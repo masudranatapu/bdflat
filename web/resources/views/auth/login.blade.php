@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<!-- 
+<!--
      ============   login   ============
  -->
 <div class="login-sec">
@@ -9,35 +9,29 @@
         <!-- row -->
         <div class="row">
             <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                 <div class="login-wrap text-center">
-                      <h1>Sign In & Access Your Account</h1>
-                      <form class="mt-5" method="POST" action="{{ route('login') }}">
+                <div class="login-wrap text-center">
+                    <h1>Sign In & Access Your Account</h1>
+                        {!! Form::open([ 'route' => 'login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         @csrf
                           <div class="row">
-                              <div class="col-12 form-group">
-                                   <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Enter Your Email">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                              </div>
-                              <div class="col-12 form-group">
-                                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                              </div>
+                            <div class="col-12 form-group text-left login-email {!! $errors->has('email') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group text-left login-password {!! $errors->has('password') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
+                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+
                               <div class="col-12 form-group text-center">
-                                  <!-- <input type="submit" name="submit" value="Login"> -->
-                                  <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+                                  <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
                               </div>
                           </div>
-                      </form>
+                          {!! Form::close() !!}
                       <div class="forget-pass">
                              @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">

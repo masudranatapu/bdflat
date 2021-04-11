@@ -1,4 +1,4 @@
-<!-- 
+<!--
      ============  footer   ============
  -->
 <footer class="footer-sec">
@@ -63,7 +63,7 @@
                          <p>Trade is Worldest leading classifieds platform that brings!</p>
                          <form action="#" method="post">
                               <div class="subscribe_form">
-                                  <input type="text" class="form-control mb-3" name="email" id="email" placeholder="Enter your email">
+                                  <input type="text" class="form-control mb-3" name="email" id="newsletter_email" placeholder="Enter your email">
                                   <input type="submit" id="submit" name="submit" value="Subscribe">
                               </div>
                          </form>
@@ -74,7 +74,7 @@
         </div><!-- row -->
     </div> <!-- container -->
 </footer>
- <!-- 
+ <!--
      ============  copyright   ============
  -->
 <div class="copyright-sec">
@@ -86,7 +86,7 @@
     </div><!-- container -->
 </div>
 
- <!-- 
+ <!--
      ============  fixed menu footer   ============
  -->
 <div class="fixed-menu">
@@ -109,7 +109,7 @@
                <li class="search_form">
                    <div class="open_serch">
                       <a href="search-filter.html"><i class="fa fa-search"></i></a>
-                   </div>     
+                   </div>
                 </li>
                 <li>
                     <a href="contact.html">
@@ -130,7 +130,7 @@
 </div>
 
 
- <!-- 
+ <!--
      ============  scroll top btn   ============
  -->
 <div id="scroll"><i class="fa fa-angle-double-up"></i></div>

@@ -25,50 +25,16 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-    protected $redirectTo = RouteServiceProvider::HOME;
 
-   
+
+    protected $redirectTo = '/';
+
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
 
-    public function showLoginForm() 
-    {
-
-        return view ('auth.login');
-    }
-
-
-    public function redirectTo()
-    {
-        if (request()->has('referer')) 
-        {
-            $this->redirectTo = request()->get('referer');
-        }
-
-        return $this->redirectTo ?? '/';
-    }
-
-
-    public function createUser($getInfo)
-       {
-           $user = User::where('email', $getInfo->email)->first();
-           if (!$user) {
-               $user = User::create([
-                   'name' => $getInfo->name,
-                   'email' => $getInfo->email,
-                   //'provider' => $provider,
-                   //'provider_id' => $getInfo->id
-               ]);
-           }
-           return $user;
-       }
-
-
-
-
-   
 
 
 

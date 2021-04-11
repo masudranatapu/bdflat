@@ -28,7 +28,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-    
+
     /**
      * Where to redirect users after registration.
      *
@@ -56,14 +56,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'usertype'       => ['required', 'string', 'max:50'],
+            'usertype'       => ['required', 'integer', 'max:4'],
             'name'           => ['required', 'string', 'max:255'],
-            'email'          => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email'          => ['required', 'string', 'email', 'max:255', 'unique:WEB_USER'],
             'mobile'         => ['required', 'string', 'max:15'],
-            'password'       => ['required', 'string', 'min:6', 'confirmed'],
-            'person_name'    => ['required', 'string', 'max:50'],
-            'designation'    => ['required', 'string', 'max:50'],
-            'office_address' => ['required', 'string', 'max:255'],
+            'password'       => ['required', 'string', 'min:6'],
+            'person_name'    => ['nullable', 'string', 'max:50'],
+            'designation'    => ['nullable', 'string', 'max:50'],
+            'office_address' => ['nullable', 'string', 'max:255'],
         ]);
     }
 
@@ -76,15 +76,35 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        return User::create([
-            'user_type'         => $data['usertype'],
-            'name'             => $data['name'],
-            'email'            => $data['email'],
-            'mobile'           => $data['mobile'],
-            'password'         => Hash::make($data['password']),
-            'contact_per_name' => $data['person_name'],
-            'designation'      => $data['designation'],
-            'address'          => $data['office_address'],
-        ]);
+        $user = new User();
+        $user->USER_TYPE    = $data['usertype'];
+        $user->NAME         = $data['name'];
+        $user->EMAIL        = $data['email'];
+        $user->MOBILE_NO    = $data['mobile'];
+        $user->PASSWORD     = Hash::make($data['password']);
+        $user->CONTACT_PER_NAME = $data['person_name'] ?? null;
+        $user->DESIGNATION  = $data['designation'] ?? null;
+        $user->ADDRESS      = $data['office_address'] ?? null;
+        $user->save();
+        return $user;
+
+
+
+
+        // $user = User::create([
+        //     'USER_TYPE'        => $data['usertype'],
+        //     'NAME'             => $data['name'],
+        //     'EMAIL'            => $data['email'],
+        //     'MOBILE_NO'        => $data['mobile'],
+        //     'PASSWORD'         => Hash::make($data['password']),
+        //     'CONTACT_PER_NAME' => $data['person_name'] ?? null,
+        //     'DESIGNATION'      => $data['designation'] ?? null,
+        //     'ADDRESS'          => $data['office_address'] ?? null,
+        // ]);
+
+    //    Auth::login($user, true);
+    //    Session::start();
+    //    return redirect()->route('home');
+
     }
 }

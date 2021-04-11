@@ -10,23 +10,26 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $table = 'WEB_USER';
+    protected $primaryKey = 'PK_NO';
+
+    public function getAuthPassword()
+    {
+        return $this->PASSWORD;
+    }
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password','user_type','mobile','contact_per_name','person_name','designation','address'
-    ];
+    protected $fillable = ['NAME', 'EMAIL', 'PASSWORD','USER_TYPE','MOBILE_NO','CONTACT_PER_NAME','DESIGNATION','ADDRESS'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['PASSWORD'];
 
     /**
      * The attributes that should be cast to native types.

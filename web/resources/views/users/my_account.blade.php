@@ -6,7 +6,7 @@
 @endpush
 
 @section('content')
-<!-- 
+<!--
      ============   dashboard   ============
  -->
 <div class="dashboard-sec">
@@ -28,7 +28,7 @@
                             <img src="{{asset('assets/img/user/1.jpg')}}" alt="image">
                         </div>
                         <div class="user-profile">
-                            <h3>{{Auth::user()->name}} <span style="font-size: 12px;">({{Auth::user()->user_type}})</span></h3>
+                            <h3>{{Auth::user()->NAME}} <span style="font-size: 12px;">({{Auth::user()->USER_TYPE}})</span></h3>
                             <h5>User Id: D292</h5>
                             <a href="edit-profile.html"><i class="fa fa-edit"></i>Edit Profile</a>
                         </div>

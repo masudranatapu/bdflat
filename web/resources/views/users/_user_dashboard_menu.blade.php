@@ -1,6 +1,6 @@
 <div class="user-info text-center">
-  <h1>Hello, <a href="my-dashboard.html">{{Auth::user()->name}}</a></h1>
-  <h5>{{Auth::user()->email}}</h5>
+  <h1>Hello, <a href="my-dashboard.html">{{Auth::user()->NAME}}</a></h1>
+  <h5>{{Auth::user()->EMAIL}}</h5>
 </div>
 <div class="dashboard-nav">
   <ul>
