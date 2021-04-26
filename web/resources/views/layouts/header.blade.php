@@ -1,4 +1,4 @@
-<!-- 
+<!--
    ============  mobile menu  ============
 -->
 <header class="d-block d-lg-none mobile-menu">
@@ -7,7 +7,7 @@
         <div class="wrapper cf">
               <nav id="main-nav">
                   <h4 class="site_logo">
-                       <a href="{{url('/')}}"><img src="assets/img/logo.png" alt="logo"></a>
+                       <a href="{{url('/')}}"><img src="{{ asset('assets/img/logo.png') }}" alt="logo"></a>
                   </h4>
 
                   <ul class="first-nav">
@@ -71,7 +71,7 @@
    </div><!-- container-fluid -->
 </header>
 
-<!-- 
+<!--
    ============   menu  ============
  -->
 <div id="header" class="home-menu">
@@ -80,8 +80,8 @@
        <!-- nav -->
        <nav class="navbar navbar-expand-lg navbar-light">
                 <a class="navbar-brand" href="{{url('/')}}">
-                    <img src="assets/img/logo.png" class="d-none d-md-block" alt="logo">
-                    <img src="assets/img/logo2.png" class="d-block d-md-none" alt="logo">
+                    <img src="{{ asset('assets/img/logo.png') }}" class="d-none d-md-block" alt="logo">
+                    <img src="{{ asset('assets/img/logo2.png') }}" class="d-block d-md-none" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -143,7 +143,7 @@
 
           <!-- post add -->
           <div class="nav-btn">
-              <a href="ad-post-details.html">Post Your Ad</a>
+              <a href=" @guest {{route('login') }}  @else {{route('properties.new') }} @endguest ">Post Your Ad</a>
           </div>
     </div><!-- container-fluid  -->
 </div>
