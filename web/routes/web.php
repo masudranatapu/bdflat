@@ -35,12 +35,29 @@ Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privac
 
 //user routes
 Route::get('/my-account', 'UserController@getMyAccount')->name('my-account');
-Route::get('/property-requirements', 'UserController@getMyRequirement')->name('property-requirements');
+Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile');
+
+Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
+Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
+
+Route::get('/owner-properties', 'OwnerController@getOwnerProperties')->name('owner-properties');
+Route::get('/properties/new', 'OwnerController@getNewProperties')->name('properties.new');
+Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
+Route::get('/owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
+
+});
+
+
 Route::get('/suggested-properties', 'UserController@getSuggestedProperties')->name('suggested-properties');
 Route::get('/varified-properties', 'UserController@getVarifiedProperties')->name('varified-properties');
 Route::get('/contacted-properties', 'UserController@getContactedProperties')->name('contacted-properties');
 Route::get('/browsed-properties', 'UserController@getBrowsedProperties')->name('browsed-properties');
 Route::get('/recharge-balance', 'UserController@getRechargeBalance')->name('recharge-balance');
+
+
+
+
+
 
 
 

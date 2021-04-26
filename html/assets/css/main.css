@@ -6264,6 +6264,287 @@ li.mt {
 
 
 
+/* ==========================================================================
+advertisment
+========================================================================== */
+
+
+.advertisment-sec{
+padding:50px 0px;
+}
+
+.advertisment-wrap{
+background: #fff;
+box-shadow: 0px 24px 35px 0px rgba(153,153,153,0.15);
+padding: 40px 45px 53px 45px;
+border-radius:4px;
+}
+
+.advertis-seller h5 {
+font-size: 15px;
+font-family: 'Montserrat-Bold';
+padding-bottom: 7px;
+display: inline-block;
+}
+
+.advertis-seller input[type="radio"]+label {
+font-size: 14px;
+font-family: 'Montserrat-Medium';
+padding: 0px 15px 0px 19px;
+color: #666;
+position: relative;
+cursor: pointer;
+vertical-align: middle;
+}
+
+.advertis-seller input[type="radio"]{
+display: none;
+}
+
+.advertis-seller input[type="radio"] + label:before,
+.advertis-seller input[type="radio"] + label:after {
+position:absolute;
+top:2px;
+left:0;
+content:"";
+width:14px;
+height:14px;
+border-radius:50%;
+display:inline-block;
+background-color:transparent;
+}
+
+.advertis-seller input[type="radio"] + label:before {
+border: 2px solid #dc3545;
+}
+
+.advertis-seller input[type="radio"]:checked + label:after {
+border: 5px solid #dc3545;
+}
+
+.advertisment-form {
+margin-top: 20px;
+}
+
+.advertisment-form .form-group {
+margin-bottom: 10px;
+vertical-align: middle;
+}
+
+.advertisment-form .advertis-label {
+font-size: 15px;
+font-family: 'Montserrat-Medium';
+color: #555;
+letter-spacing: 0.3px;
+margin: 0;
+vertical-align: middle;
+}
+
+.advertisment-form .form-control {
+height: 42px;
+border-radius: 4px;
+border: 1px solid #DDD;
+font-size: 13px;
+font-family: 'Montserrat-Medium';
+outline: none;
+box-shadow: none;
+padding: 5px 8px;
+}
+
+.advertisment-form .form-control:focus {
+border: 1px solid #dc3545;
+}
+
+.msg-area {
+height: 100px !important;
+}
+
+.advertisment-title h3 {
+font-size: 15px;
+font-family: 'Montserrat-Medium';
+font-weight: 600;
+padding-bottom: 15px;
+color: #222;
+}
+
+
+.no-gutters .form-group {
+margin-bottom: 10px;
+vertical-align: middle;
+margin-right: 3px;
+margin-left: 3px;
+}
+
+.advertisment-form input[type="radio"]+label {
+font-size: 14px;
+font-family: 'Montserrat-Medium';
+padding: 0px 15px 0px 19px;
+color: #666;
+position: relative;
+cursor: pointer;
+vertical-align: middle;
+}
+
+.advertisment-form input[type="radio"]{
+display: none;
+}
+
+.advertisment-form input[type="radio"] + label:before,
+.advertisment-form input[type="radio"] + label:after {
+position:absolute;
+top:2px;
+left:0;
+content:"";
+width:14px;
+height:14px;
+border-radius:50%;
+display:inline-block;
+background-color:transparent;
+}
+
+.advertisment-form input[type="radio"] + label:before {
+border: 2px solid #dc3545;
+}
+
+.advertisment-form input[type="radio"]:checked + label:after {
+border: 5px solid #dc3545;
+}
+
+.listing-list input[type="radio"]+label {
+display: block;
+padding-bottom: 5px;
+}
+
+
+.advertisment-btn input[type="submit"] {
+border: 1px solid #dc3545;
+padding: 12px 40px;
+font-family: 'Montserrat-Medium';
+font-size: 16px;
+color: #fff;
+background: #dc3545;
+outline: none;
+text-transform: uppercase;
+border-radius: 2px;
+transition: all 0.4s;
+-webkit-transition: all 0.4s;
+-moz-transition: all 0.4s;
+-ms-transition: all 0.4s;
+-o-transition: all 0.4s;
+}
+
+.advertisment-btn input[type="submit"]:hover {
+background: #aa2431;
+border: 1px solid #aa2431;
+}
+
+
+.advertisment-form input::-webkit-outer-spin-button,
+.advertisment-form input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+.advertisment-form input[type=number] {
+-moz-appearance: textfield;
+}
+
+.video-tag{
+margin-top:105px;
+}
+
+.et_pb_contact_form_label {
+display: block;
+color: black;
+font-weight: bold;
+letter-spacing: 1.2px;
+font-size: 18px;
+padding-bottom: 5px;
+}
+
+.advertisment-form input[id="imageFile"] {
+display: none;
+}
+
+.advertisment-form label[for="imageFile"] {
+background: #fff;
+height: 100px;
+background-image: url('https://image.flaticon.com/icons/svg/126/126477.svg');
+background-repeat: no-repeat;
+background-position: top 18px center;
+position: absolute;
+background-size: 7%;
+color: transparent;
+border-radius:4px;
+margin: auto;
+width: 93%;
+top: 50%;
+left: 0;
+right: 0;
+border: 1px solid #DDD;
+box-sizing: border-box;
+}
+
+.advertisment-form label[for="imageFile"]:before {
+content: "Drag and Drop a file here";
+display: block;
+position: absolute;
+top: 67%;
+transform: translateY(-50%);
+font-size: 14px;
+color: #202020;
+font-weight: 400;
+left:0;
+right:0;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
+}
+
+
+.advertisment-form label[for="et_pb_contact_brand_request_0"]:after {
+content: " (Provide link or Upload files if you already have guidelines)";
+font-size: 12px;
+letter-spacing: -0.31px;
+color: #7a7a7a;
+font-weight: normal;
+}
+
+.advertisment-form label[for="et_pb_contact_design_request_0"]:after {
+content: " (Provide link or Upload design files)";
+font-size: 12px;
+letter-spacing: -0.31px;
+color: #7a7a7a;
+font-weight: normal;
+}
+
+.advertisment-form label[for="imageFile"].changed,
+.advertisment-form label[for="imageFile"]:hover {
+background-color: #dc3545a3;
+}
+
+.advertisment-form label[for="imageFile"] {
+cursor: pointer;
+transition: 400ms ease;
+}
+
+.datepicker table tr td.today, .datepicker table tr td.today:hover, .datepicker table tr td.today.disabled, .datepicker table tr td.today.disabled:hover {
+background: #DC3545 !important;
+color: #fff;
+}
+
+td.active.day {
+background: #d9d6d6 !important;
+color: #000 !important;
+}
+
+.datepicker-days table {
+font-family: 'Montserrat-Medium';
+font-size: 13px;
+min-width: 287px;
+width: 100%;
+max-width: 100%;
+}
 
 
 

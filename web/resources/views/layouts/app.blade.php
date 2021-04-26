@@ -3,17 +3,17 @@
         <!-- header_script -->
         @include('layouts.header_script')
         <!-- end header_script -->
-        
+
         <body class="theme-default">
         <!-- header -->
         @include('layouts.header')
         <!-- end header -->
 
-        <!--###### <<<<<<<< DALAL MAIN >>>>>>>> ######-->
+        <!--######  BDFLAT MAIN ######-->
         <main class="main">
             @yield('content')
         </main>
-        <!--###### <<<<<<<< DALAL MAIN >>>>>>>> ######-->
+        <!--######  BDFLAT MAIN ######-->
 
         <!-- footer -->
         @include('layouts.footer')
