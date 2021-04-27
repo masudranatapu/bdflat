@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('owner-properties','active')
 @push('custom_css')
-
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
 @endpush
 
 @section('content')
@@ -19,7 +19,7 @@
                 <div class="col-sm-12 col-md-8">
                     <div class="advertisment-wrap">
                         <div class="advertis-seller d-lg-flex">
-                            <h5>Advertisment Type:</h5>
+                            <h5>Advertisement Type:</h5>
                             <form action="#" method="post">
                                 <input type="radio" name="signup" value="sell" id="sell"> <label for="sell">Sell</label>
                                 <input type="radio" name="signup" value="rent" id="rent"> <label for="rent">Rent</label>
@@ -32,8 +32,11 @@
                             <div class="row form-group">
                                 {{ Form::label('property','Property Type:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        {!! Form::select('property', [],null,array('class'=>'form-control', 'placeholder'=>'Select property type')) !!}
+                                    <div class="form-group {!! $errors->has('property') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('property', [],null,array('class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('property', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -42,8 +45,11 @@
                             <div class="row form-group">
                                 {!! Form::label('city','City <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        {!! Form::select('city', ['Dhaka','Barisal','Khulna','Sylhet'],null,array('class'=>'form-control', 'placeholder'=>'Select City')) !!}
+                                    <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('city', ['Dhaka','Barisal','Khulna','Sylhet'],null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -52,31 +58,37 @@
                             <div class="row form-group">
                                 {!! Form::label('area','Area(based on city) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        {!! Form::select('area', ['Gulshan','Banani','Jatrabari','Uttara'],null,array('class'=>'form-control', 'placeholder'=>'Select Area')) !!}
+                                    <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('area', ['Gulshan','Banani','Jatrabari','Uttara'],null,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!--  address  -->
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Address<span class="required">*</span>:</label>
+                                {!! Form::label('address','Address <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="address" id="address" placeholder="Address">
+                                    <div class="form-group {!! $errors->has('address') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('address', old('address'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Address','autocomplete' => 'off', 'tabindex' => 1]) !!}
+                                            {!! $errors->first('address', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!--  condition  -->
-                            <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Condition <span class="required">*</span>:</label>
+                            <div class="row form-group {!! $errors->has('condition') ? 'error' : '' !!}">
+                                {!! Form::label('condition','Condition <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <select class="form-control" name="condition" id="condition">
-                                            <option>Select Conditon</option>
-                                            <option>Select Conditon</option>
-                                        </select>
+                                        <div class="controls">
+                                            {!! Form::select('condition', [],null,array('class'=>'form-control', 'placeholder'=>'Select Condition','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -89,44 +101,52 @@
                             </div>
                             <div class="row no-gutters form-group">
                                 <div class="col-6 col-md-3">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" name="size" id="size" placeholder="Size in sft">
+                                    <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::number('size', old('size'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft']) !!}
+                                            {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <div class="form-group">
-                                        <select class="form-control" name="bedroom" id="bedroom">
-                                            <option>Bedroom</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
+                                    <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('bedroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
+                                            {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <div class="form-group">
-                                        <select class="form-control" name="bathroom" id="bathroom">
-                                            <option>Bathroom</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
+                                    <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('bathroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
+                                            {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" name="price" id="price" placeholder="Price">
+                                    <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::number('price', old('price'), [ 'class' => 'form-control',  'placeholder' => 'Price']) !!}
+                                            {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!--  property price   -->
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Property price is:</label>
+                                {{ Form::label('','Property price is:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="radio" name="radio" value="fixed" id="fixed"> <label for="fixed">Fixed</label>
-                                        <input type="radio" name="radio" value="nagotiable" id="nagotiable"> <label for="nagotiable">Nagotiable</label>
+                                    <div class="form-group {!! $errors->has('property_price') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::radio('property_price','fixed', old('property_price'),[ 'id' => 'fixed']) !!}
+                                            {{ Form::label('fixed','Fixed') }}
+                                            {!! Form::radio('property_price','nagotiable', old('property_price'),[ 'id' => 'nagotiable']) !!}
+                                            {{ Form::label('nagotiable','Nagotiable') }}
+
+                                            {!! $errors->first('property_price', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -136,53 +156,62 @@
                                 <h3>Additional Infomation</h3>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Total Number Of Floor:</label>
+                                {{ Form::label('floor','Total Number Of Floor:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <select class="form-control" name="floor" id="floor">
-                                            <option>Ground Floor</option>
-                                            <option>1 Floor</option>
-                                            <option>2 Floor</option>
-                                            <option>3 Floor</option>
-                                        </select>
+                                    <div class="form-group {!! $errors->has('floor') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('floor', ['1 Floor','2 Floor','3 Floor'],null,array('class'=>'form-control', 'placeholder'=>'Ground Floor')) !!}
+                                            {!! $errors->first('floor', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Floor Available:</label>
+                                {{ Form::label('','Floor Available:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="radio" name="radio" value="ground" id="ground"> <label for="ground">Ground Floor</label>
-                                        <input type="radio" name="radio" value="1stfloor" id="1stfloor"> <label for="1stfloor">1st Floor</label>
+                                    <div class="form-group {!! $errors->has('floor_available') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::radio('floor_available','ground', old('floor_available'),[ 'id' => 'ground']) !!}
+                                            {{ Form::label('ground','Ground Floor') }}
+                                            {!! Form::radio('floor_available','1stfloor', old('floor_available'),[ 'id' => '1stfloor']) !!}
+                                            {{ Form::label('1stfloor','1st Floor') }}
+
+                                            {!! $errors->first('floor_available', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Facing:</label>
+                                {{ Form::label('facing','Facing:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <select class="form-control" name="facing" id="facing">
-                                            <option>Select facing</option>
-                                            <option>Select facing</option>
-                                            <option>Select facing</option>
-                                            <option>Select facing</option>
-                                        </select>
+                                    <div class="form-group {!! $errors->has('facing') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('facing', [],null,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
+                                            {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Handover Date:</label>
+                                {{ Form::label('datepicker','Handover Date:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="text" name="datepicker" class="form-control" id="datepicker">
+                                    <div class="form-group {!! $errors->has('handover_date') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('handover_date', old('handover_date'), [ 'id'=>'datepicker','class' => 'form-control','placeholder' => 'Address','autocomplete' => 'off', 'tabindex' => 1]) !!}
+                                            {!! $errors->first('handover_date', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Descriptions:</label>
+                                {{ Form::label('msg-form','Descriptions:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <textarea name="msg-form" id="msg-form" class="msg-area form-control" rows="4" placeholder="Type here"></textarea>
+                                    <div class="form-group {!! $errors->has('msg-form') ? 'error' : '' !!}">
+
+                                        <div class="controls">
+                                            {!! Form::textarea('msg-form', old('msg-form'), [ 'id'=>'msg-form','class' => 'msg-area form-control', 'placeholder' => 'Type here']) !!}
+                                            {!! $errors->first('msg-form', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -193,11 +222,22 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <input type="radio" name="radio" value="parking" id="parking"> <label for="parking">Parking</label>
-                                        <input type="radio" name="radio" value="gas" id="gas"> <label for="gas">Gas</label>
-                                        <input type="radio" name="radio" value="water" id="water"> <label for="water">Water</label>
-                                        <input type="radio" name="radio" value="generator" id="generator"> <label for="generator">Generator</label>
+                                    <div class="form-group {!! $errors->has('features') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::radio('features','parking', old('features'),[ 'id' => 'parking']) !!}
+                                            {{ Form::label('parking','Parking') }}
+
+                                            {!! Form::radio('features','gas', old('features'),[ 'id' => 'gas']) !!}
+                                            {{ Form::label('gas','Gas') }}
+
+                                            {!! Form::radio('features','water', old('features'),[ 'id' => 'water']) !!}
+                                            {{ Form::label('water','Water') }}
+
+                                            {!! Form::radio('features','generator', old('features'),[ 'id' => 'generator']) !!}
+                                            {{ Form::label('generator','Generator') }}
+
+                                            {!! $errors->first('features', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -207,11 +247,22 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <input type="radio" name="radio" value="busstand" id="busstand"> <label for="busstand">Bus stand</label>
-                                        <input type="radio" name="radio" value="supershop" id="supershop"> <label for="supershop">Super Shop</label>
-                                        <input type="radio" name="radio" value="Hospital" id="Hospital"> <label for="Hospital">Hospital</label>
-                                        <input type="radio" name="radio" value="school" id="school"> <label for="school">School</label>
+                                    <div class="form-group {!! $errors->has('facilities_within_1km') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::radio('facilities_within_1km','busstand', old('facilities_within_1km'),[ 'id' => 'busstand']) !!}
+                                            {{ Form::label('busstand','Bus stand') }}
+
+                                            {!! Form::radio('facilities_within_1km','supershop', old('facilities_within_1km'),[ 'id' => 'supershop']) !!}
+                                            {{ Form::label('supershop','Super Shop') }}
+
+                                            {!! Form::radio('facilities_within_1km','hospital', old('facilities_within_1km'),[ 'id' => 'hospital']) !!}
+                                            {{ Form::label('hospital','Hospital') }}
+
+                                            {!! Form::radio('facilities_within_1km','school', old('facilities_within_1km'),[ 'id' => 'school']) !!}
+                                            {{ Form::label('school','School') }}
+
+                                            {!! $errors->first('facilities_within_1km', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -229,19 +280,25 @@
                             <div class="advertisment-title">
                                 <h3>Image & Videos</h3>
                             </div>
-                            <div class="row form-group mb-5">
-                                <label class="col-sm-4 advertis-label">Image</label>
+                            <div class="row form-group mb-5 {!! $errors->has('image') ? 'error' : '' !!}">
+                                {{ Form::label(null,'Image',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <label for="imageFile" class="et_pb_contact_form_label"></label>
-                                    <input type="file" id="imageFile" class="file-upload">
+                                    {{ Form::label('imageFile',null,['class' => 'et_pb_contact_form_label']) }}
+                                    <div class="controls">
+                                        {!! Form::file('image', [ 'id'=>'imageFile','class' => 'file-upload']) !!}
+                                        {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="row form-group video-tag">
-                                <label class="col-sm-4 advertis-label">Video:</label>
+                                {{ Form::label('videoURL','Video:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="text" name="videoURL" id="videoURL" class="form-control" placeholder="Paste your youtube video URL">
+                                    <div class="form-group {!! $errors->has('videoURL') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('videoURL', old('videoURL'), [ 'id'=>'videoURL','class' => 'form-control','placeholder'=>'Paste your youtube video URL']) !!}
+                                            {!! $errors->first('videoURL', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -252,19 +309,24 @@
                                 <h3>Property Owner Details</h3>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Contact Person:</label>
+                                {{ Form::label('contactPerson','Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="text" name="contactPerson" id="contactPerson" class="form-control"
-                                               placeholder="Auto fill owner name except agent user">
+                                    <div class="form-group {!! $errors->has('contactPerson') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('contactPerson', old('contactPerson'), [ 'id'=>'contactPerson','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user']) !!}
+                                            {!! $errors->first('contactPerson', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label class="col-sm-4 advertis-label">Mobile:</label>
+                                {{ Form::label('mobileNum','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="number" name="mobileNum" id="mobileNum" class="form-control" placeholder="Property Owner Number">
+                                    <div class="form-group {!! $errors->has('mobileNum') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::number('mobileNum', old('mobileNum'), [ 'id'=>'mobileNum','class' => 'form-control','placeholder'=>'Property Owner Number']) !!}
+                                            {!! $errors->first('mobileNum', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -273,36 +335,41 @@
                             <div class="advertisment-title">
                                 <h3>Listing Type</h3>
                             </div>
-                            <div class="listing-list mb-3">
-                                <input type="radio" name="radio" checked="" value="geralListing" id="geralListing"> <label for="geralListing">General Listing for 30
-                                    days</label>
+                            <div class="listing-list mb-3 {!! $errors->has('listing_type') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::radio('listing_type','geralListing', old('listing_type'),[ 'id' => 'geralListing']) !!}
+                                    {{ Form::label('geralListing','General Listing for 30 days') }}
 
-                                <input type="radio" name="radio" value="feturListing" id="feturListing"> <label for="feturListing">Feature LIsting for 30 days</label>
+                                    {!! Form::radio('listing_type','feturListing', old('listing_type'),[ 'id' => 'feturListing']) !!}
+                                    {{ Form::label('feturListing','Feature LIsting for 30 days') }}
 
-                                <input type="radio" name="radio" value="dailyGeral" id="dailyGeral"> <label for="dailyGeral">General Listing with daily auto update
-                                    for 30 days</label>
+                                    {!! Form::radio('listing_type','dailyGeral', old('listing_type'),[ 'id' => 'dailyGeral']) !!}
+                                    {{ Form::label('dailyGeral','General Listing with daily auto update for 30 days') }}
 
-                                <input type="radio" name="radio" value="dailyFea" id="dailyFea"> <label for="dailyFea">Feature Listing with daily auto update for 30
-                                    days</label>
+                                    {!! Form::radio('listing_type','dailyFea', old('listing_type'),[ 'id' => 'dailyFea']) !!}
+                                    {{ Form::label('dailyFea','Feature Listing with daily auto update for 30 days') }}
+
+                                    {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
                             </div>
 
                             <!--  submit button  -->
                             <div class="advertisment-btn">
-                                <input type="submit" name="submit" id="submit" value="Submit">
+{{--                                <input type="submit" name="submit" id="submit" value="Submit">--}}
+                                {!! Form::submit('submit', ['id'=>'submit']) !!}
+
                             </div>
 
                             {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
-
             </div><!-- container -->
         </div>
-
-
-
+    </div>
 @endsection
 
 @push('custom_js')
-
+    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
+    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
 @endpush
