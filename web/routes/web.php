@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('home.home');
 });
 
-Route::get('/cc', function() {
+Route::get('/cc', function () {
     \Artisan::call('cache:clear');
     \Artisan::call('view:clear');
     \Artisan::call('route:clear');
@@ -38,13 +38,14 @@ Route::get('/my-account', 'UserController@getMyAccount')->name('my-account');
 Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile');
 
 Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
-Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
+    Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
 
-Route::get('/owner-properties', 'OwnerController@getOwnerProperties')->name('owner-properties');
-Route::get('/properties/new', 'OwnerController@getNewProperties')->name('properties.new');
-Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
-Route::get('/owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
-
+    Route::get('/owner-properties', 'OwnerController@getOwnerProperties')->name('owner-properties');
+    Route::get('/properties/new', 'OwnerController@getNewProperties')->name('properties.new');
+    Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
+    Route::get('/owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
+    Route::get('properties/get_area/{id}', 'OwnerController@getArea')->name('get_area');
+    Route::post('add_size', 'OwnerController@addSize')->name('add_size');
 });
 
 
@@ -53,13 +54,6 @@ Route::get('/varified-properties', 'UserController@getVarifiedProperties')->name
 Route::get('/contacted-properties', 'UserController@getContactedProperties')->name('contacted-properties');
 Route::get('/browsed-properties', 'UserController@getBrowsedProperties')->name('browsed-properties');
 Route::get('/recharge-balance', 'UserController@getRechargeBalance')->name('recharge-balance');
-
-
-
-
-
-
-
 
 
 Auth::routes();

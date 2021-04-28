@@ -4,7 +4,10 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
 @endpush
 <?php
-$property_type = $data['property_type'] ?? [];
+$property_types = $data['property_type'] ?? [];
+$cities = $data['city'] ?? [];
+$property_conditions = $data['property_condition'] ?? [];
+$property_facing = $data['property_facing'] ?? [];
 
 ?>
 
@@ -21,24 +24,31 @@ $property_type = $data['property_type'] ?? [];
                     @include('owner._left_menu')
                 </div>
                 <div class="col-sm-12 col-md-8">
+                    {!! Form::open([ /*'route' => '',*/ 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     <div class="advertisment-wrap">
-                        <div class="advertis-seller d-lg-flex">
-                            <h5>Advertisement Type:</h5>
-                            <form action="#" method="post">
-                                <input type="radio" name="signup" value="sell" id="sell"> <label for="sell">Sell</label>
-                                <input type="radio" name="signup" value="rent" id="rent"> <label for="rent">Rent</label>
-                                <input type="radio" name="signup" value="roommate" id="roommate"> <label for="roommate">Roommate</label>
-                            </form>
+                        <div class="advertis-seller d-lg-flex {!! $errors->has('signup') ? 'error' : '' !!}">
+                            <h5>Advertisement Type:&nbsp; </h5>
+                            <div class="controls">
+                                {!! Form::radio('signup','sell', old('signup'),[ 'id' => 'sell']) !!}
+                                {{ Form::label('sell','Sell') }}
+
+                                {!! Form::radio('signup','rent', old('signup'),[ 'id' => 'rent']) !!}
+                                {{ Form::label('rent','Rent') }}
+
+                                {!! Form::radio('signup','roommate', old('signup'),[ 'id' => 'roommate']) !!}
+                                {{ Form::label('roommate','Roommate') }}
+
+                                {!! $errors->first('signup', '<label class="help-block text-danger">:message</label>') !!}
+                            </div>
                         </div>
                         <div class="advertisment-form">
-                        {!! Form::open([ /*'route' => '',*/ 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
-                        <!-- property type  -->
+                            <!-- property type  -->
                             <div class="row form-group">
                                 {{ Form::label('property','Property Type:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('property') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('property', $property_type,null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::select('property', $property_types,null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('property', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -51,7 +61,7 @@ $property_type = $data['property_type'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('city', ['Dhaka','Barisal','Khulna','Sylhet'],null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('city', $cities ,null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -64,7 +74,7 @@ $property_type = $data['property_type'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('area', ['Gulshan','Banani','Jatrabari','Uttara'],null,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('area', [],null,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -90,7 +100,7 @@ $property_type = $data['property_type'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <div class="controls">
-                                            {!! Form::select('condition', [],null,array('class'=>'form-control', 'placeholder'=>'Select Condition','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('condition', $property_conditions,null,array('class'=>'form-control', 'placeholder'=>'Select Condition','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -100,39 +110,42 @@ $property_type = $data['property_type'] ?? [];
                             <!--  Property Size & Price  -->
                             <div class="advertisment-title">
                                 <h3>Property Size & Price
-                                    <button type="button" class="btn btn-xs btn-danger">+ Add new size</button>
+                                    <button type="button" class="btn btn-xs btn-danger" id="add_btn">+ Add new size</button>
                                 </h3>
                             </div>
-                            <div class="row no-gutters form-group">
-                                <div class="col-6 col-md-3">
-                                    <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::number('size', old('size'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft']) !!}
-                                            {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
+
+                            <div id="size_parent">
+                                <div class="row no-gutters form-group size_child">
+                                    <div class="col-6 col-md-3">
+                                        <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::number('size', old('size'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft']) !!}
+                                                {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::select('bedroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
-                                            {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
+                                    <div class="col-6 col-md-3">
+                                        <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::select('bedroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
+                                                {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::select('bathroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
-                                            {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
+                                    <div class="col-6 col-md-3">
+                                        <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::select('bathroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
+                                                {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::number('price', old('price'), [ 'class' => 'form-control',  'placeholder' => 'Price']) !!}
-                                            {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                    <div class="col-6 col-md-3">
+                                        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::number('price', old('price'), [ 'class' => 'form-control',  'placeholder' => 'Price']) !!}
+                                                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +203,7 @@ $property_type = $data['property_type'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('facing') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('facing', [],null,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
+                                            {!! Form::select('facing', $property_facing,null,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
                                             {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -359,14 +372,13 @@ $property_type = $data['property_type'] ?? [];
 
                             <!--  submit button  -->
                             <div class="advertisment-btn">
-{{--                                <input type="submit" name="submit" id="submit" value="Submit">--}}
+                                {{--                                <input type="submit" name="submit" id="submit" value="Submit">--}}
                                 {!! Form::submit('submit', ['id'=>'submit']) !!}
 
                             </div>
-
-                            {!! Form::close() !!}
                         </div>
                     </div>
+                    {!! Form::close() !!}
                 </div>
             </div><!-- container -->
         </div>
@@ -376,4 +388,39 @@ $property_type = $data['property_type'] ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+
+    <script>
+        $('#city').change(function () {
+            $("#area").empty();
+            var id = $(this).val();
+            $.ajax({
+                url: 'get_area/' + id,
+                type: 'get',
+                dataType: 'json',
+                success: function (response) {
+                    $.each(response.area, function (key, value) {
+                        var option = new Option(value, key);
+                        // $(option).html(value);
+                        $("#area").append(option);
+                    });
+                }
+            });
+        });
+
+        $('#add_btn').click(function () {
+            $.ajax({
+                url: '{{route('add_size')}}',
+                type: 'post',
+                data: {_token: '{{csrf_token()}}'},
+                success: function (response) {
+                    console.log(response.html);
+                    $("#size_parent").append(response.html);
+                }
+            });
+        });
+
+        $(document).on("click", ".del_btn", function () {
+            $(this).closest(".size_child").remove();
+        });
+    </script>
 @endpush
