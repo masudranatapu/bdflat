@@ -3,6 +3,10 @@
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
 @endpush
+<?php
+$property_type = $data['property_type'] ?? [];
+
+?>
 
 @section('content')
     <!--
@@ -34,7 +38,7 @@
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('property') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('property', [],null,array('class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('property', $property_type,null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('property', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

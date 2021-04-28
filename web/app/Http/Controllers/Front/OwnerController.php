@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers\Front;
+use Auth;
+use Toastr;
+use App\User;
+use App\Product;
+use App\Models\PropertyType;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
-use Illuminate\Http\Request;
-use App\User;
-use Toastr;
-use App\Product;
-use Auth;
 
 class OwnerController extends Controller
 {
@@ -32,6 +33,7 @@ class OwnerController extends Controller
     public function getNewProperties(Request $request)
     {
         $data = array();
+        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE','PK_NO');
         return view('owner.new_properties',compact('data'));
     }
     public function getOwnerLeads(Request $request)
