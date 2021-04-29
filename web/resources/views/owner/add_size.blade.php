@@ -2,15 +2,15 @@
     <div class="col-6 col-md-2">
         <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
             <div class="controls">
-                {!! Form::number('size', old('size'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft']) !!}
-                {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
+                {!! Form::number('size[]', old('size'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
+                {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
     </div>
     <div class="col-6 col-md-3">
         <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
             <div class="controls">
-                {!! Form::select('bedroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
+                {!! Form::select('bedroom[]', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
@@ -18,7 +18,7 @@
     <div class="col-6 col-md-3">
         <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
             <div class="controls">
-                {!! Form::select('bathroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
+                {!! Form::select('bathroom[]', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
@@ -26,7 +26,7 @@
     <div class="col-6 col-md-3">
         <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
             <div class="controls">
-                {!! Form::number('price', old('price'), [ 'class' => 'form-control',  'placeholder' => 'Price']) !!}
+                {!! Form::number('price[]', old('price'), [ 'class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>

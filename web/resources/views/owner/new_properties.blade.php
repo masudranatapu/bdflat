@@ -1,14 +1,15 @@
 @extends('layouts.app')
 @section('owner-properties','active')
 @push('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
+{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
 @endpush
 <?php
 $property_types = $data['property_type'] ?? [];
 $cities = $data['city'] ?? [];
 $property_conditions = $data['property_condition'] ?? [];
 $property_facing = $data['property_facing'] ?? [];
-
+$property_listing_types = $data['property_listing_type'] ?? [];
 ?>
 
 @section('content')
@@ -24,21 +25,21 @@ $property_facing = $data['property_facing'] ?? [];
                     @include('owner._left_menu')
                 </div>
                 <div class="col-sm-12 col-md-8">
-                    {!! Form::open([ /*'route' => '',*/ 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::open([ 'route' => 'properties.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     <div class="advertisment-wrap">
-                        <div class="advertis-seller d-lg-flex {!! $errors->has('signup') ? 'error' : '' !!}">
+                        <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                             <h5>Advertisement Type:&nbsp; </h5>
                             <div class="controls">
-                                {!! Form::radio('signup','sell', old('signup'),[ 'id' => 'sell']) !!}
+                                {!! Form::radio('property_for','sell', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
                                 {{ Form::label('sell','Sell') }}
 
-                                {!! Form::radio('signup','rent', old('signup'),[ 'id' => 'rent']) !!}
+                                {!! Form::radio('property_for','rent', old('property_for'),[ 'id' => 'rent']) !!}
                                 {{ Form::label('rent','Rent') }}
 
-                                {!! Form::radio('signup','roommate', old('signup'),[ 'id' => 'roommate']) !!}
+                                {!! Form::radio('property_for','roommate', old('property_for'),[ 'id' => 'roommate']) !!}
                                 {{ Form::label('roommate','Roommate') }}
 
-                                {!! $errors->first('signup', '<label class="help-block text-danger">:message</label>') !!}
+                                {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
                             </div>
                         </div>
                         <div class="advertisment-form">
@@ -46,10 +47,10 @@ $property_facing = $data['property_facing'] ?? [];
                             <div class="row form-group">
                                 {{ Form::label('property','Property Type:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('property') ? 'error' : '' !!}">
+                                    <div class="form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('property', $property_types,null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
-                                            {!! $errors->first('property', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! Form::select('property_type', $property_types,null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +88,7 @@ $property_facing = $data['property_facing'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('address') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('address', old('address'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Address','autocomplete' => 'off', 'tabindex' => 1]) !!}
+                                            {!! Form::text('address', old('address'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Address']) !!}
                                             {!! $errors->first('address', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -119,15 +120,15 @@ $property_facing = $data['property_facing'] ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('size', old('size'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft']) !!}
-                                                {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
+                                                {!! Form::number('size[]', old('size[]'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bedroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
+                                                {!! Form::select('bedroom[]', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -135,7 +136,7 @@ $property_facing = $data['property_facing'] ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bathroom', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
+                                                {!! Form::select('bathroom[]', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -143,7 +144,7 @@ $property_facing = $data['property_facing'] ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('price', old('price'), [ 'class' => 'form-control',  'placeholder' => 'Price']) !!}
+                                                {!! Form::number('price[]', old('price[]'), [ 'class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -157,9 +158,9 @@ $property_facing = $data['property_facing'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('property_price') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::radio('property_price','fixed', old('property_price'),[ 'id' => 'fixed']) !!}
+                                            {!! Form::radio('property_price','1', old('property_price'),[ 'id' => 'fixed','data-validation-required-message' => 'This field is required']) !!}
                                             {{ Form::label('fixed','Fixed') }}
-                                            {!! Form::radio('property_price','nagotiable', old('property_price'),[ 'id' => 'nagotiable']) !!}
+                                            {!! Form::radio('property_price','2', old('property_price'),[ 'id' => 'nagotiable']) !!}
                                             {{ Form::label('nagotiable','Nagotiable') }}
 
                                             {!! $errors->first('property_price', '<label class="help-block text-danger">:message</label>') !!}
@@ -214,7 +215,7 @@ $property_facing = $data['property_facing'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('handover_date') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('handover_date', old('handover_date'), [ 'id'=>'datepicker','class' => 'form-control','placeholder' => 'Address','autocomplete' => 'off', 'tabindex' => 1]) !!}
+                                            {!! Form::text('handover_date', old('handover_date'), [ 'id'=>'datepicker','class' => 'form-control datetimepicker','placeholder' => 'Address','autocomplete' => 'off', 'tabindex' => 1]) !!}
                                             {!! $errors->first('handover_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -330,7 +331,7 @@ $property_facing = $data['property_facing'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('contactPerson') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('contactPerson', old('contactPerson'), [ 'id'=>'contactPerson','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user']) !!}
+                                            {!! Form::text('contactPerson', old('contactPerson'), [ 'id'=>'contactPerson','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('contactPerson', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -341,7 +342,7 @@ $property_facing = $data['property_facing'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('mobileNum') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::number('mobileNum', old('mobileNum'), [ 'id'=>'mobileNum','class' => 'form-control','placeholder'=>'Property Owner Number']) !!}
+                                            {!! Form::number('mobileNum', old('mobileNum'), [ 'id'=>'mobileNum','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('mobileNum', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -354,25 +355,16 @@ $property_facing = $data['property_facing'] ?? [];
                             </div>
                             <div class="listing-list mb-3 {!! $errors->has('listing_type') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('listing_type','geralListing', old('listing_type'),[ 'id' => 'geralListing']) !!}
-                                    {{ Form::label('geralListing','General Listing for 30 days') }}
-
-                                    {!! Form::radio('listing_type','feturListing', old('listing_type'),[ 'id' => 'feturListing']) !!}
-                                    {{ Form::label('feturListing','Feature LIsting for 30 days') }}
-
-                                    {!! Form::radio('listing_type','dailyGeral', old('listing_type'),[ 'id' => 'dailyGeral']) !!}
-                                    {{ Form::label('dailyGeral','General Listing with daily auto update for 30 days') }}
-
-                                    {!! Form::radio('listing_type','dailyFea', old('listing_type'),[ 'id' => 'dailyFea']) !!}
-                                    {{ Form::label('dailyFea','Feature Listing with daily auto update for 30 days') }}
-
+                                    @foreach($property_listing_types as $key => $item)
+                                        {!! Form::radio('listing_type',$key, old('listing_type'),[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required']) !!}
+                                        {{ Form::label('listing_type'.$key,$item) }}
+                                    @endforeach
                                     {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
 
                             <!--  submit button  -->
                             <div class="advertisment-btn">
-                                {{--                                <input type="submit" name="submit" id="submit" value="Submit">--}}
                                 {!! Form::submit('submit', ['id'=>'submit']) !!}
 
                             </div>
@@ -386,10 +378,22 @@ $property_facing = $data['property_facing'] ?? [];
 @endsection
 
 @push('custom_js')
-    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
-    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+{{--    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>--}}
+{{--    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>--}}
+    <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
+    <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
 
     <script>
+        $('.datetimepicker').datetimepicker({
+            icons:
+                {
+                    next: 'fa fa-angle-right',
+                    previous: 'fa fa-angle-left'
+                },
+            format: 'DD/MM/YYYY'
+        });
+
+
         $('#city').change(function () {
             $("#area").empty();
             var id = $(this).val();

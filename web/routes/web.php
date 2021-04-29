@@ -42,6 +42,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
 
     Route::get('/owner-properties', 'OwnerController@getOwnerProperties')->name('owner-properties');
     Route::get('/properties/new', 'OwnerController@getNewProperties')->name('properties.new');
+    Route::post('/properties/store', 'OwnerController@storeNewProperties')->name('properties.store');
     Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
     Route::get('/owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
     Route::get('properties/get_area/{id}', 'OwnerController@getArea')->name('get_area');
