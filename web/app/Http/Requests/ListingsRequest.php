@@ -28,14 +28,14 @@ class ListingsRequest extends FormRequest
         $rules = [
             'property_for'      => 'required',
             'property_type'     => 'required',
-            // 'city'              => 'required',
-            // 'area'              => 'required',
-            // 'address'           => 'required',
-            // 'condition'         => 'required',
-            // 'property_price'    => 'required',
-            // 'contactPerson'     => 'required',
-            // 'mobileNum'         => 'required',
-            // 'listing_type'      => 'required',
+            'city'              => 'required',
+            'area'              => 'required',
+            'address'           => 'required',
+            'condition'         => 'required',
+            'property_price'    => 'required',
+            'contactPerson'     => 'required',
+            'mobileNum'         => 'required',
+            'listing_type'      => 'required',
         ];
 
         return $rules;
