@@ -143,7 +143,7 @@
 
           <!-- post add -->
           <div class="nav-btn">
-              <a href=" @guest {{route('login') }}  @else {{route('properties.new') }} @endguest ">Post Your Ad</a>
+              <a href=" @guest {{route('login') }}  @else {{route('listings.create') }} @endguest ">Post Your Ad</a>
           </div>
     </div><!-- container-fluid  -->
 </div>

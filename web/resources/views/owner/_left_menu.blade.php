@@ -6,7 +6,7 @@
     <div class="dashboard-nav">
         <ul>
             <li><a href="{{route('my-account')}}" class="@yield('my-account')">My Account</a></li>
-            <li><a href="{{ route('owner-properties') }}"  class="@yield('owner-properties')">My Propertices</a></li>
+            <li><a href="{{ route('owner-listings') }}"  class="@yield('owner-listings')">My Propertices</a></li>
             <li><a href="{{ route('owner-leads') }}" class="@yield('owner-leads')">Leads</a></li>
         </ul>
         <div class="logout-btn mt-3">

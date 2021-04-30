@@ -26,5 +26,6 @@
   <link rel="stylesheet" href="{{asset('/assets/css/main.css?v=0') }}">
   <link rel="stylesheet" href="{{asset('/assets/css/responsive.css?v=0') }}">
   <meta name="theme-color" content="#fafafa">
+  <input type="hidden" name="base_url" id="base_url" value="{{url('/')}}">
   @stack('custom_css')
 </head>

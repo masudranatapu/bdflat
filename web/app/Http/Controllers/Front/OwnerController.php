@@ -37,12 +37,13 @@ class OwnerController extends Controller
         return view('owner.buy_leads', compact('data'));
     }
 
-    public function getOwnerProperties(Request $request)
+    public function getMyListings(Request $request)
     {
         $data = array();
-        return view('owner.owner_properties', compact('data'));
+        return view('owner.owner_listings', compact('data'));
     }
 
+    /*
     public function getNewProperties(Request $request)
     {
         $data = array();
@@ -56,20 +57,6 @@ class OwnerController extends Controller
 
     public function storeNewProperties(Request $request)
     {
-        $request->validate([
-            'property_for' => 'required',
-            'property_type' => 'required',
-            'city' => 'required',
-            'area' => 'required',
-            'address' => 'required',
-            'condition' => 'required',
-            'property_price' => 'required',
-            'contactPerson' => 'required',
-            'mobileNum' => 'required',
-            'listing_type' => 'required',
-        ]);
-
-
         $city_name  = City::where('PK_NO',$request->city)->first()->CITY_NAME;
         $area_name  = Area::where('PK_NO',$request->area)->first()->AREA_NAME;
         $p_condition_name  = PropertyCondition::where('PK_NO',$request->condition)->first()->PROD_CONDITION;
@@ -102,6 +89,8 @@ class OwnerController extends Controller
         return redirect()->back()->with('success', 'Success');
     }
 
+    */
+
     public function getOwnerLeads(Request $request)
     {
         $data = array();
@@ -114,10 +103,6 @@ class OwnerController extends Controller
         return response()->json($data);
     }
 
-    public function addSize(Request $request)
-    {
-        $data['html'] = view('owner.add_size')->render();
-        return response()->json($data);
-    }
+
 
 }

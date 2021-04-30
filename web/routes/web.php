@@ -40,13 +40,15 @@ Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile
 Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
 
-    Route::get('/owner-properties', 'OwnerController@getOwnerProperties')->name('owner-properties');
-    Route::get('/properties/new', 'OwnerController@getNewProperties')->name('properties.new');
-    Route::post('/properties/store', 'OwnerController@storeNewProperties')->name('properties.store');
+    Route::get('/owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
     Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
     Route::get('/owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
-    Route::get('properties/get_area/{id}', 'OwnerController@getArea')->name('get_area');
-    Route::post('add_size', 'OwnerController@addSize')->name('add_size');
+
+    Route::get('listings/create', 'ListingController@create')->name('listings.create');
+    Route::post('listings/store', 'ListingController@store')->name('listings.store');
+
+    Route::get('ajax-add-listing-variant', 'ListingController@addListingVariant')->name('add-listing-variant');
+    Route::get('ajax-get-area/{id}', 'OwnerController@getArea')->name('getarea');
 });
 
 

@@ -1,15 +1,19 @@
 @extends('layouts.app')
-@section('owner-properties','active')
+@section('owner-listings','active')
+
 @push('custom_css')
 {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">--}}
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
 @endpush
 <?php
-$property_types = $data['property_type'] ?? [];
-$cities = $data['city'] ?? [];
-$property_conditions = $data['property_condition'] ?? [];
-$property_facing = $data['property_facing'] ?? [];
+$property_types         = $data['property_type'] ?? [];
+$cities                 = $data['city'] ?? [];
+$property_conditions    = $data['property_condition'] ?? [];
+$property_facing        = $data['property_facing'] ?? [];
 $property_listing_types = $data['property_listing_type'] ?? [];
+$bed_room               = Config::get('static_array.bed_room') ?? [];
+$bath_room              = Config::get('static_array.bath_room') ?? [];
+
 ?>
 
 @section('content')
@@ -25,7 +29,7 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                     @include('owner._left_menu')
                 </div>
                 <div class="col-sm-12 col-md-8">
-                    {!! Form::open([ 'route' => 'properties.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     <div class="advertisment-wrap">
                         <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                             <h5>Advertisement Type:&nbsp; </h5>
@@ -128,7 +132,7 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bedroom[]', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
+                                                {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -136,7 +140,7 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bathroom[]', ['1','2','3'],null,array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
+                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -144,7 +148,7 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('price[]', old('price[]'), [ 'class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -162,7 +166,6 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                                             {{ Form::label('fixed','Fixed') }}
                                             {!! Form::radio('property_price','2', old('property_price'),[ 'id' => 'nagotiable']) !!}
                                             {{ Form::label('nagotiable','Nagotiable') }}
-
                                             {!! $errors->first('property_price', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -215,7 +218,7 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('handover_date') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('handover_date', old('handover_date'), [ 'id'=>'datepicker','class' => 'form-control datetimepicker','placeholder' => 'Address','autocomplete' => 'off', 'tabindex' => 1]) !!}
+                                            {!! Form::text('handover_date', old('handover_date'), [ 'id'=>'datepicker','class' => 'form-control datetimepicker','placeholder' => 'Handover date','autocomplete' => 'off', 'tabindex' => 1]) !!}
                                             {!! $errors->first('handover_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -338,12 +341,12 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                                 </div>
                             </div>
                             <div class="row form-group">
-                                {{ Form::label('mobileNum','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
+                                {{ Form::label('mobile','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('mobileNum') ? 'error' : '' !!}">
+                                    <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::number('mobileNum', old('mobileNum'), [ 'id'=>'mobileNum','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
-                                            {!! $errors->first('mobileNum', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! Form::number('mobile', old('mobile'), [ 'id'=>'mobile','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -390,38 +393,55 @@ $property_listing_types = $data['property_listing_type'] ?? [];
                     next: 'fa fa-angle-right',
                     previous: 'fa fa-angle-left'
                 },
-            format: 'DD/MM/YYYY'
+            format: 'DD-MM-YYYY'
         });
 
+        var basepath = $('#base_url').val();
 
-        $('#city').change(function () {
-            $("#area").empty();
+        $(document).on('change', '#city', function () {
             var id = $(this).val();
+            if(id == ''){return false;}
+            $("#area").empty();
             $.ajax({
-                url: 'get_area/' + id,
-                type: 'get',
+                type :'get',
+                url: basepath+'/ajax-get-area/' + id,
+                async :true,
                 dataType: 'json',
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                },
                 success: function (response) {
                     $.each(response.area, function (key, value) {
                         var option = new Option(value, key);
-                        // $(option).html(value);
                         $("#area").append(option);
                     });
+                },
+                complete: function (data){
+                    $("body").css("cursor", "default");
+
                 }
             });
         });
 
-        $('#add_btn').click(function () {
+        $(document).on('click', '#add_btn', function () {
             $.ajax({
-                url: '{{route('add_size')}}',
-                type: 'post',
-                data: {_token: '{{csrf_token()}}'},
+                type :'get',
+                url: basepath+'/ajax-add-listing-variant',
+                async :true,
+                dataType: 'json',
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                },
                 success: function (response) {
-                    console.log(response.html);
                     $("#size_parent").append(response.html);
+                },
+                complete: function (data){
+                    $("body").css("cursor", "default");
+
                 }
             });
         });
+
 
         $(document).on("click", ".del_btn", function () {
             $(this).closest(".size_child").remove();
