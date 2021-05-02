@@ -6,14 +6,6 @@ return [
         'ongoing'       => 'Ongoing',
         'used'          => 'Used'
     ],
-
-    'property_condition' => [
-        'ready'         => 'Ready',
-        'semi-ready'    => 'Semi Ready',
-        'ongoing'       => 'Ongoing',
-        'used'          => 'Used'
-    ],
-
     'bed_room' => [
         '1'    => '1 Bed',
         '2'    => '2 Bed',

@@ -103,6 +103,4 @@ class OwnerController extends Controller
         return response()->json($data);
     }
 
-
-
 }

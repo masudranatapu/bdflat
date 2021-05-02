@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Carbon\Carbon;
 use App\Models\Area;
 use App\Models\City;
@@ -13,11 +14,11 @@ class Listings extends Model
 {
     use RepoResponse;
 
-    protected $table        = 'PRD_LISTINGS';
-    protected $primaryKey   = 'PK_NO';
-    public $timestamps      = false;
+    protected $table = 'PRD_LISTINGS';
+    protected $primaryKey = 'PK_NO';
+    public $timestamps = false;
 
-    protected $fillable     = [
+    protected $fillable = [
         'CODE',
         'PROPERTY_FOR',
         'F_PROPERTY_TYPE_NO',
@@ -63,34 +64,62 @@ class Listings extends Model
     public function store($request)
     {
 
+
+        if($request->hasfile('image'))
+        {
+            $listing_no = Listings::latest()->first();
+            foreach($request->file('image') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/uploads/', $name);
+                    $data[] = $name;
+
+            }
+            ListingImages::create([
+                'F_LISTING_NO' => $listing_no,
+                'IMAGE_PATH' => public_path().'/uploads/',
+                'IMAGE' => json_encode($data),
+            ]);
+
+        }
+//        $form = new ListingImages();
+//        $form->image=json_encode($data);
+//
+//
+//        $form->save();
+
+
         DB::beginTransaction();
         try {
-            $city_name  = City::where('PK_NO',$request->city)->first()->CITY_NAME;
-            $area_name  = Area::where('PK_NO',$request->area)->first()->AREA_NAME;
-            //$p_condition_name  = PropertyCondition::where('PK_NO',$request->condition)->first()->PROD_CONDITION;
-
             $user = new Listings();
             $user->PROPERTY_FOR = $request->property_for;
             $user->PROPERTY_TYPE = $request->property_type;
             $user->F_CITY_NO = $request->city;
-            $user->CITY_NAME = $city_name;
             $user->F_AREA_NO = $request->area;
-            $user->AREA_NAME = $area_name;
             $user->ADDRESS = $request->address;
             $user->PROPERTY_CONDITION = $request->condition;
-            //$user->PROPERTY_CONDITION = $p_condition_name;
-    //        $user->PROPERTY_SIZE = $request->size;
-    //        $user->BEDROOM = $request->bedroom;
-    //        $user->BATHROOM = $request->bathroom;
-    //        $user->TOTAL_PRICE = $request->price;
             $user->PRICE_TYPE = $request->property_price;
-    //        $user-> = $request->floor;
             $user->MOBILE1 = $request->mobile;
-           // $user->MOBILE2 = $request->mobileNum;
             $user->CREATED_AT = Carbon::now();
             $user->MODIFIED_AT = Carbon::now();
             $user->save();
-            // dd($user);
+
+//            for store listing variants
+            $listing_no = Listings::latest()->first();
+            $property_size = $request->size;
+
+            foreach ($property_size as $key => $item) {
+                $data = array(
+                    'F_LISTING_NO' => $listing_no->PK_NO,
+                    'PROPERTY_SIZE' => $request->size[$key],
+                    'BEDROOM' => $request->bedroom[$key],
+                    'BATHROOM' => $request->bathroom[$key],
+                    'TOTAL_PRICE' => $request->price[$key],
+                );
+                ListingVariants::insert($data);
+            }
+
+
 
         } catch (\Exception $e) {
             // dd($e);
@@ -101,17 +130,6 @@ class Listings extends Model
 
         return $this->formatResponse(true, 'Your listings added successfully !', 'owner-listings');
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

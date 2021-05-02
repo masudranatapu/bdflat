@@ -2,17 +2,17 @@
 @section('owner-listings','active')
 
 @push('custom_css')
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">--}}
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
 @endpush
 <?php
-$property_types         = $data['property_type'] ?? [];
-$cities                 = $data['city'] ?? [];
-$property_conditions    = $data['property_condition'] ?? [];
-$property_facing        = $data['property_facing'] ?? [];
+$property_types = $data['property_type'] ?? [];
+$cities = $data['city'] ?? [];
+$property_conditions = $data['property_condition'] ?? [];
+$property_facing = $data['property_facing'] ?? [];
 $property_listing_types = $data['property_listing_type'] ?? [];
-$bed_room               = Config::get('static_array.bed_room') ?? [];
-$bath_room              = Config::get('static_array.bath_room') ?? [];
+$bed_room = Config::get('static_array.bed_room') ?? [];
+$bath_room = Config::get('static_array.bath_room') ?? [];
 
 ?>
 
@@ -49,7 +49,7 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
                         <div class="advertisment-form">
                             <!-- property type  -->
                             <div class="row form-group">
-                                {{ Form::label('property','Property Type:',['class' => 'col-sm-4 advertis-label']) }}
+                                {{ Form::label('property_type','Property Type:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
                                         <div class="controls">
@@ -140,7 +140,7 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
+                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -243,21 +243,38 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    <div class="form-group {!! $errors->has('features') ? 'error' : '' !!}">
+                                    <div class="form-check form-check-inline {!! $errors->has('parking') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::radio('features','parking', old('features'),[ 'id' => 'parking']) !!}
-                                            {{ Form::label('parking','Parking') }}
+                                            {!! Form::checkbox('parking','parking', old('parking'),[ 'id' => 'parking','class' =>'form-check-input']) !!}
+                                            {{ Form::label('parking','Parking',['class' =>'form-check-label']) }}
 
-                                            {!! Form::radio('features','gas', old('features'),[ 'id' => 'gas']) !!}
-                                            {{ Form::label('gas','Gas') }}
+                                            {!! $errors->first('parking', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
 
-                                            {!! Form::radio('features','water', old('features'),[ 'id' => 'water']) !!}
-                                            {{ Form::label('water','Water') }}
+                                    <div class="form-check form-check-inline {!! $errors->has('gas') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::checkbox('gas','gas', old('gas'),[ 'id' => 'gas','class' =>'form-check-input']) !!}
+                                            {{ Form::label('gas','Gas',['class' =>'form-check-label']) }}
+                                            {!! $errors->first('gas', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
 
-                                            {!! Form::radio('features','generator', old('features'),[ 'id' => 'generator']) !!}
-                                            {{ Form::label('generator','Generator') }}
+                                    <div class="form-check form-check-inline {!! $errors->has('gas') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::checkbox('water','water', old('water'),[ 'id' => 'water','class' =>'form-check-input']) !!}
+                                            {{ Form::label('water','Water',['class' =>'form-check-label']) }}
 
-                                            {!! $errors->first('features', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! $errors->first('water', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check form-check-inline {!! $errors->has('gas') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::checkbox('generator','generator', old('generator'),[ 'id' => 'generator','class' =>'form-check-input']) !!}
+                                            {{ Form::label('generator','Generator',['class' =>'form-check-label']) }}
+
+                                            {!! $errors->first('generator', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -268,21 +285,39 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    <div class="form-group {!! $errors->has('facilities_within_1km') ? 'error' : '' !!}">
+                                    <div class="form-check form-check-inline {!! $errors->has('busstand') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::radio('facilities_within_1km','busstand', old('facilities_within_1km'),[ 'id' => 'busstand']) !!}
+                                            {!! Form::checkbox('busstand','busstand', old('busstand'),[ 'id' => 'busstand']) !!}
                                             {{ Form::label('busstand','Bus stand') }}
 
-                                            {!! Form::radio('facilities_within_1km','supershop', old('facilities_within_1km'),[ 'id' => 'supershop']) !!}
+                                            {!! $errors->first('busstand', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check form-check-inline {!! $errors->has('supershop') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::checkbox('supershop','supershop', old('supershop'),[ 'id' => 'supershop']) !!}
                                             {{ Form::label('supershop','Super Shop') }}
 
-                                            {!! Form::radio('facilities_within_1km','hospital', old('facilities_within_1km'),[ 'id' => 'hospital']) !!}
+                                            {!! $errors->first('supershop', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check form-check-inline {!! $errors->has('hospital') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::checkbox('hospital','hospital', old('hospital'),[ 'id' => 'hospital']) !!}
                                             {{ Form::label('hospital','Hospital') }}
 
-                                            {!! Form::radio('facilities_within_1km','school', old('facilities_within_1km'),[ 'id' => 'school']) !!}
+                                            {!! $errors->first('hospital', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check form-check-inline {!! $errors->has('school') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::checkbox('school','school', old('school'),[ 'id' => 'school']) !!}
                                             {{ Form::label('school','School') }}
 
-                                            {!! $errors->first('facilities_within_1km', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! $errors->first('school', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -306,7 +341,7 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     {{ Form::label('imageFile',null,['class' => 'et_pb_contact_form_label']) }}
                                     <div class="controls">
-                                        {!! Form::file('image', [ 'id'=>'imageFile','class' => 'file-upload']) !!}
+                                        {!! Form::file('image[]', ['multiple'=>true, 'id'=>'imageFile','class' => 'file-upload']) !!}
                                         {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
@@ -381,8 +416,8 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
 @endsection
 
 @push('custom_js')
-{{--    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>--}}
-{{--    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>--}}
+    {{--    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>--}}
+    {{--    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>--}}
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
 
@@ -400,12 +435,14 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();
-            if(id == ''){return false;}
+            if (id == '') {
+                return false;
+            }
             $("#area").empty();
             $.ajax({
-                type :'get',
-                url: basepath+'/ajax-get-area/' + id,
-                async :true,
+                type: 'get',
+                url: basepath + '/ajax-get-area/' + id,
+                async: true,
                 dataType: 'json',
                 beforeSend: function () {
                     $("body").css("cursor", "progress");
@@ -416,7 +453,7 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
                         $("#area").append(option);
                     });
                 },
-                complete: function (data){
+                complete: function (data) {
                     $("body").css("cursor", "default");
 
                 }
@@ -425,9 +462,9 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
 
         $(document).on('click', '#add_btn', function () {
             $.ajax({
-                type :'get',
-                url: basepath+'/ajax-add-listing-variant',
-                async :true,
+                type: 'get',
+                url: basepath + '/ajax-add-listing-variant',
+                async: true,
                 dataType: 'json',
                 beforeSend: function () {
                     $("body").css("cursor", "progress");
@@ -435,7 +472,7 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
                 success: function (response) {
                     $("#size_parent").append(response.html);
                 },
-                complete: function (data){
+                complete: function (data) {
                     $("body").css("cursor", "default");
 
                 }

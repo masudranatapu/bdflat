@@ -34,7 +34,7 @@ class ListingsRequest extends FormRequest
             'condition'         => 'required',
             'property_price'    => 'required',
             'contactPerson'     => 'required',
-            'mobileNum'         => 'required',
+            'mobile'            => 'required',
             'listing_type'      => 'required',
         ];
 
@@ -46,9 +46,14 @@ class ListingsRequest extends FormRequest
         return [
             'property_for.required'     => 'Advertisement type is required!',
             'property_type.required'    => 'property type is required!',
-            'city.min'                  => 'City is required!',
-            'area.max'                  => 'Area is required!',
-
+            'city.required'             => 'City is required!',
+            'area.required'             => 'Area is required!',
+            'address.required'          => 'Address is required!',
+            'condition.required'        => 'Property Condition is required!',
+            'property_price.required'   => 'Property Price is required!',
+            'contactPerson.required'    => 'Contact Person is required!',
+            'mobile.required'           => 'Mobile Number is required!',
+            'listing_type.required'     => 'Listing Type is required!',
         ];
     }
 
