@@ -36,6 +36,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                     @include('owner._left_menu')
                 </div>
                 <div class="col-sm-12 col-md-8">
+                    {{ $errors }}
                     {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     <div class="advertisment-wrap">
                         <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
