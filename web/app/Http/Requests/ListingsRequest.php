@@ -27,15 +27,18 @@ class ListingsRequest extends FormRequest
         // dd(1);
         $rules = [
             'property_for'      => 'required',
-            'property_type'     => 'required',
-            'city'              => 'required',
-            'area'              => 'required',
-            'address'           => 'required',
-            'condition'         => 'required',
-            'property_price'    => 'required',
-            'contactPerson'     => 'required',
-            'mobile'            => 'required',
-            'listing_type'      => 'required',
+            'property_type'     => 'required|integer',
+            'city'              => 'required|integer',
+            'area'              => 'required|integer',
+            'address'           => 'required|max:190',
+            'condition'         => 'required|integer',
+            'property_price'    => 'required|integer',
+            'contactPerson'     => 'required|max:45',
+            'mobile'            => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
+            'floor'             => 'nullable|integer',
+            'facing'            => 'nullable|integer',
+            'description'       => 'max:4000',
+            'image'            => 'mimes:jpeg,jpg,png,gif',
         ];
 
         return $rules;
@@ -53,6 +56,7 @@ class ListingsRequest extends FormRequest
             'property_price.required'   => 'Property Price is required!',
             'contactPerson.required'    => 'Contact Person is required!',
             'mobile.required'           => 'Mobile Number is required!',
+            'mobile.regex'              => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
             'listing_type.required'     => 'Listing Type is required!',
         ];
     }

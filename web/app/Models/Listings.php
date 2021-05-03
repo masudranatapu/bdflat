@@ -94,8 +94,8 @@ class Listings extends Model
             }
 
 //            for image upload
-            if ($request->hasfile('image')) {
-                foreach ($request->file('image') as $key => $image) {
+            if ($request->hasfile('images')) {
+                foreach ($request->file('images') as $key => $image) {
                     $name = uniqid() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path() . '/uploads/', $name);
 

@@ -25,7 +25,8 @@
   <link rel="stylesheet" href="{{asset('/assets/css/demo.css?v=0') }}">
   <link rel="stylesheet" href="{{asset('/assets/css/main.css?v=0') }}">
   <link rel="stylesheet" href="{{asset('/assets/css/responsive.css?v=0') }}">
-  <meta name="theme-color" content="#fafafa">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <meta name="theme-color" content="#fafafa">
   <input type="hidden" name="base_url" id="base_url" value="{{url('/')}}">
   @stack('custom_css')
 </head>

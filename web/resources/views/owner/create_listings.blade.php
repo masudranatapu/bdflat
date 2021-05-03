@@ -2,8 +2,13 @@
 @section('owner-listings','active')
 
 @push('custom_css')
-    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+          rel="stylesheet">
 @endpush
 <?php
 $property_types = $data['property_type'] ?? [];
@@ -287,18 +292,17 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <div class="advertisment-title">
                                 <h3>Image & Videos</h3>
                             </div>
-                            <div class="row form-group mb-5 {!! $errors->has('image') ? 'error' : '' !!}">
+                            <div class="row form-group {!! $errors->has('image') ? 'error' : '' !!}">
                                 {{ Form::label(null,'Image',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    {{ Form::label('imageFile',null,['class' => 'et_pb_contact_form_label']) }}
                                     <div class="controls">
-                                        {!! Form::file('image[]', ['multiple'=>true, 'id'=>'imageFile','class' => 'file-upload']) !!}
-                                        {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
+                                        <div id="imageFile" style="padding-top: .5rem;"></div>
                                     </div>
+                                    {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
 
-                            <div class="row form-group video-tag">
+                            <div class="row form-group {{--video-tag--}}">
                                 {{ Form::label('videoURL','Video:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('videoURL') ? 'error' : '' !!}">
@@ -367,12 +371,15 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 @endsection
 
 @push('custom_js')
-    {{--    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>--}}
-    {{--    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>--}}
+    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
+    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
 
+    <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
     <script>
+        $('#imageFile').imageUploader();
+
         $('.datetimepicker').datetimepicker({
             icons:
                 {
