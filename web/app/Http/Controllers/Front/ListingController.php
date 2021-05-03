@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Front;
+use App\Models\ListingFeatures;
+use App\Models\NearBy;
 use Toastr;
 use App\User;
 use App\Models\Area;
@@ -35,6 +37,8 @@ class ListingController extends Controller
         $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
         $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
         $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
         return view('owner.create_listings', compact('data'));
     }
 

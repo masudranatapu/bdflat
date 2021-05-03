@@ -11,6 +11,8 @@ $cities = $data['city'] ?? [];
 $property_conditions = $data['property_condition'] ?? [];
 $property_facing = $data['property_facing'] ?? [];
 $property_listing_types = $data['property_listing_type'] ?? [];
+$listing_features = $data['listing_feature'] ?? [];
+$nearby = $data['nearby'] ?? [];
 $bed_room = Config::get('static_array.bed_room') ?? [];
 $bath_room = Config::get('static_array.bath_room') ?? [];
 
@@ -225,13 +227,13 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 </div>
                             </div>
                             <div class="row form-group">
-                                {{ Form::label('msg-form','Descriptions:',['class' => 'col-sm-4 advertis-label']) }}
+                                {{ Form::label('description','Descriptions:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('msg-form') ? 'error' : '' !!}">
+                                    <div class="form-group {!! $errors->has('description') ? 'error' : '' !!}">
 
                                         <div class="controls">
-                                            {!! Form::textarea('msg-form', old('msg-form'), [ 'id'=>'msg-form','class' => 'msg-area form-control', 'placeholder' => 'Type here']) !!}
-                                            {!! $errors->first('msg-form', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! Form::textarea('description', old('description'), [ 'id'=>'description','class' => 'msg-area form-control', 'placeholder' => 'Type here']) !!}
+                                            {!! $errors->first('description', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -243,40 +245,15 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    <div class="form-check form-check-inline {!! $errors->has('parking') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('parking','parking', old('parking'),[ 'id' => 'parking','class' =>'form-check-input']) !!}
-                                            {{ Form::label('parking','Parking',['class' =>'form-check-label']) }}
-
-                                            {!! $errors->first('parking', '<label class="help-block text-danger">:message</label>') !!}
+                                    @foreach($listing_features as $key => $listing_feature)
+                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input']) !!}
+                                                {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="form-check form-check-inline {!! $errors->has('gas') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('gas','gas', old('gas'),[ 'id' => 'gas','class' =>'form-check-input']) !!}
-                                            {{ Form::label('gas','Gas',['class' =>'form-check-label']) }}
-                                            {!! $errors->first('gas', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check form-check-inline {!! $errors->has('gas') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('water','water', old('water'),[ 'id' => 'water','class' =>'form-check-input']) !!}
-                                            {{ Form::label('water','Water',['class' =>'form-check-label']) }}
-
-                                            {!! $errors->first('water', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check form-check-inline {!! $errors->has('gas') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('generator','generator', old('generator'),[ 'id' => 'generator','class' =>'form-check-input']) !!}
-                                            {{ Form::label('generator','Generator',['class' =>'form-check-label']) }}
-
-                                            {!! $errors->first('generator', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
+                                    @endforeach
+                                    {!! $errors->first('features', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
                             <!--  facilities   -->
@@ -285,41 +262,15 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    <div class="form-check form-check-inline {!! $errors->has('busstand') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('busstand','busstand', old('busstand'),[ 'id' => 'busstand']) !!}
-                                            {{ Form::label('busstand','Bus stand') }}
-
-                                            {!! $errors->first('busstand', '<label class="help-block text-danger">:message</label>') !!}
+                                    @foreach($nearby as $key => $item)
+                                        <div class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key]) !!}
+                                                {{ Form::label('nearby'.$key,$item) }}
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="form-check form-check-inline {!! $errors->has('supershop') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('supershop','supershop', old('supershop'),[ 'id' => 'supershop']) !!}
-                                            {{ Form::label('supershop','Super Shop') }}
-
-                                            {!! $errors->first('supershop', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check form-check-inline {!! $errors->has('hospital') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('hospital','hospital', old('hospital'),[ 'id' => 'hospital']) !!}
-                                            {{ Form::label('hospital','Hospital') }}
-
-                                            {!! $errors->first('hospital', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check form-check-inline {!! $errors->has('school') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::checkbox('school','school', old('school'),[ 'id' => 'school']) !!}
-                                            {{ Form::label('school','School') }}
-
-                                            {!! $errors->first('school', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
+                                    @endforeach
+                                    {!! $errors->first('nearby', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
                             <!--  map   -->

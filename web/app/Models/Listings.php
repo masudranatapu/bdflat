@@ -63,32 +63,6 @@ class Listings extends Model
 
     public function store($request)
     {
-
-
-        if($request->hasfile('image'))
-        {
-            $listing_no = Listings::latest()->first();
-            foreach($request->file('image') as $image)
-            {
-                $name=$image->getClientOriginalName();
-                $image->move(public_path().'/uploads/', $name);
-                    $data[] = $name;
-
-            }
-            ListingImages::create([
-                'F_LISTING_NO' => $listing_no,
-                'IMAGE_PATH' => public_path().'/uploads/',
-                'IMAGE' => json_encode($data),
-            ]);
-
-        }
-//        $form = new ListingImages();
-//        $form->image=json_encode($data);
-//
-//
-//        $form->save();
-
-
         DB::beginTransaction();
         try {
             $user = new Listings();
@@ -119,7 +93,37 @@ class Listings extends Model
                 ListingVariants::insert($data);
             }
 
+//            for image upload
+            if ($request->hasfile('image')) {
+                foreach ($request->file('image') as $key => $image) {
+                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path() . '/uploads/', $name);
 
+                    if ($key == 0) {
+                        $is_default = 1;
+                    } else {
+                        $is_default = 0;
+                    }
+
+                    ListingImages::create([
+                        'F_LISTING_NO' => $listing_no->PK_NO,
+                        'IMAGE_PATH' => public_path() . '/uploads/' . $name,
+                        'IMAGE' => $name,
+                        'IS_DEFAULT' => $is_default,
+                    ]);
+                }
+            }
+
+//            for features
+            $features = new ListingAdditionalInfo();
+            $features->F_LISTING_NO = $listing_no->PK_NO;
+            $features->FACING = $request->facing;
+            $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
+            $features->DESCRIPTION = $request->description;
+            $features->VIDEO_CODE = $request->videoURL;
+            $features->F_FEATURE_NOS = json_encode($request->features);
+            $features->F_NEARBY_NOS = json_encode($request->nearby);
+            $features->save();
 
         } catch (\Exception $e) {
             // dd($e);
