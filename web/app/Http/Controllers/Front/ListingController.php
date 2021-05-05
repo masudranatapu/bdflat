@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Front;
+use App\Models\FloorList;
 use App\Models\ListingFeatures;
 use App\Models\NearBy;
 use Toastr;
@@ -39,8 +40,10 @@ class ListingController extends Controller
         $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
         $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
         $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['floor_list'] = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
         return view('owner.create_listings', compact('data'));
     }
+
 
     public function store(ListingsRequest $request)
     {
@@ -51,10 +54,26 @@ class ListingController extends Controller
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    public function edit($id)
+    {
+        $data = array();
+        $data['data'] = Listings::where('PRD_LISTINGS.PK_NO',$id)
+                        ->join('SS_CITY','SS_CITY.PK_NO','PRD_LISTINGS.F_CITY_NO')
+                        ->select('PRD_LISTINGS.PROPERTY_FOR','PRD_LISTINGS.PROPERTY_TYPE')
+                        ->first();
+//        dd($data['data']);
+        return view('owner.edit_listings', compact('data'));
+    }
+
     public function addListingVariant(Request $request)
     {
         $data['html'] = view('owner._add_listing_variant')->render();
         return response()->json($data);
+    }
+
+    public function getAvailableFloor()
+    {
+        return FloorList::pluck('NAME', 'PK_NO');
     }
 
 

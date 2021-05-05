@@ -11,17 +11,7 @@
           rel="stylesheet">
 @endpush
 <?php
-$property_types = $data['property_type'] ?? [];
-$cities = $data['city'] ?? [];
-$property_conditions = $data['property_condition'] ?? [];
-$property_facing = $data['property_facing'] ?? [];
-$property_listing_types = $data['property_listing_type'] ?? [];
-$listing_features = $data['listing_feature'] ?? [];
-$nearby = $data['nearby'] ?? [];
-$floor_lists = $data['floor_list'] ?? [];
-$bed_room = Config::get('static_array.bed_room') ?? [];
-$bath_room = Config::get('static_array.bath_room') ?? [];
-
+$data = $data['data'] ?? [];
 ?>
 
 @section('content')
@@ -62,7 +52,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('property_type', $property_types,null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::select('property_type', [],null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -75,7 +65,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('city', $cities ,null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('city', [] ,null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -114,7 +104,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <div class="controls">
-                                            {!! Form::select('condition', $property_conditions,null,array('class'=>'form-control', 'placeholder'=>'Select Condition','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('condition', [],null,array('class'=>'form-control', 'placeholder'=>'Select Condition','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -141,7 +131,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
+                                                {!! Form::select('bedroom[]', [], old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -149,7 +139,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     <div class="col-6 col-md-3">
                                         <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
+                                                {!! Form::select('bathroom[]', [], old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -190,7 +180,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('floor') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('floor', $floor_lists,null,array('class'=>'form-control floor_select')) !!}
+                                            {!! Form::select('floor', [],null,array('class'=>'form-control floor_select')) !!}
                                             {!! $errors->first('floor', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -213,7 +203,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('facing') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('facing', $property_facing,null,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
+                                            {!! Form::select('facing', [],null,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
                                             {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -249,14 +239,14 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    @foreach($listing_features as $key => $listing_feature)
-                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input']) !!}
-                                                {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}
-                                            </div>
-                                        </div>
-                                    @endforeach
+{{--                                    @foreach($listing_features as $key => $listing_feature)--}}
+{{--                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">--}}
+{{--                                            <div class="controls">--}}
+{{--                                                {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input']) !!}--}}
+{{--                                                {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
                                     {!! $errors->first('features', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -266,14 +256,14 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-                                    @foreach($nearby as $key => $item)
-                                        <div class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key]) !!}
-                                                {{ Form::label('nearby'.$key,$item) }}
-                                            </div>
-                                        </div>
-                                    @endforeach
+{{--                                    @foreach($nearby as $key => $item)--}}
+{{--                                        <div class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">--}}
+{{--                                            <div class="controls">--}}
+{{--                                                {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key]) !!}--}}
+{{--                                                {{ Form::label('nearby'.$key,$item) }}--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
                                     {!! $errors->first('nearby', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -354,10 +344,10 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             </div>
                             <div class="listing-list mb-3 {!! $errors->has('listing_type') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    @foreach($property_listing_types as $key => $item)
-                                        {!! Form::radio('listing_type',$key, old('listing_type'),[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required']) !!}
-                                        {{ Form::label('listing_type'.$key,$item) }}
-                                    @endforeach
+{{--                                    @foreach($property_listing_types as $key => $item)--}}
+{{--                                        {!! Form::radio('listing_type',$key, old('listing_type'),[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required']) !!}--}}
+{{--                                        {{ Form::label('listing_type'.$key,$item) }}--}}
+{{--                                    @endforeach--}}
                                     {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>

@@ -74,6 +74,8 @@ class Listings extends Model
             $user->PROPERTY_CONDITION = $request->condition;
             $user->PRICE_TYPE = $request->property_price;
             $user->MOBILE1 = $request->mobile;
+            $user->TOTAL_FLOORS = $request->floor;
+            $user->FLOORS_AVAIABLE = json_encode($request->floor_available);
             $user->CREATED_AT = Carbon::now();
             $user->MODIFIED_AT = Carbon::now();
             $user->save();
@@ -120,6 +122,7 @@ class Listings extends Model
             $features->FACING = $request->facing;
             $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
             $features->DESCRIPTION = $request->description;
+            $features->LOCATION_MAP = $request->map_url;
             $features->VIDEO_CODE = $request->videoURL;
             $features->F_FEATURE_NOS = json_encode($request->features);
             $features->F_NEARBY_NOS = json_encode($request->nearby);

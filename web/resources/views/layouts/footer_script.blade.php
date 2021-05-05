@@ -12,6 +12,7 @@
   <script src="{{asset('/assets/js/hc-offcanvas-nav.js?ver=6.1.1') }}"></script>
   <script src="{{asset('/assets/js/plugins.js?v=0') }}"></script>
   <script src="{{asset('/assets/js/main.js?v=0') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
    <script>
         (function($) {
           //  sidebar menu
