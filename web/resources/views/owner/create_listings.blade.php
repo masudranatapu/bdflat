@@ -326,12 +326,12 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <h3>Property Owner Details</h3>
                             </div>
                             <div class="row form-group">
-                                {{ Form::label('contactPerson','Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
+                                {{ Form::label('contact_person','Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('contactPerson') ? 'error' : '' !!}">
+                                    <div class="form-group {!! $errors->has('contact_person') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('contactPerson', old('contactPerson'), [ 'id'=>'contactPerson','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
-                                            {!! $errors->first('contactPerson', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! Form::text('contact_person', old('contact_person'), [ 'id'=>'contact_person','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('contact_person', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>

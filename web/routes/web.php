@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::get('listings/create', 'ListingController@create')->name('listings.create');
     Route::post('listings/store', 'ListingController@store')->name('listings.store');
     Route::get('listings/edit/{id}', 'ListingController@edit')->name('listings.edit');
+    Route::post('listings/update', 'ListingController@updated')->name('listings.update');
 
     Route::get('ajax-get-available-floor', 'ListingController@getAvailableFloor')->name('get.available.floor');
     Route::get('ajax-add-listing-variant', 'ListingController@addListingVariant')->name('add-listing-variant');

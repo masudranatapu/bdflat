@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Front;
 use App\Models\FloorList;
+use App\Models\ListingAdditionalInfo;
 use App\Models\ListingFeatures;
+use App\Models\ListingVariants;
 use App\Models\NearBy;
 use Toastr;
 use App\User;
@@ -54,14 +56,31 @@ class ListingController extends Controller
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    public function updated(ListingsRequest $request)
+    {
+        $this->resp     = $this->listingsModel->update($request);
+        $msg            = $this->resp->msg;
+        $msg_title      = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
     public function edit($id)
     {
         $data = array();
-        $data['data'] = Listings::where('PRD_LISTINGS.PK_NO',$id)
-                        ->join('SS_CITY','SS_CITY.PK_NO','PRD_LISTINGS.F_CITY_NO')
-                        ->select('PRD_LISTINGS.PROPERTY_FOR','PRD_LISTINGS.PROPERTY_TYPE')
-                        ->first();
-//        dd($data['data']);
+        $data['row'] = Listings::find($id);
+        $data['row2'] = ListingAdditionalInfo::where('F_LISTING_NO',$id)->first();
+        $data['row3'] = ListingVariants::where('F_LISTING_NO',$id)->get();
+        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+        $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
+        $data['area'] = Area::where('F_CITY_NO',$data['row']->F_CITY_NO)->pluck('AREA_NAME', 'PK_NO');
+        $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
+        $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['floor_list'] = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+
         return view('owner.edit_listings', compact('data'));
     }
 

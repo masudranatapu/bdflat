@@ -10,10 +10,25 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
           rel="stylesheet">
 @endpush
-<?php
-$data = $data['data'] ?? [];
-?>
 
+<?php
+$property_types = $data['property_type'] ?? [];
+$cities = $data['city'] ?? [];
+$area = $data['area'] ?? [];
+$property_conditions = $data['property_condition'] ?? [];
+$property_facing = $data['property_facing'] ?? [];
+$property_listing_types = $data['property_listing_type'] ?? [];
+$listing_features = $data['listing_feature'] ?? [];
+$nearby = $data['nearby'] ?? [];
+$floor_lists = $data['floor_list'] ?? [];
+$bed_room = Config::get('static_array.bed_room') ?? [];
+$bath_room = Config::get('static_array.bath_room') ?? [];
+$row = $data['row'] ?? [];
+$row2 = $data['row2'] ?? [];
+$row3 = $data['row3'] ?? [];
+$features = json_decode($data['row2']->F_FEATURE_NOS) ?? [];
+$near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
+?>
 @section('content')
     <!--
      ============  advertisment    ============
@@ -28,18 +43,19 @@ $data = $data['data'] ?? [];
                 </div>
                 <div class="col-sm-12 col-md-8">
                     {{ $errors }}
-                    {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::open([ 'route' => 'listings.update', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::hidden('id', $row->PK_NO) !!}
                     <div class="advertisment-wrap">
                         <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                             <h5>Advertisement Type:&nbsp; </h5>
                             <div class="controls">
-                                {!! Form::radio('property_for','sell', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
+                                {!! Form::radio('property_for','sell', $row->PROPERTY_FOR=='sell'?true:false,[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
                                 {{ Form::label('sell','Sell') }}
 
-                                {!! Form::radio('property_for','rent', old('property_for'),[ 'id' => 'rent']) !!}
+                                {!! Form::radio('property_for','rent', $row->PROPERTY_FOR=='rent'?true:false,[ 'id' => 'rent']) !!}
                                 {{ Form::label('rent','Rent') }}
 
-                                {!! Form::radio('property_for','roommate', old('property_for'),[ 'id' => 'roommate']) !!}
+                                {!! Form::radio('property_for','roommate', $row->PROPERTY_FOR=='roommate'?true:false,[ 'id' => 'roommate']) !!}
                                 {{ Form::label('roommate','Roommate') }}
 
                                 {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
@@ -52,7 +68,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('property_type', [],null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::select('property_type', $property_types,$row->F_PROPERTY_TYPE_NO,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -65,7 +81,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('city', [] ,null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('city', $cities ,$row->F_CITY_NO,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -78,7 +94,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('area', [],null,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('area', $area,$row->F_AREA_NO,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -91,7 +107,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('address') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('address', old('address'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Address']) !!}
+                                            {!! Form::text('address', $row->ADDRESS, [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Address']) !!}
                                             {!! $errors->first('address', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -104,7 +120,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group">
                                         <div class="controls">
-                                            {!! Form::select('condition', [],null,array('class'=>'form-control', 'placeholder'=>'Select Condition','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('condition', $property_conditions,$row->F_PROPERTY_CONDITION,array('class'=>'form-control', 'placeholder'=>'Select Condition','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -119,40 +135,45 @@ $data = $data['data'] ?? [];
                             </div>
 
                             <div id="size_parent">
-                                <div class="row no-gutters form-group size_child">
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                {!! Form::number('size[]', old('size[]'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
-                                                {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
+                                @foreach($row3 as $item)
+                                    <div class="row no-gutters form-group size_child">
+                                        <div class="col-6 col-md-3">
+                                            <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::number('size[]', $item->PROPERTY_SIZE, [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
+                                                    {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 col-md-3">
+                                            <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::select('bedroom[]', $bed_room, $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
+                                                    {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 col-md-3">
+                                            <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::select('bathroom[]', $bath_room, $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
+                                                    {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 col-md-3">
+                                            <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::number('price[]', $item->TOTAL_PRICE, ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
+                                                    {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                {!! Form::select('bedroom[]', [], old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
-                                                {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                {!! Form::select('bathroom[]', [], old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
-                                                {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
-                                                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
 
                             <!--  property price   -->
@@ -161,9 +182,9 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('property_price') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::radio('property_price','1', old('property_price'),[ 'id' => 'fixed','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::radio('property_price','1', $row->PRICE_TYPE==1?true:false,[ 'id' => 'fixed','data-validation-required-message' => 'This field is required']) !!}
                                             {{ Form::label('fixed','Fixed') }}
-                                            {!! Form::radio('property_price','2', old('property_price'),[ 'id' => 'nagotiable']) !!}
+                                            {!! Form::radio('property_price','2', $row->PRICE_TYPE==2?true:false,[ 'id' => 'nagotiable']) !!}
                                             {{ Form::label('nagotiable','Nagotiable') }}
                                             {!! $errors->first('property_price', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
@@ -180,7 +201,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('floor') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('floor', [],null,array('class'=>'form-control floor_select')) !!}
+                                            {!! Form::select('floor', $floor_lists,$row->TOTAL_FLOORS,array('class'=>'form-control floor_select')) !!}
                                             {!! $errors->first('floor', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -191,7 +212,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('floor_available') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('floor_available[]', [] ,null,array('multiple'=>'multiple','class'=>'form-control floor_available_select')) !!}
+                                            {!! Form::select('floor_available[]',$floor_lists, json_decode($row->FLOORS_AVAIABLE),array('multiple'=>'multiple','class'=>'form-control floor_available_select')) !!}
                                             {!! $errors->first('floor_available', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -203,7 +224,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('facing') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('facing', [],null,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
+                                            {!! Form::select('facing', $property_facing,$row2->FACING,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
                                             {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -214,7 +235,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('handover_date') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('handover_date', old('handover_date'), [ 'id'=>'datepicker','class' => 'form-control datetimepicker','placeholder' => 'Handover date','autocomplete' => 'off', 'tabindex' => 1]) !!}
+                                            {!! Form::text('handover_date', date('d-m-Y', strtotime($row2->HANDOVER_DATE)), [ 'id'=>'datepicker','class' => 'form-control datetimepicker','placeholder' => 'Handover date','autocomplete' => 'off', 'tabindex' => 1]) !!}
                                             {!! $errors->first('handover_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -226,7 +247,7 @@ $data = $data['data'] ?? [];
                                     <div class="form-group {!! $errors->has('description') ? 'error' : '' !!}">
 
                                         <div class="controls">
-                                            {!! Form::textarea('description', old('description'), [ 'id'=>'description','class' => 'msg-area form-control', 'placeholder' => 'Type here']) !!}
+                                            {!! Form::textarea('description', $row2->DESCRIPTION, [ 'id'=>'description','class' => 'msg-area form-control', 'placeholder' => 'Type here']) !!}
                                             {!! $errors->first('description', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -239,14 +260,14 @@ $data = $data['data'] ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-{{--                                    @foreach($listing_features as $key => $listing_feature)--}}
-{{--                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">--}}
-{{--                                            <div class="controls">--}}
-{{--                                                {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input']) !!}--}}
-{{--                                                {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endforeach--}}
+                                    @foreach($listing_features as $key => $listing_feature)
+                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::checkbox('features[]',$key, in_array($key,$features)?true:false,[ 'id' => 'features'.$key,'class' =>'form-check-input']) !!}
+                                                {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}
+                                            </div>
+                                        </div>
+                                    @endforeach
                                     {!! $errors->first('features', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -256,14 +277,14 @@ $data = $data['data'] ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
-{{--                                    @foreach($nearby as $key => $item)--}}
-{{--                                        <div class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">--}}
-{{--                                            <div class="controls">--}}
-{{--                                                {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key]) !!}--}}
-{{--                                                {{ Form::label('nearby'.$key,$item) }}--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endforeach--}}
+                                    @foreach($nearby as $key => $item)
+                                        <div class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::checkbox('nearby[]',$key, in_array($key,$near)?true:false,[ 'id' => 'nearby'.$key]) !!}
+                                                {{ Form::label('nearby'.$key,$item) }}
+                                            </div>
+                                        </div>
+                                    @endforeach
                                     {!! $errors->first('nearby', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -276,7 +297,7 @@ $data = $data['data'] ?? [];
                                     <div class="col-12">
                                         <div class="form-group {!! $errors->has('map_url') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::text('map_url', old('map_url'), [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL']) !!}
+                                                {!! Form::text('map_url', $row2->LOCATION_MAP, [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL']) !!}
                                                 {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -303,7 +324,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('videoURL') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('videoURL', old('videoURL'), [ 'id'=>'videoURL','class' => 'form-control','placeholder'=>'Paste your youtube video URL']) !!}
+                                            {!! Form::text('videoURL', $row2->VIDEO_CODE, [ 'id'=>'videoURL','class' => 'form-control','placeholder'=>'Paste your youtube video URL']) !!}
                                             {!! $errors->first('videoURL', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -316,12 +337,12 @@ $data = $data['data'] ?? [];
                                 <h3>Property Owner Details</h3>
                             </div>
                             <div class="row form-group">
-                                {{ Form::label('contactPerson','Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
+                                {{ Form::label('contact_person','Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('contactPerson') ? 'error' : '' !!}">
+                                    <div class="form-group {!! $errors->has('contact_person') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('contactPerson', old('contactPerson'), [ 'id'=>'contactPerson','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
-                                            {!! $errors->first('contactPerson', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! Form::text('contact_person', $row->CONTACT_PERSON1, [ 'id'=>'contact_person','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('contact_person', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -331,7 +352,7 @@ $data = $data['data'] ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::number('mobile', old('mobile'), [ 'id'=>'mobile','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::number('mobile', $row->MOBILE1, [ 'id'=>'mobile','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -344,10 +365,10 @@ $data = $data['data'] ?? [];
                             </div>
                             <div class="listing-list mb-3 {!! $errors->has('listing_type') ? 'error' : '' !!}">
                                 <div class="controls">
-{{--                                    @foreach($property_listing_types as $key => $item)--}}
-{{--                                        {!! Form::radio('listing_type',$key, old('listing_type'),[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required']) !!}--}}
-{{--                                        {{ Form::label('listing_type'.$key,$item) }}--}}
-{{--                                    @endforeach--}}
+                                    @foreach($property_listing_types as $key => $item)
+                                        {!! Form::radio('listing_type',$key, $row->F_LISTING_TYPE==$key?true:false,[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required']) !!}
+                                        {{ Form::label('listing_type'.$key,$item) }}
+                                    @endforeach
                                     {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>

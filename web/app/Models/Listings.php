@@ -67,12 +67,13 @@ class Listings extends Model
         try {
             $user = new Listings();
             $user->PROPERTY_FOR = $request->property_for;
-            $user->PROPERTY_TYPE = $request->property_type;
+            $user->F_PROPERTY_TYPE_NO = $request->property_type;
             $user->F_CITY_NO = $request->city;
             $user->F_AREA_NO = $request->area;
             $user->ADDRESS = $request->address;
-            $user->PROPERTY_CONDITION = $request->condition;
+            $user->F_PROPERTY_CONDITION = $request->condition;
             $user->PRICE_TYPE = $request->property_price;
+            $user->CONTACT_PERSON1 = $request->contactPerson;
             $user->MOBILE1 = $request->mobile;
             $user->TOTAL_FLOORS = $request->floor;
             $user->FLOORS_AVAIABLE = json_encode($request->floor_available);
@@ -127,6 +128,84 @@ class Listings extends Model
             $features->F_FEATURE_NOS = json_encode($request->features);
             $features->F_NEARBY_NOS = json_encode($request->nearby);
             $features->save();
+
+        } catch (\Exception $e) {
+            // dd($e);
+            DB::rollback();
+            return $this->formatResponse(false, 'Your listings not added successfully !', 'listings.create');
+        }
+        DB::commit();
+
+        return $this->formatResponse(true, 'Your listings added successfully !', 'owner-listings');
+    }
+
+    public function update($request)
+    {
+        DB::beginTransaction();
+        try {
+            $user = Listings::find($request->id);
+            $user->PROPERTY_FOR = $request->property_for;
+            $user->F_PROPERTY_TYPE_NO = $request->property_type;
+            $user->F_CITY_NO = $request->city;
+            $user->F_AREA_NO = $request->area;
+            $user->ADDRESS = $request->address;
+            $user->F_PROPERTY_CONDITION = $request->condition;
+            $user->PRICE_TYPE = $request->property_price;
+            $user->CONTACT_PERSON1 = $request->contactPerson;
+            $user->MOBILE1 = $request->mobile;
+            $user->TOTAL_FLOORS = $request->floor;
+            $user->FLOORS_AVAIABLE = json_encode($request->floor_available);
+            $user->CREATED_AT = Carbon::now();
+            $user->MODIFIED_AT = Carbon::now();
+            $user->save();
+
+//            for store listing variants
+            /*$listing_no = Listings::latest()->first();
+            $property_size = $request->size;
+
+            foreach ($property_size as $key => $item) {
+                $data = array(
+                    'F_LISTING_NO' => $listing_no->PK_NO,
+                    'PROPERTY_SIZE' => $request->size[$key],
+                    'BEDROOM' => $request->bedroom[$key],
+                    'BATHROOM' => $request->bathroom[$key],
+                    'TOTAL_PRICE' => $request->price[$key],
+                );
+                ListingVariants::insert($data);
+            }*/
+
+//            for image upload
+            /*if ($request->hasfile('images')) {
+                foreach ($request->file('images') as $key => $image) {
+                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path() . '/uploads/', $name);
+
+                    if ($key == 0) {
+                        $is_default = 1;
+                    } else {
+                        $is_default = 0;
+                    }
+
+                    ListingImages::create([
+                        'F_LISTING_NO' => $listing_no->PK_NO,
+                        'IMAGE_PATH' => public_path() . '/uploads/' . $name,
+                        'IMAGE' => $name,
+                        'IS_DEFAULT' => $is_default,
+                    ]);
+                }
+            }*/
+
+//            for features
+            /*$features = new ListingAdditionalInfo();
+            $features->F_LISTING_NO = $listing_no->PK_NO;
+            $features->FACING = $request->facing;
+            $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
+            $features->DESCRIPTION = $request->description;
+            $features->LOCATION_MAP = $request->map_url;
+            $features->VIDEO_CODE = $request->videoURL;
+            $features->F_FEATURE_NOS = json_encode($request->features);
+            $features->F_NEARBY_NOS = json_encode($request->nearby);
+            $features->save();*/
 
         } catch (\Exception $e) {
             // dd($e);
