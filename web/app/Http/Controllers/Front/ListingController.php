@@ -56,9 +56,9 @@ class ListingController extends Controller
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
-    public function updated(ListingsRequest $request)
+    public function update(ListingsRequest $request)
     {
-        $this->resp     = $this->listingsModel->update($request);
+        $this->resp     = $this->listingsModel->postUpdate($request);
         $msg            = $this->resp->msg;
         $msg_title      = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);

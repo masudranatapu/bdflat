@@ -139,7 +139,7 @@ class Listings extends Model
         return $this->formatResponse(true, 'Your listings added successfully !', 'owner-listings');
     }
 
-    public function update($request)
+    public function postUpdate($request)
     {
         DB::beginTransaction();
         try {
