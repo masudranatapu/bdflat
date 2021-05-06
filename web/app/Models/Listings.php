@@ -151,7 +151,7 @@ class Listings extends Model
             $user->ADDRESS = $request->address;
             $user->F_PROPERTY_CONDITION = $request->condition;
             $user->PRICE_TYPE = $request->property_price;
-            $user->CONTACT_PERSON1 = $request->contactPerson;
+            $user->CONTACT_PERSON1 = $request->contact_person;
             $user->MOBILE1 = $request->mobile;
             $user->TOTAL_FLOORS = $request->floor;
             $user->FLOORS_AVAIABLE = json_encode($request->floor_available);
