@@ -9,6 +9,17 @@
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
           rel="stylesheet">
+
+    <style>
+        .del_btn {
+            border-radius: 75%;
+            height: 26px;
+            width: 26px;
+            position: absolute;
+            right: -8px;
+            top: 8px;
+        }
+    </style>
 @endpush
 <?php
 $property_types = $data['property_type'] ?? [];

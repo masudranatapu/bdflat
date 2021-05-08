@@ -9,6 +9,33 @@
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
           rel="stylesheet">
+    <style>
+        .show_img {
+            height: 82px;
+            width: 82px;
+            object-fit: cover;
+        }
+
+        .del_img {
+            background: #bbbbbb;
+            padding: 2px 7px;
+            border-radius: 77px;
+            font-weight: bold;
+            color: black;
+            position: absolute;
+            top: 5px;
+            right: 20px;
+        }
+
+        .del_btn {
+            border-radius: 75%;
+            height: 26px;
+            width: 26px;
+            position: absolute;
+            right: -8px;
+            top: 8px;
+        }
+    </style>
 @endpush
 
 <?php
@@ -26,6 +53,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 $row = $data['row'] ?? [];
 $row2 = $data['row2'] ?? [];
 $row3 = $data['row3'] ?? [];
+$row4 = $data['row4'] ?? [];
 $features = json_decode($data['row2']->F_FEATURE_NOS) ?? [];
 $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
 ?>
@@ -135,8 +163,8 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                             </div>
 
                             <div id="size_parent">
-                                @foreach($row3 as $item)
-                                    <div class="row no-gutters form-group size_child">
+                                @foreach($row3 as $key => $item)
+                                    <div class="row no-gutters form-group size_child" style="position: relative">
                                         <div class="col-6 col-md-3">
                                             <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
                                                 <div class="controls">
@@ -172,6 +200,9 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                                 </div>
                                             </div>
                                         </div>
+                                        @if($key!=0)
+                                            <button class="del_btn btn btn-danger btn-xs">✕</button>
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>
@@ -312,6 +343,16 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                             <div class="row form-group {!! $errors->has('image') ? 'error' : '' !!}">
                                 {{ Form::label(null,'Image',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
+                                    <div class="row">
+                                        @foreach($row4 as $key => $item)
+                                            <div class="col-3 mb-1 remove_img{{$item->PK_NO}}">
+                                                <a href="javascript:void(0)" class="del_img" data-id="{{$item->PK_NO}}">
+                                                    ✕
+                                                </a>
+                                                <img class="show_img" src="{{asset('/')}}{{$item->IMAGE_PATH}}" alt="">
+                                            </div>
+                                        @endforeach
+                                    </div>
                                     <div class="controls">
                                         <div id="imageFile" style="padding-top: .5rem;"></div>
                                     </div>
@@ -482,6 +523,22 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                             placeholder: "Select Floors",
                         }
                     );
+                }
+            });
+        });
+
+        $(".del_img").on('click', function () {
+            var remove_img = '.remove_img' + $(this).data('id');
+            $.ajax({
+                url: basepath + "/ajax-listings-delete_img/" + $(this).data('id'),
+                type: 'GET',
+                success: function (data) {
+                    if (data.success) {
+                        $(remove_img).remove();
+                        toastr.success(data.success);
+                    } else {
+                        toastr.success(data.error);
+                    }
                 }
             });
         });

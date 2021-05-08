@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Front;
+
 use App\Models\FloorList;
 use App\Models\ListingAdditionalInfo;
 use App\Models\ListingFeatures;
+use App\Models\ListingImages;
 use App\Models\ListingVariants;
 use App\Models\NearBy;
 use Toastr;
@@ -24,7 +26,7 @@ class ListingController extends Controller
     protected $user;
     protected $listings;
 
-    public function __construct(User $user,Listings $listings)
+    public function __construct(User $user, Listings $listings)
     {
         $this->middleware('auth');
         $this->userModel = $user;
@@ -49,18 +51,18 @@ class ListingController extends Controller
 
     public function store(ListingsRequest $request)
     {
-        $this->resp     = $this->listingsModel->store($request);
-        $msg            = $this->resp->msg;
-        $msg_title      = $this->resp->msg_title;
+        $this->resp = $this->listingsModel->store($request);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function update(ListingsRequest $request)
     {
-        $this->resp     = $this->listingsModel->postUpdate($request);
-        $msg            = $this->resp->msg;
-        $msg_title      = $this->resp->msg_title;
+        $this->resp = $this->listingsModel->postUpdate($request);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
@@ -69,11 +71,12 @@ class ListingController extends Controller
     {
         $data = array();
         $data['row'] = Listings::find($id);
-        $data['row2'] = ListingAdditionalInfo::where('F_LISTING_NO',$id)->first();
-        $data['row3'] = ListingVariants::where('F_LISTING_NO',$id)->get();
+        $data['row2'] = ListingAdditionalInfo::where('F_LISTING_NO', $id)->first();
+        $data['row3'] = ListingVariants::where('F_LISTING_NO', $id)->get();
+        $data['row4'] = ListingImages::where('F_LISTING_NO', $id)->get();
         $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
         $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
-        $data['area'] = Area::where('F_CITY_NO',$data['row']->F_CITY_NO)->pluck('AREA_NAME', 'PK_NO');
+        $data['area'] = Area::where('F_CITY_NO', $data['row']->F_CITY_NO)->pluck('AREA_NAME', 'PK_NO');
         $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
         $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
         $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
@@ -95,6 +98,18 @@ class ListingController extends Controller
         return FloorList::pluck('NAME', 'PK_NO');
     }
 
+    public function deleteListingImage($id)
+    {
+        $img = ListingImages::find($id);
+        if (file_exists(public_path($img->IMAGE_PATH))) {
+            unlink(public_path($img->IMAGE_PATH));
+            $img->delete();
+            $data['success'] = 'Image Deleted';
+        } else {
+            $data['error'] = 'Something Wrong!';
+        }
+        return response()->json($data);
+    }
 
 
 }

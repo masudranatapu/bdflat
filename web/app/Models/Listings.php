@@ -75,6 +75,7 @@ class Listings extends Model
             $user->PRICE_TYPE = $request->property_price;
             $user->CONTACT_PERSON1 = $request->contactPerson;
             $user->MOBILE1 = $request->mobile;
+            $user->F_LISTING_TYPE = $request->listing_type;
             $user->TOTAL_FLOORS = $request->floor;
             $user->FLOORS_AVAIABLE = json_encode($request->floor_available);
             $user->CREATED_AT = Carbon::now();
@@ -110,7 +111,7 @@ class Listings extends Model
 
                     ListingImages::create([
                         'F_LISTING_NO' => $listing_no->PK_NO,
-                        'IMAGE_PATH' => public_path() . '/uploads/' . $name,
+                        'IMAGE_PATH' => '/uploads/' . $name,
                         'IMAGE' => $name,
                         'IS_DEFAULT' => $is_default,
                     ]);
@@ -153,6 +154,7 @@ class Listings extends Model
             $user->PRICE_TYPE = $request->property_price;
             $user->CONTACT_PERSON1 = $request->contact_person;
             $user->MOBILE1 = $request->mobile;
+            $user->F_LISTING_TYPE = $request->listing_type;
             $user->TOTAL_FLOORS = $request->floor;
             $user->FLOORS_AVAIABLE = json_encode($request->floor_available);
             $user->CREATED_AT = Carbon::now();
@@ -160,9 +162,9 @@ class Listings extends Model
             $user->save();
 
 //            for store listing variants
-            /*$listing_no = Listings::latest()->first();
+            $listing_no = Listings::latest()->first();
             $property_size = $request->size;
-
+            ListingVariants::where('F_LISTING_NO',$request->id)->delete();
             foreach ($property_size as $key => $item) {
                 $data = array(
                     'F_LISTING_NO' => $listing_no->PK_NO,
@@ -172,10 +174,11 @@ class Listings extends Model
                     'TOTAL_PRICE' => $request->price[$key],
                 );
                 ListingVariants::insert($data);
-            }*/
+//                ListingVariants::where('F_LISTING_NO',$request->id)->update($data);
+            }
 
 //            for image upload
-            /*if ($request->hasfile('images')) {
+            if ($request->hasfile('images')) {
                 foreach ($request->file('images') as $key => $image) {
                     $name = uniqid() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path() . '/uploads/', $name);
@@ -188,15 +191,15 @@ class Listings extends Model
 
                     ListingImages::create([
                         'F_LISTING_NO' => $listing_no->PK_NO,
-                        'IMAGE_PATH' => public_path() . '/uploads/' . $name,
+                        'IMAGE_PATH' => '/uploads/' . $name,
                         'IMAGE' => $name,
                         'IS_DEFAULT' => $is_default,
                     ]);
                 }
-            }*/
+            }
 
 //            for features
-            /*$features = new ListingAdditionalInfo();
+            $features = ListingAdditionalInfo::where('F_LISTING_NO',$request->id)->first();
             $features->F_LISTING_NO = $listing_no->PK_NO;
             $features->FACING = $request->facing;
             $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
@@ -205,10 +208,10 @@ class Listings extends Model
             $features->VIDEO_CODE = $request->videoURL;
             $features->F_FEATURE_NOS = json_encode($request->features);
             $features->F_NEARBY_NOS = json_encode($request->nearby);
-            $features->save();*/
+            $features->save();
 
         } catch (\Exception $e) {
-            // dd($e);
+             dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your listings not added successfully !', 'listings.create');
         }

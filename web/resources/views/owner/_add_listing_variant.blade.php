@@ -1,9 +1,9 @@
 <?php
-$bed_room               = Config::get('static_array.bed_room') ?? [];
-$bath_room              = Config::get('static_array.bath_room') ?? [];
+$bed_room = Config::get('static_array.bed_room') ?? [];
+$bath_room = Config::get('static_array.bath_room') ?? [];
 ?>
-<div class="row no-gutters form-group size_child">
-    <div class="col-6 col-md-2">
+<div class="row no-gutters form-group size_child" style="position: relative">
+    <div class="col-6 col-md-3">
         <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
             <div class="controls">
                 {!! Form::number('size[]', old('size[]'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
@@ -35,8 +35,6 @@ $bath_room              = Config::get('static_array.bath_room') ?? [];
             </div>
         </div>
     </div>
-    <div class="col-md-1">
-        <button class="del_btn btn btn-danger btn-xs">✕</button>
-    </div>
+    <button class="del_btn btn btn-danger btn-xs">✕</button>
 </div>
 

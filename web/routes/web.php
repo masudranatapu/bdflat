@@ -49,6 +49,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::get('listings/edit/{id}', 'ListingController@edit')->name('listings.edit');
     Route::post('listings/update', 'ListingController@update')->name('listings.update');
 
+    Route::get('ajax-listings-delete_img/{id}', 'ListingController@deleteListingImage')->name('listings.delete_img');
     Route::get('ajax-get-available-floor', 'ListingController@getAvailableFloor')->name('get.available.floor');
     Route::get('ajax-add-listing-variant', 'ListingController@addListingVariant')->name('add-listing-variant');
     Route::get('ajax-get-area/{id}', 'OwnerController@getArea')->name('getarea');
