@@ -71,7 +71,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                 </div>
                 <div class="col-sm-12 col-md-8">
                     {{ $errors }}
-                    {!! Form::open([ 'route' => 'listings.update', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::open([ 'route' => ['listings.update',$row->PK_NO], 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     {!! Form::hidden('id', $row->PK_NO) !!}
                     <div class="advertisment-wrap">
                         <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
