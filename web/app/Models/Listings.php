@@ -10,6 +10,7 @@ use App\Traits\RepoResponse;
 use App\Models\PropertyCondition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Image;
 
 class Listings extends Model
 {
@@ -58,8 +59,15 @@ class Listings extends Model
         'CREATED_AT',
         'CREATED_BY',
         'MODIFIED_AT',
-        'MODIFYED_BY',
+        'MODIFIED_BY',
+        'TOTAL_FLOORS',
+        'FLOORS_AVAIABLE',
+        'IS_FEATURE',
     ];
+
+    public function getDefaultThumb() {
+        return $this->hasOne('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO')->Where('IS_DEFAULT',1);
+    }
 
 
     public function store($request)
@@ -73,8 +81,9 @@ class Listings extends Model
             $list->F_AREA_NO                = $request->area;
             $list->ADDRESS                  = $request->address;
             $list->F_PROPERTY_CONDITION     = $request->condition;
+            $list->TITLE                    = $request->property_title;
             $list->PRICE_TYPE               = $request->property_price;
-            $list->CONTACT_PERSON1          = $request->contactPerson;
+            $list->CONTACT_PERSON1          = $request->contact_person;
             $list->MOBILE1                  = $request->mobile;
             $list->F_LISTING_TYPE           = $request->listing_type;
             $list->TOTAL_FLOORS             = $request->floor;
@@ -100,7 +109,28 @@ class Listings extends Model
             if ($request->hasfile('images')) {
                 foreach ($request->file('images') as $key => $image) {
                     $name = uniqid() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path() . '/uploads/listings/'.$list->PK_NO.'/', $name);
+                    $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $waterMarkUrl = public_path('assets/img/logo.png');
+
+                    $destinationPath = public_path('/uploads/listings/'.$list->PK_NO.'/');
+                    $destinationPath2 = public_path('/uploads/listings/'.$list->PK_NO.'/thumb');
+
+                    if (!file_exists($destinationPath2)) {
+                        mkdir($destinationPath2, 0755, true);
+                    }
+
+                    $thumb_img = Image::make($image->getRealPath());
+
+                    $thumb_img->backup();
+
+                    $thumb_img->resize(172, 115, function ($constraint) {});
+                    $thumb_img->save($destinationPath2.'/'.$name2);
+
+                    $thumb_img->reset();
+
+                    $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
+                    $thumb_img->save($destinationPath.'/'.$name);
+
                     if ($key == 0) {
                         $is_default = 1;
                     } else {
@@ -111,6 +141,8 @@ class Listings extends Model
                         'F_LISTING_NO' => $list->PK_NO,
                         'IMAGE_PATH' => '/uploads/listings/'.$list->PK_NO.'/' . $name,
                         'IMAGE' => $name,
+                        'THUMB_PATH' => '/uploads/listings/'.$list->PK_NO.'/thumb/'. $name2,
+                        'THUMB' => $name2,
                         'IS_DEFAULT' => $is_default,
                     ]);
                 }
@@ -129,7 +161,7 @@ class Listings extends Model
             $features->save();
 
         } catch (\Exception $e) {
-            // dd($e);
+             dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your listings not added successfully !', 'listings.create');
         }
@@ -149,6 +181,7 @@ class Listings extends Model
             $list->F_AREA_NO            = $request->area;
             $list->ADDRESS              = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
+            $list->TITLE                = $request->property_title;
             $list->PRICE_TYPE           = $request->property_price;
             $list->CONTACT_PERSON1      = $request->contact_person;
             $list->MOBILE1              = $request->mobile;
@@ -177,20 +210,45 @@ class Listings extends Model
 //            for image upload
             if ($request->hasfile('images')) {
                 foreach ($request->file('images') as $key => $image) {
-                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path() . '/uploads/listings/'.$id.'/', $name);
+//                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
+//                    $image->move(public_path() . '/uploads/listings/'.$id.'/', $name);
 
-                    if ($key == 0) {
-                        $is_default = 1;
-                    } else {
-                        $is_default = 0;
+                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $waterMarkUrl = public_path('assets/img/logo.png');
+
+                    $destinationPath = public_path('/uploads/listings/'.$list->PK_NO.'/');
+                    $destinationPath2 = public_path('/uploads/listings/'.$list->PK_NO.'/thumb');
+
+                    if (!file_exists($destinationPath2)) {
+                        mkdir($destinationPath2, 0755, true);
                     }
+
+                    $thumb_img = Image::make($image->getRealPath());
+
+                    $thumb_img->backup();
+
+                    $thumb_img->resize(172, 115, function ($constraint) {});
+                    $thumb_img->save($destinationPath2.'/'.$name2);
+
+                    $thumb_img->reset();
+
+                    $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
+                    $thumb_img->save($destinationPath.'/'.$name);
+
+//                    if ($key == 0) {
+//                        $is_default = 1;
+//                    } else {
+//                        $is_default = 0;
+//                    }
 
                     ListingImages::create([
                         'F_LISTING_NO'  => $list->PK_NO,
                         'IMAGE_PATH'    => '/uploads/listings/'.$id.'/' . $name,
                         'IMAGE'         => $name,
-                        'IS_DEFAULT'    => $is_default,
+                        'THUMB_PATH' => '/uploads/listings/'.$list->PK_NO.'/thumb/'. $name2,
+                        'THUMB' => $name2,
+//                        'IS_DEFAULT'    => $is_default,
                     ]);
                 }
             }

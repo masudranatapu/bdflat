@@ -132,6 +132,19 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 </div>
                             </div>
 
+                            <!--  title  -->
+                            <div class="row form-group">
+                                {!! Form::label('property_title','Property Title <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('property_title') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('property_title', old('property_title'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Property Title']) !!}
+                                            {!! $errors->first('property_title', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!--  Property Size & Price  -->
                             <div class="advertisment-title">
                                 <h3>Property Size & Price

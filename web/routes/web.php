@@ -46,7 +46,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
 
     Route::get('listings/create', 'ListingController@create')->name('listings.create');
     Route::post('listings/store', 'ListingController@store')->name('listings.store');
-    Route::get('listings/{id}/edit/', 'ListingController@edit')->name('listings.edit');
+    Route::get('listings/{id}/edit', 'ListingController@edit')->name('listings.edit');
     Route::post('listings/{id}/update', 'ListingController@update')->name('listings.update');
 
     Route::get('ajax-listings-delete_img/{id}', 'ListingController@deleteListingImage')->name('listings.delete_img');

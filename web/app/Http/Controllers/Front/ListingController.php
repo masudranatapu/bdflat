@@ -101,8 +101,9 @@ class ListingController extends Controller
     public function deleteListingImage($id)
     {
         $img = ListingImages::find($id);
-        if (file_exists(public_path($img->IMAGE_PATH))) {
+        if (file_exists(public_path($img->IMAGE_PATH)) && file_exists(public_path($img->THUMB_PATH)) ) {
             unlink(public_path($img->IMAGE_PATH));
+            unlink(public_path($img->THUMB_PATH));
             $img->delete();
             $data['success'] = 'Image Deleted';
         } else {

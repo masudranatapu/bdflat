@@ -30,44 +30,23 @@ $listings = $data['listing'] ?? [];
                                 </div>
 
                                 <!-- product -->
-
-{{--                                <div class="property-product mb-2">--}}
-                            {{--                                    <div class="row no-gutters position-relative">--}}
-                            {{--                                        <div class="col-3">--}}
-                            {{--                                            <div class="property-bx">--}}
-                            {{--                                                <a href="details.html"><img src="{{ asset('/assets/img/product/6.jpg') }}" class="w-100" alt="image"></a>--}}
-                            {{--                                            </div>--}}
-                            {{--                                            <div class="featured">--}}
-                            {{--                                                <div class="feature-text">--}}
-                            {{--                                                    <span>Featured</span>--}}
-                            {{--                                                </div>--}}
-                            {{--                                            </div>--}}
-                            {{--                                        </div>--}}
-                            {{--                                        <div class="col-9 position-static">--}}
-                            {{--                                            <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>--}}
-                            {{--                                            <a href="#" class="location"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>--}}
-                            {{--                                            <div class="owner-info">--}}
-                            {{--                                                <ul>--}}
-                            {{--                                                    <li><i class="fa fa-edit"></i><a href="#">Edit</a></li>--}}
-                            {{--                                                    <li><i class="fa fa-times"></i><a href="#">Delete</a></li>--}}
-                            {{--                                                    <li class="float-right"><i class="fa fa-check"></i></li>--}}
-                            {{--                                                </ul>--}}
-                            {{--                                            </div>--}}
-                            {{--                                        </div>--}}
-                            {{--                                    </div>--}}
-                            {{--                                </div>--}}
-
-                                <!-- product -->
                                 @foreach($listings as $listing)
                                     <div class="property-product mb-2">
                                         <div class="row no-gutters position-relative">
                                             <div class="col-3">
                                                 <div class="property-bx">
-                                                    <a href="details.html"><img src="{{ asset('/assets/img/product/6.jpg') }}" class="w-100" alt="image"></a>
+                                                    <a href="details.html"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH) }}" class="w-100" alt="image"></a>
                                                 </div>
+                                                @if($listing->IS_FEATURE==1)
+                                                    <div class="featured">
+                                                        <div class="feature-text">
+                                                            <span>Featured</span>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="col-9 position-static">
-                                                <h5 class="mt-0"><a href="details.html">{{$listing->PROPERTY_FOR}}</a></h5>
+                                                <h5 class="mt-0"><a href="details.html">{{$listing->TITLE}}</a></h5>
                                                 <a href="#" class="location"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
                                                 <div class="owner-info">
                                                     <ul>

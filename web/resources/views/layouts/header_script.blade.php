@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="{{asset('/assets/css/demo.css?v=0') }}">
   <link rel="stylesheet" href="{{asset('/assets/css/main.css?v=0') }}">
   <link rel="stylesheet" href="{{asset('/assets/css/responsive.css?v=0') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <meta name="theme-color" content="#fafafa">

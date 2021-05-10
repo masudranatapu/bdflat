@@ -99,6 +99,10 @@
       <path value="$PROJECT_DIR$/web/vendor/fakerphp/faker" />
       <path value="$PROJECT_DIR$/web/vendor/doctrine/lexer" />
       <path value="$PROJECT_DIR$/web/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/web/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/web/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/web/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/web/vendor/ralouphie/getallheaders" />
     </include_path>
   </component>
   <component name="PhpUnit">
