@@ -50,6 +50,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                 <div class="col-sm-12 col-md-8">
                     {{ $errors }}
                     {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::hidden('p_type',null,['id' => 'p_type']) !!}
                     <div class="advertisment-wrap">
                         <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                             <h5>Advertisement Type:&nbsp; </h5>
@@ -154,34 +155,38 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 
                             <div id="size_parent">
                                 <div class="row no-gutters form-group size_child">
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
+                                    <div class="col-6 col-md-3 size_div">
+                                        <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('size[]', old('size[]'), [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('size[]', old('size[]'), ['id'=>'size', 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
+                                                <span class="size_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                    <div class="col-6 col-md-3 bedroom_div">
+                                        <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
+                                                <span class="bedroom_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                    <div class="col-6 col-md-3 bathroom_div">
+                                        <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
+                                                <span class="bathroom_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                    <div class="col-6 col-md-3 price_div">
+                                        <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
+                                                <span class="price_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -209,7 +214,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <div class="advertisment-title">
                                 <h3>Additional Infomation</h3>
                             </div>
-                            <div class="row form-group">
+                            <div class="row form-group floor_div">
                                 {{ Form::label('floor','Total Number Of Floor:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('floor') ? 'error' : '' !!}">
@@ -220,7 +225,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     </div>
                                 </div>
                             </div>
-                            <div class="row form-group">
+
+                            <div class="row form-group floor_available_div">
                                 {{ Form::label('','Floor Available:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('floor_available') ? 'error' : '' !!}">
@@ -495,6 +501,40 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             placeholder: "Select Floors",
                         }
                     );
+                }
+            });
+        });
+
+        $("#property_type").on('change', function () {
+            $.ajax({
+                url: basepath + "/ajax-get-property-type/" + $(this).val(),
+                type: 'GET',
+                success: function (data) {
+                    if (data == 'A'){
+                        $("#p_type").val(data);
+                        $(".size_placeholder").text('(Apartment)');
+                        $(".bathroom_div").css('display','block');
+                        $(".bedroom_div").css('display','block');
+                        $(".floor_div").css('display','flex');
+                        $(".floor_available_div").css('display','flex');
+                        $("#size").attr('placeholder','Size In sft');
+                    }else if (data == 'B'){
+                        $("#p_type").val(data);
+                        $(".size_placeholder").text('(Office/Shop/Warehouse/Industrial Space/Garage)');
+                        $(".bathroom_div").css('display','none');
+                        $(".bedroom_div").css('display','none');
+                        $(".floor_div").css('display','flex');
+                        $(".floor_available_div").css('display','flex');
+                        $("#size").attr('placeholder','Size In sft');
+                    }else if(data == 'C'){
+                        $("#p_type").val(data);
+                        $(".size_placeholder").text('(Land)');
+                        $(".bathroom_div").css('display','none');
+                        $(".bedroom_div").css('display','none');
+                        $(".floor_div").css('display','none');
+                        $(".floor_available_div").css('display','none');
+                        $("#size").attr('placeholder','Size In Katha');
+                    }
                 }
             });
         });

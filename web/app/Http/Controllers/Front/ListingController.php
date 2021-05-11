@@ -112,5 +112,11 @@ class ListingController extends Controller
         return response()->json($data);
     }
 
+    public function getPropertyType($id)
+    {
+        return PropertyType::where('PK_NO',$id)->first()->TYPE;
+//        return response()->json($data);
+    }
+
 
 }

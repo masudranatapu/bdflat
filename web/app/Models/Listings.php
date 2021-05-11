@@ -74,6 +74,17 @@ class Listings extends Model
     {
         DB::beginTransaction();
         try {
+            if ($request->p_type == 'A'){
+                $floors             = $request->floor;
+                $floor_available    = json_encode($request->floor_available);
+            }elseif ($request->p_type == 'B'){
+                $floors             = $request->floor;
+                $floor_available    = json_encode($request->floor_available);
+            }elseif ($request->p_type == 'C'){
+                $floors             = null;
+                $floor_available    = null;
+            }
+
             $list                           = new Listings();
             $list->PROPERTY_FOR             = $request->property_for;
             $list->F_PROPERTY_TYPE_NO       = $request->property_type;
@@ -86,8 +97,8 @@ class Listings extends Model
             $list->CONTACT_PERSON1          = $request->contact_person;
             $list->MOBILE1                  = $request->mobile;
             $list->F_LISTING_TYPE           = $request->listing_type;
-            $list->TOTAL_FLOORS             = $request->floor;
-            $list->FLOORS_AVAIABLE          = json_encode($request->floor_available);
+            $list->TOTAL_FLOORS             = $floors;
+            $list->FLOORS_AVAIABLE          = $floor_available;
             $list->CREATED_AT               = Carbon::now();
             $list->CREATED_BY               = Auth::user()->PK_NO;
             $list->save();
@@ -95,11 +106,23 @@ class Listings extends Model
 //            for store listing variants
             $property_size = $request->size;
             foreach ($property_size as $key => $item) {
+
+                if ($request->p_type == 'A'){
+                    $bedroom    = $request->bedroom[$key];
+                    $bathroom   = $request->bathroom[$key];
+                }elseif ($request->p_type == 'B'){
+                    $bedroom    = 0;
+                    $bathroom   = 0;
+                }elseif ($request->p_type == 'C'){
+                    $bedroom    = 0;
+                    $bathroom   = 0;
+                }
+
                 $data = array(
                     'F_LISTING_NO'          => $list->PK_NO,
                     'PROPERTY_SIZE'         => $request->size[$key],
-                    'BEDROOM'               => $request->bedroom[$key],
-                    'BATHROOM'              => $request->bathroom[$key],
+                    'BEDROOM'               => $bedroom,
+                    'BATHROOM'              => $bathroom,
                     'TOTAL_PRICE'           => $request->price[$key],
                 );
                 ListingVariants::insert($data);
