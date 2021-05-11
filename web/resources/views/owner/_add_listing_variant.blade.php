@@ -12,7 +12,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
             </div>
         </div>
     </div>
-    <div class="col-6 col-md-3 bedroom_div">
+    <div class="col-6 col-md-3 bedroom_div" style="{{ $request->property_type != 1 ? 'display:none' : '' }}">
         <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
             <div class="controls">
                 {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
@@ -21,7 +21,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
             </div>
         </div>
     </div>
-    <div class="col-6 col-md-3 bathroom_div">
+    <div class="col-6 col-md-3 bathroom_div" style="{{ $request->property_type != 1 ? 'display:none' : '' }}">
         <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
             <div class="controls">
                 {!! Form::select('bathroom[]', $bath_room, old('bathroom'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}

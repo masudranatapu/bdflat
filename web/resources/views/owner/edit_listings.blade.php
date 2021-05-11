@@ -187,7 +187,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                             </div>
                                         </div>
 
-                                        <div class="col-6 col-md-3">
+                                        <div class="col-6 col-md-3 bedroom_div">
                                             <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::select('bedroom[]', $bed_room, $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
@@ -196,7 +196,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                             </div>
                                         </div>
 
-                                        <div class="col-6 col-md-3">
+                                        <div class="col-6 col-md-3 bathroom_div">
                                             <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::select('bathroom[]', $bath_room, $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
@@ -519,6 +519,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
             $(".floor_available_select").select2({
                 placeholder: "Select Floors",
             });
+            changePropertySizePrice($('#property_type').val());
         });
 
         $(".floor_select").on('change', function () {
@@ -555,5 +556,42 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                 }
             });
         });
+
+        $("#property_type").on('change', function () {
+           changePropertySizePrice($(this).val());
+        });
+        function  changePropertySizePrice(property_type) {
+            $.ajax({
+                url: basepath + "/ajax-get-property-type/" + property_type,
+                type: 'GET',
+                success: function (data) {
+                    if (data == 'A'){
+                        $("#p_type").val(data);
+                        $(".size_placeholder").text('(Apartment)');
+                        $(".bathroom_div").css('display','block');
+                        $(".bedroom_div").css('display','block');
+                        $(".floor_div").css('display','flex');
+                        $(".floor_available_div").css('display','flex');
+                        $("#size").attr('placeholder','Size In sft');
+                    }else if (data == 'B'){
+                        $("#p_type").val(data);
+                        $(".size_placeholder").text('(Office/Shop/Warehouse/Industrial Space/Garage)');
+                        $(".bathroom_div").css('display','none');
+                        $(".bedroom_div").css('display','none');
+                        $(".floor_div").css('display','flex');
+                        $(".floor_available_div").css('display','flex');
+                        $("#size").attr('placeholder','Size In sft');
+                    }else if(data == 'C'){
+                        $("#p_type").val(data);
+                        $(".size_placeholder").text('(Land)');
+                        $(".bathroom_div").css('display','none');
+                        $(".bedroom_div").css('display','none');
+                        $(".floor_div").css('display','none');
+                        $(".floor_available_div").css('display','none');
+                        $("#size").attr('placeholder','Size In Katha');
+                    }
+                }
+            });
+        }
     </script>
 @endpush

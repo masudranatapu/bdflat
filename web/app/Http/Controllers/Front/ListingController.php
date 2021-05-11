@@ -89,7 +89,7 @@ class ListingController extends Controller
 
     public function addListingVariant(Request $request)
     {
-        $data['html'] = view('owner._add_listing_variant')->render();
+        $data['html'] = view('owner._add_listing_variant',compact('request'))->render();
         return response()->json($data);
     }
 

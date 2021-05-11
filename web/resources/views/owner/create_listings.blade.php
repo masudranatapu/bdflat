@@ -456,22 +456,31 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
         });
 
         $(document).on('click', '#add_btn', function () {
-            $.ajax({
-                type: 'get',
-                url: basepath + '/ajax-add-listing-variant',
-                async: true,
-                dataType: 'json',
-                beforeSend: function () {
-                    $("body").css("cursor", "progress");
-                },
-                success: function (response) {
-                    $("#size_parent").append(response.html);
-                },
-                complete: function (data) {
-                    $("body").css("cursor", "default");
+            var property_type = $('#property_type').val();
+            if(property_type == ''){
+                alert('Please select property type at first');
+            }else{
+                $.ajax({
+                    type: 'get',
+                    data:{property_type:property_type},
+                    url: basepath + '/ajax-add-listing-variant',
+                    async: true,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("body").css("cursor", "progress");
+                    },
+                    success: function (response) {
+                        $("#size_parent").append(response.html);
 
-                }
-            });
+                    },
+                    complete: function (data) {
+                        $("body").css("cursor", "default");
+
+
+                    }
+                });
+            }
+
         });
 
 
