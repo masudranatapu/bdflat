@@ -29,6 +29,7 @@ Route::get('/cc', function () {
 //common routes
 Route::get('/about-us', 'CommonController@getAboutUs')->name('about-us');
 Route::get('/contact-us', 'CommonController@getContactUs')->name('contact-us');
+Route::post('/contact-us', 'CommonController@storeContactUs');
 Route::get('/terms-conditions', 'CommonController@getTermsConditions')->name('terms-conditions');
 Route::get('/site-map', 'CommonController@getSiteMap')->name('site-map');
 Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy-policy');

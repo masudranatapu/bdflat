@@ -395,7 +395,6 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <!--  submit button  -->
                             <div class="advertisment-btn">
                                 {!! Form::submit('submit', ['id'=>'submit']) !!}
-
                             </div>
                         </div>
                     </div>

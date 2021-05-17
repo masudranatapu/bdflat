@@ -26,10 +26,10 @@ class contactRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'                      => 'required|string|min:2|max:60',
-            'email'                     => 'required|string|min:5|max:60',
-            'subject'                   => 'required|string|min:3|max:120',
-            'capt'                      => 'required',
+            'name'                      => 'required|string|min:2|max:50',
+            'email'                     => 'required|string|min:5|max:150',
+            'subject'                   => 'required|string|min:3|max:180',
+//            'capt'                      => 'required',
             'message'                   => 'required',
         ];
 
@@ -42,7 +42,7 @@ class contactRequest extends FormRequest
             'name.required'             => 'Your name is required!',
             'email.required'            => 'Your email is required!',
             'subject.required'          => 'Your subject is required!',
-            'capt.required'             => 'Addition problem input field is required!',
+//            'capt.required'             => 'Addition problem input field is required!',
             'message.required'          => 'Message is required',
         ];
     }

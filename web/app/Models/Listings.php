@@ -184,7 +184,7 @@ class Listings extends Model
             $features->save();
 
         } catch (\Exception $e) {
-             dd($e);
+//             dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your listings not added successfully !', 'listings.create');
         }

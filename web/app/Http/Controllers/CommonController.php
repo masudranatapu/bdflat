@@ -2,50 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\contactRequest;
+use App\Models\ContactForm;
 use Illuminate\Http\Request;
 use App\Category;
 use DB;
+use Toastr;
 
 class CommonController extends Controller
 {
     protected $category;
-  
-    
-    public function __construct(Category $category)
+    protected $contact;
+
+
+    public function __construct(Category $category, ContactForm $contacts)
     {
        $this->category  = $category;
+       $this->contactFormModel  = $contacts;
     }
 
 
 /*    public function getCommon()
     {
         $data                   = array();
-        $data['divisions']      = $this->division->getAlldivisions(); 
-        $data['cities']         = $this->city->getCity(); 
-        $data['areas']          = $this->area->getArea(); 
-        $data['category']       = $this->category->getCategory(); 
+        $data['divisions']      = $this->division->getAlldivisions();
+        $data['cities']         = $this->city->getCity();
+        $data['areas']          = $this->area->getArea();
+        $data['category']       = $this->category->getCategory();
         $data['subcategory']    = $this->category->getAllSubCategory();
         return $data;
 
     }*/
 
-    
+
     public function getAboutUs(Request $request)
     {
-      
+
         return view('common.about_us');
     }
 
 
     public function getContactUs(Request $request)
     {
-      
+
         return view('common.contact_us');
+    }
+
+    public function storeContactUs(contactRequest $request)
+    {
+        $this->resp = $this->contactFormModel->store($request);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+//        return view('common.contact_us');
     }
 
     public function getTermsConditions(Request $request)
     {
-      
+
 
         return view('common.terms_condition');
 
@@ -57,38 +72,38 @@ class CommonController extends Controller
         //$data['data'] =  $this->getCommon();
         return view('common.site-map', compact('data'));
     }
-    
+
 
    /* public function getPrivacyPolicy(Request $request)
     {
-      
+
         return view('common.privacy_policy');
     }
 
     public function getHowToSellFast(Request $request)
     {
-      
+
         return view('common.how_to_sell_fast');
     }
 
 
     public function getMembership(Request $request)
     {
-      
+
         return view('common.get_membership');
     }
 
 
     public function getMyAds(Request $request)
     {
-      
+
         return view('common.my_ads');
     }
 
 
     public function getPromotions(Request $request)
     {
-      
+
         return view('common.promotions');
     }
 
@@ -104,11 +119,11 @@ class CommonController extends Controller
 
     public function getPackages(Request $request)
     {
-      
+
         return view('common.packages');
     }
 
-    
+
 
 
     public function getArea($location_id,$type)
@@ -128,18 +143,18 @@ class CommonController extends Controller
             $response .= '<option value="'.$value->pk_no.'">'.$value->name.'</option>';
           }
         }
-           
-         
-         
+
+
+
         return response()->json($response);
     }
 */
 
 
-    
 
 
-     
+
+
 }
 
 
