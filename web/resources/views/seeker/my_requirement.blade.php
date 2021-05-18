@@ -1,329 +1,364 @@
 @extends('layouts.app')
 @section('property-requirements','active')
 @push('custom_css')
-
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
 @endpush
 
+<?php
+$property_types = $data['property_type'] ?? [];
+?>
+
 @section('content')
-<!--
+    <!--
      ============   dashboard   ============
  -->
-<div class="dashboard-sec">
-  <!-- container -->
-  <div class="container">
-      <!-- row -->
-      <div class="row">
+    <div class="dashboard-sec">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
 
-          <div class="col-md-4 mb-5 d-none d-md-block">
-            @include('seeker._left_menu')
-          </div>
+                <div class="col-md-4 mb-5 d-none d-md-block">
+                    @include('seeker._left_menu')
+                </div>
 
-          <div class="col-sm-12 col-md-8">
-               <div class="requirement">
-                     <div class="property-title mb-4">
-                        <h3>Property Requirements</h3>
-                     </div>
-                     <form action="#" method="post">
-                        <!-- city & location -->
-                          <div class="select-city" data-toggle="modal" data-target="#exampleModal">
-                              <h4>
-                                  <i class="fa fa-map-marker"></i>Select location / City<br/>
-                                  <i class="fa fa-angle-right float-right"></i>
-                              </h4>
-                          </div>
-                          <!-- city &  locations -->
-                          <div class="city-location">
-                              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                          <div class="modal-content">
-                                                <div class="modal-header">
-                                                       <h5 class="modal-title" id="exampleModalLabel">
-                                                           Select City or Division | <a href="#">All of Bangladesh</a>
-                                                       </h5>
-                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                          <span aria-hidden="true">&times;</span>
-                                                      </button>
+                <div class="col-sm-12 col-md-8">
+                    <div class="requirement">
+                        <div class="property-title mb-4">
+                            <h3>Property Requirements</h3>
+                        </div>
+                    {{ $errors }}
+                    {!! Form::open([ 'route' => 'property-requirements.store', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
+                    <!-- city & location -->
+                        <div class="select-city" data-toggle="modal" data-target="#exampleModal">
+                            <h4>
+                                <i class="fa fa-map-marker"></i>Select location / City<br/>
+                                <i class="fa fa-angle-right float-right"></i>
+                            </h4>
+                        </div>
+                        <!-- city &  locations -->
+                        <div class="city-location">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                Select City or Division | <a href="#">All of Bangladesh</a>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                                                        <div class="city_title">
+                                                            <h3><i class="fa fa-tags"></i>Cities</h3>
+                                                        </div>
+                                                        <a class="nav-link" id="v-pills-dhaka-tab" data-toggle="pill" href="#v-pills-dhaka" role="tab"
+                                                           aria-controls="v-pills-dhaka" aria-selected="true">Dhaka <i class="fa fa-angle-right float-right"></i></a>
+
+                                                        <a class="nav-link" id="v-pills-chattogram-tab" data-toggle="pill" href="#v-pills-chattogram" role="tab"
+                                                           aria-controls="v-pills-chattogram" aria-selected="false">Chattogram<i
+                                                                class="fa fa-angle-right float-right"></i></a>
+
+                                                        <a class="nav-link" id="v-pills-sylhet-tab" data-toggle="pill" href="#v-pills-sylhet" role="tab"
+                                                           aria-controls="v-pills-sylhet" aria-selected="false">Messages<i class="fa fa-angle-right float-right"></i></a>
+
+                                                        <a class="nav-link" id="v-pills-khulna-tab" data-toggle="pill" href="#v-pills-khulna" role="tab"
+                                                           aria-controls="v-pills-khulna" aria-selected="false">Khulna<i class="fa fa-angle-right float-right"></i></a>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                   <div class="row">
-                                                        <div class="col-12">
-                                                          <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
-                                                            <div class="city_title">
-                                                                  <h3><i class="fa fa-tags"></i>Cities</h3>
+                                                <div class="col-12">
+                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">
+                                                        <div class="backcategory">
+                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
+                                                        </div>
+                                                        <div class="tab-pane fade show" id="v-pills-dhaka" role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Dhaka</h3>
+                                                                    <ul>
+                                                                        <li><a href="#">Mohammadpur</a></li>
+                                                                        <li><a href="#">Mogbazar</a></li>
+                                                                        <li><a href="#">Banglamotor</a></li>
+                                                                        <li><a href="#">Uttara</a></li>
+                                                                        <li><a href="#">Elephant Road</a></li>
+                                                                        <li><a href="#">Savar</a></li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                            <a class="nav-link" id="v-pills-dhaka-tab" data-toggle="pill" href="#v-pills-dhaka" role="tab" aria-controls="v-pills-dhaka" aria-selected="true">Dhaka <i class="fa fa-angle-right float-right"></i></a>
-
-                                                            <a class="nav-link" id="v-pills-chattogram-tab" data-toggle="pill" href="#v-pills-chattogram" role="tab" aria-controls="v-pills-chattogram" aria-selected="false">Chattogram<i class="fa fa-angle-right float-right"></i></a>
-
-                                                            <a class="nav-link" id="v-pills-sylhet-tab" data-toggle="pill" href="#v-pills-sylhet" role="tab" aria-controls="v-pills-sylhet" aria-selected="false">Messages<i class="fa fa-angle-right float-right"></i></a>
-
-                                                            <a class="nav-link" id="v-pills-khulna-tab" data-toggle="pill" href="#v-pills-khulna" role="tab" aria-controls="v-pills-khulna" aria-selected="false">Khulna<i class="fa fa-angle-right float-right"></i></a>
-                                                          </div>
                                                         </div>
 
-                                                        <div class="col-12">
-                                                          <div class="tab-content modalsubcategory" id="v-pills-tabContent">
-                                                              <div class="backcategory">
-                                                                   <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
-                                                              </div>
-                                                                <div class="tab-pane fade show" id="v-pills-dhaka" role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
-                                                                     <div class="city-wrap">
-                                                                          <div class="city-list">
-                                                                              <h3><i class="fa fa-map-marker"></i>Dhaka</h3>
-                                                                              <ul>
-                                                                                  <li><a href="#">Mohammadpur</a></li>
-                                                                                  <li><a href="#">Mogbazar</a></li>
-                                                                                  <li><a href="#">Banglamotor</a></li>
-                                                                                  <li><a href="#">Uttara</a></li>
-                                                                                  <li><a href="#">Elephant Road</a></li>
-                                                                                  <li><a href="#">Savar</a></li>
-                                                                              </ul>
-                                                                          </div>
-                                                                     </div>
+                                                        <div class="tab-pane fade" id="v-pills-chattogram" role="tabpanel" aria-labelledby="v-pills-chattogram-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Chattogram</h3>
+                                                                    <ul>
+                                                                        <li><a href="#">Mohammadpur</a></li>
+                                                                        <li><a href="#">Mogbazar</a></li>
+                                                                        <li><a href="#">Banglamotor</a></li>
+                                                                        <li><a href="#">Uttara</a></li>
+                                                                        <li><a href="#">Elephant Road</a></li>
+                                                                        <li><a href="#">Savar</a></li>
+                                                                    </ul>
                                                                 </div>
+                                                            </div>
+                                                        </div>
 
-                                                                <div class="tab-pane fade" id="v-pills-chattogram" role="tabpanel" aria-labelledby="v-pills-chattogram-tab">
-                                                                    <div class="city-wrap">
-                                                                          <div class="city-list">
-                                                                              <h3><i class="fa fa-map-marker"></i>Chattogram</h3>
-                                                                              <ul>
-                                                                                  <li><a href="#">Mohammadpur</a></li>
-                                                                                  <li><a href="#">Mogbazar</a></li>
-                                                                                  <li><a href="#">Banglamotor</a></li>
-                                                                                  <li><a href="#">Uttara</a></li>
-                                                                                  <li><a href="#">Elephant Road</a></li>
-                                                                                  <li><a href="#">Savar</a></li>
-                                                                              </ul>
-                                                                          </div>
-                                                                     </div>
+                                                        <div class="tab-pane fade" id="v-pills-sylhet" role="tabpanel" aria-labelledby="v-pills-sylhet-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Sylhet</h3>
+                                                                    <ul>
+                                                                        <li><a href="#">Mohammadpur</a></li>
+                                                                        <li><a href="#">Mogbazar</a></li>
+                                                                        <li><a href="#">Banglamotor</a></li>
+                                                                        <li><a href="#">Uttara</a></li>
+                                                                        <li><a href="#">Elephant Road</a></li>
+                                                                        <li><a href="#">Savar</a></li>
+                                                                    </ul>
                                                                 </div>
+                                                            </div>
+                                                        </div>
 
-                                                                <div class="tab-pane fade" id="v-pills-sylhet" role="tabpanel" aria-labelledby="v-pills-sylhet-tab">
-                                                                     <div class="city-wrap">
-                                                                          <div class="city-list">
-                                                                              <h3><i class="fa fa-map-marker"></i>Sylhet</h3>
-                                                                              <ul>
-                                                                                  <li><a href="#">Mohammadpur</a></li>
-                                                                                  <li><a href="#">Mogbazar</a></li>
-                                                                                  <li><a href="#">Banglamotor</a></li>
-                                                                                  <li><a href="#">Uttara</a></li>
-                                                                                  <li><a href="#">Elephant Road</a></li>
-                                                                                  <li><a href="#">Savar</a></li>
-                                                                              </ul>
-                                                                          </div>
-                                                                     </div>
+                                                        <div class="tab-pane fade" id="v-pills-khulna" role="tabpanel" aria-labelledby="v-pills-khulna-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Khulna</h3>
+                                                                    <ul>
+                                                                        <li><a href="#">Mohammadpur</a></li>
+                                                                        <li><a href="#">Mogbazar</a></li>
+                                                                        <li><a href="#">Banglamotor</a></li>
+                                                                        <li><a href="#">Uttara</a></li>
+                                                                        <li><a href="#">Elephant Road</a></li>
+                                                                        <li><a href="#">Savar</a></li>
+                                                                    </ul>
                                                                 </div>
-
-                                                                <div class="tab-pane fade" id="v-pills-khulna" role="tabpanel" aria-labelledby="v-pills-khulna-tab">
-                                                                     <div class="city-wrap">
-                                                                          <div class="city-list">
-                                                                              <h3><i class="fa fa-map-marker"></i>Khulna</h3>
-                                                                              <ul>
-                                                                                  <li><a href="#">Mohammadpur</a></li>
-                                                                                  <li><a href="#">Mogbazar</a></li>
-                                                                                  <li><a href="#">Banglamotor</a></li>
-                                                                                  <li><a href="#">Uttara</a></li>
-                                                                                  <li><a href="#">Elephant Road</a></li>
-                                                                                  <li><a href="#">Savar</a></li>
-                                                                              </ul>
-                                                                          </div>
-                                                                     </div>
-                                                                </div>
-                                                          </div>
-                                                       </div>
-                                                   </div>
-                                              </div>
-                                          </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                              </div>
-                          </div>
+                                </div>
+                            </div>
+                        </div>
 
-                          <!-- Looking property for -->
-                           <div class="row form-group">
-                              <label class="col-md-4 label-title">Looking property for:</label>
-                              <div class="col-md-8 property-looking">
-                                  <input type="radio" name="itemCon" value="buy" id="buy">
-                                  <label for="buy">Buy</label>
-                                  <input type="radio" name="itemCon" value="rent" id="rent">
-                                  <label for="rent">Rent</label>
-                              </div>
-                          </div>
+                        <!-- Looking property for -->
+                        <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
+                            {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
+                            <div class="col-md-8 property-looking">
+                                <div class="controls">
+                                    {!! Form::radio('itemCon','buy', old('itemCon'),[ 'id' => 'buy','data-validation-required-message' => 'This field is required']) !!}
+                                    {{ Form::label('buy','Buy') }}
+                                    {!! Form::radio('itemCon','rent', old('itemCon'),[ 'id' => 'rent','data-validation-required-message' => 'This field is required']) !!}
+                                    {{ Form::label('rent','Rent') }}
+                                    {!! $errors->first('itemCon', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
 
-                          <!--  property type -->
-                          <div class="row form-group property-type">
-                              <label class="col-md-4 label-title">Property Type:</label>
-                              <div class="col-md-8">
-                                    <select class="form-control" id="property-type">
-                                        <option>Apartment</option>
-                                        <option>Land</option>
-                                        <option>Roommate</option>
-                                        <option>Building or House</option>
-                                        <option>Office Space</option>
-                                        <option>Duplex Home</option>
-                                        <option>Room</option>
-                                        <option>Industrial Space</option>
-                                        <option>Warehouse</option>
-                                        <option>Shop</option>
-                                        <option>Garage</option>
-                                    </select>
-                              </div>
-                          </div>
+                        <!--  property type -->
+                        <div class="row form-group property-type {!! $errors->has('property_type') ? 'error' : '' !!}">
+                            {{ Form::label('property_type','Property Type:',['class' => 'col-sm-4 label-title']) }}
+                            <div class="col-md-8">
+                                <div class="controls">
+                                    {!! Form::select('property_type', $property_types,null,['id'=>'property-type','class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
 
-                          <!-- property size -->
-                          <div class="row form-group property-size">
-                               <label class="col-md-4 label-title">Property Size:</label>
-                               <div class="col-md-8">
-                                   <div class="row">
-                                        <div class="col-5">
-                                             <div class="property-form">
-                                                <input type="number" id="minimun" class="form-control" placeholder="minimun Size">
-                                             </div>
+                        <!-- property size -->
+                        <div class="row form-group property-size">
+                            {{ Form::label(null,'Property Size:',['class' => 'col-sm-4 label-title']) }}
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="property-form {!! $errors->has('minimum_size') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::number('minimum_size', old('minimum_size'), ['id'=>'minimum_size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('minimum_size', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
-                                        <div class="col-2">
-                                            <div class="size-middle text-center">
-                                               <span>To</span>
-                                             </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="size-middle text-center">
+                                            <span>To</span>
                                         </div>
-                                        <div class="col-5">
-                                             <div class="property-form">
-                                                <input type="number" id="maximum" class="form-control" placeholder="Maximum Size">
-                                             </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="property-form {!! $errors->has('maximum_size') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::number('maximum_size', old('maximum_size'), ['id'=>'maximum_size', 'class' => 'form-control',  'placeholder' => 'Maximum Size','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('maximum_size', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
-                                   </div>
-                               </div>
-                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                          <!-- property budget -->
-                          <div class="row form-group property-size">
-                               <label class="col-md-4 label-title">Property Budget:</label>
-                               <div class="col-md-8">
-                                   <div class="row">
-                                        <div class="col-5">
-                                             <div class="property-form">
-                                                <input type="number" id="minimun" class="form-control" placeholder="minimun">
-                                             </div>
+                        <!-- property budget -->
+                        <div class="row form-group property-size">
+                            {{ Form::label(null,'Property Budget:',['class' => 'col-sm-4 label-title']) }}
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="property-form">
+                                            <div class="controls">
+                                                {!! Form::number('minimum_budget', old('minimum_budget'), ['id'=>'minimum_budget', 'class' => 'form-control',  'placeholder' => 'Minimum Budget','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('minimum_budget', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
-                                        <div class="col-2">
-                                            <div class="size-middle text-center">
-                                               <span>To</span>
-                                             </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="size-middle text-center">
+                                            <span>To</span>
                                         </div>
-                                        <div class="col-5">
-                                             <div class="property-form">
-                                                <input type="number" id="maximum" class="form-control" placeholder="Maximum">
-                                             </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="property-form">
+                                            <div class="controls">
+                                                {!! Form::number('maximum_budget', old('maximum_budget'), ['id'=>'maximum_budget', 'class' => 'form-control',  'placeholder' => 'Maximum Budget','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('maximum_budget', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
-                                   </div>
-                               </div>
-                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                          <!-- Bedroom  -->
-                          <div class="row bedroom-select">
-                              <div class="col-md-4">
-                                    <h4>Bedroom</h4>
-                              </div>
-                              <div class="col-md-8">
+                        <!-- Bedroom  -->
+                        <div class="row bedroom-select">
+                            <div class="col-md-4">
+                                <h4>Bedroom</h4>
+                            </div>
+                            <div class="col-md-8 {!! $errors->has('rooms') ? 'error' : '' !!}">
+                                <div class="controls">
                                     <label for="any">
-                                         <input type="checkbox" name="rooms" value="any" id="any">Any
-                                         <span class="checkmark"></span>
-                                     </label>
-                                     <label for="1bed">
-                                         <input type="checkbox" name="rooms" value="1bed" id="1bed">1
-                                         <span class="checkmark"></span>
-                                     </label>
-                                     <label for="2bed">
-                                         <input type="checkbox" name="rooms" value="2bed" id="2bed">2
-                                         <span class="checkmark"></span>
-                                     </label>
-                                     <label for="3bed">
-                                         <input type="checkbox" name="rooms" value="3bed" id="3bed">3
-                                         <span class="checkmark"></span>
-                                     </label>
-                                     <label for="4plus">
-                                         <input type="checkbox" name="rooms" value="4plus" id="4plus">4 +
-                                         <span class="checkmark"></span>
-                                     </label>
-                              </div>
-                          </div>
+                                        {!! Form::checkbox('rooms','any', old('rooms'),[ 'id' => 'any','class' =>'form-check-input']) !!}Any
+                                        <span class="checkmark"></span>
+                                    </label>
 
-                           <!-- Looking property for -->
-                           <div class="row form-group property-condition">
-                              <label class="col-md-4 label-title">Property Condition (Only Buy):</label>
-                              <div class="col-md-8 property-checkbox">
-                                  <label for="ready">
-                                     <input type="checkbox" name="condition" value="ready" id="ready">Ready
-                                     <span class="checkmark"></span>
-                                  </label>
+                                    <label for="1bed">
+                                        {!! Form::checkbox('rooms','1bed', old('rooms'),[ 'id' => '1bed','class' =>'form-check-input']) !!}1
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label for="2bed">
+                                        {!! Form::checkbox('rooms','2bed', old('rooms'),[ 'id' => '2bed','class' =>'form-check-input']) !!}2
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label for="3bed">
+                                        {!! Form::checkbox('rooms','3bed', old('rooms'),[ 'id' => '3bed','class' =>'form-check-input']) !!}3
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label for="4plus">
+                                        {!! Form::checkbox('rooms','4plus', old('rooms'),[ 'id' => '4plus' ,'class' =>'form-check-input']) !!}4 +
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    {!! $errors->first('rooms', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
 
-                                  <label for="semi">
-                                     <input type="checkbox" name="condition" value="semi" id="semi"> Semi Ready
-                                     <span class="checkmark"></span>
-                                  </label>
+                        <!-- Looking property for -->
+                        <div class="row form-group property-condition">
+                            {{ Form::label(null,'Property Condition (Only Buy):',['class' => 'col-sm-4 label-title']) }}
+                            <div class="col-md-8 property-checkbox {!! $errors->has('condition') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    <label for="ready">
+                                        {!! Form::checkbox('condition','ready', old('condition'),[ 'id' => 'ready' ,'class' =>'form-check-input']) !!}Ready
+                                        <span class="checkmark"></span>
+                                    </label>
 
-                                  <label for="ongoing">
-                                      <input type="checkbox" name="condition" value="ongoing" id="ongoing"> Ongoing
-                                      <span class="checkmark"></span>
-                                  </label>
+                                    <label for="semi">
+                                        {!! Form::checkbox('condition','semi', old('condition'),[ 'id' => 'semi' ,'class' =>'form-check-input']) !!}Semi Ready
+                                        <span class="checkmark"></span>
+                                    </label>
 
-                                  <label for="Used">
-                                      <input type="checkbox" name="condition" value="Used" id="Used"> Used
-                                      <span class="checkmark"></span>
-                                  </label>
+                                    <label for="ongoing">
+                                        {!! Form::checkbox('condition','ongoing', old('condition'),[ 'id' => 'ongoing' ,'class' =>'form-check-input']) !!}Ongoing
+                                        <span class="checkmark"></span>
+                                    </label>
 
-                              </div>
-                          </div>
+                                    <label for="used">
+                                        {!! Form::checkbox('condition','used', old('condition'),[ 'id' => 'used' ,'class' =>'form-check-input']) !!}Used
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
 
-                          <!-- requirement details -->
-                          <div class="row form-group requirement-detail">
-                              <label class="col-md-4 label-title">Requirement Details</label>
-                              <div class="col-md-8">
-                                   <textarea class="form-control" id="requirement-details" rows="6" placeholder="Type Here"></textarea>
-                              </div>
-                          </div>
+                        <!-- requirement details -->
+                        <div class="row form-group requirement-detail">
+                            {{ Form::label(null,'Requirement Details',['class' => 'col-sm-4 label-title']) }}
+                            <div class="col-md-8">
+                                <div class="controls">
+                                    {!! Form::textarea('requirement_details', old('requirement_details'), ['rows'=>'6', 'id'=>'requirement_details','class' => 'form-control', 'placeholder' => 'Type Heree']) !!}
+                                    {!! $errors->first('requirement_details', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
 
-                          <!-- perferred time -->
-                          <div class="row form-group perferred-time">
-                               <label class="col-md-4 label-title">Preferred time to contact:</label>
-                               <div class="col-md-8">
-                                    <div class="size-form">
-                                        <input type="time" id="time" name="time" class="form-control">
+                        <!-- perferred time -->
+                        <div class="row form-group perferred-time">
+                            <label class="col-md-4 label-title">Preferred time to contact:</label>
+                            <div class="col-md-8">
+                                <div class="size-form {!! $errors->has('time') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::time('time', old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required']) !!}
+                                        {!! $errors->first('time', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
-                               </div>
-                          </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- email alert -->
+                        <div class="row form-group email-alert">
+                            <label class="col-md-4 label-title">Email Alert</label>
+                            <div class="col-md-8 {!! $errors->has('alert') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::radio('alert','daily', old('alert'),[ 'id' => 'daily','data-validation-required-message' => 'This field is required']) !!}
+                                    {{ Form::label('daily','Daily') }}
 
-                          <!-- email alert -->
-                           <div class="row form-group email-alert">
-                              <label class="col-md-4 label-title">Email Alert</label>
-                              <div class="col-md-8">
-                                  <input type="radio" name="alert" value="daily" id="daily">
-                                  <label for="daily">Daily</label>
-                                  <input type="radio" name="alert" value="weekly" id="weekly">
-                                  <label for="weekly">Weekly</label>
-                                   <input type="radio" name="alert" value="monthly" id="monthly">
-                                  <label for="monthly">Monthly</label>
-                              </div>
-                          </div>
+                                    {!! Form::radio('alert','weekly', old('alert'),[ 'id' => 'weekly','data-validation-required-message' => 'This field is required']) !!}
+                                    {{ Form::label('weekly','Weekly') }}
 
-                          <div class="submit_btn">
-                              <div class="row">
-                                  <div class="col-4"></div>
-                                  <div class="col-8">
-                                      <input type="submit" name="submit" value="Submit">
-                                  </div>
-                              </div>
-                          </div>
+                                    {!! Form::radio('alert','monthly', old('alert'),[ 'id' => 'monthly','data-validation-required-message' => 'This field is required']) !!}
+                                    {{ Form::label('monthly','Monthly') }}
+                                    {!! $errors->first('alert', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
 
-                     </form>
+                        <div class="submit_btn">
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-8">
+                                    {{--                                        <input type="submit" name="submit" value="Submit">--}}
+                                    {!! Form::submit('submit', ['id'=>'submit']) !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        {!! Form::close() !!}
+                    </div>
                 </div>
-           </div>
 
-      </div><!-- row -->
-  </div><!-- container -->
-</div>
+            </div><!-- row -->
+        </div><!-- container -->
+    </div>
 
 @endsection
 
 @push('custom_js')
-
+    <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
+    <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
 @endpush

@@ -40,6 +40,7 @@ Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile
 
 Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
+    Route::post('/property-requirements/store', 'RequirementController@store')->name('property-requirements.store');
 
     Route::get('/owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
     Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
@@ -49,6 +50,7 @@ Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::post('listings/store', 'ListingController@store')->name('listings.store');
     Route::get('listings/{id}/edit', 'ListingController@edit')->name('listings.edit');
     Route::post('listings/{id}/update', 'ListingController@update')->name('listings.update');
+    Route::get('listings/{id}/delete', 'ListingController@delete')->name('listings.delete');
 
     Route::get('ajax-listings-delete_img/{id}', 'ListingController@deleteListingImage')->name('listings.delete_img');
     Route::get('ajax-get-property-type/{id}', 'ListingController@getPropertyType')->name('get.property_type');

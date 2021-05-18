@@ -79,6 +79,19 @@
                                 {!! $errors->first('message', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
+
+                            <div class="col-12 form-group {!! $errors->has('message') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    <input type="hidden" name="randtotal" id="randtotal">
+                                    <p>
+                                        <span id="random1"></span>
+                                        <span>&nbsp;+&nbsp;</span>
+                                        <span id="random2"></span> = ?
+{{--                                        <input type="number" class="form-control" id="usernumber" name="capt" oninput="checkInputValCapt(this)" required placeholder="result...">--}}
+                                        {!! Form::number('capt', old('capt'), ['id'=>'usernumber' ,'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'result...'],'oninput','checkInputValCapt(this);') !!}
+                                    </p>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 {!! Form::submit('Submit Your Message', ['id'=>'submit']) !!}
                             </div>
@@ -99,7 +112,7 @@
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
     <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     {--!! Toastr::message() !!--}
-    <script>
+    {{--<script>
         function differentProblem() {
             randomNum1 = Math.floor((Math.random() * 10) + 1);
             randomNum2 = Math.floor((Math.random() * 10) + 1);
@@ -123,6 +136,99 @@
         $(document).ready(function () {
             differentProblem();
         });
+
+    </script>--}}
+
+    <script>
+
+        //Function for a Numbers(Replacing anything old) and emptying the input value
+        function differentProblem() {
+            randomNum1 = Math.floor((Math.random() * 10) + 1);
+            randomNum2 = Math.floor((Math.random() * 10) + 1);
+            $("#random1").empty().append(randomNum1);
+            $("#random2").empty().append(randomNum2);
+            $("#usernumber").val("");
+        }
+
+        //Check to see if the user field is equal to the math total
+        function check() {
+
+            if (typeof (tc) == 'undefined') {
+                flag = false;
+                $('.tcl').addClass('err');
+                $(this).focus();
+                return false;
+
+            }
+
+            humanNumber = $('#usernumber').val();
+            randomTotal = randomNum1 + randomNum2;
+            if (randomTotal == humanNumber) {
+                // alert("Number is right.");
+                //This would run a php script if the answer was correct...
+                //$.get("somepage.php");
+                // return false;
+
+            } else if (humanNumber == "") {
+                flag = false;
+                $(this).focus();
+                $('#usernumber').addClass('err-input');
+                // alert("Please enter an answer.");
+                return false;
+            } else {
+                flag = false;
+                timesWrong = timesWrong + 1;
+                if (timesWrong => 5) {
+                    alert("You're too stupid and shouldn't be doing this. I'm taking it away.");
+                    return false;
+                } else {
+                    alert("Number is wrong. Wrong " + timesWrong + " time" + timesWrongPlural() + ".");
+                    differentProblem();
+                    return false;
+                }
+            }
+
+
+            if (true == flag) {
+                e.preventDefault();
+            }
+
+
+        }
+
+        function checkInputPass(e) {
+            if ($(e).val().length < 8) {
+                $(e).addClass('err-input');
+            } else {
+                $(e).removeClass('err-input');
+            }
+        }
+
+        function checkInputVal(e) {
+            if ('' == $(e).val()) {
+                $(e).addClass('err-input');
+            } else {
+                $(e).removeClass('err-input');
+            }
+        }
+
+        function checkInputValCapt(e) {
+            humanNumber = $(e).val();
+            randomTotal = randomNum1 + randomNum2;
+            $("#randtotal").val(randomTotal);
+            if (randomTotal == humanNumber) {
+                $(e).removeClass('err-input');
+            } else {
+                $(e).addClass('err-input');
+            }
+        }
+
+
+        //Running a first time to get numbers set
+        $(document).ready(function () {
+            differentProblem();
+        });
+
 
     </script>
 @endpush

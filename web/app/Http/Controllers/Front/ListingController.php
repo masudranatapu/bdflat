@@ -67,6 +67,15 @@ class ListingController extends Controller
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    public function delete($id)
+    {
+        $this->resp = $this->listingsModel->postDelete($id);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
     public function edit($id)
     {
         $data = array();

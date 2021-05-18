@@ -298,5 +298,36 @@ class Listings extends Model
         return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
     }
 
+    public function postDelete($id)
+    {
+        DB::beginTransaction();
+        try {
+            Listings::where('PK_NO',$id)->delete();
+
+            ListingVariants::where('F_LISTING_NO',$id)->delete();
+
+            $images = ListingImages::where('F_LISTING_NO',$id)->get();
+            foreach ($images as $item){
+                if(\File::exists(public_path($item->IMAGE_PATH))){
+                    \File::delete(public_path($item->IMAGE_PATH));
+                }
+                if(\File::exists(public_path($item->THUMB_PATH))){
+                    \File::delete(public_path($item->THUMB_PATH));
+                }
+            }
+            ListingImages::where('F_LISTING_NO',$id)->delete();
+
+            ListingAdditionalInfo::where('F_LISTING_NO',$id)->delete();
+
+        } catch (\Exception $e) {
+             dd($e);
+            DB::rollback();
+            return $this->formatResponse(false, 'Your listings not updated successfully !', 'listings.create');
+        }
+        DB::commit();
+
+        return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
+    }
+
 
 }

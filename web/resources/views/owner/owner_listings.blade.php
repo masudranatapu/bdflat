@@ -31,35 +31,45 @@ $listings = $data['listing'] ?? [];
                                 </div>
 
                                 <!-- product -->
-                                @foreach($listings as $listing)
-                                    <div class="property-product mb-2">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-3">
-                                                <div class="property-bx">
-                                                    <a href="details.html"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
-                                                </div>
-                                                @if($listing->IS_FEATURE==1)
-                                                    <div class="featured">
-                                                        <div class="feature-text">
-                                                            <span>Featured</span>
-                                                        </div>
+                                @if($listings->count()>0)
+                                    @foreach($listings as $listing)
+                                        <div class="property-product mb-2">
+                                            <div class="row no-gutters position-relative">
+                                                <div class="col-3">
+                                                    <div class="property-bx">
+                                                        <a href="details.html"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100"
+                                                                                    alt="image"></a>
                                                     </div>
-                                                @endif
-                                            </div>
-                                            <div class="col-9 position-static">
-                                                <h5 class="mt-0"><a href="details.html">{{$listing->TITLE}}</a></h5>
-                                                <a href="#" class="location"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                <div class="owner-info">
-                                                    <ul>
-                                                        <li><i class="fa fa-edit"></i><a href="{{route('listings.edit',$listing->PK_NO)}}">Edit</a></li>
-                                                        <li><i class="fa fa-times"></i><a href="#">Delete</a></li>
-                                                        <li class="float-right"><i class="fa fa-check"></i></li>
-                                                    </ul>
+                                                    @if($listing->IS_FEATURE==1)
+                                                        <div class="featured">
+                                                            <div class="feature-text">
+                                                                <span>Featured</span>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <div class="col-9 position-static">
+                                                    <h5 class="mt-0"><a href="details.html">{{$listing->TITLE}}</a></h5>
+                                                    <a href="#" class="location"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
+                                                    <div class="owner-info">
+                                                        <ul>
+                                                            <li><i class="fa fa-edit"></i><a href="{{route('listings.edit',$listing->PK_NO)}}">Edit</a></li>
+                                                            <li><i class="fa fa-times"></i><a href="{{route('listings.delete',$listing->PK_NO)}}"
+                                                                                              onclick="return confirm('Are You Sure To Delete This?')">Delete</a></li>
+                                                            <li class="float-right"><i class="fa fa-check"></i></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    @endforeach
+                                @else
+                                    <div class="row no-gutters">
+                                        <div class="col-12">
+                                            <h6 class="font-weight-bold text-danger text-center">No Data Found!</h6>
+                                        </div>
                                     </div>
-                                @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
