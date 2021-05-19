@@ -7,6 +7,20 @@
 
 <?php
 $property_types = $data['property_type'] ?? [];
+$row = $data['row'] ?? [];
+
+if (!empty($data['row']->BEDROOM)) {
+    $bedrooms = json_decode($data['row']->BEDROOM) ?? [];
+} else {
+    $bedrooms = [];
+}
+
+if (!empty($data['row']->PROPERTY_CONDITION)) {
+    $prop_cond = json_decode($data['row']->PROPERTY_CONDITION) ?? [];
+} else {
+    $prop_cond = [];
+}
+
 ?>
 
 @section('content')
@@ -29,7 +43,8 @@ $property_types = $data['property_type'] ?? [];
                             <h3>Property Requirements</h3>
                         </div>
                     {{ $errors }}
-                    {!! Form::open([ 'route' => 'property-requirements.store', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
+
                     <!-- city & location -->
                         <div class="select-city" data-toggle="modal" data-target="#exampleModal">
                             <h4>
@@ -155,9 +170,9 @@ $property_types = $data['property_type'] ?? [];
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8 property-looking">
                                 <div class="controls">
-                                    {!! Form::radio('itemCon','buy', old('itemCon'),[ 'id' => 'buy','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('itemCon','buy', !empty($row)?$row->PROPERTY_FOR=='buy'?true:false:old('itemCon'),[ 'id' => 'buy','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('buy','Buy') }}
-                                    {!! Form::radio('itemCon','rent', old('itemCon'),[ 'id' => 'rent','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('itemCon','rent', !empty($row)?$row->PROPERTY_FOR=='rent'?true:false:old('itemCon'),[ 'id' => 'rent','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('rent','Rent') }}
                                     {!! $errors->first('itemCon', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
@@ -169,7 +184,7 @@ $property_types = $data['property_type'] ?? [];
                             {{ Form::label('property_type','Property Type:',['class' => 'col-sm-4 label-title']) }}
                             <div class="col-md-8">
                                 <div class="controls">
-                                    {!! Form::select('property_type', $property_types,null,['id'=>'property-type','class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::select('property_type', $property_types,!empty($row)?$row->F_PROPERTY_TYPE_NO:null,['id'=>'property-type','class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
                                     {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -183,7 +198,7 @@ $property_types = $data['property_type'] ?? [];
                                     <div class="col-5">
                                         <div class="property-form {!! $errors->has('minimum_size') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('minimum_size', old('minimum_size'), ['id'=>'minimum_size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('minimum_size', !empty($row)?$row->MIN_SIZE:old('minimum_size'), ['id'=>'minimum_size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('minimum_size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -196,7 +211,7 @@ $property_types = $data['property_type'] ?? [];
                                     <div class="col-5">
                                         <div class="property-form {!! $errors->has('maximum_size') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('maximum_size', old('maximum_size'), ['id'=>'maximum_size', 'class' => 'form-control',  'placeholder' => 'Maximum Size','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('maximum_size',!empty($row)?$row->MAX_SIZE:old('maximum_size'), ['id'=>'maximum_size', 'class' => 'form-control',  'placeholder' => 'Maximum Size','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('maximum_size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -213,7 +228,7 @@ $property_types = $data['property_type'] ?? [];
                                     <div class="col-5">
                                         <div class="property-form">
                                             <div class="controls">
-                                                {!! Form::number('minimum_budget', old('minimum_budget'), ['id'=>'minimum_budget', 'class' => 'form-control',  'placeholder' => 'Minimum Budget','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('minimum_budget',!empty($row)?$row->MIN_BUDGET:old('minimum_budget'), ['id'=>'minimum_budget', 'class' => 'form-control',  'placeholder' => 'Minimum Budget','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('minimum_budget', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -226,7 +241,7 @@ $property_types = $data['property_type'] ?? [];
                                     <div class="col-5">
                                         <div class="property-form">
                                             <div class="controls">
-                                                {!! Form::number('maximum_budget', old('maximum_budget'), ['id'=>'maximum_budget', 'class' => 'form-control',  'placeholder' => 'Maximum Budget','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('maximum_budget', !empty($row)?$row->MAX_BUDGET:old('maximum_budget'), ['id'=>'maximum_budget', 'class' => 'form-control',  'placeholder' => 'Maximum Budget','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('maximum_budget', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -243,24 +258,29 @@ $property_types = $data['property_type'] ?? [];
                             <div class="col-md-8 {!! $errors->has('rooms') ? 'error' : '' !!}">
                                 <div class="controls">
                                     <label for="any">
-                                        {!! Form::checkbox('rooms','any', old('rooms'),[ 'id' => 'any','class' =>'form-check-input']) !!}Any
+                                        {!! Form::checkbox('rooms[]','any',!empty($bedrooms)? in_array('any',$bedrooms)?true:false:old('rooms'),[ 'id' => 'any','class' =>'form-check-input']) !!}
+                                        Any
                                         <span class="checkmark"></span>
                                     </label>
 
                                     <label for="1bed">
-                                        {!! Form::checkbox('rooms','1bed', old('rooms'),[ 'id' => '1bed','class' =>'form-check-input']) !!}1
+                                        {!! Form::checkbox('rooms[]','1bed', !empty($bedrooms)? in_array('1bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '1bed','class' =>'form-check-input']) !!}
+                                        1
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="2bed">
-                                        {!! Form::checkbox('rooms','2bed', old('rooms'),[ 'id' => '2bed','class' =>'form-check-input']) !!}2
+                                        {!! Form::checkbox('rooms[]','2bed', !empty($bedrooms)? in_array('2bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '2bed','class' =>'form-check-input']) !!}
+                                        2
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="3bed">
-                                        {!! Form::checkbox('rooms','3bed', old('rooms'),[ 'id' => '3bed','class' =>'form-check-input']) !!}3
+                                        {!! Form::checkbox('rooms[]','3bed', !empty($bedrooms)? in_array('3bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '3bed','class' =>'form-check-input']) !!}
+                                        3
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="4plus">
-                                        {!! Form::checkbox('rooms','4plus', old('rooms'),[ 'id' => '4plus' ,'class' =>'form-check-input']) !!}4 +
+                                        {!! Form::checkbox('rooms[]','4plus', !empty($bedrooms)? in_array('4plus',$bedrooms)?true:false:old('rooms'),[ 'id' => '4plus' ,'class' =>'form-check-input']) !!}
+                                        4 +
                                         <span class="checkmark"></span>
                                     </label>
                                     {!! $errors->first('rooms', '<label class="help-block text-danger">:message</label>') !!}
@@ -274,22 +294,25 @@ $property_types = $data['property_type'] ?? [];
                             <div class="col-md-8 property-checkbox {!! $errors->has('condition') ? 'error' : '' !!}">
                                 <div class="controls">
                                     <label for="ready">
-                                        {!! Form::checkbox('condition','ready', old('condition'),[ 'id' => 'ready' ,'class' =>'form-check-input']) !!}Ready
+                                        {!! Form::checkbox('condition[]','ready', !empty($bedrooms)? in_array('ready',$prop_cond)?true:false:old('condition'),[ 'id' => 'ready' ,'class' =>'form-check-input']) !!}
+                                        Ready
                                         <span class="checkmark"></span>
                                     </label>
-
                                     <label for="semi">
-                                        {!! Form::checkbox('condition','semi', old('condition'),[ 'id' => 'semi' ,'class' =>'form-check-input']) !!}Semi Ready
+                                        {!! Form::checkbox('condition[]','semi', !empty($bedrooms)? in_array('semi',$prop_cond)?true:false:old('condition'),[ 'id' => 'semi' ,'class' =>'form-check-input']) !!}
+                                        Semi Ready
                                         <span class="checkmark"></span>
                                     </label>
 
                                     <label for="ongoing">
-                                        {!! Form::checkbox('condition','ongoing', old('condition'),[ 'id' => 'ongoing' ,'class' =>'form-check-input']) !!}Ongoing
+                                        {!! Form::checkbox('condition[]','ongoing', !empty($bedrooms)? in_array('ongoing',$prop_cond)?true:false:old('condition'),[ 'id' => 'ongoing' ,'class' =>'form-check-input']) !!}
+                                        Ongoing
                                         <span class="checkmark"></span>
                                     </label>
 
                                     <label for="used">
-                                        {!! Form::checkbox('condition','used', old('condition'),[ 'id' => 'used' ,'class' =>'form-check-input']) !!}Used
+                                        {!! Form::checkbox('condition[]','used', !empty($bedrooms)? in_array('used',$prop_cond)?true:false:old('condition'),[ 'id' => 'used' ,'class' =>'form-check-input']) !!}
+                                        Used
                                         <span class="checkmark"></span>
                                     </label>
                                     {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
@@ -302,7 +325,7 @@ $property_types = $data['property_type'] ?? [];
                             {{ Form::label(null,'Requirement Details',['class' => 'col-sm-4 label-title']) }}
                             <div class="col-md-8">
                                 <div class="controls">
-                                    {!! Form::textarea('requirement_details', old('requirement_details'), ['rows'=>'6', 'id'=>'requirement_details','class' => 'form-control', 'placeholder' => 'Type Heree']) !!}
+                                    {!! Form::textarea('requirement_details', !empty($row)?$row->REQUIREMENT_DETAILS:old('requirement_details'), ['rows'=>'6', 'id'=>'requirement_details','class' => 'form-control', 'placeholder' => 'Type Heree']) !!}
                                     {!! $errors->first('requirement_details', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -314,7 +337,7 @@ $property_types = $data['property_type'] ?? [];
                             <div class="col-md-8">
                                 <div class="size-form {!! $errors->has('time') ? 'error' : '' !!}">
                                     <div class="controls">
-                                        {!! Form::time('time', old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required']) !!}
+                                        {!! Form::time('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required']) !!}
                                         {!! $errors->first('time', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
@@ -325,13 +348,13 @@ $property_types = $data['property_type'] ?? [];
                             <label class="col-md-4 label-title">Email Alert</label>
                             <div class="col-md-8 {!! $errors->has('alert') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('alert','daily', old('alert'),[ 'id' => 'daily','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('alert','daily',!empty($row)? $row->EMAIL_ALERT=='daily'?true:false:old('alert'),[ 'id' => 'daily','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('daily','Daily') }}
 
-                                    {!! Form::radio('alert','weekly', old('alert'),[ 'id' => 'weekly','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('alert','weekly', !empty($row)? $row->EMAIL_ALERT=='weekly'?true:false:old('alert'),[ 'id' => 'weekly','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('weekly','Weekly') }}
 
-                                    {!! Form::radio('alert','monthly', old('alert'),[ 'id' => 'monthly','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('alert','monthly', !empty($row)? $row->EMAIL_ALERT=='monthly'?true:false:old('alert'),[ 'id' => 'monthly','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('monthly','Monthly') }}
                                     {!! $errors->first('alert', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
@@ -361,4 +384,28 @@ $property_types = $data['property_type'] ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+
+    <script>
+        $("#any").on('click', function () {
+            if ($(this).prop("checked") == true) {
+                $("#1bed").prop("checked", false);
+                $("#1bed").attr("disabled", true);
+
+                $("#2bed").prop("checked", false);
+                $("#2bed").attr("disabled", true);
+
+                $("#3bed").prop("checked", false);
+                $("#3bed").attr("disabled", true);
+
+                $("#4plus").prop("checked", false);
+                $("#4plus").attr("disabled", true);
+            } else {
+                $("#1bed").attr("disabled", false);
+                $("#2bed").attr("disabled", false);
+                $("#3bed").attr("disabled", false);
+                $("#4plus").attr("disabled", false);
+            }
+
+        });
+    </script>
 @endpush

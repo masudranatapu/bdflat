@@ -32,16 +32,16 @@ class RequirementController extends Controller
     {
         $data = array();
         $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+        $data['row'] = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
         return view('seeker.my_requirement',compact('data'));
     }
 
-    public function store(ProductRequirementsRequest $request)
+    public function storeOrUpdate(ProductRequirementsRequest $request)
     {
-        $this->resp = $this->prdRequirementsModel->store($request);
+        $this->resp = $this->prdRequirementsModel->storeOrUpdate($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
-
 }

@@ -40,7 +40,7 @@ Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile
 
 Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
-    Route::post('/property-requirements/store', 'RequirementController@store')->name('property-requirements.store');
+    Route::post('/property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
 
     Route::get('/owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
     Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');

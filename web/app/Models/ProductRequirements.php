@@ -40,27 +40,49 @@ class ProductRequirements extends Model
         'VERIFIED_AT',
     ];
 
-    public function store($request)
+    public function storeOrUpdate($request)
     {
         DB::beginTransaction();
         try {
-            $list                           = new ProductRequirements();
-            $list->PROPERTY_FOR             = $request->itemCon;
-            $list->F_PROPERTY_TYPE_NO       = $request->property_type;
-            $list->MIN_SIZE                 = $request->minimum_size;
-            $list->MAX_SIZE                 = $request->maximum_size;
-            $list->MIN_BUDGET               = $request->minimum_budget;
-            $list->MAX_BUDGET               = $request->maximum_budget;
-            $list->BEDROOM                  = $request->rooms;
-            $list->PROPERTY_CONDITION       = $request->condition;
-            $list->REQUIREMENT_DETAILS      = $request->requirement_details;
-            $list->PREP_CONT_TIME           = $request->time;
-            $list->EMAIL_ALERT              = $request->alert;
-            $list->CREATED_AT               = Carbon::now();
-            $list->CREATED_BY               = Auth::user()->PK_NO;
-            $list->MODIFYED_AT              = Carbon::now();
-            $list->MODIFYED_BY              = Auth::user()->PK_NO;
-            $list->save();
+            $check = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
+            if ($check!=null){
+                $list                           = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
+                $list->PROPERTY_FOR             = $request->itemCon;
+                $list->F_PROPERTY_TYPE_NO       = $request->property_type;
+                $list->MIN_SIZE                 = $request->minimum_size;
+                $list->MAX_SIZE                 = $request->maximum_size;
+                $list->MIN_BUDGET               = $request->minimum_budget;
+                $list->MAX_BUDGET               = $request->maximum_budget;
+                $list->BEDROOM                  = json_encode($request->rooms);
+                $list->PROPERTY_CONDITION       = json_encode($request->condition);
+                $list->REQUIREMENT_DETAILS      = $request->requirement_details;
+                $list->PREP_CONT_TIME           = $request->time;
+                $list->EMAIL_ALERT              = $request->alert;
+                $list->CREATED_AT               = Carbon::now();
+                $list->CREATED_BY               = Auth::user()->PK_NO;
+                $list->MODIFYED_AT              = Carbon::now();
+                $list->MODIFYED_BY              = Auth::user()->PK_NO;
+                $list->update();
+            }else{
+                $list                           = new ProductRequirements();
+                $list->PROPERTY_FOR             = $request->itemCon;
+                $list->F_PROPERTY_TYPE_NO       = $request->property_type;
+                $list->MIN_SIZE                 = $request->minimum_size;
+                $list->MAX_SIZE                 = $request->maximum_size;
+                $list->MIN_BUDGET               = $request->minimum_budget;
+                $list->MAX_BUDGET               = $request->maximum_budget;
+                $list->BEDROOM                  = json_encode($request->rooms);
+                $list->PROPERTY_CONDITION       = json_encode($request->condition);
+                $list->REQUIREMENT_DETAILS      = $request->requirement_details;
+                $list->PREP_CONT_TIME           = $request->time;
+                $list->EMAIL_ALERT              = $request->alert;
+                $list->CREATED_AT               = Carbon::now();
+                $list->CREATED_BY               = Auth::user()->PK_NO;
+                $list->MODIFYED_AT              = Carbon::now();
+                $list->MODIFYED_BY              = Auth::user()->PK_NO;
+                $list->save();
+            }
+
 
         } catch (\Exception $e) {
              dd($e);
