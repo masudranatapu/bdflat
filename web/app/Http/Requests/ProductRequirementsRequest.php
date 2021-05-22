@@ -26,16 +26,17 @@ class ProductRequirementsRequest extends FormRequest
     {
         // dd(1);
         $rules = [
-            'itemCon'           => 'required',
-            'property_type'     => 'required|integer',
-            'minimum_size'      => 'required|integer',
-            'maximum_size'      => 'required|integer',
-            'minimum_budget'    => 'required|integer',
-            'maximum_budget'    => 'required|integer',
-            'rooms'             => 'required',
-            'condition'         => 'required',
-            'time'              => 'required',
-            'alert'             => 'required',
+            'itemCon'               => 'required',
+            'property_type'         => 'required|integer',
+            'minimum_size'          => 'required|integer',
+            'maximum_size'          => 'required|integer',
+            'minimum_budget'        => 'required|integer',
+            'maximum_budget'        => 'required|integer',
+            'rooms'                 => 'required',
+            'condition'             => 'required',
+            'time'                  => 'required',
+            'requirement_details'   => 'max:1000',
+            'alert'                 => 'required',
         ];
 
         return $rules;

@@ -39,7 +39,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
                 <div class="col-sm-12 col-md-8">
                     <div class="requirement">
-                        <div class="property-title mb-4">
+                        <div class="property-title mb-2">
                             <h3>Property Requirements</h3>
                         </div>
                     {{ $errors }}
@@ -198,7 +198,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                     <div class="col-5">
                                         <div class="property-form {!! $errors->has('minimum_size') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('minimum_size', !empty($row)?$row->MIN_SIZE:old('minimum_size'), ['id'=>'minimum_size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('minimum_size', !empty($row)?$row->MIN_SIZE:old('minimum_size'), ['id'=>'minimum_size','max'=>'', 'data-validation-max-message'=>'Minimum Size may not be greater than Maximum Size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('minimum_size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -228,7 +228,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                     <div class="col-5">
                                         <div class="property-form">
                                             <div class="controls">
-                                                {!! Form::number('minimum_budget',!empty($row)?$row->MIN_BUDGET:old('minimum_budget'), ['id'=>'minimum_budget', 'class' => 'form-control',  'placeholder' => 'Minimum Budget','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('minimum_budget',!empty($row)?$row->MIN_BUDGET:old('minimum_budget'), ['id'=>'minimum_budget','max'=>'', 'data-validation-max-message'=>'Minimum Budget may not be greater than Maximum Budget', 'class' => 'form-control',  'placeholder' => 'Minimum Budget','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('minimum_budget', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -325,7 +325,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                             {{ Form::label(null,'Requirement Details',['class' => 'col-sm-4 label-title']) }}
                             <div class="col-md-8">
                                 <div class="controls">
-                                    {!! Form::textarea('requirement_details', !empty($row)?$row->REQUIREMENT_DETAILS:old('requirement_details'), ['rows'=>'6', 'id'=>'requirement_details','class' => 'form-control', 'placeholder' => 'Type Heree']) !!}
+                                    {!! Form::textarea('requirement_details', !empty($row)?$row->REQUIREMENT_DETAILS:old('requirement_details'), ['rows'=>'6', 'maxlength'=>'1000', 'data-validation-maxlength-message'=>'Requirement Details may not be greater than 1000 characters', 'id'=>'requirement_details','class' => 'form-control', 'placeholder' => 'Type Here']) !!}
                                     {!! $errors->first('requirement_details', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -407,5 +407,29 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             }
 
         });
+
+        var max_size  = $("#maximum_size");
+        var min_size  = $("#minimum_size");
+
+        var max_budget  = $("#maximum_budget");
+        var min_budget  = $("#minimum_budget");
+
+        $( document ).ready(function() {
+            min_size.attr('max',max_size.val());
+            min_budget.attr('max',max_budget.val());
+        });
+
+
+        min_size.on('keyup', function () {
+            max_size.val('');
+            min_size.attr('max',max_size.val());
+        });
+
+        min_budget.on('keyup', function () {
+            max_budget.val('');
+            min_budget.attr('max',max_budget.val());
+        });
+
+
     </script>
 @endpush
