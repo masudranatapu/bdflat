@@ -41,6 +41,7 @@ Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile
 Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
     Route::post('/property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
+    Route::get('property-requirements/get_area/{id}', 'RequirementController@getArea')->name('property-requirements.get_area');
 
     Route::get('/owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
     Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');

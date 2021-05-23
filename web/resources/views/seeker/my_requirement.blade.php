@@ -8,6 +8,7 @@
 <?php
 $property_types = $data['property_type'] ?? [];
 $row = $data['row'] ?? [];
+$cities = $data['city'] ?? [];
 
 if (!empty($data['row']->BEDROOM)) {
     $bedrooms = json_decode($data['row']->BEDROOM) ?? [];
@@ -45,10 +46,13 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                     {{ $errors }}
                     {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
+                    {!! Form::hidden('f_city_id',null,[ 'id' => 'f_city_id']) !!}
+                    {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id']) !!}
+
                     <!-- city & location -->
                         <div class="select-city" data-toggle="modal" data-target="#exampleModal">
                             <h4>
-                                <i class="fa fa-map-marker"></i>Select location / City<br/>
+                                <i class="fa fa-map-marker"></i><span id="show_cityArea">Select location / City</span><br/>
                                 <i class="fa fa-angle-right float-right"></i>
                             </h4>
                         </div>
@@ -59,7 +63,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                Select City or Division | <a href="#">All of Bangladesh</a>
+                                                Select City or Division | <a href="javascript:void(0);" id="all_bd">All of Bangladesh</a>
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -67,95 +71,33 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-12">
+                                                <div class="col-6">
                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
                                                         <div class="city_title">
                                                             <h3><i class="fa fa-tags"></i>Cities</h3>
                                                         </div>
-                                                        <a class="nav-link" id="v-pills-dhaka-tab" data-toggle="pill" href="#v-pills-dhaka" role="tab"
-                                                           aria-controls="v-pills-dhaka" aria-selected="true">Dhaka <i class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-chattogram-tab" data-toggle="pill" href="#v-pills-chattogram" role="tab"
-                                                           aria-controls="v-pills-chattogram" aria-selected="false">Chattogram<i
-                                                                class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-sylhet-tab" data-toggle="pill" href="#v-pills-sylhet" role="tab"
-                                                           aria-controls="v-pills-sylhet" aria-selected="false">Messages<i class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-khulna-tab" data-toggle="pill" href="#v-pills-khulna" role="tab"
-                                                           aria-controls="v-pills-khulna" aria-selected="false">Khulna<i class="fa fa-angle-right float-right"></i></a>
+                                                        <div>
+                                                            <ul>
+                                                                @foreach($cities as $item)
+                                                                    <li>
+                                                                        <a class="nav-link city_id" href="javascript:void(0);"
+                                                                           data-id="{{$item->PK_NO}}">{{$item->CITY_NAME}}<i
+                                                                                class="fa fa-angle-right float-right"></i></a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-12">
-                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">
-                                                        <div class="backcategory">
-                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
+                                                <div class="col-6">
+                                                    <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                        <div class="city_title" id="area_title" style="display: none">
+                                                            <h3><i class="fa fa-tags"></i>Areas</h3>
                                                         </div>
-                                                        <div class="tab-pane fade show" id="v-pills-dhaka" role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Dhaka</h3>
-                                                                    <ul>
-                                                                        <li><a href="#">Mohammadpur</a></li>
-                                                                        <li><a href="#">Mogbazar</a></li>
-                                                                        <li><a href="#">Banglamotor</a></li>
-                                                                        <li><a href="#">Uttara</a></li>
-                                                                        <li><a href="#">Elephant Road</a></li>
-                                                                        <li><a href="#">Savar</a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-chattogram" role="tabpanel" aria-labelledby="v-pills-chattogram-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Chattogram</h3>
-                                                                    <ul>
-                                                                        <li><a href="#">Mohammadpur</a></li>
-                                                                        <li><a href="#">Mogbazar</a></li>
-                                                                        <li><a href="#">Banglamotor</a></li>
-                                                                        <li><a href="#">Uttara</a></li>
-                                                                        <li><a href="#">Elephant Road</a></li>
-                                                                        <li><a href="#">Savar</a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-sylhet" role="tabpanel" aria-labelledby="v-pills-sylhet-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Sylhet</h3>
-                                                                    <ul>
-                                                                        <li><a href="#">Mohammadpur</a></li>
-                                                                        <li><a href="#">Mogbazar</a></li>
-                                                                        <li><a href="#">Banglamotor</a></li>
-                                                                        <li><a href="#">Uttara</a></li>
-                                                                        <li><a href="#">Elephant Road</a></li>
-                                                                        <li><a href="#">Savar</a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-khulna" role="tabpanel" aria-labelledby="v-pills-khulna-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Khulna</h3>
-                                                                    <ul>
-                                                                        <li><a href="#">Mohammadpur</a></li>
-                                                                        <li><a href="#">Mogbazar</a></li>
-                                                                        <li><a href="#">Banglamotor</a></li>
-                                                                        <li><a href="#">Uttara</a></li>
-                                                                        <li><a href="#">Elephant Road</a></li>
-                                                                        <li><a href="#">Savar</a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <ul id="show_areas">
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -408,26 +350,55 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
         });
 
-        var max_size  = $("#maximum_size");
-        var min_size  = $("#minimum_size");
+        var max_size = $("#maximum_size");
+        var min_size = $("#minimum_size");
 
-        var max_budget  = $("#maximum_budget");
-        var min_budget  = $("#minimum_budget");
+        var max_budget = $("#maximum_budget");
+        var min_budget = $("#minimum_budget");
 
-        $( document ).ready(function() {
-            min_size.attr('max',max_size.val());
-            min_budget.attr('max',max_budget.val());
+        $(document).ready(function () {
+            min_size.attr('max', max_size.val());
+            min_budget.attr('max', max_budget.val());
         });
 
 
         min_size.on('keyup', function () {
             max_size.val('');
-            min_size.attr('max',max_size.val());
+            min_size.attr('max', max_size.val());
         });
 
         min_budget.on('keyup', function () {
             max_budget.val('');
-            min_budget.attr('max',max_budget.val());
+            min_budget.attr('max', max_budget.val());
+        });
+
+        $(".city_id").on('click', function () {
+            var id = $(this).data('id');
+            $("#f_city_id").val(id);
+            $(".city_id").removeClass('active');
+            $(this).addClass('active');
+
+            $("#show_cityArea").text($(this).text());
+            $.ajax({
+                url: "property-requirements/get_area/" + id,
+                method: 'GET',
+                success: function (data) {
+                    $("#area_title").css('display','block');
+                    $("#show_areas").html(data.html);
+                }
+            });
+        });
+
+        $("#all_bd").on('click', function () {
+            $("#show_cityArea").text('Select location / City');
+        });
+
+        $(document).on("click", ".area_select", function(event){
+            var old_text = $("#show_cityArea").text();
+            $("#show_cityArea").text(old_text + ' > ' + $(this).text());
+            $(this).addClass('active');
+            $("#f_area_id").val($(this).data('id'));
+            $( ".close" ).trigger( "click" );
         });
 
 
