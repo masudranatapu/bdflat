@@ -426,6 +426,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
         });
 
         var basepath = $('#base_url').val();
+        console.log(basepath);
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();

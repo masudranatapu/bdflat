@@ -4,6 +4,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequirementsRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
+use App\Models\Area;
+use App\Models\City;
 use App\Models\ProductRequirements;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
@@ -33,6 +35,7 @@ class RequirementController extends Controller
         $data = array();
         $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
         $data['row'] = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
+        $data['city'] = City::select('CITY_NAME', 'PK_NO')->get();
         return view('seeker.my_requirement',compact('data'));
     }
 
@@ -43,5 +46,17 @@ class RequirementController extends Controller
         $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
+    public function getArea($id)
+    {
+        $html = '';
+        $areas = Area::where('F_CITY_NO', $id)->select('AREA_NAME', 'PK_NO')->get();
+        foreach ($areas as $item) {
+            $html .= '<li>
+                        <a class="nav-link area_select" href="javascript:void(0);" data-id="'.$item->PK_NO.'">'.$item->AREA_NAME.'</a>
+                      </li>';
+            }
+        return response()->json(['html' => $html]);
     }
 }
