@@ -68,7 +68,8 @@ Route::get('/varified-properties', 'UserController@getVarifiedProperties')->name
 Route::get('/contacted-properties', 'UserController@getContactedProperties')->name('contacted-properties');
 Route::get('/browsed-properties', 'UserController@getBrowsedProperties')->name('browsed-properties');
 Route::get('/recharge-balance', 'UserController@getRechargeBalance')->name('recharge-balance');
-Route::get('/refund-request', 'UserController@getRefundRequest')->name('refund-request');
+Route::get('/refund-request/{id}', 'UserController@getRefundRequest')->name('refund-request');
+Route::post('/refund-request/store', 'UserController@customerRefundStore')->name('refund-request.store');
 
 
 Auth::routes();

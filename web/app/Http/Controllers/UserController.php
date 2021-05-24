@@ -1,7 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
+use App\Models\CustomerRefund;
+use App\Models\Listings;
 use Illuminate\Http\Request;
 use App\User;
 use Toastr;
@@ -13,10 +16,11 @@ class UserController extends Controller
     protected $user;
 
 
-    public function __construct(User $user)
+    public function __construct(User $user,CustomerRefund $customerRefund)
     {
         $this->middleware('auth');
-        $this->userModel    = $user;
+        $this->userModel                = $user;
+        $this->customerRefundModel      = $customerRefund;
 
     }
 
@@ -71,8 +75,9 @@ class UserController extends Controller
     }
     public function getContactedProperties(Request $request)
     {
-         $data = array();
-        //$data['city_combo'] = $this->city->getCityCombo();
+        $data = array();
+        $data['product_list'] = Listings::select('TITLE','CITY_NAME','AREA_NAME','PK_NO', 'IS_FEATURE')->get();
+//        dd($data['product_list']);
         return view('seeker.contacted_properties',compact('data'));
     }
     public function getBrowsedProperties(Request $request)
@@ -87,13 +92,21 @@ class UserController extends Controller
         //$data['city_combo'] = $this->city->getCityCombo();
         return view('seeker.recharge_balance',compact('data'));
     }
-    public function getRefundRequest(Request $request)
+    public function getRefundRequest(Request $request, $id)
     {
-         $data = array();
-        //$data['city_combo'] = $this->city->getCityCombo();
+        $data = array();
+        $data['product_list_details'] = Listings::where('PK_NO',$id)->select('CODE','CITY_NAME','AREA_NAME','PK_NO', 'IS_FEATURE')->first();
         return view('seeker.refund_request',compact('data'));
     }
 
+    public function customerRefundStore(CustomerRefundRequest $request)
+    {
+        $this->resp = $this->customerRefundModel->store($request);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
 
 
 }

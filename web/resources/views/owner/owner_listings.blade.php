@@ -37,7 +37,7 @@ $listings = $data['listing'] ?? [];
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-3">
                                                     <div class="property-bx">
-                                                        <a href="details.html"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100"
+                                                        <a href="#"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100"
                                                                                     alt="image"></a>
                                                     </div>
                                                     @if($listing->IS_FEATURE==1)
@@ -50,7 +50,7 @@ $listings = $data['listing'] ?? [];
                                                 </div>
                                                 <div class="col-9 position-static">
                                                     <h5 class="mt-0"><a href="details.html">{{$listing->TITLE}}</a></h5>
-                                                    <a href="#" class="location"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
+                                                    <a href="#" class="location"><i class="fa fa-map-marker"></i>{{$listing->AREA_NAME}}, {{$listing->CITY_NAME}}</a>
                                                     <div class="owner-info">
                                                         <ul>
                                                             <li><i class="fa fa-edit"></i><a href="{{route('listings.edit',$listing->PK_NO)}}">Edit</a></li>

@@ -521,7 +521,6 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                 success: function (data) {
                     if (data == 'A'){
                         $("#p_type").val(data);
-                        $(".size_placeholder").text('(Apartment)');
                         $(".bathroom_div").css('display','block');
                         $(".bedroom_div").css('display','block');
                         $(".floor_div").css('display','flex');
@@ -529,7 +528,6 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                         $("#size").attr('placeholder','Size In sft');
                     }else if (data == 'B'){
                         $("#p_type").val(data);
-                        $(".size_placeholder").text('(Office/Shop/Warehouse/Industrial Space/Garage)');
                         $(".bathroom_div").css('display','none');
                         $(".bedroom_div").css('display','none');
                         $(".floor_div").css('display','flex');
@@ -537,7 +535,6 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                         $("#size").attr('placeholder','Size In sft');
                     }else if(data == 'C'){
                         $("#p_type").val(data);
-                        $(".size_placeholder").text('(Land)');
                         $(".bathroom_div").css('display','none');
                         $(".bedroom_div").css('display','none');
                         $(".floor_div").css('display','none');
