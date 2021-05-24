@@ -108,5 +108,18 @@ class UserController extends Controller
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    public function paymentHistory(Request $request)
+    {
+        $data = array();
+        // $this->resp = $this->userModel->paymentHistory($request);
+        // $msg        = $this->resp->msg;
+        // $msg_title  = $this->resp->msg_title;
+        // Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        // return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+         return view('seeker.payment_history',compact('data'));
+    }
+
+    
+
 
 }

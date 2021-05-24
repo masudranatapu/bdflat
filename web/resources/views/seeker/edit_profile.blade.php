@@ -1,7 +1,6 @@
 @extends('layouts.app')
-
+@section('my-account','active')
 @push('custom_css')
-
 
 @endpush
 

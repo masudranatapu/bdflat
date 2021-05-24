@@ -70,6 +70,7 @@ Route::get('/browsed-properties', 'UserController@getBrowsedProperties')->name('
 Route::get('/recharge-balance', 'UserController@getRechargeBalance')->name('recharge-balance');
 Route::get('/refund-request/{id}', 'UserController@getRefundRequest')->name('refund-request');
 Route::post('/refund-request/store', 'UserController@customerRefundStore')->name('refund-request.store');
+Route::get('/payment-history', 'UserController@paymentHistory')->name('payment-history');
 
 
 Auth::routes();

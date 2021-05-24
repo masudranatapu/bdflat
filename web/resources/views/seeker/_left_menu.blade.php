@@ -12,6 +12,7 @@
             <li><a href="{{route('contacted-properties')}}"  class="@yield('contacted-properties')">Contacted Properties</a></li>
             <li><a href="{{route('browsed-properties')}}"  class="@yield('browsed-properties')">Browsed Properties</a></li>
             <li><a href="{{route('recharge-balance')}}"  class="@yield('recharge-balance')">Recharge Balance</a></li>
+            <li><a href="{{route('payment-history')}}"  class="@yield('payment-history')">Payment History</a></li>
         </ul>
         <div class="logout-btn mt-3">
             <a class="nav-link"  href="{{ route('logout') }}"
