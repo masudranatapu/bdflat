@@ -12,13 +12,6 @@
             <li><a href="{{route('contacted-properties')}}"  class="@yield('contacted-properties')">Contacted Properties</a></li>
             <li><a href="{{route('browsed-properties')}}"  class="@yield('browsed-properties')">Browsed Properties</a></li>
             <li><a href="{{route('recharge-balance')}}"  class="@yield('recharge-balance')">Recharge Balance</a></li>
-            <li><a href="insufficient-balance.html">Insufficient balance</a></li>
-            <li><a href="pay-now.html">Pay Now</a></li>
-            <li><a href="sms-verification.html">SMS Verification</a></li>
-            <li><a href="submitted.html">requirement Submitted</a></li>
-            <li><a href="verified-massege.html">Verified Massege</a></li>
-            <li><a href="refund.html">Refund</a></li>
-            <li><a href="submission-message.html">Submission</a></li>
         </ul>
         <div class="logout-btn mt-3">
             <a class="nav-link"  href="{{ route('logout') }}"

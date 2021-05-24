@@ -87,6 +87,13 @@ class UserController extends Controller
         //$data['city_combo'] = $this->city->getCityCombo();
         return view('seeker.recharge_balance',compact('data'));
     }
+    public function getRefundRequest(Request $request)
+    {
+         $data = array();
+        //$data['city_combo'] = $this->city->getCityCombo();
+        return view('seeker.refund_request',compact('data'));
+    }
+
 
 
 }

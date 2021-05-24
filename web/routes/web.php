@@ -52,6 +52,8 @@ Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
     Route::post('listings/{id}/update', 'ListingController@update')->name('listings.update');
     Route::get('listings/{id}/delete', 'ListingController@delete')->name('listings.delete');
 
+
+
     Route::get('ajax-listings-delete_img/{id}', 'ListingController@deleteListingImage')->name('listings.delete_img');
     Route::get('ajax-get-property-type/{id}', 'ListingController@getPropertyType')->name('get.property_type');
     Route::get('ajax-get-available-floor', 'ListingController@getAvailableFloor')->name('get.available.floor');
@@ -65,6 +67,7 @@ Route::get('/varified-properties', 'UserController@getVarifiedProperties')->name
 Route::get('/contacted-properties', 'UserController@getContactedProperties')->name('contacted-properties');
 Route::get('/browsed-properties', 'UserController@getBrowsedProperties')->name('browsed-properties');
 Route::get('/recharge-balance', 'UserController@getRechargeBalance')->name('recharge-balance');
+Route::get('/refund-request', 'UserController@getRefundRequest')->name('refund-request');
 
 
 Auth::routes();
