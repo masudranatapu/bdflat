@@ -50,20 +50,79 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                     {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id']) !!}
 
                     <!-- city & location -->
-                        <div class="select-city" data-toggle="modal" data-target="#exampleModal">
+                        {{--<div class="select-city" data-toggle="modal" data-target="#exampleModal">
                             <h4>
                                 <i class="fa fa-map-marker"></i><span id="show_cityArea">Select location / City</span><br/>
                                 <i class="fa fa-angle-right float-right"></i>
                             </h4>
+                        </div>--}}
+                        <div class="select-city" data-toggle="modal" data-target="#exampleModal">
+                            <h4>
+                                <i class="fa fa-map-marker"></i>Select location / City<br/>
+                                <i class="fa fa-angle-right float-right"></i>
+                            </h4>
                         </div>
-                        <!-- city &  locations -->
+                        {{-- <!-- city &  locations -->
+                         <div class="city-location">
+                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                 <div class="modal-dialog">
+                                     <div class="modal-content">
+                                         <div class="modal-header">
+                                             <h5 class="modal-title" id="exampleModalLabel">
+                                                 Select City or Division | <a href="javascript:void(0);" id="all_bd">All of Bangladesh</a>
+                                             </h5>
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                 <span aria-hidden="true">&times;</span>
+                                             </button>
+                                         </div>
+                                         <div class="modal-body">
+                                             <div class="row">
+                                                 <div class="col-6">
+                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                                                         <div class="city_title">
+                                                             <h3><i class="fa fa-tags"></i>Cities</h3>
+                                                         </div>
+                                                         <div>
+                                                             <ul>
+                                                                 @foreach($cities as $item)
+                                                                     <li>
+                                                                         <a class="nav-link city_id" href="javascript:void(0);"
+                                                                            data-id="{{$item->PK_NO}}">{{$item->CITY_NAME}}<i
+                                                                                 class="fa fa-angle-right float-right"></i></a>
+                                                                     </li>
+                                                                 @endforeach
+                                                             </ul>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                                 <div class="col-6">
+                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                         <div class="city_title" id="area_title" style="display: none">
+                                                             <h3><i class="fa fa-tags"></i>Areas</h3>
+                                                         </div>
+                                                         <ul id="show_areas">
+                                                         </ul>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>--}}
+
+                    <!--
+            ============ city &  locations ============
+          -->
                         <div class="city-location">
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                Select City or Division | <a href="javascript:void(0);" id="all_bd">All of Bangladesh</a>
+                                                Select City or Division | <a href="#">All of Bangladesh</a>
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -71,33 +130,103 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-12">
                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
                                                         <div class="city_title">
                                                             <h3><i class="fa fa-tags"></i>Cities</h3>
                                                         </div>
-                                                        <div>
-                                                            <ul>
-                                                                @foreach($cities as $item)
-                                                                    <li>
-                                                                        <a class="nav-link city_id" href="javascript:void(0);"
-                                                                           data-id="{{$item->PK_NO}}">{{$item->CITY_NAME}}<i
-                                                                                class="fa fa-angle-right float-right"></i></a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                                        <a class="nav-link" id="v-pills-dhaka-tab" data-toggle="pill" href="#v-pills-dhaka" role="tab"
+                                                           aria-controls="v-pills-dhaka" aria-selected="true">Dhaka <i class="fa fa-angle-right float-right"></i></a>
+
+                                                        <a class="nav-link" id="v-pills-chattogram-tab" data-toggle="pill" href="#v-pills-chattogram" role="tab"
+                                                           aria-controls="v-pills-chattogram" aria-selected="false">Chattogram<i
+                                                                class="fa fa-angle-right float-right"></i></a>
+
+                                                        <a class="nav-link" id="v-pills-sylhet-tab" data-toggle="pill" href="#v-pills-sylhet" role="tab"
+                                                           aria-controls="v-pills-sylhet" aria-selected="false">Sylhet<i class="fa fa-angle-right float-right"></i></a>
+
+                                                        <a class="nav-link" id="v-pills-khulna-tab" data-toggle="pill" href="#v-pills-khulna" role="tab"
+                                                           aria-controls="v-pills-khulna" aria-selected="false">Khulna<i class="fa fa-angle-right float-right"></i></a>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
-                                                    <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                        <div class="city_title" id="area_title" style="display: none">
-                                                            <h3><i class="fa fa-tags"></i>Areas</h3>
+                                                <div class="col-12">
+                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">
+                                                        <div class="backcategory">
+                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
                                                         </div>
-                                                        <ul id="show_areas">
-                                                        </ul>
+                                                        <div class="tab-pane fade show" id="v-pills-dhaka" role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Dhaka</h3>
+                                                                    <form class="attireCodeToggleBlock" action="">
+                                                                        <select class="multipleSelect form-control" multiple name="area">
+                                                                            <option value="Afghanistan">Mohammadpur</option>
+                                                                            <option value="Albania">Mogbazar</option>
+                                                                            <option value="Algeria">Banglamotor</option>
+                                                                            <option value="Andorra">Uttara</option>
+                                                                            <option value="Belize">Elephant Road</option>
+                                                                            <option value="Egypt">Savar</option>
+                                                                        </select>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="tab-pane fade" id="v-pills-chattogram" role="tabpanel" aria-labelledby="v-pills-chattogram-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Chattogram</h3>
+                                                                    <form class="attireCodeToggleBlock" action="">
+                                                                        <select class="multipleSelect form-control" multiple name="area">
+                                                                            <option value="Afghanistan">Mohammadpur</option>
+                                                                            <option value="Albania">Mogbazar</option>
+                                                                            <option value="Algeria">Banglamotor</option>
+                                                                            <option value="Andorra">Uttara</option>
+                                                                            <option value="Belize">Elephant Road</option>
+                                                                            <option value="Egypt">Savar</option>
+                                                                        </select>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="tab-pane fade" id="v-pills-sylhet" role="tabpanel" aria-labelledby="v-pills-sylhet-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Sylhet</h3>
+                                                                    <form class="attireCodeToggleBlock" action="">
+                                                                        <select class="multipleSelect form-control" multiple name="area">
+                                                                            <option value="Afghanistan">Mohammadpur</option>
+                                                                            <option value="Albania">Mogbazar</option>
+                                                                            <option value="Algeria">Banglamotor</option>
+                                                                            <option value="Andorra">Uttara</option>
+                                                                            <option value="Belize">Elephant Road</option>
+                                                                            <option value="Egypt">Savar</option>
+                                                                        </select>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="tab-pane fade" id="v-pills-khulna" role="tabpanel" aria-labelledby="v-pills-khulna-tab">
+                                                            <div class="city-wrap">
+                                                                <div class="city-list">
+                                                                    <h3><i class="fa fa-map-marker"></i>Khulna</h3>
+                                                                    <form class="attireCodeToggleBlock" action="">
+                                                                        <select class="multipleSelect form-control" multiple name="area">
+                                                                            <option value="Afghanistan">Mohammadpur</option>
+                                                                            <option value="Albania">Mogbazar</option>
+                                                                            <option value="Algeria">Banglamotor</option>
+                                                                            <option value="Andorra">Uttara</option>
+                                                                            <option value="Belize">Elephant Road</option>
+                                                                            <option value="Egypt">Savar</option>
+                                                                        </select>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -383,7 +512,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                 url: "property-requirements/get_area/" + id,
                 method: 'GET',
                 success: function (data) {
-                    $("#area_title").css('display','block');
+                    $("#area_title").css('display', 'block');
                     $("#show_areas").html(data.html);
                 }
             });
@@ -393,12 +522,12 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             $("#show_cityArea").text('Select location / City');
         });
 
-        $(document).on("click", ".area_select", function(event){
+        $(document).on("click", ".area_select", function (event) {
             var old_text = $("#show_cityArea").text();
             $("#show_cityArea").text(old_text + ' > ' + $(this).text());
             $(this).addClass('active');
             $("#f_area_id").val($(this).data('id'));
-            $( ".close" ).trigger( "click" );
+            $(".close").trigger("click");
         });
 
 
