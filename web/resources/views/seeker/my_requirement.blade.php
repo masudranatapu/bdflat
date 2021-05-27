@@ -113,130 +113,9 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                              </div>
                          </div>--}}
 
-                    <!--
-            ============ city &  locations ============
-          -->
-                        <div class="city-location">
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">
-                                                Select City or Division | <a href="#">All of Bangladesh</a>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
-                                                        <div class="city_title">
-                                                            <h3><i class="fa fa-tags"></i>Cities</h3>
-                                                        </div>
-                                                        <a class="nav-link" id="v-pills-dhaka-tab" data-toggle="pill" href="#v-pills-dhaka" role="tab"
-                                                           aria-controls="v-pills-dhaka" aria-selected="true">Dhaka <i class="fa fa-angle-right float-right"></i></a>
 
-                                                        <a class="nav-link" id="v-pills-chattogram-tab" data-toggle="pill" href="#v-pills-chattogram" role="tab"
-                                                           aria-controls="v-pills-chattogram" aria-selected="false">Chattogram<i
-                                                                class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-sylhet-tab" data-toggle="pill" href="#v-pills-sylhet" role="tab"
-                                                           aria-controls="v-pills-sylhet" aria-selected="false">Sylhet<i class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-khulna-tab" data-toggle="pill" href="#v-pills-khulna" role="tab"
-                                                           aria-controls="v-pills-khulna" aria-selected="false">Khulna<i class="fa fa-angle-right float-right"></i></a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">
-                                                        <div class="backcategory">
-                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
-                                                        </div>
-                                                        <div class="tab-pane fade show" id="v-pills-dhaka" role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Dhaka</h3>
-                                                                    <form class="attireCodeToggleBlock" action="">
-                                                                        <select class="multipleSelect form-control" multiple name="area">
-                                                                            <option value="Afghanistan">Mohammadpur</option>
-                                                                            <option value="Albania">Mogbazar</option>
-                                                                            <option value="Algeria">Banglamotor</option>
-                                                                            <option value="Andorra">Uttara</option>
-                                                                            <option value="Belize">Elephant Road</option>
-                                                                            <option value="Egypt">Savar</option>
-                                                                        </select>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-chattogram" role="tabpanel" aria-labelledby="v-pills-chattogram-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Chattogram</h3>
-                                                                    <form class="attireCodeToggleBlock" action="">
-                                                                        <select class="multipleSelect form-control" multiple name="area">
-                                                                            <option value="Afghanistan">Mohammadpur</option>
-                                                                            <option value="Albania">Mogbazar</option>
-                                                                            <option value="Algeria">Banglamotor</option>
-                                                                            <option value="Andorra">Uttara</option>
-                                                                            <option value="Belize">Elephant Road</option>
-                                                                            <option value="Egypt">Savar</option>
-                                                                        </select>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-sylhet" role="tabpanel" aria-labelledby="v-pills-sylhet-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Sylhet</h3>
-                                                                    <form class="attireCodeToggleBlock" action="">
-                                                                        <select class="multipleSelect form-control" multiple name="area">
-                                                                            <option value="Afghanistan">Mohammadpur</option>
-                                                                            <option value="Albania">Mogbazar</option>
-                                                                            <option value="Algeria">Banglamotor</option>
-                                                                            <option value="Andorra">Uttara</option>
-                                                                            <option value="Belize">Elephant Road</option>
-                                                                            <option value="Egypt">Savar</option>
-                                                                        </select>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-khulna" role="tabpanel" aria-labelledby="v-pills-khulna-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Khulna</h3>
-                                                                    <form class="attireCodeToggleBlock" action="">
-                                                                        <select class="multipleSelect form-control" multiple name="area">
-                                                                            <option value="Afghanistan">Mohammadpur</option>
-                                                                            <option value="Albania">Mogbazar</option>
-                                                                            <option value="Algeria">Banglamotor</option>
-                                                                            <option value="Andorra">Uttara</option>
-                                                                            <option value="Belize">Elephant Road</option>
-                                                                            <option value="Egypt">Savar</option>
-                                                                        </select>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Looking property for -->
+                    <!-- Looking property for -->
                         <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8 property-looking">
@@ -432,6 +311,68 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                             </div>
                         </div>
 
+
+                        <div class="city-location">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                Select City or Division | <a href="#">All of Bangladesh</a>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                                                        <div class="city_title">
+                                                            <h3><i class="fa fa-tags"></i>Cities</h3>
+                                                        </div>
+                                                        @foreach($cities as $item)
+                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab" data-toggle="pill" data-id="{{$item->PK_NO}}"
+                                                               href="#v-pills-{{$item->PK_NO}}" role="tab"
+                                                               aria-controls="v-pills-dhaka" aria-selected="true">{{$item->CITY_NAME}}<i
+                                                                    class="fa fa-angle-right float-right"></i></a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">
+                                                        <div class="backcategory">
+                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
+                                                        </div>
+                                                        <div id="show_area">
+                                                            <div class="tab-pane fade show" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
+                                                                <div class="city-wrap">
+                                                                    <div class="city-list">
+                                                                        <h3><i class="fa fa-map-marker"></i><span id="city_title"></span></h3>
+                                                                        <select class="multipleSelect form-control" multiple name="area[]" id="area">
+                                                                            {{--<option value="Afghanistan">Mohammadpur</option>
+                                                                            <option value="Albania">Mogbazar</option>
+                                                                            <option value="Algeria">Banglamotor</option>
+                                                                            <option value="Andorra">Uttara</option>
+                                                                            <option value="Belize">Elephant Road</option>
+                                                                            <option value="Egypt">Savar</option>--}}
+                                                                        </select>
+                                                                        {{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'multipleSelect form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="submit_btn">
                             <div class="row">
                                 <div class="col-4"></div>
@@ -529,7 +470,36 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             $("#f_area_id").val($(this).data('id'));
             $(".close").trigger("click");
         });
+    </script>
+
+    <script>
+        // modal control
+        $(document).on('click', '.modalcategory .nav-link', function () {
+            var id = $(this).data('id');
+            $('.modalcategory').hide();
+            $('.modalsubcategory').show();
+            $('.backcategory').show();
+            $('#city_title').text($(this).text());
+            $.ajax({
+                url: "property-requirements/get_area/" + id,
+                method: 'GET',
+                success: function (data) {
+                    $.each(data.html, function (key, value) {
+                        var option = new Option(value, key);
+                        $("#area").append(option);
+                    });
+                }
+            });
+        });
+
+        $(document).on('click', '.backcategory', function () {
+
+            $('.fstChoiceRemove').trigger('click');
+            $('.modalsubcategory').hide();
+            $('.modalcategory').show();
+        });
 
 
+        $('.multipleSelect').fastselect();
     </script>
 @endpush

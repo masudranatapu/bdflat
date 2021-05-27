@@ -48,8 +48,8 @@ class ProductRequirements extends Model
             if ($check!=null){
                 $list                           = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
                 $list->PROPERTY_FOR             = $request->itemCon;
-                $list->	F_CITY_NO               = $request->f_city_id;
-                $list->	F_AREAS                 = $request->f_area_id;
+                $list->F_CITY_NO                = $request->f_city_id;
+                $list->F_AREAS                  = json_encode($request->area);
                 $list->F_PROPERTY_TYPE_NO       = $request->property_type;
                 $list->MIN_SIZE                 = $request->minimum_size;
                 $list->MAX_SIZE                 = $request->maximum_size;

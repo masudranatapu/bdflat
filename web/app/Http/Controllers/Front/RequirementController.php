@@ -50,13 +50,7 @@ class RequirementController extends Controller
 
     public function getArea($id)
     {
-        $html = '';
-        $areas = Area::where('F_CITY_NO', $id)->select('AREA_NAME', 'PK_NO')->get();
-        foreach ($areas as $item) {
-            $html .= '<li>
-                        <a class="nav-link area_select" href="javascript:void(0);" data-id="'.$item->PK_NO.'">'.$item->AREA_NAME.'</a>
-                      </li>';
-            }
+        $html = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
         return response()->json(['html' => $html]);
     }
 }

@@ -9,7 +9,7 @@
   <script src="{{asset('/assets/js/fastselect.standalone.js?v=0') }}"></script>
 {{--  <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>--}}
   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-  <script src="{{asset('/assets/js/owl.carousel.min.js?v=0') }}"></script>\
+  <script src="{{asset('/assets/js/owl.carousel.min.js?v=0') }}"></script>
   <script src="{{asset('/assets/js/hc-offcanvas-nav.js?ver=6.1.1') }}"></script>
   <script src="{{asset('/assets/js/plugins.js?v=0') }}"></script>
   <script src="{{asset('/assets/js/main.js?v=0') }}"></script>
