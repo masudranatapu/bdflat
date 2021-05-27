@@ -351,15 +351,10 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                                                 <div class="city-wrap">
                                                                     <div class="city-list">
                                                                         <h3><i class="fa fa-map-marker"></i><span id="city_title"></span></h3>
-                                                                        <select class="multipleSelect form-control" multiple name="area[]" id="area">
-                                                                            {{--<option value="Afghanistan">Mohammadpur</option>
-                                                                            <option value="Albania">Mogbazar</option>
-                                                                            <option value="Algeria">Banglamotor</option>
-                                                                            <option value="Andorra">Uttara</option>
-                                                                            <option value="Belize">Elephant Road</option>
-                                                                            <option value="Egypt">Savar</option>--}}
+                                                                        <select class="select2 form-control" multiple name="area[]" id="area">
+                                                                            
                                                                         </select>
-                                                                        {{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'multipleSelect form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
+                                                                        {{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -398,6 +393,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
 
     <script>
+        var base_url = $('#base_url').val();
         $("#any").on('click', function () {
             if ($(this).prop("checked") == true) {
                 $("#1bed").prop("checked", false);
@@ -479,27 +475,48 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             $('.modalcategory').hide();
             $('.modalsubcategory').show();
             $('.backcategory').show();
-            $('#city_title').text($(this).text());
+            $('#city_title').text($(this).text()); 
+            $("#area").empty();
+             $('.select2').select2();
+
             $.ajax({
-                url: "property-requirements/get_area/" + id,
-                method: 'GET',
+                type :'GET',
+                headers: {},
+                data:{},
+                url: base_url+"/property-requirements/get_area/" + id,
+                async :true,
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                },
                 success: function (data) {
+                    if(data.status == 'success' ){
                     $.each(data.html, function (key, value) {
                         var option = new Option(value, key);
                         $("#area").append(option);
                     });
+                    } else {
+                        alert('Something wrong');
+                    }
+                },
+                complete: function (data){
+                    
+                    $("body").css("cursor", "default");
+
+
                 }
             });
+
+            
         });
 
         $(document).on('click', '.backcategory', function () {
-
-            $('.fstChoiceRemove').trigger('click');
+            $('.select2').select2();
+           // $('.fstChoiceRemove').trigger('click');
             $('.modalsubcategory').hide();
             $('.modalcategory').show();
         });
 
 
-        $('.multipleSelect').fastselect();
+        $('.select2').select2();
     </script>
 @endpush

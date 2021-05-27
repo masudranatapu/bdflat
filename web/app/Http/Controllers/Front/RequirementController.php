@@ -50,7 +50,12 @@ class RequirementController extends Controller
 
     public function getArea($id)
     {
-        $html = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
-        return response()->json(['html' => $html]);
+        $html = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO'); 
+        if($html){
+            return response()->json(['html' => $html, 'status' => 'success']);  
+        }else{
+            return response()->json(['html' => [], 'status' => 'faild']);  
+        }
+       
     }
 }
