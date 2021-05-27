@@ -66,9 +66,6 @@ $user_data = $data['user_data'] ?? [];
                             <tr>
                                 <td class="label">Photo:</td>
                                 <td>
-                                    {{--<label class="upload-image" for="upload-image-one">
-                                        <input type="file" id="upload-image-one">
-                                    </label>--}}
                                     <div class="form-group {!! $errors->has('image') ? 'error' : '' !!}">
                                         <div class="controls">
                                             <label class="upload-image" for="upload-image-one">

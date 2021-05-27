@@ -65,7 +65,7 @@ class UserController extends Controller
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
-    public function passwordUpdateProfile(UserRequest $request)
+    public function passwordUpdateProfile(Request $request)
     {
         $this->resp = $this->userModel->passwordUpdate($request);
         $msg = $this->resp->msg;
@@ -97,7 +97,7 @@ class UserController extends Controller
     {
         $data = array();
         $data['product_list'] = Listings::select('TITLE','CITY_NAME','AREA_NAME','PK_NO', 'IS_FEATURE')->get();
-//        dd($data['product_list']);
+//        dd($data['product_list']->getListingVariants);
         return view('seeker.contacted_properties',compact('data'));
     }
     public function getBrowsedProperties(Request $request)
@@ -140,6 +140,21 @@ class UserController extends Controller
     }
 
 
+    public function getVariants($id)
+    {
+        $data = Listings::where('PK_NO',$id)->first();
+        $output = '';
+        foreach ($data->getListingVariants as $item){
+            $output.='
+                <tr>
+                  <td>'.$item->BEDROOM.' Bed</td>
+                  <td>'.$item->BATHROOM.' Bath</td>
+                  <td>'.$item->TOTAL_PRICE.'</td>
+                </tr>
+            ';
+        }
+        return response()->json($output);
+    }
 
 
 }

@@ -69,6 +69,14 @@ class Listings extends Model
         return $this->hasOne('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO')->Where('IS_DEFAULT',1);
     }
 
+    public function getListingVariant() {
+        return $this->hasOne('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO')->Where('IS_DEFAULT',1);
+    }
+
+    public function getListingVariants() {
+        return $this->hasMany('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO');
+    }
+
 
     public function store($request)
     {
@@ -118,12 +126,19 @@ class Listings extends Model
                     $bathroom   = 0;
                 }
 
+                if ($key == 0) {
+                    $is_default = 1;
+                } else {
+                    $is_default = 0;
+                }
+
                 $data = array(
                     'F_LISTING_NO'          => $list->PK_NO,
                     'PROPERTY_SIZE'         => $request->size[$key],
                     'BEDROOM'               => $bedroom,
                     'BATHROOM'              => $bathroom,
                     'TOTAL_PRICE'           => $request->price[$key],
+                    'IS_DEFAULT'            => $is_default,
                 );
                 ListingVariants::insert($data);
             }
