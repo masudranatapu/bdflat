@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\CustomerRefund;
 use App\Models\Listings;
 use Illuminate\Http\Request;
@@ -45,6 +46,7 @@ class UserController extends Controller
         $user_id = Auth::user()->PK_NO;
         $user_type = Auth::user()->USER_TYPE;
         $data = array();
+        $data['user_data'] = User::where('PK_NO',$user_id)->first();
         if($user_type == 1){
             $view = 'seeker.edit_profile';
         }else{
@@ -52,6 +54,24 @@ class UserController extends Controller
         }
         //$data['city_combo'] = $this->city->getCityCombo();
         return view($view,compact('data'));
+    }
+
+    public function storeOrUpdateProfile(UserRequest $request)
+    {
+        $this->resp = $this->userModel->storeOrUpdate($request);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
+    public function passwordUpdateProfile(UserRequest $request)
+    {
+        $this->resp = $this->userModel->passwordUpdate($request);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
 
@@ -119,7 +139,7 @@ class UserController extends Controller
          return view('seeker.payment_history',compact('data'));
     }
 
-    
+
 
 
 }

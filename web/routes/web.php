@@ -37,8 +37,13 @@ Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privac
 //user routes
 Route::get('/my-account', 'UserController@getMyAccount')->name('my-account');
 Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile');
+Route::post('/edit-profile/store_or_update', 'UserController@storeOrUpdateProfile')->name('edit-profile.store_or_update');
+Route::post('/edit-profile/password_update', 'UserController@passwordUpdateProfile')->name('edit-profile.password_update');
 
 Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
+
+
+
     Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
     Route::post('/property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
     Route::get('property-requirements/get_area/{id}', 'RequirementController@getArea')->name('property-requirements.get_area');
