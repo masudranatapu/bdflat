@@ -34,15 +34,22 @@ Route::get('/terms-conditions', 'CommonController@getTermsConditions')->name('te
 Route::get('/site-map', 'CommonController@getSiteMap')->name('site-map');
 Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy-policy');
 
-//user routes
-Route::get('/my-account', 'UserController@getMyAccount')->name('my-account');
-Route::get('/edit-profile', 'UserController@getEditProfile')->name('edit-profile');
-Route::post('/edit-profile/store_or_update', 'UserController@storeOrUpdateProfile')->name('edit-profile.store_or_update');
-Route::post('/edit-profile/password_update', 'UserController@passwordUpdateProfile')->name('edit-profile.password_update');
-
-Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
 
 
+Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
+    Route::get('/suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');
+    Route::get('/varified-properties', 'SeekerController@getVarifiedProperties')->name('varified-properties');
+    Route::get('/contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');
+    Route::get('/browsed-properties', 'SeekerController@getBrowsedProperties')->name('browsed-properties');
+    Route::get('/recharge-balance', 'SeekerController@getRechargeBalance')->name('recharge-balance');
+    Route::get('/refund-request/{id}', 'SeekerController@getRefundRequest')->name('refund-request');
+    Route::post('/refund-request/store', 'SeekerController@customerRefundStore')->name('refund-request.store');
+    Route::get('/payment-history', 'SeekerController@paymentHistory')->name('payment-history');
+    Route::get('ajax-get-variants/{id}', 'SeekerController@getVariants')->name('get-variants');
+
+});
+
+Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
 
     Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
     Route::post('/property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
@@ -68,16 +75,10 @@ Route::group(['namespace' => 'Front', 'middleware' => ['auth']], function () {
 });
 
 
-Route::get('/suggested-properties', 'UserController@getSuggestedProperties')->name('suggested-properties');
-Route::get('/varified-properties', 'UserController@getVarifiedProperties')->name('varified-properties');
-Route::get('/contacted-properties', 'UserController@getContactedProperties')->name('contacted-properties');
-Route::get('/browsed-properties', 'UserController@getBrowsedProperties')->name('browsed-properties');
-Route::get('/recharge-balance', 'UserController@getRechargeBalance')->name('recharge-balance');
-Route::get('/refund-request/{id}', 'UserController@getRefundRequest')->name('refund-request');
-Route::post('/refund-request/store', 'UserController@customerRefundStore')->name('refund-request.store');
-Route::get('/payment-history', 'UserController@paymentHistory')->name('payment-history');
-
-Route::get('ajax-get-variants/{id}', 'UserController@getVariants')->name('get-variants');
+Route::get('/my-account', 'UserController@getMyAccount')->name('my-account');
+Route::get('/profile/edit', 'UserController@getEditProfile')->name('profile.edit');
+Route::post('/profile/store_or_update', 'UserController@updateProfile')->name('profile.store_or_update');
+Route::post('/profile/password_update', 'UserController@updatePass')->name('profile.password_update');
 
 
 Auth::routes();

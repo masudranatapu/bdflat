@@ -31,7 +31,7 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
             <div class="row">
 
                 <div class="col-md-4 mb-5 d-none d-md-block">
-                    @include('seeker._left_menu')
+                    @include('common._left_menu')
                 </div>
 
                 <div class="col-sm-12 col-md-8">

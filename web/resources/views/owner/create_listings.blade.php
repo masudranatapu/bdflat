@@ -45,7 +45,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-5 d-none d-md-block">
-                    @include('owner._left_menu')
+                    @include('common._left_menu')
                 </div>
                 <div class="col-sm-12 col-md-8">
                     {{ $errors }}

@@ -4,7 +4,7 @@
 @endpush
 
 <?php
-$product_lists = $data['product_list'] ?? [];
+$product_lists = $data['rows'] ?? [];
 ?>
 
 @section('content')
@@ -18,7 +18,7 @@ $product_lists = $data['product_list'] ?? [];
             <div class="row">
 
                 <div class="col-md-4 mb-5 d-none d-md-block">
-                    @include('seeker._left_menu')
+                    @include('common._left_menu')
                 </div>
 
                 <div class="col-sm-12 col-md-8">
@@ -30,28 +30,26 @@ $product_lists = $data['product_list'] ?? [];
                                     <h3><a href="my-dashboard.html"><i class="fa fa-long-arrow-left"></i>Contacted Properties</a></h3>
                                 </div>
                                 <!-- product -->
-                                @foreach($product_lists as $item)
-                                    <div class="property-product mb-4">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-4">
-                                                <div class="property-bx">
-                                                    <a href="#"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
+                                @if(isset($product_lists) && count($product_lists) > 0 )
+                                    @foreach($product_lists as $item)
+                                        <div class="property-product mb-4">
+                                            <div class="row no-gutters position-relative">
+                                                <div class="col-4">
+                                                    <div class="property-bx">
+                                                        <a href="#"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 position-static">
+                                                    <h3>TK {{$item->getListingVariant->TOTAL_PRICE ?? 0}} <span class="float-right claim"><a href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a> <i class="fa fa-exclamation-triangle"></i></span></h3>
+                                                    <h5 class="mt-0"><a href="#">{{$item->TITLE}}</a></h5>
+                                                    <h6>{{$item->getListingVariant->BEDROOM}} Bed, {{$item->getListingVariant->BATHROOM}} Bath <a href="javascript:void(0)" data-id="{{$item->PK_NO}}" class="moreVariantBtn">More</a>
+                                                    </h6>
+                                                    <a href="#" class="location"><i class="fa fa-map-marker"></i>{{$item->AREA_NAME}}, {{$item->CITY_NAME}}</a>
                                                 </div>
                                             </div>
-                                            <div class="col-8 position-static">
-                                                <h3>TK {{$item->getListingVariant->TOTAL_PRICE}} <span class="float-right claim"><a
-                                                            href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a> <i
-                                                            class="fa fa-exclamation-triangle"></i></span></h3>
-                                                <h5 class="mt-0"><a href="#">{{$item->TITLE}}</a></h5>
-                                                <h6>{{$item->getListingVariant->BEDROOM}} Bed, {{$item->getListingVariant->BATHROOM}} Bath <a href="#"
-                                                                                                                                              data-id="{{$item->PK_NO}}"
-                                                                                                                                              class="moreVariantBtn">More</a>
-                                                </h6>
-                                                <a href="#" class="location"><i class="fa fa-map-marker"></i>{{$item->AREA_NAME}}, {{$item->CITY_NAME}}</a>
-                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
                             </div>
 
 
@@ -60,9 +58,7 @@ $product_lists = $data['product_list'] ?? [];
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="extra_variantsLabel">
-                                                    More Variants
-                                                </h5>
+                                                <h5 class="modal-title" id="extra_variantsLabel">More Variants</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -79,17 +75,7 @@ $product_lists = $data['product_list'] ?? [];
                                                                     <th>PRICE</th>
                                                                 </tr>
                                                                 </thead>
-                                                                <tbody id="show_variant">
-                                                                {{--@foreach($product_lists as $item)
-                                                                    @foreach($item->getListingVariants as $variant)
-                                                                        <tr>
-                                                                            <td>{{$variant->BEDROOM}} Bed</td>
-                                                                            <td>2 Bath</td>
-                                                                            <td>15000</td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                @endforeach--}}
-                                                                </tbody>
+                                                                <tbody id="show_variant"> </tbody>
                                                             </table>
 
                                                         </div>

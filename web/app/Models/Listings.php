@@ -66,11 +66,11 @@ class Listings extends Model
     ];
 
     public function getDefaultThumb() {
-        return $this->hasOne('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO')->Where('IS_DEFAULT',1);
+        return $this->hasOne('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO')->where('IS_DEFAULT',1);
     }
 
     public function getListingVariant() {
-        return $this->hasOne('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO')->Where('IS_DEFAULT',1);
+        return $this->hasOne('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO')->where('PRD_LISTING_VARIANTS.IS_DEFAULT',1);
     }
 
     public function getListingVariants() {

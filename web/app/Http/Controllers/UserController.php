@@ -27,18 +27,14 @@ class UserController extends Controller
 
     public function getMyAccount(Request $request)
     {
-        $user_id = Auth::user()->PK_NO;
-        $user_type = Auth::user()->USER_TYPE;
-        $data = array();
-        if($user_type == 1){
-            $view = 'seeker.my_account';
-        }elseif($user_type == 2){
-            $view = 'owner.my_account';
-        }else{
-            $view = 'users.my_account';
-        }
+        $data       = array();
+        $user_id    = Auth::user()->PK_NO;
+        $user_type  = Auth::user()->USER_TYPE;
+
+
+        $data['my_balance'] = 0;
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view($view,compact('data'));
+        return view('common.my_account',compact('data'));
     }
 
     public function getEditProfile(Request $request)
@@ -47,27 +43,23 @@ class UserController extends Controller
         $user_type = Auth::user()->USER_TYPE;
         $data = array();
         $data['user_data'] = User::where('PK_NO',$user_id)->first();
-        if($user_type == 1){
-            $view = 'seeker.edit_profile';
-        }else{
-            $view = 'users.edit_profile';
-        }
+
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view($view,compact('data'));
+        return view('common.edit_profile',compact('data'));
     }
 
-    public function storeOrUpdateProfile(UserRequest $request)
+    public function updateProfile(UserRequest $request)
     {
-        $this->resp = $this->userModel->storeOrUpdate($request);
+        $this->resp = $this->userModel->updateProfile($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
-    public function passwordUpdateProfile(Request $request)
+    public function updatePass(Request $request)
     {
-        $this->resp = $this->userModel->passwordUpdate($request);
+        $this->resp = $this->userModel->updatePass($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
@@ -96,8 +88,8 @@ class UserController extends Controller
     public function getContactedProperties(Request $request)
     {
         $data = array();
-        $data['product_list'] = Listings::select('TITLE','CITY_NAME','AREA_NAME','PK_NO', 'IS_FEATURE')->get();
-//        dd($data['product_list']->getListingVariants);
+        $data['rows'] = Listings::select('PK_NO','TITLE','CITY_NAME','AREA_NAME', 'IS_FEATURE')->get();
+    //    dd($data['rows'][0]);
         return view('seeker.contacted_properties',compact('data'));
     }
     public function getBrowsedProperties(Request $request)

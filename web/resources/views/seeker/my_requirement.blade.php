@@ -35,7 +35,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             <div class="row">
 
                 <div class="col-md-4 mb-5 d-none d-md-block">
-                    @include('seeker._left_menu')
+                    @include('common._left_menu')
                 </div>
 
                 <div class="col-sm-12 col-md-8">
@@ -352,7 +352,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                                                     <div class="city-list">
                                                                         <h3><i class="fa fa-map-marker"></i><span id="city_title"></span></h3>
                                                                         <select class="select2 form-control" multiple name="area[]" id="area">
-                                                                            
+
                                                                         </select>
                                                                         {{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
                                                                     </div>
@@ -475,7 +475,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             $('.modalcategory').hide();
             $('.modalsubcategory').show();
             $('.backcategory').show();
-            $('#city_title').text($(this).text()); 
+            $('#city_title').text($(this).text());
             $("#area").empty();
              $('.select2').select2();
 
@@ -499,14 +499,14 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                     }
                 },
                 complete: function (data){
-                    
+
                     $("body").css("cursor", "default");
 
 
                 }
             });
 
-            
+
         });
 
         $(document).on('click', '.backcategory', function () {

@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     }
 
-    public function storeOrUpdate($request)
+    public function updateProfile($request)
     {
         DB::beginTransaction();
         try {
@@ -77,13 +77,13 @@ class User extends Authenticatable
         }catch (\Exception $e){
 //                dd($e);
             DB::rollback();
-            return $this->formatResponse(false, 'Your Profile is not updated successfully !', 'edit-profile');
+            return $this->formatResponse(false, 'Your Profile is not updated successfully !', 'profile.edit');
         }
         DB::commit();
-        return $this->formatResponse(true, 'Your Profile has been updated successfully !', 'edit-profile');
+        return $this->formatResponse(true, 'Your Profile has been updated successfully !', 'profile.edit');
     }
 
-    public function passwordUpdate($request)
+    public function updatePass($request)
     {
         DB::beginTransaction();
         try {
@@ -93,10 +93,10 @@ class User extends Authenticatable
 
         }catch (\Exception $e){
             DB::rollback();
-            return $this->formatResponse(false, 'Password is not updated successfully !', 'edit-profile');
+            return $this->formatResponse(false, 'Password is not updated successfully !', 'profile.edit');
         }
         DB::commit();
-        return $this->formatResponse(true, 'Password has been updated successfully !', 'edit-profile');
+        return $this->formatResponse(true, 'Password has been updated successfully !', 'profile.edit');
     }
 
 
