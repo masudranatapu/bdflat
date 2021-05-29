@@ -35,6 +35,10 @@ Route::get('/site-map', 'CommonController@getSiteMap')->name('site-map');
 Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy-policy');
 
 
+Route::get('/developer-listings', 'CommonController@getDevListings')->name('developer-listings');
+Route::get('/developer-leads', 'CommonController@getdeveloperLeads')->name('developer-leads');
+Route::get('/developer-buy-leads', 'CommonController@getdeveloperBuyLeads')->name('developer-buy-leads');
+Route::get('/developer-payments', 'CommonController@getdeveloperPayments')->name('developer-payments');
 
 Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
     Route::get('/suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\contactRequest;
 use App\Models\ContactForm;
+use App\Models\Listings;
 use Illuminate\Http\Request;
 use App\Category;
 use DB;
@@ -151,8 +152,30 @@ class CommonController extends Controller
 */
 
 
+    public function getDevListings(Request $request)
+    {
+        $data = array();
+        $data['listing'] = Listings::select('LISTING_TYPE','MODIFIED_AT','PROPERTY_FOR','CODE','TITLE', 'CITY_NAME', 'AREA_NAME', 'PK_NO', 'IS_FEATURE')->get();
+        return view('developer.developer_listings', compact('data'));
+    }
 
+    public function getdeveloperLeads(Request $request)
+    {
+        $data = array();
+        return view('developer.developer_leads', compact('data'));
+    }
 
+    public function getdeveloperBuyLeads(Request $request)
+    {
+        $data = array();
+        return view('developer.developer_buy_leads', compact('data'));
+    }
+
+    public function getdeveloperPayments(Request $request)
+    {
+        $data = array();
+        return view('developer.developer_payments', compact('data'));
+    }
 
 
 }

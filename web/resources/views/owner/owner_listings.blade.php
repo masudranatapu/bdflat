@@ -4,7 +4,7 @@
 
 @endpush
 <?php
-    $listings = $data['listing'] ?? [];
+$listings = $data['listing'] ?? [];
 ?>
 
 @section('content')
@@ -37,7 +37,7 @@
                                                 <div class="col-3">
                                                     <div class="property-bx">
                                                         <a href="#"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100"
-                                                                                    alt="image"></a>
+                                                                         alt="image"></a>
                                                     </div>
                                                     @if($listing->IS_FEATURE==1)
                                                         <div class="featured">

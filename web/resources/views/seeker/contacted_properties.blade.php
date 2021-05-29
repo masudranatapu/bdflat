@@ -40,9 +40,12 @@ $product_lists = $data['rows'] ?? [];
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">
-                                                    <h3>TK {{$item->getListingVariant->TOTAL_PRICE ?? 0}} <span class="float-right claim"><a href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a> <i class="fa fa-exclamation-triangle"></i></span></h3>
+                                                    <h3>TK {{$item->getListingVariant->TOTAL_PRICE ?? 0}} <span class="float-right claim"><a
+                                                                href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a> <i
+                                                                class="fa fa-exclamation-triangle"></i></span></h3>
                                                     <h5 class="mt-0"><a href="#">{{$item->TITLE}}</a></h5>
-                                                    <h6>{{$item->getListingVariant->BEDROOM}} Bed, {{$item->getListingVariant->BATHROOM}} Bath <a href="javascript:void(0)" data-id="{{$item->PK_NO}}" class="moreVariantBtn">More</a>
+                                                    <h6>{{--{{$item->getListingVariant->BEDROOM}} Bed, {{$item->getListingVariant->BATHROOM}} Bath--}} <a
+                                                            href="javascript:void(0)" data-id="{{$item->PK_NO}}" class="moreVariantBtn">More</a>
                                                     </h6>
                                                     <a href="#" class="location"><i class="fa fa-map-marker"></i>{{$item->AREA_NAME}}, {{$item->CITY_NAME}}</a>
                                                 </div>
@@ -75,7 +78,7 @@ $product_lists = $data['rows'] ?? [];
                                                                     <th>PRICE</th>
                                                                 </tr>
                                                                 </thead>
-                                                                <tbody id="show_variant"> </tbody>
+                                                                <tbody id="show_variant"></tbody>
                                                             </table>
 
                                                         </div>
@@ -111,6 +114,10 @@ $product_lists = $data['rows'] ?? [];
                     $("#show_variant").append(data);
                 }
             });
+        });
+
+        $(".close").on('click', function () {
+            $("#extra_variants").modal('hide');
         });
     </script>
 @endpush
