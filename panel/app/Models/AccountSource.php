@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class AccountSource extends Model
 {
-    protected $table 		= 'ACC_PAYMENT_SOURCE';
+    protected $table 		= 'ACC_PAYMENT_BANK_ACC';
     protected $primaryKey   = 'PK_NO';
     public $timestamps      = false;
     // const CREATED_AT     = 'create_dttm';
     // const UPDATED_AT     = 'update_dttm';
 
     protected $fillable = [
-        'NAME'
+        'BANK_NAME','BANK_ACC_NAME','BANK_ACC_NO'
     ];
 
     public function getAllSource($type=null){
@@ -23,7 +23,7 @@ class AccountSource extends Model
 
         if($type == 'combo'){
             $response = '';
-            
+
             if ($data) {
                 foreach ($data as $value) {
                     $CODE = '';
@@ -34,7 +34,7 @@ class AccountSource extends Model
                     }
             }else{
                 $response .= '<option value="">No data found</option>';
-            } 
+            }
         }else{
             $response = [];
             if ($data) {
@@ -44,7 +44,7 @@ class AccountSource extends Model
             }
         }
 
-        
+
         return $response;
     }
 
