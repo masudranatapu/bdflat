@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    protected $table 		= 'SLS_CUSTOMERS';
+    protected $table 		= 'WEB_USER';
     protected $primaryKey   = 'PK_NO';
     //public $timestamps      = false;
     const CREATED_AT        = 'SS_CREATED_ON';

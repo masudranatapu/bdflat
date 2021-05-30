@@ -30,7 +30,8 @@ class ProductAbstract implements ProductInterface
 
     public function getPaginatedList($request, int $per_page = 2000)
     {
-        $data = $this->product->where('IS_ACTIVE',1)->orderBy('DEFAULT_NAME','ASC')->get();
+
+        $data = $this->product->where('IS_DELETE',0)->orderBy('PK_NO','ASC')->get();
         return $this->formatResponse(true, '', 'admin', $data);
     }
 

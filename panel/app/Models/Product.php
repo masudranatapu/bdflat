@@ -7,15 +7,13 @@ use DB;
 
 class Product extends Model
 {
-    protected $table        = 'PRD_MASTER_SETUP';
+    protected $table        = 'PRD_LISTINGS';
     protected $primaryKey   = 'PK_NO';
     const CREATED_AT        = 'SS_CREATED_ON';
     const UPDATED_AT        = 'SS_MODIFIED_ON';
 
 
-    protected $fillable = [
-        'F_PRD_SUB_CATEGORY_ID', 'CODE', 'COMPOSITE_CODE', 'DEFAULT_NAME', 'DEFAULT_HS_CODE', 'F_BRAND', 'BRAND_NAME', 'F_MODEL', 'MODEL_NAME', 'DEFAULT_PRICE', 'INSTALLMENT_PRICE'
-    ];
+    protected $fillable = ['CODE', 'PROPERTY_FOR', 'PROPERTY_TYPE', 'PROPERTY_CONDITION'];
 
     public static function boot()
         {

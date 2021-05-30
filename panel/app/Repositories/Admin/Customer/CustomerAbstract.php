@@ -28,7 +28,7 @@ class CustomerAbstract implements CustomerInterface
 
     public function getPaginatedList($request, int $per_page = 5)
     {
-        $data = $this->customer->where('IS_ACTIVE',1)->orderBy('NAME', 'ASC')->get();
+        $data = $this->customer->orderBy('NAME', 'ASC')->get();
         return $this->formatResponse(true, '', 'admin.customer.index', $data);
     }
 

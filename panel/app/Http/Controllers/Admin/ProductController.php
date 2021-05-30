@@ -61,6 +61,7 @@ class ProductController extends BaseController
 
     public function getIndex(Request $request)
     {
+
         $this->resp = $this->productInt->getPaginatedList($request);
         return view('admin.product.index')->withRows($this->resp->data);
     }
