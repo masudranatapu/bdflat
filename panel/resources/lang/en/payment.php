@@ -3,7 +3,7 @@
 return [
     'list_page_title'               => 'Accounts',
     'list_page_title'               => 'Accounts',
-    'list_page_sub_title'           => 'Account Source Card & Method',
+    'list_page_sub_title'           => 'Bank Account List',
     'breadcrumb_title'              => 'Dashboard',
     'breadcrumb_sub_title'          => 'Accounts',
     'product_create_btn'            => 'New Product',

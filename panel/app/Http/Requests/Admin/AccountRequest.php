@@ -24,7 +24,9 @@ class AccountRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'    => 'required',
+            'bank_name'         => 'required',
+            'bank_acc_name'     => 'required',
+            'bank_acc_no'       => 'required',
         ];
 
         return $rules;
@@ -33,7 +35,9 @@ class AccountRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Please enter name!',
+            'bank_name.required'        => 'Please enter bank name!',
+            'bank_acc_name.required'    => 'Please enter bank account name!',
+            'bank_acc_no.required'      => 'Please enter bank account number!',
         ];
     }
 }
