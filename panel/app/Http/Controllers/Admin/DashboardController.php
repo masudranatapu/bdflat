@@ -43,6 +43,7 @@ class DashboardController extends BaseController
     }
 
     public function getIndex() {
+
         $roles = userRolePermissionArray();
         $agent                                  = Auth::user()->F_AGENT_NO;
         $role_id                                = DB::table('SA_USER_GROUP_USERS')
@@ -50,10 +51,11 @@ class DashboardController extends BaseController
                                                     ->join('SA_USER_GROUP_ROLE','SA_USER_GROUP_ROLE.F_USER_GROUP_NO','SA_USER_GROUP_USERS.F_GROUP_NO')
                                                     ->where('SA_USER_GROUP_USERS.F_USER_NO', Auth::user()->PK_NO)
                                                     ->first();
-        $product_master                         = Product::where('IS_ACTIVE',1)->count();
-        $product_variant                        = ProductVariant::where('IS_ACTIVE',1)->count();
-        $product_model                          = ProductModel::where('IS_ACTIVE',1)->count();
-        $product_brand                          = Brand::where('IS_ACTIVE',1)->count();
+
+        $product_master                         = 0;
+        $product_variant                        = 0;
+        $product_model                          = 0;
+        $product_brand                          = 0;
         $today                                  = Carbon::today()->toDateString();
         $last7days                              = Carbon::now()->subDays(7)->toDateString();
         $last30days                             = Carbon::now()->subDays(30)->toDateString();
@@ -61,23 +63,15 @@ class DashboardController extends BaseController
         $this_month                             = Carbon::now()->month;
         $sticky_note                            = DB::table('SS_STICKY_NOTE')->select('NOTE')->first();
 
-        if ($agent > 0) {
-            $customer_count                     = Customer::join('SLS_BOOKING','SLS_BOOKING.F_CUSTOMER_NO','SLS_CUSTOMERS.PK_NO')
-                                                            ->select('SLS_BOOKING.PK_NO')
-                                                            ->where('SLS_BOOKING.F_BOOKING_SALES_AGENT_NO',$agent)
-                                                            ->where('SLS_CUSTOMERS.IS_ACTIVE',1)
-                                                            ->groupBy('SLS_BOOKING.F_CUSTOMER_NO')->get();
-            $customer_count = $customer_count->count();
 
-            $reseller_count                     = Reseller::join('SLS_BOOKING','SLS_BOOKING.F_RESELLER_NO','SLS_RESELLERS.PK_NO')
-                                                            ->select('SLS_BOOKING.PK_NO')
-                                                            ->where('SLS_BOOKING.F_BOOKING_SALES_AGENT_NO',$agent)
-                                                            ->where('SLS_RESELLERS.IS_ACTIVE',1)
-                                                            ->groupBy('SLS_BOOKING.F_RESELLER_NO')->get();
-            $reseller_count = $reseller_count->count();
+        if ($agent > 0) {
+
+            $customer_count = 0;
+
+            $reseller_count                     = 0;
         }else{
-            $customer_count                     = Customer::where('IS_ACTIVE',1)->count();
-            $reseller_count                     = Reseller::where('IS_ACTIVE',1)->count();
+            $customer_count                     = 0;
+            $reseller_count                     = 0;
         }
         if(hasAccessAbility('view_dashboard_cards_sales_agent', $roles) || hasAccessAbility('view_dashboard_cards_my_manager', $roles)){
 
@@ -223,6 +217,7 @@ class DashboardController extends BaseController
             $data['cod_rtc_today']                  = $cod_rtc_today;
             $data['cod_rtc_last7days']              = $cod_rtc_last7days;
             $data['cod_rtc_last30days']             = $cod_rtc_last30days;
+
         }
 
         if(hasAccessAbility('view_dashboard_cards_uk_manager', $roles)){
