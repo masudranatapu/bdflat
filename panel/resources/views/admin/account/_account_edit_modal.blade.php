@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="form-group {!! $errors->has('bank_acc_no') ? 'error' : '' !!}">
-                        <label>Bank Acc Name<span class="text-danger">*</span></label>
+                        <label>Bank Acc Number<span class="text-danger">*</span></label>
                         <div class="controls">
                             {!! Form::text('bank_acc_no', null, [ 'class' => 'form-control mb-1 bank_acc_no', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Bank Acc Number', 'tabindex' => 1 ]) !!}
                             {!! $errors->first('bank_acc_no', '<label class="help-block text-danger">:message</label>') !!}

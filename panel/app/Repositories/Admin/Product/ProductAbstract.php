@@ -32,7 +32,7 @@ class ProductAbstract implements ProductInterface
     {
 
         $data = $this->product->where('IS_DELETE',0)->orderBy('PK_NO','ASC')->get();
-        return $this->formatResponse(true, '', 'admin', $data);
+        return $this->formatResponse(true, '', 'admin.product.list', $data);
     }
 
 
