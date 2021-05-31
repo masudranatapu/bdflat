@@ -27,8 +27,8 @@ class ResellerController extends BaseController
 
     public function getIndex(Request $request)
     {
-        // $this->resp = $this->reseller->getPaginatedList($request, 20);
-        return view('admin.reseller.index');
+         $this->resp = $this->reseller->getPaginatedList($request, 20);
+            return view('admin.reseller.index')->withRows($this->resp->data);
     }
 
     public function getCreate() {

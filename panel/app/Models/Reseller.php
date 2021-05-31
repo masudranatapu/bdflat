@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reseller extends Model
 {
-    protected $table 		= 'SLS_RESELLERS';
+    protected $table 		= 'WEB_USER';
     protected $primaryKey   = 'PK_NO';
 
-    const CREATED_AT        = 'SS_CREATED_ON';
-    const UPDATED_AT        = 'SS_MODIFIED_ON';
+    /*const CREATED_AT        = 'SS_CREATED_ON';
+    const UPDATED_AT        = 'SS_MODIFIED_ON';*/
 
     protected $fillable = [
         'NAME'

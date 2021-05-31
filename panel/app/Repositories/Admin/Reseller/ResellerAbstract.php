@@ -18,9 +18,7 @@ class ResellerAbstract implements ResellerInterface
 
     public function getPaginatedList($request, int $per_page = 5)
     {
-        $data = $this->reseller->join('SS_COUNTRY','SS_COUNTRY.PK_NO','SLS_RESELLERS.F_COUNTRY_NO')
-                                ->select('SLS_RESELLERS.*','SS_COUNTRY.DIAL_CODE')
-                                ->where('IS_ACTIVE',1)->orderBy('NAME', 'ASC')->get();
+        $data = $this->reseller->where('USER_TYPE',3)->orWhere('USER_TYPE',2)->orderBy('NAME','asc')->get();
         return $this->formatResponse(true, '', 'admin.reseller.index', $data);
     }
 

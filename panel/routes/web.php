@@ -78,7 +78,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('product-list/{id}/view',['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist.view', 'uses' => 'ProductController@getView']);
     Route::get('product-list/{id}/edit',['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
 
-    Route::get('product',['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
+    Route::get('property',['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
     Route::get('product/new',['middleware' => 'acl:new_product', 'as' => 'admin.product.create', 'uses' => 'ProductController@getCreate']);
     Route::post('product/store',['middleware' => 'acl:new_product', 'as' => 'admin.product.store', 'uses' => 'ProductController@postStore']);
     Route::get('product/{id}/edit',['middleware' => 'acl:edit_product', 'as' => 'admin.product.edit', 'uses' => 'ProductController@getEdit']);
@@ -189,7 +189,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     //Reseller Section
     Route::post('reseller/all_reseller', 'DatatableController@all_reseller');
-    Route::get('reseller', ['middleware' => 'acl:view_reseller', 'as' => 'admin.reseller.list', 'uses' => 'ResellerController@getIndex']);
+    Route::get('property-owner', ['middleware' => 'acl:view_reseller', 'as' => 'admin.reseller.list', 'uses' => 'ResellerController@getIndex']);
     Route::get('reseller/new', ['middleware' => 'acl:new_reseller', 'as' => 'admin.reseller.create', 'uses' => 'ResellerController@getCreate']);
     Route::post('reseller/store', ['middleware' => 'acl:new_reseller', 'as' => 'admin.reseller.store', 'uses' => 'ResellerController@postStore']);
     Route::get('reseller/{id}/edit', ['middleware' => 'acl:edit_reseller', 'as' => 'admin.reseller.edit', 'uses' => 'ResellerController@getEdit']);
@@ -362,7 +362,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('hscode/{id}/delete',['middleware' => 'acl:delete_hscode', 'as' => 'admin.hscode.delete', 'uses' => 'HscodeController@getDelete']);
 
     //Customer
-    Route::get('customer',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.list', 'uses' => 'CustomerController@getIndex']);
+    Route::get('property-seeker',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.list', 'uses' => 'CustomerController@getIndex']);
     Route::get('customer/new',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.create', 'uses' => 'CustomerController@getCreate']);
     Route::post('customer/store',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store', 'uses' => 'CustomerController@postStore']);
     Route::post('customer/blance-transfer',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.blance_transfer', 'uses' => 'CustomerController@postBlanceTransfer']);

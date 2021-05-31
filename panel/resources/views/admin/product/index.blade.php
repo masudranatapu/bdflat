@@ -3,6 +3,42 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 
+    <style>
+        .t-pub {
+            color: #6aa586;
+        }
+
+        .t-unpub {
+            color: #a54b82;
+        }
+
+        .t-pen {
+            color: #726ba5;
+        }
+
+        .t-del {
+            color: #e37b7f;
+        }
+
+        .key_search {
+            position: relative;
+        }
+
+        .key_search i {
+            position: absolute;
+            top: 30%;
+            left: 15%;
+        }
+
+        .key_search input {
+            border-radius: 25px !important;
+            padding-left: 30px;
+            font-size: 12px;
+        }
+        .br{
+            border-radius: 5px !important;
+        }
+    </style>
 @endpush
 @section('product_list','active')
 @section('Product Management','open')
@@ -55,8 +91,54 @@
                                 </ul>
                             </div>
                         </div>
+
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
+                                <form action="" class="my-2">
+                                    <div class="row mb-1">
+                                        <div class="col key_search">
+                                            <input type="text" class="form-control " id="" name="" placeholder="Keyword Search">
+                                            <i class="fa fa-search"></i>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="" id="" class="form-control" style="border-radius: 5px !important;">
+                                                <option value="">User Type</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="" id="" class="form-control" style="border-radius: 5px !important;">
+                                                <option value="">Property For</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="" id="" class="form-control" style="border-radius: 5px !important;">
+                                                <option value="">AD Type</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="" id="" class="form-control" style="border-radius: 5px !important;">
+                                                <option value="">Payment</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="" id="" class="form-control" style="border-radius: 5px !important;">
+                                                <option value="">Status</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="button" class="btn btn-info btn-sm px-2" value="Search" style="border-radius: 5px">
+                                            <a href="" style="color: #FC611F;margin-left: 10px;">+ Add New</a>
+                                        </div>
+                                    </div>
+                                </form>
+
                                 <div class="table-responsive ">
                                     <table class="table table-striped table-bordered alt-pagination50 table-sm" id="indextable">
                                         <thead>
@@ -72,7 +154,7 @@
                                             <th>Status</th>
                                             <th>AD Type</th>
                                             <th>Payment Type</th>
-                                            <th style="width: 120px;">Action</th>
+                                            <th style="width: 135px;">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -87,25 +169,48 @@
                                                     <td>{{$row->TITLE}}</td>
                                                     <td>{{$row->MOBILE1}}</td>
                                                     <td>{{$row->CREATED_AT}}</td>
-                                                    <td>{{$row->PROPERTY_TYPE}}</td>
-                                                    <td>{{$row->A}}</td>
-                                                    <td>{{$row->A}}</td>
-
-                                                    <td style="width: 120px;" class="text-center">
-                                                        @if(hasAccessAbility('edit_product', $roles))
-                                                            <a href="{{ route('admin.product.edit', [$row->PK_NO]) }}" class="btn btn-xs  btn-info" title="EDIT"><i
-                                                                    class="la la-edit"></i></a>
+                                                    <td>
+                                                        @if($row->STATUS == 'published')
+                                                            <span class="t-pub">Published</span>
                                                         @endif
 
+                                                        @if($row->STATUS == 'unpublished')
+                                                            <span class="t-unpub">Unpublished</span>
+                                                        @endif
+
+                                                        @if($row->STATUS == 'pending')
+                                                            <span class="t-pen">Pending</span>
+                                                        @endif
+
+                                                        @if($row->STATUS == 'rejected')
+                                                            <span class="t-del">Rejected</span>
+                                                        @endif
+
+                                                        @if($row->STATUS == 'expired')
+                                                            <span class="t-del">Expired</span>
+                                                        @endif
+
+                                                        @if($row->STATUS == 'deleted')
+                                                            <span class="t-del">Deleted</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{$row->A}}</td>
+                                                    <td>{{$row->A}}</td>
+
+                                                    <td style="width: 135px;" class="text-center">
                                                         @if(hasAccessAbility('view_product', $roles))
-                                                            <a href="{{ route('admin.product.view', [$row->PK_NO]) }}" class="btn btn-xs  btn-success text-white"
-                                                               title="VIEW"><i class="la la-eye"></i></a>
+                                                            <a href="{{ route('admin.product.view', [$row->PK_NO]) }}"
+                                                               title="VIEW">Activities</a>
                                                         @endif
-
+                                                        |
+                                                        @if(hasAccessAbility('edit_product', $roles))
+                                                            <a href="{{ route('admin.product.edit', [$row->PK_NO]) }}" title="EDIT">Edit</a>
+                                                        @endif
+                                                        |
                                                         @if(hasAccessAbility('delete_product', $roles))
-                                                            <a href="{{ route('admin.product.delete', [$row->PK_NO]) }}" class="btn btn-xs btn-danger text-white"
+                                                            <a href="{{ route('admin.product.delete', [$row->PK_NO]) }}"
                                                                onclick="return confirm('Are you sure you want to delete the product with it\'s variant product ?')"
-                                                               title="DELETE"><i class="la la-trash"></i></a>
+                                                               title="DELETE">Delete</a>
                                                         @endif
 
                                                     </td>
