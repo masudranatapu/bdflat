@@ -151,7 +151,6 @@ return [
         'sub_category_code'       => 'Enter Code',
 
     // Sub Category Validation
-
         'sub_category_select_required'         => 'Please Select Category',
         'sub_category_name_required'         => 'Enter Sub Category Name',
         'sub_category_code_required'         => 'Enter Sub Category Code',
@@ -309,6 +308,8 @@ return [
     'customer_no'                   => 'Customer No.',
     'preferred_shipping_method'     => 'Preferred Shipping Method',
     'edit_user_form_placeholder'    => 'Enter Group Name',
+    'meta_title_label'              => 'Meta Title',
+    'meta_desc_label'               => 'Meta Description',
 
 
 

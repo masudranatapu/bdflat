@@ -80,6 +80,7 @@ class AdminAccessServiceProvider extends ServiceProvider
             'Poslazu',
             'SearchBooking',
             'Shopcategory',
+            'WebInfo',
         ];
 
         foreach ($repos as $repo) {
