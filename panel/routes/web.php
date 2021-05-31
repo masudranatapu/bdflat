@@ -426,6 +426,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('address-type/{id}/update',['middleware' => 'acl:edit_address_type', 'as' => 'admin.address_type.update', 'uses' => 'AddressController@postUpdate']);
     Route::get('address-type/{id}/delete',['middleware' => 'acl:delete_address_type', 'as' => 'admin.address_type.delete', 'uses' => 'AddressController@getDelete']);
 
+    //GENERAL INFO OF BDFLATS
+    Route::get('general/info',['middleware' => 'acl:view_general_info', 'as' => 'admin.general.info', 'uses' => 'WebInfoController@getCreate']);
+    Route::post('webinfo/store', ['middleware' => 'acl:new_webinfo', 'as' => 'admin.web.info', 'uses' => 'WebInfoController@postStore']);
+
 
     //POSTCODE CITY ADDRESS ADD UPDATE
     Route::get('address-type-city/list',['middleware' => 'acl:view_city_list', 'as' => 'admin.address_type.city_list_', 'uses' => 'AddressController@getCityList']);
