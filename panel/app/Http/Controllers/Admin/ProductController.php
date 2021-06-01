@@ -118,12 +118,11 @@ class ProductController extends BaseController
 
 
 
-
     public function getEdit(Request $request, $id)
     {
         $data[] = '';
         $this->resp = $this->productInt->getShow($id);
-        $cat_id     = $this->resp->data->subcategory->category->PK_NO ?? 0;
+        /*$cat_id     = $this->resp->data->subcategory->category->PK_NO ?? 0;
         $brand_id   = $this->resp->data->F_BRAND ?? 0;
         $subcat_id  = $this->resp->data->subcategory->PK_NO;
 
@@ -135,13 +134,13 @@ class ProductController extends BaseController
 
         $data['prod_size_combo']    =  $this->size->getProductSize($brand_id);
         $data['prod_model_combo']   =  $this->productModel->getProdModel($brand_id, 'list');
-        $data['hscode_combo']       =  $this->hscode->getHscodeCombo($subcat_id,'list');
+        $data['hscode_combo']       =  $this->hscode->getHscodeCombo($subcat_id,'list');*/
 
         if (!$this->resp->status) {
             return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
         }
 
-        return view('admin.product.edit')->withProduct($this->resp->data)->withData($data);
+        return view('admin.product.property_edit')->withProduct($this->resp->data)->withData($data);
 
     }
 
