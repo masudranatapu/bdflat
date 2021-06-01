@@ -528,3 +528,257 @@ ul[role="alert"]{
 .dalal-bg{background-color: #FF0000; color: #fff;}
 .dalal-bg:hover{background-color: #FF0000; color: #ffe000;}
 .vendor-bg{background-color: #f79602cc; color: #fff;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.saleform-wrapper .form-title h3 {
+    color: #414141;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.saleform-wrapper .saleform-header p {
+    font-size: 14px;
+    color: #222;
+}
+
+.saleform-wrapper .label-title {
+    display: block;
+    margin-bottom: 13px;
+    color: #222 !important;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.7px;
+}
+
+.saleform-wrapper input[type="radio"]+label {
+    font-size: 13px;
+    padding: 0px 15px 0px 19px;
+    color: #666 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.saleform-wrapper input[type="radio"]{
+  display: none;
+}
+
+.saleform-wrapper input[type="radio"] + label:before,
+.saleform-wrapper input[type="radio"] + label:after {
+  position:absolute;
+  top:0px;
+  left:0;
+  content:"";
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  display:inline-block;
+  background-color:transparent;
+}
+
+.saleform-wrapper input[type="radio"] + label:before {
+  border: 2px solid #dc3545;
+}
+
+.saleform-wrapper input[type="radio"]:checked + label:after {
+  border: 5px solid #dc3545;
+}
+
+.saleform-wrapper input[type="checkbox"]+label {
+    font-size: 13px;
+    padding: 0px 15px 0px 19px;
+    color: #414141 !important;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.saleform-wrapper input[type="checkbox"]{
+  display: none;
+}
+
+.saleform-wrapper input[type="checkbox"] + label:before,
+.saleform-wrapper input[type="checkbox"] + label:after {
+  position:absolute;
+  top:0px;
+  left:0;
+  content:"";
+  width:14px;
+  height:14px;
+  display:inline-block;
+  background-color:transparent;
+}
+
+.saleform-wrapper input[type="checkbox"] + label:before {
+  border: 2px solid #b6b6b6;
+}
+
+.saleform-wrapper input[type="checkbox"]:checked + label:after {
+    height: 7px;
+    width: 16px;
+    border-left: 3px solid #dc3545;
+    border-bottom: 3px solid #dc3545;
+    top: 0px;
+    left: 2px;
+    transform: rotate(-45deg);
+}
+
+.saleform-wrapper .form-control{
+    border: 1px solid #e1e1e1;
+    height: 40px !important;
+    border-radius: 2px !important;
+    font-size: 14px;
+}
+
+.saleform-wrapper .form-control::placeholder{
+    color: #797979 !important;
+}
+
+.saleform-wrapper .form-control:focus {
+    border: 1px solid #dc3545 !important;
+}
+
+.saleform-wrapper #description {
+    height: 100px !important;
+}
+
+
+.saleform-wrapper .form-group.validate input, 
+.saleform-wrapper .form-group.validate select,
+.saleform-wrapper .form-group.validate textarea {
+    color: #000;
+    border-color: #dc3545;
+}
+
+.saleform-wrapper .addSize {
+    vertical-align: middle;
+    padding-top: 10px;
+}
+
+.saleform-wrapper .addSize a {
+    color: #494949;
+    font-size: 13px;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.saleform-wrapper .addSize a:hover{
+    color:#dc3545;
+}
+
+.saleform-wrapper .addSize a i {
+    padding-right: 3px;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+#metaDescr {
+    height: 100px !important;
+}
+
+.listingType label,
+.publishingStatus label{
+    display: block;
+    padding-bottom: 15px !important;
+}
+
+.billing-amounot h5 {
+    font-size: 13px;
+    color: #3f3f3f;
+    padding-bottom: 6px;
+    font-weight: 600;
+}
+
+.submit-btn input[type="submit"] {
+    background: #dc3545;
+    border: 2px solid #dc3545;
+    color: #fff;
+    padding: 10px 36px;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    border-radius: 2px;
+    transition:all 0.4s ease;
+    -webkit-transition:all 0.4s ease;
+    -moz-transition:all 0.4s ease;
+    -ms-transition:all 0.4s ease;
+    -o-transition:all 0.4s ease;
+}
+
+.submit-btn input[type="submit"]:hover {
+    background: #222;
+    border-color: #222;
+}
+
+
+.custom-file-label::after{
+    background: #dc3545 !important;
+    color:#fff;
+}
+
+.custom-switch {
+    padding: 0 !important;
+}
+
+.custom-switch input[type="checkbox"]+label {
+    font-size: 13px;
+    padding: 3px 0px 6px 53px;
+    color: #414141 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.custom-switch input[type="checkbox"] + label:before,
+.custom-switch input[type="checkbox"] + label:after {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    content: "";
+    width: 18px;
+    height: 19px;
+    display: inline-block;
+    background-color: #00000026 !important;
+}
+
+.custom-switch input[type="checkbox"] + label:before {
+    border: 2px solid #d1d1d1 !important ;
+    width: 42px;
+    left: 0;
+    height: 20px;
+    border-radius: 50px;
+}
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #28d094 !important;
+    background-color: #28d094 !important;
+}
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+    background-color: #fff;
+    transform: translateX(1.6rem) !important;
+    height: 20px;
+    width: 20px;
+    border: none !important;
+    top: 0px;
+    left: -1px;
+    background: #fff !important;
+    border-radius: 50px !important;
+}
+
