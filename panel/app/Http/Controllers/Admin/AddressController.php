@@ -92,8 +92,9 @@ class AddressController extends BaseController
 
     public function getCityList()
     {
-        $this->address_resp = $this->address->getCityList();
-        return view('admin.customer-address.city_index')->withRows($this->address_resp->data);
+        //$this->address_resp = $this->address->getCityList();
+        //return view('admin.customer-address.city_index')->withRows($this->address_resp->data);
+        return view('admin.customer-address.form');
     }
 
     public function getPostageList()
