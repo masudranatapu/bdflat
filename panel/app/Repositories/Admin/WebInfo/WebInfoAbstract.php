@@ -51,11 +51,11 @@ class WebInfoAbstract implements WebInfoInterface
             $webinfo->META_DESC                 = $request->meta_description;
             if(!is_null($request->file('fav_icon')))
             {
-                $webinfo->FAV_PATH       = $this->uploadImage($request->fav_icon);
+                $webinfo->FAV_PATH              = $this->uploadImage($request->fav_icon);
             }
             if(!is_null($request->file('site_logo')))
             {
-                $webinfo->LOGO_PATH       = $this->uploadImage($request->site_logo);
+                $webinfo->LOGO_PATH             = $this->uploadImage($request->site_logo);
             }
 
             $webinfo->save();
@@ -72,19 +72,14 @@ class WebInfoAbstract implements WebInfoInterface
 
     public function uploadImage($image)
     {
+        $imageUrl = null;
       if($image)
       {
-          $filename = $image->getClientOriginalExtension();
-          $destinationPath1 = '/media/images/banner';
-          if (!file_exists($destinationPath1)) {
-              mkdir($destinationPath1, 0755, true);
-          }
-        $img = Image::make($image->getRealPath());
-        $file_name1 = 'prod_'. date('dmY'). '_' .uniqid().'.'.$filename;
-        Image::make($img)->save($destinationPath1.'/'.$file_name1);
-        $imageUrl1 = $destinationPath1 .'/'. $file_name1;
+        $file_name  = 'img_'. date('dmY'). '_' .uniqid(). '.' . $image->getClientOriginalExtension();
+        $imageUrl   = '/media/images/generalinfo/'.$file_name;
+        $image->move(public_path().'/media/images/generalinfo/',$file_name);
       }
-      return $imageUrl1;
+      return $imageUrl;
     }
 
     public function findOrThrowException($id)

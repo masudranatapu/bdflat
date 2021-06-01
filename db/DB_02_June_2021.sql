@@ -1,0 +1,87 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.4
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 01, 2021 at 10:50 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `BDFLATS`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PRD_PROPERTY_TYPE`
+--
+
+CREATE TABLE `PRD_PROPERTY_TYPE` (
+  `PK_NO` int(10) NOT NULL,
+  `PROPERTY_TYPE` varchar(50) DEFAULT NULL,
+  `URL_SLUG` varchar(50) DEFAULT NULL,
+  `IS_ACTIVE` int(1) NOT NULL DEFAULT 1,
+  `ORDER_ID` int(3) NOT NULL DEFAULT 1,
+  `TYPE` varchar(10) DEFAULT NULL,
+  `META_TITLE` varchar(255) DEFAULT NULL,
+  `META_DESC` text DEFAULT NULL,
+  `BODY_DESC` text DEFAULT NULL,
+  `CATEGORY_URL` varchar(255) DEFAULT NULL,
+  `IMG_PATH` varchar(255) DEFAULT NULL,
+  `ICON_PATH` varchar(255) DEFAULT NULL,
+  `CREATED_AT` timestamp NULL DEFAULT current_timestamp(),
+  `UPDATED_AT` datetime DEFAULT NULL,
+  `F_SS_CREATED_BY` int(11) DEFAULT NULL,
+  `F_SS_MODIFIED_BY` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `PRD_PROPERTY_TYPE`
+--
+
+INSERT INTO `PRD_PROPERTY_TYPE` (`PK_NO`, `PROPERTY_TYPE`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`, `TYPE`, `META_TITLE`, `META_DESC`, `BODY_DESC`, `CATEGORY_URL`, `IMG_PATH`, `ICON_PATH`, `CREATED_AT`, `UPDATED_AT`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`) VALUES
+(1, 'Apartment', 'apartment', 1, 1, 'A', NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-01 19:21:06', NULL, NULL, NULL),
+(2, 'Office ', 'office ', 1, 2, 'B', NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-01 19:21:06', NULL, NULL, NULL),
+(3, 'Shop', 'shop', 1, 3, 'B', NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-01 19:21:06', NULL, NULL, NULL),
+(4, 'Warehouse', 'warehouse', 1, 4, 'B', NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-01 19:21:06', NULL, NULL, NULL),
+(5, 'Industrial space', 'industrial-space', 1, 5, 'B', NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-01 19:21:06', NULL, NULL, NULL),
+(6, 'Garage', 'garage', 1, 6, 'B', NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-01 19:21:06', NULL, NULL, NULL),
+(7, 'Land', 'land', 1, 7, 'C', NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-01 19:21:06', NULL, NULL, NULL),
+(13, 'Property', 'property', 1, 0, NULL, 'lksfdjl', 'adsfasdf', 'sdfsdfsdf', NULL, NULL, NULL, '2021-06-01 20:49:44', '2021-06-02 02:49:44', 2, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `PRD_PROPERTY_TYPE`
+--
+ALTER TABLE `PRD_PROPERTY_TYPE`
+  ADD PRIMARY KEY (`PK_NO`),
+  ADD UNIQUE KEY `u_url_slug` (`URL_SLUG`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `PRD_PROPERTY_TYPE`
+--
+ALTER TABLE `PRD_PROPERTY_TYPE`
+  MODIFY `PK_NO` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -81,6 +81,7 @@ class AdminAccessServiceProvider extends ServiceProvider
             'SearchBooking',
             'Shopcategory',
             'WebInfo',
+            'PropertyCategory',
         ];
 
         foreach ($repos as $repo) {
