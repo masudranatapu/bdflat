@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $table = 'users';
+    protected $table = 'WEB_USER';
+    protected $primaryKey = 'PK_NO';
 
     public function adminUser()
     {
