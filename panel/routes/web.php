@@ -436,6 +436,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('property/category/new', ['middleware' => 'acl:new_property_category', 'as' => 'property.category.create', 'uses' => 'PropertyCategoryController@getCreate']);
     Route::get('property/category',['middleware' => 'acl:list_box', 'as' => 'admin.property.category', 'uses' => 'PropertyCategoryController@getIndex']);
     Route::post('property/category/store',['middleware' => 'acl:new_property_category', 'as' => 'admin.property.category.store', 'uses' => 'PropertyCategoryController@postStore']);
+    Route::get('property/category/{id}/edit', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.edit', 'uses' => 'PropertyCategoryController@getEdit']);
+    Route::post('property/category/{id}/update', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.update', 'uses' => 'PropertyCategoryController@postUpdate']);
 
 
     //POSTCODE CITY ADDRESS ADD UPDATE

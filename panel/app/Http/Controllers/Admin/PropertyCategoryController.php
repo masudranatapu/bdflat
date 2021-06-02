@@ -41,11 +41,11 @@ class PropertyCategoryController extends BaseController
 
         $this->resp = $this->category->findOrThrowException($id);
         //dd($this->resp->data);
-        return view('admin.category.edit')->withCategory($this->resp->data);
+        return view('admin.property-category.edit')->withCategory($this->resp->data);
 
     }
 
-    public function postUpdate(CategoryRequest $request, $id)
+    public function postUpdate(PropertyCategoryRequest $request, $id)
     {
         //dd($id);
         $this->resp = $this->category->postUpdate($request, $id);
@@ -54,12 +54,6 @@ class PropertyCategoryController extends BaseController
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
-    public function getDelete($id)
-    {
-        $this->resp = $this->category->delete($id);
-
-        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
-    }
 
 
 }

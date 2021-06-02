@@ -67,8 +67,8 @@
                       <td class="" style="">{{ $row->PROPERTY_TYPE }}</td>
                       <td class="" style="">{{ $row->ORDER_ID }}</td>
                         <td class="text-center" style="width: 200px;">
-                          @if(hasAccessAbility('edit_category', $roles))
-                          <a href="{{ route('product.category.edit', [$row->PK_NO]) }}" title="EDIT" class="btn btn-xs btn-info  mb-1"><i class="la la-edit"></i></a>
+                          @if(hasAccessAbility('edit_property_category', $roles))
+                          <a href="{{ route('property.category.edit', [$row->PK_NO]) }}" title="EDIT" class="btn btn-xs btn-info  mb-1"><i class="la la-edit"></i></a>
                           @endif
                         </td>
                       </tr>

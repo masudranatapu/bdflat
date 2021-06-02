@@ -46,6 +46,7 @@ class PropertyCategoryAbstract implements PropertyCategoryInterface
             $category->META_TITLE               = $request->meta_title;
             $category->META_DESC                = $request->meta_description;
             $category->BODY_DESC                = $request->body_description;
+            $category->CATEGORY_URL             = $request->url;
             $category->ORDER_ID                 = $request->order;
             $category->save();
         } catch (\Exception $e) {
@@ -65,7 +66,7 @@ class PropertyCategoryAbstract implements PropertyCategoryInterface
       {
         $file_name  = 'img_'. date('dmY'). '_' .uniqid(). '.' . $image->getClientOriginalExtension();
         $imageUrl   = '/media/images/property-category/'.$file_name;
-        $image->move(public_path().'/media/images/generalinfo/',$file_name);
+        $image->move(public_path().'/media/images/property-category/',$file_name);
       }
       return $imageUrl;
     }
@@ -74,49 +75,39 @@ class PropertyCategoryAbstract implements PropertyCategoryInterface
     {
         $data = $this->category->where('PK_NO', '=', $id)->first();
         if (!empty($data)) {
-            return $this->formatResponse(true, '', 'admin.category.edit', $data);
+            return $this->formatResponse(true, '', 'property.category.edit', $data);
         }
-        return $this->formatResponse(false, 'Did not found data !', 'admin.category.list', null);
+        return $this->formatResponse(false, 'Did not found data !', 'admin.property.category', null);
     }
     public function postUpdate($request, $id)
     {
         DB::beginTransaction();
         try {
-            $category = Category::find($id);
-            $category->NAME                     = $request->name;
-            if(!empty($request->url_slug)){
-                $category->URL_SLUG             = $this->getSlugByText($request->url_slug);
+            $category = PropertyCategory::find($id);
+            $category->PROPERTY_TYPE            = $request->category_name;
+            if(!empty($request->category_name)){
+                $category->URL_SLUG             = $this->getSlugByText($request->category_name);
             }
-            else {
-                $category->URL_SLUG             = $this->getSlugByText($request->name);
-            }
-            $category->HS_PREFIX                = $request->hs_prefix;
-            if(!is_null($request->file('thumbnail_image')))
+            if(!is_null($request->file('image')))
             {
-                $category->THUMBNAIL_PATH       = $this->uploadImage($request->thumbnail_image);
-            }
-            if(!is_null($request->file('banner_image')))
-            {
-                $category->BANNER_PATH          = $this->uploadImage($request->banner_image);
+                $category->IMG_PATH       = $this->uploadImage($request->image);
             }
             if(!is_null($request->file('icon')))
             {
-                $category->ICON                 = $this->uploadImage($request->icon);
+                $category->ICON_PATH          = $this->uploadImage($request->icon);
             }
-           // $category->ORDER_ID                 = Category::max('ORDER_ID')+1;
-            $category->COMMENTS                 = $request->comment;
-            $category->IS_FEATURE               = $request->is_feature;
             $category->META_TITLE               = $request->meta_title;
-            $category->META_KEYWARDS            = $request->meta_keywards;
-            $category->META_DESCRIPTION         = $request->meta_description;
-            $category->IS_ACTIVE                = $request->is_active;
+            $category->META_DESC                = $request->meta_description;
+            $category->BODY_DESC                = $request->body_description;
+            $category->CATEGORY_URL             = $request->url;
+            $category->ORDER_ID                 = $request->order;
             $category->update();
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->formatResponse(false, 'Unable to update Category !', 'product.category.list');
+            return $this->formatResponse(false, 'Unable to update category !', 'admin.property.category');
         }
         DB::commit();
-        return $this->formatResponse(true, 'Category has been updated successfully !', 'product.category.list');
+        return $this->formatResponse(true, 'Property category has been updated successfully !', 'admin.property.category');
     }
     public function delete($id)
     {

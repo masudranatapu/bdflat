@@ -124,7 +124,7 @@ Create Property Category
                                  <span class="fileupload-exists">
                                  <i class="la la-reply"></i> Change
                                  </span>
-                                 {!! Form::file('image', Null,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'IS ACTIVE', 'tabindex' => 9]) !!}
+                                 {!! Form::file('icon', Null,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'IS ACTIVE', 'tabindex' => 9]) !!}
                                  </label>
                                  <a href="#" class="btn fileupload-exists btn-default btn-rounded  btn-sm" data-dismiss="fileupload" id="remove-thumbnail">
                                  <i class="la la-times"></i> Remove
@@ -133,7 +133,7 @@ Create Property Category
                                  <br>
                                  <span class="MainToUpload edit-3-color" style="font-size: 12px; color: #bf4c4c;">File types jpg, png.</span>
                               </div>
-                              {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
+                              {!! $errors->first('icon', '<label class="help-block text-danger">:message</label>') !!}
                            </div>
                         </div>
                      </div>
