@@ -226,44 +226,54 @@
                                         </div>
                                         <div class="row">
                                             <!--  Type A -->
-                                            <div class="col-md-6">
-                                                {{ Form::label('','Type A',['class' => 'label-title '],false) }}
+                                            <div class="col-md-12">
+{{--                                                {{ Form::label('','Type A',['class' => 'label-title '],false) }}--}}
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
+                                                    <div class="col-3">
+                                                        <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
                                                             <div class="controls">
                                                                 {!! Form::number('size', null /*$row->ADDRESS*/, [ 'class' => 'form-control size', 'placeholder' => 'Size in Sft']) !!}
                                                                 {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                                    <div class="col-3">
+                                                        <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                                             <div class="controls">
                                                                 {!! Form::select('bedroom', [],null /*$property_conditions,$row->F_PROPERTY_CONDITION*/,array('class'=>'form-control bedroom','placeholder'=>'Bedroom')) !!}
                                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                                    <div class="col-3">
+                                                        <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                                             <div class="controls">
                                                                 {!! Form::select('bathroom', [],null /*$property_conditions,$row->F_PROPERTY_CONDITION*/,array('class'=>'form-control bathroom','placeholder'=>'Bathroom')) !!}
                                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                                    <div class="col-3">
+                                                        <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
                                                             <div class="controls">
                                                                 {!! Form::number('price', null /*$row->ADDRESS*/, [ 'class' => 'form-control price', 'placeholder' => 'Total Price']) !!}
                                                                 {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-6 col-sm-3">
+                                                        <div class="form-group addSize">
+                                                            <a href="javascript:void(0);" id="add_btn">
+                                                                <i class="fa fa-plus"></i>
+                                                                Add New Size
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!-- Type B -->
+
+                                       {{--     <!-- Type B -->
                                             <div class="col-md-6">
                                                 {{ Form::label('','Type B',['class' => 'label-title '],false) }}
                                                 <div class="row">
@@ -316,7 +326,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Property price is -->
+                                            <!-- Property price is -->--}}
+
+                                        </div>
+
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="controls">
                                                     <label class="label-title">Property price is</label>
@@ -601,7 +615,7 @@
                                     </div>
 
                                     <!--  Additional informamtion -->
-
+                                    <input type="hidden" value="{{URL::to('/')}}" id="base_path">
                                     {!! Form::close() !!}
                                 </div>
                             </div>
@@ -636,7 +650,7 @@
             format: 'DD-MM-YYYY'
         });
 
-        var basepath = $('#base_url').val();
+        var basepath = $('#base_path').val();
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();
@@ -646,7 +660,7 @@
             $("#area").empty();
             $.ajax({
                 type: 'get',
-                url: basepath + '/ajax-get-area/' + id,
+                url:basepath+ '/ajax-get-area/' + id,
                 async: true,
                 dataType: 'json',
                 beforeSend: function () {

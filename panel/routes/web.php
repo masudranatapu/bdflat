@@ -79,6 +79,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('product-list/{id}/edit',['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
 
     Route::get('property',['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
+
+    Route::get('ajax-get-area/{id}',['as' => 'getarea', 'uses' => 'ProductController@getArea']);
 //    Route::get('property-sale-rent',['middleware' => 'acl:view_product', 'as' => 'admin.property.rent.edit', 'uses' => 'ProductController@getEditRentndex']);
 //    Route::get('property-sale-roommate',['middleware' => 'acl:view_product', 'as' => 'admin.property.roommate.edit', 'uses' => 'ProductController@getEditRoommatendex']);
     Route::get('product/new',['middleware' => 'acl:new_product', 'as' => 'admin.product.create', 'uses' => 'ProductController@getCreate']);

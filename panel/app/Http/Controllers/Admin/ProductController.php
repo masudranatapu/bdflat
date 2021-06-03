@@ -329,5 +329,10 @@ class ProductController extends BaseController
         return view('admin.product.test')->withData($data);
     }
 
+    public function getArea($id)
+    {
+        $data['area'] = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
+        return response()->json($data);
+    }
 
 }
