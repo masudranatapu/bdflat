@@ -4,78 +4,78 @@
     </li>
 
     @if(hasAccessAbility('view_product', $roles))
-    <li class=" nav-item @yield('Product Management')">
-        <a href="#"><i class="fas fa-box-open"></i></i><span class="menu-title" data-i18n="@lang('left_menu.product')">Properties</span></a>
-        <ul class="menu-content">
-            {{--
-            @if(hasAccessAbility('view_product_list', $roles))
-             <li class="@yield('product_search_list')"><a class="menu-item" href="{{route('admin.product.searchlist')}}"><i></i><span data-i18n="@lang('left_menu.product_search_list')">@lang('left_menu.product_search_list')</span></a></li>
-            @endif --}}
-            @if(hasAccessAbility('view_product', $roles))
-            <li class="nav-item @yield('product_list')"><a class="menu-item" href="{{ route('admin.product.list') }}"><i></i><span data-i18n="@yield('product_list')">Properties</span></a></li>
-            @endif
+        <li class=" nav-item @yield('Product Management')">
+            <a href="#"><i class="fas fa-box-open"></i></i><span class="menu-title" data-i18n="@lang('left_menu.product')">Properties</span></a>
+            <ul class="menu-content">
+                {{--
+                @if(hasAccessAbility('view_product_list', $roles))
+                 <li class="@yield('product_search_list')"><a class="menu-item" href="{{route('admin.product.searchlist')}}"><i></i><span data-i18n="@lang('left_menu.product_search_list')">@lang('left_menu.product_search_list')</span></a></li>
+                @endif --}}
+                @if(hasAccessAbility('view_product', $roles))
+                    <li class="nav-item @yield('product_list')"><a class="menu-item" href="{{ route('admin.product.list') }}"><i></i><span data-i18n="@yield('product_list')">Properties</span></a></li>
+                @endif
 
-            @if(hasAccessAbility('view_product', $roles))
-            <li class="nav-item @yield('product_list')"><a class="menu-item" href="{{ route('admin.product.list') }}"><i></i><span data-i18n="@yield('product_list')">Property History</span></a></li>
-            @endif
+                @if(hasAccessAbility('view_product', $roles))
+                    <li class="nav-item"><a class="menu-item" href="#"><i></i><span data-i18n="@yield('product_list')">Property History</span></a></li>
+                @endif
 
-            {{--
-            @if(hasAccessAbility('view_category', $roles))
-            <li class="@yield('product category')"><a class="menu-item" href="{{route('product.category.list')}}"><i></i><span data-i18n="@yield('product category')">Category-Subcategory</span></a></li>
-            @endif
+                {{--
+                @if(hasAccessAbility('view_category', $roles))
+                <li class="@yield('product category')"><a class="menu-item" href="{{route('product.category.list')}}"><i></i><span data-i18n="@yield('product category')">Category-Subcategory</span></a></li>
+                @endif
 
-            @if(hasAccessAbility('view_brand', $roles))
-            <li class="@yield('product brand')"><a class="menu-item" href="{{route('product.brand.list')}}"><i></i><span data-i18n="@lang('left_menu.brand')">@lang('left_menu.product_brand')</span></a></li>
-            @endif
-            @if(hasAccessAbility('view_product', $roles))
-            <li class="@yield('product sub-category')"><a class="menu-item" href="{{route('admin.sub_category.list')}}"><span data-i18n="Basic">@lang('left_menu.sub_category')</span></a></li>
-            @endif --}}
-        </ul>
-    </li>
+                @if(hasAccessAbility('view_brand', $roles))
+                <li class="@yield('product brand')"><a class="menu-item" href="{{route('product.brand.list')}}"><i></i><span data-i18n="@lang('left_menu.brand')">@lang('left_menu.product_brand')</span></a></li>
+                @endif
+                @if(hasAccessAbility('view_product', $roles))
+                <li class="@yield('product sub-category')"><a class="menu-item" href="{{route('admin.sub_category.list')}}"><span data-i18n="Basic">@lang('left_menu.sub_category')</span></a></li>
+                @endif --}}
+            </ul>
+        </li>
     @endif
     @if(hasAccessAbility('view_customer', $roles))
-    <li class="nav-item  @yield('Customer Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Customers</span></a>
-        <ul class="menu-content">
-            @if(hasAccessAbility('view_customer', $roles))
-            <li class="@yield('customer_list')"><a class="menu-item" href="{{route('admin.customer.list')}}"><i></i><span data-i18n="@lang('left_menu.customer_list')">Property Seekers</span></a></li>
-            @endif
-            @if(hasAccessAbility('view_reseller', $roles))
-            <li class="@yield('reseller_list')"><a class="menu-item" href="{{route('admin.reseller.list')}}"><i></i><span data-i18n="@lang('left_menu.reseller_list')">Property Owners</span></a></li>
-            @endif
-            @if(hasAccessAbility('view_shopcategory', $roles))
-            <li class="@yield('shop category')"><a class="menu-item" href="{{route('admin.shop.category.list')}}"><i></i><span data-i18n="@lang('left_menu.shopcategory_list')">Agents</span></a></li>
-            @endif
+        <li class="nav-item  @yield('Customer Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Customers</span></a>
+            <ul class="menu-content">
+                @if(hasAccessAbility('view_customer', $roles))
+                    <li class="@yield('customer_list')"><a class="menu-item" href="{{route('admin.customer.list')}}"><i></i><span data-i18n="@lang('left_menu.customer_list')">Property Seekers</span></a></li>
+                @endif
+                @if(hasAccessAbility('view_reseller', $roles))
+                    <li class="@yield('reseller_list')"><a class="menu-item" href="{{route('admin.reseller.list')}}"><i></i><span data-i18n="@lang('left_menu.reseller_list')">Property Owners</span></a></li>
+                @endif
+                @if(hasAccessAbility('view_shopcategory', $roles))
+                    <li class="@yield('shop category')"><a class="menu-item" href="{{route('admin.shop.category.list')}}"><i></i><span data-i18n="@lang('left_menu.shopcategory_list')">Agents</span></a></li>
+                @endif
 
-        </ul>
-    </li>
+            </ul>
+        </li>
     @endif
 
     @if(hasAccessAbility('view_payment_section', $roles))
-    <li class="nav-item @yield('Payment')">
-        <a href="#"><i class="la la-paypal"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.payment')</span></a>
-        <ul class="menu-content">
-            @if(hasAccessAbility('view_payment', $roles))
-            <li class=" nav-item @yield('payment_list')"><a class="menu-item" href="{{ route('admin.payment.list') }}"><i></i><span data-i18n="Basic">Transactions</span></a></li>
-            @endif
-            {{-- <li class=" nav-item @yield('payment_entry')"><a class="menu-item" href="{{ route('admin.payment.create') }}"><i></i><span data-i18n="Basic">@lang('left_menu.payment_entry')</span></a></li> --}}
-            @if(hasAccessAbility('view_bank_state', $roles))
-            <li class=" nav-item @yield('bankstatement')"><a class="menu-item" href="{{ route('admin.bankstate.list') }}"><i></i><span data-i18n="Basic">Refund Request</span></a></li>
-            @endif
+        <li class="nav-item @yield('Payment')">
+            <a href="#"><i class="la la-paypal"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.payment')</span></a>
+            <ul class="menu-content">
+                @if(hasAccessAbility('view_payment', $roles))
+                    <li class=" nav-item @yield('payment_list')"><a class="menu-item" href="{{ route('admin.payment.list') }}"><i></i><span data-i18n="Basic">Transactions</span></a></li>
+                @endif
+                {{-- <li class=" nav-item @yield('payment_entry')"><a class="menu-item" href="{{ route('admin.payment.create') }}"><i></i><span data-i18n="Basic">@lang('left_menu.payment_entry')</span></a></li> --}}
+                @if(hasAccessAbility('view_bank_state', $roles))
+                    <li class=" nav-item @yield('bankstatement')"><a class="menu-item" href="{{ route('admin.bankstate.list') }}"><i></i><span data-i18n="Basic">Refund Request</span></a></li>
+                @endif
 
-            @if(hasAccessAbility('edit_bank_state', $roles))
-            <li class=" nav-item @yield('payment_verification')"><a class="menu-item" href="{{ route('admin.bankstate.verification') }}"><i></i><span data-i18n="Basic">Recharge Request</span></a></li>
-            @endif
-            @if(hasAccessAbility('view_bank_to_other', $roles))
-            <li class="@yield('bank_to_other_xfer')"><a class="menu-item" href="{{route('admin.account_to_other_list.view')}}"><i></i><span data-i18n="@yield('bank_to_other_xfer')">Agent Commission Request</span></a></li>
-            @endif
-            {{-- @if(hasAccessAbility('view_bank_to_bank', $roles))
-            <li class="@yield('bank_to_bank_xfer')"><a class="menu-item" href="{{route('admin.account_to_bank_list.view')}}"><i></i><span data-i18n="@yield('bank_to_bank_xfer')">Internal Transfer</span></a></li>
-            @endif
-            @if(hasAccessAbility('view_refund', $roles))
-            <li class="nav-item @yield('view_refund')"><a class="menu-item" href="{{ route('admin.customer.refund') }}"><i></i><span data-i18n="Basic">Refund</span></a></li>
-            @endif --}}
-        </ul>
-    </li>
+                @if(hasAccessAbility('edit_bank_state', $roles))
+                    <li class=" nav-item @yield('payment_verification')"><a class="menu-item" href="{{ route('admin.bankstate.verification') }}"><i></i><span data-i18n="Basic">Recharge Request</span></a></li>
+                @endif
+                @if(hasAccessAbility('view_bank_to_other', $roles))
+                    <li class="@yield('bank_to_other_xfer')"><a class="menu-item" href="{{route('admin.account_to_other_list.view')}}"><i></i><span data-i18n="@yield('bank_to_other_xfer')">Agent Commission Request</span></a></li>
+                @endif
+                {{-- @if(hasAccessAbility('view_bank_to_bank', $roles))
+                <li class="@yield('bank_to_bank_xfer')"><a class="menu-item" href="{{route('admin.account_to_bank_list.view')}}"><i></i><span data-i18n="@yield('bank_to_bank_xfer')">Internal Transfer</span></a></li>
+                @endif
+                @if(hasAccessAbility('view_refund', $roles))
+                <li class="nav-item @yield('view_refund')"><a class="menu-item" href="{{ route('admin.customer.refund') }}"><i></i><span data-i18n="Basic">Refund</span></a></li>
+                @endif --}}
+            </ul>
+        </li>
     @endif
 
     {{-- @if(hasAccessAbility('view_order', $roles))
@@ -258,42 +258,42 @@
         <a href="{{ route('admin.dashboard')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="@lang('left_menu.dashboard')">Pages</span></a>
     </li>
     @if(hasAccessAbility('view_sales_report_section', $roles))
-    <li class="nav-item  @yield('Sales Report')"><a href="#"><i class="ft-bar-chart"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Reports</span></a>
-        <ul class="menu-content">
-            @if(hasAccessAbility('view_sales_report', $roles))
-            <li class="@yield('sales_report')">
-                <a class="menu-item" href="{{route('admin.sales_report.list')}}"><i></i>
-                    <span data-i18n="">Sales Comission</span>
-                </a>
-            </li>
-            @endif
-            @if(hasAccessAbility('view_collection_list', $roles))
-            <li class="@yield('view_bank_collection')"><a class="menu-item" href="{{route('admin.collection.list')}}"><span data-i18n="@yield('view_bank_collection')">COD payment Position</span></a></li>
-            @endif
-            @if(hasAccessAbility('yet_to_ship', $roles))
-            <li class="@yield('yet_to_ship')"><a class="menu-item" href="{{route('admin.yet_to_ship.list')}}"><span data-i18n="@yield('yet_to_ship')">Yet to Ship</span></a></li>
-            @endif
-        </ul>
-    </li>
+        <li class="nav-item  @yield('Sales Report')"><a href="#"><i class="ft-bar-chart"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Reports</span></a>
+            <ul class="menu-content">
+                @if(hasAccessAbility('view_sales_report', $roles))
+                    <li class="@yield('sales_report')">
+                        <a class="menu-item" href="{{route('admin.sales_report.list')}}"><i></i>
+                            <span data-i18n="">Sales Comission</span>
+                        </a>
+                    </li>
+                @endif
+                @if(hasAccessAbility('view_collection_list', $roles))
+                    <li class="@yield('view_bank_collection')"><a class="menu-item" href="{{route('admin.collection.list')}}"><span data-i18n="@yield('view_bank_collection')">COD payment Position</span></a></li>
+                @endif
+                @if(hasAccessAbility('yet_to_ship', $roles))
+                    <li class="@yield('yet_to_ship')"><a class="menu-item" href="{{route('admin.yet_to_ship.list')}}"><span data-i18n="@yield('yet_to_ship')">Yet to Ship</span></a></li>
+                @endif
+            </ul>
+        </li>
     @endif
 
-   @if(hasAccessAbility('view_account_name', $roles))
-    <li class=" nav-item @yield('Accounts')">
-        <a href="#"><i class="fas fa-money-check"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.account')</span></a>
-        <ul class="menu-content">
-            <li class=" nav-item @yield('Payment Management')"><a class="menu-item" href="{{route('admin.account.list')}}"><i></i><span data-i18n="Basic">Bank Acc List</span></a></li>
+    @if(hasAccessAbility('view_account_name', $roles))
+        <li class=" nav-item @yield('Accounts')">
+            <a href="#"><i class="fas fa-money-check"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.account')</span></a>
+            <ul class="menu-content">
+                <li class=" nav-item @yield('Payment Management')"><a class="menu-item" href="{{route('admin.account.list')}}"><i></i><span data-i18n="Basic">Bank Acc List</span></a></li>
 
-            <li class=" nav-item @yield('payment_bank')"><a class="menu-item" href="{{route('admin.payment_bank.list')}}"><i></i><span data-i18n="Basic">@lang('left_menu.payment_bank')</span></a></li>
+                <li class=" nav-item @yield('payment_bank')"><a class="menu-item" href="{{route('admin.payment_bank.list')}}"><i></i><span data-i18n="Basic">@lang('left_menu.payment_bank')</span></a></li>
 
-            {{-- <li><a class="menu-item" href="#"><i></i><span data-i18n="Basic">@lang('left_menu.others')</span></a>
-                <ul class="menu-content">
-                    <li class="@yield('vat')"><a class="menu-item" href="#!"><i></i><span data-i18n="Basic">@lang('left_menu.Vat')</span></a></li>
-                    <li class="@yield('Account Name')"><a class="menu-item" href="#!"><i></i><span data-i18n="Basic">@lang('left_menu.Name')</span></a></li>
-                    <li class="@yield('product model')"><a class="menu-item" href="#!"><i></i><span data-i18n="Extra">@lang('left_menu.Method')</span></a></li>
-                </ul>
-            </li> --}}
-        </ul>
-    </li>
+                {{-- <li><a class="menu-item" href="#"><i></i><span data-i18n="Basic">@lang('left_menu.others')</span></a>
+                    <ul class="menu-content">
+                        <li class="@yield('vat')"><a class="menu-item" href="#!"><i></i><span data-i18n="Basic">@lang('left_menu.Vat')</span></a></li>
+                        <li class="@yield('Account Name')"><a class="menu-item" href="#!"><i></i><span data-i18n="Basic">@lang('left_menu.Name')</span></a></li>
+                        <li class="@yield('product model')"><a class="menu-item" href="#!"><i></i><span data-i18n="Extra">@lang('left_menu.Method')</span></a></li>
+                    </ul>
+                </li> --}}
+            </ul>
+        </li>
     @endif
 
     <li class=" navigation-header"><span data-i18n="Settings">Settings</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Settings" ></i>
@@ -322,7 +322,7 @@
                     </li>
                 @endif
                 @if(hasAccessAbility('view_agent', $roles))
-                <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agent.list')}}"><i></i><span data-i18n="Basic">@lang('left_menu.agent_list')</span></a></li>
+                    <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agent.list')}}"><i></i><span data-i18n="Basic">@lang('left_menu.agent_list')</span></a></li>
                 @endif
             </ul>
         </li>
@@ -377,7 +377,7 @@
             <ul class="menu-content">
                 <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.general.info')}}"><i></i><span data-i18n="Basic">General</span></a>
                 </li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Property Categories</span></a>
+                <li class="@yield('property_category')"><a class="menu-item" href="{{route('admin.property.category')}}"><i></i><span data-i18n="Basic">Property Categories</span></a>
                 </li>
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Condition</span></a>
                 </li>
@@ -402,57 +402,57 @@
 
                 <li class=" nav-item @yield('currency')"><a class="menu-item" href="{{ route('admin.currency.list') }}"><i></i><span data-i18n="Basic">@lang('left_menu.currency')</span></a></li>
                 @if(hasAccessAbility('view_address_type', $roles))
-                <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a></li>
+                    <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a></li>
                 @endif
             </ul>
         </li>
     @endif
     @if(Auth::user()->PK_NO == 1)
-    <li class=" nav-item @yield('web')">
-        <a href="#"><i class="la la-cog"></i>
-            <span class="menu-title" data-i18n="@yield('web')">Web</span>
-        </a>
-        <ul class="menu-content">
-            <li class="@yield('slider')">
-                <a class="menu-item" href="{{route('web.home.slider')}}"><i></i>
-                    <span data-i18n="">Home Slider</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="menu-content">
-            <li class="@yield('blog-category')">
-                <a class="menu-item" href="{{route('web.blog.category')}}"><i></i>
-                    <span data-i18n="@yield('blog-category')">Blog Category</span>
-                </a>
-            </li>
-            <li class="@yield('blog-article')">
-                <a class="menu-item" href="{{route('web.blog.article')}}"><i></i>
-                    <span data-i18n="@yield('blog-article')">Blog Article</span>
-                </a>
-            </li>
-            <li class="@yield('pages')">
-                <a class="menu-item" href="{{route('web.page')}}"><i></i>
-                    <span data-i18n="@yield('pages')">Pages</span>
-                </a>
-            </li>
-            <li class="@yield('faq')">
-                <a class="menu-item" href="{{route('web.faq')}}"><i></i>
-                    <span data-i18n="@yield('faq')">Faq</span>
-                </a>
-            </li>
-            <li class="@yield('about')">
-                <a class="menu-item" href="{{route('web.about')}}"><i></i>
-                    <span data-i18n="@yield('about')">About</span>
-                </a>
-            </li>
-            {{-- <li class="@yield('mail')">
-                <a class="menu-item" href="{{route('web.mail.index')}}"><i></i>
-                    <span data-i18n="@yield('mail')">Email Config</span>
-                </a>
-            </li> --}}
-        </ul>
+        <li class=" nav-item @yield('web')">
+            <a href="#"><i class="la la-cog"></i>
+                <span class="menu-title" data-i18n="@yield('web')">Web</span>
+            </a>
+            <ul class="menu-content">
+                <li class="@yield('slider')">
+                    <a class="menu-item" href="{{route('web.home.slider')}}"><i></i>
+                        <span data-i18n="">Home Slider</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-content">
+                <li class="@yield('blog-category')">
+                    <a class="menu-item" href="{{route('web.blog.category')}}"><i></i>
+                        <span data-i18n="@yield('blog-category')">Blog Category</span>
+                    </a>
+                </li>
+                <li class="@yield('blog-article')">
+                    <a class="menu-item" href="{{route('web.blog.article')}}"><i></i>
+                        <span data-i18n="@yield('blog-article')">Blog Article</span>
+                    </a>
+                </li>
+                <li class="@yield('pages')">
+                    <a class="menu-item" href="{{route('web.page')}}"><i></i>
+                        <span data-i18n="@yield('pages')">Pages</span>
+                    </a>
+                </li>
+                <li class="@yield('faq')">
+                    <a class="menu-item" href="{{route('web.faq')}}"><i></i>
+                        <span data-i18n="@yield('faq')">Faq</span>
+                    </a>
+                </li>
+                <li class="@yield('about')">
+                    <a class="menu-item" href="{{route('web.about')}}"><i></i>
+                        <span data-i18n="@yield('about')">About</span>
+                    </a>
+                </li>
+                {{-- <li class="@yield('mail')">
+                    <a class="menu-item" href="{{route('web.mail.index')}}"><i></i>
+                        <span data-i18n="@yield('mail')">Email Config</span>
+                    </a>
+                </li> --}}
+            </ul>
 
 
-    </li>
+        </li>
     @endif
 </ul>

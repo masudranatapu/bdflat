@@ -2,6 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Area;
+use App\Models\City;
+use App\Models\FloorList;
+use App\Models\ListingAdditionalInfo;
+use App\Models\ListingFeatures;
+use App\Models\ListingImages;
+use App\Models\ListingVariants;
+use App\Models\NearBy;
+use App\Models\PropertyCondition;
+use App\Models\PropertyFacing;
+use App\Models\PropertyListingType;
+use App\Models\PropertyType;
 use Session;
 use App\Models\Brand;
 use App\Models\Color;
@@ -24,6 +36,20 @@ class ProductController extends BaseController
 
 
     protected $product;
+    protected $property_type;
+    protected $city;
+    protected $area;
+    protected $property_condition;
+    protected $listing_variants;
+    protected $floor_list;
+    protected $property_facing;
+    protected $property_additional_info;
+    protected $listing_feature;
+    protected $near_by;
+    protected $property_listing_type;
+    protected $property_listing_images;
+
+
     protected $productModel;
     protected $productInt;
     protected $vatClass;
@@ -35,7 +61,21 @@ class ProductController extends BaseController
     protected $hscode;
 
     public function __construct(
-        Product             $product,
+        Product                     $product,
+        PropertyType                $property_type,
+        City                        $city,
+        Area                        $area,
+        PropertyCondition           $property_condition,
+        ListingVariants             $listing_variants,
+        FloorList                   $floor_list,
+        PropertyFacing              $property_facing,
+        ListingAdditionalInfo       $property_additional_info,
+        ListingFeatures             $listing_feature,
+        NearBy                      $near_by,
+        PropertyListingType         $property_listing_type,
+        ListingImages               $property_listing_images,
+
+
         ProductModel        $productModel,
         ProductInterface    $productInt,
         VatClass            $vatClass,
@@ -47,7 +87,21 @@ class ProductController extends BaseController
         Hscode              $hscode
     )
     {
-        $this->product          = $product;
+        $this->product                          = $product;
+        $this->property_type                    = $property_type;
+        $this->city                             = $city;
+        $this->area                             = $area;
+        $this->property_condition               = $property_condition;
+        $this->listing_variants                 = $listing_variants;
+        $this->floor_list                       = $floor_list;
+        $this->property_facing                  = $property_facing;
+        $this->property_additional_info         = $property_additional_info;
+        $this->listing_feature                  = $listing_feature;
+        $this->near_by                          = $near_by;
+        $this->property_listing_type            = $property_listing_type;
+        $this->property_listing_images          = $property_listing_images;
+
+
         $this->productModel     = $productModel;
         $this->productInt       = $productInt;
         $this->vatClass         = $vatClass;
@@ -118,16 +172,15 @@ class ProductController extends BaseController
 
 
 
-
     public function getEdit(Request $request, $id)
     {
         $data[] = '';
         $this->resp = $this->productInt->getShow($id);
-        $cat_id     = $this->resp->data->subcategory->category->PK_NO ?? 0;
+        /*$cat_id     = $this->resp->data->subcategory->category->PK_NO ?? 0;
         $brand_id   = $this->resp->data->F_BRAND ?? 0;
         $subcat_id  = $this->resp->data->subcategory->PK_NO;
 
-        $data['vat_class_combo']    =  $this->vatClass->getVatClassCombo();
+
         $data['category_combo']     =  $this->category->getCategorCombo();
         $data['subcategory_combo']  =  $this->subCategory->getSubcateByCategor($cat_id, 'list');
         $data['brand_combo']        =  $this->brand->getBrandCombo();
@@ -135,13 +188,25 @@ class ProductController extends BaseController
 
         $data['prod_size_combo']    =  $this->size->getProductSize($brand_id);
         $data['prod_model_combo']   =  $this->productModel->getProdModel($brand_id, 'list');
-        $data['hscode_combo']       =  $this->hscode->getHscodeCombo($subcat_id,'list');
+        $data['hscode_combo']       =  $this->hscode->getHscodeCombo($subcat_id,'list');*/
+        $data['property_type']              =  $this->property_type->getProperty();
+        $data['city']                       =  $this->city->getCity();
+        $data['area']                       =  $this->area->getArea($this->resp->data->F_CITY_NO);
+        $data['property_condition']         =  $this->property_condition->getPropertyCondition();
+        $data['listing_variants']           = $this->listing_variants->getListingVariants($id);
+        $data['floor_list']                 = $this->floor_list->getFloorList();
+        $data['property_facing']            = $this->property_facing->getPropertyFacing();
+        $data['property_additional_info']   = $this->property_additional_info->getAdditionalInfo($id);
+        $data['listing_feature']            = $this->listing_feature->getListingFeature();
+        $data['near_by']                    = $this->near_by->getNearBy();
+        $data['property_listing_type']      = $this->property_listing_type->getPropertyListingType();
+        $data['property_listing_images']    = $this->property_listing_images->getListingImages($id);
 
+//    dd($data['listing_variants']);
         if (!$this->resp->status) {
             return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
         }
-
-        return view('admin.product.edit')->withProduct($this->resp->data)->withData($data);
+        return view('admin.product.property_edit')->withProduct($this->resp->data)->withData($data);
 
     }
 
@@ -264,5 +329,10 @@ class ProductController extends BaseController
         return view('admin.product.test')->withData($data);
     }
 
+    public function getArea($id)
+    {
+        $data['area'] = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
+        return response()->json($data);
+    }
 
 }

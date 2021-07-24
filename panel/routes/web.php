@@ -79,6 +79,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('product-list/{id}/edit',['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
 
     Route::get('property',['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
+
+    Route::get('ajax-get-area/{id}',['as' => 'getarea', 'uses' => 'ProductController@getArea']);
+//    Route::get('property-sale-rent',['middleware' => 'acl:view_product', 'as' => 'admin.property.rent.edit', 'uses' => 'ProductController@getEditRentndex']);
+//    Route::get('property-sale-roommate',['middleware' => 'acl:view_product', 'as' => 'admin.property.roommate.edit', 'uses' => 'ProductController@getEditRoommatendex']);
     Route::get('product/new',['middleware' => 'acl:new_product', 'as' => 'admin.product.create', 'uses' => 'ProductController@getCreate']);
     Route::post('product/store',['middleware' => 'acl:new_product', 'as' => 'admin.product.store', 'uses' => 'ProductController@postStore']);
     Route::get('product/{id}/edit',['middleware' => 'acl:edit_product', 'as' => 'admin.product.edit', 'uses' => 'ProductController@getEdit']);
@@ -430,6 +434,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('general/info',['middleware' => 'acl:view_general_info', 'as' => 'admin.general.info', 'uses' => 'WebInfoController@getCreate']);
     Route::post('webinfo/store', ['middleware' => 'acl:new_webinfo', 'as' => 'admin.web.info', 'uses' => 'WebInfoController@postStore']);
 
+    //PROPERTY CATEGORY
+    Route::get('property/category/new', ['middleware' => 'acl:new_property_category', 'as' => 'property.category.create', 'uses' => 'PropertyCategoryController@getCreate']);
+    Route::get('property/category',['middleware' => 'acl:list_box', 'as' => 'admin.property.category', 'uses' => 'PropertyCategoryController@getIndex']);
+    Route::post('property/category/store',['middleware' => 'acl:new_property_category', 'as' => 'admin.property.category.store', 'uses' => 'PropertyCategoryController@postStore']);
+    Route::get('property/category/{id}/edit', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.edit', 'uses' => 'PropertyCategoryController@getEdit']);
+    Route::post('property/category/{id}/update', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.update', 'uses' => 'PropertyCategoryController@postUpdate']);
+
 
     //POSTCODE CITY ADDRESS ADD UPDATE
     Route::get('address-type-city/list',['middleware' => 'acl:view_city_list', 'as' => 'admin.address_type.city_list_', 'uses' => 'AddressController@getCityList']);
@@ -762,7 +773,6 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::post('web/blog/article/{id}/update',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.article.update', 'uses' => 'ArticleController@postUpdate']);
     Route::get('web/blog/article/{id}/delete',['middleware' => 'acl:delete_payment', 'as' => 'web.blog.article.delete', 'uses' => 'ArticleController@getDelete']);
     Route::post('ajax/text-editor/image-upload',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.text-editor.image', 'uses' => 'ArticleController@postEditorImageUpload']);
-
 
 
     Route::get('web/blog/category',['middleware' => 'acl:list_box', 'as' => 'web.blog.category', 'uses' => 'BlogCategoryController@getAllCategory']);

@@ -44,11 +44,11 @@
 @section('Product Management','open')
 
 @section('title')
-    @lang('product.list_page_title')
+    Properties
 @endsection
 
 @section('page-name')
-    @lang('product.list_page_sub_title')
+    Properties
 @endsection
 
 @push('custom_js')
@@ -61,7 +61,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('product.breadcrumb_title')    </a>
     </li>
-    <li class="breadcrumb-item active">@lang('product.breadcrumb_sub_title')
+    <li class="breadcrumb-item active">Properties
     </li>
 @endsection
 
@@ -78,7 +78,7 @@
                         <div class="card-header">
                             @if(hasAccessAbility('new_product', $roles))
                                 <a class="btn btn-sm btn-primary text-white" href="{{url('product/new')}}" title="ADD NEW PRODUCT MASTER"><i
-                                        class="ft-plus text-white"></i> @lang('product.product_create_btn')</a>
+                                        class="ft-plus text-white"></i> New Properties</a>
                             @endif
 
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
