@@ -19,7 +19,7 @@ class PermissionGroupController extends BaseController
 
     public function getIndex(Request $request)
     {
-        $this->resp = $this->permissionGroup->getPaginatedList($request, 20);
+        $this->resp = $this->permissionGroup->getPaginatedList($request, 2000);
 
         return view('admin.permission-group.index')
             ->withRows($this->resp->data);
