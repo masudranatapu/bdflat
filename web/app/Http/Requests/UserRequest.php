@@ -28,7 +28,8 @@ class UserRequest extends FormRequest
         $rules = [
             'name'             => 'required|min:2',
             'email'            => 'required',
-            'mobile'           => 'required',
+            'mobile'           => 'required|regex:/(01)[0-9]{9}/',
+            'image'            => 'sometimes|file|image|mimes:jpg,png,jpeg'
         ];
 
         return $rules;

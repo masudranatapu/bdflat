@@ -27,7 +27,7 @@ $user_data = $data['user_data'] ?? [];
                             <h3>Update Profile</h3>
                         </div>
                         {{ $errors }}
-                        {!! Form::open([ 'route' => 'profile.store_or_update', 'method' => 'post', 'class' => 'form-horizontal','files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open([ 'route' => 'profile.store_or_update', 'id' => 'profileForm', 'method' => 'post', 'class' => 'form-horizontal','files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         <table>
                             <tr>
 
@@ -46,7 +46,7 @@ $user_data = $data['user_data'] ?? [];
                                 <td>
                                     <div class="form-group mb-0 {!! $errors->has('email') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('email', old('email') ?? $user_data->EMAIL, [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email']) !!}
+                                            {!! Form::text('email', $user_data->EMAIL, [ 'class' => 'form-control', 'readonly', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email']) !!}
                                             {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@ $user_data = $data['user_data'] ?? [];
                                 <td>
                                     <div class="form-group mb-0 {!! $errors->has('mobile') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('mobile', old('mobile') ?? $user_data->MOBILE_NO, [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Mobile']) !!}
+                                            {!! Form::text('mobile', old('mobile') ?? $user_data->MOBILE_NO, [ 'class' => 'form-control', 'pattern' => '^(01)[0-9]{9}$', 'data-validation-pattern-message' => 'Incorrect mobile number format', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Mobile']) !!}
                                             {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@ $user_data = $data['user_data'] ?? [];
                                 <td></td>
                                 <td>
                                     <div class="advertisment-btn">
-                                        {!! Form::submit('update', ['id'=>'submit']) !!}
+                                        {!! Form::submit('update', ['id' => 'submit']) !!}
                                     </div>
                                 </td>
                             </tr>
@@ -103,10 +103,12 @@ $user_data = $data['user_data'] ?? [];
                         </div>
                         {{ $errors }}
                         {!! Form::open([ 'route' => 'profile.password_update', 'method' => 'post', 'class' => 'form-horizontal', 'novalidate', 'autocomplete' => 'off']) !!}
-                        <div class="form-group">
+                        <div class="form-group mb-0 {!! $errors->has('password') ? 'error' : '' !!}">
                             {{ Form::label('password','New Password:') }}
-                            {!! Form::password('password', ['id'=>'password', 'placeholder' => 'Type Password']) !!}
-
+                            <div class="controls">
+                                {!! Form::password('password', ['id'=>'password', 'min' => 6, 'data-validation-min-message' => 'Minimum length of password is 6', 'placeholder' => 'Type Password']) !!}
+                                {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                            </div>
                             {!! Form::submit('Change', ['id'=>'submit']) !!}
                         </div>
                         {!! Form::close() !!}
@@ -121,4 +123,6 @@ $user_data = $data['user_data'] ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+    <script>
+    </script>
 @endpush

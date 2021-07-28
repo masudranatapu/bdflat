@@ -59,6 +59,9 @@ class UserController extends Controller
 
     public function updatePass(Request $request)
     {
+        $request->validate([
+            'password' => 'required|min:6'
+        ]);
         $this->resp = $this->userModel->updatePass($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
@@ -54,9 +54,10 @@ class User extends Authenticatable
     {
         DB::beginTransaction();
         try {
-            $list                           = User::where('PK_NO',Auth::user()->PK_NO)->first();
+//            $list                           = User::where('PK_NO',Auth::user()->PK_NO)->first();
+            $list                           = Auth::user();
             $list->NAME                     = $request->name;
-            $list->EMAIL                    = $request->email;
+//            $list->EMAIL                    = $request->email;
             $list->MOBILE_NO                = $request->mobile;
 
             if ($request->hasfile('image')) {
@@ -77,7 +78,7 @@ class User extends Authenticatable
         }catch (\Exception $e){
 //                dd($e);
             DB::rollback();
-            return $this->formatResponse(false, 'Your Profile is not updated successfully !', 'profile.edit');
+            return $this->formatResponse(false, 'Your Profile is not updated !', 'profile.edit');
         }
         DB::commit();
         return $this->formatResponse(true, 'Your Profile has been updated successfully !', 'profile.edit');
