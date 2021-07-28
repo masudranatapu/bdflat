@@ -42,7 +42,7 @@
             <li><a href="{{ route('owner-listings') }}"  class="@yield('owner-listings')">My Propertices</a></li>
             <li><a href="{{ route('owner-leads') }}" class="@yield('owner-leads')">Leads</a></li>
         </ul>
-        <div class="logout-btn mt-3">
+        <div class="logout-btn mt-3 text-center">
             <a class="nav-link"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
         </div>

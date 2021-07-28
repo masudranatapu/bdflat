@@ -4573,7 +4573,7 @@ button.btn.btn-primary:active {
     background: #fff;
     box-shadow: 0 24px 35px 11px rgba(153, 153, 153, 0.15);
     padding: 29px 20px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .account-user {
@@ -6775,4 +6775,5 @@ td.active.day {
         page-break-after: avoid;
     }
 }
-
+.footer-menu-mobile{display: flex;}
+.footer-menu-mobile li{flex:1;}

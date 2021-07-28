@@ -93,7 +93,7 @@
   <!-- container-fluid -->
   <div class="container-fluid">
       <div class="menu-list">
-          <ul>
+          <ul class="footer-menu-mobile">
               <li>
                   <a href="index.html">
                       <i class="fa fa-home"></i><br/>

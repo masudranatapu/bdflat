@@ -13,10 +13,10 @@
   <div class="container">
       <!-- row -->
       <div class="row">
-          <div class="col-md-4 mb-5 d-none d-md-block">
+          <div class="col-lg-3 col-md-4 mb-5 d-none d-md-block">
             @include('common._left_menu')
           </div>
-          <div class="col-sm-12 col-md-8">
+          <div class="col-lg-9 col-md-8 col-sm-12 ">
                <div class="account-details">
                     <div class="account-user">
                         <div class="user-bx">
@@ -80,7 +80,7 @@
                                     <div class="sale-wrapper">
                                         <div class="sale-product">
                                             <div class="row no-gutters position-relative">
-                                                  <div class="col-3 col-md-5">
+                                                  <div class="col-3 col-md-4">
                                                       <div class="category-bx">
                                                            <a href="details.html"><img src="{{asset('assets/img/verified/1.jpg')}}" class="img-fluid" alt="image"></a>
                                                       </div>
@@ -90,7 +90,7 @@
                                                           </div>
                                                       </div>
                                                   </div>
-                                                  <div class="col-9 col-md-7 position-static pl-3">
+                                                  <div class="col-9 col-md-8 position-static pl-3">
                                                       <div class="category-price">
                                                           <h3>TK 50.00</h3>
                                                       </div>
@@ -117,7 +117,7 @@
                                     <div class="sale-wrapper">
                                         <div class="sale-product">
                                             <div class="row no-gutters position-relative">
-                                                  <div class="col-3 col-md-5">
+                                                  <div class="col-3 col-md-4">
                                                       <div class="category-bx">
                                                           <a href="details.html"><img src="{{asset('assets/img/verified/1.jpg')}}" class="img-fluid" alt="image"></a>
                                                       </div>
@@ -127,7 +127,7 @@
                                                           </div>
                                                       </div>
                                                   </div>
-                                                  <div class="col-9 col-md-7 position-static pl-3">
+                                                  <div class="col-9 col-md-8 position-static pl-3">
                                                       <div class="category-price">
                                                            <h3>TK 569 <span class="float-right" style="color:#92D36E;">Verified <i class="fa fa-check-square"></i></span></h3>
                                                       </div>

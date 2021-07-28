@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('owner-properties','active')
+@section('owner-listings','active')
 @push('custom_css')
 
 @endpush
@@ -16,10 +16,10 @@ $listings = $data['listing'] ?? [];
         <div class="container">
             <!-- row -->
             <div class="row">
-                <div class="col-md-4 mb-5 d-none d-md-block">
+                <div class="col-md-3 mb-5 d-none d-md-block">
                     @include('common._left_menu')
                 </div>
-                <div class="col-sm-12 col-md-8">
+                <div class="col-md-9 col-sm-12">
                     <div class="account-details">
                         <!-- properties -->
                         <div class="property-wrapper">
