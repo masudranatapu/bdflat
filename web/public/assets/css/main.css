@@ -6777,3 +6777,5 @@ td.active.day {
 }
 .footer-menu-mobile{display: flex;}
 .footer-menu-mobile li{flex:1;}
+
+.form-control:disabled, .form-control[readonly] {background-color: #e8eaec;}

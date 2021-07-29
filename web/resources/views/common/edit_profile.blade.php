@@ -3,6 +3,9 @@
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <style>
+        .profile_photo{width: 35px;height: 35px; position: absolute;top: 8px;border-radius: 5px;object-fit: cover;margin-left: 5px;}
+    </style>
 @endpush
 
 <?php
@@ -26,11 +29,9 @@ $user_data = $data['user_data'] ?? [];
                         <div class="profile-heading">
                             <h3>Update Profile</h3>
                         </div>
-                        {{ $errors }}
                         {!! Form::open([ 'route' => 'profile.store_or_update', 'id' => 'profileForm', 'method' => 'post', 'class' => 'form-horizontal','files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         <table>
                             <tr>
-
                                 <td class="label">Name:</td>
                                 <td>
                                     <div class="form-group mb-0 {!! $errors->has('name') ? 'error' : '' !!}">
@@ -76,14 +77,8 @@ $user_data = $data['user_data'] ?? [];
                                     </div>
                                 </td>
                                 <td style="position: relative">
-                                    <img style="
-                                        width: 35px;
-                                        height: 35px;
-                                        position: absolute;
-                                        top: 8px;
-                                        border-radius: 5px;
-                                        object-fit: cover;
-                                    margin-left: 5px;" width="50" src="{{asset($user_data->PROFILE_PIC_URL)}}" alt="">
+                                    <a target="_blank" href="{{asset($user_data->PROFILE_PIC_URL)}}">
+                                    <img class="profile_photo" width="50" src="{{asset($user_data->PROFILE_PIC_URL)}}" alt="{{ $user_data->NAME ?? '' }}"></a>
                                 </td>
                             </tr>
                             <tr>
@@ -101,15 +96,18 @@ $user_data = $data['user_data'] ?? [];
                         <div class="profile-heading">
                             <h3>Change Password</h3>
                         </div>
-                        {{ $errors }}
                         {!! Form::open([ 'route' => 'profile.password_update', 'method' => 'post', 'class' => 'form-horizontal', 'novalidate', 'autocomplete' => 'off']) !!}
                         <div class="form-group mb-0 {!! $errors->has('password') ? 'error' : '' !!}">
-                            {{ Form::label('password','New Password:') }}
-                            <div class="controls">
-                                {!! Form::password('password', ['id'=>'password', 'min' => 6, 'data-validation-min-message' => 'Minimum length of password is 6', 'placeholder' => 'Type Password']) !!}
+                            <div class="form-group">
+                                <label for="password">New Password:</label>
+                                <div class="controls" style="display: inline">
+                                    {!! Form::password('password', ['id'=>'password', 'min' => 6, 'data-validation-required-message' => 'Minimum length of password is 6', 'placeholder' => 'Type Password']) !!}
+                                    <input type="submit" name="submit" id="submit" value="Change">
+                                </div>
                                 {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
                             </div>
-                            {!! Form::submit('Change', ['id'=>'submit']) !!}
+
+
                         </div>
                         {!! Form::close() !!}
                     </div>
