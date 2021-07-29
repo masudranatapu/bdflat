@@ -190,7 +190,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                         <div class="col-6 col-md-3 bedroom_div">
                                             <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('bedroom[]', $bed_room, $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
+                                                    {!! Form::select('bedroom[]', $bed_room, $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
                                                     {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -199,7 +199,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                         <div class="col-6 col-md-3 bathroom_div">
                                             <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('bathroom[]', $bath_room, $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
+                                                    {!! Form::select('bathroom[]', $bath_room, $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
                                                     {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>

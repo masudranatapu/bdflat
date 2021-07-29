@@ -167,7 +167,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     <div class="col-6 col-md-3 bedroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
+                                                {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
                                                 <span class="bedroom_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
@@ -176,7 +176,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     <div class="col-6 col-md-3 bathroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom','data-validation-required-message' => 'This field is required')) !!}
+                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
                                                 <span class="bathroom_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>

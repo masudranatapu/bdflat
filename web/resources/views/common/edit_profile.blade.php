@@ -101,7 +101,7 @@ $user_data = $data['user_data'] ?? [];
                             <div class="form-group">
                                 <label for="password">New Password:</label>
                                 <div class="controls" style="display: inline">
-                                    {!! Form::password('password', ['id'=>'password', 'min' => 6, 'data-validation-required-message' => 'Minimum length of password is 6', 'placeholder' => 'Type Password']) !!}
+                                    {!! Form::password('password', ['id'=>'password', 'minlength' => 6, 'data-validation-required-message' => 'Minimum length of password is 6', 'placeholder' => 'Type Password']) !!}
                                     <input type="submit" name="submit" id="submit" value="Change">
                                 </div>
                                 {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
