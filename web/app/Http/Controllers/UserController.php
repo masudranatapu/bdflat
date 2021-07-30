@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
@@ -10,31 +12,36 @@ use Illuminate\Http\Request;
 use App\User;
 use Toastr;
 use App\Product;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     protected $user;
+    protected $userModel;
+    protected $customerRefundModel;
+    protected $listings;
 
 
-    public function __construct(User $user,CustomerRefund $customerRefund)
+    public function __construct(User $user, CustomerRefund $customerRefund, Listings $listings)
     {
         $this->middleware('auth');
-        $this->userModel                = $user;
-        $this->customerRefundModel      = $customerRefund;
-
+        $this->userModel = $user;
+        $this->customerRefundModel = $customerRefund;
+        $this->listings = $listings;
     }
 
     public function getMyAccount(Request $request)
     {
-        $data       = array();
-        $user_id    = Auth::user()->PK_NO;
-        $user_type  = Auth::user()->USER_TYPE;
+        $data = array();
+        $user_id = Auth::user()->PK_NO;
+        $user_type = Auth::user()->USER_TYPE;
 
 
         $data['my_balance'] = 0;
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('common.my_account',compact('data'));
+        $data['properties'] = $this->listings->getLatest(2);
+//        dd($data);
+        return view('common.my_account', compact('data'));
     }
 
     public function getEditProfile(Request $request)
@@ -42,10 +49,10 @@ class UserController extends Controller
         $user_id = Auth::user()->PK_NO;
         $user_type = Auth::user()->USER_TYPE;
         $data = array();
-        $data['user_data'] = User::where('PK_NO',$user_id)->first();
+        $data['user_data'] = User::where('PK_NO', $user_id)->first();
 
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('common.edit_profile',compact('data'));
+        return view('common.edit_profile', compact('data'));
     }
 
     public function updateProfile(UserRequest $request)
@@ -72,46 +79,52 @@ class UserController extends Controller
 
     public function getMyRequirement(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.my_requirement',compact('data'));
+        return view('seeker.my_requirement', compact('data'));
     }
+
     public function getSuggestedProperties(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.suggested_properties',compact('data'));
+        return view('seeker.suggested_properties', compact('data'));
     }
+
     public function getVarifiedProperties(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.varified_properties',compact('data'));
+        return view('seeker.varified_properties', compact('data'));
     }
+
     public function getContactedProperties(Request $request)
     {
         $data = array();
-        $data['rows'] = Listings::select('PK_NO','TITLE','CITY_NAME','AREA_NAME', 'IS_FEATURE')->get();
-    //    dd($data['rows'][0]);
-        return view('seeker.contacted_properties',compact('data'));
+        $data['rows'] = Listings::select('PK_NO', 'TITLE', 'CITY_NAME', 'AREA_NAME', 'IS_FEATURE')->get();
+        //    dd($data['rows'][0]);
+        return view('seeker.contacted_properties', compact('data'));
     }
+
     public function getBrowsedProperties(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.browsed_properties',compact('data'));
+        return view('seeker.browsed_properties', compact('data'));
     }
+
     public function getRechargeBalance(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.recharge_balance',compact('data'));
+        return view('seeker.recharge_balance', compact('data'));
     }
+
     public function getRefundRequest(Request $request, $id)
     {
         $data = array();
-        $data['product_list_details'] = Listings::where('PK_NO',$id)->select('CODE','CITY_NAME','AREA_NAME','PK_NO', 'IS_FEATURE')->first();
-        return view('seeker.refund_request',compact('data'));
+        $data['product_list_details'] = Listings::where('PK_NO', $id)->select('CODE', 'CITY_NAME', 'AREA_NAME', 'PK_NO', 'IS_FEATURE')->first();
+        return view('seeker.refund_request', compact('data'));
     }
 
     public function customerRefundStore(CustomerRefundRequest $request)
@@ -131,20 +144,20 @@ class UserController extends Controller
         // $msg_title  = $this->resp->msg_title;
         // Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
         // return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
-         return view('seeker.payment_history',compact('data'));
+        return view('seeker.payment_history', compact('data'));
     }
 
 
     public function getVariants($id)
     {
-        $data = Listings::where('PK_NO',$id)->first();
+        $data = Listings::where('PK_NO', $id)->first();
         $output = '';
-        foreach ($data->getListingVariants as $item){
-            $output.='
+        foreach ($data->getListingVariants as $item) {
+            $output .= '
                 <tr>
-                  <td>'.$item->BEDROOM.' Bed</td>
-                  <td>'.$item->BATHROOM.' Bath</td>
-                  <td>'.$item->TOTAL_PRICE.'</td>
+                  <td>' . $item->BEDROOM . ' Bed</td>
+                  <td>' . $item->BATHROOM . ' Bath</td>
+                  <td>' . $item->TOTAL_PRICE . '</td>
                 </tr>
             ';
         }
