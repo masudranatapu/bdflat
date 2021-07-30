@@ -42,7 +42,7 @@ class OwnerController extends Controller
     {
         $data = array();
         $data['listing'] = Listings::select('TITLE', 'CITY_NAME', 'AREA_NAME', 'PK_NO', 'IS_FEATURE')
-            ->where('IS_DELETE', 0)
+            ->where('STATUS','!=', 4)
             ->get();
         return view('owner.owner_listings', compact('data'));
     }
