@@ -15,9 +15,9 @@
                     <li class="nav-item @yield('product_list')"><a class="menu-item" href="{{ route('admin.product.list') }}"><i></i><span data-i18n="@yield('product_list')">Properties</span></a></li>
                 @endif
 
-                @if(hasAccessAbility('view_product', $roles))
-                    <li class="nav-item"><a class="menu-item" href="#"><i></i><span data-i18n="@yield('product_list')">Property History</span></a></li>
-                @endif
+               <!--  @if(hasAccessAbility('view_product', $roles))
+                    <li class="nav-item"><a class="menu-item" href="#"><i></i><span data-i18n="@yield('product_list')">Activities</span></a></li>
+                @endif -->
 
                 {{--
                 @if(hasAccessAbility('view_category', $roles))

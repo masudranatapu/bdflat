@@ -117,7 +117,8 @@ class ProductController extends BaseController
     {
 
         $this->resp = $this->productInt->getPaginatedList($request);
-        return view('admin.product.index')->withRows($this->resp->data);
+        $data = $this->resp->data;
+        return view('admin.product.index',compact('data'));
     }
 
 

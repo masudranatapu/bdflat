@@ -1,5 +1,22 @@
 <?php
 return [
+
+    'property_for' => [
+        'rent'      => 'Rent',
+        'sell'      => 'Sell',
+        'roommate'  => 'Roommate',
+    ],
+
+    'property_status' => [
+        0 => 'pending',
+        1 => 'published', 
+        2 => 'Rejected', 
+        3 => 'Expaired', 
+        4 => 'deleted',
+    ],
+
+    
+
 	'booking_validity' => [
 		24 => '24 Hours',
 		48 => '48 Hours',
