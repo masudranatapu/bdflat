@@ -86,6 +86,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('product/new',['middleware' => 'acl:new_product', 'as' => 'admin.product.create', 'uses' => 'ProductController@getCreate']);
     Route::post('product/store',['middleware' => 'acl:new_product', 'as' => 'admin.product.store', 'uses' => 'ProductController@postStore']);
     Route::get('product/{id}/edit',['middleware' => 'acl:edit_product', 'as' => 'admin.product.edit', 'uses' => 'ProductController@getEdit']);
+    Route::get('product/{id}/activity',['middleware' => 'acl:edit_product_activity', 'as' => 'admin.product.activity', 'uses' => 'ProductController@getaAtivity']);
     Route:: get('product/{id}/view',['middleware' => 'acl:view_product', 'as' => 'admin.product.view', 'uses' => 'ProductController@getView']);
     Route::post('product/{id}/update',['middleware' => 'acl:edit_product', 'as' => 'admin.product.update', 'uses' => 'ProductController@putUpdate']);
     Route::get('product/{id}/delete',['middleware' => 'acl:delete_product', 'as' => 'admin.product.delete', 'uses' => 'ProductController@getDelete']);
@@ -405,20 +406,18 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
      //AJAX ROUTE FOR CUSTOMER_ADDRESS
      Route::get('customer_state/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_state', 'uses' => 'CustomerAddressController@getState']);
-
      Route::get('customer_city/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_city', 'uses' => 'CustomerAddressController@getCity']);
-
      Route::get('customer_pCode/{city_id}/{state_id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_pCode', 'uses' => 'CustomerAddressController@getPostC']);
-
      Route::get('customer_city_by_state/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_city_by_state', 'uses' => 'CustomerAddressController@getCitybyState']);
      Route::get('customer_postage_by_city/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_postage_by_city', 'uses' => 'CustomerAddressController@getPostagebyCity']);
+
     //Agent
-    // Route::get('agent-view',['middleware' => 'acl:agent_view', 'as' => 'admin.agent.list', 'uses' => 'AgentsController@getIndex']);
-    // Route::get('agent-new',['middleware' => 'acl:agent_new', 'as' => 'admin.agent.create', 'uses' => 'AgentsController@getCreate']);
-    // Route::post('agent-store',['middleware' => 'acl:agent_store', 'as' => 'admin.agent.store', 'uses' => 'AgentsController@postStore']);
-    // Route::get('agent-{id}-edit',['middleware' => 'acl:agent_edit', 'as' => 'admin.agent.edit', 'uses' => 'AgentsController@getEdit']);
-    // Route::post('agent-{id}-update',['middleware' => 'acl:agent_update', 'as' => 'admin.agent.update', 'uses' => 'AgentsController@postUpdate']);
-    // Route::get('agent-{id}-delete',['middleware' => 'acl:agent_delete', 'as' => 'admin.agent.delete', 'uses' => 'AgentsController@getDelete']);
+    Route::get('agent', ['middleware' => 'acl:agent_view', 'as' => 'admin.agent.list', 'uses' => 'AgentsController@getIndex']);
+    Route::get('agent/new',['middleware' => 'acl:agent_new', 'as' => 'admin.agent.create', 'uses' => 'AgentsController@getCreate']);
+    Route::post('agent/store',['middleware' => 'acl:agent_store', 'as' => 'admin.agent.store', 'uses' => 'AgentsController@postStore']);
+    Route::get('agent/{id}/edit',['middleware' => 'acl:agent_edit', 'as' => 'admin.agent.edit', 'uses' => 'AgentsController@getEdit']);
+    Route::post('agent/{id}/update',['middleware' => 'acl:agent_update', 'as' => 'admin.agent.update', 'uses' => 'AgentsController@postUpdate']);
+    Route::get('agent/{id}/delete',['middleware' => 'acl:agent_delete', 'as' => 'admin.agent.delete', 'uses' => 'AgentsController@getDelete']);
 
 
 

@@ -42,13 +42,22 @@
                 @if(hasAccessAbility('view_reseller', $roles))
                     <li class="@yield('reseller_list')"><a class="menu-item" href="{{route('admin.reseller.list')}}"><i></i><span data-i18n="@lang('left_menu.reseller_list')">Property Owners</span></a></li>
                 @endif
-                @if(hasAccessAbility('view_shopcategory', $roles))
-                    <li class="@yield('shop category')"><a class="menu-item" href="{{route('admin.shop.category.list')}}"><i></i><span data-i18n="@lang('left_menu.shopcategory_list')">Agents</span></a></li>
-                @endif
 
             </ul>
         </li>
     @endif
+
+    @if(hasAccessAbility('view_agent', $roles))
+    <li class="nav-item  @yield('Agent Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Agent</span></a>
+        <ul class="menu-content">
+
+            @if(hasAccessAbility('view_agent', $roles))
+                <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agent.list')}}"><i></i><span data-i18n="@lang('left_menu.agent_list')">Agents</span></a></li>
+            @endif
+
+        </ul>
+    </li>
+@endif
 
     @if(hasAccessAbility('view_payment_section', $roles))
         <li class="nav-item @yield('Payment')">

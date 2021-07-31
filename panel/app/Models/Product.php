@@ -79,6 +79,10 @@ class Product extends Model
         return $this->belongsTo('App\Models\User', 'CREATED_BY')->withDefault();
     }
 
+    public function listingOwner() {
+        return $this->belongsTo('App\Models\User', 'F_USER_NO');
+    }
+
     public function subcategory() {
         return $this->belongsTo('App\Models\SubCategory', 'F_PRD_SUB_CATEGORY_ID')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
     }

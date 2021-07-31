@@ -105,5 +105,6 @@ return [
     'payment_verification'  => 'Payment Verification',
     'system_settings'       => 'System',
     'dispatch_management'   => 'Dispatch Management',
+    'agent_list'            => 'agent list',
 
 ];

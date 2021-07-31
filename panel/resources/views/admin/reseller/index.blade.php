@@ -129,11 +129,24 @@
                 <div class="col-md-12">
                     <div class="card card-sm card-success">
                         <div class="card-header">
+                            <form action="" class="mb-2">
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <a href="#" class="btn btn-info btn-sm">Owner</a>
+                                    </div>
 
-                            {{--@if(hasAccessAbility('new_customer', $roles))
-                                <a class="btn btn-sm btn-primary text-white" href="{{route('admin.reseller.create')}}" title="Add new reseller"><i
-                                        class="ft-plus text-white"></i>Add Reseller</a>
-                            @endif--}}
+                                    <div class="form-check form-check-inline">
+                                        <a href="#" class="btn btn-info btn-sm">Builder</a>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <a href="#" class="btn btn-info btn-sm">Agency</a>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <a href="#" class="btn btn-info btn-sm">All</a>
+                                    </div>
+                                </div>
+                            </form>
 
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
@@ -147,21 +160,7 @@
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
-                                <form action="" class="mb-2">
-                                    <div class="form-group">
-                                        <div class="form-check form-check-inline">
-                                            <a href="#" class="btn btn-info btn-sm">Owner</a>
-                                        </div>
 
-                                        <div class="form-check form-check-inline">
-                                            <a href="#" class="btn btn-info btn-sm">Builder</a>
-                                        </div>
-
-                                        <div class="form-check form-check-inline">
-                                            <a href="#" class="btn btn-success btn-sm">Both</a>
-                                        </div>
-                                    </div>
-                                </form>
 
                                 <div class="table-responsive ">
                                     <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>

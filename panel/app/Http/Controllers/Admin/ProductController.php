@@ -211,6 +211,13 @@ class ProductController extends BaseController
 
     }
 
+    public function getaAtivity($id)
+    {
+        $data[] = '';
+        return view('admin.product.property_activity');
+    }
+
+
     public function getView($id)
     {
         $data[] = '';

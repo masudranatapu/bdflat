@@ -35,7 +35,9 @@
     $roles = userRolePermissionArray();
     $rows = $data['listings'] ?? null;
     $user_type_combo = $data['user_type'] ?? [];
+    $listing_type_combo = $data['listing_type'] ?? [];
     $property_for_combo = Config::get('static_array.property_for');
+    $property_status_combo = Config::get('static_array.property_status');
 @endphp
 
 @section('content')
@@ -43,7 +45,7 @@
         <section id="pagination">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-sm card-success">                     
+                    <div class="card card-sm card-success">
 
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
@@ -55,7 +57,7 @@
                                         </div>
 
                                         <div class="col">
-                                           <div class="form-group {!! $errors->has('user_type') ? 'error' : '' !!}"> 
+                                           <div class="form-group {!! $errors->has('user_type') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                    {!! Form::select('user_type', $user_type_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select user type', 'tabindex' => 6]) !!}
                                                    {!! $errors->first('user_type', '<label class="help-block text-danger">:message</label>') !!}
@@ -65,7 +67,7 @@
                                         </div>
 
                                         <div class="col">
-                                            <div class="form-group {!! $errors->has('property_for') ? 'error' : '' !!}"> 
+                                            <div class="form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                    {!! Form::select('property_for', $property_for_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property for', 'tabindex' => 6]) !!}
                                                    {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
@@ -74,9 +76,12 @@
                                         </div>
 
                                         <div class="col">
-                                            <select name="" id="" class="form-control">
-                                                <option value="">AD Type</option>
-                                            </select>
+                                            <div class="form-group {!! $errors->has('listing_type') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                   {!! Form::select('listing_type', $listing_type_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select listing type', 'tabindex' => 6]) !!}
+                                                   {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
+                                               </div>
+                                           </div>
                                         </div>
 
                                         <div class="col">
@@ -86,9 +91,13 @@
                                         </div>
 
                                         <div class="col">
-                                            <select name="" id="" class="form-control">
-                                                <option value="">Status</option>
-                                            </select>
+                                            <div class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                   {!! Form::select('property_status', $property_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select status', 'tabindex' => 6]) !!}
+                                                   {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
+                                               </div>
+                                           </div>
+
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -96,7 +105,7 @@
                                             <input type="button" class="btn btn-info btn-sm px-2" value="Search" style="border-radius: 5px">
                                             @if(hasAccessAbility('new_product', $roles))
                                             <a class="btn btn-sm btn-primary text-white" href="{{url('product/new')}}" title="ADD NEW LISTING" style="color: #FC611F;margin-left: 10px;" >+ Add New</a>
-                                            @endif                                            
+                                            @endif
                                         </div>
                                     </div>
                                 </form>
@@ -105,64 +114,60 @@
                                     <table class="table table-striped table-bordered alt-pagination50 table-sm" id="indextable">
                                         <thead>
                                         <tr>
+                                            <th class="text-center">SL</th>
                                             <th class="text-center">User ID</th>
-                                            <th>User Type</th>
-                                            <th>User Name</th>
-                                            <th>Property ID</th>
+                                            <th class="text-center">User Type</th>
+                                            <th class="text-center">User Name</th>
+                                            <th class="text-center">Property ID</th>
                                             <th>Property For</th>
                                             <th>Title</th>
                                             <th>Mobile</th>
                                             <th>Create Date</th>
                                             <th>Status</th>
-                                            <th>AD Type</th>
-                                            <th>Payment Type</th>
+                                            <th>Listing Type</th>
+                                            <th>Payment Status</th>
                                             <th style="width: 135px;">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @if(isset($rows) && ($rows->count() > 0))
-                                            @foreach($rows as $row)
+                                            @foreach($rows as $key => $row)
                                                 <tr>
-                                                    <td>{{$row->A}}</td>
-                                                    <td>{{$row->A}}</td>
-                                                    <td>{{$row->A}}</td>
-                                                    <td>{{$row->CODE}}</td>
-                                                    <td>{{$row->PROPERTY_FOR}}</td>
-                                                    <td>{{$row->TITLE}}</td>
-                                                    <td>{{$row->MOBILE1}}</td>
-                                                    <td>{{$row->CREATED_AT}}</td>
+                                                    <td class="text-center">{{ $key+1 }}</td>
+                                                    <td class="text-center">{{ $row->listingOwner->CODE }}</td>
+                                                    <td class="text-center">{{ $user_type_combo[$row->listingOwner->USER_TYPE] }}</td>
+                                                    <td class="text-center">{{ $row->listingOwner->NAME }}</td>
+                                                    <td class="text-center">{{ $row->CODE }}</td>
+                                                    <td>{{ $row->PROPERTY_FOR }}</td>
+                                                    <td>{{ $row->TITLE }}</td>
+                                                    <td>{{ $row->MOBILE1 }}</td>
+                                                    <td>{{ $row->CREATED_AT }}</td>
                                                     <td>
-                                                        @if($row->STATUS == 'published')
-                                                            <span class="t-pub">Published</span>
-                                                        @endif
+                                                        <?php
+                                                            $status_color = '';
+                                                            if($row->STATUS == 0 ){
+                                                                $status_color = 't-pen';
+                                                            }elseif($row->STATUS == 1 ){
+                                                                $status_color = 't-pub';
+                                                            }elseif($row->STATUS == 2 ){
+                                                                $status_color = 't-del';
+                                                            }elseif($row->STATUS == 3 ){
+                                                                $status_color = 't-del';
+                                                            }elseif($row->STATUS == 4 ){
+                                                                $status_color = 't-del';
+                                                            }
+                                                        ?>
 
-                                                        @if($row->STATUS == 'unpublished')
-                                                            <span class="t-unpub">Unpublished</span>
-                                                        @endif
-
-                                                        @if($row->STATUS == 'pending')
-                                                            <span class="t-pen">Pending</span>
-                                                        @endif
-
-                                                        @if($row->STATUS == 'rejected')
-                                                            <span class="t-del">Rejected</span>
-                                                        @endif
-
-                                                        @if($row->STATUS == 'expired')
-                                                            <span class="t-del">Expired</span>
-                                                        @endif
-
-                                                        @if($row->STATUS == 'deleted')
-                                                            <span class="t-del">Deleted</span>
-                                                        @endif
+                                                        <span class="{{ $status_color }}">{{ $property_status_combo[$row->STATUS] }}</span>
                                                     </td>
-                                                    <td>{{$row->A}}</td>
-                                                    <td>{{$row->A}}</td>
+
+                                                    <td>{{ $row->LISTING_TYPE }}</td>
+                                                    <td>{{ $row->A }}</td>
 
                                                     <td style="width: 135px;" class="text-center">
-                                                        @if(hasAccessAbility('view_product', $roles))
-                                                            <a href="{{ route('admin.product.view', [$row->PK_NO]) }}"
-                                                               title="VIEW">Activities</a>
+                                                        @if(hasAccessAbility('view_product_activity', $roles))
+                                                            <a href="{{ route('admin.product.activity', [$row->PK_NO]) }}"
+                                                               title="ACTIVITY">Activities</a>
                                                         @endif
                                                         |
                                                         @if(hasAccessAbility('edit_product', $roles))
