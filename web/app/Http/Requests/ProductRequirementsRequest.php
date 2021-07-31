@@ -37,6 +37,8 @@ class ProductRequirementsRequest extends FormRequest
             'time'                  => 'required',
             'requirement_details'   => 'max:1000',
             'alert'                 => 'required',
+            'area'                  => 'required|array|min:1',
+            'f_city_id'             => 'required'
         ];
 
         return $rules;
@@ -55,6 +57,9 @@ class ProductRequirementsRequest extends FormRequest
             'condition.required'        => 'Property Condition is required!',
             'time.required'             => 'Preferred time to contact is required!',
             'alert.required'            => 'Email Alert is required!',
+            'f_city_id.required'        => 'Location is required',
+            'area.required'             => 'Location is required',
+            'area.min'                  => 'Location is required'
         ];
     }
 

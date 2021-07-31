@@ -42,7 +42,6 @@ Route::get('/developer-payments', 'CommonController@getdeveloperPayments')->name
 
 Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
     Route::get('/suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');
-    Route::get('/varified-properties', 'SeekerController@getVarifiedProperties')->name('varified-properties');
     Route::get('/contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');
     Route::get('/browsed-properties', 'SeekerController@getBrowsedProperties')->name('browsed-properties');
     Route::get('/recharge-balance', 'SeekerController@getRechargeBalance')->name('recharge-balance');

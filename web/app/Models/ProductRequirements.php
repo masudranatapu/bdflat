@@ -1,19 +1,21 @@
 <?php
 
 namespace App\Models;
+
 use App\Traits\RepoResponse;
 use Carbon\Carbon;
-use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductRequirements extends Model
 {
     use RepoResponse;
-    protected $table        = 'PRD_REQUIREMENTS';
-    protected $primaryKey   = 'PK_NO';
+
+    protected $table = 'PRD_REQUIREMENTS';
+    protected $primaryKey = 'PK_NO';
     public $timestamps = false;
-    protected $fillable     = [
+    protected $fillable = [
         'F_CITY_NO',
         'F_AREAS',
         'CITY_NAME',
@@ -44,53 +46,26 @@ class ProductRequirements extends Model
     {
         DB::beginTransaction();
         try {
-            $check = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
-            if ($check!=null){
-                $list                           = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
-                $list->PROPERTY_FOR             = $request->itemCon;
-                $list->F_CITY_NO                = $request->f_city_id;
-                $list->F_AREAS                  = json_encode($request->area);
-                $list->F_PROPERTY_TYPE_NO       = $request->property_type;
-                $list->MIN_SIZE                 = $request->minimum_size;
-                $list->MAX_SIZE                 = $request->maximum_size;
-                $list->MIN_BUDGET               = $request->minimum_budget;
-                $list->MAX_BUDGET               = $request->maximum_budget;
-                $list->BEDROOM                  = json_encode($request->rooms);
-                $list->PROPERTY_CONDITION       = json_encode($request->condition);
-                $list->REQUIREMENT_DETAILS      = $request->requirement_details;
-                $list->PREP_CONT_TIME           = $request->time;
-                $list->EMAIL_ALERT              = $request->alert;
-                $list->CREATED_AT               = Carbon::now();
-                $list->CREATED_BY               = Auth::user()->PK_NO;
-                $list->MODIFYED_AT              = Carbon::now();
-                $list->MODIFYED_BY              = Auth::user()->PK_NO;
-                $list->update();
-            }else{
-                $list                           = new ProductRequirements();
-                $list->PROPERTY_FOR             = $request->itemCon;
-                $list->	F_CITY_NO               = $request->f_city_id;
-                $list->	F_AREAS                 = $request->f_area_id;
-                $list->F_PROPERTY_TYPE_NO       = $request->property_type;
-                $list->MIN_SIZE                 = $request->minimum_size;
-                $list->MAX_SIZE                 = $request->maximum_size;
-                $list->MIN_BUDGET               = $request->minimum_budget;
-                $list->MAX_BUDGET               = $request->maximum_budget;
-                $list->BEDROOM                  = json_encode($request->rooms);
-                $list->PROPERTY_CONDITION       = json_encode($request->condition);
-                $list->REQUIREMENT_DETAILS      = $request->requirement_details;
-                $list->PREP_CONT_TIME           = $request->time;
-                $list->EMAIL_ALERT              = $request->alert;
-                $list->CREATED_AT               = Carbon::now();
-                $list->CREATED_BY               = Auth::user()->PK_NO;
-                $list->MODIFYED_AT              = Carbon::now();
-                $list->MODIFYED_BY              = Auth::user()->PK_NO;
-                $list->save();
-            }
-
-
+            $list = new ProductRequirements();
+            $list->PROPERTY_FOR         = $request->itemCon;
+            $list->F_CITY_NO            = $request->f_city_id;
+            $list->F_AREAS              = json_encode($request->area);
+            $list->F_PROPERTY_TYPE_NO   = $request->property_type;
+            $list->MIN_SIZE             = $request->minimum_size;
+            $list->MAX_SIZE             = $request->maximum_size;
+            $list->MIN_BUDGET           = $request->minimum_budget;
+            $list->MAX_BUDGET           = $request->maximum_budget;
+            $list->BEDROOM              = json_encode($request->rooms);
+            $list->PROPERTY_CONDITION   = json_encode($request->condition);
+            $list->REQUIREMENT_DETAILS  = $request->requirement_details;
+            $list->PREP_CONT_TIME       = $request->time;
+            $list->EMAIL_ALERT          = $request->alert;
+            $list->CREATED_BY           = Auth::id();
+            $list->MODIFYED_BY          = Auth::id();
+            $list->save();
         } catch (\Exception $e) {
-             dd($e);
             DB::rollback();
+            dd($e);
             return $this->formatResponse(false, 'Property Requirements not added successfully !', 'property-requirements');
         }
         DB::commit();

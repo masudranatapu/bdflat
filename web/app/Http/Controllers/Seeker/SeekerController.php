@@ -11,11 +11,12 @@ use Illuminate\Http\Request;
 use App\User;
 use Toastr;
 use App\Product;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class SeekerController extends Controller
 {
-    protected $user;
+    protected $userModel;
+    protected $customerRefundModel;
 
 
     public function __construct(User $user,CustomerRefund $customerRefund)
@@ -91,12 +92,7 @@ class SeekerController extends Controller
         //$data['city_combo'] = $this->city->getCityCombo();
         return view('seeker.suggested_properties',compact('data'));
     }
-    public function getVarifiedProperties(Request $request)
-    {
-         $data = array();
-        //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.varified_properties',compact('data'));
-    }
+
     public function getContactedProperties(Request $request)
     {
         $data = array();

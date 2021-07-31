@@ -18,7 +18,8 @@ use Auth;
 
 class RequirementController extends Controller
 {
-    protected $user;
+    protected $userModel;
+    protected $prdRequirementsModel;
 
 
     public function __construct(User $user,ProductRequirements $prd_requirements)
@@ -26,7 +27,6 @@ class RequirementController extends Controller
         $this->middleware('auth');
         $this->userModel    = $user;
         $this->prdRequirementsModel    = $prd_requirements;
-
     }
 
 

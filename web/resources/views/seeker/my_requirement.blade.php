@@ -2,7 +2,8 @@
 @section('property-requirements','active')
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
 @endpush
 
 <?php
@@ -44,10 +45,10 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                             <h3>Property Requirements</h3>
                         </div>
                     {{ $errors }}
-                    {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
+                    {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
-                    {!! Form::hidden('f_city_id',null,[ 'id' => 'f_city_id']) !!}
-                    {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id']) !!}
+                            {!! Form::hidden('f_city_id',null,[ 'id' => 'f_city_id','data-validation-required-message' => 'This field is required']) !!}
+                            {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id','data-validation-required-message' => 'This field is required']) !!}
 
                     <!-- city & location -->
                         {{--<div class="select-city" data-toggle="modal" data-target="#exampleModal">
@@ -61,6 +62,13 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                 <i class="fa fa-map-marker"></i>Select location / City<br/>
                                 <i class="fa fa-angle-right float-right"></i>
                             </h4>
+                            {!! $errors->first('area', '<label class="help-block text-danger">:message</label><br>') !!}
+                            <p class="help-block text-danger" id="location-error" style="display: none">Location is required</p>
+                        </div>
+                        <div class="row form-group d-none">
+                            <div class="controls">
+                                {!! Form::text('area_selected', '', ['id' => 'area_selected', 'data-validation-required-message' => 'Location is required']) !!}
+                            </div>
                         </div>
                         {{-- <!-- city &  locations -->
                          <div class="city-location">
@@ -281,7 +289,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                             </div>
                         </div>
 
-                        <!-- perferred time -->
+                        <!-- preferred time -->
                         <div class="row form-group perferred-time">
                             <label class="col-md-4 label-title">Preferred time to contact:</label>
                             <div class="col-md-8">
@@ -313,7 +321,8 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
 
                         <div class="city-location">
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -327,15 +336,18 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                    <div class="nav modalcategory flex-column nav-pills"
+                                                         id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
                                                         <div class="city_title">
                                                             <h3><i class="fa fa-tags"></i>Cities</h3>
                                                         </div>
                                                         @foreach($cities as $item)
-                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab" data-toggle="pill" data-id="{{$item->PK_NO}}"
+                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab"
+                                                               data-toggle="pill" data-id="{{$item->PK_NO}}"
                                                                href="#v-pills-{{$item->PK_NO}}" role="tab"
-                                                               aria-controls="v-pills-dhaka" aria-selected="true">{{$item->CITY_NAME}}<i
+                                                               aria-controls="v-pills-dhaka"
+                                                               aria-selected="true">{{$item->CITY_NAME}}<i
                                                                     class="fa fa-angle-right float-right"></i></a>
                                                         @endforeach
                                                     </div>
@@ -347,11 +359,14 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                                             <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
                                                         </div>
                                                         <div id="show_area">
-                                                            <div class="tab-pane fade show" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
+                                                            <div class="tab-pane fade show" id="v-pills-1"
+                                                                 role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
                                                                 <div class="city-wrap">
                                                                     <div class="city-list">
-                                                                        <h3><i class="fa fa-map-marker"></i><span id="city_title"></span></h3>
-                                                                        <select class="select2 form-control" multiple name="area[]" id="area">
+                                                                        <h3><i class="fa fa-map-marker"></i><span
+                                                                                id="city_title"></span></h3>
+                                                                        <select class="select2 form-control" data-validation- multiple
+                                                                                name="area[]" id="area">
 
                                                                         </select>
                                                                         {{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
@@ -362,6 +377,9 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="modal-footer" style="border-top: unset">
+                                            <button type="button" id="done_button" class="btn btn-primary" data-dismiss="modal" aria-label="Done">Done</button>
                                         </div>
                                     </div>
                                 </div>
@@ -391,7 +409,18 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
-
+    <script>
+        $('#done_button').on('click', function () {
+            let area = $('#area').val();
+            if (area.length) {
+                $('#area_selected').val(area.length);
+                $('#location-error').hide(100);
+            } else {
+                $('#area_selected').val('')
+                $('#location-error').show(100);
+            }
+        });
+    </script>
     <script>
         var base_url = $('#base_url').val();
         $("#any").on('click', function () {
@@ -477,28 +506,28 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             $('.backcategory').show();
             $('#city_title').text($(this).text());
             $("#area").empty();
-             $('.select2').select2();
+            $('.select2').select2();
 
             $.ajax({
-                type :'GET',
+                type: 'GET',
                 headers: {},
-                data:{},
-                url: base_url+"/property-requirements/get_area/" + id,
-                async :true,
+                data: {},
+                url: base_url + "/property-requirements/get_area/" + id,
+                async: true,
                 beforeSend: function () {
                     $("body").css("cursor", "progress");
                 },
                 success: function (data) {
-                    if(data.status == 'success' ){
-                    $.each(data.html, function (key, value) {
-                        var option = new Option(value, key);
-                        $("#area").append(option);
-                    });
+                    if (data.status == 'success') {
+                        $.each(data.html, function (key, value) {
+                            var option = new Option(value, key);
+                            $("#area").append(option);
+                        });
                     } else {
                         alert('Something wrong');
                     }
                 },
-                complete: function (data){
+                complete: function (data) {
 
                     $("body").css("cursor", "default");
 
@@ -511,10 +540,19 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
         $(document).on('click', '.backcategory', function () {
             $('.select2').select2();
-           // $('.fstChoiceRemove').trigger('click');
+            // $('.fstChoiceRemove').trigger('click');
             $('.modalsubcategory').hide();
             $('.modalcategory').show();
         });
+
+        // $('#requirement_form').submit(function (e) {
+        //     e.preventDefault();
+        //     if ($('#area').val().length && $('#f_city_id').val()) {
+        //         $('#requirement_form').submit();
+        //     } else {
+        //         toastr.error('Location is required')
+        //     }
+        // });
 
 
         $('.select2').select2();

@@ -9,7 +9,6 @@
             <li><a href="{{route('my-account')}}" class="@yield('my-account')">My Account</a></li>
             <li><a href="{{route('property-requirements')}}"  class="@yield('property-requirements')">Property Requirements</a></li>
             <li><a href="{{route('suggested-properties')}}"  class="@yield('suggested-properties')">Suggested Properties</a></li>
-            <li><a href="{{route('varified-properties')}}"  class="@yield('varified-properties')">Verified Properties</a></li>
             <li><a href="{{route('contacted-properties')}}"  class="@yield('contacted-properties')">Contacted Properties</a></li>
             <li><a href="{{route('browsed-properties')}}"  class="@yield('browsed-properties')">Browsed Properties</a></li>
             <li><a href="{{route('recharge-balance')}}"  class="@yield('recharge-balance')">Recharge Balance</a></li>
