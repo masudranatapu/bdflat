@@ -132,7 +132,6 @@
                                                     <td>{{$row->MOBILE1}}</td>
                                                     <td>{{$row->CREATED_AT}}</td>
                                                     <td>
-
                                                         @if($row->STATUS == 'published')
                                                             <span class="t-pub">Published</span>
                                                         @endif
@@ -156,7 +155,6 @@
                                                         @if($row->STATUS == 'deleted')
                                                             <span class="t-del">Deleted</span>
                                                         @endif
-                                                        
                                                     </td>
                                                     <td>{{$row->A}}</td>
                                                     <td>{{$row->A}}</td>
