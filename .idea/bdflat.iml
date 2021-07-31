@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/web/app" isTestSource="false" packagePrefix="App\" />
       <excludeFolder url="file://$MODULE_DIR$/web/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/web/vendor/intervention/image" />
+      <excludeFolder url="file://$MODULE_DIR$/web/vendor/psr/http-factory" />
       <excludeFolder url="file://$MODULE_DIR$/web/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/web/vendor/ralouphie/getallheaders" />
     </content>
