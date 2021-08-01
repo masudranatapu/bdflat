@@ -47,7 +47,7 @@
                                         <div class="user-box">
                                             <a href="#">
                                                 <span>01</span><br/>
-                                                New Properties
+                                                Suggested Properties
                                             </a>
                                         </div>
                                     </div>
