@@ -82,6 +82,7 @@ class AdminAccessServiceProvider extends ServiceProvider
             'Shopcategory',
             'WebInfo',
             'PropertyCategory',
+            'Earnings',
         ];
 
         foreach ($repos as $repo) {
