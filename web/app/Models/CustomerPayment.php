@@ -35,6 +35,13 @@ class CustomerPayment extends Model
         return $this->belongsTo('App\User', 'F_CUSTOMER_NO', 'PK_NO');
     }
 
+    public function getPayments($userId)
+    {
+        return CustomerPayment::with('customer')
+            ->where('F_CUSTOMER_NO', '=', $userId)
+            ->get();
+    }
+
     public function getPayment($id)
     {
         return CustomerPayment::with('customer')

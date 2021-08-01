@@ -20,11 +20,11 @@
             <!-- row -->
             <div class="row">
 
-                <div class="col-md-4 mb-5 d-none d-md-block">
+                <div class="col-md-3 mb-5 d-none d-md-block">
                     @include('common._left_menu')
                 </div>
 
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-9">
                     <div class="recharre-balance text-center">
                         <h2>Recharge Balance</h2>
                         {!! Form::open([ 'route' => 'ssl.pay', 'id' => 'paymentForm', 'method' => 'post', 'class' => 'form-horizontal','files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
