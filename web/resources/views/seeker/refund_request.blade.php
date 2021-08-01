@@ -30,11 +30,11 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
             <!-- row -->
             <div class="row">
 
-                <div class="col-md-4 mb-5 d-none d-md-block">
+                <div class="col-md-3 mb-5 d-none d-md-block">
                     @include('common._left_menu')
                 </div>
 
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-9">
                     <div class="refund-wrap text-center">
                         <h1>Hi, you are claiming amount for<br/> Property ID {{$product_list_details->CODE}}</h1>
                         {{ $errors }}

@@ -66,10 +66,10 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
         <!-- container -->
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-5 d-none d-md-block">
+                <div class="col-md-3 mb-5 d-none d-md-block">
                     @include('common._left_menu')
                 </div>
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-9">
                     {{ $errors }}
                     {!! Form::open([ 'route' => ['listings.update',$row->PK_NO], 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     {!! Form::hidden('id', $row->PK_NO) !!}

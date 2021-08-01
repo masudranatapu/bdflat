@@ -5,6 +5,7 @@ use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
 use App\Http\Requests\UserRequest;
+use App\Models\CustomerPayment;
 use App\Models\CustomerRefund;
 use App\Models\Listings;
 use Illuminate\Http\Request;
@@ -17,14 +18,14 @@ class SeekerController extends Controller
 {
     protected $userModel;
     protected $customerRefundModel;
+    protected $payment;
 
-
-    public function __construct(User $user,CustomerRefund $customerRefund)
+    public function __construct(User $user,CustomerRefund $customerRefund, CustomerPayment $payment)
     {
         $this->middleware('auth');
         $this->userModel                = $user;
         $this->customerRefundModel      = $customerRefund;
-
+        $this->payment = $payment;
     }
 
     public function getMyAccount(Request $request)
@@ -130,12 +131,7 @@ class SeekerController extends Controller
 
     public function paymentHistory(Request $request)
     {
-        $data = array();
-        // $this->resp = $this->userModel->paymentHistory($request);
-        // $msg        = $this->resp->msg;
-        // $msg_title  = $this->resp->msg_title;
-        // Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
-        // return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+        $data['payments'] = $this->payment->getPayments(Auth::id());
          return view('seeker.payment_history',compact('data'));
     }
 

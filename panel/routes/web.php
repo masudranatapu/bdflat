@@ -412,13 +412,15 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
      Route::get('customer_postage_by_city/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_postage_by_city', 'uses' => 'CustomerAddressController@getPostagebyCity']);
 
     //Agent
-    Route::get('agent', ['middleware' => 'acl:agent_view', 'as' => 'admin.agent.list', 'uses' => 'AgentsController@getIndex']);
-    Route::get('agent/new',['middleware' => 'acl:agent_new', 'as' => 'admin.agent.create', 'uses' => 'AgentsController@getCreate']);
-    Route::post('agent/store',['middleware' => 'acl:agent_store', 'as' => 'admin.agent.store', 'uses' => 'AgentsController@postStore']);
-    Route::get('agent/{id}/edit',['middleware' => 'acl:agent_edit', 'as' => 'admin.agent.edit', 'uses' => 'AgentsController@getEdit']);
-    Route::post('agent/{id}/update',['middleware' => 'acl:agent_update', 'as' => 'admin.agent.update', 'uses' => 'AgentsController@postUpdate']);
-    Route::get('agent/{id}/delete',['middleware' => 'acl:agent_delete', 'as' => 'admin.agent.delete', 'uses' => 'AgentsController@getDelete']);
+    Route::get('agents', ['middleware' => 'acl:agent_view', 'as' => 'admin.agents.list', 'uses' => 'AgentsController@getIndex']);
+    Route::get('agents/new',['middleware' => 'acl:agent_new', 'as' => 'admin.agents.create', 'uses' => 'AgentsController@getCreate']);
+    Route::post('agents/store',['middleware' => 'acl:agent_store', 'as' => 'admin.agents.store', 'uses' => 'AgentsController@postStore']);
+    Route::get('agents/{id}/edit',['middleware' => 'acl:agent_edit', 'as' => 'admin.agents.edit', 'uses' => 'AgentsController@getEdit']);
+    Route::post('agents/{id}/update',['middleware' => 'acl:agent_update', 'as' => 'admin.agents.update', 'uses' => 'AgentsController@postUpdate']);
+    Route::get('agents/{id}/delete',['middleware' => 'acl:agent_delete', 'as' => 'admin.agents.delete', 'uses' => 'AgentsController@getDelete']);
 
+    //earnings
+    Route::get('earnings', ['as' => 'admin.earnings.list', 'uses' => 'EarningsController@getIndex']);
 
 
     //Customer Address Type
