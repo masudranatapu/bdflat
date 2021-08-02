@@ -427,7 +427,7 @@
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for property </span></a>
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Floor</span></a>
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facing</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Pricing</span></a>
+                <li class="@yield('listing_price')"><a class="menu-item" href="{{route('admin.listing_price.list')}}"><i></i><span data-i18n="Basic">Pricing</span></a>
 
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">City List</span></a>
                 </li>

@@ -422,6 +422,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     //earnings
     Route::get('earnings', ['as' => 'admin.earnings.list', 'uses' => 'EarningsController@getIndex']);
 
+    //listing pricing
+    Route::get('listing-price', ['middleware' => 'acl:listing_price_view', 'as' => 'admin.listing_price.list', 'uses' => 'ListingPriceController@getIndex']);
+    Route::post('listing-price/update', ['middleware' => 'acl:listing_price_update', 'as' => 'admin.listing_price.update', 'uses' => 'ListingPriceController@postUpdate']);
 
     //Customer Address Type
     Route::get('address-type',['middleware' => 'acl:view_address_type', 'as' => 'admin.address_type.list', 'uses' => 'AddressController@getIndex']);
