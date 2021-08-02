@@ -81,6 +81,10 @@ class Listings extends Model
         return $this->hasMany('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO');
     }
 
+    public function listingType(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne('App\Models\ListingType', 'PK_NO', 'F_LISTING_TYPE');
+    }
 
     public function store($request)
     {
@@ -362,5 +366,51 @@ class Listings extends Model
             ->latest()
             ->take($limit)
             ->get();
+    }
+
+    public function getListing($id)
+    {
+        return Listings::with(['listingType'])
+            ->find($id);
+    }
+
+    public function storePayment($id)
+    {
+        $status = false;
+        $msg = 'Payment unsuccessful !';
+
+        DB::beginTransaction();
+        try {
+            $listing = $this->getListing($id);
+            $user = Auth::user();
+            $type = $listing->PROPERTY_FOR;
+            $price = 0;
+            if ($type == 'sell') {
+                $price = $listing->listingType->SELL_PRICE ?? 0;
+            } else if ($type == 'rent') {
+                $price = $listing->listingType->RENT_PRICE ?? 0;
+            } else if ($type == 'roommate') {
+                $price = $listing->listingType->ROOMMATE_PRICE ?? 0;
+            }
+
+            if ($user->UNUSED_TOPUP - $price >= 0) {
+                $payment = new PaymentUsed();
+                $payment->F_CUSTOMER_NO = Auth::id();
+                $payment->F_LISTING_NO = $listing->PK_NO;
+                $payment->AMOUNT = $price;
+                $payment->START_DATE = Carbon::now();
+                $payment->END_DATE = Carbon::now()->addDays($listing->listingType->DURATION);
+                $payment->save();
+
+                $status = true;
+                $msg = 'Payment successful !';
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'owner-listings');
     }
 }

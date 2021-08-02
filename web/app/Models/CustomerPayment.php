@@ -59,6 +59,7 @@ class CustomerPayment extends Model
             $payment = new CustomerPayment();
             $payment->F_CUSTOMER_NO = Auth::id();
             $payment->AMOUNT = $request->amount;
+            $payment->REMAINING_AMOUNT = $request->amount;
             $payment->F_ACC_PAYMENT_BANK_NO = 1; // SSL PK_NO
             $payment->PAYMENT_CONFIRMED_STATUS = 0; // NOT CONFIRMED
             $payment->PAYMENT_DATE = date('Y-m-d H:i:s');

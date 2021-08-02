@@ -9,6 +9,12 @@
             font-size: 12px !important;
             font-family: 'Montserrat-Medium', serif !important;
         }
+
+        @media (max-width:576px) {
+            .table-responsive {
+                display: unset;
+            }
+        }
     </style>
 @endpush
 
