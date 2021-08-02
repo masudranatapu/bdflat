@@ -47,7 +47,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                     {{ $errors }}
                     {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
-                            {!! Form::hidden('f_city_id',null,[ 'id' => 'f_city_id','data-validation-required-message' => 'This field is required']) !!}
+                            {!! Form::hidden('f_city_id',1,[ 'id' => 'f_city_id','data-validation-required-message' => 'This field is required']) !!}
                             {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id','data-validation-required-message' => 'This field is required']) !!}
 
                     <!-- city & location -->

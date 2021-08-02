@@ -25,12 +25,13 @@ class ListingController extends Controller
 {
     protected $user;
     protected $listings;
+    protected $resp;
 
     public function __construct(User $user, Listings $listings)
     {
         $this->middleware('auth');
-        $this->userModel = $user;
-        $this->listingsModel = $listings;
+        $this->user = $user;
+        $this->listings = $listings;
     }
 
 
@@ -51,7 +52,7 @@ class ListingController extends Controller
 
     public function store(ListingsRequest $request)
     {
-        $this->resp = $this->listingsModel->store($request);
+        $this->resp = $this->listings->store($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
@@ -60,7 +61,7 @@ class ListingController extends Controller
 
     public function update(ListingsRequest $request,$id)
     {
-        $this->resp = $this->listingsModel->postUpdate($request,$id);
+        $this->resp = $this->listings->postUpdate($request,$id);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
@@ -69,7 +70,7 @@ class ListingController extends Controller
 
     public function delete($id)
     {
-        $this->resp = $this->listingsModel->postDelete($id);
+        $this->resp = $this->listings->postDelete($id);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
         Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
@@ -127,5 +128,21 @@ class ListingController extends Controller
 //        return response()->json($data);
     }
 
+    public function pay($id)
+    {
+        $data['listing'] = $this->listings->getListing($id);
+        return view('owner.pay', compact('data'));
+    }
+
+    public function payStore(Request $request, $id)
+    {
+        $this->resp = $this->listings->storePayment($id);
+        if ($this->resp->status) {
+            Toastr()->success($this->resp->msg);
+        } else {
+            Toastr()->error($this->resp->msg);
+        }
+        return redirect()->route($this->resp->redirect_to);
+    }
 
 }
