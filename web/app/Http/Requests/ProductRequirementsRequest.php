@@ -58,7 +58,7 @@ class ProductRequirementsRequest extends FormRequest
             'time.required'             => 'Preferred time to contact is required!',
             'alert.required'            => 'Email Alert is required!',
             'f_city_id.required'        => 'Location is required',
-            'area.required'             => 'Location is required',
+            'area.required'             => 'Area is required',
             'area.min'                  => 'Location is required'
         ];
     }

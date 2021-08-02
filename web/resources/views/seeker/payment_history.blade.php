@@ -64,7 +64,7 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                                         <td>{{ $payment->PAYMENT_NOTE }}</td>
                                         <td>{{ \Carbon\Carbon::parse($payment->PAYMENT_DATE)->format('d/m/Y') }}</td>
                                         <td>{{ number_format($payment->AMOUNT, 2) }}</td>
-                                        <td>{{ ''  }}</td>
+                                        <td>&nbsp;</td>
                                     </tr>
                                 @endforeach
                             @else

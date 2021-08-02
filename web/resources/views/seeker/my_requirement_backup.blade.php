@@ -57,6 +57,19 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                 <i class="fa fa-angle-right float-right"></i>
                             </h4>
                         </div>--}}
+                        <div class="select-city" data-toggle="modal" data-target="#exampleModal">
+                            <h4>
+                                <i class="fa fa-map-marker"></i>Select location / City<br/>
+                                <i class="fa fa-angle-right float-right"></i>
+                            </h4>
+                            {!! $errors->first('area', '<label class="help-block text-danger">:message</label><br>') !!}
+                            <p class="help-block text-danger" id="location-error" style="display: none">Location is required</p>
+                        </div>
+                        <div class="row form-group d-none">
+                            <div class="controls">
+                                {!! Form::text('area_selected', '', ['id' => 'area_selected', 'data-validation-required-message' => 'Location is required']) !!}
+                            </div>
+                        </div>
                         {{-- <!-- city &  locations -->
                          <div class="city-location">
                              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,25 +122,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                          </div>--}}
 
 
-                        <div class="row form-group {!! $errors->has('f_city_id') ? 'error' : '' !!}">
-                            {{ Form::label('city', 'Select location:', ['class' => 'col-md-4 label-title']) }}
-                            <div class="col-md-8">
-                                <div class="controls">
-                                    {!! Form::select('city', $cities, null, ['class' => 'form-control', 'id' => 'cities', 'data-validation-required-message' => 'Location is required']) !!}
-                                    {!! $errors->first('f_city_id', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row form-group {!! $errors->has('f_area_id') ? 'error' : '' !!}">
-                            {{ Form::label('city', 'Select area:', ['class' => 'col-md-4 label-title']) }}
-                            <div class="col-md-8">
-                                <div class="controls">
-                                    {!! Form::select('area[]', $data['areas'] ?? [], null, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple']) !!}
-                                    {!! $errors->first('f_area_id', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
                     <!-- Looking property for -->
                         <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
@@ -326,69 +321,69 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
 
                         <div class="city-location">
-{{--                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"--}}
-{{--                                 aria-hidden="true">--}}
-{{--                                <div class="modal-dialog">--}}
-{{--                                    <div class="modal-content">--}}
-{{--                                        <div class="modal-header">--}}
-{{--                                            <h5 class="modal-title" id="exampleModalLabel">--}}
-{{--                                                Select City or Division | <a href="#">All of Bangladesh</a>--}}
-{{--                                            </h5>--}}
-{{--                                            <button type="button" class="close done_button" data-dismiss="modal" aria-label="Close">--}}
-{{--                                                <span aria-hidden="true">&times;</span>--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-body">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="col-12">--}}
-{{--                                                    <div class="nav modalcategory flex-column nav-pills"--}}
-{{--                                                         id="v-pills-tab" role="tablist" aria-orientation="vertical">--}}
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                Select City or Division | <a href="#">All of Bangladesh</a>
+                                            </h5>
+                                            <button type="button" class="close done_button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="nav modalcategory flex-column nav-pills"
+                                                         id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
-{{--                                                        <div class="city_title">--}}
-{{--                                                            <h3><i class="fa fa-tags"></i>Cities</h3>--}}
-{{--                                                        </div>--}}
-{{--                                                        @foreach($cities as $item)--}}
-{{--                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab"--}}
-{{--                                                               data-toggle="pill" data-id="{{$item->PK_NO}}"--}}
-{{--                                                               href="#v-pills-{{$item->PK_NO}}" role="tab"--}}
-{{--                                                               aria-controls="v-pills-dhaka"--}}
-{{--                                                               aria-selected="true">{{$item->CITY_NAME}}<i--}}
-{{--                                                                    class="fa fa-angle-right float-right"></i></a>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
+                                                        <div class="city_title">
+                                                            <h3><i class="fa fa-tags"></i>Cities</h3>
+                                                        </div>
+                                                        @foreach($cities as $item)
+                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab"
+                                                               data-toggle="pill" data-id="{{$item->PK_NO}}"
+                                                               href="#v-pills-{{$item->PK_NO}}" role="tab"
+                                                               aria-controls="v-pills-dhaka"
+                                                               aria-selected="true">{{$item->CITY_NAME}}<i
+                                                                    class="fa fa-angle-right float-right"></i></a>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
 
-{{--                                                <div class="col-12">--}}
-{{--                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">--}}
-{{--                                                        <div class="backcategory">--}}
-{{--                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>--}}
-{{--                                                        </div>--}}
-{{--                                                        <div id="show_area">--}}
-{{--                                                            <div class="tab-pane fade show" id="v-pills-1"--}}
-{{--                                                                 role="tabpanel" aria-labelledby="v-pills-dhaka-tab">--}}
-{{--                                                                <div class="city-wrap">--}}
-{{--                                                                    <div class="city-list">--}}
-{{--                                                                        <h3><i class="fa fa-map-marker"></i><span--}}
-{{--                                                                                id="city_title"></span></h3>--}}
-{{--                                                                        <select class="select2 form-control" data-validation- multiple--}}
-{{--                                                                                name="area[]" id="area">--}}
+                                                <div class="col-12">
+                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">
+                                                        <div class="backcategory">
+                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
+                                                        </div>
+                                                        <div id="show_area">
+                                                            <div class="tab-pane fade show" id="v-pills-1"
+                                                                 role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
+                                                                <div class="city-wrap">
+                                                                    <div class="city-list">
+                                                                        <h3><i class="fa fa-map-marker"></i><span
+                                                                                id="city_title"></span></h3>
+                                                                        <select class="select2 form-control" data-validation- multiple
+                                                                                name="area[]" id="area">
 
-{{--                                                                        </select>--}}
-{{--                                                                        --}}{{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-footer" style="border-top: unset">--}}
-{{--                                            <button type="button" id="done_button" class="btn btn-primary done_button" data-dismiss="modal" aria-label="Done">Done</button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                                                        </select>
+                                                                        {{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="border-top: unset">
+                                            <button type="button" id="done_button" class="btn btn-primary done_button" data-dismiss="modal" aria-label="Done">Done</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="submit_btn">
@@ -470,29 +465,6 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
         min_budget.on('keyup', function () {
             max_budget.val('');
             min_budget.attr('max', max_budget.val());
-        });
-
-        $("#cities").on("change", function () {
-            let dis = $(this);
-            $("#f_city_id").val(dis.val());
-            let area = $('#area');
-            area.empty();
-            $('.select2').select2();
-
-            $.ajax({
-                url: "property-requirements/get_area/" + dis.val(),
-                method: "GET",
-                success: function (data) {
-                    if (data.status == 'success') {
-                        $.each(data.html, function (key, value) {
-                            let option = new Option(value, key);
-                            area.append(option);
-                        });
-                    } else {
-                        alert('Something wrong');
-                    }
-                }
-            });
         });
 
         $(".city_id").on('click', function () {
