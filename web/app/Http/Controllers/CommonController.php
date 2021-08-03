@@ -4,22 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\contactRequest;
 use App\Models\ContactForm;
+use App\Models\CustomerPayment;
 use App\Models\Listings;
 use Illuminate\Http\Request;
 use App\Category;
-use DB;
+use Illuminate\Support\Facades\Auth;
 use Toastr;
 
 class CommonController extends Controller
 {
     protected $category;
     protected $contact;
+    protected $payment;
 
-
-    public function __construct(Category $category, ContactForm $contacts)
+    public function __construct(Category $category, ContactForm $contacts, CustomerPayment $payment)
     {
+        $this->middleware('auth');
         $this->category = $category;
         $this->contact = $contacts;
+        $this->payment = $payment;
     }
 
 
@@ -156,6 +159,8 @@ class CommonController extends Controller
     {
         $data = array();
         $data['listing'] = Listings::select('PRD_LISTINGS.LISTING_TYPE', 'LT.SHORT_NAME', 'PRD_LISTINGS.MODIFIED_AT', 'PRD_LISTINGS.PROPERTY_FOR', 'PRD_LISTINGS.CODE', 'PRD_LISTINGS.TITLE', 'PRD_LISTINGS.CITY_NAME', 'PRD_LISTINGS.AREA_NAME', 'PRD_LISTINGS.PK_NO', 'PRD_LISTINGS.IS_FEATURE')
+            ->where('PRD_LISTINGS.STATUS', '!=', 4)
+            ->where('PRD_LISTINGS.F_USER_NO', '=', Auth::id())
             ->leftJoin('PRD_LISTING_TYPE AS LT', 'LT.PK_NO', '=', 'PRD_LISTINGS.F_LISTING_TYPE')
             ->get();
         return view('developer.developer_listings', compact('data'));
@@ -175,7 +180,7 @@ class CommonController extends Controller
 
     public function getdeveloperPayments(Request $request)
     {
-        $data = array();
+        $data['payments'] = $this->payment->getPayments(Auth::id());
         return view('developer.developer_payments', compact('data'));
     }
 

@@ -10,9 +10,12 @@
             font-family: 'Montserrat-Medium', serif !important;
         }
 
-        @media (max-width:576px) {
+        .table-responsive {
+            display: inline-table !important;
+        }
+        @media (max-width: 768px) {
             .table-responsive {
-                display: unset;
+                display: block !important;
             }
         }
     </style>
