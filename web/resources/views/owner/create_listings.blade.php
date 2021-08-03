@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('owner-listings','active')
+@section('developer-listings','active')
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
@@ -18,6 +19,9 @@
             position: absolute;
             right: -8px;
             top: 8px;
+        }
+        .row.form-group {
+            align-items: baseline;
         }
     </style>
 @endpush
@@ -328,7 +332,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <div class="advertisment-title">
                                 <h3>Image & Videos</h3>
                             </div>
-                            <div class="row form-group {!! $errors->has('image') ? 'error' : '' !!}">
+                            <div class="row form-group {!! $errors->has('image') ? 'error' : '' !!}" style="align-items: center">
                                 {{ Form::label(null,'Image',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="controls">
@@ -377,6 +381,28 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     </div>
                                 </div>
                             </div>
+                            <div class="row form-group">
+                                {{ Form::label('contact_person_2','Second Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('contact_person_2') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('contact_person_2', old('contact_person_2'), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('contact_person_2', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                {{ Form::label('mobile_2','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::number('mobile_2', old('mobile_2'), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!--  listing  type -->
                             <div class="advertisment-title">
@@ -410,8 +436,12 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
-
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
+    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <script>
+        //ck editor
+        CKEDITOR.replace('description');
+    </script>
     <script>
 
         $('#imageFile').imageUploader();

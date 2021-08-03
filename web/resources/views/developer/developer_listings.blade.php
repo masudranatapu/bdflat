@@ -65,11 +65,11 @@ $listings = $data['listing'] ?? [];
                                             </tr>
                                         @endforeach
                                     @else
-                                        <div class="row no-gutters">
-                                            <div class="col-12">
+                                        <tr>
+                                            <td colspan="9">
                                                 <h6 class="font-weight-bold text-danger text-center">No Data Found!</h6>
-                                            </div>
-                                        </div>
+                                            </td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                 </table>

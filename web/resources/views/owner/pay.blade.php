@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('owner-listings','active')
+@section('developer-listings','active')
 @push('custom_css')
 
 @endpush
