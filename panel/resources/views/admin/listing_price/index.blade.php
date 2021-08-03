@@ -27,6 +27,7 @@
 @php
     $roles = userRolePermissionArray();
     $data = $data ?? [];
+    $data2 = $data2 ?? [];
 @endphp
 
 
@@ -45,316 +46,108 @@
         </div>
         <div class="card-content collapse show">
             <div class="card-body">
-
                 {!! Form::open([ 'route' => 'admin.listing_price.update', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
-                @csrf
                 <div class="form-body">
-                    <h2 class="mb-2">General Listing Charge</h2>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Sale:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('gl_sale_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('gl_sale_price', $data->GENERAL_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('gl_sale_price', '<label class="help-block text-danger">:message</label>') !!}
+                    @foreach($data as $key => $item)
+                        @php
+                            $price = $item->listingPrice;
+                        @endphp
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group {!! $errors->has('gl_sale_price') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::text('gl_sale_name'.$key, $item->NAME,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                        {!! $errors->first('gl_sale_price', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('gl_sale_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('gl_sale_duration', $data->GENERAL_SALES_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('gl_sale_duration', '<label class="help-block text-danger">:message</label>') !!}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Listing For Sale (BDT):</label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Rent:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('gl_rent_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('gl_rent_price', $data->GENERAL_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('gl_rent_price', '<label class="help-block text-danger">:message</label>') !!}
+                            <div class="col-md-2">
+                                <div class="form-group {!! $errors->has('gl_sale_price') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::text('gl_sale_price'.$key, $price->SELL_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                        {!! $errors->first('gl_sale_price', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('gl_rent_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('gl_rent_duration', $data->GENERAL_RENT_PRICE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('gl_rent_duration', '<label class="help-block text-danger">:message</label>') !!}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Listing For Rent (BDT):</label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Roommate:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('gl_roommate_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('gl_roommate_price', $data->GENERAL_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('gl_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
+                            <div class="col-md-2">
+                                <div class="form-group {!! $errors->has('gl_rent_price') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::text('gl_rent_price'.$key, $price->RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                        {!! $errors->first('gl_rent_price', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('gl_roommate_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('gl_roommate_duration', $data->GENERAL_ROOMMATE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('gl_roommate_duration', '<label class="help-block text-danger">:message</label>') !!}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Listing For Roommate (BDT):</label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <h2 class="mb-2 mt-2">Feature Listing Charge</h2>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Sale:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('fl_sale_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('fl_sale_price', $data->FEATURE_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('fl_sale_price', '<label class="help-block text-danger">:message</label>') !!}
+                            <div class="col-md-2">
+                                <div class="form-group {!! $errors->has('gl_roommate_price') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::text('gl_roommate_price'.$key, $price->ROOMMAT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                        {!! $errors->first('gl_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('fl_sale_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('fl_sale_duration', $data->FEATURE_SALES_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('fl_sale_duration', '<label class="help-block text-danger">:message</label>') !!}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Duration (Days):</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group {!! $errors->has('gl_duration') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::text('gl_duration'.$key, $item->DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                        {!! $errors->first('gl_duration', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
+                </div>
+            </div>
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Rent:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('fl_rent_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('fl_rent_price', $data->FEATURE_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('fl_rent_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('fl_rent_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('fl_rent_duration', $data->FEATURE_RENT_PRICE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('fl_rent_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Roommate:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('fl_roommate_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('fl_roommate_price', $data->FEATURE_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('fl_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('fl_roommate_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('fl_roommate_duration', $data->FEATURE_ROOMMATE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('fl_roommate_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h2 class="mb-2 mt-2">General Listing With Daily Auto Update Charge</h2>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Sale:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('ag_sale_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('ag_sale_price', $data->AUTO_GENERAL_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('ag_sale_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('ag_sale_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('ag_sale_duration', $data->AUTO_GENERAL_SALES_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('ag_sale_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Rent:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('ag_rent_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('ag_rent_price', $data->AUTO_GENERAL_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('ag_rent_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('ag_rent_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('ag_rent_duration', $data->AUTO_GENERAL_RENT_PRICE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('ag_rent_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Roommate:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('ag_roommate_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('ag_roommate_price', $data->AUTO_GENERAL_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('ag_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('ag_roommate_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('ag_roommate_duration', $data->AUTO_GENERAL_ROOMMATE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('ag_roommate_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="form-actions mt-10 mb-3 text-center">
+                <a href="{{ route('admin.agents.list')}}">
+                    <button type="button" class="btn btn-warning mr-1">
+                        <i class="ft-x"></i> Cancel
+                    </button>
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="la la-check-square-o"></i> Save
+                </button>
+            </div>
+            {!! Form::close() !!}
+        </div>
 
 
-                    <h2 class="mb-2 mt-2">Featured Listing With Daily Auto Update Charge</h2>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Sale:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('af_sale_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('af_sale_price', $data->AUTO_FEATURE_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('af_sale_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('af_sale_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('af_sale_duration', $data->AUTO_FEATURE_SALES_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('af_sale_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Rent:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('af_rent_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('af_rent_price', $data->AUTO_FEATURE_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('af_rent_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('af_rent_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('af_rent_duration', $data->AUTO_FEATURE_RENT_PRICE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('af_rent_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Listing For Roommate:</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('af_roommate_price') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('af_roommate_price', $data->AUTO_FEATURE_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('af_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group {!! $errors->has('af_roommate_duration') ? 'error' : '' !!}">
-                                <div class="controls">
-                                    {!! Form::text('af_roommate_duration', $data->AUTO_FEATURE_ROOMMATE_DURATION,[ 'class' => 'form-control mb-1', 'placeholder' => 'Duration (Days)', 'tabindex' => 1 ]) !!}
-                                    {!! $errors->first('af_roommate_duration', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
+        <div class="card-content collapse show">
+            <div class="card-body">
+                {!! Form::open([ 'route' => 'admin.listing_lead_price.update', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
+                <div class="form-body">
                     <h2 class="mb-2 mt-2">Agent Properties Contact View</h2>
                     <div class="row">
                         <div class="col-md-2">
@@ -365,7 +158,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('apv_sale_price', $data->AGENT_PROP_VIEW_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('apv_sale_price', $data2->AGENT_PROP_VIEW_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('apv_sale_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -381,7 +174,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('apv_rent_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('apv_rent_price', $data->AGENT_PROP_VIEW_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('apv_rent_price', $data2->AGENT_PROP_VIEW_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('apv_rent_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -397,7 +190,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('apv_roommate_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('apv_roommate_price', $data->AGENT_PROP_VIEW_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('apv_roommate_price', $data2->AGENT_PROP_VIEW_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('apv_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -414,7 +207,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('ac_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('ac_sale_price', $data->AGENT_COMM_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('ac_sale_price', $data2->AGENT_COMM_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('ac_sale_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -430,7 +223,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('ac_rent_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('ac_rent_price', $data->AGENT_COMM_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('ac_rent_price', $data2->AGENT_COMM_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('ac_rent_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -446,7 +239,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('ac_roommate_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('ac_roommate_price', $data->AGENT_COMM_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('ac_roommate_price', $data2->AGENT_COMM_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('ac_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -464,7 +257,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('lv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('lv_sale_price', $data->LEAD_VIEW_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('lv_sale_price', $data2->LEAD_VIEW_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('lv_sale_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -480,7 +273,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('lv_rent_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('lv_rent_price', $data->LEAD_VIEW_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('lv_rent_price', $data2->LEAD_VIEW_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('lv_rent_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -496,7 +289,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('lv_roommate_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('lv_roommate_price', $data->LEAD_VIEW_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('lv_roommate_price', $data2->LEAD_VIEW_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('lv_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>

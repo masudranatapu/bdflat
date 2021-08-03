@@ -425,6 +425,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     //listing pricing
     Route::get('listing-price', ['middleware' => 'acl:listing_price_view', 'as' => 'admin.listing_price.list', 'uses' => 'ListingPriceController@getIndex']);
     Route::post('listing-price/update', ['middleware' => 'acl:listing_price_update', 'as' => 'admin.listing_price.update', 'uses' => 'ListingPriceController@postUpdate']);
+    Route::post('listing-lead-price/update', ['middleware' => 'acl:listing_price_update', 'as' => 'admin.listing_lead_price.update', 'uses' => 'ListingPriceController@postLeadPriceUpdate']);
 
     //Customer Address Type
     Route::get('address-type',['middleware' => 'acl:view_address_type', 'as' => 'admin.address_type.list', 'uses' => 'AddressController@getIndex']);
