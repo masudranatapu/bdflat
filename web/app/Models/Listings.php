@@ -88,6 +88,11 @@ class Listings extends Model
 
     public function store($request)
     {
+        $url = 'owner-listings';
+        if (Auth::user()->USER_TYPE == 3) {
+            $url = 'developer-listings';
+        }
+
         DB::beginTransaction();
         try {
             if ($request->p_type == 'A') {
@@ -102,6 +107,7 @@ class Listings extends Model
             }
 
             $list = new Listings();
+            $list->F_USER_NO = Auth::id();
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->property_type;
             $list->F_CITY_NO = $request->city;
@@ -214,76 +220,80 @@ class Listings extends Model
         }
         DB::commit();
 
-        return $this->formatResponse(true, 'Your listings added successfully !', 'owner-listings');
+        return $this->formatResponse(true, 'Your listings added successfully !', $url);
     }
 
     public function postUpdate($request, $id)
     {
+        $url = 'owner-listings';
+        if (Auth::user()->USER_TYPE == 3) {
+            $url = 'developer-listings';
+        }
+
         DB::beginTransaction();
         try {
-            $list = Listings::find($id);
-            if ($list->IS_DELETE == 0) {
-                $list->PROPERTY_FOR = $request->property_for;
-                $list->F_PROPERTY_TYPE_NO = $request->property_type;
-                $list->F_CITY_NO = $request->city;
-                $list->F_AREA_NO = $request->area;
-                $list->ADDRESS = $request->address;
-                $list->F_PROPERTY_CONDITION = $request->condition;
-                $list->TITLE = $request->property_title;
-                $list->PRICE_TYPE = $request->property_price;
-                $list->CONTACT_PERSON1 = $request->contact_person;
-                $list->MOBILE1 = $request->mobile;
-                $list->F_LISTING_TYPE = $request->listing_type;
-                $list->TOTAL_FLOORS = $request->floor;
-                $list->FLOORS_AVAIABLE = json_encode($request->floor_available);
-                $list->MODIFIED_BY = Auth::user()->PK_NO;
-                $list->MODIFIED_AT = Carbon::now();
-                $list->update();
+            $list = $this->getListing($id);
+            $list->PROPERTY_FOR = $request->property_for;
+            $list->F_PROPERTY_TYPE_NO = $request->property_type;
+            $list->F_CITY_NO = $request->city;
+            $list->F_AREA_NO = $request->area;
+            $list->ADDRESS = $request->address;
+            $list->F_PROPERTY_CONDITION = $request->condition;
+            $list->TITLE = $request->property_title;
+            $list->PRICE_TYPE = $request->property_price;
+            $list->CONTACT_PERSON1 = $request->contact_person;
+            $list->MOBILE1 = $request->mobile;
+            $list->F_LISTING_TYPE = $request->listing_type;
+            $list->TOTAL_FLOORS = $request->floor;
+            $list->FLOORS_AVAIABLE = json_encode($request->floor_available);
+            $list->MODIFIED_BY = Auth::user()->PK_NO;
+            $list->MODIFIED_AT = Carbon::now();
+            $list->update();
 
 //            for store listing variants
 
-                $property_size = $request->size;
-                ListingVariants::where('F_LISTING_NO', $id)->delete();
-                foreach ($property_size as $key => $item) {
-                    $data = array(
-                        'F_LISTING_NO' => $list->PK_NO,
-                        'PROPERTY_SIZE' => $request->size[$key],
-                        'BEDROOM' => $request->bedroom[$key],
-                        'BATHROOM' => $request->bathroom[$key],
-                        'TOTAL_PRICE' => $request->price[$key],
-                    );
-                    ListingVariants::insert($data);
-                }
+            $property_size = $request->size;
+            ListingVariants::where('F_LISTING_NO', $id)->delete();
+            foreach ($property_size as $key => $item) {
+                $data = array(
+                    'F_LISTING_NO' => $list->PK_NO,
+                    'PROPERTY_SIZE' => $request->size[$key],
+                    'BEDROOM' => $request->bedroom[$key],
+                    'BATHROOM' => $request->bathroom[$key],
+                    'TOTAL_PRICE' => $request->price[$key],
+                );
+                ListingVariants::insert($data);
+            }
 
 //            for image upload
-                if ($request->hasfile('images')) {
-                    foreach ($request->file('images') as $key => $image) {
+            if ($request->hasfile('images')) {
+                foreach ($request->file('images') as $key => $image) {
 //                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
 //                    $image->move(public_path() . '/uploads/listings/'.$id.'/', $name);
 
-                        $name = uniqid() . '.' . $image->getClientOriginalExtension();
-                        $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
-                        $waterMarkUrl = public_path('assets/img/logo.png');
+                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $waterMarkUrl = public_path('assets/img/logo.png');
 
-                        $destinationPath = public_path('/uploads/listings/' . $list->PK_NO . '/');
-                        $destinationPath2 = public_path('/uploads/listings/' . $list->PK_NO . '/thumb');
+                    $destinationPath = public_path('/uploads/listings/' . $list->PK_NO . '/');
+                    $destinationPath2 = public_path('/uploads/listings/' . $list->PK_NO . '/thumb');
 
-                        if (!file_exists($destinationPath2)) {
-                            mkdir($destinationPath2, 0755, true);
-                        }
+                    if (!file_exists($destinationPath2)) {
+                        mkdir($destinationPath2, 0755, true);
+                    }
 
-                        $thumb_img = Image::make($image->getRealPath());
+                    $thumb_img = Image::make($image->getRealPath());
 
-                        $thumb_img->backup();
+                    $thumb_img->backup();
 
-                        $thumb_img->resize(172, 115, function ($constraint) {
-                        });
-                        $thumb_img->save($destinationPath2 . '/' . $name2);
+                    $thumb_img->resize(172, 115, function ($constraint) {
+                    });
+                    $thumb_img->save($destinationPath2 . '/' . $name2);
 
-                        $thumb_img->reset();
+                    $thumb_img->reset();
 
-                        $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
-                        $thumb_img->save($destinationPath . '/' . $name);
+                    $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
+                    $thumb_img->save($destinationPath . '/' . $name);
 
 //                    if ($key == 0) {
 //                        $is_default = 1;
@@ -291,64 +301,65 @@ class Listings extends Model
 //                        $is_default = 0;
 //                    }
 
-                        ListingImages::create([
-                            'F_LISTING_NO' => $list->PK_NO,
-                            'IMAGE_PATH' => '/uploads/listings/' . $id . '/' . $name,
-                            'IMAGE' => $name,
-                            'THUMB_PATH' => '/uploads/listings/' . $list->PK_NO . '/thumb/' . $name2,
-                            'THUMB' => $name2,
+                    ListingImages::create([
+                        'F_LISTING_NO' => $list->PK_NO,
+                        'IMAGE_PATH' => '/uploads/listings/' . $id . '/' . $name,
+                        'IMAGE' => $name,
+                        'THUMB_PATH' => '/uploads/listings/' . $list->PK_NO . '/thumb/' . $name2,
+                        'THUMB' => $name2,
 //                        'IS_DEFAULT'    => $is_default,
-                        ]);
-                    }
+                    ]);
                 }
-
-//            for features
-                $features = ListingAdditionalInfo::where('F_LISTING_NO', $request->id)->first();
-                $features->F_LISTING_NO = $list->PK_NO;
-                $features->FACING = $request->facing;
-                $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
-                $features->DESCRIPTION = $request->description;
-                $features->LOCATION_MAP = $request->map_url;
-                $features->VIDEO_CODE = $request->videoURL;
-                $features->F_FEATURE_NOS = json_encode($request->features);
-                $features->F_NEARBY_NOS = json_encode($request->nearby);
-                $features->update();
-            } else {
-                return $this->formatResponse(false, 'Your listings does not exists !', 'listings.create');
             }
 
+//            for features
+            $features = ListingAdditionalInfo::where('F_LISTING_NO', $request->id)->first();
+            $features->F_LISTING_NO = $list->PK_NO;
+            $features->FACING = $request->facing;
+            $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
+            $features->DESCRIPTION = $request->description;
+            $features->LOCATION_MAP = $request->map_url;
+            $features->VIDEO_CODE = $request->videoURL;
+            $features->F_FEATURE_NOS = json_encode($request->features);
+            $features->F_NEARBY_NOS = json_encode($request->nearby);
+            $features->update();
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
+//            dd($e);
             return $this->formatResponse(false, 'Your listings not updated !', 'listings.create');
         }
         DB::commit();
 
-        return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
+        return $this->formatResponse(true, 'Your listings updated successfully !', $url);
     }
 
     public function postDelete($id)
     {
+        $url = 'owner-listings';
+        if (Auth::user()->USER_TYPE == 3) {
+            $url = 'developer-listings';
+        }
+
         DB::beginTransaction();
         try {
-            $listing = Listings::find($id);
-            $listing->IS_DELETE = 1;
+            $listing = $this->getListing($id);
+            $listing->STATUS = 4;
             $listing->save();
 
 //            ListingVariants::where('F_LISTING_NO',$id)->delete();
 
-            $images = ListingImages::where('F_LISTING_NO', $id)->get();
-            foreach ($images as $item) {
-                if (\File::exists(public_path($item->IMAGE_PATH))) {
-                    \File::delete(public_path($item->IMAGE_PATH));
-                }
-                if (\File::exists(public_path($item->THUMB_PATH))) {
-                    \File::delete(public_path($item->THUMB_PATH));
-                }
-            }
-            ListingImages::where('F_LISTING_NO', $id)->delete();
-
-            ListingAdditionalInfo::where('F_LISTING_NO', $id)->delete();
+//            $images = ListingImages::where('F_LISTING_NO', $id)->get();
+//            foreach ($images as $item) {
+//                if (\File::exists(public_path($item->IMAGE_PATH))) {
+//                    \File::delete(public_path($item->IMAGE_PATH));
+//                }
+//                if (\File::exists(public_path($item->THUMB_PATH))) {
+//                    \File::delete(public_path($item->THUMB_PATH));
+//                }
+//            }
+//            ListingImages::where('F_LISTING_NO', $id)->delete();
+//
+//            ListingAdditionalInfo::where('F_LISTING_NO', $id)->delete();
 
         } catch (\Exception $e) {
 //             dd($e);
@@ -357,7 +368,7 @@ class Listings extends Model
         }
         DB::commit();
 
-        return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
+        return $this->formatResponse(true, 'Your listings updated successfully !', $url);
     }
 
     public function getLatest(int $limit)
@@ -371,6 +382,7 @@ class Listings extends Model
     public function getListing($id)
     {
         return Listings::with(['listingType'])
+            ->where('STATUS', '!=', 4)
             ->find($id);
     }
 
@@ -379,10 +391,10 @@ class Listings extends Model
         $status = false;
         $msg = 'Payment unsuccessful !';
 
+        $user = Auth::user();
         DB::beginTransaction();
         try {
             $listing = $this->getListing($id);
-            $user = Auth::user();
             $type = $listing->PROPERTY_FOR;
             $price = 0;
             if ($type == 'sell') {
@@ -411,6 +423,11 @@ class Listings extends Model
         }
 
         DB::commit();
-        return $this->formatResponse($status, $msg, 'owner-listings');
+
+        $url = 'owner-listings';
+        if ($user->USER_TYPE == 3) {
+            $url = 'developer-listings';
+        }
+        return $this->formatResponse($status, $msg, $url);
     }
 }
