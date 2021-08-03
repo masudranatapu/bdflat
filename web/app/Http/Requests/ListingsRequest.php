@@ -33,12 +33,14 @@ class ListingsRequest extends FormRequest
             'address'           => 'required|max:190',
             'condition'         => 'required|integer',
             'property_price'    => 'required|integer',
-            'contact_person'     => 'required|max:45',
+            'contact_person'    => 'required|max:45',
             'mobile'            => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
+            'contact_person_2'  => 'required|max:45',
+            'mobile_2'          => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
             'floor'             => 'nullable|integer',
             'facing'            => 'nullable|integer',
             'description'       => 'max:4000',
-            'image'            => 'mimes:jpeg,jpg,png,gif',
+            'image'             => 'mimes:jpeg,jpg,png,gif',
         ];
 
         return $rules;
@@ -54,9 +56,12 @@ class ListingsRequest extends FormRequest
             'address.required'          => 'Address is required!',
             'condition.required'        => 'Property Condition is required!',
             'property_price.required'   => 'Property Price is required!',
-            'contact_person.required'    => 'Contact Person is required!',
+            'contact_person.required'   => 'Contact Person is required!',
             'mobile.required'           => 'Mobile Number is required!',
             'mobile.regex'              => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
+            'contact_person_2.required' => 'Contact Person is required!',
+            'mobile_2.required'         => 'Mobile Number is required!',
+            'mobile_2.regex'            => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
             'listing_type.required'     => 'Listing Type is required!',
         ];
     }

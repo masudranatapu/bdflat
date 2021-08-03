@@ -83,7 +83,8 @@ class Listings extends Model
 
     public function listingType(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne('App\Models\ListingType', 'PK_NO', 'F_LISTING_TYPE');
+        return $this->hasOne('App\Models\ListingType', 'PK_NO', 'F_LISTING_TYPE')
+            ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', '=', 'PRD_LISTING_TYPE.PK_NO');
     }
 
     public function store($request)
@@ -117,7 +118,9 @@ class Listings extends Model
             $list->TITLE = $request->property_title;
             $list->PRICE_TYPE = $request->property_price;
             $list->CONTACT_PERSON1 = $request->contact_person;
+            $list->CONTACT_PERSON2 = $request->contact_person_2;
             $list->MOBILE1 = $request->mobile;
+            $list->MOBILE2 = $request->mobile_2;
             $list->F_LISTING_TYPE = $request->listing_type;
             $list->TOTAL_FLOORS = $floors;
             $list->FLOORS_AVAIABLE = $floor_available;
@@ -242,7 +245,9 @@ class Listings extends Model
             $list->TITLE = $request->property_title;
             $list->PRICE_TYPE = $request->property_price;
             $list->CONTACT_PERSON1 = $request->contact_person;
+            $list->CONTACT_PERSON2 = $request->contact_person_2;
             $list->MOBILE1 = $request->mobile;
+            $list->MOBILE2 = $request->mobile_2;
             $list->F_LISTING_TYPE = $request->listing_type;
             $list->TOTAL_FLOORS = $request->floor;
             $list->FLOORS_AVAIABLE = json_encode($request->floor_available);

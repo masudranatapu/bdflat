@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('owner-listings','active')
+@section('developer-listings','active')
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
-          rel="stylesheet">
+    rel="stylesheet">
     <style>
         .show_img {
             height: 82px;
@@ -34,6 +35,9 @@
             position: absolute;
             right: -8px;
             top: 8px;
+        }
+        .row.form-group {
+            align-items: baseline;
         }
     </style>
 @endpush
@@ -412,6 +416,28 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                     </div>
                                 </div>
                             </div>
+                            <div class="row form-group">
+                                {{ Form::label('contact_person_2','Second Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('contact_person_2') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('contact_person_2', old('contact_person_2', $row->CONTACT_PERSON2), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('contact_person_2', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                {{ Form::label('mobile_2','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::number('mobile_2', old('mobile_2', $row->MOBILE2), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!--  listing  type -->
                             <div class="advertisment-title">
@@ -446,9 +472,16 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
-
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
+    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
     <script>
+        //ck editor
+        CKEDITOR.replace('description');
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#description').summernote();
+        });
 
         $('#imageFile').imageUploader();
 
@@ -491,8 +524,13 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
         });
 
         $(document).on('click', '#add_btn', function () {
+            let property_type = $('#property_type').val();
+            if(property_type === ''){
+                alert('Please select property type at first');
+            }
             $.ajax({
                 type: 'get',
+                data:{property_type:property_type},
                 url: basepath + '/ajax-add-listing-variant',
                 async: true,
                 dataType: 'json',
