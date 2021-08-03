@@ -19,7 +19,6 @@
 @section('content')
     <div class="card card-success min-height">
         <div class="card-header">
-
             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
             <div class="heading-elements">
                 <ul class="list-inline mb-0">

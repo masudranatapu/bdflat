@@ -26,7 +26,6 @@ class AgentsController extends BaseController
     }
 
     public function getCreate() {
-
         return view('admin.agents.create');
     }
 

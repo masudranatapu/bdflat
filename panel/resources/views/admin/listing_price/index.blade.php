@@ -158,7 +158,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('apv_sale_price', $data2->AGENT_PROP_VIEW_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('apv_sale_price', $data2->AGENT_PROP_VIEW_SALES_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('apv_sale_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('apv_rent_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('apv_rent_price', $data2->AGENT_PROP_VIEW_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('apv_rent_price', $data2->AGENT_PROP_VIEW_RENT_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('apv_rent_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -190,7 +190,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('apv_roommate_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('apv_roommate_price', $data2->AGENT_PROP_VIEW_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('apv_roommate_price', $data2->AGENT_PROP_VIEW_ROOMMATE_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('apv_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -207,7 +207,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('ac_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('ac_sale_price', $data2->AGENT_COMM_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('ac_sale_price', $data2->AGENT_COMM_SALES_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('ac_sale_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('ac_rent_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('ac_rent_price', $data2->AGENT_COMM_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('ac_rent_price', $data2->AGENT_COMM_RENT_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('ac_rent_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -239,7 +239,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('ac_roommate_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('ac_roommate_price', $data2->AGENT_COMM_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('ac_roommate_price', $data2->AGENT_COMM_ROOMMATE_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('ac_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -257,7 +257,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('lv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('lv_sale_price', $data2->LEAD_VIEW_SALES_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('lv_sale_price', $data2->LEAD_VIEW_SALES_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('lv_sale_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -273,7 +273,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('lv_rent_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('lv_rent_price', $data2->LEAD_VIEW_RENT_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('lv_rent_price', $data2->LEAD_VIEW_RENT_PRICE ?? 0,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('lv_rent_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -289,7 +289,7 @@
                         <div class="col-md-2">
                             <div class="form-group {!! $errors->has('lv_roommate_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('lv_roommate_price', $data2->LEAD_VIEW_ROOMMATE_PRICE,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
+                                    {!! Form::text('lv_roommate_price', $data2->LEAD_VIEW_ROOMMATE_PRICE ?? 0 ,[ 'class' => 'form-control mb-1', 'placeholder' => 'Price', 'tabindex' => 1 ]) !!}
                                     {!! $errors->first('lv_roommate_price', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
