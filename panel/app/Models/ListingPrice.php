@@ -12,57 +12,60 @@ class ListingPrice extends Model
     protected $primaryKey = 'PK_NO';
     public $timestamps = false;
 
-
-    /*public function getAgentCombo(){
-        return Agent::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
-    }*/
-    public function getPaginatedList()
-    {
-        return ListingPrice::find(1);
-    }
-
     public function postUpdate($request)
     {
+//        dd($request->all());
         try{
-            $listing_price                                      = ListingPrice::find(1);
-            $listing_price->GENERAL_SALES_PRICE                 = $request->gl_sale_price;
-            $listing_price->GENERAL_SALES_DURATION              = $request->gl_sale_duration;
-            $listing_price->GENERAL_RENT_PRICE                  = $request->gl_rent_price;
-            $listing_price->GENERAL_RENT_PRICE_DURATION         = $request->gl_rent_duration;
-            $listing_price->GENERAL_ROOMMATE_PRICE              = $request->gl_roommate_price;
-            $listing_price->GENERAL_ROOMMATE_DURATION           = $request->gl_roommate_duration;
-            $listing_price->FEATURE_SALES_PRICE                 = $request->fl_sale_price;
-            $listing_price->FEATURE_SALES_DURATION              = $request->fl_sale_duration;
-            $listing_price->FEATURE_RENT_PRICE                  = $request->fl_rent_price ;
-            $listing_price->FEATURE_RENT_PRICE_DURATION         = $request->fl_rent_duration;
-            $listing_price->FEATURE_ROOMMATE_PRICE              = $request->fl_roommate_price;
-            $listing_price->FEATURE_ROOMMATE_DURATION           = $request->fl_roommate_duration;
-            $listing_price->AUTO_GENERAL_SALES_PRICE            = $request->ag_sale_price;
-            $listing_price->AUTO_GENERAL_SALES_DURATION         = $request->ag_sale_duration;
-            $listing_price->AUTO_GENERAL_RENT_PRICE             = $request->ag_rent_price;
-            $listing_price->AUTO_GENERAL_RENT_PRICE_DURATION    = $request->ag_rent_duration;
-            $listing_price->AUTO_GENERAL_ROOMMATE_PRICE         = $request->ag_roommate_price;
-            $listing_price->AUTO_GENERAL_ROOMMATE_DURATION      = $request->ag_roommate_duration;
-            $listing_price->AUTO_FEATURE_SALES_PRICE            = $request->af_sale_price;
-            $listing_price->AUTO_FEATURE_SALES_DURATION         = $request->af_sale_duration;
-            $listing_price->AUTO_FEATURE_RENT_PRICE             = $request->af_rent_price;
-            $listing_price->AUTO_FEATURE_RENT_PRICE_DURATION    = $request->af_rent_duration;
-            $listing_price->AUTO_FEATURE_ROOMMATE_PRICE         = $request->af_roommate_price;
-            $listing_price->AUTO_FEATURE_ROOMMATE_DURATION      = $request->af_roommate_duration;
-            $listing_price->AGENT_PROP_VIEW_SALES_PRICE         = $request->apv_sale_price;
-            $listing_price->AGENT_PROP_VIEW_RENT_PRICE          = $request->apv_rent_price;
-            $listing_price->AGENT_PROP_VIEW_ROOMMATE_PRICE      = $request->apv_roommate_price;
-            $listing_price->AGENT_COMM_SALES_PRICE              = $request->ac_sale_price;
-            $listing_price->AGENT_COMM_RENT_PRICE               = $request->ac_rent_price;
-            $listing_price->AGENT_COMM_ROOMMATE_PRICE           = $request->ac_roommate_price;
-            $listing_price->LEAD_VIEW_SALES_PRICE               = $request->lv_sale_price;
-            $listing_price->LEAD_VIEW_RENT_PRICE                = $request->lv_rent_price;
-            $listing_price->LEAD_VIEW_ROOMMATE_PRICE            = $request->lv_roommate_price;
-            $listing_price->update();
+            $listing_name1                                  = ListingType::where('PK_NO',1)->first();
+            $listing_name1->NAME                            = $request->gl_sale_name0;
+            $listing_name1->DURATION                        = $request->gl_duration0;
+            $listing_name1->update();
 
-            return $this->formatResponse(true, 'Listing Price Updated', 'admin.listing_price.list');
+            $listing_name2                                  = ListingType::where('PK_NO',2)->first();
+            $listing_name2->NAME                            = $request->gl_sale_name1;
+            $listing_name2->DURATION                        = $request->gl_duration1;
+            $listing_name2->update();
+
+            $listing_name3                                  = ListingType::where('PK_NO',3)->first();
+            $listing_name3->NAME                            = $request->gl_sale_name2;
+            $listing_name3->DURATION                        = $request->gl_duration2;
+            $listing_name3->update();
+
+            $listing_name4                                  = ListingType::where('PK_NO',4)->first();
+            $listing_name4->NAME                            = $request->gl_sale_name3;
+            $listing_name4->DURATION                        = $request->gl_duration3;
+            $listing_name4->update();
+
+
+
+            $listing_price1                                 = ListingPrice::where('F_LISTING_TYPE_NO',1)->first();
+            $listing_price1->SELL_PRICE                    = $request->gl_sale_price0;
+            $listing_price1->RENT_PRICE                     = $request->gl_rent_price0;
+            $listing_price1->ROOMMAT_PRICE                  = $request->gl_roommate_price0;
+            $listing_price1->update();
+
+            $listing_price2                                 = ListingPrice::where('F_LISTING_TYPE_NO',2)->first();
+            $listing_price2->SELL_PRICE                    = $request->gl_sale_price1;
+            $listing_price2->RENT_PRICE                     = $request->gl_rent_price1;
+            $listing_price2->ROOMMAT_PRICE                  = $request->gl_roommate_price1;
+            $listing_price2->update();
+
+            $listing_price3                                 = ListingPrice::where('F_LISTING_TYPE_NO',3)->first();
+            $listing_price3->SELL_PRICE                    = $request->gl_sale_price2;
+            $listing_price3->RENT_PRICE                     = $request->gl_rent_price2;
+            $listing_price3->ROOMMAT_PRICE                  = $request->gl_roommate_price2;
+            $listing_price3->update();
+
+            $listing_price4                                 = ListingPrice::where('F_LISTING_TYPE_NO',4)->first();
+            $listing_price4->SELL_PRICE                    = $request->gl_sale_price3;
+            $listing_price4->RENT_PRICE                     = $request->gl_rent_price3;
+            $listing_price4->ROOMMAT_PRICE                  = $request->gl_roommate_price3;
+            $listing_price4->update();
+
+            return $this->formatResponse(true, 'Price Updated Successfully', 'admin.listing_price.list');
         }catch (\Exception $e){
-            dd($e);
+//            dd($e);
+            return $this->formatResponse(false, 'Something Wrong', 'admin.listing_price.list');
         }
     }
 }
