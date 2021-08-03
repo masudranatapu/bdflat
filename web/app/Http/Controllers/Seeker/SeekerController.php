@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Seeker;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
@@ -20,31 +22,31 @@ class SeekerController extends Controller
     protected $customerRefundModel;
     protected $payment;
 
-    public function __construct(User $user,CustomerRefund $customerRefund, CustomerPayment $payment)
+    public function __construct(User $user, CustomerRefund $customerRefund, CustomerPayment $payment)
     {
         $this->middleware('auth');
-        $this->userModel                = $user;
-        $this->customerRefundModel      = $customerRefund;
+        $this->userModel = $user;
+        $this->customerRefundModel = $customerRefund;
         $this->payment = $payment;
     }
 
     public function getMyAccount(Request $request)
     {
-        $data       = array();
-        $user_id    = Auth::user()->PK_NO;
-        $user_type  = Auth::user()->USER_TYPE;
+        $data = array();
+        $user_id = Auth::user()->PK_NO;
+        $user_type = Auth::user()->USER_TYPE;
 
 
-        if($user_type == 1){
+        if ($user_type == 1) {
             $view = 'seeker.my_account';
-        }elseif($user_type == 2){
+        } elseif ($user_type == 2) {
             $view = 'owner.my_account';
-        }else{
+        } else {
             $view = 'users.my_account';
         }
         $data['my_balance'] = 0;
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view($view,compact('data'));
+        return view($view, compact('data'));
     }
 
     public function getEditProfile(Request $request)
@@ -52,14 +54,14 @@ class SeekerController extends Controller
         $user_id = Auth::user()->PK_NO;
         $user_type = Auth::user()->USER_TYPE;
         $data = array();
-        $data['user_data'] = User::where('PK_NO',$user_id)->first();
-        if($user_type == 1){
+        $data['user_data'] = User::where('PK_NO', $user_id)->first();
+        if ($user_type == 1) {
             $view = 'seeker.edit_profile';
-        }else{
+        } else {
             $view = 'users.edit_profile';
         }
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view($view,compact('data'));
+        return view($view, compact('data'));
     }
 
     public function updateProfile(UserRequest $request)
@@ -83,41 +85,45 @@ class SeekerController extends Controller
 
     public function getMyRequirement(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.my_requirement',compact('data'));
+        return view('seeker.my_requirement', compact('data'));
     }
+
     public function getSuggestedProperties(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.suggested_properties',compact('data'));
+        return view('seeker.suggested_properties', compact('data'));
     }
 
     public function getContactedProperties(Request $request)
     {
         $data = array();
-        $data['rows'] = Listings::select('PK_NO','TITLE','CITY_NAME','AREA_NAME', 'IS_FEATURE')->get();
-    //    dd($data['rows'][0]);
-        return view('seeker.contacted_properties',compact('data'));
+        $data['rows'] = Listings::select('PK_NO', 'TITLE', 'CITY_NAME', 'AREA_NAME', 'IS_FEATURE')->get();
+        //    dd($data['rows'][0]);
+        return view('seeker.contacted_properties', compact('data'));
     }
+
     public function getBrowsedProperties(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.browsed_properties',compact('data'));
+        return view('seeker.browsed_properties', compact('data'));
     }
+
     public function getRechargeBalance(Request $request)
     {
-         $data = array();
+        $data = array();
         //$data['city_combo'] = $this->city->getCityCombo();
-        return view('seeker.recharge_balance',compact('data'));
+        return view('seeker.recharge_balance', compact('data'));
     }
+
     public function getRefundRequest(Request $request, $id)
     {
         $data = array();
-        $data['product_list_details'] = Listings::where('PK_NO',$id)->select('CODE','CITY_NAME','AREA_NAME','PK_NO', 'IS_FEATURE')->first();
-        return view('seeker.refund_request',compact('data'));
+        $data['product_list_details'] = Listings::where('PK_NO', $id)->select('CODE', 'CITY_NAME', 'AREA_NAME', 'PK_NO', 'IS_FEATURE')->first();
+        return view('seeker.refund_request', compact('data'));
     }
 
     public function customerRefundStore(CustomerRefundRequest $request)
@@ -132,20 +138,20 @@ class SeekerController extends Controller
     public function paymentHistory(Request $request)
     {
         $data['payments'] = $this->payment->getPayments(Auth::id());
-         return view('seeker.payment_history',compact('data'));
+        return view('seeker.payment_history', compact('data'));
     }
 
 
     public function getVariants($id)
     {
-        $data = Listings::where('PK_NO',$id)->first();
+        $data = Listings::where('PK_NO', $id)->first();
         $output = '';
-        foreach ($data->getListingVariants as $item){
-            $output.='
+        foreach ($data->getListingVariants as $item) {
+            $output .= '
                 <tr>
-                  <td>'.$item->BEDROOM.' Bed</td>
-                  <td>'.$item->BATHROOM.' Bath</td>
-                  <td>'.$item->TOTAL_PRICE.'</td>
+                  <td>' . $item->BEDROOM . ' Bed</td>
+                  <td>' . $item->BATHROOM . ' Bath</td>
+                  <td>' . $item->TOTAL_PRICE . '</td>
                 </tr>
             ';
         }

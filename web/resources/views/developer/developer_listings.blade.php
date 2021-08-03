@@ -58,9 +58,9 @@ $listings = $data['listing'] ?? [];
                                                 <td>{{date('M m, Y', strtotime($listing->MODIFIED_AT))}}</td>
                                                 <td>Pending</td>
                                                 <td width="20%">
-                                                    <a href="#" class="text-info">Edit</a> |
-                                                    <a href="#" class="text-danger">Delete</a> |
-                                                    <a href="#" class="text-success">Pay</a>
+                                                    <a href="{{ route('listings.edit', $listing->PK_NO) }}" class="text-info">Edit</a> |
+                                                    <a href="{{ route('listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')" class="text-danger">Delete</a> |
+                                                    <a href="{{ route('listings.pay', $listing->PK_NO) }}" class="text-success">Pay</a>
                                                 </td>
                                             </tr>
                                         @endforeach
