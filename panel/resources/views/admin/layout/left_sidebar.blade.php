@@ -36,27 +36,38 @@
         </li>
     @endif
     @if(hasAccessAbility('view_customer', $roles))
-        <li class="nav-item  @yield('Customer Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Customers</span></a>
+        <li class="nav-item  @yield('Property Seekers')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Property Seekers</span></a>
             <ul class="menu-content">
                 @if(hasAccessAbility('view_customer', $roles))
                     <li class="@yield('customer_list')"><a class="menu-item" href="{{route('admin.customer.list')}}"><i></i><span
-                                data-i18n="@lang('left_menu.customer_list')">Property Seekers</span></a></li>
+                                data-i18n="@lang('left_menu.customer_list')">Seeker List</span></a></li>
                 @endif
-                @if(hasAccessAbility('view_reseller', $roles))
-                    <li class="@yield('reseller_list')"><a class="menu-item" href="{{route('admin.reseller.list')}}"><i></i><span
-                                data-i18n="@lang('left_menu.reseller_list')">Property Owners</span></a></li>
-                @endif
+
 
             </ul>
         </li>
     @endif
 
+
+    @if(hasAccessAbility('view_customer', $roles))
+    <li class="nav-item  @yield('Property Owner')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Property Owners</span></a>
+        <ul class="menu-content">
+
+            @if(hasAccessAbility('view_reseller', $roles))
+                <li class="@yield('reseller_list')"><a class="menu-item" href="{{route('admin.reseller.list')}}"><i></i><span
+                            data-i18n="@lang('left_menu.reseller_list')">Owner List</span></a></li>
+            @endif
+
+        </ul>
+    </li>
+@endif
+
     @if(hasAccessAbility('view_agent', $roles))
-        <li class="nav-item  @yield('Agent Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Agent</span></a>
+        <li class="nav-item  @yield('Agent Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">BDFLAT Agents</span></a>
             <ul class="menu-content">
 
                 @if(hasAccessAbility('view_agent', $roles))
-                    <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agents.list')}}"><i></i><span data-i18n="@lang('left_menu.agent_list')">Agents</span></a>
+                    <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agents.list')}}"><i></i><span data-i18n="@lang('left_menu.agent_list')">Agent List</span></a>
                     </li>
                 @endif
 
