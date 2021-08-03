@@ -70,7 +70,6 @@
                                 </div>
                             </div>
                         </div>
-
                         @if(isset($data['properties']) && count($data['properties']))
                             <div class="property-wrapper">
                                 <div class="new-property">
@@ -87,12 +86,12 @@
                                                             <div class="col-3 col-md-4">
                                                                 <div class="category-bx">
                                                                     <a href="details.html"><img
-                                                                            src="{{asset($property->getDefaultThumb->THUMB_PATH)}}"
+                                                                            src="{{$property->getDefaultThumb ? asset($property->getDefaultThumb->THUMB_PATH) : ""}}"
                                                                             class="img-fluid" alt="image"></a>
                                                                 </div>
                                                                 <div class="featured">
                                                                     <div class="feature-text">
-                                                                        <span>Featured</span>
+                                                                        <span>{{ $property->listingType ? $property->listingType->SHORT_NAME : '' }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>

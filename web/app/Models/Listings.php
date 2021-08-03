@@ -378,7 +378,9 @@ class Listings extends Model
 
     public function getLatest(int $limit)
     {
-        return Listings::with(['getDefaultThumb'])
+        return Listings::with(['getDefaultThumb', 'listingType'])
+            ->where('F_USER_NO', '=', Auth::id())
+            ->where('STATUS', '!=', 4)
             ->latest()
             ->take($limit)
             ->get();

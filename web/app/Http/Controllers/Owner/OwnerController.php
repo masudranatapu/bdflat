@@ -25,11 +25,13 @@ use App\Http\Requests\updatePasswordRequest;
 class OwnerController extends Controller
 {
     protected $user;
+    protected $listings;
 
-    public function __construct(User $user)
+    public function __construct(User $user, Listings $listings)
     {
         $this->middleware('auth');
-        $this->userModel = $user;
+        $this->user = $user;
+        $this->listings = $listings;
     }
 
     public function getOwnerBuyLeads(Request $request)
@@ -41,9 +43,7 @@ class OwnerController extends Controller
     public function getMyListings(Request $request)
     {
         $data = array();
-        $data['listing'] = Listings::select('TITLE', 'CITY_NAME', 'AREA_NAME', 'PK_NO', 'IS_FEATURE')
-            ->where('STATUS','!=', 4)
-            ->get();
+        $data['listing'] = $this->listings->getLatest(15);
         return view('owner.owner_listings', compact('data'));
     }
 
