@@ -70,6 +70,8 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
     Route::get('listings/{id}/edit', 'ListingController@edit')->name('listings.edit');
     Route::post('listings/{id}/update', 'ListingController@update')->name('listings.update');
     Route::get('listings/{id}/delete', 'ListingController@delete')->name('listings.delete');
+    Route::get('listings/{id}/pay', 'ListingController@pay')->name('listings.pay');
+    Route::post('listings/{id}/pay', 'ListingController@payStore')->name('listings.pay');
 
 
 

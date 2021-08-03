@@ -41,6 +41,8 @@
             <li><a href="{{route('buy-leads')}}" class="@yield('buy-leads')">Buy Leads</a></li>
             <li><a href="{{ route('owner-listings') }}"  class="@yield('owner-listings')">My Properties</a></li>
             <li><a href="{{ route('owner-leads') }}" class="@yield('owner-leads')">Leads</a></li>
+            <li><a href="{{route('recharge-balance')}}"  class="@yield('recharge-balance')">Recharge Balance</a></li>
+            <li><a href="{{route('payment-history')}}"  class="@yield('payment-history')">Payment History</a></li>
         </ul>
         <div class="logout-btn mt-3 text-center">
             <a class="nav-link"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

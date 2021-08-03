@@ -16,10 +16,10 @@ $listings = $data['listing'] ?? [];
         <div class="container">
             <!-- row -->
             <div class="row">
-                <div class="col-md-4 mb-5 d-none d-md-block">
+                <div class="col-md-3 mb-5 d-none d-md-block">
                     @include('common._left_menu')
                 </div>
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-9">
                     <div class="account-details">
                         <!-- properties -->
                         <div class="property-wrapper">
@@ -33,6 +33,7 @@ $listings = $data['listing'] ?? [];
                                 <table class="table table-striped text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
                                     <thead>
                                     <tr>
+                                        <th>Sl.</th>
                                         <th>PID</th>
                                         <th>Name</th>
                                         <th>Location</th>
@@ -46,18 +47,20 @@ $listings = $data['listing'] ?? [];
 
                                     <tbody>
                                     @if($listings->count()>0)
-                                        @foreach($listings as $listing)
+                                        @foreach($listings as $key => $listing)
                                             <tr>
+                                                <td>{{ $key + 1 }}</td>
                                                 <td>{{$listing->CODE}}</td>
                                                 <td>{{$listing->TITLE}}</td>
                                                 <td>{{$listing->AREA_NAME}}, {{$listing->CITY_NAME}}</td>
                                                 <td>{{$listing->PROPERTY_FOR}}</td>
-                                                <td>{{$listing->LISTING_TYPE}}</td>
+                                                <td title="{{ $listing->LISTING_TYPE }}">{{$listing->SHORT_NAME}}</td>
                                                 <td>{{date('M m, Y', strtotime($listing->MODIFIED_AT))}}</td>
                                                 <td>Pending</td>
                                                 <td width="20%">
                                                     <a href="#" class="text-info">Edit</a> |
-                                                    <a href="#" class="text-danger">Delete</a>
+                                                    <a href="#" class="text-danger">Delete</a> |
+                                                    <a href="#" class="text-success">Pay</a>
                                                 </td>
                                             </tr>
                                         @endforeach
