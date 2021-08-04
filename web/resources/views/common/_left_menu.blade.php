@@ -110,6 +110,7 @@
             <li><a href="{{ route('agent-leads') }}" class="@yield('agent-leads')">Leads</a></li>
             <li><a href="{{ route('agent-buy-leads') }}" class="@yield('agent-buy-leads')">Buy New Leads</a></li>
             <li><a href="{{ route('agent-payments') }}" class="@yield('agent-payments')">Payments</a></li>
+            <li><a href="{{ route('agent-earnings') }}" class="@yield('agent-earnings')">Earnings</a></li>
         </ul>
         <div class="logout-btn mt-3">
             <a class="nav-link"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

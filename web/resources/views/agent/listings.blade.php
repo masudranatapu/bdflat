@@ -59,8 +59,7 @@ $listings = $data['listings'] ?? [];
                                                 <td>Pending</td>
                                                 <td width="20%">
                                                     <a href="{{ route('agent.listings.edit', $listing->PK_NO) }}" class="text-info">Edit</a> |
-                                                    <a href="{{ route('agent.listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')" class="text-danger">Delete</a> |
-                                                    <a href="{{ route('agent.listings.pay', $listing->PK_NO) }}" class="text-success">Pay</a>
+                                                    <a href="{{ route('agent.listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')" class="text-danger">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach

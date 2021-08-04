@@ -43,4 +43,9 @@ class AgentController extends Controller
         $data['payments'] = $this->payment->getPayments(Auth::id());
         return view('agent.payments', compact('data'));
     }
+
+    public function getEarnings()
+    {
+        return view('agent.earnings');
+    }
 }

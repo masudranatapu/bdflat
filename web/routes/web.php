@@ -72,6 +72,7 @@ Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
     Route::get('/agent-leads', 'AgentController@getLeads')->name('agent-leads');
     Route::get('/agent-buy-leads', 'AgentController@getBuyLeads')->name('agent-buy-leads');
     Route::get('/agent-payments', 'AgentController@getPayments')->name('agent-payments');
+    Route::get('/agent-earnings', 'AgentController@getEarnings')->name('agent-earnings');
 
     Route::get('agent-listings/create', 'ListingController@create')->name('agent.listings.create');
     Route::post('agent-listings/store', 'ListingController@store')->name('agent.listings.store');
@@ -79,7 +80,6 @@ Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
     Route::post('agent-listings/{id}/update', 'ListingController@update')->name('agent.listings.update');
     Route::get('agent-listings/{id}/delete', 'ListingController@delete')->name('agent.listings.delete');
     Route::get('agent-listings/{id}/pay', 'ListingController@pay')->name('agent.listings.pay');
-    Route::post('agent-listings/{id}/pay', 'ListingController@payStore')->name('agent.listings.pay');
 });
 
 Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
