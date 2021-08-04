@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('agency-listings','active')
+@section('agent-listings','active')
 @push('custom_css')
 
 @endpush
@@ -33,7 +33,7 @@ if ($type == 'sell') {
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('agency-listings') }}"><i class="fa fa-long-arrow-left"></i>My
+                                    <h3><a href="{{ route('agent-listings') }}"><i class="fa fa-long-arrow-left"></i>My
                                             Properties</a></h3>
                                 </div>
 
@@ -72,7 +72,7 @@ if ($type == 'sell') {
                                                     @else
                                                         <a href="#" class="btn text-white" onclick="event.preventDefault();document.getElementById('pay').submit()" style="background: #d8232a;">Pay
                                                             Now</a>
-                                                        <form action="{{ route('agency.listings.pay', $data['listing']->PK_NO) }}" id="pay" method="post"
+                                                        <form action="{{ route('agent.listings.pay', $data['listing']->PK_NO) }}" id="pay" method="post"
                                                               class="d-none">
                                                             @csrf
                                                         </form>

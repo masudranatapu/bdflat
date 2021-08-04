@@ -67,6 +67,21 @@ Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {
     Route::post('agency-listings/{id}/pay', 'ListingController@payStore')->name('agency.listings.pay');
 });
 
+Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
+    Route::get('/agent-listings', 'AgentController@getListings')->name('agent-listings');
+    Route::get('/agent-leads', 'AgentController@getLeads')->name('agent-leads');
+    Route::get('/agent-buy-leads', 'AgentController@getBuyLeads')->name('agent-buy-leads');
+    Route::get('/agent-payments', 'AgentController@getPayments')->name('agent-payments');
+
+    Route::get('agent-listings/create', 'ListingController@create')->name('agent.listings.create');
+    Route::post('agent-listings/store', 'ListingController@store')->name('agent.listings.store');
+    Route::get('agent-listings/{id}/edit', 'ListingController@edit')->name('agent.listings.edit');
+    Route::post('agent-listings/{id}/update', 'ListingController@update')->name('agent.listings.update');
+    Route::get('agent-listings/{id}/delete', 'ListingController@delete')->name('agent.listings.delete');
+    Route::get('agent-listings/{id}/pay', 'ListingController@pay')->name('agent.listings.pay');
+    Route::post('agent-listings/{id}/pay', 'ListingController@payStore')->name('agent.listings.pay');
+});
+
 Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
     Route::get('/suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');
     Route::get('/contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');

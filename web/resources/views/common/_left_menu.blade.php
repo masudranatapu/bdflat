@@ -97,5 +97,27 @@
 </div>
 @endif
 
+@if(Auth::user()->USER_TYPE == 5)
+<div class="dashboard-wrapper">
+    <div class="user-info text-center">
+        <h1>Hello, <a href="{{ route('my-account') }}">{{ Auth::user()->NAME }}</a></h1>
+        <h5>{{ Auth::user()->EMAIL }}</h5>
+    </div>
+    <div class="dashboard-nav">
+        <ul>
+            <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a></li>
+            <li><a href="{{ route('agent-listings') }}"  class="@yield('agent-listings')">Properties</a></li>
+            <li><a href="{{ route('agent-leads') }}" class="@yield('agent-leads')">Leads</a></li>
+            <li><a href="{{ route('agent-buy-leads') }}" class="@yield('agent-buy-leads')">Buy New Leads</a></li>
+            <li><a href="{{ route('agent-payments') }}" class="@yield('agent-payments')">Payments</a></li>
+        </ul>
+        <div class="logout-btn mt-3">
+            <a class="nav-link"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        </div>
+    </div>
+</div>
+@endif
+
 
 
