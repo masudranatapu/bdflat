@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('developer-listings','active')
+@section('agency-listings','active')
 @push('custom_css')
 
 @endpush
 <?php
-$listings = $data['listing'] ?? [];
+$listings = $data['listings'] ?? [];
 ?>
 
 @section('content')
@@ -25,8 +25,8 @@ $listings = $data['listing'] ?? [];
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('developer-listings') }}"><i class="fa fa-long-arrow-left"></i>My Properties</a> <a
-                                            href="{{ route('listings.create') }}" style="float: right;">Add new</a></h3>
+                                    <h3><a href="{{ route('agency-listings') }}"><i class="fa fa-long-arrow-left"></i>My Properties</a> <a
+                                            href="{{ route('agency.listings.create') }}" style="float: right;">Add new</a></h3>
                                 </div>
 
                                 <!-- product -->
@@ -58,9 +58,9 @@ $listings = $data['listing'] ?? [];
                                                 <td>{{date('M m, Y', strtotime($listing->MODIFIED_AT))}}</td>
                                                 <td>Pending</td>
                                                 <td width="20%">
-                                                    <a href="{{ route('developer.listings.edit', $listing->PK_NO) }}" class="text-info">Edit</a> |
-                                                    <a href="{{ route('developer.listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')" class="text-danger">Delete</a> |
-                                                    <a href="{{ route('developer.listings.pay', $listing->PK_NO) }}" class="text-success">Pay</a>
+                                                    <a href="{{ route('agency.listings.edit', $listing->PK_NO) }}" class="text-info">Edit</a> |
+                                                    <a href="{{ route('agency.listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')" class="text-danger">Delete</a> |
+                                                    <a href="{{ route('agency.listings.pay', $listing->PK_NO) }}" class="text-success">Pay</a>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -37,11 +37,35 @@ Route::get('/terms-conditions', 'CommonController@getTermsConditions')->name('te
 Route::get('/site-map', 'CommonController@getSiteMap')->name('site-map');
 Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy-policy');
 
+Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function () {
+    Route::get('/developer-listings', 'DeveloperController@getDevListings')->name('developer-listings');
+    Route::get('/developer-leads', 'DeveloperController@getdeveloperLeads')->name('developer-leads');
+    Route::get('/developer-buy-leads', 'DeveloperController@getdeveloperBuyLeads')->name('developer-buy-leads');
+    Route::get('/developer-payments', 'DeveloperController@getdeveloperPayments')->name('developer-payments');
 
-Route::get('/developer-listings', 'CommonController@getDevListings')->name('developer-listings');
-Route::get('/developer-leads', 'CommonController@getdeveloperLeads')->name('developer-leads');
-Route::get('/developer-buy-leads', 'CommonController@getdeveloperBuyLeads')->name('developer-buy-leads');
-Route::get('/developer-payments', 'CommonController@getdeveloperPayments')->name('developer-payments');
+    Route::get('developer-listings/create', 'ListingController@create')->name('developer.listings.create');
+    Route::post('developer-listings/store', 'ListingController@store')->name('developer.listings.store');
+    Route::get('developer-listings/{id}/edit', 'ListingController@edit')->name('developer.listings.edit');
+    Route::post('developer-listings/{id}/update', 'ListingController@update')->name('developer.listings.update');
+    Route::get('developer-listings/{id}/delete', 'ListingController@delete')->name('developer.listings.delete');
+    Route::get('developer-listings/{id}/pay', 'ListingController@pay')->name('developer.listings.pay');
+    Route::post('developer-listings/{id}/pay', 'ListingController@payStore')->name('developer.listings.pay');
+});
+
+Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {
+    Route::get('/agency-listings', 'AgencyController@getListings')->name('agency-listings');
+    Route::get('/agency-leads', 'AgencyController@getLeads')->name('agency-leads');
+    Route::get('/agency-buy-leads', 'AgencyController@getBuyLeads')->name('agency-buy-leads');
+    Route::get('/agency-payments', 'AgencyController@getPayments')->name('agency-payments');
+
+    Route::get('agency-listings/create', 'ListingController@create')->name('agency.listings.create');
+    Route::post('agency-listings/store', 'ListingController@store')->name('agency.listings.store');
+    Route::get('agency-listings/{id}/edit', 'ListingController@edit')->name('agency.listings.edit');
+    Route::post('agency-listings/{id}/update', 'ListingController@update')->name('agency.listings.update');
+    Route::get('agency-listings/{id}/delete', 'ListingController@delete')->name('agency.listings.delete');
+    Route::get('agency-listings/{id}/pay', 'ListingController@pay')->name('agency.listings.pay');
+    Route::post('agency-listings/{id}/pay', 'ListingController@payStore')->name('agency.listings.pay');
+});
 
 Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
     Route::get('/suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');
@@ -62,7 +86,7 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
     Route::get('property-requirements/get_area/{id}', 'RequirementController@getArea')->name('property-requirements.get_area');
 
     Route::get('/owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
-    Route::get('/buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
+    Route::get('/owner-buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
     Route::get('/owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
 
     Route::get('listings/create', 'ListingController@create')->name('listings.create');

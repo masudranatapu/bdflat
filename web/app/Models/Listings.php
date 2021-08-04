@@ -11,7 +11,7 @@ use App\Models\PropertyCondition;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class Listings extends Model
 {
@@ -19,7 +19,8 @@ class Listings extends Model
 
     protected $table = 'PRD_LISTINGS';
     protected $primaryKey = 'PK_NO';
-    public $timestamps = false;
+    const CREATED_AT = 'CREATED_AT';
+    const UPDATED_AT = 'MODIFIED_AT';
 
     protected $fillable = [
         'CODE',
@@ -89,11 +90,6 @@ class Listings extends Model
 
     public function store($request)
     {
-        $url = 'owner-listings';
-        if (Auth::user()->USER_TYPE == 3) {
-            $url = 'developer-listings';
-        }
-
         DB::beginTransaction();
         try {
             if ($request->p_type == 'A') {
@@ -223,16 +219,11 @@ class Listings extends Model
         }
         DB::commit();
 
-        return $this->formatResponse(true, 'Your listings added successfully !', $url);
+        return $this->formatResponse(true, 'Your listings added successfully !', 'owner-listings');
     }
 
     public function postUpdate($request, $id)
     {
-        $url = 'owner-listings';
-        if (Auth::user()->USER_TYPE == 3) {
-            $url = 'developer-listings';
-        }
-
         DB::beginTransaction();
         try {
             $list = $this->getListing($id);
@@ -335,16 +326,11 @@ class Listings extends Model
         }
         DB::commit();
 
-        return $this->formatResponse(true, 'Your listings updated successfully !', $url);
+        return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
     }
 
     public function postDelete($id)
     {
-        $url = 'owner-listings';
-        if (Auth::user()->USER_TYPE == 3) {
-            $url = 'developer-listings';
-        }
-
         DB::beginTransaction();
         try {
             $listing = $this->getListing($id);
@@ -373,7 +359,7 @@ class Listings extends Model
         }
         DB::commit();
 
-        return $this->formatResponse(true, 'Your listings updated successfully !', $url);
+        return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
     }
 
     public function getLatest(int $limit)
