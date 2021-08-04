@@ -23,24 +23,24 @@ class AgentController extends Controller
     public function getListings()
     {
         $data['listings'] = $this->listings->getLatest(15);
-        return view('agency.listings', compact('data'));
+        return view('agent.listings', compact('data'));
     }
 
     public function getLeads(Request $request)
     {
         $data = [];
-        return view('agency.leads', compact('data'));
+        return view('agent.leads', compact('data'));
     }
 
     public function getBuyLeads(Request $request)
     {
         $data = [];
-        return view('agency.buy_leads', compact('data'));
+        return view('agent.buy_leads', compact('data'));
     }
 
     public function getPayments(Request $request)
     {
         $data['payments'] = $this->payment->getPayments(Auth::id());
-        return view('agency.payments', compact('data'));
+        return view('agent.payments', compact('data'));
     }
 }
