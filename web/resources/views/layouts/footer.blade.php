@@ -13,7 +13,8 @@
                         <h3>About Bdflats</h3>
                     </div>
                     <div class="about-bdflats">
-                        <p>Lorem ipsum dolor, sit, amet consectetur adipisicing elit. A quibusdam nisi corrupti minus architecto at impedit amet repudiandae voluptate sed.</p>
+                        <p>Lorem ipsum dolor, sit, amet consectetur adipisicing elit. A quibusdam nisi corrupti minus
+                            architecto at impedit amet repudiandae voluptate sed.</p>
                         <p>Unit 1A, House 01, Road 02, Block A Banani C/A, Dhaka 1213</p>
                     </div>
                 </div>
@@ -32,6 +33,9 @@
                             <li><a href="#">Properties</a></li>
                             <li><a href="{{route('terms-conditions')}}">Terms & Conditions</a></li>
                             <li><a href="{{route('site-map')}}">Sitemap</a></li>
+                            @if(!Auth::user() || (Auth::user()->USER_TYPE == 1 && !Auth::user()->requirements()->count()))
+                                <li><a href="{{route('post-requirement')}}">Post Requirement</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -44,11 +48,11 @@
                     </div>
                     <div class="widget-list">
                         <ul>
-                           <li><a href="#">Facebook</a></li>
-                           <li><a href="#">Twitter</a></li>
-                           <li><a href="#">Linkedin</a></li>
-                           <li><a href="#">Pinterest</a></li>
-                           <li><a href="#">Youtube</a></li>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Linkedin</a></li>
+                            <li><a href="#">Pinterest</a></li>
+                            <li><a href="#">Youtube</a></li>
                         </ul>
                     </div>
                 </div>
@@ -60,13 +64,14 @@
                         <h3>Newsletter</h3>
                     </div>
                     <div class="widget-list">
-                         <p>Trade is Worldest leading classifieds platform that brings!</p>
-                         <form action="#" method="post">
-                              <div class="subscribe_form">
-                                  <input type="text" class="form-control mb-3" name="email" id="newsletter_email" placeholder="Enter your email">
-                                  <input type="submit" id="submit" name="submit" value="Subscribe">
-                              </div>
-                         </form>
+                        <p>Trade is Worldest leading classifieds platform that brings!</p>
+                        <form action="#" method="post">
+                            <div class="subscribe_form">
+                                <input type="text" class="form-control mb-3" name="email" id="newsletter_email"
+                                       placeholder="Enter your email">
+                                <input type="submit" id="submit" name="submit" value="Subscribe">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -74,63 +79,63 @@
         </div><!-- row -->
     </div> <!-- container -->
 </footer>
- <!--
-     ============  copyright   ============
- -->
+<!--
+    ============  copyright   ============
+-->
 <div class="copyright-sec">
     <!-- container -->
     <div class="container">
         <div class="copyright-text text-center">
-              <p>© 2021 bdflats.com All rights reserved</p>
+            <p>© 2021 bdflats.com All rights reserved</p>
         </div>
     </div><!-- container -->
 </div>
 
- <!--
-     ============  fixed menu footer   ============
- -->
+<!--
+    ============  fixed menu footer   ============
+-->
 <div class="fixed-menu">
-  <!-- container-fluid -->
-  <div class="container-fluid">
-      <div class="menu-list">
-          <ul class="footer-menu-mobile">
-              <li>
-                  <a href="index.html">
-                      <i class="fa fa-home"></i><br/>
-                     Home
-                  </a>
-              </li>
-               <li>
-                  <a href="categories.html">
-                     <i class="fa fa-building"></i><br/>
-                      Properties
-                  </a>
-               </li>
-               <li class="search_form">
-                   <div class="open_serch">
-                      <a href="search-filter.html"><i class="fa fa-search"></i></a>
-                   </div>
+    <!-- container-fluid -->
+    <div class="container-fluid">
+        <div class="menu-list">
+            <ul class="footer-menu-mobile">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i><br/>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="categories.html">
+                        <i class="fa fa-building"></i><br/>
+                        Properties
+                    </a>
+                </li>
+                <li class="search_form">
+                    <div class="open_serch">
+                        <a href="search-filter.html"><i class="fa fa-search"></i></a>
+                    </div>
                 </li>
                 <li>
                     <a href="contact.html">
                         <i class="fa fa-address-card"></i><br/>
-                       Contact
+                        Contact
                     </a>
                 </li>
                 <li>
                     <a href="seeker/my-dashboard.html">
                         <i class="fa fa-user"></i><br/>
-                       My Profile
+                        My Profile
                     </a>
                 </li>
-          </ul>
-      </div>
-  </div>
-  <!-- container-fluid -->
+            </ul>
+        </div>
+    </div>
+    <!-- container-fluid -->
 </div>
 
 
- <!--
-     ============  scroll top btn   ============
- -->
+<!--
+    ============  scroll top btn   ============
+-->
 <div id="scroll"><i class="fa fa-angle-double-up"></i></div>

@@ -58,7 +58,7 @@
                                             <div class="card-body text-center">
                                                 <h2 class="text-white">Balance</h2>
                                                 <h1 class="text-white font-weight-bold">BDT 12,000</h1>
-                                                <a href="#" class="my-2 btn bg-white">Withdraw Credit</a>
+                                                <a href="{{ route('agent-withdraw') }}" class="my-2 btn bg-white">Withdraw Credit</a>
                                             </div>
                                         </div>
                                     </div>

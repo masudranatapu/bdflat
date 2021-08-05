@@ -34,79 +34,16 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
         <div class="container">
             <!-- row -->
             <div class="row">
-
-                <div class="col-md-3 mb-5 d-none d-md-block">
-                    @include('common._left_menu')
-                </div>
-
-                <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-12">
                     <div class="requirement">
                         <div class="property-title mb-2">
-                            <h3>Property Requirements</h3>
+                            <h3>Post Property Requirements</h3>
                         </div>
-                    {{ $errors }}
-                    {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
+                        {{ $errors }}
+                        {!! Form::open([ 'route' => ['store-requirement'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
-                            {!! Form::hidden('f_city_id',1,[ 'id' => 'f_city_id','data-validation-required-message' => 'This field is required']) !!}
-                            {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id','data-validation-required-message' => 'This field is required']) !!}
-
-                    <!-- city & location -->
-                        {{--<div class="select-city" data-toggle="modal" data-target="#exampleModal">
-                            <h4>
-                                <i class="fa fa-map-marker"></i><span id="show_cityArea">Select location / City</span><br/>
-                                <i class="fa fa-angle-right float-right"></i>
-                            </h4>
-                        </div>--}}
-                        {{-- <!-- city &  locations -->
-                         <div class="city-location">
-                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                 <div class="modal-dialog">
-                                     <div class="modal-content">
-                                         <div class="modal-header">
-                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                 Select City or Division | <a href="javascript:void(0);" id="all_bd">All of Bangladesh</a>
-                                             </h5>
-                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                 <span aria-hidden="true">&times;</span>
-                                             </button>
-                                         </div>
-                                         <div class="modal-body">
-                                             <div class="row">
-                                                 <div class="col-6">
-                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-
-                                                         <div class="city_title">
-                                                             <h3><i class="fa fa-tags"></i>Cities</h3>
-                                                         </div>
-                                                         <div>
-                                                             <ul>
-                                                                 @foreach($cities as $item)
-                                                                     <li>
-                                                                         <a class="nav-link city_id" href="javascript:void(0);"
-                                                                            data-id="{{$item->PK_NO}}">{{$item->CITY_NAME}}<i
-                                                                                 class="fa fa-angle-right float-right"></i></a>
-                                                                     </li>
-                                                                 @endforeach
-                                                             </ul>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-
-                                                 <div class="col-6">
-                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                         <div class="city_title" id="area_title" style="display: none">
-                                                             <h3><i class="fa fa-tags"></i>Areas</h3>
-                                                         </div>
-                                                         <ul id="show_areas">
-                                                         </ul>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>--}}
+                        {!! Form::hidden('f_city_id',1,[ 'id' => 'f_city_id','data-validation-required-message' => 'This field is required']) !!}
+                        {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id','data-validation-required-message' => 'This field is required']) !!}
 
 
                         <div class="row form-group {!! $errors->has('f_city_id') ? 'error' : '' !!}">
@@ -123,12 +60,12 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                             {{ Form::label('city', 'Select area:', ['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8" style="margin-left: -5px">
                                 <div class="controls">
-                                    {!! Form::select('area[]', $data['areas'] ?? [], json_decode($row->F_AREAS), ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple']) !!}
+                                    {!! Form::select('area[]', $data['areas'] ?? [], null, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple']) !!}
                                     {!! $errors->first('f_area_id', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
                         </div>
-                    <!-- Looking property for -->
+                        <!-- Looking property for -->
                         <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8 property-looking" style="margin-left: -6px">
@@ -161,7 +98,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                     <div class="col-5">
                                         <div class="property-form {!! $errors->has('minimum_size') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('minimum_size', !empty($row)?$row->MIN_SIZE:old('minimum_size'), ['id'=>'minimum_size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('minimum_size', old('minimum_size'), ['id'=>'minimum_size','max'=>'', 'data-validation-max-message'=>'Minimum Size may not be greater than Maximum Size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('minimum_size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -174,7 +111,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                     <div class="col-5">
                                         <div class="property-form {!! $errors->has('maximum_size') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::number('maximum_size',!empty($row)?$row->MAX_SIZE:old('maximum_size'), ['id'=>'maximum_size', 'class' => 'form-control',  'placeholder' => 'Maximum Size','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('maximum_size', old('maximum_size'), ['id'=>'maximum_size', 'class' => 'form-control',  'placeholder' => 'Maximum Size','data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('maximum_size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -324,72 +261,25 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                             </div>
                         </div>
 
+                            <div class="row form-group" style="box-shadow: inset 0 20px 20px rgb(255 255 255 / 57%);background: #f9f3f4; margin-bottom: 0; padding-bottom: 20px; padding-top: 20px">
+                                <label for="email" class="col-md-4 label-title">Email</label>
+                                <div class="col-md-4 {!! $errors->has('email') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::email('email', old('email'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email Address']) !!}
+                                        {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="city-location">
-{{--                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"--}}
-{{--                                 aria-hidden="true">--}}
-{{--                                <div class="modal-dialog">--}}
-{{--                                    <div class="modal-content">--}}
-{{--                                        <div class="modal-header">--}}
-{{--                                            <h5 class="modal-title" id="exampleModalLabel">--}}
-{{--                                                Select City or Division | <a href="#">All of Bangladesh</a>--}}
-{{--                                            </h5>--}}
-{{--                                            <button type="button" class="close done_button" data-dismiss="modal" aria-label="Close">--}}
-{{--                                                <span aria-hidden="true">&times;</span>--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-body">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="col-12">--}}
-{{--                                                    <div class="nav modalcategory flex-column nav-pills"--}}
-{{--                                                         id="v-pills-tab" role="tablist" aria-orientation="vertical">--}}
-
-{{--                                                        <div class="city_title">--}}
-{{--                                                            <h3><i class="fa fa-tags"></i>Cities</h3>--}}
-{{--                                                        </div>--}}
-{{--                                                        @foreach($cities as $item)--}}
-{{--                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab"--}}
-{{--                                                               data-toggle="pill" data-id="{{$item->PK_NO}}"--}}
-{{--                                                               href="#v-pills-{{$item->PK_NO}}" role="tab"--}}
-{{--                                                               aria-controls="v-pills-dhaka"--}}
-{{--                                                               aria-selected="true">{{$item->CITY_NAME}}<i--}}
-{{--                                                                    class="fa fa-angle-right float-right"></i></a>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-
-{{--                                                <div class="col-12">--}}
-{{--                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">--}}
-{{--                                                        <div class="backcategory">--}}
-{{--                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>--}}
-{{--                                                        </div>--}}
-{{--                                                        <div id="show_area">--}}
-{{--                                                            <div class="tab-pane fade show" id="v-pills-1"--}}
-{{--                                                                 role="tabpanel" aria-labelledby="v-pills-dhaka-tab">--}}
-{{--                                                                <div class="city-wrap">--}}
-{{--                                                                    <div class="city-list">--}}
-{{--                                                                        <h3><i class="fa fa-map-marker"></i><span--}}
-{{--                                                                                id="city_title"></span></h3>--}}
-{{--                                                                        <select class="select2 form-control" data-validation- multiple--}}
-{{--                                                                                name="area[]" id="area">--}}
-
-{{--                                                                        </select>--}}
-{{--                                                                        --}}{{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-footer" style="border-top: unset">--}}
-{{--                                            <button type="button" id="done_button" class="btn btn-primary done_button" data-dismiss="modal" aria-label="Done">Done</button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-                        </div>
+                            <div class="row form-group" style="box-shadow: inset 0 -20px 20px rgb(255 255 255 / 57%); padding-bottom: 20px; background: #f9f3f4">
+                                <label for="password" class="col-md-4 label-title">Password</label>
+                                <div class="col-md-4 {!! $errors->has('password') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::password('password', ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Password', 'minlength' => 6, 'data-validation-minlength-message' => 'Password must be a minimum of 6 characters']) !!}
+                                        {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
+                                </div>
+                            </div>
 
                         <div class="submit_btn">
                             <div class="row">
@@ -450,11 +340,11 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
         });
 
-        let max_size = $("#maximum_size");
-        let min_size = $("#minimum_size");
+        var max_size = $("#maximum_size");
+        var min_size = $("#minimum_size");
 
-        let max_budget = $("#maximum_budget");
-        let min_budget = $("#minimum_budget");
+        var max_budget = $("#maximum_budget");
+        var min_budget = $("#minimum_budget");
 
         $(document).ready(function () {
             min_size.attr('max', max_size.val());
@@ -572,15 +462,6 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
             $('.modalsubcategory').hide();
             $('.modalcategory').show();
         });
-
-        // $('#requirement_form').submit(function (e) {
-        //     e.preventDefault();
-        //     if ($('#area').val().length && $('#f_city_id').val()) {
-        //         $('#requirement_form').submit();
-        //     } else {
-        //         toastr.error('Location is required')
-        //     }
-        // });
 
 
         $('.select2').select2();

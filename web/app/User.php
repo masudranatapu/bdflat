@@ -44,6 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function requirements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\ProductRequirements', 'CREATED_BY', 'PK_NO');
+    }
+
 
     public function paymentHistory($request){
 

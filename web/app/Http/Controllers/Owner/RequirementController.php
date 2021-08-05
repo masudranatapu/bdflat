@@ -34,7 +34,7 @@ class RequirementController extends Controller
     {
         $data = array();
         $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
-        $data['row'] = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->first();
+        $data['row'] = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->orderByDesc('PK_NO')->first();
 //        $data['city'] = City::select('CITY_NAME', 'PK_NO')->get(); // Previous modal version
         $data['city'] = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
         $data['areas'] = Area::where('F_CITY_NO', 1)->pluck('AREA_NAME', 'PK_NO');

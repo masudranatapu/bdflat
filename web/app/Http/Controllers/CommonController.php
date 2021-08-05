@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\contactRequest;
+use App\Http\Requests\ProductRequirementsRequest;
+use App\Models\Area;
+use App\Models\City;
 use App\Models\ContactForm;
 use App\Models\CustomerPayment;
 use App\Models\Listings;
+use App\Models\ProductRequirements;
+use App\Models\PropertyType;
+use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Toastr;
 
 class CommonController extends Controller
@@ -16,13 +25,16 @@ class CommonController extends Controller
     protected $category;
     protected $contact;
     protected $payment;
+    protected $requirements;
+    protected $resp;
 
-    public function __construct(Category $category, ContactForm $contacts, CustomerPayment $payment)
+    public function __construct(ProductRequirements $requirements, Category $category, ContactForm $contacts, CustomerPayment $payment)
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['getPostRequirement', 'storePostRequirement']);
         $this->category = $category;
         $this->contact = $contacts;
         $this->payment = $payment;
+        $this->requirements = $requirements;
     }
 
 
@@ -184,7 +196,49 @@ class CommonController extends Controller
         return view('developer.developer_payments', compact('data'));
     }
 
+    public function getPostRequirement()
+    {
+        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+//        $data['city'] = City::select('CITY_NAME', 'PK_NO')->get(); // Previous modal version
+        $data['city'] = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
+        $data['areas'] = Area::where('F_CITY_NO', 1)->pluck('AREA_NAME', 'PK_NO');
+        return view('common.post-requirement', compact('data'));
+    }
 
+    public function storePostRequirement(ProductRequirementsRequest $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:WEB_USER,EMAIL',
+            'password' => 'required|min:6',
+        ]);
+
+
+        DB::beginTransaction();
+        try {
+            $user = new User();
+            $user->USER_TYPE    = 1;
+            $user->EMAIL        = $request->email;
+            $user->PASSWORD     = Hash::make($request->password);
+            $user->save();
+
+            $request->request->add(['auth_id' => $user->PK_NO]);
+            Auth::attempt($request->only(['email', 'password']));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back();
+        }
+
+        $this->resp = $this->requirements->storeOrUpdate($request);
+        if ($this->resp->status) {
+            Toastr()->success($this->resp->msg);
+        } else {
+            Toastr()->error($this->resp->msg);
+            return back();
+        }
+
+        DB::commit();
+        return redirect()->route('my-account');
+    }
 }
 
 

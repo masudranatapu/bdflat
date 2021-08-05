@@ -48,4 +48,9 @@ class AgentController extends Controller
     {
         return view('agent.earnings');
     }
+
+    public function getWithdraw()
+    {
+        return view('agent.withdraw');
+    }
 }

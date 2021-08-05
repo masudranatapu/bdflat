@@ -46,6 +46,9 @@ class ProductRequirements extends Model
     {
         DB::beginTransaction();
         try {
+            if (!$request->auth_id) {
+                assert(Auth::user()->USER_TYPE == 1);
+            }
             $list = new ProductRequirements();
             $list->PROPERTY_FOR         = $request->itemCon;
             $list->F_CITY_NO            = $request->f_city_id;
@@ -60,16 +63,16 @@ class ProductRequirements extends Model
             $list->REQUIREMENT_DETAILS  = $request->requirement_details;
             $list->PREP_CONT_TIME       = $request->time;
             $list->EMAIL_ALERT          = $request->alert;
-            $list->CREATED_BY           = Auth::id();
-            $list->MODIFYED_BY          = Auth::id();
+            $list->CREATED_BY           = Auth::id() ?? $request->auth_id;
+            $list->MODIFYED_BY          = Auth::id() ?? $request->auth_id;
             $list->save();
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);
             return $this->formatResponse(false, 'Property Requirements not added successfully !', 'property-requirements');
         }
-        DB::commit();
 
+        DB::commit();
         return $this->formatResponse(true, 'Property Requirements added successfully !', 'property-requirements');
     }
 }

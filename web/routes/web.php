@@ -36,6 +36,8 @@ Route::post('/contact-us', 'CommonController@storeContactUs');
 Route::get('/terms-conditions', 'CommonController@getTermsConditions')->name('terms-conditions');
 Route::get('/site-map', 'CommonController@getSiteMap')->name('site-map');
 Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy-policy');
+Route::get('/post-requirement', 'CommonController@getPostRequirement')->name('post-requirement');
+Route::post('/store-requirement', 'CommonController@storePostRequirement')->name('store-requirement');
 
 Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function () {
     Route::get('/developer-listings', 'DeveloperController@getDevListings')->name('developer-listings');
@@ -73,6 +75,7 @@ Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
     Route::get('/agent-buy-leads', 'AgentController@getBuyLeads')->name('agent-buy-leads');
     Route::get('/agent-payments', 'AgentController@getPayments')->name('agent-payments');
     Route::get('/agent-earnings', 'AgentController@getEarnings')->name('agent-earnings');
+    Route::get('/agent-withdraw', 'AgentController@getWithdraw')->name('agent-withdraw');
 
     Route::get('agent-listings/create', 'ListingController@create')->name('agent.listings.create');
     Route::post('agent-listings/store', 'ListingController@store')->name('agent.listings.store');
