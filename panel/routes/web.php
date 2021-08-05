@@ -367,7 +367,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('hscode/{id}/delete',['middleware' => 'acl:delete_hscode', 'as' => 'admin.hscode.delete', 'uses' => 'HscodeController@getDelete']);
 
     //Customer
-    Route::get('property-seeker',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.list', 'uses' => 'CustomerController@getIndex']);
+    Route::get('property-seeker',['middleware' => 'acl:view_property_seeker', 'as' => 'admin.property_seeker.list', 'uses' => 'PropertySeekerController@getIndex']);
+    Route::get('property-seeker/edit',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.edit', 'uses' => 'PropertySeekerController@getEdit']);
+
+
     Route::get('customer/new',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.create', 'uses' => 'CustomerController@getCreate']);
     Route::post('customer/store',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store', 'uses' => 'CustomerController@postStore']);
     Route::post('customer/blance-transfer',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.blance_transfer', 'uses' => 'CustomerController@postBlanceTransfer']);

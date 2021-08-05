@@ -131,11 +131,6 @@
             </div>
 
             <div class="form-actions mt-10 mb-3 text-center">
-                <a href="{{ route('admin.agents.list')}}">
-                    <button type="button" class="btn btn-warning mr-1">
-                        <i class="ft-x"></i> Cancel
-                    </button>
-                </a>
                 <button type="submit" class="btn btn-primary">
                     <i class="la la-check-square-o"></i> Save
                 </button>
@@ -299,11 +294,6 @@
             </div>
 
             <div class="form-actions mt-10 mb-3 text-center">
-                <a href="{{ route('admin.agents.list')}}">
-                    <button type="button" class="btn btn-warning mr-1">
-                        <i class="ft-x"></i> Cancel
-                    </button>
-                </a>
                 <button type="submit" class="btn btn-primary">
                     <i class="la la-check-square-o"></i> Save
                 </button>
