@@ -414,6 +414,11 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <script>
+        //ck editor
+        CKEDITOR.replace('requirement_details');
+    </script>
     <script>
         $('.done_button').on('click', function () {
             let area = $('#area').val();
