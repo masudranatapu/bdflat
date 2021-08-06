@@ -81,23 +81,19 @@
         <li class="nav-item @yield('Payment')">
             <a href="#"><i class="la la-paypal"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.payment')</span></a>
             <ul class="menu-content">
-                @if(hasAccessAbility('view_payment', $roles))
-                    <li class=" nav-item @yield('payment_list')"><a class="menu-item" href="{{ route('admin.payment.list') }}"><i></i><span
-                                data-i18n="Basic">Transactions</span></a></li>
+                @if(hasAccessAbility('view_transaction', $roles))
+                    <li class="nav-item @yield('transaction_list')"><a class="menu-item" href="{{ route('admin.transaction.list') }}"><i></i><span data-i18n="Basic">Transactions</span></a></li>
                 @endif
-                {{-- <li class=" nav-item @yield('payment_entry')"><a class="menu-item" href="{{ route('admin.payment.create') }}"><i></i><span data-i18n="Basic">@lang('left_menu.payment_entry')</span></a></li> --}}
-                @if(hasAccessAbility('view_bank_state', $roles))
-                    <li class=" nav-item @yield('bankstatement')"><a class="menu-item" href="{{ route('admin.bankstate.list') }}"><i></i><span data-i18n="Basic">Refund Request</span></a>
+                @if(hasAccessAbility('view_refund_request', $roles))
+                    <li class="nav-item @yield('refund_request')"><a class="menu-item" href="{{ route('admin.refund_request') }}"><i></i><span data-i18n="Basic">Refund Request</span></a>
                     </li>
                 @endif
 
-                @if(hasAccessAbility('edit_bank_state', $roles))
-                    <li class=" nav-item @yield('payment_verification')"><a class="menu-item" href="{{ route('admin.bankstate.verification') }}"><i></i><span
-                                data-i18n="Basic">Recharge Request</span></a></li>
+                @if(hasAccessAbility('view_recharge_request', $roles))
+                    <li class=" nav-item @yield('recharge_request')"><a class="menu-item" href="{{ route('admin.recharge_request') }}"><i></i><span data-i18n="Basic">Recharge Request</span></a></li>
                 @endif
-                @if(hasAccessAbility('view_bank_to_other', $roles))
-                    <li class="@yield('bank_to_other_xfer')"><a class="menu-item" href="{{route('admin.account_to_other_list.view')}}"><i></i><span
-                                data-i18n="@yield('bank_to_other_xfer')">Agent Commission Request</span></a></li>
+                @if(hasAccessAbility('view_agent_commission', $roles))
+                    <li class="@yield('agent_commission')"><a class="menu-item" href="{{route('admin.agent_commission')}}"><i></i><span data-i18n="@yield('agent_commission')">Agent Commission Request</span></a></li>
                 @endif
                 {{-- @if(hasAccessAbility('view_bank_to_bank', $roles))
                 <li class="@yield('bank_to_bank_xfer')"><a class="menu-item" href="{{route('admin.account_to_bank_list.view')}}"><i></i><span data-i18n="@yield('bank_to_bank_xfer')">Internal Transfer</span></a></li>
@@ -279,9 +275,11 @@
     @endif --}}
     {{-- <li class=" nav-item"><a href="{{route('product.inventory.list')}}"><i class="la la-calendar"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.inventory')</span></a>
     </li> --}}
-    <li class=" nav-item @yield('dashboard')">
-        <a href="{{ route('admin.dashboard')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="@lang('left_menu.dashboard')">Blog</span></a>
+    @if(hasAccessAbility('view_pages', $roles))
+    <li class=" nav-item @yield('pages')">
+        <a href="{{ route('admin.pages.list')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="pages">Pages</span></a>
     </li>
+    @endif
     <li class=" nav-item @yield('dashboard')">
         <a href="{{ route('admin.dashboard')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="@lang('left_menu.dashboard')">Banners</span></a>
     </li>

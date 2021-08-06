@@ -151,12 +151,32 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('product-brand/{id}/delete', ['middleware' => 'acl:delete_brand', 'as' => 'product.brand.delete', 'uses' => 'BrandController@getDelete']);
 
     //Account Source
-
     Route::get('account',['middleware' => 'acl:view_account_source', 'as' => 'admin.account.list', 'uses' => 'AccountController@getIndex']);
     Route::get('account/new', ['middleware' => 'acl:new_account_source', 'as' => 'account.source.create', 'uses' => 'AccountController@getCreate']);
     Route::post('account/store', ['middleware' => 'acl:new_account_source', 'as' => 'account.store', 'uses' => 'AccountController@postAccSource']);
     Route::get('account/{id}/delete', ['middleware' => 'acl:delete_account_source', 'as' => 'account.source.delete', 'uses' => 'AccountController@getDelete']);
     Route::post('account/{id}/update', ['middleware' => 'acl:edit_account_source', 'as' => 'account.source.update', 'uses' => 'AccountController@putUpdate']);
+
+    //Transaction
+    Route::get('transaction', ['middleware' => 'acl:view_transaction', 'as' => 'admin.transaction.list', 'uses' => 'TransactionController@getIndex']);
+    Route::get('transaction/create', ['middleware' => 'acl:new_transaction', 'as' => 'admin.transaction.create', 'uses' => 'TransactionController@getEdit']);
+    Route::post('transaction/store', ['middleware' => 'acl:new_transaction', 'as' => 'admin.transaction.store', 'uses' => 'TransactionController@postStore']);
+    Route::get('transaction/{id}/edit', ['middleware' => 'acl:edit_transaction', 'as' => 'admin.transaction.edit', 'uses' => 'TransactionController@getEdit']);
+    Route::post('transaction/{id}/update', ['middleware' => 'acl:edit_transaction', 'as' => 'admin.transaction.update', 'uses' => 'TransactionController@postUpdate']);
+    Route::get('refund-request', ['middleware' => 'acl:view_refund_request', 'as' => 'admin.refund_request', 'uses' => 'TransactionController@getRefundRequest']);
+    Route::get('recharge-request', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.recharge_request', 'uses' => 'TransactionController@getRechargeRequest']);
+    Route::get('recharge-request', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.recharge_request', 'uses' => 'TransactionController@getRechargeRequest']);
+    Route::get('agent-commission', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.agent_commission', 'uses' => 'TransactionController@getAgentCommission']);
+
+
+    //Pages
+    Route::get('pages', ['middleware' => 'acl:view_pages', 'as' => 'admin.pages.list', 'uses' => 'PagesController@getIndex']);
+    Route::get('pages/create', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.create', 'uses' => 'PagesController@getEdit']);
+    Route::post('pages/store', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.store', 'uses' => 'PagesController@postStore']);
+    Route::get('pages/{id}/edit', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.edit', 'uses' => 'PagesController@getEdit']);
+    Route::post('pages/{id}/update', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.update', 'uses' => 'PagesController@postUpdate']);
+
+
 
     //Account Bank Name
     Route::get('account-bank', ['middleware' => 'acl:view_account_name', 'as' => 'account.bank.list', 'uses' => 'BankAccountController@getIndex']);
