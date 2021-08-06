@@ -33,8 +33,6 @@ use App\Repositories\Admin\Product\ProductInterface;
 
 class ProductController extends BaseController
 {
-
-
     protected $product;
     protected $property_type;
     protected $city;
@@ -48,7 +46,7 @@ class ProductController extends BaseController
     protected $near_by;
     protected $property_listing_type;
     protected $property_listing_images;
-
+    protected $resp;
 
     protected $productModel;
     protected $productInt;
@@ -61,56 +59,56 @@ class ProductController extends BaseController
     protected $hscode;
 
     public function __construct(
-        Product                     $product,
-        PropertyType                $property_type,
-        City                        $city,
-        Area                        $area,
-        PropertyCondition           $property_condition,
-        ListingVariants             $listing_variants,
-        FloorList                   $floor_list,
-        PropertyFacing              $property_facing,
-        ListingAdditionalInfo       $property_additional_info,
-        ListingFeatures             $listing_feature,
-        NearBy                      $near_by,
-        PropertyListingType         $property_listing_type,
-        ListingImages               $property_listing_images,
+        Product $product,
+        PropertyType $property_type,
+        City $city,
+        Area $area,
+        PropertyCondition $property_condition,
+        ListingVariants $listing_variants,
+        FloorList $floor_list,
+        PropertyFacing $property_facing,
+        ListingAdditionalInfo $property_additional_info,
+        ListingFeatures $listing_feature,
+        NearBy $near_by,
+        PropertyListingType $property_listing_type,
+        ListingImages $property_listing_images,
 
 
-        ProductModel        $productModel,
-        ProductInterface    $productInt,
-        VatClass            $vatClass,
-        Category            $category,
-        SubCategory         $subCategory,
-        Brand               $brand,
-        ProductSize         $size,
-        Color               $color,
-        Hscode              $hscode
+        ProductModel $productModel,
+        ProductInterface $productInt,
+        VatClass $vatClass,
+        Category $category,
+        SubCategory $subCategory,
+        Brand $brand,
+        ProductSize $size,
+        Color $color,
+        Hscode $hscode
     )
     {
-        $this->product                          = $product;
-        $this->property_type                    = $property_type;
-        $this->city                             = $city;
-        $this->area                             = $area;
-        $this->property_condition               = $property_condition;
-        $this->listing_variants                 = $listing_variants;
-        $this->floor_list                       = $floor_list;
-        $this->property_facing                  = $property_facing;
-        $this->property_additional_info         = $property_additional_info;
-        $this->listing_feature                  = $listing_feature;
-        $this->near_by                          = $near_by;
-        $this->property_listing_type            = $property_listing_type;
-        $this->property_listing_images          = $property_listing_images;
+        $this->product = $product;
+        $this->property_type = $property_type;
+        $this->city = $city;
+        $this->area = $area;
+        $this->property_condition = $property_condition;
+        $this->listing_variants = $listing_variants;
+        $this->floor_list = $floor_list;
+        $this->property_facing = $property_facing;
+        $this->property_additional_info = $property_additional_info;
+        $this->listing_feature = $listing_feature;
+        $this->near_by = $near_by;
+        $this->property_listing_type = $property_listing_type;
+        $this->property_listing_images = $property_listing_images;
 
 
-        $this->productModel     = $productModel;
-        $this->productInt       = $productInt;
-        $this->vatClass         = $vatClass;
-        $this->category         = $category;
-        $this->subCategory      = $subCategory;
-        $this->brand            = $brand;
-        $this->color            = $color;
-        $this->size             = $size;
-        $this->hscode           = $hscode;
+        $this->productModel = $productModel;
+        $this->productInt = $productInt;
+        $this->vatClass = $vatClass;
+        $this->category = $category;
+        $this->subCategory = $subCategory;
+        $this->brand = $brand;
+        $this->color = $color;
+        $this->size = $size;
+        $this->hscode = $hscode;
     }
 
     public function getIndex(Request $request)
@@ -118,7 +116,7 @@ class ProductController extends BaseController
 
         $this->resp = $this->productInt->getPaginatedList($request);
         $data = $this->resp->data;
-        return view('admin.product.index',compact('data'));
+        return view('admin.product.index', compact('data'));
     }
 
 
@@ -131,10 +129,10 @@ class ProductController extends BaseController
 
     public function getCreate()
     {
-        $data[]                         = '';
-        $data['vat_class_combo']        =  $this->vatClass->getVatClassCombo();
-        $data['category_combo']         =  $this->category->getCategorCombo();
-        $data['brand_combo']            =  $this->brand->getBrandCombo();
+        $data[] = '';
+        $data['vat_class_combo'] = $this->vatClass->getVatClassCombo();
+        $data['category_combo'] = $this->category->getCategorCombo();
+        $data['brand_combo'] = $this->brand->getBrandCombo();
         return view('admin.product.create')->withData($data);
     }
 
@@ -157,8 +155,8 @@ class ProductController extends BaseController
         $this->resp = $this->productInt->postStore($request);
         if ($this->resp->status == true) {
             $pk_no = $this->resp->data;
-            return redirect()->route('admin.product.edit',['id' => $pk_no,'type' => 'variant', 'tab' => 2])->with($this->resp->redirect_class, $this->resp->msg);
-        }else{
+            return redirect()->route('admin.product.edit', ['id' => $pk_no, 'type' => 'variant', 'tab' => 2])->with($this->resp->redirect_class, $this->resp->msg);
+        } else {
             return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
         }
 
@@ -168,9 +166,8 @@ class ProductController extends BaseController
     {
         $this->resp = $this->productInt->postStoreProductVariant($request);
         $pk_no = $request->pk_no;
-        return redirect()->route('admin.product.edit',['id' => $pk_no,'type' => 'variant', 'tab' => 2])->with($this->resp->redirect_class, $this->resp->msg);
+        return redirect()->route('admin.product.edit', ['id' => $pk_no, 'type' => 'variant', 'tab' => 2])->with($this->resp->redirect_class, $this->resp->msg);
     }
-
 
 
     public function getEdit(Request $request, $id)
@@ -190,18 +187,18 @@ class ProductController extends BaseController
         $data['prod_size_combo']    =  $this->size->getProductSize($brand_id);
         $data['prod_model_combo']   =  $this->productModel->getProdModel($brand_id, 'list');
         $data['hscode_combo']       =  $this->hscode->getHscodeCombo($subcat_id,'list');*/
-        $data['property_type']              =  $this->property_type->getProperty();
-        $data['city']                       =  $this->city->getCity();
-        $data['area']                       =  $this->area->getArea($this->resp->data->F_CITY_NO);
-        $data['property_condition']         =  $this->property_condition->getPropertyCondition();
-        $data['listing_variants']           = $this->listing_variants->getListingVariants($id);
-        $data['floor_list']                 = $this->floor_list->getFloorList();
-        $data['property_facing']            = $this->property_facing->getPropertyFacing();
-        $data['property_additional_info']   = $this->property_additional_info->getAdditionalInfo($id);
-        $data['listing_feature']            = $this->listing_feature->getListingFeature();
-        $data['near_by']                    = $this->near_by->getNearBy();
-        $data['property_listing_type']      = $this->property_listing_type->getPropertyListingType();
-        $data['property_listing_images']    = $this->property_listing_images->getListingImages($id);
+        $data['property_type'] = $this->property_type->getProperty();
+        $data['city'] = $this->city->getCity();
+        $data['area'] = $this->area->getArea($this->resp->data->F_CITY_NO);
+        $data['property_condition'] = $this->property_condition->getPropertyCondition();
+        $data['listing_variants'] = $this->listing_variants->getListingVariants($id);
+        $data['floor_list'] = $this->floor_list->getFloorList();
+        $data['property_facing'] = $this->property_facing->getPropertyFacing();
+        $data['property_additional_info'] = $this->property_additional_info->getAdditionalInfo($id);
+        $data['listing_feature'] = $this->listing_feature->getListingFeature();
+        $data['near_by'] = $this->near_by->getNearBy();
+        $data['property_listing_type'] = $this->property_listing_type->getPropertyListingType();
+        $data['property_listing_images'] = $this->property_listing_images->getListingImages($id);
 
 //    dd($data['listing_variants']);
         if (!$this->resp->status) {
@@ -246,7 +243,7 @@ class ProductController extends BaseController
     public function putUpdateProductVariant(ProductVariantRequest $request, $id)
     {
         $this->resp = $this->productInt->postUpdateProductVariant($request, $id);
-        return redirect()->route('admin.product.edit',['id' => $request->pk_no,'type' => 'variant', 'tab' => 2])->with($this->resp->redirect_class, $this->resp->msg);
+        return redirect()->route('admin.product.edit', ['id' => $request->pk_no, 'type' => 'variant', 'tab' => 2])->with($this->resp->redirect_class, $this->resp->msg);
     }
 
 
@@ -264,25 +261,23 @@ class ProductController extends BaseController
 
     public function getProductSearchList(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $this->resp = $this->productInt->getProductSearchList($request);
             $multiple_select = trim($request->multiple_select);
             $html = view('admin.components._result_rows')->withRows($this->resp->data)->withMultiselect($multiple_select)->render();
             $data['html'] = $html;
             return response()->json($data);
 
-        }else {
-             $this->resp = $this->productInt->getProductSearchList($request);
-             $data[]                         = '';
-             $data['vat_class_combo']        =  $this->vatClass->getVatClassCombo();
-             $data['category_combo']         =  $this->category->getCategorCombo();
-             $data['brand_combo']            =  $this->brand->getBrandCombo();
-             $data['rows']                   =  $this->resp->data;
+        } else {
+            $this->resp = $this->productInt->getProductSearchList($request);
+            $data[] = '';
+            $data['vat_class_combo'] = $this->vatClass->getVatClassCombo();
+            $data['category_combo'] = $this->category->getCategorCombo();
+            $data['brand_combo'] = $this->brand->getBrandCombo();
+            $data['rows'] = $this->resp->data;
 
-             return view('admin.product.search_result', compact('data'));
+            return view('admin.product.search_result', compact('data'));
         }
-
-
 
 
     }
@@ -292,22 +287,22 @@ class ProductController extends BaseController
     {
 
         $url = $request->parent_url;
-        $queryString = $product_no_arra  =  request()->get('product_no');
+        $queryString = $product_no_arra = request()->get('product_no');
 
-       if (empty($url )) {
-           return redirect()->back();
-       }
+        if (empty($url)) {
+            return redirect()->back();
+        }
 
-       if(empty($queryString)){
+        if (empty($queryString)) {
             return redirect()->to($url);
-       }
+        }
 
-        $queryString = http_build_query($queryString,'product_no_');
-        $queryString = $url.'?'.$queryString;
+        $queryString = http_build_query($queryString, 'product_no_');
+        $queryString = $url . '?' . $queryString;
 
-        if(!empty($url) && (!empty($product_no_arra))){
+        if (!empty($url) && (!empty($product_no_arra))) {
             return redirect()->to($queryString);
-        }else{
+        } else {
             return redirect()->back();
         }
 
@@ -325,6 +320,17 @@ class ProductController extends BaseController
     {
         $data['area'] = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
         return response()->json($data);
+    }
+
+    public function addListingVariant(Request $request)
+    {
+        $data['html'] = view('admin.product.add_listing_variant',compact('request'))->render();
+        return response()->json($data);
+    }
+
+    public function getPropertyType($id)
+    {
+        return PropertyType::where('PK_NO',$id)->first()->TYPE;
     }
 
 }

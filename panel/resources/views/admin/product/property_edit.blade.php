@@ -76,6 +76,8 @@
     $features                   = json_decode($property_additional_info->F_FEATURE_NOS) ?? [];
     $near                       = json_decode($property_additional_info->F_NEARBY_NOS) ?? [];
     //dd($area)
+    $bed_room = Config::get('static_array.bed_room') ?? [];
+    $bath_room = Config::get('static_array.bath_room') ?? [];
 @endphp
 
 @section('content')
@@ -99,6 +101,7 @@
                             <div class="card-body card-dashboard">
                                 <div class="saleform-wrapper mt-2">
                                     <div class="container">
+                                        {{ $errors }}
                                         <div class="form-title mb-2">
                                             <h3>Basic Information</h3>
                                         </div>
@@ -107,7 +110,7 @@
                                             <p>Create Date: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
                                             <p>Modified On: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
                                         </div>
-                                        {!! Form::open([ 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                                        {!! Form::open([ 'route' => ['admin.product.update', $product->PK_NO], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                                         <div class="row">
                                             <!-- Type User -->
                                             <div class="col-md-6">
@@ -135,16 +138,16 @@
                                                 <div class="form-group {!! $errors->has('alert') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         <label class="label-title">Advertisement Type <span>*</span></label>
-                                                        {!! Form::radio('alert','sell',$product->PROPERTY_FOR=='sell'?true:false,[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
+                                                        {!! Form::radio('property_for','sell',$product->PROPERTY_FOR=='sell'?true:false,[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
                                                         {{ Form::label('sell','Sell') }}
 
-                                                        {!! Form::radio('alert','rent',$product->PROPERTY_FOR=='rent'?true:false,[ 'id' => 'rent']) !!}
+                                                        {!! Form::radio('property_for','rent',$product->PROPERTY_FOR=='rent'?true:false,[ 'id' => 'rent']) !!}
                                                         {{ Form::label('rent','Rent') }}
 
-                                                        {!! Form::radio('alert','roommate',$product->PROPERTY_FOR=='roommate'?true:false,[ 'id' => 'roommate']) !!}
+                                                        {!! Form::radio('property_for','roommate',$product->PROPERTY_FOR=='roommate'?true:false,[ 'id' => 'roommate']) !!}
                                                         {{ Form::label('roommate','Roommate') }}
 
-                                                        {!! $errors->first('usertype', '<label class="help-block text-danger">:message</label>') !!}
+                                                        {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,7 +166,7 @@
                                                 <div class="form-group {!! $errors->has('propertyType') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('propertyType','Property Type',['class' => 'label-title']) }}
-                                                        {!! Form::select('propertyType',$property_types,$product->F_PROPERTY_TYPE_NO,array('class'=>'form-control propertyType', 'placeholder'=>'Select Property Type')) !!}
+                                                        {!! Form::select('propertyType',$property_types,$product->F_PROPERTY_TYPE_NO,array('id' => 'propertyType', 'class'=>'form-control propertyType', 'placeholder'=>'Select Property Type')) !!}
                                                         {!! $errors->first('propertyType', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -225,50 +228,57 @@
                                             <h3>Property Size & Price</h3>
                                         </div>
                                         <div class="row">
-                                            <!--  Type A -->
                                             <div class="col-md-12">
-{{--                                                {{ Form::label('','Type A',['class' => 'label-title '],false) }}--}}
-                                                <div class="row">
-                                                    <div class="col-3">
-                                                        <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
-                                                            <div class="controls">
-                                                                {!! Form::number('size', null /*$row->ADDRESS*/, [ 'class' => 'form-control size', 'placeholder' => 'Size in Sft']) !!}
-                                                                {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
+                                                <div id="size_parent">
+                                                    @foreach($data['listing_variants'] as $key => $item)
+                                                        <div class="row no-gutters form-group size_child" style="position: relative">
+                                                            <div class="col-6 col-md-3">
+                                                                <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
+                                                                    <div class="controls">
+                                                                        {!! Form::number('size[]', $item->PROPERTY_SIZE, [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
+                                                                        {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
-                                                            <div class="controls">
-                                                                {!! Form::select('bedroom', [],null /*$property_conditions,$row->F_PROPERTY_CONDITION*/,array('class'=>'form-control bedroom','placeholder'=>'Bedroom')) !!}
-                                                                {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
-                                                            <div class="controls">
-                                                                {!! Form::select('bathroom', [],null /*$property_conditions,$row->F_PROPERTY_CONDITION*/,array('class'=>'form-control bathroom','placeholder'=>'Bathroom')) !!}
-                                                                {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
-                                                            <div class="controls">
-                                                                {!! Form::number('price', null /*$row->ADDRESS*/, [ 'class' => 'form-control price', 'placeholder' => 'Total Price']) !!}
-                                                                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="col-6 col-sm-3">
-                                                        <div class="form-group addSize">
-                                                            <a href="javascript:void(0);" id="add_btn">
-                                                                <i class="fa fa-plus"></i>
-                                                                Add New Size
-                                                            </a>
+                                                            <div class="col-6 col-md-3 bedroom_div">
+                                                                <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                                                    <div class="controls">
+                                                                        {!! Form::select('bedroom[]', $bed_room ?? [], $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
+                                                                        {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-6 col-md-3 bathroom_div">
+                                                                <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                                                    <div class="controls">
+                                                                        {!! Form::select('bathroom[]', $bath_room ?? [], $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
+                                                                        {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-6 col-md-3">
+                                                                <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                                                    <div class="controls">
+                                                                        {!! Form::number('price[]', $item->TOTAL_PRICE, ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
+                                                                        {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @if($key!=0)
+                                                                <button class="del_btn btn btn-danger btn-xs">✕</button>
+                                                            @endif
                                                         </div>
+                                                    @endforeach
+                                                </div>
+                                                <div class="col-6 col-sm-3">
+                                                    <div class="form-group addSize">
+                                                        <a href="javascript:void(0);" id="add_btn">
+                                                            <i class="fa fa-plus"></i>
+                                                            Add New Size
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -286,10 +296,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                                        <div class="form-group {!! $errors->has('property_price') ? 'error' : '' !!}">
                                                             <div class="controls">
-                                                                {!! Form::number('price', null /*$row->ADDRESS*/, [ 'class' => 'form-control price', 'placeholder' => 'Total Price']) !!}
-                                                                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                                                {!! Form::number('property_price', null /*$row->ADDRESS*/, [ 'class' => 'form-control property_price', 'placeholder' => 'Total Price']) !!}
+                                                                {!! $errors->first('property_price', '<label class="help-block text-danger">:message</label>') !!}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -309,10 +319,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-6 col-sm-3">
-                                                        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                                        <div class="form-group {!! $errors->has('property_price') ? 'error' : '' !!}">
                                                             <div class="controls">
-                                                                {!! Form::number('price', null /*$row->ADDRESS*/, [ 'class' => 'form-control price', 'placeholder' => 'Total Price']) !!}
-                                                                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                                                {!! Form::number('property_price', null /*$row->ADDRESS*/, [ 'class' => 'form-control property_price', 'placeholder' => 'Total Price']) !!}
+                                                                {!! $errors->first('property_price', '<label class="help-block text-danger">:message</label>') !!}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -326,21 +336,21 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Property price is -->--}}
+                                            <!-- Property property_price is -->--}}
 
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="controls">
-                                                    <label class="label-title">Property price is</label>
-                                                    {!! Form::radio('priceChek','fixed', $product->PRICE_TYPE==1?true:false,[ 'id' => 'fixed','checked'=>'checked']) !!}
+                                                    <label class="label-title">Property property price is</label>
+                                                    {!! Form::radio('property_priceChek','fixed', $product->PRICE_TYPE==1,[ 'id' => 'fixed','checked'=>'checked']) !!}
                                                     {{ Form::label('fixed','Fixed') }}
 
-                                                    {!! Form::radio('priceChek','negotiable', $product->PRICE_TYPE==2?true:false,[ 'id' => 'negotiable']) !!}
+                                                    {!! Form::radio('property_priceChek','negotiable', $product->PRICE_TYPE==2,[ 'id' => 'negotiable']) !!}
                                                     {{ Form::label('negotiable','Negotiable') }}
 
-                                                    {!! $errors->first('priceChek', '<label class="help-block text-danger">:message</label>') !!}
+                                                    {!! $errors->first('property_priceChek', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -414,7 +424,7 @@
                                                     @foreach($listing_features as $key => $listing_feature)
                                                         <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                                             <div class="controls">
-                                                                {!! Form::checkbox('features[]',$key, in_array($key,$features)?true:false,[ 'id' => 'features'.$key]) !!}
+                                                                {!! Form::checkbox('features[]',$key, in_array($key,$features),[ 'id' => 'features'.$key]) !!}
                                                                 {{ Form::label('features'.$key,$listing_feature) }}
                                                             </div>
                                                         </div>
@@ -431,7 +441,7 @@
                                                     @foreach($nearby as $key => $item)
                                                         <div class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
                                                             <div class="controls">
-                                                                {!! Form::checkbox('nearby[]',$key, in_array($key,$near)?true:false,[ 'id' => 'nearby'.$key]) !!}
+                                                                {!! Form::checkbox('nearby[]',$key, in_array($key,$near),[ 'id' => 'nearby'.$key]) !!}
                                                                 {{ Form::label('nearby'.$key,$item) }}
                                                             </div>
                                                         </div>
@@ -682,7 +692,8 @@
         $(document).on('click', '#add_btn', function () {
             $.ajax({
                 type: 'get',
-                url: basepath + '/ajax-add-listing-variant',
+                data:{property_type:$('#propertyType').val()},
+                url: '{{ route('admin.product.ajax.get.variant') }}',
                 async: true,
                 dataType: 'json',
                 beforeSend: function () {
@@ -708,7 +719,7 @@
             $(".floor_available_select").select2({
                 placeholder: "Select Floors",
             });
-            changePropertySizePrice($('#property_type').val());
+            changePropertySizePrice($('#propertyType').val());
         });
 
         $(".floor_select").on('change', function () {
@@ -746,12 +757,13 @@
             });
         });
 
-        $("#property_type").on('change', function () {
+        $("#propertyType").on('change', function () {
+            console.log($(this).val())
             changePropertySizePrice($(this).val());
         });
         function  changePropertySizePrice(property_type) {
             $.ajax({
-                url: basepath + "/ajax-get-property-type/" + property_type,
+                url: basepath + "/property/ajax-property-type/" +  property_type,
                 type: 'GET',
                 success: function (data) {
                     if (data == 'A'){
@@ -783,4 +795,10 @@
             });
         }
     </script>
+
+    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('description');
+    </script>
+
 @endpush
