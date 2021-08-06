@@ -61,7 +61,9 @@ class CustomerPayment extends Model
             $payment->AMOUNT = $request->amount;
             $payment->REMAINING_AMOUNT = $request->amount;
             $payment->F_ACC_PAYMENT_BANK_NO = 1; // SSL PK_NO
-            $payment->PAYMENT_CONFIRMED_STATUS = 0; // NOT CONFIRMED
+            $payment->PAYMENT_CONFIRMED_STATUS = 1; // NOT CONFIRMED
+            $payment->PAYMENT_NOTE = $request->card_type;
+            $payment->SLIP_NUMBER = $request->tran_id;
             $payment->PAYMENT_DATE = date('Y-m-d H:i:s');
             $payment->IS_COD = 0;
             $payment->save();
