@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 06, 2021 at 12:30 PM
+-- Generation Time: Aug 06, 2021 at 07:12 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -1878,7 +1878,7 @@ CREATE TABLE IF NOT EXISTS `SS_USER_TYPE` (
   `CREATED_BY` int(11) DEFAULT NULL,
   `MODIFIED_BY` int(11) DEFAULT NULL,
   PRIMARY KEY (`PK_NO`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `SS_USER_TYPE`
@@ -1888,7 +1888,8 @@ INSERT INTO `SS_USER_TYPE` (`PK_NO`, `TITLE`, `TYPE_NO`, `MODIFIED_AT`, `CREATE_
 (1, 'seeker', 1, NULL, NULL, NULL, NULL),
 (2, 'owner', 2, NULL, NULL, NULL, NULL),
 (3, 'builder', 3, NULL, NULL, NULL, NULL),
-(4, 'agency', 4, NULL, NULL, NULL, NULL);
+(4, 'agency', 4, NULL, NULL, NULL, NULL),
+(5, 'Agent', 5, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

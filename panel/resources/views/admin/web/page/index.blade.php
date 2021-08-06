@@ -1,5 +1,6 @@
 @extends('admin.layout.master')
-@section('pages','active')
+@section('web','open')
+@section('web_page','active')
 @section('title')
 Page List
 @endsection

@@ -1,6 +1,5 @@
 @extends('admin.layout.master')
 
-@section('Payment','open')
 @section('pages','active')
 
 @section('title') Refund Request @endsection

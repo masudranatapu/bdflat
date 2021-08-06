@@ -276,19 +276,18 @@
     {{-- <li class=" nav-item"><a href="{{route('product.inventory.list')}}"><i class="la la-calendar"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.inventory')</span></a>
     </li> --}}
     @if(hasAccessAbility('view_pages', $roles))
-    <li class=" nav-item @yield('pages')">
+    <li class="nav-item @yield('pages')">
         <a href="{{ route('admin.pages.list')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="pages">Pages</span></a>
     </li>
     @endif
-    <li class=" nav-item @yield('dashboard')">
+    {{-- <li class=" nav-item @yield('dashboard')">
         <a href="{{ route('admin.dashboard')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="@lang('left_menu.dashboard')">Banners</span></a>
     </li>
     <li class=" nav-item @yield('dashboard')">
         <a href="{{ route('admin.dashboard')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="@lang('left_menu.dashboard')">Pages</span></a>
-    </li>
-    @if(hasAccessAbility('view_sales_report_section', $roles))
-        <li class="nav-item  @yield('Sales Report')"><a href="#"><i class="ft-bar-chart"></i><span class="menu-title"
-                                                                                                   data-i18n="@lang('left_menu.customer')">Reports</span></a>
+    </li> --}}
+    {{-- @if(hasAccessAbility('view_sales_report_section', $roles))
+        <li class="nav-item  @yield('Sales Report')"><a href="#"><i class="ft-bar-chart"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Reports</span></a>
             <ul class="menu-content">
                 @if(hasAccessAbility('view_sales_report', $roles))
                     <li class="@yield('sales_report')">
@@ -307,9 +306,9 @@
                 @endif
             </ul>
         </li>
-    @endif
+    @endif --}}
 
-    @if(hasAccessAbility('view_account_name', $roles))
+    {{-- @if(hasAccessAbility('view_account_name', $roles))
         <li class=" nav-item @yield('Accounts')">
             <a href="#"><i class="fas fa-money-check"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.account')</span></a>
             <ul class="menu-content">
@@ -319,33 +318,30 @@
                 <li class=" nav-item @yield('payment_bank')"><a class="menu-item" href="{{route('admin.payment_bank.list')}}"><i></i><span
                             data-i18n="Basic">@lang('left_menu.payment_bank')</span></a></li>
 
-                {{-- <li><a class="menu-item" href="#"><i></i><span data-i18n="Basic">@lang('left_menu.others')</span></a>
+                <li><a class="menu-item" href="#"><i></i><span data-i18n="Basic">@lang('left_menu.others')</span></a>
                     <ul class="menu-content">
                         <li class="@yield('vat')"><a class="menu-item" href="#!"><i></i><span data-i18n="Basic">@lang('left_menu.Vat')</span></a></li>
                         <li class="@yield('Account Name')"><a class="menu-item" href="#!"><i></i><span data-i18n="Basic">@lang('left_menu.Name')</span></a></li>
                         <li class="@yield('product model')"><a class="menu-item" href="#!"><i></i><span data-i18n="Extra">@lang('left_menu.Method')</span></a></li>
                     </ul>
-                </li> --}}
+                </li>
             </ul>
         </li>
-    @endif
+    @endif --}}
 
-    <li class=" navigation-header"><span data-i18n="Settings">Settings</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right"
-                                                                                data-original-title="Settings"></i>
-    </li>
+    <li class=" navigation-header"><span data-i18n="Settings">Settings</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Settings"></i></li>
+
     @if(hasAccessAbility('view_admin_user', $roles))
         <li class=" nav-item @yield('Admin Mangement')">
             <a href="#">
                 <i class="ft-users"></i>
-                <span class="menu-title"
-                      data-i18n="@lang('left_menu.admin_management')">@lang('left_menu.admin_management')</span>
+                <span class="menu-title" data-i18n="@lang('left_menu.admin_management')">Admin Users</span>
             </a>
             <ul class="menu-content">
                 @if(hasAccessAbility('view_admin_user', $roles))
                     <li class="@yield('admin-user')">
                         <a href="{{ route('admin.admin-user') }}">
-                            <span class="menu-title"
-                                  data-i18n="@lang('left_menu.admin_user')">@lang('left_menu.admin_user')</span>
+                            <span class="menu-title" data-i18n="@lang('left_menu.admin_user')">@lang('left_menu.admin_user')</span>
                         </a>
                     </li>
                 @endif
@@ -356,10 +352,9 @@
                         </a>
                     </li>
                 @endif
-                {{-- @if(hasAccessAbility('view_agent', $roles))
-                    <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agent.list')}}"><i></i><span
-                                data-i18n="Basic">@lang('left_menu.agent_list')</span></a></li>
-                @endif --}}
+                @if(hasAccessAbility('view_agent', $roles))
+                    <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agent.list')}}"><i></i><span data-i18n="Basic">@lang('left_menu.agent_list')</span></a></li>
+                @endif
             </ul>
         </li>
     @endif
@@ -471,9 +466,9 @@
                         <span data-i18n="@yield('blog-article')">Blog Article</span>
                     </a>
                 </li>
-                <li class="@yield('pages')">
+                <li class="@yield('web_page')">
                     <a class="menu-item" href="{{route('web.page')}}"><i></i>
-                        <span data-i18n="@yield('pages')">Pages</span>
+                        <span data-i18n="@yield('web_page')">Pages</span>
                     </a>
                 </li>
                 <li class="@yield('faq')">
