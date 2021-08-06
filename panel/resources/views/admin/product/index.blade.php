@@ -134,9 +134,9 @@
                                             @foreach($rows as $key => $row)
                                                 <tr>
                                                     <td class="text-center">{{ $key+1 }}</td>
-                                                    <td class="text-center">{{ $row->listingOwner->CODE }}</td>
-                                                    <td class="text-center">{{ $user_type_combo[$row->listingOwner->USER_TYPE] }}</td>
-                                                    <td class="text-center">{{ $row->listingOwner->NAME }}</td>
+                                                    <td class="text-center">{{ $row->listingOwner->CODE ?? '' }}</td>
+                                                    <td class="text-center">{{ $user_type_combo[$row->listingOwner->USER_TYPE] ?? '' }}</td>
+                                                    <td class="text-center">{{ $row->listingOwner->NAME ?? '' }}</td>
                                                     <td class="text-center">{{ $row->CODE }}</td>
                                                     <td>{{ $row->PROPERTY_FOR }}</td>
                                                     <td>{{ $row->TITLE }}</td>
@@ -158,7 +158,7 @@
                                                             }
                                                         ?>
 
-                                                        <span class="{{ $status_color }}">{{ $property_status_combo[$row->STATUS] }}</span>
+                                                        <span class="{{ $status_color }}">{{ $property_status_combo[$row->STATUS] ?? '' }}</span>
                                                     </td>
 
                                                     <td>{{ $row->LISTING_TYPE }}</td>
