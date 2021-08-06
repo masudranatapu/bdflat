@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('Sales Agent','open')
-@section('add_agent','active')
+@section('agent_list','active')
 
 @section('title') Agents | Create @endsection
 @section('page-name') Create Agents @endsection
