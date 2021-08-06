@@ -43,21 +43,25 @@ class AgentsController extends BaseController
         if (!$agent) {
             return redirect()->route('admin.agent.list');
         }
-        return view('admin.agent.edit')->withAgent($agent);
+        return view('admin.agents.edit')->withAgent($agent);
     }
 
     public function postUpdate(AgentRequest $request, $id)
     {
         $this->resp = $this->agent->postUpdate($request, $id);
-
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getDelete($id)
     {
         $this->resp = $this->agent->delete($id);
-
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
+
+    public function getEarnings($id)
+    {
+        return view('admin.agents.earnings');
+    }
+
 
 }

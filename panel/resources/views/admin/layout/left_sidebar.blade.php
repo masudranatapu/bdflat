@@ -39,7 +39,7 @@
         <li class="nav-item  @yield('Property Seekers')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Property Seekers</span></a>
             <ul class="menu-content">
                 @if(hasAccessAbility('view_customer', $roles))
-                    <li class="@yield('customer_list')"><a class="menu-item" href="{{route('admin.customer.list')}}"><i></i><span
+                    <li class="@yield('customer_list')"><a class="menu-item" href="{{route('admin.property_seeker.list')}}"><i></i><span
                                 data-i18n="@lang('left_menu.customer_list')">Seeker List</span></a></li>
                 @endif
 
@@ -75,9 +75,7 @@
         </li>
     @endif
 
-{{--    @if(hasAccessAbility('view_agent', $roles))--}}
-        <li class="nav-item  @yield('earnings')"><a href="{{route('admin.earnings.list')}}"><i class="fas fa-coins"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Earnings</span></a></li>
-{{--    @endif--}}
+
 
     @if(hasAccessAbility('view_payment_section', $roles))
         <li class="nav-item @yield('Payment')">
@@ -360,10 +358,10 @@
                         </a>
                     </li>
                 @endif
-                @if(hasAccessAbility('view_agent', $roles))
+                {{-- @if(hasAccessAbility('view_agent', $roles))
                     <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agent.list')}}"><i></i><span
                                 data-i18n="Basic">@lang('left_menu.agent_list')</span></a></li>
-                @endif
+                @endif --}}
             </ul>
         </li>
     @endif
@@ -452,7 +450,7 @@
             </ul>
         </li>
     @endif
-    @if(Auth::user()->PK_NO == 1)
+
         <li class=" nav-item @yield('web')">
             <a href="#"><i class="la la-cog"></i>
                 <span class="menu-title" data-i18n="@yield('web')">Web</span>
@@ -490,6 +488,11 @@
                         <span data-i18n="@yield('about')">About</span>
                     </a>
                 </li>
+                <li class="@yield('payment_method')">
+                    <a class="menu-item" href="{{route('web.payment_method')}}"><i></i>
+                        <span data-i18n="@yield('payment_method')">Payment Method</span>
+                    </a>
+                </li>
                 {{-- <li class="@yield('mail')">
                     <a class="menu-item" href="{{route('web.mail.index')}}"><i></i>
                         <span data-i18n="@yield('mail')">Email Config</span>
@@ -499,5 +502,5 @@
 
 
         </li>
-    @endif
+
 </ul>

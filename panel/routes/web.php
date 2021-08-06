@@ -367,7 +367,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('hscode/{id}/delete',['middleware' => 'acl:delete_hscode', 'as' => 'admin.hscode.delete', 'uses' => 'HscodeController@getDelete']);
 
     //Customer
-    Route::get('property-seeker',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.list', 'uses' => 'CustomerController@getIndex']);
+    Route::get('property-seeker',['middleware' => 'acl:view_property_seeker', 'as' => 'admin.property_seeker.list', 'uses' => 'PropertySeekerController@getIndex']);
+    Route::get('property-seeker/edit',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.edit', 'uses' => 'PropertySeekerController@getEdit']);
+
+
     Route::get('customer/new',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.create', 'uses' => 'CustomerController@getCreate']);
     Route::post('customer/store',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store', 'uses' => 'CustomerController@postStore']);
     Route::post('customer/blance-transfer',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.blance_transfer', 'uses' => 'CustomerController@postBlanceTransfer']);
@@ -418,9 +421,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('agents/{id}/edit',['middleware' => 'acl:agent_edit', 'as' => 'admin.agents.edit', 'uses' => 'AgentsController@getEdit']);
     Route::post('agents/{id}/update',['middleware' => 'acl:agent_update', 'as' => 'admin.agents.update', 'uses' => 'AgentsController@postUpdate']);
     Route::get('agents/{id}/delete',['middleware' => 'acl:agent_delete', 'as' => 'admin.agents.delete', 'uses' => 'AgentsController@getDelete']);
+    Route::get('agents-earnings/{id}',['middleware' => 'acl:view_agent_earnings', 'as' => 'admin.agent_earnings', 'uses' => 'AgentsController@getEarnings']);
 
     //earnings
-    Route::get('earnings', ['as' => 'admin.earnings.list', 'uses' => 'EarningsController@getIndex']);
+    //Route::get('earnings', ['as' => 'admin.earnings.list', 'uses' => 'EarningsController@getIndex']);
 
     //listing pricing
     Route::get('listing-price', ['middleware' => 'acl:listing_price_view', 'as' => 'admin.listing_price.list', 'uses' => 'ListingPriceController@getIndex']);
@@ -808,6 +812,12 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     //WEB ABOUT
     Route::get('web/about',['middleware' => 'acl:list_box', 'as' => 'web.about', 'uses' => 'AboutController@getIndex']);
     Route::post('web/about/store',['middleware' => 'acl:new_page', 'as' => 'web.about.store', 'uses' => 'AboutController@postStore']);
+
+    //Payment Method
+    Route::get('web/payment_method',['middleware' => 'acl:new_page', 'as' => 'web.payment_method', 'uses' => 'PaymentMethodController@getIndex']);
+    Route::get('web/payment_method/{id}/edit',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
+
+
 
 
 

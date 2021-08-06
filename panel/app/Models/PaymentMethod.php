@@ -16,7 +16,5 @@ class PaymentMethod extends Model
         'NAME'
     ];
 
-    public function AccountSource() {
-        return $this->belongsTo('App\Models\AccountSource');
-    }
+    
 }

@@ -82,14 +82,15 @@
                                                 </td>
                                                 <td>
 
-                                                    <a href="#" title="EDIT">Edit</a>
+
+                                                    @if(hasAccessAbility('edit_agents', $roles))
+                                                        <a href="{{ route('admin.agents.edit', 1) }}" title="Edit Agent">Edit</a>
+                                                    @endif
                                                     |
-                                                    <a href="#"
-                                                       onclick="return confirm('Are you sure you want to delete the properties ?')"
-                                                       title="DELETE">Delete</a>
-                                                    |
-                                                    <a href="#"
-                                                       title="CP">CP</a>
+
+                                                    @if(hasAccessAbility('view_agent_earnings', $roles))
+                                                       <a href="{{ route('admin.agent_earnings', 1) }}" title="View & Edit Agent">Earnings</a>
+                                                   @endif
 
                                                 </td>
                                             </tr>
@@ -112,14 +113,16 @@
                                                 </td>
                                                 <td>
 
-                                                    <a href="#" title="EDIT">Edit</a>
+                                                @if(hasAccessAbility('edit_agents', $roles))
+                                                    <a href="{{ route('admin.agents.edit', 1) }}" title="Edit Agent">Edit</a>
+                                                @endif
+
                                                     |
-                                                    <a href="#"
-                                                       onclick="return confirm('Are you sure you want to delete the properties ?')"
-                                                       title="DELETE">Delete</a>
-                                                    |
-                                                    <a href="#"
-                                                       title="CP">CP</a>
+
+
+                                                    @if(hasAccessAbility('view_agent_earnings', $roles))
+                                                       <a href="{{ route('admin.agent_earnings', 1) }}" title="View Agent Earnings">Earnings</a>
+                                                   @endif
 
                                                 </td>
                                             </tr>
