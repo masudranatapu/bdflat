@@ -35,4 +35,8 @@ class Ads extends Model
         return $this->hasOne('App\Models\Web\AdsPosition', 'POSITION_ID', 'F_AD_POSITION_NO');
     }
 
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\Web\AdsImages', 'F_ADS_NO', 'PK_NO')->orderByDesc('ORDER_ID');
+    }
 }

@@ -2,15 +2,9 @@
 namespace App\Repositories\Admin\Ads;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Auth;
 use App\Models\Web\Ads;
 use App\Models\Web\AdsPosition;
-use App\Models\UserGroup;
 use App\Traits\RepoResponse;
-use App\Models\AccountSource;
-use App\Models\AuthUserGroup;
-use App\Models\AdminUser as User;
-use Illuminate\Support\Facades\Hash;
 
 class AdsAbstract implements AdsInterface
 {
@@ -27,7 +21,7 @@ class AdsAbstract implements AdsInterface
 
     public function getPaginatedList($request): object
     {
-        $data = $this->ads->orderBy('PK_NO', 'ASC')->get();
+        $data = $this->ads->with('position')->orderBy('PK_NO', 'ASC')->get();
         return $this->formatResponse(true, '', 'web.ads', $data);
     }
 
@@ -58,7 +52,7 @@ class AdsAbstract implements AdsInterface
 
     public function editAd($id): object
     {
-        $data['positions'] = $this->adsPosition->orderBy('PK_NO', 'ASC')->pluck('NAME', 'PK_NO');
+        $data['positions'] = $this->adsPosition->orderBy('PK_NO', 'ASC')->pluck('NAME', 'POSITION_ID');
         $data['ad'] = $this->ads->find($id);
         return $this->formatResponse(true, '', 'web.ads', $data);
     }

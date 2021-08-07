@@ -34,7 +34,7 @@ class AdsController extends Controller
 
     public function createAd(Request $request)
     {
-        $data['positions'] = $this->ads->getAdsPositions($request)->data->pluck('NAME', 'PK_NO');
+        $data['positions'] = $this->ads->getAdsPositions($request)->data->pluck('NAME', 'POSITION_ID');
         return view('admin.ads.add_ad', compact('data'));
     }
 
@@ -50,7 +50,7 @@ class AdsController extends Controller
         return view('admin.ads.edit_ad', compact('data'));
     }
 
-    public function updateAd(AdsRequest $request, $id)
+    public function updateAd(AdsRequest $request, $id): RedirectResponse
     {
         $this->resp = $this->ads->updateAd($request, $id);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
