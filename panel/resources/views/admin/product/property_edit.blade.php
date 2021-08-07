@@ -418,6 +418,11 @@
                                                     {!! Form::text('map_url', $property_additional_info->LOCATION_MAP, [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL']) !!}
                                                     {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
+                                                <div class="map">
+                                                    <iframe
+                                                        src="{{$property_additional_info->LOCATION_MAP}}"
+                                                        style="border:0; width:100%; height: 250px;" allowfullscreen="" loading="lazy"></iframe>
+                                                </div>
                                             </div>
 
                                             <!-- Image & video -->
@@ -551,17 +556,14 @@
                                                     <h3>Publishing Status</h3>
                                                 </div>
                                                 <div class="form-group publishingStatus">
-                                                    <input type="radio" checked="" name="publishing" value="pending"
+                                                    <input type="radio" {{ $product->STATUS == 0 ? 'checked' : '' }} name="status" value="0"
                                                            id="pending">
                                                     <label for="pending">Pending</label>
-                                                    <input type="radio" name="publishing" value="publish" id="publish">
-                                                    <label for="publish">Publish</label>
-                                                    <input type="radio" name="publishing" value="unpublish"
-                                                           id="unpublish">
-                                                    <label for="unpublish">Unpublish</label>
-                                                    <input type="radio" name="publishing" value="reject" id="reject">
+                                                    <input type="radio" {{ $product->STATUS == 1 ? 'checked' : '' }} name="status" value="1" id="publish">
+                                                    <label for="publish">Published</label>
+                                                    <input type="radio" {{ $product->STATUS == 2 ? 'checked' : '' }} name="status" value="2" id="reject">
                                                     <label for="reject">Reject</label>
-                                                    <input type="radio" name="publishing" value="expired" id="expired">
+                                                    <input type="radio" {{ $product->STATUS == 3 ? 'checked' : '' }} name="status" value="3" id="expired">
                                                     <label for="expired">Expired</label>
                                                 </div>
                                             </div>

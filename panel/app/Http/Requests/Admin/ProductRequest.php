@@ -37,6 +37,7 @@ class ProductRequest extends FormRequest
             'facing'            => 'nullable|integer',
             'description'       => 'max:4000',
             'image'             => 'mimes:jpeg,jpg,png,gif',
+            'status'            => 'required'
         ];
     }
 

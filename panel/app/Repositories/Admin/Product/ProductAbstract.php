@@ -144,6 +144,7 @@ class ProductAbstract implements ProductInterface
         DB::beginTransaction();
         try {
             $list = Product::find($id);
+            $list->STATUS = $request->status;
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->propertyType;
             $list->F_CITY_NO = $request->city;
