@@ -27,12 +27,12 @@
             </ul>
         </li>
     @endif
-    @if(hasAccessAbility('view_customer', $roles))
+    @if(hasAccessAbility('view_seeker', $roles))
         <li class="nav-item  @yield('Property Seekers')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Property Seekers</span></a>
             <ul class="menu-content">
-                @if(hasAccessAbility('view_customer', $roles))
-                    <li class="@yield('customer_list')"><a class="menu-item" href="{{route('admin.property_seeker.list')}}"><i></i><span
-                                data-i18n="@lang('left_menu.customer_list')">Seeker List</span></a></li>
+                @if(hasAccessAbility('view_seeker', $roles))
+                    <li class="@yield('seeker_list')"><a class="menu-item" href="{{route('admin.seeker.list')}}"><i></i><span
+                                data-i18n="@lang('left_menu.seeker_list')">Seeker List</span></a></li>
                 @endif
 
 
