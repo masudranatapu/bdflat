@@ -838,6 +838,11 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::get('web/payment_method/{id}/edit',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
 
 
+    //Payment Method
+    Route::get('web/ads',['middleware' => 'acl:view_ads', 'as' => 'web.ads', 'uses' => 'AdsController@getIndex']);
+    Route::get('web/ads_position',['middleware' => 'acl:view_ads_position', 'as' => 'web.ads_position', 'uses' => 'AdsController@getAdsPosition']);
+
+
 
 
 

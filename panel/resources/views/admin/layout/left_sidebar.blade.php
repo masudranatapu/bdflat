@@ -444,6 +444,27 @@
         </li>
     @endif
 
+    @if(hasAccessAbility('view_web_ads', $roles))
+    <li class=" nav-item @yield('web_ads')">
+        <a href="#"><i class="la la-cog"></i>
+            <span class="menu-title" data-i18n="@yield('web_ads')">Web Ads</span>
+        </a>
+        <ul class="menu-content">
+            <li class="@yield('ads')">
+                <a class="menu-item" href="{{route('web.ads')}}"><i></i>
+                    <span data-i18n="">Ads</span>
+                </a>
+            </li>
+            <li class="@yield('ads_position')">
+                <a class="menu-item" href="{{route('web.ads_position')}}"><i></i>
+                    <span data-i18n="">Ad Position</span>
+                </a>
+            </li>
+        </ul>
+
+    </li>
+    @endif
+
         <li class=" nav-item @yield('web')">
             <a href="#"><i class="la la-cog"></i>
                 <span class="menu-title" data-i18n="@yield('web')">Web</span>
