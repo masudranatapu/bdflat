@@ -2,8 +2,8 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -64,13 +64,13 @@ class Product extends Model
            static::creating(function($model)
            {
                $user = Auth::user();
-               $model->F_SS_CREATED_BY = $user->PK_NO;
+               $model->CREATED_BY = $user->PK_NO;
            });
 
            static::updating(function($model)
            {
                $user = Auth::user();
-               $model->F_SS_MODIFIED_BY = $user->PK_NO;
+               $model->MODIFIED_BY = $user->PK_NO;
            });
        }
 

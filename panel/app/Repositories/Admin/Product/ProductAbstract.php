@@ -1,17 +1,20 @@
 <?php
 namespace App\Repositories\Admin\Product;
 
-use App\Models\Product as Product;
+use App\Models\ListingAdditionalInfo;
+use App\Models\ListingImages;
+use App\Models\ListingVariants;
+use App\Models\Product;
 use App\Traits\RepoResponse;
 use App\Repositories\Admin\Auth\AuthAbstract;
-use App\Models\Auth;
 use App\Models\AdminUser as User;
 use App\Models\ProductVariant;
 use App\Models\ProdImgLib;
-use App\Models\UserGroup;
-use DB;
-use Str;
-use Image;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class ProductAbstract implements ProductInterface
 {
@@ -138,106 +141,94 @@ class ProductAbstract implements ProductInterface
 
     public function postUpdate($request, int $id)
     {
-        $brand_name         = null;
-        $model_name         = null;
-        $default_vat_amount = null;
-        $mkt_prefix         = null;
-        $brand = DB::table('PRD_BRAND')->where('PK_NO',$request->brand)->first();
-        $model = DB::table('PRD_MODEL')->where('PK_NO',$request->prod_model)->first();
-        $vat_class = DB::table('ACC_VAT_CLASS')->where('PK_NO',$request->vat_class)->first();
-
-        if ($brand){ $brand_name = $brand->NAME; }
-        if ($model){ $model_name = $model->NAME; }
-        if ($vat_class){ $default_vat_amount = $vat_class->RATE; }
-        // $mkt_composit_code = $mkt_prefix.$request->mkt_code;
-        // $result = Product::where(['F_PRD_SUB_CATEGORY_ID' => $request->sub_category,'F_BRAND' => $request->brand, 'F_MODEL' => $request->prod_model])->where('PK_NO', '!=', $id)->first();
-        // if($result){
-        //     return $this->formatResponse(false, 'Unable to create product because multiple product not allow by same subcategory and same brand and same model and same IG code !', 'admin.product.list');
-        // }
-
         DB::beginTransaction();
-
         try {
+            $list = Product::find($id);
+            $list->PROPERTY_FOR = $request->property_for;
+            $list->F_PROPERTY_TYPE_NO = $request->propertyType;
+            $list->F_CITY_NO = $request->city;
+            $list->F_AREA_NO = $request->area;
+            $list->ADDRESS = $request->address;
+            $list->F_PROPERTY_CONDITION = $request->condition;
+            $list->TITLE = $request->ad_title;
+            $list->PRICE_TYPE = $request->property_priceChek;
+            $list->CONTACT_PERSON1 = $request->contact_person;
+            $list->CONTACT_PERSON2 = $request->contact_person_2;
+            $list->MOBILE1 = $request->mobile;
+            $list->MOBILE2 = $request->mobile_2;
+            $list->F_LISTING_TYPE = $request->listing_type;
+            $list->TOTAL_FLOORS = $request->floor;
+            $list->FLOORS_AVAIABLE = json_encode($request->floor_available);
+            $list->MODIFIED_BY = Auth::id();
+            $list->MODIFIED_AT = Carbon::now();
+            $list->update();
 
-            $prod                                       = Product::find($id);
-            $prod->F_PRD_CATEGORY_ID                    = $request->category;
-            $prod->F_PRD_SUB_CATEGORY_ID                = $request->sub_category;
-            // $prod->MKT_CODE                             = $request->mkt_code;
-            // $prod->MKT_ID_COMPOSITE_CODE_PREFIX         = $mkt_prefix.$request->mkt_code;
-            $prod->DEFAULT_NAME                         = $request->name;
-            $prod->DEFAULT_CUSTOMS_NAME                 = $request->customs_name;
-            $prod->DEFAULT_HS_CODE                      = $request->hs_code;
-            $prod->F_BRAND                              = $request->brand;
-            $prod->BRAND_NAME                           = $brand_name;
-            $prod->F_MODEL                              = $request->prod_model;
-            $prod->MODEL_NAME                           = $model_name;
-            $prod->DEFAULT_PRICE                        = $request->def_price;
-            $prod->DEFAULT_INSTALLMENT_PRICE            = $request->def_price_ins;
-            $prod->IS_BARCODE_BY_MFG                    = $request->is_barcode_by_mfg ? 1 : 0;
-            $prod->DEFAULT_NARRATION                    = $request->def_narration;
-            $prod->F_DEFAULT_VAT_CLASS                  = $request->vat_class;
-            $prod->DEFAULT_VAT_AMOUNT_PERCENT           = $default_vat_amount;
-            $prod->DEFAULT_AIR_FREIGHT_CHARGE           = $request->def_air_freight;
-            $prod->DEFAULT_SEA_FREIGHT_CHARGE           = $request->def_sea_freight;
-            $prod->DEFAULT_PREFERRED_SHIPPING_METHOD    = $request->def_shipping_method;
-            $prod->DEFAULT_LOCAL_POSTAGE                = $request->def_local_postage;
-            $prod->DEFAULT_INTERDISTRICT_POSTAGE        = $request->def_int_postage;
-            $str                                        = strtolower($request->name);
-            $prod->URL_SLUG                             = Str::slug($str);
-            $prod->NEW_ARRIVAL                          = $request->new_arrival;
-            $prod->IS_FEATURE                           = $request->is_feature;
-            $prod->MAX_ORDER                            = $request->max_order;
-            $prod->META_TITLE                           = $request->meta_title;
-            $prod->META_KEYWARDS                        = $request->meta_keywards;
-            $prod->META_DESCRIPTION                     = $request->meta_description;
-            $prod->update();
-
-            if ($request->file('images')) {
-                $i = 0;
-                foreach($request->file('images') as $key => $image)
-                    {
-                        $file_name = 'prod_'. date('dmY'). '_' .uniqid(). '.' . $image->getClientOriginalExtension();
-
-                        $img_lib                    = new ProdImgLib();
-                        $img_lib->F_PRD_MASTER_NO   = $prod->PK_NO;
-                        $img_lib->IS_MASTER         = 0;
-                        $img_lib->F_FILE_TYPE       = 1;
-                        $img_lib->FILE_EXT          = $image->getClientOriginalExtension();
-                        $img_lib->RELATIVE_PATH     = '/media/images/products/'.$prod->PK_NO.'/'.$file_name;
-                        $img_lib->SERIAL_NO         = $i;
-
-                        if($i == 0){
-                            $def_relative_path      = '/media/images/products/'.$prod->PK_NO.'/'.$file_name;
-                            $img_lib->IS_MASTER     = 1;
-                        }
-                        $img_lib->save();
-
-
-
-                        $image->move(public_path().'/media/images/products/'.$prod->PK_NO.'/', $file_name);
-
-                        $i++;
-
-                    }
-
-                    $update_prod = Product::find($prod->PK_NO);
-
-                    if ($update_prod->PRIMARY_IMG_RELATIVE_PATH == null) {
-                        $update_prod->PRIMARY_IMG_RELATIVE_PATH = $def_relative_path ?? null;
-                        $update_prod->update();
-                    }
-
-
+//            for store listing variants
+            $property_size = $request->size;
+            ListingVariants::where('F_LISTING_NO', $id)->delete();
+            foreach ($property_size as $key => $item) {
+                $data = array(
+                    'F_LISTING_NO' => $list->PK_NO,
+                    'PROPERTY_SIZE' => $request->size[$key],
+                    'BEDROOM' => $request->bedroom[$key],
+                    'BATHROOM' => $request->bathroom[$key],
+                    'TOTAL_PRICE' => $request->price[$key],
+                );
+                ListingVariants::insert($data);
             }
 
+//            for image upload
+            if ($request->hasfile('images')) {
+                foreach ($request->file('images') as $key => $image) {
+                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $waterMarkUrl = public_path('assets/img/logo.png');
 
+                    $destinationPath = public_path('/uploads/listings/' . $list->PK_NO . '/');
+                    $destinationPath2 = public_path('/uploads/listings/' . $list->PK_NO . '/thumb');
+
+                    if (!file_exists($destinationPath2)) {
+                        mkdir($destinationPath2, 0755, true);
+                    }
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0755, true);
+                    }
+
+                    $thumb_img = Image::make($image->getRealPath());
+                    $thumb_img->backup();
+                    $thumb_img->resize(172, 115, function ($constraint) {
+                    });
+                    $thumb_img->save($destinationPath2 . '/' . $name2);
+                    $thumb_img->reset();
+                    $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
+                    $thumb_img->save($destinationPath . '/' . $name);
+
+                    ListingImages::create([
+                        'F_LISTING_NO' => $list->PK_NO,
+                        'IMAGE_PATH' => '/uploads/listings/' . $id . '/' . $name,
+                        'IMAGE' => $name,
+                        'THUMB_PATH' => '/uploads/listings/' . $list->PK_NO . '/thumb/' . $name2,
+                        'THUMB' => $name2,
+                    ]);
+                }
+            }
+
+//            for features
+            $features = ListingAdditionalInfo::where('F_LISTING_NO', $request->id)->first();
+            $features->F_LISTING_NO = $list->PK_NO;
+            $features->FACING = $request->facing;
+            $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
+            $features->DESCRIPTION = $request->description;
+            $features->LOCATION_MAP = $request->map_url;
+            $features->VIDEO_CODE = $request->videoURL;
+            $features->F_FEATURE_NOS = json_encode($request->features);
+            $features->F_NEARBY_NOS = json_encode($request->nearby);
+            $features->update();
         } catch (\Exception $e) {
-
             DB::rollback();
-
-            return $this->formatResponse(false, 'Unable to update product !', 'admin.product.list');
+//            dd($e);
+            return $this->formatResponse(false, 'Your listings not updated !', 'admin.product.list');
         }
-
         DB::commit();
 
         return $this->formatResponse(true, 'Product has been updated successfully !', 'admin.product.list');
