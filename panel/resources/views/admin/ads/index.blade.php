@@ -33,6 +33,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-success">
+                    <div class="card-header">
+                        @if(hasAccessAbility('add_ads', $roles))
+                            <a href="{{ route('web.ads.create') }}" class="btn btn-primary btn-sm">Add New</a>
+                        @endif
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="card-content">
                         <div class="card-body">
                             <div class="row  mb-2">
@@ -60,8 +73,16 @@
                                                             <td>{{ date('d-m-Y', strtotime($row->AVAILABLE_FROM)) }}</td>
                                                             <td>{{ date('d-m-Y', strtotime($row->AVAILABLE_TO)) }}</td>
                                                             <td>0</td>
-                                                            <td>{{ $row->STATUS == 1 ? 'Published' : 'Pending' }}</td>
-                                                            <td></td>
+                                                            <td>{{ $row->STATUS ? 'Published' : 'Pending' }}</td>
+                                                            <td>
+                                                                @if(hasAccessAbility('edit_ads', $roles))
+                                                                    <a class="btn btn-sm btn-warning text-white"
+                                                                       href="{{ route('web.ads.edit', $row->PK_NO) }}"
+                                                                       title="Edit">
+                                                                        <i class="la la-edit"></i>
+                                                                    </a>
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
