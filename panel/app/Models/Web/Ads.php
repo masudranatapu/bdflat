@@ -30,5 +30,9 @@ class Ads extends Model
         });
     }
 
+    public function position(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne('App\Models\Web\AdsPosition', 'POSITION_ID', 'F_AD_POSITION_NO');
+    }
 
 }

@@ -39,7 +39,6 @@ $status = [
             <div class="col-md-12">
                 <div class="card card-success">
                     <div class="card-header">
-                        <a href="{{ route('web.ads_position') }}" class="btn btn-primary btn-sm">Cancel</a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
@@ -53,7 +52,7 @@ $status = [
                         <div class="card-body">
                             {!! Form::open([ 'route' => ['web.ads_position.update', $data['position']->PK_NO], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('name') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('name','Name <span>*</span>', ['class' => 'label-title'], false) !!}
@@ -62,16 +61,16 @@ $status = [
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('position') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::label('position','Position <span>*</span>', ['class' => 'label-title'], false) !!}
+                                            {!! Form::label('position','Position ID <span>*</span>', ['class' => 'label-title'], false) !!}
                                             {!! Form::number('position', old('position', $data['position']->POSITION_ID), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Ad Position']) !!}
                                             {!! $errors->first('position', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('status') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('status','Status <span>*</span>', ['class' => 'label-title'], false) !!}
@@ -82,7 +81,8 @@ $status = [
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <a href="{{ route('web.ads_position') }}" class="btn btn-primary">Cancel</a>
                                     {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
                                 </div>
                             </div>
