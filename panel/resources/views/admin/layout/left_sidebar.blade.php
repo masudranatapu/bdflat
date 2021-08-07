@@ -4,22 +4,14 @@
                                                                                      data-i18n="@lang('left_menu.dashboard')">@lang('left_menu.dashboard')</span></a>
     </li>
 
-    @if(hasAccessAbility('view_product', $roles))
-        <li class=" nav-item @yield('Product Management')">
+    @if(hasAccessAbility('view_property', $roles))
+        <li class=" nav-item @yield('Property Management')">
             <a href="#"><i class="fas fa-box-open"></i></i><span class="menu-title" data-i18n="@lang('left_menu.product')">Properties</span></a>
             <ul class="menu-content">
-                {{--
-                @if(hasAccessAbility('view_product_list', $roles))
-                 <li class="@yield('product_search_list')"><a class="menu-item" href="{{route('admin.product.searchlist')}}"><i></i><span data-i18n="@lang('left_menu.product_search_list')">@lang('left_menu.product_search_list')</span></a></li>
-                @endif --}}
-                @if(hasAccessAbility('view_product', $roles))
-                    <li class="nav-item @yield('product_list')"><a class="menu-item" href="{{ route('admin.product.list') }}"><i></i><span
-                                data-i18n="@yield('product_list')">Properties</span></a></li>
+                @if(hasAccessAbility('view_property', $roles))
+                    <li class="nav-item @yield('property_list')"><a class="menu-item" href="{{ route('admin.product.list') }}"><i></i><span data-i18n="@yield('property_list')">Properties</span></a></li>
                 @endif
 
-            <!--  @if(hasAccessAbility('view_product', $roles))
-                <li class="nav-item"><a class="menu-item" href="#"><i></i><span data-i18n="@yield('product_list')">Activities</span></a></li>
-                @endif -->
 
                 {{--
                 @if(hasAccessAbility('view_category', $roles))

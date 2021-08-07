@@ -74,13 +74,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('permission/{id}/delete', ['middleware' => 'acl:delete_action', 'as' => 'admin.permission.delete', 'uses' => 'PermissionController@getDelete']);
 
     //product
+    Route::get('property', ['middleware' => 'acl:view_property', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
 
-    Route::get('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist', 'uses' => 'ProductController@getProductSearch']);
-    Route::post('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.searchlist.view.post', 'uses' => 'ProductController@getProductSearchList']);
-    Route::get('product-list/{id}/view', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist.view', 'uses' => 'ProductController@getView']);
-    Route::get('product-list/{id}/edit', ['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
+    // Route::get('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist', 'uses' => 'ProductController@getProductSearch']);
+    // Route::post('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.searchlist.view.post', 'uses' => 'ProductController@getProductSearchList']);
+    // Route::get('product-list/{id}/view', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist.view', 'uses' => 'ProductController@getView']);
+    // Route::get('product-list/{id}/edit', ['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
 
-    Route::get('property', ['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
 
     Route::get('ajax-get-area/{id}', ['as' => 'getarea', 'uses' => 'ProductController@getArea']);
 //    Route::get('property-sale-rent',['middleware' => 'acl:view_product', 'as' => 'admin.property.rent.edit', 'uses' => 'ProductController@getEditRentndex']);

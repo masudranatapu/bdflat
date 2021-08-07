@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
-@section('Product Management','open')
-@section('product_list','active')
+@section('Property Management','open')
+@section('property_list','active')
 
 @section('title') Properties @endsection
 @section('page-name') Properties @endsection
@@ -38,6 +38,7 @@
     $listing_type_combo = $data['listing_type'] ?? [];
     $property_for_combo = Config::get('static_array.property_for');
     $property_status_combo = Config::get('static_array.property_status');
+    $payment_status_combo = Config::get('static_array.payment_status');
 @endphp
 
 @section('content')
@@ -51,10 +52,6 @@
                             <div class="card-body card-dashboard">
                                 <form action="" class="my-2">
                                     <div class="row mb-1">
-                                        <div class="col key_search">
-                                            <input type="text" class="form-control " id="" name="" placeholder="Keyword Search">
-                                            <i class="fa fa-search"></i>
-                                        </div>
 
                                         <div class="col">
                                            <div class="form-group {!! $errors->has('user_type') ? 'error' : '' !!}">
@@ -85,15 +82,18 @@
                                         </div>
 
                                         <div class="col">
-                                            <select name="" id="" class="form-control">
-                                                <option value="">Payment</option>
-                                            </select>
+                                            <div class="form-group {!! $errors->has('payment_status') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                   {!! Form::select('payment_status', $payment_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select payment status', 'tabindex' => 6]) !!}
+                                                   {!! $errors->first('payment_status', '<label class="help-block text-danger">:message</label>') !!}
+                                               </div>
+                                           </div>
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                   {!! Form::select('property_status', $property_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select status', 'tabindex' => 6]) !!}
+                                                   {!! Form::select('property_status', $property_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
                                                    {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
                                                </div>
                                            </div>
@@ -102,10 +102,8 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col">
-                                            <input type="button" class="btn btn-info btn-sm px-2" value="Search" style="border-radius: 5px">
-                                            @if(hasAccessAbility('new_product', $roles))
-                                            <a class="btn btn-sm btn-primary text-white" href="{{url('product/new')}}" title="ADD NEW LISTING" style="color: #FC611F;margin-left: 10px;" >+ Add New</a>
-                                            @endif
+                                            <input type="submit" class="btn btn-info btn-sm px-2" value="Search" style="border-radius: 0px">
+                                            <a class="btn btn-sm btn-primary text-white" href="{{ route('admin.product.list') }}" title="ADD NEW LISTING" style="color: #FC611F;margin-left: 10px;" >Reset</a>
                                         </div>
                                     </div>
                                 </form>
@@ -162,7 +160,7 @@
                                                     </td>
 
                                                     <td>{{ $row->LISTING_TYPE }}</td>
-                                                    <td>{{ $row->A }}</td>
+                                                    <td class="text-center">{{ $row->PAYMENT_STATUS == 1 ? 'Paid' : 'Due' }}</td>
 
                                                     <td style="width: 135px;" class="text-center">
                                                         @if(hasAccessAbility('view_product_activity', $roles))
