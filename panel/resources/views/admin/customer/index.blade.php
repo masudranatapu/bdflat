@@ -1,66 +1,14 @@
 @extends('admin.layout.master')
 
+@section('Seeker Management','open')
+@section('seeker_list','active')
+
+@section('title') @lang('customer.list_page_title') @endsection
+@section('page-name') Property Seekers @endsection
+
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
-
-    <style>
-        .t-pub {
-            color: #6aa586;
-        }
-
-        .t-unpub {
-            color: #a54b82;
-        }
-
-        .t-pen {
-            color: #726ba5;
-        }
-
-        .t-del {
-            color: #e37b7f;
-        }
-
-        .key_search {
-            position: relative;
-        }
-
-        .key_search i {
-            position: absolute;
-            top: 30%;
-            left: 5%;
-        }
-
-        .key_search input {
-            padding-left: 30px;
-            font-size: 12px;
-        }
-
-        .key_search_btn {
-            height: 100%;
-            background-color: #73BB55;
-            border-color: #65aa52;
-            color: black !important;
-        }
-
-        .br {
-            border-radius: 5px !important;
-        }
-    </style>
-@endpush
-
-@section('Customer Management','open')
-@section('customer_list','active')
-
-@section('title') @lang('customer.list_page_title') @endsection
-
-@section('page-name') Property Seekers @endsection
-
-@push('custom_js')
-    <!-- BEGIN: Data Table-->
-    <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
-    <!-- END: Data Table-->
 @endpush
 
 @section('breadcrumb')
@@ -73,139 +21,17 @@
 @endphp
 
 
-@push('custom_css')
-
-    <style>
-        #scrollable-dropdown-menu .tt-menu {
-            max-height: 260px;
-            overflow-y: auto;
-            width: 100%;
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
-
-        #scrollable-dropdown-menu2 .tt-menu {
-            max-height: 260px;
-            overflow-y: auto;
-            width: 100%;
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
-
-        .twitter-typeahead {
-            display: block !important;
-        }
-
-        #warehouse th, #availble_qty th {
-            border: none;
-            border-bottom: 1px solid #333;
-            font-size: 12px;
-            font-weight: normal;
-            padding-bottom: 11px;
-        }
-
-        #book_qty th {
-            border: none;
-            font-size: 12px;
-            font-weight: normal;
-            padding-bottom: 5px;
-            padding-top: 0;
-        }
-
-        .tt-hint {
-            color: #999 !important;
-        }
-    </style>
-
-@endpush('custom_css')
-
 @section('content')
     <div class="content-body min-height">
         <section id="pagination">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-sm card-success">
-                        <div class="card-header">
-
-                            {{--@if(hasAccessAbility('new_customer', $roles))
-                                <a class="btn btn-sm btn-primary" href="{{route('admin.customer.create')}}" title="ADD NEW PRODUCT CUSTOMER"><i
-                                        class="ft-plus text-white"></i> @lang('customer.customer_create_btn')</a>
-                            @endif--}}
-
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
 
-                                <form action="" class="mb-2">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-check form-check-inline">
-                                                    <input type="checkbox" class="form-check-input " id="" name="" checked>
-                                                    <label for="">New</label>
-                                                </div>
-
-                                                <div class="form-check form-check-inline">
-                                                    <input type="checkbox" class="form-check-input " id="" name="">
-                                                    <label for="">Pending</label>
-                                                </div>
-
-                                                <div class="form-check form-check-inline">
-                                                    <input type="checkbox" class="form-check-input " id="" name="">
-                                                    <label for="">Valid</label>
-                                                </div>
-
-                                                <div class="form-check form-check-inline">
-                                                    <input type="checkbox" class="form-check-input " id="" name="">
-                                                    <label for="">Invalid</label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="form-check form-check-inline">
-                                                    <input type="checkbox" class="form-check-input " id="" name="" checked>
-                                                    <label for="">Active</label>
-                                                </div>
-
-                                                <div class="form-check form-check-inline">
-                                                    <input type="checkbox" class="form-check-input " id="" name="">
-                                                    <label for="">Inactive</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-row">
-                                                {{--<div class="col-md-4 key_search">
-                                                    <input type="text" class="form-control " id="" name="" placeholder="Search By UID">
-                                                    <i class="fa fa-search"></i>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="button" class="btn btn-success btn-sm px-3 key_search_btn" value="Search">
-                                                </div>--}}
-                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                    <label class="active key_search">
-                                                        <input type="text" class="form-control " id="" name="" placeholder="Search By UID">
-                                                        <i class="fa fa-search"></i>
-                                                    </label>
-                                                    <label class="">
-                                                        <input type="button" class="btn btn-success btn-sm px-3 key_search_btn" value="Search">
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-
                                 <div class="table-responsive ">
-                                    <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
+                                    <table class="table table-striped table-bordered table-sm text-center alt-pagination" >
                                         <thead>
                                         <tr>
                                             <th class="text-center">User ID</th>
@@ -261,74 +87,16 @@
         </section>
     </div>
 
-    <div class="modal animated zoomIn text-left balanceTrans" tabindex="-1" role="dialog" aria-labelledby="balanceTrans" aria-hidden="true" id="balanceTrans">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-content">
-                    {!! Form::open([ 'route' => 'admin.customer.blance_transfer', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate','id' => 'balanceTransFrm']) !!}
-                    <input type="hidden" name="from_customer" value="" id="from_customer"/>
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel23"><i class="la la-tree"></i> Balance Transfer from <span id="customer_name"></span></h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
 
-                        <div class="col-md-12">
-                            <div class="form-group {!! $errors->has('payment_no') ? 'error' : '' !!}">
-                                <label>Customer Balance</label>
-                                <div class="controls">
-                                    {!! Form::select('payment_no', [], null, ['class'=>'form-control mb-1 ', 'data-validation-required-message' => 'This field is required', 'id' => 'payment_no']) !!}
-                                    {!! $errors->first('payment_no', '<label class="help-block text-danger">:message</label>') !!}
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-
-                            <div class="form-group {!! $errors->has('to_customer') ? 'error' : '' !!}">
-                                <label>To</label>
-                                <div class="controls" id="scrollable-dropdown-menu2">
-                                    <input type="search" name="q" id="to_customer" class="form-control search_to_customer" placeholder="Enter Customer Name"
-                                           autocomplete="off" required>
-                                    <input type="hidden" name="to_customer_hidden" id="to_customer_hidden">
-                                    {!! $errors->first('to_customer', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group {!! $errors->has('amount_to_trans') ? 'error' : '' !!}">
-                                <label>Amount to be transfer</label>
-                                <div class="controls">
-
-
-                                    {!! Form::number('amount_to_trans', null, ['class'=>'form-control mb-1 ', 'data-validation-required-message' => 'This field is required', 'id' => 'amount_to_trans', 'step' => '0.01']) !!}
-
-                                    {!! $errors->first('amount_to_trans', '<label class="help-block text-danger">:message</label>') !!}
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn grey btn-secondary" data-dismiss="modal" title="Close"><i class="ft-x"></i> Close</button>
-                        <button type="submit" class="btn btn-primary" title="Save"><i class="la la-save"></i> Save changes</button>
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 @endsection
 
 @push('custom_js')
+
+<script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
+<script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 
     <script type="text/javascript">

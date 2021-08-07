@@ -15,6 +15,10 @@ return [
         4 => 'deleted',
     ],
 
+    'payment_status' => [
+        0 => 'Due',
+        1 => 'Paid',
+    ],
 
 
 	'booking_validity' => [

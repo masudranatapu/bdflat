@@ -1,11 +1,10 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Models\Agent;
-use App\Models\Booking;
 use App\Models\Country;
 use App\Models\Customer;
 use App\Models\Reseller;
-use App\Models\OrderPayment;
+
 use Illuminate\Http\Request;
 use App\Models\CustomerAddress;
 use App\Models\PaymentCustomer;
@@ -15,7 +14,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\CustomerRequest;
 use App\Repositories\Admin\Customer\CustomerInterface;
 
-class PropertySeekerController extends BaseController
+class SeekerController extends BaseController
 {
     protected $customer;
     protected $country;
@@ -36,6 +35,22 @@ class PropertySeekerController extends BaseController
         $this->resp = $this->customer->getPaginatedList($request, 20);
         return view('admin.customer.index')->withRows($this->resp->data);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 
     public function getCombo($type)
     {
@@ -78,7 +93,7 @@ class PropertySeekerController extends BaseController
         return view('admin.property-seeker.index');
     }
 
-    /*public function getEdit($id)
+    public function getEdit($id)
     {
         $this->resp = $this->customer->getShow($id);
         $data['agent_combo'] = $this->agent->getUKCombo();
@@ -90,7 +105,7 @@ class PropertySeekerController extends BaseController
         }
 
         return view('admin.customer.edit_customer')->withCustomer($this->resp->data)->withData($data);
-    }*/
+    }
 
     public function postUpdate(Request $request, $id)
     {
@@ -134,17 +149,17 @@ class PropertySeekerController extends BaseController
         if ($request->get('type') == 'reseller') {
             $table = 'SLS_RESELLERS';
         }
-        // $result = DB::table($table)->select('NAME','MOBILE_NO')->where('NAME', 'LIKE', '%'. $request->get('q'). '%')->orWhere('MOBILE_NO', 'LIKE', '%'. $request->get('q'). '%')->get();
+
 
         if ($table == 'SLS_CUSTOMERS') {
-            // $post_code = CustomerAddress::selectRaw('(SELECT IFNULL(POST_CODE,0) from SLS_CUSTOMERS_ADDRESS where F_CUSTOMER_NO = pk_no1 and F_ADDRESS_TYPE_NO = 1)')->limit(1)->getQuery();
+
 
             $customer_info = DB::table($table)
             ->select('NAME','MOBILE_NO','PK_NO as pk_no1','CUSTOMER_NO'
             ,DB::raw('(select IFNULL(POST_CODE,0)  from SLS_CUSTOMERS_ADDRESS where (F_CUSTOMER_NO=pk_no1 and F_ADDRESS_TYPE_NO=1) limit 1) as POST_CODE')
             ,DB::raw('(select CITY  from SLS_CUSTOMERS_ADDRESS where (F_CUSTOMER_NO=pk_no1 and F_ADDRESS_TYPE_NO=1) limit 1) as CITY')
             )
-            // ->selectSub($post_code, 'POST_CODE')
+
             ->where('IS_ACTIVE',1)
             ->where('NAME', 'LIKE', '%'. $request->get('q'). '%')
             ->orWhere('MOBILE_NO', 'LIKE', '%'. $request->get('q'). '%')
@@ -198,18 +213,11 @@ class PropertySeekerController extends BaseController
 
 
 
-        // $orders = DB::table("SLS_ORDER as o")->select('o.F_CUSTOMER_NO','o.F_BOOKING_NO','o.CUSTOMER_NAME','o.IS_RESELLER','o.ORDER_ACTUAL_TOPUP','o.ORDER_BUFFER_TOPUP', 'o.ORDER_BALANCE_RETURN','o.DISPATCH_STATUS','b.BOOKING_NO', 'b.RECONFIRM_TIME as DATE','b.TOTAL_PRICE', 'b.DISCOUNT','b.BOOKING_STATUS','b.F_SS_CREATED_BY','u.username as ENTRY_BY')
-        // ->join('SLS_BOOKING as b','b.PK_NO','=','o.F_BOOKING_NO')
-        // ->leftJoin('auths as u','u.id','=','b.F_SS_CREATED_BY')
-        // ->where('o.F_CUSTOMER_NO',$id)
-        // ->orderBy('b.RECONFIRM_TIME','DESC')
-        // ->get();
-
-
-
-
 
         return view('admin.customer.history',compact('data','rows','balance_history'));
     }
+*/
+
+
 }
 

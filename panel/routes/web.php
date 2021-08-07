@@ -74,13 +74,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('permission/{id}/delete', ['middleware' => 'acl:delete_action', 'as' => 'admin.permission.delete', 'uses' => 'PermissionController@getDelete']);
 
     //product
+    Route::get('property', ['middleware' => 'acl:view_property', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
 
-    Route::get('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist', 'uses' => 'ProductController@getProductSearch']);
-    Route::post('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.searchlist.view.post', 'uses' => 'ProductController@getProductSearchList']);
-    Route::get('product-list/{id}/view', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist.view', 'uses' => 'ProductController@getView']);
-    Route::get('product-list/{id}/edit', ['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
+    // Route::get('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist', 'uses' => 'ProductController@getProductSearch']);
+    // Route::post('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.searchlist.view.post', 'uses' => 'ProductController@getProductSearchList']);
+    // Route::get('product-list/{id}/view', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist.view', 'uses' => 'ProductController@getView']);
+    // Route::get('product-list/{id}/edit', ['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
 
-    Route::get('property', ['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
 
     Route::get('ajax-get-area/{id}', ['as' => 'getarea', 'uses' => 'ProductController@getArea']);
 //    Route::get('property-sale-rent',['middleware' => 'acl:view_product', 'as' => 'admin.property.rent.edit', 'uses' => 'ProductController@getEditRentndex']);
@@ -215,8 +215,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('agent/{id}/delete', ['middleware' => 'acl:delete_agent', 'as' => 'admin.agent.delete', 'uses' => 'AgentController@getDelete']);
 
     //Reseller Section
-    Route::post('reseller/all_reseller', 'DatatableController@all_reseller');
+
     Route::get('property-owner', ['middleware' => 'acl:view_reseller', 'as' => 'admin.reseller.list', 'uses' => 'ResellerController@getIndex']);
+
+    /* Route::post('reseller/all_reseller', 'DatatableController@all_reseller');
     Route::get('reseller/new', ['middleware' => 'acl:new_reseller', 'as' => 'admin.reseller.create', 'uses' => 'ResellerController@getCreate']);
     Route::post('reseller/store', ['middleware' => 'acl:new_reseller', 'as' => 'admin.reseller.store', 'uses' => 'ResellerController@postStore']);
     Route::get('reseller/{id}/edit', ['middleware' => 'acl:edit_reseller', 'as' => 'admin.reseller.edit', 'uses' => 'ResellerController@getEdit']);
@@ -224,6 +226,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('reseller/update/{id}', ['middleware' => 'acl:edit_reseller', 'as' => 'admin.reseller.update', 'uses' => 'ResellerController@postUpdate']);
     Route::get('reseller/{id}/delete', ['middleware' => 'acl:delete_reseller', 'as' => 'admin.reseller.delete', 'uses' => 'ResellerController@getDelete']);
     Route::get('reseller/{id}/view', ['middleware' => 'acl:view_reseller', 'as' => 'admin.reseller.view', 'uses' => 'ResellerController@getView']);
+
+    */
+
 
     //shop category
     Route::get('shop/category/list', ['middleware' => 'acl:view_shop_category', 'as' => 'admin.shop.category.list', 'uses' => 'ShopCategoryController@getIndex']);
@@ -389,9 +394,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('hscode/{id}/delete', ['middleware' => 'acl:delete_hscode', 'as' => 'admin.hscode.delete', 'uses' => 'HscodeController@getDelete']);
 
     //Customer
-    Route::get('property-seeker', ['middleware' => 'acl:view_property_seeker', 'as' => 'admin.property_seeker.list', 'uses' => 'PropertySeekerController@getIndex']);
-    Route::get('property-seeker/edit', ['middleware' => 'acl:view_customer', 'as' => 'admin.customer.edit', 'uses' => 'PropertySeekerController@getEdit']);
+    Route::get('seeker', ['middleware' => 'acl:view_seeker', 'as' => 'admin.seeker.list', 'uses' => 'SeekerController@getIndex']);
+    Route::get('seeker/edit', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.edit', 'uses' => 'SeekerController@getEdit']);
 
+/*
 
     Route::get('customer/new', ['middleware' => 'acl:new_customer', 'as' => 'admin.customer.create', 'uses' => 'CustomerController@getCreate']);
     Route::post('customer/store', ['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store', 'uses' => 'CustomerController@postStore']);
@@ -401,6 +407,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('customer/{id}/payment-history', ['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.payment_history', 'uses' => 'CustomerController@getPaymentHistory']);
     Route::post('customer/{id}/update', ['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.update', 'uses' => 'CustomerController@postUpdate']);
     Route::get('customer/{id}/delete', ['middleware' => 'acl:delete_customer', 'as' => 'admin.customer.delete', 'uses' => 'CustomerController@getDelete']);
+
+    */
+
+
     Route::get('parent-root/{type}', ['middleware' => 'acl:view_customer', 'as' => 'admn.customer.root', 'uses' => 'CustomerController@getCombo']);
     Route::get('customer/{id}/view', ['middleware' => 'acl:view_customer', 'as' => 'admin.customer.view', 'uses' => 'CustomerController@getView']);
     Route::get('get/{id}/remainingcustomerbalance/', ['middleware' => 'acl:view_customer', 'as' => 'admin.remainingcustomerbalance', 'uses' => 'CustomerController@getRemainingBalance']);
