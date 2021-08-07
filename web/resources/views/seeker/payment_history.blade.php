@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('contacted-properties','active')
+@section('payment-history','active')
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
     <style>

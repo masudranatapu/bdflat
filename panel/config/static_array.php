@@ -9,13 +9,13 @@ return [
 
     'property_status' => [
         0 => 'pending',
-        1 => 'published', 
-        2 => 'Rejected', 
-        3 => 'Expaired', 
+        1 => 'published',
+        2 => 'Rejected',
+        3 => 'Expaired',
         4 => 'deleted',
     ],
 
-    
+
 
 	'booking_validity' => [
 		24 => '24 Hours',
@@ -164,6 +164,19 @@ return [
         5 => 'Bad Condition ( Item Returned - defect )',
     ],
 
+    'bed_room' => [
+        '1'    => '1 Bed',
+        '2'    => '2 Bed',
+        '3'    => '3 Bed',
+        '4'    => '4 bed',
+    ],
+
+    'bath_room' => [
+        '1'    => '1 Bath',
+        '2'    => '2 Bath',
+        '3'    => '3 Bath',
+        '4'    => '4 Bath',
+    ],
 
 ]
 ?>

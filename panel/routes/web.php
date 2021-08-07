@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
 
     if (Auth::check()) {
@@ -73,37 +75,37 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     //product
 
-    Route::get('product-search-list',['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist', 'uses' => 'ProductController@getProductSearch']);
-    Route::post('product-search-list',[ 'middleware' => 'acl:view_product_list', 'as' => 'admin.searchlist.view.post', 'uses' => 'ProductController@getProductSearchList']);
-    Route::get('product-list/{id}/view',['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist.view', 'uses' => 'ProductController@getView']);
-    Route::get('product-list/{id}/edit',['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
+    Route::get('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist', 'uses' => 'ProductController@getProductSearch']);
+    Route::post('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.searchlist.view.post', 'uses' => 'ProductController@getProductSearchList']);
+    Route::get('product-list/{id}/view', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist.view', 'uses' => 'ProductController@getView']);
+    Route::get('product-list/{id}/edit', ['middleware' => 'acl:edit_product_list', 'as' => 'admin.product.searchlist.edit', 'uses' => 'ProductController@getEdit']);
 
-    Route::get('property',['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
+    Route::get('property', ['middleware' => 'acl:view_product', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
 
-    Route::get('ajax-get-area/{id}',['as' => 'getarea', 'uses' => 'ProductController@getArea']);
+    Route::get('ajax-get-area/{id}', ['as' => 'getarea', 'uses' => 'ProductController@getArea']);
 //    Route::get('property-sale-rent',['middleware' => 'acl:view_product', 'as' => 'admin.property.rent.edit', 'uses' => 'ProductController@getEditRentndex']);
 //    Route::get('property-sale-roommate',['middleware' => 'acl:view_product', 'as' => 'admin.property.roommate.edit', 'uses' => 'ProductController@getEditRoommatendex']);
-    Route::get('product/new',['middleware' => 'acl:new_product', 'as' => 'admin.product.create', 'uses' => 'ProductController@getCreate']);
-    Route::post('product/store',['middleware' => 'acl:new_product', 'as' => 'admin.product.store', 'uses' => 'ProductController@postStore']);
-    Route::get('product/{id}/edit',['middleware' => 'acl:edit_product', 'as' => 'admin.product.edit', 'uses' => 'ProductController@getEdit']);
-    Route::get('product/{id}/activity',['middleware' => 'acl:edit_product_activity', 'as' => 'admin.product.activity', 'uses' => 'ProductController@getaAtivity']);
-    Route:: get('product/{id}/view',['middleware' => 'acl:view_product', 'as' => 'admin.product.view', 'uses' => 'ProductController@getView']);
-    Route::post('product/{id}/update',['middleware' => 'acl:edit_product', 'as' => 'admin.product.update', 'uses' => 'ProductController@putUpdate']);
-    Route::get('product/{id}/delete',['middleware' => 'acl:delete_product', 'as' => 'admin.product.delete', 'uses' => 'ProductController@getDelete']);
+    Route::get('property/new', ['middleware' => 'acl:new_product', 'as' => 'admin.product.create', 'uses' => 'ProductController@getCreate']);
+    Route::post('property/store', ['middleware' => 'acl:new_product', 'as' => 'admin.product.store', 'uses' => 'ProductController@postStore']);
+    Route::get('property/{id}/edit', ['middleware' => 'acl:edit_product', 'as' => 'admin.product.edit', 'uses' => 'ProductController@getEdit']);
+    Route::get('property/{id}/activity', ['middleware' => 'acl:edit_product_activity', 'as' => 'admin.product.activity', 'uses' => 'ProductController@getaAtivity']);
+    Route::get('property/{id}/view', ['middleware' => 'acl:view_product', 'as' => 'admin.product.view', 'uses' => 'ProductController@getView']);
+    Route::post('property/{id}/update', ['middleware' => 'acl:edit_product', 'as' => 'admin.product.update', 'uses' => 'ProductController@putUpdate']);
+    Route::get('property/{id}/delete', ['middleware' => 'acl:delete_product', 'as' => 'admin.product.delete', 'uses' => 'ProductController@getDelete']);
 
-    Route::post('product_variant/store',['middleware' => 'acl:new_product_variant', 'as' => 'admin.product_variant.store', 'uses' => 'ProductController@postStoreProductVariant']);
-    Route::post('product_variant/{id}/update',['middleware' => 'acl:edit_product_variant', 'as' => 'admin.product_variant.update', 'uses' => 'ProductController@putUpdateProductVariant']);
-    Route::get('product_variant/{id}/delete',['middleware' => 'acl:delete_product_variant', 'as' => 'admin.product_variant.delete', 'uses' => 'ProductController@getDeleteProductVariant']);
+    Route::get('property/ajax-listing-variant', ['middleware' => 'acl:edit_product', 'as' => 'admin.product.ajax.get.variant', 'uses' => 'ProductController@addListingVariant']);
+    Route::get('property/ajax-property-type/{id}', ['middleware' => 'acl:edit_product', 'as' => 'admin.product.ajax.get.property_type', 'uses' => 'ProductController@getPropertyType']);
+
+    Route::post('product_variant/store', ['middleware' => 'acl:new_product_variant', 'as' => 'admin.product_variant.store', 'uses' => 'ProductController@postStoreProductVariant']);
+    Route::post('product_variant/{id}/update', ['middleware' => 'acl:edit_product_variant', 'as' => 'admin.product_variant.update', 'uses' => 'ProductController@putUpdateProductVariant']);
+    Route::get('product_variant/{id}/delete', ['middleware' => 'acl:delete_product_variant', 'as' => 'admin.product_variant.delete', 'uses' => 'ProductController@getDeleteProductVariant']);
     //ajax route for product module
-    Route::get('prod_img_delete/{id}',['middleware' => 'acl:delete_product', 'as' => 'admin.product.img_delete', 'uses' => 'ProductController@getDeleteImage']);
-    Route::get('prod_subcategory/{id}',[ 'middleware' => 'acl:new_product', 'as' => 'product.prod_subcategory.', 'uses' => 'ProductController@getSubcat']);
-    Route::get('prod_model/{id}',[ 'middleware' => 'acl:new_product', 'as' => 'product.prod_model', 'uses' => 'ProductController@getProdModel']);
-    Route::get('get_hscode_by_scat/{id?}',[ 'middleware' => 'acl:new_product', 'as' => 'get_hscode_by_scat', 'uses' => 'ProductController@getHscode']);
-    Route::post('product-search',[ 'middleware' => 'acl:new_product', 'as' => 'admin.product_search', 'uses' => 'ProductController@getProductSearchList']);
-    Route::post('product/search-back',[ 'middleware' => 'acl:new_product', 'as' => 'admin.add_to_mother_page', 'uses' => 'ProductController@getProductSearchGoBack']);
-
-
-
+    Route::get('prod_img_delete/{id}', ['middleware' => 'acl:delete_product', 'as' => 'admin.product.img_delete', 'uses' => 'ProductController@getDeleteImage']);
+    Route::get('prod_subcategory/{id}', ['middleware' => 'acl:new_product', 'as' => 'product.prod_subcategory.', 'uses' => 'ProductController@getSubcat']);
+    Route::get('prod_model/{id}', ['middleware' => 'acl:new_product', 'as' => 'product.prod_model', 'uses' => 'ProductController@getProdModel']);
+    Route::get('get_hscode_by_scat/{id?}', ['middleware' => 'acl:new_product', 'as' => 'get_hscode_by_scat', 'uses' => 'ProductController@getHscode']);
+    Route::post('product-search', ['middleware' => 'acl:new_product', 'as' => 'admin.product_search', 'uses' => 'ProductController@getProductSearchList']);
+    Route::post('product/search-back', ['middleware' => 'acl:new_product', 'as' => 'admin.add_to_mother_page', 'uses' => 'ProductController@getProductSearchGoBack']);
 
 
     //product-model
@@ -151,7 +153,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('product-brand/{id}/delete', ['middleware' => 'acl:delete_brand', 'as' => 'product.brand.delete', 'uses' => 'BrandController@getDelete']);
 
     //Account Source
-    Route::get('account',['middleware' => 'acl:view_account_source', 'as' => 'admin.account.list', 'uses' => 'AccountController@getIndex']);
+    Route::get('account', ['middleware' => 'acl:view_account_source', 'as' => 'admin.account.list', 'uses' => 'AccountController@getIndex']);
     Route::get('account/new', ['middleware' => 'acl:new_account_source', 'as' => 'account.source.create', 'uses' => 'AccountController@getCreate']);
     Route::post('account/store', ['middleware' => 'acl:new_account_source', 'as' => 'account.store', 'uses' => 'AccountController@postAccSource']);
     Route::get('account/{id}/delete', ['middleware' => 'acl:delete_account_source', 'as' => 'account.source.delete', 'uses' => 'AccountController@getDelete']);
@@ -218,10 +220,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('reseller/new', ['middleware' => 'acl:new_reseller', 'as' => 'admin.reseller.create', 'uses' => 'ResellerController@getCreate']);
     Route::post('reseller/store', ['middleware' => 'acl:new_reseller', 'as' => 'admin.reseller.store', 'uses' => 'ResellerController@postStore']);
     Route::get('reseller/{id}/edit', ['middleware' => 'acl:edit_reseller', 'as' => 'admin.reseller.edit', 'uses' => 'ResellerController@getEdit']);
-    Route::get('reseller/{id}/payment-history',['middleware' => 'acl:edit_reseller', 'as' => 'admin.reseller.payment_history', 'uses' => 'ResellerController@getPaymentHistory']);
+    Route::get('reseller/{id}/payment-history', ['middleware' => 'acl:edit_reseller', 'as' => 'admin.reseller.payment_history', 'uses' => 'ResellerController@getPaymentHistory']);
     Route::post('reseller/update/{id}', ['middleware' => 'acl:edit_reseller', 'as' => 'admin.reseller.update', 'uses' => 'ResellerController@postUpdate']);
     Route::get('reseller/{id}/delete', ['middleware' => 'acl:delete_reseller', 'as' => 'admin.reseller.delete', 'uses' => 'ResellerController@getDelete']);
-    Route::get('reseller/{id}/view',['middleware' => 'acl:view_reseller', 'as' => 'admin.reseller.view', 'uses' => 'ResellerController@getView']);
+    Route::get('reseller/{id}/view', ['middleware' => 'acl:view_reseller', 'as' => 'admin.reseller.view', 'uses' => 'ResellerController@getView']);
 
     //shop category
     Route::get('shop/category/list', ['middleware' => 'acl:view_shop_category', 'as' => 'admin.shop.category.list', 'uses' => 'ShopCategoryController@getIndex']);
@@ -274,11 +276,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('imvoice_img_delete/{id}', ['middleware' => 'acl:delete_invoice', 'as' => 'admin.imvoice_img_delete', 'uses' => 'InvoiceController@getImgDelete']);
 
     //Invoice Details
-    Route::get('invoice-details/{id}',['middleware' => 'acl:view_invoice_details', 'as' => 'admin.invoice-details', 'uses' => 'InvoiceDetailsController@getIndex']);
-    Route::get('invoice-details/{id}/new',['middleware' => 'acl:new_invoice_details','as' => 'admin.invoice-details.new', 'uses' => 'InvoiceDetailsController@getCreate']);
-    Route::get('invoice-details/{id}/delete',['middleware' => 'acl:delete_invoice_details','as' => 'admin.invoice-details.delete', 'uses' => 'InvoiceDetailsController@getDelete']);
-    Route::post('invoice-details/variant/list',['middleware' => 'acl:view_invoice_details','as' => 'admin.invoice-details.variant-list', 'uses' => 'InvoiceDetailsController@getVariantListById']);
-    Route::get('invoice-details/variant/{bar_code}/list',['middleware' => 'acl:view_invoice_details','as' => 'admin.invoice-details.bar-code/variant-list', 'uses' => 'InvoiceDetailsController@getVariantListByBarCode']);
+    Route::get('invoice-details/{id}', ['middleware' => 'acl:view_invoice_details', 'as' => 'admin.invoice-details', 'uses' => 'InvoiceDetailsController@getIndex']);
+    Route::get('invoice-details/{id}/new', ['middleware' => 'acl:new_invoice_details', 'as' => 'admin.invoice-details.new', 'uses' => 'InvoiceDetailsController@getCreate']);
+    Route::get('invoice-details/{id}/delete', ['middleware' => 'acl:delete_invoice_details', 'as' => 'admin.invoice-details.delete', 'uses' => 'InvoiceDetailsController@getDelete']);
+    Route::post('invoice-details/variant/list', ['middleware' => 'acl:view_invoice_details', 'as' => 'admin.invoice-details.variant-list', 'uses' => 'InvoiceDetailsController@getVariantListById']);
+    Route::get('invoice-details/variant/{bar_code}/list', ['middleware' => 'acl:view_invoice_details', 'as' => 'admin.invoice-details.bar-code/variant-list', 'uses' => 'InvoiceDetailsController@getVariantListByBarCode']);
     Route::get('invoice-details/{id}/product', ['middleware' => 'acl:view_invoice_details', 'as' => 'admin.invoice-details.get-product', 'uses' => 'InvoiceDetailsController@getProductBySubCategory']);
     Route::post('invoice-details/store', ['middleware' => 'acl:new_invoice_details', 'as' => 'admin.invoice-details.store', 'uses' => 'InvoiceDetailsController@postStore']);
     Route::get('invoice-product-details/{id}/{type}', ['middleware' => 'acl:view_invoice_details', 'as' => 'admin.invoice-product-details.get-product', 'uses' => 'InvoiceDetailsController@getProductByInvoice']);
@@ -372,76 +374,75 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     // Route::post('get-customer-details', ['middleware' => 'acl:new_booking', 'as' => 'admin.booking.getproduct', 'uses' => 'OrderController@getCusInfo']);
 
     //COLLECTION LIST
-    Route::get('collection-list',['middleware' => 'acl:view_collection_list', 'as' => 'admin.collection.list', 'uses' => 'DispatchController@getCollectionList']);
-    Route::get('collection-list/{id}',['middleware' => 'acl:view_collection_list_breakdown', 'as' => 'admin.collection.list.breakdown', 'uses' => 'DispatchController@getCollectionListBreakdown']);
+    Route::get('collection-list', ['middleware' => 'acl:view_collection_list', 'as' => 'admin.collection.list', 'uses' => 'DispatchController@getCollectionList']);
+    Route::get('collection-list/{id}', ['middleware' => 'acl:view_collection_list_breakdown', 'as' => 'admin.collection.list.breakdown', 'uses' => 'DispatchController@getCollectionListBreakdown']);
 
     //COD/RTC SHELVE STOCK LIST
-    Route::get('stock-list/{id}/shelve',['middleware' => 'acl:view_cod_user_stock_list', 'as' => 'admin.cod_user.stock_list', 'uses' => 'DispatchController@getCodRtcUserStockList']);
+    Route::get('stock-list/{id}/shelve', ['middleware' => 'acl:view_cod_user_stock_list', 'as' => 'admin.cod_user.stock_list', 'uses' => 'DispatchController@getCodRtcUserStockList']);
 
     //HS code
-    Route::get('hscode',['middleware' => 'acl:view_hscode', 'as' => 'admin.hscode.list', 'uses' => 'HscodeController@getIndex']);
-    Route::get('hscode/new',['middleware' => 'acl:new_hscode', 'as' => 'admin.hscode.create', 'uses' => 'HscodeController@getCreate']);
-    Route::post('hscode/store',['middleware' => 'acl:new_hscode', 'as' => 'admin.hscode.store', 'uses' => 'HscodeController@postStore']);
-    Route::get('hscode/{id}/edit',['middleware' => 'acl:edit_hscode', 'as' => 'admin.hscode.edit', 'uses' => 'HscodeController@getEdit']);
-    Route::post('hscode/{id}/update',['middleware' => 'acl:edit_hscode', 'as' => 'admin.hscode.update', 'uses' => 'HscodeController@postUpdate']);
-    Route::get('hscode/{id}/delete',['middleware' => 'acl:delete_hscode', 'as' => 'admin.hscode.delete', 'uses' => 'HscodeController@getDelete']);
+    Route::get('hscode', ['middleware' => 'acl:view_hscode', 'as' => 'admin.hscode.list', 'uses' => 'HscodeController@getIndex']);
+    Route::get('hscode/new', ['middleware' => 'acl:new_hscode', 'as' => 'admin.hscode.create', 'uses' => 'HscodeController@getCreate']);
+    Route::post('hscode/store', ['middleware' => 'acl:new_hscode', 'as' => 'admin.hscode.store', 'uses' => 'HscodeController@postStore']);
+    Route::get('hscode/{id}/edit', ['middleware' => 'acl:edit_hscode', 'as' => 'admin.hscode.edit', 'uses' => 'HscodeController@getEdit']);
+    Route::post('hscode/{id}/update', ['middleware' => 'acl:edit_hscode', 'as' => 'admin.hscode.update', 'uses' => 'HscodeController@postUpdate']);
+    Route::get('hscode/{id}/delete', ['middleware' => 'acl:delete_hscode', 'as' => 'admin.hscode.delete', 'uses' => 'HscodeController@getDelete']);
 
     //Customer
-    Route::get('property-seeker',['middleware' => 'acl:view_property_seeker', 'as' => 'admin.property_seeker.list', 'uses' => 'PropertySeekerController@getIndex']);
-    Route::get('property-seeker/edit',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.edit', 'uses' => 'PropertySeekerController@getEdit']);
+    Route::get('property-seeker', ['middleware' => 'acl:view_property_seeker', 'as' => 'admin.property_seeker.list', 'uses' => 'PropertySeekerController@getIndex']);
+    Route::get('property-seeker/edit', ['middleware' => 'acl:view_customer', 'as' => 'admin.customer.edit', 'uses' => 'PropertySeekerController@getEdit']);
 
 
-    Route::get('customer/new',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.create', 'uses' => 'CustomerController@getCreate']);
-    Route::post('customer/store',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store', 'uses' => 'CustomerController@postStore']);
-    Route::post('customer/blance-transfer',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.blance_transfer', 'uses' => 'CustomerController@postBlanceTransfer']);
-    Route::post('customer/store/booking',['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store.booking', 'uses' => 'CustomerController@addNewCustomer']);
-    Route::get('customer/{id}/edit',['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.edit', 'uses' => 'CustomerController@getEdit']);
-    Route::get('customer/{id}/payment-history',['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.payment_history', 'uses' => 'CustomerController@getPaymentHistory']);
-    Route::post('customer/{id}/update',['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.update', 'uses' => 'CustomerController@postUpdate']);
-    Route::get('customer/{id}/delete',['middleware' => 'acl:delete_customer', 'as' => 'admin.customer.delete', 'uses' => 'CustomerController@getDelete']);
-    Route::get('parent-root/{type}',[ 'middleware' => 'acl:view_customer', 'as' => 'admn.customer.root', 'uses' => 'CustomerController@getCombo']);
-    Route::get('customer/{id}/view',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.view', 'uses' => 'CustomerController@getView']);
-    Route::get('get/{id}/remainingcustomerbalance/',['middleware' => 'acl:view_customer', 'as' => 'admin.remainingcustomerbalance', 'uses' => 'CustomerController@getRemainingBalance']);
-    Route::get('customer/{id}/history',['middleware' => 'acl:view_customer', 'as' => 'admin.customer.history', 'uses' => 'CustomerController@getHistory']);
+    Route::get('customer/new', ['middleware' => 'acl:new_customer', 'as' => 'admin.customer.create', 'uses' => 'CustomerController@getCreate']);
+    Route::post('customer/store', ['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store', 'uses' => 'CustomerController@postStore']);
+    Route::post('customer/blance-transfer', ['middleware' => 'acl:new_customer', 'as' => 'admin.customer.blance_transfer', 'uses' => 'CustomerController@postBlanceTransfer']);
+    Route::post('customer/store/booking', ['middleware' => 'acl:new_customer', 'as' => 'admin.customer.store.booking', 'uses' => 'CustomerController@addNewCustomer']);
+    Route::get('customer/{id}/edit', ['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.edit', 'uses' => 'CustomerController@getEdit']);
+    Route::get('customer/{id}/payment-history', ['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.payment_history', 'uses' => 'CustomerController@getPaymentHistory']);
+    Route::post('customer/{id}/update', ['middleware' => 'acl:edit_customer', 'as' => 'admin.customer.update', 'uses' => 'CustomerController@postUpdate']);
+    Route::get('customer/{id}/delete', ['middleware' => 'acl:delete_customer', 'as' => 'admin.customer.delete', 'uses' => 'CustomerController@getDelete']);
+    Route::get('parent-root/{type}', ['middleware' => 'acl:view_customer', 'as' => 'admn.customer.root', 'uses' => 'CustomerController@getCombo']);
+    Route::get('customer/{id}/view', ['middleware' => 'acl:view_customer', 'as' => 'admin.customer.view', 'uses' => 'CustomerController@getView']);
+    Route::get('get/{id}/remainingcustomerbalance/', ['middleware' => 'acl:view_customer', 'as' => 'admin.remainingcustomerbalance', 'uses' => 'CustomerController@getRemainingBalance']);
+    Route::get('customer/{id}/history', ['middleware' => 'acl:view_customer', 'as' => 'admin.customer.history', 'uses' => 'CustomerController@getHistory']);
 
-    Route::get('customer/{id}/refund/{type}',['middleware'=>'acl:new_refund', 'as'=>'admin.payment.refund', 'uses'=>'RefundController@getRefund']);
-    Route::post('customer/refund/store',['middleware'=>'acl:new_refund', 'as'=>'admin.paymentrefund.store', 'uses'=>'RefundController@postRefund']);
+    Route::get('customer/{id}/refund/{type}', ['middleware' => 'acl:new_refund', 'as' => 'admin.payment.refund', 'uses' => 'RefundController@getRefund']);
+    Route::post('customer/refund/store', ['middleware' => 'acl:new_refund', 'as' => 'admin.paymentrefund.store', 'uses' => 'RefundController@postRefund']);
 
-    Route::get('customer/refund',['middleware' => 'acl:view_refund', 'as' => 'admin.customer.refund', 'uses' => 'RefundController@getIndex']);
-    Route::post('customer/refundrequest/store',['middleware' => 'acl:new_refund', 'as' => 'admin.customer.refundrequeststore', 'uses' => 'RefundController@postRefundRequest']);
-    Route::get('customer/refundrequest',['middleware' => 'acl:view_refund', 'as' => 'admin.customer.refundrequest', 'uses' => 'RefundController@getrefundRequestList']);
-    Route::get('customer/refunded',['middleware' => 'acl:view_refund', 'as' => 'admin.customer.refunded', 'uses' => 'RefundController@getRefunded']);
-    Route::get('customer/refundrequest/{id}/deny',['middleware' => 'acl:edit_refund', 'as' => 'admin.customer.refundrequest_deny', 'uses' => 'RefundController@getRefundedRequestDeny']);
-
+    Route::get('customer/refund', ['middleware' => 'acl:view_refund', 'as' => 'admin.customer.refund', 'uses' => 'RefundController@getIndex']);
+    Route::post('customer/refundrequest/store', ['middleware' => 'acl:new_refund', 'as' => 'admin.customer.refundrequeststore', 'uses' => 'RefundController@postRefundRequest']);
+    Route::get('customer/refundrequest', ['middleware' => 'acl:view_refund', 'as' => 'admin.customer.refundrequest', 'uses' => 'RefundController@getrefundRequestList']);
+    Route::get('customer/refunded', ['middleware' => 'acl:view_refund', 'as' => 'admin.customer.refunded', 'uses' => 'RefundController@getRefunded']);
+    Route::get('customer/refundrequest/{id}/deny', ['middleware' => 'acl:edit_refund', 'as' => 'admin.customer.refundrequest_deny', 'uses' => 'RefundController@getRefundedRequestDeny']);
 
 
     //Customer Address
-    Route::get('customer-address',['middleware' => 'acl:view_customer_address', 'as' => 'admin.customer-address.list', 'uses' => 'CustomerAddressController@getIndex']);
-    Route::get('customer-address/{id}/new',['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer-address.create', 'uses' => 'CustomerAddressController@getCreate']);
-    Route::post('customer-address/store',['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer-address.store', 'uses' => 'CustomerAddressController@postStore']);
-    Route::get('customer-address/{id}/edit',['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.edit', 'uses' => 'CustomerAddressController@getEdit']);
-    Route::post('customer-address/{id}/update',['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.update', 'uses' => 'CustomerAddressController@postUpdate']);
-    Route::get('customer-address/{id}/delete',['middleware' => 'acl:delete_customer_address', 'as' => 'admin.customer-address.delete', 'uses' => 'CustomerAddressController@getDelete']);
-    Route::get('getCustomerAddressEdit/{customer_id}/{id}/{is_reseller?}',['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.order_edit', 'uses' => 'CustomerAddressController@getCustomerAddressEdit']);
-    Route::get('getCustomerByName/{customer_name}/{type?}',['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.order_getcusinfo', 'uses' => 'CustomerAddressController@getCustomerByName']);
+    Route::get('customer-address', ['middleware' => 'acl:view_customer_address', 'as' => 'admin.customer-address.list', 'uses' => 'CustomerAddressController@getIndex']);
+    Route::get('customer-address/{id}/new', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer-address.create', 'uses' => 'CustomerAddressController@getCreate']);
+    Route::post('customer-address/store', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer-address.store', 'uses' => 'CustomerAddressController@postStore']);
+    Route::get('customer-address/{id}/edit', ['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.edit', 'uses' => 'CustomerAddressController@getEdit']);
+    Route::post('customer-address/{id}/update', ['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.update', 'uses' => 'CustomerAddressController@postUpdate']);
+    Route::get('customer-address/{id}/delete', ['middleware' => 'acl:delete_customer_address', 'as' => 'admin.customer-address.delete', 'uses' => 'CustomerAddressController@getDelete']);
+    Route::get('getCustomerAddressEdit/{customer_id}/{id}/{is_reseller?}', ['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.order_edit', 'uses' => 'CustomerAddressController@getCustomerAddressEdit']);
+    Route::get('getCustomerByName/{customer_name}/{type?}', ['middleware' => 'acl:edit_customer_address', 'as' => 'admin.customer-address.order_getcusinfo', 'uses' => 'CustomerAddressController@getCustomerByName']);
 
     Route::get('get-post-code', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer-address.creates', 'uses' => 'CustomerAddressController@search']);
 
-     //AJAX ROUTE FOR CUSTOMER_ADDRESS
-     Route::get('customer_state/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_state', 'uses' => 'CustomerAddressController@getState']);
-     Route::get('customer_city/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_city', 'uses' => 'CustomerAddressController@getCity']);
-     Route::get('customer_pCode/{city_id}/{state_id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_pCode', 'uses' => 'CustomerAddressController@getPostC']);
-     Route::get('customer_city_by_state/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_city_by_state', 'uses' => 'CustomerAddressController@getCitybyState']);
-     Route::get('customer_postage_by_city/{id}',[ 'middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_postage_by_city', 'uses' => 'CustomerAddressController@getPostagebyCity']);
+    //AJAX ROUTE FOR CUSTOMER_ADDRESS
+    Route::get('customer_state/{id}', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_state', 'uses' => 'CustomerAddressController@getState']);
+    Route::get('customer_city/{id}', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_city', 'uses' => 'CustomerAddressController@getCity']);
+    Route::get('customer_pCode/{city_id}/{state_id}', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_pCode', 'uses' => 'CustomerAddressController@getPostC']);
+    Route::get('customer_city_by_state/{id}', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_city_by_state', 'uses' => 'CustomerAddressController@getCitybyState']);
+    Route::get('customer_postage_by_city/{id}', ['middleware' => 'acl:new_customer_address', 'as' => 'admin.customer_postage_by_city', 'uses' => 'CustomerAddressController@getPostagebyCity']);
 
     //Agent
     Route::get('agents', ['middleware' => 'acl:agent_view', 'as' => 'admin.agents.list', 'uses' => 'AgentsController@getIndex']);
-    Route::get('agents/new',['middleware' => 'acl:agent_new', 'as' => 'admin.agents.create', 'uses' => 'AgentsController@getCreate']);
-    Route::post('agents/store',['middleware' => 'acl:agent_store', 'as' => 'admin.agents.store', 'uses' => 'AgentsController@postStore']);
-    Route::get('agents/{id}/edit',['middleware' => 'acl:agent_edit', 'as' => 'admin.agents.edit', 'uses' => 'AgentsController@getEdit']);
-    Route::post('agents/{id}/update',['middleware' => 'acl:agent_update', 'as' => 'admin.agents.update', 'uses' => 'AgentsController@postUpdate']);
-    Route::get('agents/{id}/delete',['middleware' => 'acl:agent_delete', 'as' => 'admin.agents.delete', 'uses' => 'AgentsController@getDelete']);
-    Route::get('agents-earnings/{id}',['middleware' => 'acl:view_agent_earnings', 'as' => 'admin.agent_earnings', 'uses' => 'AgentsController@getEarnings']);
+    Route::get('agents/new', ['middleware' => 'acl:agent_new', 'as' => 'admin.agents.create', 'uses' => 'AgentsController@getCreate']);
+    Route::post('agents/store', ['middleware' => 'acl:agent_store', 'as' => 'admin.agents.store', 'uses' => 'AgentsController@postStore']);
+    Route::get('agents/{id}/edit', ['middleware' => 'acl:agent_edit', 'as' => 'admin.agents.edit', 'uses' => 'AgentsController@getEdit']);
+    Route::post('agents/{id}/update', ['middleware' => 'acl:agent_update', 'as' => 'admin.agents.update', 'uses' => 'AgentsController@postUpdate']);
+    Route::get('agents/{id}/delete', ['middleware' => 'acl:agent_delete', 'as' => 'admin.agents.delete', 'uses' => 'AgentsController@getDelete']);
+    Route::get('agents-earnings/{id}', ['middleware' => 'acl:view_agent_earnings', 'as' => 'admin.agent_earnings', 'uses' => 'AgentsController@getEarnings']);
 
     //earnings
     //Route::get('earnings', ['as' => 'admin.earnings.list', 'uses' => 'EarningsController@getIndex']);
@@ -452,50 +453,50 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('listing-lead-price/update', ['middleware' => 'acl:listing_price_update', 'as' => 'admin.listing_lead_price.update', 'uses' => 'ListingPriceController@postLeadPriceUpdate']);
 
     //Customer Address Type
-    Route::get('address-type',['middleware' => 'acl:view_address_type', 'as' => 'admin.address_type.list', 'uses' => 'AddressController@getIndex']);
-    Route::get('address-type/new',['middleware' => 'acl:new_address_type', 'as' => 'admin.address_type.create', 'uses' => 'AddressController@getCreate']);
-    Route::post('address-type/store',['middleware' => 'acl:new_address_type', 'as' => 'admin.address_type.store', 'uses' => 'AddressController@postStore']);
-    Route::get('address-type/{id}/edit',['middleware' => 'acl:edit_address_type', 'as' => 'admin.address_type.edit', 'uses' => 'AddressController@getEdit']);
-    Route::post('address-type/{id}/update',['middleware' => 'acl:edit_address_type', 'as' => 'admin.address_type.update', 'uses' => 'AddressController@postUpdate']);
-    Route::get('address-type/{id}/delete',['middleware' => 'acl:delete_address_type', 'as' => 'admin.address_type.delete', 'uses' => 'AddressController@getDelete']);
+    Route::get('address-type', ['middleware' => 'acl:view_address_type', 'as' => 'admin.address_type.list', 'uses' => 'AddressController@getIndex']);
+    Route::get('address-type/new', ['middleware' => 'acl:new_address_type', 'as' => 'admin.address_type.create', 'uses' => 'AddressController@getCreate']);
+    Route::post('address-type/store', ['middleware' => 'acl:new_address_type', 'as' => 'admin.address_type.store', 'uses' => 'AddressController@postStore']);
+    Route::get('address-type/{id}/edit', ['middleware' => 'acl:edit_address_type', 'as' => 'admin.address_type.edit', 'uses' => 'AddressController@getEdit']);
+    Route::post('address-type/{id}/update', ['middleware' => 'acl:edit_address_type', 'as' => 'admin.address_type.update', 'uses' => 'AddressController@postUpdate']);
+    Route::get('address-type/{id}/delete', ['middleware' => 'acl:delete_address_type', 'as' => 'admin.address_type.delete', 'uses' => 'AddressController@getDelete']);
 
     //GENERAL INFO OF BDFLATS
-    Route::get('general/info',['middleware' => 'acl:view_general_info', 'as' => 'admin.general.info', 'uses' => 'WebInfoController@getCreate']);
+    Route::get('general/info', ['middleware' => 'acl:view_general_info', 'as' => 'admin.general.info', 'uses' => 'WebInfoController@getCreate']);
     Route::post('webinfo/store', ['middleware' => 'acl:new_webinfo', 'as' => 'admin.web.info', 'uses' => 'WebInfoController@postStore']);
 
     //PROPERTY CATEGORY
     Route::get('property/category/new', ['middleware' => 'acl:new_property_category', 'as' => 'property.category.create', 'uses' => 'PropertyCategoryController@getCreate']);
-    Route::get('property/category',['middleware' => 'acl:list_box', 'as' => 'admin.property.category', 'uses' => 'PropertyCategoryController@getIndex']);
-    Route::post('property/category/store',['middleware' => 'acl:new_property_category', 'as' => 'admin.property.category.store', 'uses' => 'PropertyCategoryController@postStore']);
+    Route::get('property/category', ['middleware' => 'acl:list_box', 'as' => 'admin.property.category', 'uses' => 'PropertyCategoryController@getIndex']);
+    Route::post('property/category/store', ['middleware' => 'acl:new_property_category', 'as' => 'admin.property.category.store', 'uses' => 'PropertyCategoryController@postStore']);
     Route::get('property/category/{id}/edit', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.edit', 'uses' => 'PropertyCategoryController@getEdit']);
     Route::post('property/category/{id}/update', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.update', 'uses' => 'PropertyCategoryController@postUpdate']);
 
 
     //POSTCODE CITY ADDRESS ADD UPDATE
-    Route::get('address-type-city/list',['middleware' => 'acl:view_city_list', 'as' => 'admin.address_type.city_list_', 'uses' => 'AddressController@getCityList']);
-    Route::get('address-type-post-code/list',['middleware' => 'acl:view_postage_list', 'as' => 'admin.address_type.postage_list_', 'uses' => 'AddressController@getPostageList']);
-    Route::get('address-type-post-code/{id?}',['middleware' => 'acl:edit_postage_list', 'as' => 'admin.address_type.postage_view_', 'uses' => 'AddressController@getPostageAddress']);
-    Route::get('address-type-city/{id?}',['middleware' => 'acl:edit_city_list', 'as' => 'admin.address_type.city_list', 'uses' => 'AddressController@getCityAddress']);
-    Route::post('post-address-type-city/{id}',['middleware' => 'acl:edit_city_list', 'as' => 'admin.customer_address_city.put', 'uses' => 'AddressController@postCityAddress']);
-    Route::post('post-address-type-postage/{id}',['middleware' => 'acl:edit_postage_list', 'as' => 'admin.customer_address_postage.put', 'uses' => 'AddressController@postPostageAddress']);
+    Route::get('address-type-city/list', ['middleware' => 'acl:view_city_list', 'as' => 'admin.address_type.city_list_', 'uses' => 'AddressController@getCityList']);
+    Route::get('address-type-post-code/list', ['middleware' => 'acl:view_postage_list', 'as' => 'admin.address_type.postage_list_', 'uses' => 'AddressController@getPostageList']);
+    Route::get('address-type-post-code/{id?}', ['middleware' => 'acl:edit_postage_list', 'as' => 'admin.address_type.postage_view_', 'uses' => 'AddressController@getPostageAddress']);
+    Route::get('address-type-city/{id?}', ['middleware' => 'acl:edit_city_list', 'as' => 'admin.address_type.city_list', 'uses' => 'AddressController@getCityAddress']);
+    Route::post('post-address-type-city/{id}', ['middleware' => 'acl:edit_city_list', 'as' => 'admin.customer_address_city.put', 'uses' => 'AddressController@postCityAddress']);
+    Route::post('post-address-type-postage/{id}', ['middleware' => 'acl:edit_postage_list', 'as' => 'admin.customer_address_postage.put', 'uses' => 'AddressController@postPostageAddress']);
     //AJAX
-    Route::get('customer_state_by_country/{country}',['middleware' => 'acl:edit_postage_list', 'as' => 'admin.address_type.city_list_ajax', 'uses' => 'AddressController@ajaxStateByCountry']);
+    Route::get('customer_state_by_country/{country}', ['middleware' => 'acl:edit_postage_list', 'as' => 'admin.address_type.city_list_ajax', 'uses' => 'AddressController@ajaxStateByCountry']);
 
     //SEARCH & BOOK
-    Route::get('search-&-book',['middleware' => 'acl:new_search_booking', 'as' => 'admin.booking.search_create', 'uses' => 'SearchBookingController@getCreate']);
+    Route::get('search-&-book', ['middleware' => 'acl:new_search_booking', 'as' => 'admin.booking.search_create', 'uses' => 'SearchBookingController@getCreate']);
 
     //Booking
 
-    Route::get('booking/new/{id?}/{type?}',['middleware' => 'acl:new_booking', 'as' => 'admin.booking.create', 'uses' => 'BookingController@getCreate']);
-    Route::post('booking/store',['middleware' => 'acl:new_booking', 'as' => 'admin.booking.store', 'uses' => 'BookingController@postStore']);
-    Route::get('booking/{id}/edit',['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.edit', 'uses' => 'BookingController@getEdit']);
-    Route::get('booking/{id}/view',['middleware' => 'acl:view_booking', 'as' => 'admin.booking.view', 'uses' => 'BookingController@getView']);
-    Route::post('booking/{id?}/put/{type?}/{type2?}',['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.put', 'uses' => 'BookingController@postUpdate']);
-    Route::get('booking/{id}/delete',['middleware' => 'acl:delete_booking', 'as' => 'admin.booking.delete', 'uses' => 'BookingController@getDelete']);
-    Route::post('booking/offer-apply',['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.offer-apply', 'uses' => 'BookingController@postOfferApply']);
-    Route::post('check-offer',['middleware' => 'acl:new_booking', 'as' => 'admin.booking.checkoffer', 'uses' => 'BookingController@postCheckOffer']);
+    Route::get('booking/new/{id?}/{type?}', ['middleware' => 'acl:new_booking', 'as' => 'admin.booking.create', 'uses' => 'BookingController@getCreate']);
+    Route::post('booking/store', ['middleware' => 'acl:new_booking', 'as' => 'admin.booking.store', 'uses' => 'BookingController@postStore']);
+    Route::get('booking/{id}/edit', ['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.edit', 'uses' => 'BookingController@getEdit']);
+    Route::get('booking/{id}/view', ['middleware' => 'acl:view_booking', 'as' => 'admin.booking.view', 'uses' => 'BookingController@getView']);
+    Route::post('booking/{id?}/put/{type?}/{type2?}', ['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.put', 'uses' => 'BookingController@postUpdate']);
+    Route::get('booking/{id}/delete', ['middleware' => 'acl:delete_booking', 'as' => 'admin.booking.delete', 'uses' => 'BookingController@getDelete']);
+    Route::post('booking/offer-apply', ['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.offer-apply', 'uses' => 'BookingController@postOfferApply']);
+    Route::post('check-offer', ['middleware' => 'acl:new_booking', 'as' => 'admin.booking.checkoffer', 'uses' => 'BookingController@postCheckOffer']);
 
-    Route::get('booking/{id?}/{type?}',['middleware' => 'acl:view_booking', 'as' => 'admin.booking.list', 'uses' => 'BookingController@getIndex']);
+    Route::get('booking/{id?}/{type?}', ['middleware' => 'acl:view_booking', 'as' => 'admin.booking.list', 'uses' => 'BookingController@getIndex']);
     Route::get('get-variant-info', ['middleware' => 'acl:view_booking', 'as' => 'admin.booking.product', 'uses' => 'BookingController@search']);
     Route::get('get-customer-info', ['middleware' => 'acl:view_booking', 'as' => 'admin.booking.product', 'uses' => 'CustomerController@getCustomer']);
     Route::get('get-prd-details', ['middleware' => 'acl:view_booking', 'as' => 'admin.booking.getproduct', 'uses' => 'BookingController@getAllInfo']);
@@ -504,162 +505,159 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
 
     //Booking to order
-    Route::get('booking/{id}/check-offer',['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.checkoffer', 'uses' => 'BookingController@checkOffer']);
-    Route::get('booking-to-order/{id}',['middleware' => 'acl:edit_booking', 'as' => 'admin.booking_to_order.create', 'uses' => 'BookingToOrderController@getBooking']);
+    Route::get('booking/{id}/check-offer', ['middleware' => 'acl:edit_booking', 'as' => 'admin.booking.checkoffer', 'uses' => 'BookingController@checkOffer']);
+    Route::get('booking-to-order/{id}', ['middleware' => 'acl:edit_booking', 'as' => 'admin.booking_to_order.create', 'uses' => 'BookingToOrderController@getBooking']);
 
     // Route::get('orderbooking/{id}/book-order/view',['middleware' => 'acl:view_order', 'as' => 'admin.booking_to_order.book-order-view', 'uses' => 'BookingToOrderController@getBookOrderView']);
 
-    Route::get('order/{id}/view',['middleware' => 'acl:view_order', 'as' => 'admin.booking_to_order.book-order-view', 'uses' => 'BookingToOrderController@getView']);
+    Route::get('order/{id}/view', ['middleware' => 'acl:view_order', 'as' => 'admin.booking_to_order.book-order-view', 'uses' => 'BookingToOrderController@getView']);
 
     // Route::get('orderbooking/{id}/book-order',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order.book-order', 'uses' => 'BookingToOrderController@getBookOrder']);
-    Route::get('order/{id}/edit',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order.book-order', 'uses' => 'BookingToOrderController@getEdit']);
+    Route::get('order/{id}/edit', ['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order.book-order', 'uses' => 'BookingToOrderController@getEdit']);
 
-    Route::post('order/senderaddress/{id}/update',['middleware' => 'acl:edit_order', 'as' => 'admin.senderaddress.update', 'uses' => 'OrderController@updateSenderaddress']);
-    Route::post('order/receiveraddress/{id}/update',['middleware' => 'acl:edit_order', 'as' => 'admin.receiveraddress.update', 'uses' => 'OrderController@updateReceiverAddress']);
+    Route::post('order/senderaddress/{id}/update', ['middleware' => 'acl:edit_order', 'as' => 'admin.senderaddress.update', 'uses' => 'OrderController@updateSenderaddress']);
+    Route::post('order/receiveraddress/{id}/update', ['middleware' => 'acl:edit_order', 'as' => 'admin.receiveraddress.update', 'uses' => 'OrderController@updateReceiverAddress']);
 
-    Route::post('booking-to-order/{id}/update',['middleware' => 'acl:edit_order', 'as' => 'admin.bookingtoorder.update', 'uses' => 'BookingToOrderController@updateBooktoOrder']);
-    Route::get('order/{id}/admin-approval',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order.admin-approval', 'uses' => 'BookingToOrderController@getBookOrderAdminApproval']);
-    Route::post('booking-to-order/{id}/admin-approved',['middleware' => 'acl:edit_order', 'as' => 'admin.bookingtoorder.admin-approved', 'uses' => 'BookingToOrderController@updateBooktoOrderAdminApproved']);
+    Route::post('booking-to-order/{id}/update', ['middleware' => 'acl:edit_order', 'as' => 'admin.bookingtoorder.update', 'uses' => 'BookingToOrderController@updateBooktoOrder']);
+    Route::get('order/{id}/admin-approval', ['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order.admin-approval', 'uses' => 'BookingToOrderController@getBookOrderAdminApproval']);
+    Route::post('booking-to-order/{id}/admin-approved', ['middleware' => 'acl:edit_order', 'as' => 'admin.bookingtoorder.admin-approved', 'uses' => 'BookingToOrderController@updateBooktoOrderAdminApproved']);
 
     //AJAX
-    Route::get('delete_book_to_order_item/{id}/{type?}/{booking_no?}',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_delete_ajax.book-order', 'uses' => 'BookingToOrderController@ajaxDelete']);
-    Route::post('update_order_payment',['middleware' => 'acl:edit_booking', 'as' => 'admin.booking_to_order_payment_ajax.book-order', 'uses' => 'BookingToOrderController@ajaxPayment']);
+    Route::get('delete_book_to_order_item/{id}/{type?}/{booking_no?}', ['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_delete_ajax.book-order', 'uses' => 'BookingToOrderController@ajaxDelete']);
+    Route::post('update_order_payment', ['middleware' => 'acl:edit_booking', 'as' => 'admin.booking_to_order_payment_ajax.book-order', 'uses' => 'BookingToOrderController@ajaxPayment']);
 
-    Route::get('booking/getCustomerAddress/{id}/{pk_no}/{address_id?}/{reseller_id?}',['middleware' => 'acl:view_order', 'as' => 'admin.bookingtoorder.getCustomerAddress', 'uses' => 'BookingToOrderController@getCustomerAddress']);
+    Route::get('booking/getCustomerAddress/{id}/{pk_no}/{address_id?}/{reseller_id?}', ['middleware' => 'acl:view_order', 'as' => 'admin.bookingtoorder.getCustomerAddress', 'uses' => 'BookingToOrderController@getCustomerAddress']);
 
-    Route::post('postCustomerAddress',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_ajax.postCustomerAddress', 'uses' => 'BookingToOrderController@postCustomerAddress']);
+    Route::post('postCustomerAddress', ['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_ajax.postCustomerAddress', 'uses' => 'BookingToOrderController@postCustomerAddress']);
 
-    Route::post('postCustomerAddress2',['middleware' => 'acl:edit_order', 'as' => 'admin.customerAddress.add', 'uses' => 'BookingToOrderController@postCustomerAddress2']);
+    Route::post('postCustomerAddress2', ['middleware' => 'acl:edit_order', 'as' => 'admin.customerAddress.add', 'uses' => 'BookingToOrderController@postCustomerAddress2']);
 
-    Route::get('checkifCustomerAddressexists/{customer_id}/{type}/{book_id?}',['middleware' => 'acl:view_order', 'as' => 'admin.bookingtoorder.checkifCustomerAddressexists', 'uses' => 'BookingToOrderController@checkifCustomerAddressexists']);
-    Route::get('bookorder/getPayInfo/{order_id}/{is_reseller}',['middleware' => 'acl:view_order', 'as' => 'admin.bookingtoorder.getPayInfo', 'uses' => 'BookingToOrderController@getPayInfo']);
-    Route::post('postUpdatedAddress/{order_id}/{type}',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_ajax.postUpdatedAddress', 'uses' => 'BookingToOrderController@postUpdatedAddress']);
-    Route::post('postPaymentUncheck',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_ajax.postPaymentUncheck', 'uses' => 'BookingToOrderController@postPaymentUncheck']);
-    Route::get('getStockExchangeInfo/{id}',['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_stock_exchange_ajax', 'uses' => 'BookingToOrderController@ajaxExchangeStock']);
-    Route::post('getStockExchangeInfo-exchange',['middleware' => 'acl:edit_order', 'as' => 'admin.post_booking_to_order_stock_exchange_ajax', 'uses' => 'BookingToOrderController@ajaxExchangeStockAction']);
+    Route::get('checkifCustomerAddressexists/{customer_id}/{type}/{book_id?}', ['middleware' => 'acl:view_order', 'as' => 'admin.bookingtoorder.checkifCustomerAddressexists', 'uses' => 'BookingToOrderController@checkifCustomerAddressexists']);
+    Route::get('bookorder/getPayInfo/{order_id}/{is_reseller}', ['middleware' => 'acl:view_order', 'as' => 'admin.bookingtoorder.getPayInfo', 'uses' => 'BookingToOrderController@getPayInfo']);
+    Route::post('postUpdatedAddress/{order_id}/{type}', ['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_ajax.postUpdatedAddress', 'uses' => 'BookingToOrderController@postUpdatedAddress']);
+    Route::post('postPaymentUncheck', ['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_ajax.postPaymentUncheck', 'uses' => 'BookingToOrderController@postPaymentUncheck']);
+    Route::get('getStockExchangeInfo/{id}', ['middleware' => 'acl:edit_order', 'as' => 'admin.booking_to_order_stock_exchange_ajax', 'uses' => 'BookingToOrderController@ajaxExchangeStock']);
+    Route::post('getStockExchangeInfo-exchange', ['middleware' => 'acl:edit_order', 'as' => 'admin.post_booking_to_order_stock_exchange_ajax', 'uses' => 'BookingToOrderController@ajaxExchangeStockAction']);
 
-    Route::post('default-order-penalty/{id}',['middleware' => 'acl:edit_order', 'as' => 'admin.default.order.penalty', 'uses' => 'BookingToOrderController@postDefaultOrderPenalty']);
+    Route::post('default-order-penalty/{id}', ['middleware' => 'acl:edit_order', 'as' => 'admin.default.order.penalty', 'uses' => 'BookingToOrderController@postDefaultOrderPenalty']);
 
     //Payment
 
-    Route::get('payment',['middleware'=>'acl:view_payment', 'as'=>'admin.payment.list', 'uses'=>'PaymentController@getIndex']);
+    Route::get('payment', ['middleware' => 'acl:view_payment', 'as' => 'admin.payment.list', 'uses' => 'PaymentController@getIndex']);
 
     // Route::get('payment/verify/{id}/{type}',['middleware'=>'acl:edit_payment', 'as'=>'admin.payment.verify', 'uses'=>'PaymentController@getVrify']);
 
-    Route::get('payment/new/{id?}/{type?}',['middleware'=>'acl:view_payment', 'as'=>'admin.payment.create', 'uses'=>'PaymentController@getCreate']);
-    Route::get('payment/{id?}/details',['middleware'=>'acl:view_payment', 'as'=>'admin.payment.details', 'uses'=>'PaymentController@getDetails']);
+    Route::get('payment/new/{id?}/{type?}', ['middleware' => 'acl:view_payment', 'as' => 'admin.payment.create', 'uses' => 'PaymentController@getCreate']);
+    Route::get('payment/{id?}/details', ['middleware' => 'acl:view_payment', 'as' => 'admin.payment.details', 'uses' => 'PaymentController@getDetails']);
 
-    Route::post('payment/store',['middleware'=>'acl:new_payment', 'as'=>'admin.payment.store', 'uses'=>'PaymentController@postStore']);
+    Route::post('payment/store', ['middleware' => 'acl:new_payment', 'as' => 'admin.payment.store', 'uses' => 'PaymentController@postStore']);
 
     //Route::get('payment/{id}/edit',['middleware'=>'acl:edit_payment', 'as'=>'admin.payment.edit', 'uses'=>'PaymentController@getEdit']);
     //Route::post('payment/{id}/update',['middleware'=>'acl:edit_payment', 'as'=>'admin.payment.update', 'uses'=>'PaymentController@postUpdate']);
 
-    Route::get('payment/{id}/delete',['middleware'=>'acl:delete_payment', 'as'=>'admin.payment.delete', 'uses'=>'PaymentController@getDelete']);
-    Route::get('orderpayment/{id}/delete',['middleware'=>'acl:delete_payment', 'as'=>'admin.orderpayment.delete', 'uses'=>'PaymentController@getOrderPaymentDelete']);
+    Route::get('payment/{id}/delete', ['middleware' => 'acl:delete_payment', 'as' => 'admin.payment.delete', 'uses' => 'PaymentController@getDelete']);
+    Route::get('orderpayment/{id}/delete', ['middleware' => 'acl:delete_payment', 'as' => 'admin.orderpayment.delete', 'uses' => 'PaymentController@getOrderPaymentDelete']);
 
-    Route::post('payment/update-partial',['middleware'=>'acl:edit_payment', 'as'=>'admin.payment.updatepartial', 'uses'=>'PaymentController@postUpdatePartial']);
+    Route::post('payment/update-partial', ['middleware' => 'acl:edit_payment', 'as' => 'admin.payment.updatepartial', 'uses' => 'PaymentController@postUpdatePartial']);
 
-    Route::get('payment-processing',['middleware'=>'acl:view_payment_processing', 'as'=>'admin.payment_processing.list', 'uses'=>'PaymentController@getPaymentProcessing']);
-    Route::get('bank-to-other/{id?}',['middleware'=>'acl:new_bank_to_other', 'as'=>'admin.account_to_other.view', 'uses'=>'PaymentController@getBankToOther']);
-    Route::get('bank-to-other-list',['middleware'=>'acl:view_bank_to_other', 'as'=>'admin.account_to_other_list.view', 'uses'=>'PaymentController@getBankToOtherList']);
-    Route::get('party-transfer-details/{id}',['middleware'=>'acl:view_bank_to_other', 'as'=>'admin.account_to_other.details', 'uses'=>'PaymentController@getBankToOtherDetails']);
-    Route::post('add-new-type',['middleware'=>'acl:new_bank_to_other', 'as'=>'admin.account_to_other.type.store', 'uses'=>'PaymentController@postNewPaymentType']);
-    Route::post('bank-to-other-store',['middleware'=>'acl:new_bank_to_other', 'as'=>'admin.account_to_other.store', 'uses'=>'PaymentController@postbankToOther']);
-    Route::get('bank-to-bank/{id?}',['middleware'=>'acl:new_bank_to_bank', 'as'=>'admin.account_to_bank.view', 'uses'=>'PaymentController@getBankToBank']);
-    Route::get('bank-to-bank-list',['middleware'=>'acl:view_bank_to_bank', 'as'=>'admin.account_to_bank_list.view', 'uses'=>'PaymentController@getBankToBankList']);
-    Route::get('internal-transfer-details/{id}',['middleware'=>'acl:view_bank_to_bank', 'as'=>'admin.account_to_bank.details', 'uses'=>'PaymentController@getBankToBankDetails']);
-    Route::post('bank-to-bank-store',['middleware'=>'acl:new_bank_to_bank', 'as'=>'admin.account_to_bank.store', 'uses'=>'PaymentController@postbankToBank']);
+    Route::get('payment-processing', ['middleware' => 'acl:view_payment_processing', 'as' => 'admin.payment_processing.list', 'uses' => 'PaymentController@getPaymentProcessing']);
+    Route::get('bank-to-other/{id?}', ['middleware' => 'acl:new_bank_to_other', 'as' => 'admin.account_to_other.view', 'uses' => 'PaymentController@getBankToOther']);
+    Route::get('bank-to-other-list', ['middleware' => 'acl:view_bank_to_other', 'as' => 'admin.account_to_other_list.view', 'uses' => 'PaymentController@getBankToOtherList']);
+    Route::get('party-transfer-details/{id}', ['middleware' => 'acl:view_bank_to_other', 'as' => 'admin.account_to_other.details', 'uses' => 'PaymentController@getBankToOtherDetails']);
+    Route::post('add-new-type', ['middleware' => 'acl:new_bank_to_other', 'as' => 'admin.account_to_other.type.store', 'uses' => 'PaymentController@postNewPaymentType']);
+    Route::post('bank-to-other-store', ['middleware' => 'acl:new_bank_to_other', 'as' => 'admin.account_to_other.store', 'uses' => 'PaymentController@postbankToOther']);
+    Route::get('bank-to-bank/{id?}', ['middleware' => 'acl:new_bank_to_bank', 'as' => 'admin.account_to_bank.view', 'uses' => 'PaymentController@getBankToBank']);
+    Route::get('bank-to-bank-list', ['middleware' => 'acl:view_bank_to_bank', 'as' => 'admin.account_to_bank_list.view', 'uses' => 'PaymentController@getBankToBankList']);
+    Route::get('internal-transfer-details/{id}', ['middleware' => 'acl:view_bank_to_bank', 'as' => 'admin.account_to_bank.details', 'uses' => 'PaymentController@getBankToBankDetails']);
+    Route::post('bank-to-bank-store', ['middleware' => 'acl:new_bank_to_bank', 'as' => 'admin.account_to_bank.store', 'uses' => 'PaymentController@postbankToBank']);
 
     //DATATABLE
-    Route::post('bank-to-other-list-ajax',['middleware'=>'acl:view_bank_to_other', 'as'=>'admin.account_to_other_ajax.list', 'uses'=>'DatatableController@ajaxbankToOther']);
-    Route::post('bank-to-bank-list-ajax',['middleware'=>'acl:view_bank_to_bank', 'as'=>'admin.account_to_bank_ajax.list', 'uses'=>'DatatableController@ajaxbankToBank']);
+    Route::post('bank-to-other-list-ajax', ['middleware' => 'acl:view_bank_to_other', 'as' => 'admin.account_to_other_ajax.list', 'uses' => 'DatatableController@ajaxbankToOther']);
+    Route::post('bank-to-bank-list-ajax', ['middleware' => 'acl:view_bank_to_bank', 'as' => 'admin.account_to_bank_ajax.list', 'uses' => 'DatatableController@ajaxbankToBank']);
 
     //AJAX
-    Route::post('postAccountBalanceInfo',['middleware'=>'acl:new_bank_to_bank', 'as'=>'admin.account.bank.balance', 'uses'=>'PaymentController@postAccountBalanceInfo']);
+    Route::post('postAccountBalanceInfo', ['middleware' => 'acl:new_bank_to_bank', 'as' => 'admin.account.bank.balance', 'uses' => 'PaymentController@postAccountBalanceInfo']);
 
     //////////////////// BANK STATEMENT  //////////////////
-    Route::get('bank-state',['middleware' => 'acl:view_bank_state', 'as' => 'admin.bankstate.list', 'uses' => 'BankStateController@getIndex']);
-    Route::get('get-bank-state',['middleware' => 'acl:view_bank_state', 'as' => 'admin.getbankstate.list', 'uses' => 'BankStateController@getMatchingList']);
-    Route::post('bank-state/store',['middleware' => 'acl:new_bank_state', 'as' => 'admin.bankstate.store', 'uses' => 'BankStateController@postStore']);
-    Route::get('bank-state/{id}/delete',['middleware' => 'acl:delete_bank_state', 'as' => 'admin.bankstate.delete', 'uses' => 'BankStateController@getDelete']);
-    Route::post('bank-state/delete_bulk',['middleware' => 'acl:delete_bank_state', 'as' => 'admin.bankstate.delete_bulk', 'uses' => 'BankStateController@postDeleteBulk']);
-    Route::post('bank-state/draft-to-save',['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.draft_to_save', 'uses' => 'BankStateController@postDraftToSave']);
-    Route::post('bank-state/mark-as-used',['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.mark_as_used', 'uses' => 'BankStateController@postMarkAsUsed']);
-    Route::get('bank-state/verification',['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.verification', 'uses' => 'BankStateController@getVerification']);
-    Route::post('bank-state/verify',['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.verify', 'uses' => 'BankStateController@postVerify']);
-    Route::get('bank-state/{id}/unverify',['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.unverify', 'uses' => 'BankStateController@getUnVerify']);
-
-
+    Route::get('bank-state', ['middleware' => 'acl:view_bank_state', 'as' => 'admin.bankstate.list', 'uses' => 'BankStateController@getIndex']);
+    Route::get('get-bank-state', ['middleware' => 'acl:view_bank_state', 'as' => 'admin.getbankstate.list', 'uses' => 'BankStateController@getMatchingList']);
+    Route::post('bank-state/store', ['middleware' => 'acl:new_bank_state', 'as' => 'admin.bankstate.store', 'uses' => 'BankStateController@postStore']);
+    Route::get('bank-state/{id}/delete', ['middleware' => 'acl:delete_bank_state', 'as' => 'admin.bankstate.delete', 'uses' => 'BankStateController@getDelete']);
+    Route::post('bank-state/delete_bulk', ['middleware' => 'acl:delete_bank_state', 'as' => 'admin.bankstate.delete_bulk', 'uses' => 'BankStateController@postDeleteBulk']);
+    Route::post('bank-state/draft-to-save', ['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.draft_to_save', 'uses' => 'BankStateController@postDraftToSave']);
+    Route::post('bank-state/mark-as-used', ['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.mark_as_used', 'uses' => 'BankStateController@postMarkAsUsed']);
+    Route::get('bank-state/verification', ['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.verification', 'uses' => 'BankStateController@getVerification']);
+    Route::post('bank-state/verify', ['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.verify', 'uses' => 'BankStateController@postVerify']);
+    Route::get('bank-state/{id}/unverify', ['middleware' => 'acl:edit_bank_state', 'as' => 'admin.bankstate.unverify', 'uses' => 'BankStateController@getUnVerify']);
 
 
     //Shipment
-    Route::get('shipment/new/{id?}',['middleware' => 'acl:new_shipment', 'as' => 'admin.shipment.create', 'uses' => 'ShipmentController@getCreate']);
-    Route::post('shipment/store',['middleware' => 'acl:new_shipment', 'as' => 'admin.shipment.store', 'uses' => 'ShipmentController@postStore']);
-    Route::post('shipment/carrier/update',['middleware' => 'acl:new_shipment', 'as' => 'admin.shipment.carrier', 'uses' => 'ShipmentController@postCarrier']);
-    Route::get('shipment/list',['middleware' => 'acl:view_shipment', 'as' => 'admin.shipment.list', 'uses' => 'ShipmentController@getIndex']);
-    Route::get('shipment/processing',['middleware' => 'acl:view_shipment_processing', 'as' => 'admin.shipment.processing', 'uses' => 'ShipmentController@getProcessingIndex']);
-    Route::get('shipment/{id}/new',['middleware' => 'acl:new_shipment_box', 'as' => 'admin.shipment.new', 'uses' => 'ShipmentController@getShipmentAdd']);
-    Route::get('shipment/view/{id}',['middleware' => 'acl:view_shipment', 'as' => 'admin.shipment.view', 'uses' => 'ShipmentController@getShipment']);
-    Route::post('get-box-details',['middleware' => 'acl:new_shipment_box', 'as' => 'admin.shipment.box', 'uses' => 'ShipmentController@addShipmentBox']);
-    Route::post('delete-shipment-box',['middleware' => 'acl:delete_shipment_box', 'as' => 'admin.shipment.box', 'uses' => 'ShipmentController@deleteShipmentBox']);
-    Route::post('update-shipment-status',['middleware' => 'acl:edit_shipment_processing', 'as' => 'admin.shipment.update', 'uses' => 'ShipmentController@updateShipmentStatus']);
-    Route::post('update-shipmentinfo-status/{id}',['middleware' => 'acl:edit_shipment', 'as' => 'admin.shipping_info.update', 'uses' => 'ShipmentController@updateShipmentInfo']);
-    Route::get('shipment-packaging/{id}/{type}',['middleware' => 'acl:add_packaging', 'as' => 'admin.shipment.packaging', 'uses' => 'ShipmentController@postShipmentPackaging']);
-    Route::get('shipment/{id}/invoice',['middleware' => 'acl:add_packaging', 'as' => 'admin.shipment.invoice', 'uses' => 'ShipmentController@getShipmentInvoice']);
-
+    Route::get('shipment/new/{id?}', ['middleware' => 'acl:new_shipment', 'as' => 'admin.shipment.create', 'uses' => 'ShipmentController@getCreate']);
+    Route::post('shipment/store', ['middleware' => 'acl:new_shipment', 'as' => 'admin.shipment.store', 'uses' => 'ShipmentController@postStore']);
+    Route::post('shipment/carrier/update', ['middleware' => 'acl:new_shipment', 'as' => 'admin.shipment.carrier', 'uses' => 'ShipmentController@postCarrier']);
+    Route::get('shipment/list', ['middleware' => 'acl:view_shipment', 'as' => 'admin.shipment.list', 'uses' => 'ShipmentController@getIndex']);
+    Route::get('shipment/processing', ['middleware' => 'acl:view_shipment_processing', 'as' => 'admin.shipment.processing', 'uses' => 'ShipmentController@getProcessingIndex']);
+    Route::get('shipment/{id}/new', ['middleware' => 'acl:new_shipment_box', 'as' => 'admin.shipment.new', 'uses' => 'ShipmentController@getShipmentAdd']);
+    Route::get('shipment/view/{id}', ['middleware' => 'acl:view_shipment', 'as' => 'admin.shipment.view', 'uses' => 'ShipmentController@getShipment']);
+    Route::post('get-box-details', ['middleware' => 'acl:new_shipment_box', 'as' => 'admin.shipment.box', 'uses' => 'ShipmentController@addShipmentBox']);
+    Route::post('delete-shipment-box', ['middleware' => 'acl:delete_shipment_box', 'as' => 'admin.shipment.box', 'uses' => 'ShipmentController@deleteShipmentBox']);
+    Route::post('update-shipment-status', ['middleware' => 'acl:edit_shipment_processing', 'as' => 'admin.shipment.update', 'uses' => 'ShipmentController@updateShipmentStatus']);
+    Route::post('update-shipmentinfo-status/{id}', ['middleware' => 'acl:edit_shipment', 'as' => 'admin.shipping_info.update', 'uses' => 'ShipmentController@updateShipmentInfo']);
+    Route::get('shipment-packaging/{id}/{type}', ['middleware' => 'acl:add_packaging', 'as' => 'admin.shipment.packaging', 'uses' => 'ShipmentController@postShipmentPackaging']);
+    Route::get('shipment/{id}/invoice', ['middleware' => 'acl:add_packaging', 'as' => 'admin.shipment.invoice', 'uses' => 'ShipmentController@getShipmentInvoice']);
 
 
     //admin.packaging.view
-     Route::get('packaging/{id}/edit',['middleware' => 'acl:edit_packaging', 'as' => 'admin.packaging.edit', 'uses' => 'PackagingController@getEdit']);
-     Route::get('packaging/{id}/end',['middleware' => 'acl:edit_packaging', 'as' => 'admin.packaging.end', 'uses' => 'PackagingController@getEndPackaging']);
-     Route::post('packingitem/delete',['middleware' => 'acl:edit_packaging', 'as' => 'admin.packingitem.delete', 'uses' => 'PackagingController@postDeleteItem']);
-     Route::get('get-packaginglist-info/{key}/{type}',['middleware' => 'acl:edit_packaging', 'as' => 'get-packaginglist-info', 'uses' => 'PackagingController@gePackagingListInfo']);
-     Route::get('product/get-variant-info-like',[ 'middleware' => 'acl:edit_packaging', 'as' => 'admin.get-variant-info-like', 'uses' => 'PackagingController@getVariantInfoLike']);
-     Route::post('packagingitem-update',[ 'middleware' => 'acl:edit_packaging', 'as' => 'admin.packagingitemupdate', 'uses' => 'PackagingController@postPackingItemUpdate']);
-     Route::post('packagingitem/store',[ 'middleware' => 'acl:edit_packaging', 'as' => 'admin.packagingitem.store', 'uses' => 'PackagingController@postPackingItemStore']);
-     Route::post('packagingbox/store',[ 'middleware' => 'acl:edit_packaging', 'as' => 'admin.packagingbox.store', 'uses' => 'PackagingController@postPackagingboxStore']);
-     Route::get('packaginglist/{shipment_no}/pdf',[ 'middleware' => 'acl:edit_packaging', 'as' => 'admin.packaginglist.pdf', 'uses' => 'PackagingController@getPackaginglistPDF']);
-     Route::get('packaginglist/{shipment_no}/commarcialpdf',[ 'middleware' => 'acl:edit_packaging', 'as' => 'admin.packaginglist.commarcialpdf', 'uses' => 'PackagingController@getPackaginglistCommarcialpdf']);
-     Route::get('packaginglist/{shipment_no}/pdfwithinvoice',[ 'middleware' => 'acl:edit_packaging', 'as' => 'admin.packaginglist.pdfwithinvoice', 'uses' => 'PackagingController@getPackaginglistPdfWithInvoice']);
+    Route::get('packaging/{id}/edit', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packaging.edit', 'uses' => 'PackagingController@getEdit']);
+    Route::get('packaging/{id}/end', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packaging.end', 'uses' => 'PackagingController@getEndPackaging']);
+    Route::post('packingitem/delete', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packingitem.delete', 'uses' => 'PackagingController@postDeleteItem']);
+    Route::get('get-packaginglist-info/{key}/{type}', ['middleware' => 'acl:edit_packaging', 'as' => 'get-packaginglist-info', 'uses' => 'PackagingController@gePackagingListInfo']);
+    Route::get('product/get-variant-info-like', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.get-variant-info-like', 'uses' => 'PackagingController@getVariantInfoLike']);
+    Route::post('packagingitem-update', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packagingitemupdate', 'uses' => 'PackagingController@postPackingItemUpdate']);
+    Route::post('packagingitem/store', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packagingitem.store', 'uses' => 'PackagingController@postPackingItemStore']);
+    Route::post('packagingbox/store', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packagingbox.store', 'uses' => 'PackagingController@postPackagingboxStore']);
+    Route::get('packaginglist/{shipment_no}/pdf', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packaginglist.pdf', 'uses' => 'PackagingController@getPackaginglistPDF']);
+    Route::get('packaginglist/{shipment_no}/commarcialpdf', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packaginglist.commarcialpdf', 'uses' => 'PackagingController@getPackaginglistCommarcialpdf']);
+    Route::get('packaginglist/{shipment_no}/pdfwithinvoice', ['middleware' => 'acl:edit_packaging', 'as' => 'admin.packaginglist.pdfwithinvoice', 'uses' => 'PackagingController@getPackaginglistPdfWithInvoice']);
 
     //FAULTY
-    Route::get('lost-product/{type}/{id}',['middleware' => 'acl:view_faulty', 'as' => 'admin.faulty.list', 'uses' => 'FaultyController@getIndex']);
+    Route::get('lost-product/{type}/{id}', ['middleware' => 'acl:view_faulty', 'as' => 'admin.faulty.list', 'uses' => 'FaultyController@getIndex']);
 
     //AJAX
-    Route::get('faulty-checker/{id}',['middleware' => 'acl:view_faulty', 'as' => 'admin.faulty.put', 'uses' => 'FaultyController@ajaxFaultyChecker']);
+    Route::get('faulty-checker/{id}', ['middleware' => 'acl:view_faulty', 'as' => 'admin.faulty.put', 'uses' => 'FaultyController@ajaxFaultyChecker']);
 
 
     //BOXING
-    Route::get('box-type',['middleware' => 'acl:view_box_type', 'as' => 'admin.box_type.list', 'uses' => 'BoxController@getBoxTypeList']);
-    Route::get('box-type-add/{id?}',['middleware' => 'acl:add_box_type', 'as' => 'admin.box_type.add', 'uses' => 'BoxController@getBoxTypeAdd']);
-    Route::get('box-type-delete/{id}',['middleware' => 'acl:delete_box_type', 'as' => 'admin.box_type.delete', 'uses' => 'BoxController@getBoxTypeDelete']);
-    Route::post('box-type-store',['middleware' => 'acl:add_box_type', 'as' => 'admin.box_type.store', 'uses' => 'BoxController@postBoxTypeStore']);
-    Route::get('box',['middleware' => 'acl:view_box', 'as' => 'admin.box.list', 'uses' => 'BoxController@getIndex']);
-    Route::get('not-boxed/list',['middleware' => 'acl:view_not_boxed', 'as' => 'admin.not_box.list', 'uses' => 'BoxController@getNotBoxed']);
-    Route::get('box/view/{id}',['middleware' => 'acl:view_box', 'as' => 'admin.box.view', 'uses' => 'BoxController@getBox']);
-    Route::get('not-box/view/{id}',['middleware' => 'acl:view_not_boxed', 'as' => 'admin.not_boxed.view', 'uses' => 'BoxController@getNotBox']);
-    Route::post('update-box-label',['middleware' => 'acl:edit_box_label', 'as' => 'admin.box_label.update', 'uses' => 'BoxController@putBoxLabelUpdate']);
+    Route::get('box-type', ['middleware' => 'acl:view_box_type', 'as' => 'admin.box_type.list', 'uses' => 'BoxController@getBoxTypeList']);
+    Route::get('box-type-add/{id?}', ['middleware' => 'acl:add_box_type', 'as' => 'admin.box_type.add', 'uses' => 'BoxController@getBoxTypeAdd']);
+    Route::get('box-type-delete/{id}', ['middleware' => 'acl:delete_box_type', 'as' => 'admin.box_type.delete', 'uses' => 'BoxController@getBoxTypeDelete']);
+    Route::post('box-type-store', ['middleware' => 'acl:add_box_type', 'as' => 'admin.box_type.store', 'uses' => 'BoxController@postBoxTypeStore']);
+    Route::get('box', ['middleware' => 'acl:view_box', 'as' => 'admin.box.list', 'uses' => 'BoxController@getIndex']);
+    Route::get('not-boxed/list', ['middleware' => 'acl:view_not_boxed', 'as' => 'admin.not_box.list', 'uses' => 'BoxController@getNotBoxed']);
+    Route::get('box/view/{id}', ['middleware' => 'acl:view_box', 'as' => 'admin.box.view', 'uses' => 'BoxController@getBox']);
+    Route::get('not-box/view/{id}', ['middleware' => 'acl:view_not_boxed', 'as' => 'admin.not_boxed.view', 'uses' => 'BoxController@getNotBox']);
+    Route::post('update-box-label', ['middleware' => 'acl:edit_box_label', 'as' => 'admin.box_label.update', 'uses' => 'BoxController@putBoxLabelUpdate']);
 
 
     // SHELVING
-    Route::get('all-product-list',['middleware' => 'acl:view_warehouse_stock', 'as' => 'admin.all_product.list', 'uses' => 'ShelveController@getAllProduct']);
-    Route::get('shelve',['middleware' => 'acl:view_warehouse_shelved', 'as' => 'admin.shelve.list', 'uses' => 'ShelveController@getShelveList']);
-    Route::get('unshelved-products/{id}/view',['middleware' => 'acl:view_warehouse_unshelved', 'as' => 'admin.unshelved.view', 'uses' => 'ShelveController@getUnshelvedItem']);
-    Route::get('unshelved-products',['middleware' => 'acl:view_warehouse_unshelved', 'as' => 'admin.unshelved.list', 'uses' => 'ShelveController@getUnshelved']);
-    Route::get('shelved-products/{id}/view',['middleware' => 'acl:view_warehouse_shelved', 'as' => 'admin.shelved.view', 'uses' => 'ShelveController@getShelvedItem']);
-    Route::get('stock-price/{id}/view',['middleware' => 'acl:view_warehouse_stock', 'as' => 'admin.stock_price.view', 'uses' => 'ShelveController@getStockPriceInfo']);
-    Route::post('product-details-modal/{type}',['middleware' => 'acl:view_warehouse_stock', 'as' => 'product.details.modal', 'uses' => 'ShelveController@getProductModal']);
-    Route::post('product-details-modal-invoice',['middleware' => 'acl:view_warehouse_stock', 'as' => 'product.details_invoice.modal', 'uses' => 'ShelveController@getInvoiceProductModal']);
-    Route::post('get-warehouse-dropdown',['middleware' => 'acl:view_warehouse_section', 'as' => 'warehouse.dropdown', 'uses' => 'ShelveController@getWarehouseDropdown']);
-    Route::get('add-shelve/{id?}',['middleware' => 'acl:add_shelve', 'as' => 'admin.shelve.add', 'uses' => 'ShelveController@getShelveStore']);
-    Route::post('post-shelve',['middleware' => 'acl:add_shelve', 'as' => 'admin.shelve.post', 'uses' => 'ShelveController@postStore']);
+    Route::get('all-product-list', ['middleware' => 'acl:view_warehouse_stock', 'as' => 'admin.all_product.list', 'uses' => 'ShelveController@getAllProduct']);
+    Route::get('shelve', ['middleware' => 'acl:view_warehouse_shelved', 'as' => 'admin.shelve.list', 'uses' => 'ShelveController@getShelveList']);
+    Route::get('unshelved-products/{id}/view', ['middleware' => 'acl:view_warehouse_unshelved', 'as' => 'admin.unshelved.view', 'uses' => 'ShelveController@getUnshelvedItem']);
+    Route::get('unshelved-products', ['middleware' => 'acl:view_warehouse_unshelved', 'as' => 'admin.unshelved.list', 'uses' => 'ShelveController@getUnshelved']);
+    Route::get('shelved-products/{id}/view', ['middleware' => 'acl:view_warehouse_shelved', 'as' => 'admin.shelved.view', 'uses' => 'ShelveController@getShelvedItem']);
+    Route::get('stock-price/{id}/view', ['middleware' => 'acl:view_warehouse_stock', 'as' => 'admin.stock_price.view', 'uses' => 'ShelveController@getStockPriceInfo']);
+    Route::post('product-details-modal/{type}', ['middleware' => 'acl:view_warehouse_stock', 'as' => 'product.details.modal', 'uses' => 'ShelveController@getProductModal']);
+    Route::post('product-details-modal-invoice', ['middleware' => 'acl:view_warehouse_stock', 'as' => 'product.details_invoice.modal', 'uses' => 'ShelveController@getInvoiceProductModal']);
+    Route::post('get-warehouse-dropdown', ['middleware' => 'acl:view_warehouse_section', 'as' => 'warehouse.dropdown', 'uses' => 'ShelveController@getWarehouseDropdown']);
+    Route::get('add-shelve/{id?}', ['middleware' => 'acl:add_shelve', 'as' => 'admin.shelve.add', 'uses' => 'ShelveController@getShelveStore']);
+    Route::post('post-shelve', ['middleware' => 'acl:add_shelve', 'as' => 'admin.shelve.post', 'uses' => 'ShelveController@postStore']);
 
 
     //////////////////// CURRENCY //////////////////
-    Route::get('currency',['middleware' => 'acl:view_currency', 'as' => 'admin.currency.list', 'uses' => 'CurrencyController@getIndex']);
-    Route::post('update/{id?}',['middleware' => 'acl:edit_currency', 'as' => 'admin.currency.update', 'uses' => 'CurrencyController@putUpdate']);
-    Route::post('store',['middleware' => 'acl:edit_currency', 'as' => 'admin.currency.store', 'uses' => 'CurrencyController@postStore']);
-    Route::get('delete/{id}',['middleware' => 'acl:delete_currency', 'as' => 'admin.currency.delete', 'uses' => 'CurrencyController@getDelete']);
+    Route::get('currency', ['middleware' => 'acl:view_currency', 'as' => 'admin.currency.list', 'uses' => 'CurrencyController@getIndex']);
+    Route::post('update/{id?}', ['middleware' => 'acl:edit_currency', 'as' => 'admin.currency.update', 'uses' => 'CurrencyController@putUpdate']);
+    Route::post('store', ['middleware' => 'acl:edit_currency', 'as' => 'admin.currency.store', 'uses' => 'CurrencyController@postStore']);
+    Route::get('delete/{id}', ['middleware' => 'acl:delete_currency', 'as' => 'admin.currency.delete', 'uses' => 'CurrencyController@getDelete']);
 
     /////////////////////////////// DATATABLE ROUTES
     Route::post('customer/all_customer', 'DatatableController@all_customer');
@@ -676,106 +674,101 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('sales_comission_report_list', 'DatatableController@sales_comission_report_list');
 
     //////////////////// OFFER TYPE //////////////////
-    Route::get('offer-type',['middleware' => 'acl:view_offer_type', 'as' => 'admin.offer_type.list', 'uses' => 'OfferTypeController@getIndex']);
-    Route::get('offer-type/new',['middleware' => 'acl:new_offer_type', 'as' => 'admin.offer_type.create', 'uses' => 'OfferTypeController@getCreate']);
-    Route::post('offer-type/store',['middleware' => 'acl:new_offer_type', 'as' => 'admin.offer_type.store', 'uses' => 'OfferTypeController@postStore']);
-    Route::get('offer-type/{id?}/edit',['middleware' => 'acl:edit_offer_type', 'as' => 'admin.offer_type.edit', 'uses' => 'OfferTypeController@getEdit']);
-    Route::post('offer-type/{id?}/update',['middleware' => 'acl:edit_offer_type', 'as' => 'admin.offer_type.update', 'uses' => 'OfferTypeController@putUpdate']);
-    Route::get('offer-type/{id}/delete',['middleware' => 'acl:delete_offer_type', 'as' => 'admin.offer_type.delete', 'uses' => 'OfferTypeController@getDelete']);
-
+    Route::get('offer-type', ['middleware' => 'acl:view_offer_type', 'as' => 'admin.offer_type.list', 'uses' => 'OfferTypeController@getIndex']);
+    Route::get('offer-type/new', ['middleware' => 'acl:new_offer_type', 'as' => 'admin.offer_type.create', 'uses' => 'OfferTypeController@getCreate']);
+    Route::post('offer-type/store', ['middleware' => 'acl:new_offer_type', 'as' => 'admin.offer_type.store', 'uses' => 'OfferTypeController@postStore']);
+    Route::get('offer-type/{id?}/edit', ['middleware' => 'acl:edit_offer_type', 'as' => 'admin.offer_type.edit', 'uses' => 'OfferTypeController@getEdit']);
+    Route::post('offer-type/{id?}/update', ['middleware' => 'acl:edit_offer_type', 'as' => 'admin.offer_type.update', 'uses' => 'OfferTypeController@putUpdate']);
+    Route::get('offer-type/{id}/delete', ['middleware' => 'acl:delete_offer_type', 'as' => 'admin.offer_type.delete', 'uses' => 'OfferTypeController@getDelete']);
 
 
     //////////////////// OFFER LIST //////////////////
-    Route::get('offer-list',['middleware' => 'acl:view_offer_list', 'as' => 'admin.offer.list', 'uses' => 'OfferController@getIndex']);
-    Route::get('offer-list/new',['middleware' => 'acl:new_offer_list', 'as' => 'admin.offer.create', 'uses' => 'OfferController@getCreate']);
-    Route::post('offer-list/store',['middleware' => 'acl:new_offer_list', 'as' => 'admin.offer.store', 'uses' => 'OfferController@postStore']);
-    Route::get('offer-list/{id?}/edit',['middleware' => 'acl:edit_offer_list', 'as' => 'admin.offer.edit', 'uses' => 'OfferController@getEdit']);
-    Route::post('offer-list/{id?}/update',['middleware' => 'acl:edit_offer_list', 'as' => 'admin.offer.update', 'uses' => 'OfferController@putUpdate']);
-    Route::get('offer-list/{id}/delete',['middleware' => 'acl:delete_offer_list', 'as' => 'admin.offer.delete', 'uses' => 'OfferController@getDelete']);
+    Route::get('offer-list', ['middleware' => 'acl:view_offer_list', 'as' => 'admin.offer.list', 'uses' => 'OfferController@getIndex']);
+    Route::get('offer-list/new', ['middleware' => 'acl:new_offer_list', 'as' => 'admin.offer.create', 'uses' => 'OfferController@getCreate']);
+    Route::post('offer-list/store', ['middleware' => 'acl:new_offer_list', 'as' => 'admin.offer.store', 'uses' => 'OfferController@postStore']);
+    Route::get('offer-list/{id?}/edit', ['middleware' => 'acl:edit_offer_list', 'as' => 'admin.offer.edit', 'uses' => 'OfferController@getEdit']);
+    Route::post('offer-list/{id?}/update', ['middleware' => 'acl:edit_offer_list', 'as' => 'admin.offer.update', 'uses' => 'OfferController@putUpdate']);
+    Route::get('offer-list/{id}/delete', ['middleware' => 'acl:delete_offer_list', 'as' => 'admin.offer.delete', 'uses' => 'OfferController@getDelete']);
 
-     //////////////////// OFFER PRIMARY LIST //////////////////
-     Route::get('offer-primary-list',['middleware' => 'acl:view_offer_primary', 'as' => 'admin.offer_primary.list', 'uses' => 'OfferPrimaryController@getIndex']);
-     Route::get('offer-primary-list/new',['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.create', 'uses' => 'OfferPrimaryController@getCreate']);
-     Route::post('offer-primary-list/store',['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.store', 'uses' => 'OfferPrimaryController@postStore']);
-     Route::get('offer-primary-list/{id?}/edit',['middleware' => 'acl:edit_offer_primary', 'as' => 'admin.offer_primary.edit', 'uses' => 'OfferPrimaryController@getEdit']);
-     Route::get('offer-primary-list/{id?}/view',['middleware' => 'acl:view_offer_primary', 'as' => 'admin.offer_primary.view', 'uses' => 'OfferPrimaryController@getView']);
-     Route::post('offer-primary-list/{id?}/update',['middleware' => 'acl:edit_offer_primary', 'as' => 'admin.offer_primary.update', 'uses' => 'OfferPrimaryController@putUpdate']);
-     Route::get('offer-primary-list/{id}/delete',['middleware' => 'acl:delete_offer_primary', 'as' => 'admin.offer_primary.delete', 'uses' => 'OfferPrimaryController@getDelete']);
-     Route::get('offer-primary-list/{id}/add-product',['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.add_product', 'uses' => 'OfferPrimaryController@getAddProduct']);
-     Route::post('offer-primary-list/store_product',['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.store_product', 'uses' => 'OfferPrimaryController@postStoreProduct']);
-    Route::post('offer-primary-list/add-productlist',['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.productlist', 'uses' => 'OfferPrimaryController@getVariantList']);
-    Route::get('offer-primary-list/{id}/delete-product',['middleware' => 'acl:edit_offer_primary', 'as' => 'admin.offer_primary.deleteproduct', 'uses' => 'OfferPrimaryController@getDeleteProduct']);
+    //////////////////// OFFER PRIMARY LIST //////////////////
+    Route::get('offer-primary-list', ['middleware' => 'acl:view_offer_primary', 'as' => 'admin.offer_primary.list', 'uses' => 'OfferPrimaryController@getIndex']);
+    Route::get('offer-primary-list/new', ['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.create', 'uses' => 'OfferPrimaryController@getCreate']);
+    Route::post('offer-primary-list/store', ['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.store', 'uses' => 'OfferPrimaryController@postStore']);
+    Route::get('offer-primary-list/{id?}/edit', ['middleware' => 'acl:edit_offer_primary', 'as' => 'admin.offer_primary.edit', 'uses' => 'OfferPrimaryController@getEdit']);
+    Route::get('offer-primary-list/{id?}/view', ['middleware' => 'acl:view_offer_primary', 'as' => 'admin.offer_primary.view', 'uses' => 'OfferPrimaryController@getView']);
+    Route::post('offer-primary-list/{id?}/update', ['middleware' => 'acl:edit_offer_primary', 'as' => 'admin.offer_primary.update', 'uses' => 'OfferPrimaryController@putUpdate']);
+    Route::get('offer-primary-list/{id}/delete', ['middleware' => 'acl:delete_offer_primary', 'as' => 'admin.offer_primary.delete', 'uses' => 'OfferPrimaryController@getDelete']);
+    Route::get('offer-primary-list/{id}/add-product', ['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.add_product', 'uses' => 'OfferPrimaryController@getAddProduct']);
+    Route::post('offer-primary-list/store_product', ['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.store_product', 'uses' => 'OfferPrimaryController@postStoreProduct']);
+    Route::post('offer-primary-list/add-productlist', ['middleware' => 'acl:new_offer_primary', 'as' => 'admin.offer_primary.productlist', 'uses' => 'OfferPrimaryController@getVariantList']);
+    Route::get('offer-primary-list/{id}/delete-product', ['middleware' => 'acl:edit_offer_primary', 'as' => 'admin.offer_primary.deleteproduct', 'uses' => 'OfferPrimaryController@getDeleteProduct']);
 
 
-      //////////////////// OFFER SECONDARY LIST //////////////////
-      Route::get('offer-secondary-list',['middleware' => 'acl:view_offer_secondary', 'as' => 'admin.offer_secondary.list', 'uses' => 'OfferSecondaryController@getIndex']);
-      Route::get('offer-secondary-list/new',['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.create', 'uses' => 'OfferSecondaryController@getCreate']);
-      Route::post('offer-secondary-list/store',['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.store', 'uses' => 'OfferSecondaryController@postStore']);
-      Route::get('offer-secondary-list/{id?}/edit',['middleware' => 'acl:edit_offer_secondary', 'as' => 'admin.offer_secondary.edit', 'uses' => 'OfferSecondaryController@getEdit']);
-      Route::get('offer-secondary-list/{id?}/view',['middleware' => 'acl:view_offer_secondary', 'as' => 'admin.offer_secondary.view', 'uses' => 'OfferSecondaryController@getView']);
-      Route::post('offer-secondary-list/{id?}/update',['middleware' => 'acl:edit_offer_secondary', 'as' => 'admin.offer_secondary.update', 'uses' => 'OfferSecondaryController@putUpdate']);
-      Route::get('offer-secondary-list/{id}/delete',['middleware' => 'acl:delete_offer_secondary', 'as' => 'admin.offer_secondary.delete', 'uses' => 'OfferSecondaryController@getDelete']);
-      Route::get('offer-secondary-list/{id}/add-product',['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.add_product', 'uses' => 'OfferSecondaryController@getAddProduct']);
-      Route::post('offer-secondary-list/store_product',['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.store_product', 'uses' => 'OfferSecondaryController@postStoreProduct']);
-     Route::post('offer-secondary-list/add-productlist',['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.productlist', 'uses' => 'OfferSecondaryController@getVariantList']);
-     Route::get('offer-secondary-list/{id}/delete-product',['middleware' => 'acl:edit_offer_secondary', 'as' => 'admin.offer_secondary.deleteproduct', 'uses' => 'OfferSecondaryController@getDeleteProduct']);
-
+    //////////////////// OFFER SECONDARY LIST //////////////////
+    Route::get('offer-secondary-list', ['middleware' => 'acl:view_offer_secondary', 'as' => 'admin.offer_secondary.list', 'uses' => 'OfferSecondaryController@getIndex']);
+    Route::get('offer-secondary-list/new', ['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.create', 'uses' => 'OfferSecondaryController@getCreate']);
+    Route::post('offer-secondary-list/store', ['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.store', 'uses' => 'OfferSecondaryController@postStore']);
+    Route::get('offer-secondary-list/{id?}/edit', ['middleware' => 'acl:edit_offer_secondary', 'as' => 'admin.offer_secondary.edit', 'uses' => 'OfferSecondaryController@getEdit']);
+    Route::get('offer-secondary-list/{id?}/view', ['middleware' => 'acl:view_offer_secondary', 'as' => 'admin.offer_secondary.view', 'uses' => 'OfferSecondaryController@getView']);
+    Route::post('offer-secondary-list/{id?}/update', ['middleware' => 'acl:edit_offer_secondary', 'as' => 'admin.offer_secondary.update', 'uses' => 'OfferSecondaryController@putUpdate']);
+    Route::get('offer-secondary-list/{id}/delete', ['middleware' => 'acl:delete_offer_secondary', 'as' => 'admin.offer_secondary.delete', 'uses' => 'OfferSecondaryController@getDelete']);
+    Route::get('offer-secondary-list/{id}/add-product', ['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.add_product', 'uses' => 'OfferSecondaryController@getAddProduct']);
+    Route::post('offer-secondary-list/store_product', ['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.store_product', 'uses' => 'OfferSecondaryController@postStoreProduct']);
+    Route::post('offer-secondary-list/add-productlist', ['middleware' => 'acl:new_offer_secondary', 'as' => 'admin.offer_secondary.productlist', 'uses' => 'OfferSecondaryController@getVariantList']);
+    Route::get('offer-secondary-list/{id}/delete-product', ['middleware' => 'acl:edit_offer_secondary', 'as' => 'admin.offer_secondary.deleteproduct', 'uses' => 'OfferSecondaryController@getDeleteProduct']);
 
 
     //////////////////// Shipping Address ////////////////////
 
-    Route::get('shipping-address',['middleware' => 'acl:view_shipping_address', 'as' => 'admin.shipping-address.list', 'uses' => 'ShippingAddressController@getIndex']);
+    Route::get('shipping-address', ['middleware' => 'acl:view_shipping_address', 'as' => 'admin.shipping-address.list', 'uses' => 'ShippingAddressController@getIndex']);
 
-    Route::get('shipping-address/new',['middleware' => 'acl:new_shipping_address', 'as' => 'admin.shipping-address.create', 'uses' => 'ShippingAddressController@getCreate']);
+    Route::get('shipping-address/new', ['middleware' => 'acl:new_shipping_address', 'as' => 'admin.shipping-address.create', 'uses' => 'ShippingAddressController@getCreate']);
 
-    Route::post('shipping-address/store',['middleware' => 'acl:new_shipping_address', 'as' => 'admin.shipping-address.store', 'uses' => 'ShippingAddressController@postStore']);
+    Route::post('shipping-address/store', ['middleware' => 'acl:new_shipping_address', 'as' => 'admin.shipping-address.store', 'uses' => 'ShippingAddressController@postStore']);
 
-    Route::get('shipping-address/{id?}/edit',['middleware' => 'acl:edit_shipping_address', 'as' => 'admin.shipping-address.edit', 'uses' => 'ShippingAddressController@getEdit']);
+    Route::get('shipping-address/{id?}/edit', ['middleware' => 'acl:edit_shipping_address', 'as' => 'admin.shipping-address.edit', 'uses' => 'ShippingAddressController@getEdit']);
 
-    Route::post('shipping-address/{id}/update',['middleware' => 'acl:edit_shipping_address', 'as' => 'admin.shipping-address.update', 'uses' => 'ShippingAddressController@postUpdate']);
+    Route::post('shipping-address/{id}/update', ['middleware' => 'acl:edit_shipping_address', 'as' => 'admin.shipping-address.update', 'uses' => 'ShippingAddressController@postUpdate']);
 
-    Route::get('shipping-address/{id}/delete',['middleware' => 'acl:delete_shipping_address', 'as' => 'admin.shipping-address.delete', 'uses' => 'ShippingAddressController@getDelete']);
+    Route::get('shipping-address/{id}/delete', ['middleware' => 'acl:delete_shipping_address', 'as' => 'admin.shipping-address.delete', 'uses' => 'ShippingAddressController@getDelete']);
 
 
     /////////////// Shipment Signature //////////////////
 
-    Route::get('shipment-signature',['middleware' => 'acl:view_shipment_signature', 'as' => 'admin.shipment-signature.list', 'uses' => 'ShipmentSignController@getIndex']);
+    Route::get('shipment-signature', ['middleware' => 'acl:view_shipment_signature', 'as' => 'admin.shipment-signature.list', 'uses' => 'ShipmentSignController@getIndex']);
 
-    Route::get('shipment-signature/new',['middleware' => 'acl:new_shipment_signature', 'as' => 'admin.shipment-signature.create', 'uses' => 'ShipmentSignController@getCreate']);
+    Route::get('shipment-signature/new', ['middleware' => 'acl:new_shipment_signature', 'as' => 'admin.shipment-signature.create', 'uses' => 'ShipmentSignController@getCreate']);
 
-    Route::post('shipment-signature/store',['middleware' => 'acl:new_shipment_signature', 'as' => 'admin.shipment-signature.store', 'uses' => 'ShipmentSignController@postStore']);
+    Route::post('shipment-signature/store', ['middleware' => 'acl:new_shipment_signature', 'as' => 'admin.shipment-signature.store', 'uses' => 'ShipmentSignController@postStore']);
 
-    Route::get('shipment-signature/{id?}/edit',['middleware' => 'acl:edit_shipment_signature', 'as' => 'admin.shipment-signature.edit', 'uses' => 'ShipmentSignController@getEdit']);
+    Route::get('shipment-signature/{id?}/edit', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'admin.shipment-signature.edit', 'uses' => 'ShipmentSignController@getEdit']);
 
-    Route::post('shipment-signature/{id}/update',['middleware' => 'acl:edit_shipment_signature', 'as' => 'admin.shipment-signature.update', 'uses' => 'ShipmentSignController@postUpdate']);
+    Route::post('shipment-signature/{id}/update', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'admin.shipment-signature.update', 'uses' => 'ShipmentSignController@postUpdate']);
 
-    Route::get('shipment-signature/{id}/delete',['middleware' => 'acl:delete_shipment_signature', 'as' => 'admin.shipment-signature.delete', 'uses' => 'ShipmentSignController@getDelete']);
+    Route::get('shipment-signature/{id}/delete', ['middleware' => 'acl:delete_shipment_signature', 'as' => 'admin.shipment-signature.delete', 'uses' => 'ShipmentSignController@getDelete']);
 
     //Ajax route for signature
-    Route::get('signature_img_delete/{id}',['middleware' => 'acl:delete_shipment_signature', 'as' => 'admin.signature.img_delete', 'uses' => 'ShipmentSignController@getDeleteImage']);
+    Route::get('signature_img_delete/{id}', ['middleware' => 'acl:delete_shipment_signature', 'as' => 'admin.signature.img_delete', 'uses' => 'ShipmentSignController@getDeleteImage']);
 
-        //////////////////// SMS notification ////////////////////
+    //////////////////// SMS notification ////////////////////
 
-        Route::get('notification/email',['middleware' => 'acl:view_notify_email', 'as' => 'admin.notify_email.list', 'uses' => 'NotifySmsController@getEmailIndex']);
-        Route::get('notification/email/view/{id}',['middleware' => 'acl:view_notify_email_body', 'as' => 'admin.notify_email.body', 'uses' => 'NotifySmsController@getEmailBody']);
-        Route::get('notification/{id}/email-send',['middleware' => 'acl:send_notify_email', 'as' => 'admin.notify_email.send', 'uses' => 'NotifySmsController@getSendEmail']);
-        Route::get('notification/sms',['middleware' => 'acl:view_notify_sms', 'as' => 'admin.notify_sms.list', 'uses' => 'NotifySmsController@getIndex']);
-       Route::get('notification/{id}/sms-send',['middleware' => 'acl:send_notify_sms', 'as' => 'admin.notify_sms.send', 'uses' => 'NotifySmsController@getSendSms']);
+    Route::get('notification/email', ['middleware' => 'acl:view_notify_email', 'as' => 'admin.notify_email.list', 'uses' => 'NotifySmsController@getEmailIndex']);
+    Route::get('notification/email/view/{id}', ['middleware' => 'acl:view_notify_email_body', 'as' => 'admin.notify_email.body', 'uses' => 'NotifySmsController@getEmailBody']);
+    Route::get('notification/{id}/email-send', ['middleware' => 'acl:send_notify_email', 'as' => 'admin.notify_email.send', 'uses' => 'NotifySmsController@getSendEmail']);
+    Route::get('notification/sms', ['middleware' => 'acl:view_notify_sms', 'as' => 'admin.notify_sms.list', 'uses' => 'NotifySmsController@getIndex']);
+    Route::get('notification/{id}/sms-send', ['middleware' => 'acl:send_notify_sms', 'as' => 'admin.notify_sms.send', 'uses' => 'NotifySmsController@getSendSms']);
 
-        //SALES REPORT
-        Route::get('sales-report',['middleware' => 'acl:view_sales_report', 'as' => 'admin.sales_report.list', 'uses' => 'SalesReportController@getIndex']);
-        Route::get('sales-report/{id}',['middleware' => 'acl:view_sales_report', 'as' => 'admin.sales_report.list-item', 'uses' => 'SalesReportController@getComissionReport']);
-        Route::get('yet-to-ship',['middleware' => 'acl:view_yet_to_ship', 'as' => 'admin.yet_to_ship.list', 'uses' => 'SalesReportController@getYetToShip']);
-        //AJAX
-        Route::get('sales-comission-list-view/{agent_id}/{date}',['middleware' => 'acl:view_sales_report', 'as' => 'admin.sales_report.list-item-ajax', 'uses' => 'SalesReportController@ajaxComissionReport']);
-
-
-        //consigment note
-        Route::post('order/{id}/consignmentNote', ['middleware' => 'acl:edit_dispatch', 'as' => 'admin.order.consignmentNote', 'uses' => 'PosLazuController@getConsignmentNote']);
-        Route::get('ajax/consignment/getTrackingId/{id}',['middleware' => 'acl:edit_dispatch', 'as' => 'admin.consignment.getTrackingId', 'uses' => 'PosLazuController@getTrackingId']);
+    //SALES REPORT
+    Route::get('sales-report', ['middleware' => 'acl:view_sales_report', 'as' => 'admin.sales_report.list', 'uses' => 'SalesReportController@getIndex']);
+    Route::get('sales-report/{id}', ['middleware' => 'acl:view_sales_report', 'as' => 'admin.sales_report.list-item', 'uses' => 'SalesReportController@getComissionReport']);
+    Route::get('yet-to-ship', ['middleware' => 'acl:view_yet_to_ship', 'as' => 'admin.yet_to_ship.list', 'uses' => 'SalesReportController@getYetToShip']);
+    //AJAX
+    Route::get('sales-comission-list-view/{agent_id}/{date}', ['middleware' => 'acl:view_sales_report', 'as' => 'admin.sales_report.list-item-ajax', 'uses' => 'SalesReportController@ajaxComissionReport']);
 
 
-
+    //consigment note
+    Route::post('order/{id}/consignmentNote', ['middleware' => 'acl:edit_dispatch', 'as' => 'admin.order.consignmentNote', 'uses' => 'PosLazuController@getConsignmentNote']);
+    Route::get('ajax/consignment/getTrackingId/{id}', ['middleware' => 'acl:edit_dispatch', 'as' => 'admin.consignment.getTrackingId', 'uses' => 'PosLazuController@getTrackingId']);
 
 
 });
@@ -783,55 +776,55 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 
     //Mail
-    Route::get('mail/config','MailController@getIndex')->name('web.mail.index');
-    Route::post('mail/env-update','MailController@env_key_update')->name('env_key_update.update');
+    Route::get('mail/config', 'MailController@getIndex')->name('web.mail.index');
+    Route::post('mail/env-update', 'MailController@env_key_update')->name('env_key_update.update');
     //WEB ROUTE
-    Route::get('home/slider',['middleware' => 'acl:list_box', 'as' => 'web.home.slider', 'uses' => 'SliderController@getAllSlider']);
-    Route::get('home/slider/create',['middleware' => 'acl:list_box', 'as' => 'web.home.slider.create', 'uses' => 'SliderController@createSlider']);
-    Route::get('home/slider/edit/{id}',['middleware' => 'acl:list_box', 'as' => 'web.home.slider.edit', 'uses' => 'SliderController@getEdit']);
-    Route::post('home/slider/store',['middleware' => 'acl:list_box', 'as' => 'web.home.slider.store', 'uses' => 'SliderController@postStore']);
-    Route::post('home/slider/{id}/update',['middleware' => 'acl:edit_payment', 'as' => 'web.home.slider.update', 'uses' => 'SliderController@postUpdate']);
-    Route::get('home/slider/{id}/delete',['middleware' => 'acl:delete_payment', 'as' => 'web.home.slider.delete', 'uses' => 'SliderController@getDelete']);
-    Route::post('web/slider/featureStatus',['middleware' => 'acl:edit_payment', 'as' => 'web.home.slider.featureStatus', 'uses' => 'SliderController@changeFeatureStatus']);
+    Route::get('home/slider', ['middleware' => 'acl:list_box', 'as' => 'web.home.slider', 'uses' => 'SliderController@getAllSlider']);
+    Route::get('home/slider/create', ['middleware' => 'acl:list_box', 'as' => 'web.home.slider.create', 'uses' => 'SliderController@createSlider']);
+    Route::get('home/slider/edit/{id}', ['middleware' => 'acl:list_box', 'as' => 'web.home.slider.edit', 'uses' => 'SliderController@getEdit']);
+    Route::post('home/slider/store', ['middleware' => 'acl:list_box', 'as' => 'web.home.slider.store', 'uses' => 'SliderController@postStore']);
+    Route::post('home/slider/{id}/update', ['middleware' => 'acl:edit_payment', 'as' => 'web.home.slider.update', 'uses' => 'SliderController@postUpdate']);
+    Route::get('home/slider/{id}/delete', ['middleware' => 'acl:delete_payment', 'as' => 'web.home.slider.delete', 'uses' => 'SliderController@getDelete']);
+    Route::post('web/slider/featureStatus', ['middleware' => 'acl:edit_payment', 'as' => 'web.home.slider.featureStatus', 'uses' => 'SliderController@changeFeatureStatus']);
 
     //WEB ARTICLE
-    Route::get('web/blog/article',['middleware' => 'acl:list_box', 'as' => 'web.blog.article', 'uses' => 'ArticleController@getAllArticle']);
-    Route::get('web/blog/article/create',['middleware' => 'acl:list_box', 'as' => 'web.blog.article.create', 'uses' => 'ArticleController@getCreate']);
-    Route::post('web/blog/article/store',['middleware' => 'acl:new_shipment_signature', 'as' => 'web.blog.article.store', 'uses' => 'ArticleController@postStore']);
-    Route::get('web/blog/article/{id?}/edit',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.article.edit', 'uses' => 'ArticleController@getEdit']);
-    Route::post('web/blog/article/{id}/update',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.article.update', 'uses' => 'ArticleController@postUpdate']);
-    Route::get('web/blog/article/{id}/delete',['middleware' => 'acl:delete_payment', 'as' => 'web.blog.article.delete', 'uses' => 'ArticleController@getDelete']);
-    Route::post('ajax/text-editor/image-upload',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.text-editor.image', 'uses' => 'ArticleController@postEditorImageUpload']);
+    Route::get('web/blog/article', ['middleware' => 'acl:list_box', 'as' => 'web.blog.article', 'uses' => 'ArticleController@getAllArticle']);
+    Route::get('web/blog/article/create', ['middleware' => 'acl:list_box', 'as' => 'web.blog.article.create', 'uses' => 'ArticleController@getCreate']);
+    Route::post('web/blog/article/store', ['middleware' => 'acl:new_shipment_signature', 'as' => 'web.blog.article.store', 'uses' => 'ArticleController@postStore']);
+    Route::get('web/blog/article/{id?}/edit', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.article.edit', 'uses' => 'ArticleController@getEdit']);
+    Route::post('web/blog/article/{id}/update', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.article.update', 'uses' => 'ArticleController@postUpdate']);
+    Route::get('web/blog/article/{id}/delete', ['middleware' => 'acl:delete_payment', 'as' => 'web.blog.article.delete', 'uses' => 'ArticleController@getDelete']);
+    Route::post('ajax/text-editor/image-upload', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.text-editor.image', 'uses' => 'ArticleController@postEditorImageUpload']);
 
 
-    Route::get('web/blog/category',['middleware' => 'acl:list_box', 'as' => 'web.blog.category', 'uses' => 'BlogCategoryController@getAllCategory']);
-    Route::get('web/blog/category/create',['middleware' => 'acl:list_box', 'as' => 'web.blog.category.create', 'uses' => 'BlogCategoryController@getCreate']);
-    Route::post('web/blog/category/store',['middleware' => 'acl:new_shipment_signature', 'as' => 'web.blog.category.store', 'uses' => 'BlogCategoryController@postStore']);
-    Route::get('web/blog/category/{id?}/edit',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.category.edit', 'uses' => 'BlogCategoryController@getEdit']);
-    Route::post('web/blog/category/{id}/update',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.category.update', 'uses' => 'BlogCategoryController@postUpdate']);
-    Route::get('web/blog/category/{id}/delete',['middleware' => 'acl:delete_payment', 'as' => 'web.blog.category.delete', 'uses' => 'BlogCategoryController@getDelete']);
+    Route::get('web/blog/category', ['middleware' => 'acl:list_box', 'as' => 'web.blog.category', 'uses' => 'BlogCategoryController@getAllCategory']);
+    Route::get('web/blog/category/create', ['middleware' => 'acl:list_box', 'as' => 'web.blog.category.create', 'uses' => 'BlogCategoryController@getCreate']);
+    Route::post('web/blog/category/store', ['middleware' => 'acl:new_shipment_signature', 'as' => 'web.blog.category.store', 'uses' => 'BlogCategoryController@postStore']);
+    Route::get('web/blog/category/{id?}/edit', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.category.edit', 'uses' => 'BlogCategoryController@getEdit']);
+    Route::post('web/blog/category/{id}/update', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.category.update', 'uses' => 'BlogCategoryController@postUpdate']);
+    Route::get('web/blog/category/{id}/delete', ['middleware' => 'acl:delete_payment', 'as' => 'web.blog.category.delete', 'uses' => 'BlogCategoryController@getDelete']);
 
-        //WEB PAGES
-    Route::get('web/page',['middleware' => 'acl:list_box', 'as' => 'web.page', 'uses' => 'PageController@getAllPage']);
-    Route::get('web/page/create',['middleware' => 'acl:list_box', 'as' => 'web.page.create', 'uses' => 'PageController@getCreate']);
-    Route::post('web/page/store',['middleware' => 'acl:new_page', 'as' => 'web.page.store', 'uses' => 'PageController@postStore']);
-    Route::get('web/page/{id}/edit',['middleware' => 'acl:edit_page', 'as' => 'web.page.edit', 'uses' => 'PageController@getEdit']);
-    Route::post('web/page/{id}/update',['middleware' => 'acl:edit_page', 'as' => 'web.page.update', 'uses' => 'PageController@postUpdate']);
-    Route::get('web/page/{id}/delete',['middleware' => 'acl:delete_page', 'as' => 'web.page.delete', 'uses' => 'PageController@getDelete']);
+    //WEB PAGES
+    Route::get('web/page', ['middleware' => 'acl:list_box', 'as' => 'web.page', 'uses' => 'PageController@getAllPage']);
+    Route::get('web/page/create', ['middleware' => 'acl:list_box', 'as' => 'web.page.create', 'uses' => 'PageController@getCreate']);
+    Route::post('web/page/store', ['middleware' => 'acl:new_page', 'as' => 'web.page.store', 'uses' => 'PageController@postStore']);
+    Route::get('web/page/{id}/edit', ['middleware' => 'acl:edit_page', 'as' => 'web.page.edit', 'uses' => 'PageController@getEdit']);
+    Route::post('web/page/{id}/update', ['middleware' => 'acl:edit_page', 'as' => 'web.page.update', 'uses' => 'PageController@postUpdate']);
+    Route::get('web/page/{id}/delete', ['middleware' => 'acl:delete_page', 'as' => 'web.page.delete', 'uses' => 'PageController@getDelete']);
     // Route::post('ajax/text-editor/image-upload',['middleware' => 'acl:edit_spage', 'as' => 'web.blog.text-editor.image', 'uses' => 'PageController@postEditorImageUpload']);
 
     //WEB FAQ
-    Route::get('web/faq',['middleware' => 'acl:list_box', 'as' => 'web.faq', 'uses' => 'FaqController@getAllFaq']);
-    Route::get('web/faq/create',['middleware' => 'acl:list_box', 'as' => 'web.faq.create', 'uses' => 'FaqController@getCreate']);
-    Route::post('web/faq/store',['middleware' => 'acl:new_shipment_signature', 'as' => 'web.faq.store', 'uses' => 'FaqController@postStore']);
-    Route::get('web/faq/{id?}/edit',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.faq.edit', 'uses' => 'FaqController@getEdit']);
-    Route::post('web/faq/{id}/update',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.faq.update', 'uses' => 'FaqController@postUpdate']);
-    Route::get('web/faq/{id}/delete',['middleware' => 'acl:delete_payment', 'as' => 'web.faq.delete', 'uses' => 'FaqController@getDelete']);
+    Route::get('web/faq', ['middleware' => 'acl:list_box', 'as' => 'web.faq', 'uses' => 'FaqController@getAllFaq']);
+    Route::get('web/faq/create', ['middleware' => 'acl:list_box', 'as' => 'web.faq.create', 'uses' => 'FaqController@getCreate']);
+    Route::post('web/faq/store', ['middleware' => 'acl:new_shipment_signature', 'as' => 'web.faq.store', 'uses' => 'FaqController@postStore']);
+    Route::get('web/faq/{id?}/edit', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.faq.edit', 'uses' => 'FaqController@getEdit']);
+    Route::post('web/faq/{id}/update', ['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.faq.update', 'uses' => 'FaqController@postUpdate']);
+    Route::get('web/faq/{id}/delete', ['middleware' => 'acl:delete_payment', 'as' => 'web.faq.delete', 'uses' => 'FaqController@getDelete']);
     // Route::post('ajax/text-editor/image-upload',['middleware' => 'acl:edit_shipment_signature', 'as' => 'web.blog.text-editor.image', 'uses' => 'PageController@postEditorImageUpload']);
 
     //WEB ABOUT
-    Route::get('web/about',['middleware' => 'acl:list_box', 'as' => 'web.about', 'uses' => 'AboutController@getIndex']);
-    Route::post('web/about/store',['middleware' => 'acl:new_page', 'as' => 'web.about.store', 'uses' => 'AboutController@postStore']);
+    Route::get('web/about', ['middleware' => 'acl:list_box', 'as' => 'web.about', 'uses' => 'AboutController@getIndex']);
+    Route::post('web/about/store', ['middleware' => 'acl:new_page', 'as' => 'web.about.store', 'uses' => 'AboutController@postStore']);
 
     //Payment Method
     Route::get('web/payment_method',['middleware' => 'acl:new_page', 'as' => 'web.payment_method', 'uses' => 'PaymentMethodController@getIndex']);
@@ -845,8 +838,4 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 
 
 
-
-
-
-
-    });
+});

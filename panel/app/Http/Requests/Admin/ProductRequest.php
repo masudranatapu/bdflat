@@ -23,42 +23,40 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-
-
-        $rules = [
-            'category'          => 'required|integer|min:1',
-            'sub_category'      => 'required|integer|min:1',
-            'brand'             => 'required|integer|min:1',
-            'prod_model'        => 'required|integer|min:1',
-            'name'              => 'required',
-           // 'mkt_code'          => 'required',
-            // 'price'             => 'required|numeric|between:0,99999.99|regex:/^(?:d*.d{1,2}|d+)$/',
+        return [
+            'property_for'      => 'required',
+            'propertyType'     => 'required|integer',
+            'city'              => 'required|integer',
+            'area'              => 'required|integer',
+            'address'           => 'required|max:190',
+            'condition'         => 'required|integer',
+            'property_price'    => 'required|integer',
+            'contact_person'    => 'required|max:45',
+            'mobile'            => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
+            'floor'             => 'nullable|integer',
+            'facing'            => 'nullable|integer',
+            'description'       => 'max:4000',
+            'image'             => 'mimes:jpeg,jpg,png,gif',
         ];
-
-    // if(request()->pk_no)
-    // {
-    //     $id = request()->pk_no;
-    //     $rules['code']         = 'nullable|unique:PRD_MASTER_SETUP,CODE,'. $id.',PK_NO'; 
-    
-    // }else{
-    //     $rules['code']         = 'nullable|unique:PRD_MASTER_SETUP,CODE,NULL,PK_NO';
-    // }
-
-
-        return $rules;
     }
 
     public function messages()
     {
         return [
-           'category.required'      => 'Please select product category',
-           'category.integer'       => 'Please select product category must be nubmber',
-           'sub_category.required'  => 'Please select product sub category',
-           'sub_category.integer'   => 'Please select product sub category must be nubmber',
-           'name.required'          => 'This field is required',
-          // 'mkt_code.required'      => 'This field is required',
-           // 'price.numeric'          => 'This field is required only numaric value',
-         
+            'property_for.required'     => 'Advertisement type is required!',
+            'propertyType.required'    => 'Property type is required!',
+            'city.required'             => 'City is required!',
+            'area.required'             => 'Area is required!',
+            'address.required'          => 'Address is required!',
+            'condition.required'        => 'Property Condition is required!',
+            'property_price.required'   => 'Property Price is required!',
+            'contact_person.required'   => 'Contact Person is required!',
+            'mobile.required'           => 'Mobile Number is required!',
+            'mobile.regex'              => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
+            'contact_person_2.required' => 'Contact Person is required!',
+            'mobile_2.required'         => 'Mobile Number is required!',
+            'mobile_2.regex'            => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
+            'listing_type.required'     => 'Listing Type is required!',
         ];
     }
 
