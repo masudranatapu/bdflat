@@ -831,9 +831,18 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::get('web/payment_method/{id}/edit',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
 
 
-    //Payment Method
+    // Ads
     Route::get('web/ads',['middleware' => 'acl:view_ads', 'as' => 'web.ads', 'uses' => 'AdsController@getIndex']);
+    Route::get('web/ads/create',['middleware' => 'acl:add_ads', 'as' => 'web.ads.create', 'uses' => 'AdsController@createAd']);
+    Route::post('web/ads/store',['middleware' => 'acl:add_ads', 'as' => 'web.ads.store', 'uses' => 'AdsController@storeAd']);
+    Route::get('web/ads/{id}/edit',['middleware' => 'acl:edit_ads', 'as' => 'web.ads.edit', 'uses' => 'AdsController@editAd']);
+    Route::post('web/ads/{id}/update',['middleware' => 'acl:edit_ads', 'as' => 'web.ads.update', 'uses' => 'AdsController@updateAd']);
+
     Route::get('web/ads_position',['middleware' => 'acl:view_ads_position', 'as' => 'web.ads_position', 'uses' => 'AdsController@getAdsPosition']);
+    Route::get('web/ads_position/create',['middleware' => 'acl:add_ads_position', 'as' => 'web.ads_position.create', 'uses' => 'AdsController@createAdsPosition']);
+    Route::post('web/ads_position/store',['middleware' => 'acl:add_ads_position', 'as' => 'web.ads_position.store', 'uses' => 'AdsController@storeAdsPosition']);
+    Route::get('web/ads_position/{id}/edit',['middleware' => 'acl:edit_ads_position', 'as' => 'web.ads_position.edit', 'uses' => 'AdsController@editAdsPosition']);
+    Route::post('web/ads_position/{id}/update',['middleware' => 'acl:edit_ads_position', 'as' => 'web.ads_position.update', 'uses' => 'AdsController@updateAdsPosition']);
 
 
 
