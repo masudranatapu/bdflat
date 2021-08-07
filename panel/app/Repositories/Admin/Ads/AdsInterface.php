@@ -20,4 +20,9 @@ interface AdsInterface
 
     public function updateAdsPosition($request, int $id);
 
+    public function getAdsImages($id);
+
+    public function storeAdsImages($request, int $id);
+
+    public function deleteAdsImage(int $id);
 }

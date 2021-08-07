@@ -75,6 +75,13 @@
                                                             <td>0</td>
                                                             <td>{{ $row->STATUS ? 'Published' : 'Pending' }}</td>
                                                             <td>
+                                                                @if(hasAccessAbility('view_ads_image', $roles))
+                                                                    <a class="btn btn-sm btn-success text-white"
+                                                                       href="{{ route('web.ads.image', $row->PK_NO) }}"
+                                                                       title="Images">
+                                                                        <i class="la la-image"></i>
+                                                                    </a>
+                                                                @endif
                                                                 @if(hasAccessAbility('edit_ads', $roles))
                                                                     <a class="btn btn-sm btn-warning text-white"
                                                                        href="{{ route('web.ads.edit', $row->PK_NO) }}"

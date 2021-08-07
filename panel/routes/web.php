@@ -838,6 +838,10 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::get('web/ads/{id}/edit',['middleware' => 'acl:edit_ads', 'as' => 'web.ads.edit', 'uses' => 'AdsController@editAd']);
     Route::post('web/ads/{id}/update',['middleware' => 'acl:edit_ads', 'as' => 'web.ads.update', 'uses' => 'AdsController@updateAd']);
 
+    Route::get('web/ads/{id}/images',['middleware' => 'acl:view_ads_image', 'as' => 'web.ads.image', 'uses' => 'AdsController@getAdsImages']);
+    Route::post('web/ads/{id}/store',['middleware' => 'acl:add_ads_image', 'as' => 'web.ads.image.store', 'uses' => 'AdsController@storeAdsImage']);
+    Route::get('web/ads/{id}/delete',['middleware' => 'acl:delete_ads_image', 'as' => 'web.ads.image.delete', 'uses' => 'AdsController@deleteAdsImage']);
+
     Route::get('web/ads_position',['middleware' => 'acl:view_ads_position', 'as' => 'web.ads_position', 'uses' => 'AdsController@getAdsPosition']);
     Route::get('web/ads_position/create',['middleware' => 'acl:add_ads_position', 'as' => 'web.ads_position.create', 'uses' => 'AdsController@createAdsPosition']);
     Route::post('web/ads_position/store',['middleware' => 'acl:add_ads_position', 'as' => 'web.ads_position.store', 'uses' => 'AdsController@storeAdsPosition']);

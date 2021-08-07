@@ -87,4 +87,29 @@ class AdsController extends Controller
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    // Ads Image
+    public function getAdsImages($id)
+    {
+        $data = $this->ads->getAdsImages($id)->data;
+        return view('admin.ads.images', compact('data'));
+    }
+
+    public function storeAdsImage(Request $request, $id): RedirectResponse
+    {
+        $request->validate([
+            'order_id' => 'required',
+            'images' => 'required|min:1|max:1',
+            'images.*' => 'image|mimes:jpg,jpeg,png,gif'
+        ]);
+
+        $this->resp = $this->ads->storeAdsImages($request, $id);
+        return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
+    public function deleteAdsImage($id): RedirectResponse
+    {
+        $this->resp = $this->ads->deleteAdsImage($id);
+        return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
 }
