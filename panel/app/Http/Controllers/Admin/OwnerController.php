@@ -6,30 +6,34 @@ use App\Models\City;
 use App\Models\Agent;
 use App\Models\PoCode;
 use App\Models\Country;
-use App\Models\Reseller;
+use App\Models\Owner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\ResellerRequest;
-use App\Repositories\Admin\Reseller\ResellerInterface;
+use App\Repositories\Admin\Owner\OwnerInterface;
 
 
-class ResellerController extends BaseController
+class OwnerController extends BaseController
 {
-    protected $reseller;
+    protected $owner;
 
-    public function __construct(ResellerInterface $reseller, Agent $agent, Reseller $resellermodel, Country $country)
+    public function __construct(OwnerInterface $owner, Agent $agent, Country $country)
     {
-        $this->reseller         = $reseller;
+        $this->owner         = $owner;
         $this->agent            = $agent;
-        $this->resellermodel    = $resellermodel;
         $this->country         = $country;
     }
 
     public function getIndex(Request $request)
     {
-         $this->resp = $this->reseller->getPaginatedList($request, 20);
-            return view('admin.reseller.index')->withRows($this->resp->data);
+        $this->resp     = $this->owner->getPaginatedList($request, 20);
+        $data['rows']   = $this->resp->data;
+        return view('admin.owner.index', compact('data'));
     }
+
+
+
+/*
 
     public function getCreate() {
         $agentCombo    = $this->agent->getAgentCombo();
@@ -39,13 +43,13 @@ class ResellerController extends BaseController
 
     public function postStore(ResellerRequest $request)
     {
-        $this->resp = $this->reseller->postStore($request);
+        $this->resp = $this->owner->postStore($request);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getView(Request $request, $id)
     {
-        $this->resp             = $this->reseller->getShow($id);
+        $this->resp             = $this->owner->getShow($id);
         $data['agent_combo']    = $this->agent->getAgentCombo();
         $data['country']        = $this->country->getCountryComboWithCode();
         $data['city']           = PoCode::where('PO_CODE',$this->resp->data->POST_CODE)->groupBy('F_CITY_NO')->pluck('CITY_NAME','F_CITY_NO');
@@ -60,7 +64,7 @@ class ResellerController extends BaseController
 
     public function getEdit(Request $request, $id)
     {
-        $this->resp             = $this->reseller->getShow($id);
+        $this->resp             = $this->owner->getShow($id);
         $data['agent_combo']    = $this->agent->getAgentCombo();
         $data['country']        = $this->country->getCountryComboWithCode();
         $data['city']           = PoCode::where('PO_CODE',$this->resp->data->POST_CODE)->groupBy('F_CITY_NO')->pluck('CITY_NAME','F_CITY_NO');
@@ -74,16 +78,17 @@ class ResellerController extends BaseController
 
     public function postUpdate(ResellerRequest $request, $id)
     {
-        $this->resp = $this->reseller->postUpdate($request, $id);
+        $this->resp = $this->owner->postUpdate($request, $id);
 
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getDelete($id)
     {
-        $this->resp = $this->reseller->delete($id);
+        $this->resp = $this->owner->delete($id);
 
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
+    */
 
 }

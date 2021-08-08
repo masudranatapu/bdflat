@@ -32,7 +32,7 @@ class AdminAccessServiceProvider extends ServiceProvider
             'Account',
             'Agent',
             'Booking',
-            'Reseller',
+            'Owner',
             'CustomerAddress',
             'AccountMethod',
             'Bank',

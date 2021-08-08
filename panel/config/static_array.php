@@ -21,13 +21,21 @@ return [
         1 => 'Paid',
     ],
 
-
-	'booking_validity' => [
-		24 => '24 Hours',
-		48 => '48 Hours',
-		74 => '74 Hours',
-		96 => '96 Hours'
+	'user_type' => [
+		1 => 'Seeker',
+		2 => 'Owner',
+		3 => 'Builder',
+		4 => 'Agency',
+		5 => 'Agent of BDFLAT',
     ],
+
+    'user_status' => [
+		1 => 'Active',
+		2 => 'Pending',
+		3 => 'Inactive',
+		4 => 'Deleted'
+    ],
+
     'shipping_status' => [
         00 => 'Not Shipped',
         10 => 'In Progress at Source',

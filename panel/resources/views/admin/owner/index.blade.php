@@ -1,127 +1,29 @@
 @extends('admin.layout.master')
-@push('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 
-    <style>
-        .t-pub {
-            color: #6aa586;
-        }
-
-        .t-unpub {
-            color: #a54b82;
-        }
-
-        .t-pen {
-            color: #726ba5;
-        }
-
-        .t-del {
-            color: #e37b7f;
-        }
-
-        .key_search {
-            position: relative;
-        }
-
-        .key_search i {
-            position: absolute;
-            top: 30%;
-            left: 5%;
-        }
-
-        .key_search input {
-            padding-left: 30px;
-            font-size: 12px;
-        }
-
-        .key_search_btn {
-            height: 100%;
-            background-color: #73BB55;
-            border-color: #65aa52;
-            color: black !important;
-        }
-
-        .br {
-            border-radius: 5px !important;
-        }
-    </style>
-
-@endpush
-@section('Customer Management','open')
-@section('reseller_list','active')
-
+@section('Property Owner','open')
+@section('owner_list','active')
 
 @section('title') Property Owner @endsection
 @section('page-name') Property Owner @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('invoice.breadcrumb_title')    </a>
-    </li>
-    <li class="breadcrumb-item active">Property Owner
-    </li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('invoice.breadcrumb_title')</a></li>
+    <li class="breadcrumb-item active">Property Owner </li>
 @endsection
 
 @php
-    $roles = userRolePermissionArray();
+    $roles          = userRolePermissionArray();
+    $user_type      = Config::get('static_array.user_type');
+    $user_status    = Config::get('static_array.user_status');
+
 @endphp
 
-
 @push('custom_css')
-
-    <style>
-        #scrollable-dropdown-menu .tt-menu {
-            max-height: 260px;
-            overflow-y: auto;
-            width: 100%;
-            border: 1px solid #333;
-            border-radius: 5px;
-
-        }
-
-        #scrollable-dropdown-menu2 .tt-menu {
-            max-height: 260px;
-            overflow-y: auto;
-            width: 100%;
-            border: 1px solid #333;
-            border-radius: 5px;
-
-        }
-
-        .twitter-typeahead {
-            display: block !important;
-        }
-
-        #warehouse th, #availble_qty th {
-            border: none;
-            border-bottom: 1px solid #333;
-            font-size: 12px;
-            font-weight: normal;
-            padding-bottom: 7px;
-            padding-bottom: 11px;
-        }
-
-        #book_qty th {
-            border: none;
-            /* border-bottom: 1px solid #333; */
-            font-size: 12px;
-            font-weight: normal;
-            padding-bottom: 5px;
-            padding-top: 0;
-        }
-
-        .tt-hint {
-            color: #999 !important;
-        }
-    </style>
-@endpush('custom_css')
-
-@push('custom_js')
-    <!-- BEGIN: Data Table-->
-    <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
-    <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
-    <!-- END: Data Table-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 @endpush
+
+
 @section('content')
     <div class="content-body min-height">
         <section id="pagination">
@@ -129,24 +31,22 @@
                 <div class="col-md-12">
                     <div class="card card-sm card-success">
                         <div class="card-header">
-                            <form action="" class="mb-2">
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <a href="#" class="btn btn-info btn-sm">Owner</a>
+                                        <a href="{{ route('admin.owner.list',['owner' => 2]) }}" class="btn btn-info btn-sm">Owner</a>
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <a href="#" class="btn btn-info btn-sm">Builder</a>
+                                        <a href="{{ route('admin.owner.list',['owner' => 3]) }}" class="btn btn-info btn-sm">Builder</a>
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <a href="#" class="btn btn-info btn-sm">Agency</a>
+                                        <a href="{{ route('admin.owner.list',['owner' => 4]) }}" class="btn btn-info btn-sm">Agency</a>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <a href="#" class="btn btn-info btn-sm">All</a>
+                                        <a href="{{ route('admin.owner.list') }}" class="btn btn-info btn-sm">All</a>
                                     </div>
                                 </div>
-                            </form>
 
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
@@ -163,51 +63,49 @@
 
 
                                 <div class="table-responsive ">
-                                    <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
+                                    <table class="table table-striped table-bordered table-sm" {{--id="process_data_table"--}}>
                                         <thead>
                                         <tr>
+                                            <th class="text-center">SL</th>
                                             <th class="text-center">User ID</th>
+                                            <th>Create Date</th>
+                                            <th>User Type</th>
                                             <th>Name</th>
                                             <th>Mobile</th>
                                             <th>Email</th>
-                                            <th>Balance</th>
-                                            <th>Create Date</th>
-                                            <th>Lead Status</th>
-                                            <th>Account Status</th>
+                                            <th class="text-center">Balance</th>
+                                            <th class="text-center">Properties</th>
+                                            <th class="text-center">Status</th>
                                             <th style="width: 17%" class="text-center">Action</th>
                                         </tr>
                                         </thead>
 
                                         <tbody>
-                                        @foreach($rows as $row)
-                                            <tr>
-                                                <td>{{$row->CODE}}</td>
-                                                <td>{{$row->NAME}}</td>
-                                                <td>{{$row->MOBILE_NO}}</td>
-                                                <td>{{$row->EMAIL}}</td>
-                                                <td>{{$row->ACTUAL_TOPUP}}</td>
-                                                <td>{{date('M d, Y', strtotime($row->CREATED_AT))}}</td>
-                                                <td>
-                                                    <span class="t-pub">Valid</span>
-                                                </td>
-                                                <td>
-                                                    @if($row->STATUS == 1)
-                                                        <span class="t-pub">Active</span>
-                                                    @else
-                                                        <span class="t-del">Inactive</span>
-                                                    @endif
-                                                </td>
-                                                <td style="width: 17%" class="text-center">
-                                                    <a href="#">Edit</a>
-                                                    |
-                                                    <a href="#">Payment</a>
-                                                    |
-                                                    <a href="#">CP</a>
-                                                    |
-                                                    <a href="#">Delete</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                            @if(isset($data['rows']) && count($data['rows']) > 0 )
+                                                @foreach($data['rows'] as $key => $row)
+                                                    <tr>
+                                                        <td class="text-center">{{ $key+1 }}</td>
+                                                        <td class="text-center">{{ $row->CODE }}</td>
+                                                        <td>{{ date('M d, Y', strtotime($row->CREATED_AT)) }}</td>
+                                                        <td>{{ $user_type[$row->USER_TYPE] ?? '' }}</td>
+                                                        <td>{{ $row->NAME }}</td>
+                                                        <td>{{ $row->MOBILE_NO }}</td>
+                                                        <td>{{ $row->EMAIL }}</td>
+                                                        <td class="text-center">{{ number_format($row->UNUSED_TOPUP,2) }}</td>
+                                                        <td class="text-center"><span class="t-pub">{{ $row->TOTAL_LISTING }}</span></td>
+                                                        <td class="text-center">{{ $user_status[$row->STATUS] ?? '' }}</td>
+                                                        <td style="width: 17%" class="text-center">
+                                                            <a href="#">Edit</a>
+                                                            |
+                                                            <a href="#">Payment</a>
+                                                            |
+                                                            <a href="#">CP</a>
+                                                            |
+                                                            <a href="#">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -218,75 +116,11 @@
             </div>
         </section>
     </div>
-
-    <div class="modal animated zoomIn text-left balanceTrans" tabindex="-1" role="dialog" aria-labelledby="balanceTrans" aria-hidden="true" id="balanceTrans">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-content">
-                    {!! Form::open([ 'route' => 'admin.customer.blance_transfer', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate','id' => 'balanceTransFrm']) !!}
-                    <input type="hidden" name="from_customer" value="" id="from_customer"/>
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel23"><i class="la la-tree"></i> Balance Transfer from <span id="customer_name"></span></h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="col-md-12">
-                            <div class="form-group {!! $errors->has('payment_no') ? 'error' : '' !!}">
-                                <label>Customer Balance</label>
-                                <div class="controls">
-                                    {!! Form::select('payment_no', [], null, ['class'=>'form-control mb-1 ', 'data-validation-required-message' => 'This field is required', 'id' => 'payment_no']) !!}
-                                    {!! $errors->first('payment_no', '<label class="help-block text-danger">:message</label>') !!}
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-
-                            <div class="form-group {!! $errors->has('to_customer') ? 'error' : '' !!}">
-                                <label>To</label>
-                                <div class="controls" id="scrollable-dropdown-menu2">
-                                    <input type="search" name="q" id="to_customer" class="form-control search_to_customer" placeholder="Enter Customer Name"
-                                           autocomplete="off" required>
-                                    <input type="hidden" name="to_customer_hidden" id="to_customer_hidden">
-                                    {!! $errors->first('to_customer', '<label class="help-block text-danger">:message</label>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group {!! $errors->has('amount_to_trans') ? 'error' : '' !!}">
-                                <label>Amount to be transfer</label>
-                                <div class="controls">
-
-
-                                    {!! Form::number('amount_to_trans', null, ['class'=>'form-control mb-1 ', 'data-validation-required-message' => 'This field is required', 'id' => 'amount_to_trans', 'step' => '0.01']) !!}
-
-                                    {!! $errors->first('amount_to_trans', '<label class="help-block text-danger">:message</label>') !!}
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn grey btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 @endsection
 
 @push('custom_js')
+    <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
+    <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 
     <script type="text/javascript">

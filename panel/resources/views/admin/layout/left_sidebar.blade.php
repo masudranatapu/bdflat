@@ -41,18 +41,17 @@
     @endif
 
 
-    @if(hasAccessAbility('view_customer', $roles))
+    @if(hasAccessAbility('view_owner', $roles))
     <li class="nav-item  @yield('Property Owner')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Property Owners</span></a>
         <ul class="menu-content">
 
-            @if(hasAccessAbility('view_reseller', $roles))
-                <li class="@yield('reseller_list')"><a class="menu-item" href="{{route('admin.reseller.list')}}"><i></i><span
-                            data-i18n="@lang('left_menu.reseller_list')">Owner List</span></a></li>
+            @if(hasAccessAbility('view_owner', $roles))
+                <li class="@yield('owner_list')"><a class="menu-item" href="{{route('admin.owner.list')}}"><i></i><span data-i18n="owner_list">Owner List</span></a></li>
             @endif
 
         </ul>
     </li>
-@endif
+    @endif
 
     @if(hasAccessAbility('view_agent', $roles))
         <li class="nav-item  @yield('Agent Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">BDFLAT Agents</span></a>
