@@ -145,13 +145,15 @@
                                                             $status_color = '';
                                                             if($row->STATUS == 0 ){
                                                                 $status_color = 't-pen';
-                                                            }elseif($row->STATUS == 1 ){
+                                                            }elseif($row->STATUS == 10 ){
                                                                 $status_color = 't-pub';
-                                                            }elseif($row->STATUS == 2 ){
+                                                            }elseif($row->STATUS == 20 ){
                                                                 $status_color = 't-del';
-                                                            }elseif($row->STATUS == 3 ){
+                                                            }elseif($row->STATUS == 30 ){
                                                                 $status_color = 't-del';
-                                                            }elseif($row->STATUS == 4 ){
+                                                            }elseif($row->STATUS == 40 ){
+                                                                $status_color = 't-del';
+                                                            }elseif($row->STATUS == 50 ){
                                                                 $status_color = 't-del';
                                                             }
                                                         ?>
@@ -170,13 +172,8 @@
                                                         |
                                                         @if(hasAccessAbility('edit_product', $roles))
                                                             <a href="{{ route('admin.product.edit', [$row->PK_NO]) }}" title="EDIT">Edit</a>
-                                                        @endif
-                                                        |
-                                                        @if(hasAccessAbility('delete_product', $roles))
-                                                            <a href="{{ route('admin.product.delete', [$row->PK_NO]) }}"
-                                                               onclick="return confirm('Are you sure you want to delete the properties ?')"
-                                                               title="DELETE">Delete</a>
-                                                        @endif
+                                                        @endif                                                        
+                                                     
 
                                                     </td>
                                                 </tr>

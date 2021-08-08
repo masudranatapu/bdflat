@@ -8,11 +8,12 @@ return [
     ],
 
     'property_status' => [
-        0 => 'pending',
-        1 => 'published',
-        2 => 'Rejected',
-        3 => 'Expaired',
-        4 => 'deleted',
+        0 => 'Pending',
+        10 => 'Published',
+        20 => 'Unpublished',
+        30 => 'Rejected',
+        40 => 'Expaired',
+        50 => 'deleted',
     ],
 
     'payment_status' => [
