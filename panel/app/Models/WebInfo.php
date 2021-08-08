@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WebInfo extends Model
 {
-    protected $table        = 'WEB_CONFIG';
+    protected $table        = 'WEB_SETTINGS';
     protected $primaryKey   = 'PK_NO';
     public $timestamps      = false;
 
@@ -19,8 +19,8 @@ class WebInfo extends Model
         'META_TITLE', 'META_DESC','LOGO_PATH','FAV_PATH'
     ];
 
-    
 
-    
+
+
 
 }
