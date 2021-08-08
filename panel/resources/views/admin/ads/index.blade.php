@@ -72,7 +72,7 @@
                                                             <td>{{ $row->position->NAME ?? '' }}</td>
                                                             <td>{{ date('d-m-Y', strtotime($row->AVAILABLE_FROM)) }}</td>
                                                             <td>{{ date('d-m-Y', strtotime($row->AVAILABLE_TO)) }}</td>
-                                                            <td>0</td>
+                                                            <td>{{ $row->images->count() }}</td>
                                                             <td>{{ $row->STATUS ? 'Published' : 'Pending' }}</td>
                                                             <td>
                                                                 @if(hasAccessAbility('view_ads_image', $roles))

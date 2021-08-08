@@ -25,7 +25,7 @@ class AdsAbstract implements AdsInterface
 
     public function getPaginatedList($request): object
     {
-        $data = $this->ads->with('position')->orderBy('PK_NO', 'ASC')->get();
+        $data = $this->ads->with(['position', 'images'])->orderBy('PK_NO', 'ASC')->get();
         return $this->formatResponse(true, '', 'web.ads', $data);
     }
 
