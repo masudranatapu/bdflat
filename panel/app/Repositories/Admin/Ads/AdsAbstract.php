@@ -1,16 +1,12 @@
 <?php
 namespace App\Repositories\Admin\Ads;
 
+use App\Models\Web\AdsImages;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Auth;
 use App\Models\Web\Ads;
 use App\Models\Web\AdsPosition;
-use App\Models\UserGroup;
 use App\Traits\RepoResponse;
-use App\Models\AccountSource;
-use App\Models\AuthUserGroup;
-use App\Models\AdminUser as User;
-use Illuminate\Support\Facades\Hash;
 
 class AdsAbstract implements AdsInterface
 {
@@ -18,16 +14,18 @@ class AdsAbstract implements AdsInterface
 
     protected $ads;
     protected $adsPosition;
+    protected $adsImages;
 
-    public function __construct(Ads $ads,AdsPosition $adsPosition)
+    public function __construct(Ads $ads, AdsPosition $adsPosition, AdsImages $adsImages)
     {
         $this->ads = $ads;
         $this->adsPosition = $adsPosition;
+        $this->adsImages = $adsImages;
     }
 
     public function getPaginatedList($request): object
     {
-        $data = $this->ads->orderBy('PK_NO', 'ASC')->get();
+        $data = $this->ads->with(['position', 'images'])->orderBy('PK_NO', 'ASC')->get();
         return $this->formatResponse(true, '', 'web.ads', $data);
     }
 
@@ -58,7 +56,7 @@ class AdsAbstract implements AdsInterface
 
     public function editAd($id): object
     {
-        $data['positions'] = $this->adsPosition->orderBy('PK_NO', 'ASC')->pluck('NAME', 'PK_NO');
+        $data['positions'] = $this->adsPosition->orderBy('PK_NO', 'ASC')->pluck('NAME', 'POSITION_ID');
         $data['ad'] = $this->ads->find($id);
         return $this->formatResponse(true, '', 'web.ads', $data);
     }
@@ -147,4 +145,63 @@ class AdsAbstract implements AdsInterface
         return $this->formatResponse($status, $msg, 'web.ads_position');
     }
 
+    public function getAdsImages($id): object
+    {
+        $data['images'] = $this->adsImages->orderByDesc('ORDER_ID')->get();
+        return $this->formatResponse(true, '', 'web.ads.images', $data);
+    }
+
+    public function storeAdsImages($request, $id)
+    {
+        $status = false;
+        $msg = 'Image could not be added!';
+
+        DB::beginTransaction();
+        try {
+            $adImg = new AdsImages();
+            $adImg->F_ADS_NO = $id;
+            $adImg->ORDER_ID = $request->order_id;
+
+            $image = $request->file('images')[0];
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+            $imagePath = '/uploads/ads/' . $id . '/';
+            $image->move(public_path($imagePath), $imageName);
+
+            $adImg->IMAGE_PATH = $imagePath . $imageName;
+            $adImg->save();
+
+            $status = true;
+            $msg = 'Image added successfully!';
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'web.ads.image');
+    }
+
+    public function deleteAdsImage(int $id): object
+    {
+        $status = false;
+        $msg = 'Image could not be deleted!';
+
+        DB::beginTransaction();
+        try {
+            $adImg = AdsImages::find($id);
+
+            $imageFile = $adImg->IMAGE_PATH;
+            $adImg->delete();
+            unlink(public_path($imageFile));
+
+            $status = true;
+            $msg = 'Image deleted successfully!';
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'web.ads.image');
+    }
 }

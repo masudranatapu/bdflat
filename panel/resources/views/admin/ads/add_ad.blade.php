@@ -40,9 +40,6 @@ $status = [
             <div class="col-md-12">
                 <div class="card card-success">
                     <div class="card-header">
-                        @if(hasAccessAbility('view_ads', $roles))
-                            <a href="{{ route('web.ads') }}" class="btn btn-primary btn-sm">Cancel</a>
-                        @endif
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
@@ -56,7 +53,7 @@ $status = [
                         <div class="card-body">
                             {!! Form::open([ 'route' => 'web.ads.store', 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('position') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('position','Ad Position <span>*</span>', ['class' => 'label-title'], false) !!}
@@ -65,7 +62,7 @@ $status = [
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('start_date') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('start_date','Start Date <span>*</span>', ['class' => 'label-title'], false) !!}
@@ -74,7 +71,7 @@ $status = [
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('end_date') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('end_date','End Date <span>*</span>', ['class' => 'label-title'], false) !!}
@@ -83,9 +80,7 @@ $status = [
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('status') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('status','Status <span>*</span>', ['class' => 'label-title'], false) !!}
@@ -95,6 +90,9 @@ $status = [
                                     </div>
                                 </div>
                             </div>
+                            @if(hasAccessAbility('view_ads', $roles))
+                                <a href="{{ route('web.ads') }}" class="btn btn-primary">Cancel</a>
+                            @endif
                             {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
                             {!! Form::close() !!}
                         </div>

@@ -173,7 +173,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     //Pages
     Route::get('pages', ['middleware' => 'acl:view_pages', 'as' => 'admin.pages.list', 'uses' => 'PagesController@getIndex']);
-    Route::get('pages/create', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.create', 'uses' => 'PagesController@getEdit']);
+    Route::get('pages/create', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.create', 'uses' => 'PagesController@getCreate']);
     Route::post('pages/store', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.store', 'uses' => 'PagesController@postStore']);
     Route::get('pages/{id}/edit', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.edit', 'uses' => 'PagesController@getEdit']);
     Route::post('pages/{id}/update', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.update', 'uses' => 'PagesController@postUpdate']);
@@ -396,6 +396,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     //Customer
     Route::get('seeker', ['middleware' => 'acl:view_seeker', 'as' => 'admin.seeker.list', 'uses' => 'SeekerController@getIndex']);
     Route::get('seeker/edit', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.edit', 'uses' => 'SeekerController@getEdit']);
+    Route::get('seeker/payment', ['middleware' => 'acl:seeker_payment', 'as' => 'admin.seeker.payment', 'uses' => 'SeekerController@payment']);
 
 /*
 
@@ -847,6 +848,10 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::post('web/ads/store',['middleware' => 'acl:add_ads', 'as' => 'web.ads.store', 'uses' => 'AdsController@storeAd']);
     Route::get('web/ads/{id}/edit',['middleware' => 'acl:edit_ads', 'as' => 'web.ads.edit', 'uses' => 'AdsController@editAd']);
     Route::post('web/ads/{id}/update',['middleware' => 'acl:edit_ads', 'as' => 'web.ads.update', 'uses' => 'AdsController@updateAd']);
+
+    Route::get('web/ads/{id}/images',['middleware' => 'acl:view_ads_image', 'as' => 'web.ads.image', 'uses' => 'AdsController@getAdsImages']);
+    Route::post('web/ads/{id}/store',['middleware' => 'acl:add_ads_image', 'as' => 'web.ads.image.store', 'uses' => 'AdsController@storeAdsImage']);
+    Route::get('web/ads/{id}/delete',['middleware' => 'acl:delete_ads_image', 'as' => 'web.ads.image.delete', 'uses' => 'AdsController@deleteAdsImage']);
 
     Route::get('web/ads_position',['middleware' => 'acl:view_ads_position', 'as' => 'web.ads_position', 'uses' => 'AdsController@getAdsPosition']);
     Route::get('web/ads_position/create',['middleware' => 'acl:add_ads_position', 'as' => 'web.ads_position.create', 'uses' => 'AdsController@createAdsPosition']);

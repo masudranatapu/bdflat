@@ -59,7 +59,7 @@
                                             <tr>
                                                 <th>SL</th>
                                                 <th>Name</th>
-                                                <th>Position</th>
+                                                <th>Position ID</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>

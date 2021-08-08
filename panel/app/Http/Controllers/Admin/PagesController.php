@@ -10,7 +10,6 @@ class PagesController extends BaseController
 {
     public function __construct()
     {
-
     }
 
     public function getIndex(Request $request)
@@ -34,10 +33,4 @@ class PagesController extends BaseController
     public function postUpdate() {
 
     }
-
-
-
-
-
-
 }
