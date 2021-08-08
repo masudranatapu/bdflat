@@ -173,7 +173,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     //Pages
     Route::get('pages', ['middleware' => 'acl:view_pages', 'as' => 'admin.pages.list', 'uses' => 'PagesController@getIndex']);
-    Route::get('pages/create', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.create', 'uses' => 'PagesController@getEdit']);
+    Route::get('pages/create', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.create', 'uses' => 'PagesController@getCreate']);
     Route::post('pages/store', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.store', 'uses' => 'PagesController@postStore']);
     Route::get('pages/{id}/edit', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.edit', 'uses' => 'PagesController@getEdit']);
     Route::post('pages/{id}/update', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.update', 'uses' => 'PagesController@postUpdate']);
