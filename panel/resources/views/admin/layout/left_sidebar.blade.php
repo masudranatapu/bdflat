@@ -6,10 +6,13 @@
 
     @if(hasAccessAbility('view_property', $roles))
         <li class=" nav-item @yield('Property Management')">
-            <a href="#"><i class="fas fa-box-open"></i></i><span class="menu-title" data-i18n="@lang('left_menu.product')">Properties</span></a>
+            <a href="#"><i class="fas fa-box-open"></i></i><span class="menu-title"
+                                                                 data-i18n="@lang('left_menu.product')">Properties</span></a>
             <ul class="menu-content">
                 @if(hasAccessAbility('view_property', $roles))
-                    <li class="nav-item @yield('property_list')"><a class="menu-item" href="{{ route('admin.product.list') }}"><i></i><span data-i18n="@yield('property_list')">Properties</span></a></li>
+                    <li class="nav-item @yield('property_list')"><a class="menu-item"
+                                                                    href="{{ route('admin.product.list') }}"><i></i><span
+                                data-i18n="@yield('property_list')">Properties</span></a></li>
                 @endif
 
 
@@ -28,7 +31,8 @@
         </li>
     @endif
     @if(hasAccessAbility('view_seeker', $roles))
-        <li class="nav-item  @yield('Property Seekers')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Property Seekers</span></a>
+        <li class="nav-item  @yield('Property Seekers')"><a href="#"><i class="fas fa-users-cog"></i><span
+                    class="menu-title" data-i18n="@lang('left_menu.customer')">Property Seekers</span></a>
             <ul class="menu-content">
                 @if(hasAccessAbility('view_seeker', $roles))
                     <li class="@yield('seeker_list')"><a class="menu-item" href="{{route('admin.seeker.list')}}"><i></i><span
@@ -42,24 +46,29 @@
 
 
     @if(hasAccessAbility('view_customer', $roles))
-    <li class="nav-item  @yield('Property Owner')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">Property Owners</span></a>
-        <ul class="menu-content">
+        <li class="nav-item  @yield('Property Owner')"><a href="#"><i class="fas fa-users-cog"></i><span
+                    class="menu-title" data-i18n="@lang('left_menu.customer')">Property Owners</span></a>
+            <ul class="menu-content">
 
-            @if(hasAccessAbility('view_reseller', $roles))
-                <li class="@yield('reseller_list')"><a class="menu-item" href="{{route('admin.reseller.list')}}"><i></i><span
-                            data-i18n="@lang('left_menu.reseller_list')">Owner List</span></a></li>
-            @endif
+                @if(hasAccessAbility('view_reseller', $roles))
+                    <li class="@yield('reseller_list')"><a class="menu-item"
+                                                           href="{{route('admin.reseller.list')}}"><i></i><span
+                                data-i18n="@lang('left_menu.reseller_list')">Owner List</span></a></li>
+                @endif
 
-        </ul>
-    </li>
-@endif
+            </ul>
+        </li>
+    @endif
 
     @if(hasAccessAbility('view_agent', $roles))
-        <li class="nav-item  @yield('Agent Management')"><a href="#"><i class="fas fa-users-cog"></i><span class="menu-title" data-i18n="@lang('left_menu.customer')">BDFLAT Agents</span></a>
+        <li class="nav-item  @yield('Agent Management')"><a href="#"><i class="fas fa-users-cog"></i><span
+                    class="menu-title" data-i18n="@lang('left_menu.customer')">BDFLAT Agents</span></a>
             <ul class="menu-content">
 
                 @if(hasAccessAbility('view_agent', $roles))
-                    <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agents.list')}}"><i></i><span data-i18n="@lang('left_menu.agent_list')">Agent List</span></a>
+                    <li class="@yield('agent_list')"><a class="menu-item"
+                                                        href="{{route('admin.agents.list')}}"><i></i><span
+                                data-i18n="@lang('left_menu.agent_list')">Agent List</span></a>
                     </li>
                 @endif
 
@@ -71,21 +80,30 @@
 
     @if(hasAccessAbility('view_payment_section', $roles))
         <li class="nav-item @yield('Payment')">
-            <a href="#"><i class="la la-paypal"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.payment')</span></a>
+            <a href="#"><i class="la la-paypal"></i><span class="menu-title"
+                                                          data-i18n="Calendars">@lang('left_menu.payment')</span></a>
             <ul class="menu-content">
                 @if(hasAccessAbility('view_transaction', $roles))
-                    <li class="nav-item @yield('transaction_list')"><a class="menu-item" href="{{ route('admin.transaction.list') }}"><i></i><span data-i18n="Basic">Transactions</span></a></li>
+                    <li class="nav-item @yield('transaction_list')"><a class="menu-item"
+                                                                       href="{{ route('admin.transaction.list') }}"><i></i><span
+                                data-i18n="Basic">Transactions</span></a></li>
                 @endif
                 @if(hasAccessAbility('view_refund_request', $roles))
-                    <li class="nav-item @yield('refund_request')"><a class="menu-item" href="{{ route('admin.refund_request') }}"><i></i><span data-i18n="Basic">Refund Request</span></a>
+                    <li class="nav-item @yield('refund_request')"><a class="menu-item"
+                                                                     href="{{ route('admin.refund_request') }}"><i></i><span
+                                data-i18n="Basic">Refund Request</span></a>
                     </li>
                 @endif
 
                 @if(hasAccessAbility('view_recharge_request', $roles))
-                    <li class=" nav-item @yield('recharge_request')"><a class="menu-item" href="{{ route('admin.recharge_request') }}"><i></i><span data-i18n="Basic">Recharge Request</span></a></li>
+                    <li class=" nav-item @yield('recharge_request')"><a class="menu-item"
+                                                                        href="{{ route('admin.recharge_request') }}"><i></i><span
+                                data-i18n="Basic">Recharge Request</span></a></li>
                 @endif
                 @if(hasAccessAbility('view_agent_commission', $roles))
-                    <li class="@yield('agent_commission')"><a class="menu-item" href="{{route('admin.agent_commission')}}"><i></i><span data-i18n="@yield('agent_commission')">Agent Commission Request</span></a></li>
+                    <li class="@yield('agent_commission')"><a class="menu-item"
+                                                              href="{{route('admin.agent_commission')}}"><i></i><span
+                                data-i18n="@yield('agent_commission')">Agent Commission Request</span></a></li>
                 @endif
                 {{-- @if(hasAccessAbility('view_bank_to_bank', $roles))
                 <li class="@yield('bank_to_bank_xfer')"><a class="menu-item" href="{{route('admin.account_to_bank_list.view')}}"><i></i><span data-i18n="@yield('bank_to_bank_xfer')">Internal Transfer</span></a></li>
@@ -267,11 +285,30 @@
     @endif --}}
     {{-- <li class=" nav-item"><a href="{{route('product.inventory.list')}}"><i class="la la-calendar"></i><span class="menu-title" data-i18n="Calendars">@lang('left_menu.inventory')</span></a>
     </li> --}}
-    @if(hasAccessAbility('view_pages', $roles))
-    <li class="nav-item @yield('pages')">
-        <a href="{{ route('admin.pages.list')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="pages">Pages</span></a>
+
+    <li class="nav-item @yield('Pages')">
+        <a href="#">
+            <i class="la la-sticky-note"></i>
+            <span class="menu-title" data-i18n="Pages">Pages</span>
+        </a>
+        <ul class="menu-content">
+            @if(hasAccessAbility('view_pages', $roles))
+                <li class="@yield('pages-list')">
+                    <a href="{{ route('admin.pages.list') }}">
+                        <span class="menu-title" data-i18n="Pages List">Pages List</span>
+                    </a>
+                </li>
+            @endif
+            @if(hasAccessAbility('view_pages_category', $roles))
+                <li class="@yield('pages-category')">
+                    <a href="{{ route('admin.pages-category.list') }}">
+                        <span class="menu-title" data-i18n="Pages List">Pages Category</span>
+                    </a>
+                </li>
+            @endif
+        </ul>
     </li>
-    @endif
+
     {{-- <li class=" nav-item @yield('dashboard')">
         <a href="{{ route('admin.dashboard')}}"><i class="la la-dashboard"></i><span class="menu-title" data-i18n="@lang('left_menu.dashboard')">Banners</span></a>
     </li>
@@ -321,7 +358,10 @@
         </li>
     @endif --}}
 
-    <li class=" navigation-header"><span data-i18n="Settings">Settings</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Settings"></i></li>
+    <li class=" navigation-header"><span data-i18n="Settings">Settings</span><i class="la la-ellipsis-h"
+                                                                                data-toggle="tooltip"
+                                                                                data-placement="right"
+                                                                                data-original-title="Settings"></i></li>
 
     @if(hasAccessAbility('view_admin_user', $roles))
         <li class=" nav-item @yield('Admin Mangement')">
@@ -333,19 +373,23 @@
                 @if(hasAccessAbility('view_admin_user', $roles))
                     <li class="@yield('admin-user')">
                         <a href="{{ route('admin.admin-user') }}">
-                            <span class="menu-title" data-i18n="@lang('left_menu.admin_user')">@lang('left_menu.admin_user')</span>
+                            <span class="menu-title"
+                                  data-i18n="@lang('left_menu.admin_user')">@lang('left_menu.admin_user')</span>
                         </a>
                     </li>
                 @endif
                 @if(hasAccessAbility('view_user_group', $roles))
                     <li class=" nav-item @yield('user-group')">
                         <a href="{{ route('admin.user-group') }}">
-                            <span class="menu-title" data-i18n="@lang('left_menu.user_category')">@lang('left_menu.user_category')</span>
+                            <span class="menu-title"
+                                  data-i18n="@lang('left_menu.user_category')">@lang('left_menu.user_category')</span>
                         </a>
                     </li>
                 @endif
                 @if(hasAccessAbility('view_agent', $roles))
-                    <li class="@yield('agent_list')"><a class="menu-item" href="{{route('admin.agent.list')}}"><i></i><span data-i18n="Basic">@lang('left_menu.agent_list')</span></a></li>
+                    <li class="@yield('agent_list')"><a class="menu-item"
+                                                        href="{{route('admin.agent.list')}}"><i></i><span
+                                data-i18n="Basic">@lang('left_menu.agent_list')</span></a></li>
                 @endif
             </ul>
         </li>
@@ -382,7 +426,8 @@
                 @if(hasAccessAbility('assign_user_access', $roles))
                     <li class=" nav-item @yield('assign-access')">
                         <a href="{{ route('admin.assign-access') }}">
-                            <span class="menu-title" data-i18n="@lang('left_menu.assign_access')">@lang('left_menu.assign_access')</span>
+                            <span class="menu-title"
+                                  data-i18n="@lang('left_menu.assign_access')">@lang('left_menu.assign_access')</span>
                         </a>
                     </li>
                 @endif
@@ -398,115 +443,146 @@
                       data-i18n="@lang('left_menu.system_settings')">@lang('left_menu.system_settings')</span>
             </a>
             <ul class="menu-content">
-                <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.general.info')}}"><i></i><span data-i18n="Basic">General</span></a>
+                <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.general.info')}}"><i></i><span
+                            data-i18n="Basic">General</span></a>
                 </li>
-                <li class="@yield('property_category')"><a class="menu-item" href="{{route('admin.property.category')}}"><i></i><span data-i18n="Basic">Property Categories</span></a>
+                <li class="@yield('property_category')"><a class="menu-item"
+                                                           href="{{route('admin.property.category')}}"><i></i><span
+                            data-i18n="Basic">Property Categories</span></a>
                 </li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Condition</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Condition</span></a>
                 </li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Features</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Features</span></a>
 
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
                             data-i18n="Basic">Facilities</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
                             data-i18n="Basic">City or Division</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Area</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Area</span></a>
 
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
                             data-i18n="Basic">Blog Categories</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bedroom</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Page Category</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bathroom</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for Lead</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for property </span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Floor</span></a>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facing</span></a>
-                <li class="@yield('listing_price')"><a class="menu-item" href="{{route('admin.listing_price.list')}}"><i></i><span data-i18n="Basic">Pricing</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Bedroom</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Page Category</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Bathroom</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Refund Reason for Lead</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Refund Reason for property </span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Floor</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">Facing</span></a>
+                <li class="@yield('listing_price')"><a class="menu-item"
+                                                       href="{{route('admin.listing_price.list')}}"><i></i><span
+                            data-i18n="Basic">Pricing</span></a>
 
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">City List</span></a>
+                <li class="@yield('city_list')"><a class="menu-item"
+                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                            data-i18n="Basic">City List</span></a>
                 </li>
 
                 <li class=" nav-item @yield('currency')"><a class="menu-item" href="{{ route('admin.currency.list') }}"><i></i><span
                             data-i18n="Basic">@lang('left_menu.currency')</span></a></li>
                 @if(hasAccessAbility('view_address_type', $roles))
                     <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span
-                                data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a></li>
+                                data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a>
+                    </li>
                 @endif
             </ul>
         </li>
     @endif
 
     @if(hasAccessAbility('view_web_ads', $roles))
-    <li class=" nav-item @yield('web_ads')">
+        <li class=" nav-item @yield('web_ads')">
+            <a href="#"><i class="la la-cog"></i>
+                <span class="menu-title" data-i18n="@yield('web_ads')">Web Ads</span>
+            </a>
+            <ul class="menu-content">
+                <li class="@yield('ads')">
+                    <a class="menu-item" href="{{route('web.ads')}}"><i></i>
+                        <span data-i18n="">Ads</span>
+                    </a>
+                </li>
+                <li class="@yield('ads_position')">
+                    <a class="menu-item" href="{{route('web.ads_position')}}"><i></i>
+                        <span data-i18n="">Ad Position</span>
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+    @endif
+
+    <li class=" nav-item @yield('web')">
         <a href="#"><i class="la la-cog"></i>
-            <span class="menu-title" data-i18n="@yield('web_ads')">Web Ads</span>
+            <span class="menu-title" data-i18n="@yield('web')">Web</span>
         </a>
         <ul class="menu-content">
-            <li class="@yield('ads')">
-                <a class="menu-item" href="{{route('web.ads')}}"><i></i>
-                    <span data-i18n="">Ads</span>
-                </a>
-            </li>
-            <li class="@yield('ads_position')">
-                <a class="menu-item" href="{{route('web.ads_position')}}"><i></i>
-                    <span data-i18n="">Ad Position</span>
+            <li class="@yield('slider')">
+                <a class="menu-item" href="{{route('web.home.slider')}}"><i></i>
+                    <span data-i18n="">Home Slider</span>
                 </a>
             </li>
         </ul>
+        <ul class="menu-content">
+            <li class="@yield('blog-category')">
+                <a class="menu-item" href="{{route('web.blog.category')}}"><i></i>
+                    <span data-i18n="@yield('blog-category')">Blog Category</span>
+                </a>
+            </li>
+            <li class="@yield('blog-article')">
+                <a class="menu-item" href="{{route('web.blog.article')}}"><i></i>
+                    <span data-i18n="@yield('blog-article')">Blog Article</span>
+                </a>
+            </li>
+            <li class="@yield('web_page')">
+                <a class="menu-item" href="{{route('web.page')}}"><i></i>
+                    <span data-i18n="@yield('web_page')">Pages</span>
+                </a>
+            </li>
+            <li class="@yield('faq')">
+                <a class="menu-item" href="{{route('web.faq')}}"><i></i>
+                    <span data-i18n="@yield('faq')">Faq</span>
+                </a>
+            </li>
+            <li class="@yield('about')">
+                <a class="menu-item" href="{{route('web.about')}}"><i></i>
+                    <span data-i18n="@yield('about')">About</span>
+                </a>
+            </li>
+            <li class="@yield('payment_method')">
+                <a class="menu-item" href="{{route('web.payment_method')}}"><i></i>
+                    <span data-i18n="@yield('payment_method')">Payment Method</span>
+                </a>
+            </li>
+            {{-- <li class="@yield('mail')">
+                <a class="menu-item" href="{{route('web.mail.index')}}"><i></i>
+                    <span data-i18n="@yield('mail')">Email Config</span>
+                </a>
+            </li> --}}
+        </ul>
+
 
     </li>
-    @endif
-
-        <li class=" nav-item @yield('web')">
-            <a href="#"><i class="la la-cog"></i>
-                <span class="menu-title" data-i18n="@yield('web')">Web</span>
-            </a>
-            <ul class="menu-content">
-                <li class="@yield('slider')">
-                    <a class="menu-item" href="{{route('web.home.slider')}}"><i></i>
-                        <span data-i18n="">Home Slider</span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="menu-content">
-                <li class="@yield('blog-category')">
-                    <a class="menu-item" href="{{route('web.blog.category')}}"><i></i>
-                        <span data-i18n="@yield('blog-category')">Blog Category</span>
-                    </a>
-                </li>
-                <li class="@yield('blog-article')">
-                    <a class="menu-item" href="{{route('web.blog.article')}}"><i></i>
-                        <span data-i18n="@yield('blog-article')">Blog Article</span>
-                    </a>
-                </li>
-                <li class="@yield('web_page')">
-                    <a class="menu-item" href="{{route('web.page')}}"><i></i>
-                        <span data-i18n="@yield('web_page')">Pages</span>
-                    </a>
-                </li>
-                <li class="@yield('faq')">
-                    <a class="menu-item" href="{{route('web.faq')}}"><i></i>
-                        <span data-i18n="@yield('faq')">Faq</span>
-                    </a>
-                </li>
-                <li class="@yield('about')">
-                    <a class="menu-item" href="{{route('web.about')}}"><i></i>
-                        <span data-i18n="@yield('about')">About</span>
-                    </a>
-                </li>
-                <li class="@yield('payment_method')">
-                    <a class="menu-item" href="{{route('web.payment_method')}}"><i></i>
-                        <span data-i18n="@yield('payment_method')">Payment Method</span>
-                    </a>
-                </li>
-                {{-- <li class="@yield('mail')">
-                    <a class="menu-item" href="{{route('web.mail.index')}}"><i></i>
-                        <span data-i18n="@yield('mail')">Email Config</span>
-                    </a>
-                </li> --}}
-            </ul>
-
-
-        </li>
 
 </ul>

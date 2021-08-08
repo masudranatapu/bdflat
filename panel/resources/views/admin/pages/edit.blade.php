@@ -2,12 +2,12 @@
 
 @section('pages-list','active')
 
-@section('title') Pages | Create @endsection
-@section('page-name') Pages | Create @endsection
+@section('title') Pages | Edit @endsection
+@section('page-name') Pages | Edit @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('agent.breadcrumb_title') </a></li>
-    <li class="breadcrumb-item active">Pages | Create</li>
+    <li class="breadcrumb-item active">Pages | Edit</li>
 @endsection
 
 @push('custom_css')
@@ -53,14 +53,14 @@
                         <div class="card-body">
                             <div class="row  mb-2">
                                 <div class="col-12">
-                                    {!! Form::open(['route' => 'admin.pages.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
+                                    {!! Form::open(['route' => ['admin.pages.update', $data['page']->PK_NO], 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div
                                                 class="form-group {!! $errors->has('page_category') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::label('page_category','Page Category <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                    {!! Form::select('page_category', $data['page_categories'] ?? [], old('page_category'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Page Category']) !!}
+                                                    {!! Form::select('page_category', $data['page_categories'] ?? [], old('page_category', $data['page']->F_PAGE_CATEGORY_NO), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Page Category']) !!}
                                                     {!! $errors->first('page_category', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -69,7 +69,7 @@
                                             <div class="form-group {!! $errors->has('page_title') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::label('page_title','Page Title <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                    {!! Form::text('page_title', old('page_title'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Page Title']) !!}
+                                                    {!! Form::text('page_title', old('page_title', $data['page']->TITLE), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Page Title']) !!}
                                                     {!! $errors->first('page_title', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -79,7 +79,7 @@
                                                 class="form-group {!! $errors->has('meta_keywords') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::label('meta_keywords','Meta Keywords <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                    {!! Form::text('meta_keywords', old('meta_keywords'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Meta Keywords']) !!}
+                                                    {!! Form::text('meta_keywords', old('meta_keywords', $data['page']->META_KEYWARDS), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Meta Keywords']) !!}
                                                     {!! $errors->first('meta_keywords', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -88,7 +88,7 @@
                                             <div class="form-group {!! $errors->has('meta_description') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::label('meta_description','Meta Description <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                    {!! Form::textarea('meta_description', old('meta_description'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Meta Description']) !!}
+                                                    {!! Form::textarea('meta_description', old('meta_description', $data['page']->META_DESCRIPTION), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Meta Description']) !!}
                                                     {!! $errors->first('meta_description', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                                                             <div class="input-group-text" id="btnGroupAddon2">{{ env('APP_URL') . '/page/' }}</div>
                                                         </div>
                                                     </div>
-                                                    {!! Form::text('page_url', old('page_url'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Page URL']) !!}
+                                                    {!! Form::text('page_url', old('page_url', substr($data['page']->URL_SLUG, strlen(env('APP_URL') . '/page/'))), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Page URL']) !!}
                                                     {!! $errors->first('page_url', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@
                                             <div class="form-group {!! $errors->has('search_url') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::label('search_url','Search URL <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                    {!! Form::text('search_url', old('search_url'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Search URL']) !!}
+                                                    {!! Form::text('search_url', old('search_url', $data['page']->SEARCH_URL), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Search URL']) !!}
                                                     {!! $errors->first('search_url', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -121,7 +121,7 @@
                                             <div class="form-group {!! $errors->has('order_id') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::label('order_id','Order ID <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                    {!! Form::number('order_id', old('order_id'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Order ID']) !!}
+                                                    {!! Form::number('order_id', old('order_id', $data['page']->ORDER_ID), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Order ID']) !!}
                                                     {!! $errors->first('order_id', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -131,18 +131,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 {!! Form::label('images','Page Image <span>*</span>', ['class' => 'label-title'], false) !!}
+                                                <img src="{{ asset($data['page']->IMAGE_PATH) }}" alt="" style="max-height: 100px;display: block">
                                                 <div class="controls">
                                                     <div id="imageFile" style="padding-top: .5rem;"></div>
                                                 </div>
                                                 {!! $errors->first('images', '<label class="help-block text-danger">:message</label>') !!}
-                                                {!! $errors->first('images.0', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div
                                                 class="form-group {!! $errors->has('view_on_bottom_list') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::checkbox('view_on_bottom_list', '1', false, ['id' => 'view_on_bottom_list']) !!}                                                    {!! Form::label('view_on_bottom_list','View On Bottom List', ['class' => 'label-title'], false) !!}
+                                                    {!! Form::checkbox('view_on_bottom_list', '1', $data['page']->IS_BOTTOM_VIEW == 1, ['id' => 'view_on_bottom_list']) !!}
+                                                    {!! Form::label('view_on_bottom_list','View On Bottom List', ['class' => 'label-title'], false) !!}
                                                     {!! $errors->first('view_on_bottom_list', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -150,10 +151,10 @@
                                         <div class="col-md-12">
                                             <div class="form-group {!! $errors->has('status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::radio('status','1', true,[ 'id' => 'active','data-validation-required-message' => 'This field is required','checked'=>'checked']) !!}
+                                                    {!! Form::radio('status','1', $data['page']->IS_ACTIVE == 1,[ 'id' => 'active','data-validation-required-message' => 'This field is required','checked'=>'checked']) !!}
                                                     {{ Form::label('active','Active') }}
 
-                                                    {!! Form::radio('status','0', false,[ 'id' => 'inactive']) !!}
+                                                    {!! Form::radio('status','0', $data['page']->IS_ACTIVE == 0,[ 'id' => 'inactive']) !!}
                                                     {{ Form::label('inactive','Inactive') }}
                                                     {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
@@ -161,6 +162,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <a href="{{ route('admin.pages.list') }}" class="btn btn-info">Cancel</a>
+                                            {!! Form::hidden('update', '1') !!}
                                             {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
                                         </div>
                                     </div>

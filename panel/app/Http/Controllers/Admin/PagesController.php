@@ -2,35 +2,57 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PagesRequest;
+use App\Repositories\Admin\Pages\PagesInterface;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\BaseController;
 
 
-class PagesController extends BaseController
+class PagesController extends Controller
 {
-    public function __construct()
+    protected $resp;
+    protected $pages;
+
+    public function __construct(PagesInterface $pages)
     {
+        $this->pages = $pages;
     }
 
     public function getIndex(Request $request)
     {
-        return view('admin.pages.index');
+        $data['pages'] = $this->pages->getPages()->data;
+        return view('admin.pages.index', compact('data'));
     }
 
     public function getCreate()
     {
-        return view('admin.pages.create');
+        $data['page_categories'] = $this->pages->getPagesCategories()->data->pluck('NAME', 'PK_NO');
+        return view('admin.pages.create', compact('data'));
     }
 
-    public function getEdit($request)
+    public function getEdit($id)
     {
-        return view('admin.pages.create');
+        $data['page_categories'] = $this->pages->getPagesCategories()->data->pluck('NAME', 'PK_NO');
+        $data['page'] = $this->pages->getPage($id)->data;
+        return view('admin.pages.edit', compact('data'));
     }
 
-    public function postStore() {
-
+    public function postStore(PagesRequest $request): RedirectResponse
+    {
+        $this->resp = $this->pages->storePage($request);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
-    public function postUpdate() {
 
+    public function postUpdate(PagesRequest $request, $id): RedirectResponse
+    {
+        $this->resp = $this->pages->updatePage($request, $id);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
+    public function getDelete($id): RedirectResponse
+    {
+        $this->resp = $this->pages->deletePage($id);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 }

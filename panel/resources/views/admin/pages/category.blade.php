@@ -1,13 +1,13 @@
 @extends('admin.layout.master')
 
-@section('pages-list','active')
+@section('pages-category','active')
 
-@section('title') Pages @endsection
-@section('page-name') Pages @endsection
+@section('title') Pages Category @endsection
+@section('page-name') Pages Category @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('agent.breadcrumb_title') </a></li>
-    <li class="breadcrumb-item active">Pages</li>
+    <li class="breadcrumb-item active">Pages Category</li>
 @endsection
 
 @push('custom_css')
@@ -60,52 +60,44 @@
                                             </form>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
-                                            <a href="{{ route('admin.pages.create') }}"
+                                            <a href="{{ route('admin.pages-category.create') }}"
                                                class="text-warning font-weight-bold"><i class="fa fa-plus"></i> Add New</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table table-striped text-center table-sm table-bordered">
+                                        <table class="table table-striped table-sm table-bordered text-center">
                                             <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Page Title</th>
-                                                <th>Page URL</th>
-                                                <th>Order</th>
+                                                <th class="text-center">Sl.</th>
+                                                <th>Category Name</th>
+                                                <th>Order ID</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @if(isset($data['pages']) && count($data['pages']))
-                                                @foreach($data['pages'] as $key => $page)
+                                            @if(isset($data['categories']) && count($data['categories']))
+                                                @foreach($data['categories'] as $key => $category)
                                                     <tr>
                                                         <td>{{ $key + 1 }}</td>
-                                                        <td>{{ $page->TITLE }}</td>
-                                                        <td>{{ $page->URL_SLUG }}</td>
-                                                        <td class="font-weight-bold text-primary">{{ $page->ORDER_ID }}</td>
-                                                        @if($page->IS_ACTIVE)
+                                                        <td>{{ $category->NAME }}</td>
+                                                        <td class="font-weight-bold text-primary">{{ $category->ORDER_ID }}</td>
+                                                        @if($category->IS_ACTIVE)
                                                             <td class="text-success">Active</td>
                                                         @else
                                                             <td class="text-danger">Inactive</td>
                                                         @endif
                                                         <td>
-                                                            @if(hasAccessAbility('view_pages', $roles))
-                                                                <a href="{{ route('admin.pages.edit', $page->PK_NO) }}"
-                                                                   class="btn btn-sm btn-info">
-                                                                    <i class="la la-eye"></i>
-                                                                </a>
-                                                            @endif
-                                                            @if(hasAccessAbility('edit_pages', $roles))
-                                                                <a href="{{ route('admin.pages.edit', $page->PK_NO) }}"
+                                                            @if(hasAccessAbility('edit_pages_category', $roles))
+                                                                <a href="{{ route('admin.pages-category.edit', $category->PK_NO) }}"
                                                                    class="btn btn-sm btn-warning">
                                                                     <i class="la la-pencil"></i>
                                                                 </a>
                                                             @endif
-                                                            @if(hasAccessAbility('delete_pages', $roles))
-                                                                <a href="{{ route('admin.pages.delete', $page->PK_NO) }}"
+                                                            @if(hasAccessAbility('delete_pages_category', $roles))
+                                                                <a href="{{ route('admin.pages-category.delete', $category->PK_NO) }}"
                                                                    onclick="return confirm('Are you sure?')"
                                                                    class="btn btn-sm btn-danger">
                                                                     <i class="la la-trash"></i>

@@ -177,8 +177,15 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('pages/store', ['middleware' => 'acl:new_pages', 'as' => 'admin.pages.store', 'uses' => 'PagesController@postStore']);
     Route::get('pages/{id}/edit', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.edit', 'uses' => 'PagesController@getEdit']);
     Route::post('pages/{id}/update', ['middleware' => 'acl:edit_pages', 'as' => 'admin.pages.update', 'uses' => 'PagesController@postUpdate']);
+    Route::get('pages/{id}/delete', ['middleware' => 'acl:delete_pages', 'as' => 'admin.pages.delete', 'uses' => 'PagesController@getDelete']);
 
-
+    // Pages Category
+    Route::get('pages-category', ['middleware' => 'acl:view_pages_category', 'as' => 'admin.pages-category.list', 'uses' => 'PagesCategoryController@getIndex']);
+    Route::get('pages-category/create', ['middleware' => 'acl:new_pages_category', 'as' => 'admin.pages-category.create', 'uses' => 'PagesCategoryController@getCreate']);
+    Route::post('pages-category/store', ['middleware' => 'acl:new_pages_category', 'as' => 'admin.pages-category.store', 'uses' => 'PagesCategoryController@postStore']);
+    Route::get('pages-category/{id}/edit', ['middleware' => 'acl:edit_pages_category', 'as' => 'admin.pages-category.edit', 'uses' => 'PagesCategoryController@getEdit']);
+    Route::post('pages-category/{id}/update', ['middleware' => 'acl:edit_pages_category', 'as' => 'admin.pages-category.update', 'uses' => 'PagesCategoryController@postUpdate']);
+    Route::get('pages-category/{id}/delete', ['middleware' => 'acl:delete_pages_category', 'as' => 'admin.pages-category.delete', 'uses' => 'PagesCategoryController@getDelete']);
 
     //Account Bank Name
     Route::get('account-bank', ['middleware' => 'acl:view_account_name', 'as' => 'account.bank.list', 'uses' => 'BankAccountController@getIndex']);
