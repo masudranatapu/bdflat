@@ -396,6 +396,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     //Customer
     Route::get('seeker', ['middleware' => 'acl:view_seeker', 'as' => 'admin.seeker.list', 'uses' => 'SeekerController@getIndex']);
     Route::get('seeker/edit', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.edit', 'uses' => 'SeekerController@getEdit']);
+    Route::get('seeker/payment', ['middleware' => 'acl:seeker_payment', 'as' => 'admin.seeker.payment', 'uses' => 'SeekerController@payment']);
 
 /*
 
