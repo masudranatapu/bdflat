@@ -40,6 +40,7 @@ class WebInfoController extends BaseController
 
     public function postStore(WebInfoRequest $request): RedirectResponse
     {
+//        dd($request->file('images'));
         $this->resp = $this->generalInfo->postStore($request);
         //dd($this->resp);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);

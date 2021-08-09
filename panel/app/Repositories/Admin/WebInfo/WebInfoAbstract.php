@@ -21,6 +21,7 @@ class WebInfoAbstract implements WebInfoInterface
     protected $state;
     protected $city;
     protected $country;
+    protected $imageMap;
 
     public function __construct(WebInfo $webInfo, Country $country, State $state, City $city)
     {
@@ -29,6 +30,13 @@ class WebInfoAbstract implements WebInfoInterface
         $this->city = $city;
         $this->country = $country;
 
+        $this->imageMap = [
+            'HEADER_LOGO',
+            'FOOTER_LOGO',
+            'APP_LOGO',
+            'META_IMAGE',
+            'FAVICON'
+        ];
     }
 
     public function getPaginatedList($request, int $per_page = 20)
@@ -73,10 +81,17 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo->LANGUAGE_ID = $request->language_id;
             $webInfo->IPHONE_APP_LINK = $request->ios_app_link;
             $webInfo->IPHONE_APP_VERSION = $request->ios_app_version;
-
+            $webInfo->COPYRIGHT_TEXT = $request->copyright_text;
             $webInfo->META_TITLE = $request->meta_title;
             $webInfo->META_KEYWARDS = $request->meta_keywords;
             $webInfo->META_DESCRIPTION = $request->meta_description;
+
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $key => $image) {
+                    $field = $this->imageMap[$key];
+                    $webInfo->{$field} = $this->uploadImage($image);
+                }
+            }
 
             $webInfo->save();
 
