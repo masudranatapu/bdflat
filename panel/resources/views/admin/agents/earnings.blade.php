@@ -105,9 +105,9 @@
                                                     <div class="media-body text-center">
                                                         <h1 class="text-white">Balance</h1>
                                                         <h1 class="info text-white font-weight-bold" style="margin-bottom: 10px;">BDT 12000</h1>
-                                                        <button class="btn mt-2" style="background: white;color: black;font-weight: bold;border-radius: 5px">Withdraw
+                                                        <a href="{{route('admin.withdraw_credit')}}" class="btn mt-2" style="background: white;color: black;font-weight: bold;border-radius: 5px">Withdraw
                                                             Credit
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
