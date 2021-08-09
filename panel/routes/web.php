@@ -400,10 +400,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('hscode/{id}/update', ['middleware' => 'acl:edit_hscode', 'as' => 'admin.hscode.update', 'uses' => 'HscodeController@postUpdate']);
     Route::get('hscode/{id}/delete', ['middleware' => 'acl:delete_hscode', 'as' => 'admin.hscode.delete', 'uses' => 'HscodeController@getDelete']);
 
-    //Customer
+    //Seeker
     Route::get('seeker', ['middleware' => 'acl:view_seeker', 'as' => 'admin.seeker.list', 'uses' => 'SeekerController@getIndex']);
-    Route::get('seeker/edit', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.edit', 'uses' => 'SeekerController@getEdit']);
-    Route::get('seeker/payment', ['middleware' => 'acl:seeker_payment', 'as' => 'admin.seeker.payment', 'uses' => 'SeekerController@payment']);
+    Route::get('seeker/{id}/edit', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.edit', 'uses' => 'SeekerController@getEdit']);
+    Route::get('seeker/{id}/payment', ['middleware' => 'acl:seeker_payment', 'as' => 'admin.seeker.payment', 'uses' => 'SeekerController@getPayment']);
 
 /*
 

@@ -26,12 +26,17 @@ class CustomerAbstract implements CustomerInterface
         $this->cusAdd   = $cusAdd;
     }
 
-    public function getPaginatedList($request, int $per_page = 5)
+    public function getPaginatedList($request)
     {
-        $data = $this->customer->orderBy('NAME', 'ASC')->get();
+        $data = $this->customer->where('STATUS','!=',3)->where('USER_TYPE',1)->orderBy('NAME', 'ASC')->get();
         return $this->formatResponse(true, '', 'admin.customer.index', $data);
     }
 
+    public function getPayment($id){
+
+    }
+
+    /*
     public function getShow(int $id)
     {
         $data =  Customer::join('SS_COUNTRY','SS_COUNTRY.PK_NO','SLS_CUSTOMERS.F_COUNTRY_NO')
@@ -416,6 +421,8 @@ class CustomerAbstract implements CustomerInterface
 
 
     }
+
+    */
 
 
 

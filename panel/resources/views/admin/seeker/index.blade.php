@@ -3,7 +3,7 @@
 @section('Seeker Management','open')
 @section('seeker_list','active')
 
-@section('title') Property Seekers@endsection
+@section('title') Property Seekers @endsection
 @section('page-name') Property Seekers @endsection
 
 @push('custom_css')
@@ -18,6 +18,7 @@
 
 @php
     $roles = userRolePermissionArray();
+
 @endphp
 
 
@@ -47,35 +48,36 @@
                                         </thead>
 
                                         <tbody>
-                                        @foreach($rows as $row)
-                                            <tr>
-                                                <td>{{$row->CODE}}</td>
-                                                <td>{{$row->NAME}}</td>
-                                                <td>{{$row->MOBILE_NO}}</td>
-                                                <td>{{$row->EMAIL}}</td>
-                                                <td>{{$row->ACTUAL_TOPUP}}</td>
-                                                <td>{{date('M d, Y', strtotime($row->CREATED_AT))}}</td>
-                                                <td>
-                                                    <span class="t-pub">Valid</span>
-                                                </td>
-                                                <td>
-                                                    @if($row->STATUS == 1)
-                                                        <span class="t-pub">Active</span>
-                                                    @else
-                                                        <span class="t-del">Inactive</span>
-                                                    @endif
-                                                </td>
-                                                <td style="width: 17%" class="text-center">
-                                                    <a href="{{route('admin.seeker.edit')}}">Edit</a>
-                                                    |
-                                                    <a href="{{route('admin.seeker.payment')}}">Payment</a>
-                                                    |
-                                                    <a href="#">CP</a>
-                                                    |
-                                                    <a href="#">Delete</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                            @if(isset($data) && count($data) > 0 )
+                                                @foreach($data as $row)
+                                                    <tr>
+                                                        <td>{{$row->CODE}}</td>
+                                                        <td>{{$row->NAME}}</td>
+                                                        <td>{{$row->MOBILE_NO}}</td>
+                                                        <td>{{$row->EMAIL}}</td>
+                                                        <td>{{$row->UNUSED_TOPUP}}</td>
+                                                        <td>{{date('M d, Y', strtotime($row->CREATED_AT))}}</td>
+                                                        <td>
+                                                            <span class="t-pub">Valid</span>
+                                                        </td>
+                                                        <td>
+                                                            @if($row->STATUS == 1)
+                                                                <span class="t-pub">Active</span>
+                                                            @else
+                                                                <span class="t-del">Inactive</span>
+                                                            @endif
+                                                        </td>
+                                                        <td style="width: 17%" class="text-center">
+                                                            <a href="{{route('admin.seeker.edit',$row->PK_NO)}}">Edit</a>
+                                                            |
+                                                            <a href="{{route('admin.seeker.payment',$row->PK_NO)}}">Payment</a>
+                                                            |
+                                                            <a href="#">CP</a>
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
