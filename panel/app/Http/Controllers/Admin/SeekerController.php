@@ -15,6 +15,7 @@ class SeekerController extends BaseController
 
     }
 
+
     public function getIndex(Request $request)
     {
         $this->resp = $this->customer->getPaginatedList($request);
