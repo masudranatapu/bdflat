@@ -24,5 +24,7 @@ interface AdsInterface
 
     public function storeAdsImages($request, int $id);
 
+    public function updateAdsImage($request);
+
     public function deleteAdsImage(int $id);
 }

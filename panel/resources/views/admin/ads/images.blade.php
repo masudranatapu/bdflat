@@ -20,7 +20,6 @@
 @endpush
 
 @push('custom_js')
-
     <!-- BEGIN: Data Table-->
     <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
     <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
@@ -28,6 +27,17 @@
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
     <script>
         $('#imageFile').imageUploader();
+
+        $(document).ready(function () {
+            let editBtn = $('.edit-btn');
+
+            editBtn.click(function (e) {
+                e.preventDefault();
+                $('#orderID').val($(this).data('value'));
+                $('#imageID').val($(this).data('id'));
+                $('#editModal').modal();
+            });
+        });
     </script>
 @endpush
 
@@ -103,6 +113,15 @@
                                                         </td>
                                                         <td>{{ $image->ORDER_ID }}</td>
                                                         <td>
+                                                            @if(hasAccessAbility('edit_ads_image', $roles))
+                                                                <a class="btn edit-btn btn-sm btn-warning text-white"
+                                                                   href=""
+                                                                   data-value="{{ $image->ORDER_ID }}"
+                                                                   data-id="{{ $image->PK_NO }}"
+                                                                   title="Edit">
+                                                                    <i class="la la-pencil"></i>
+                                                                </a>
+                                                            @endif
                                                             @if(hasAccessAbility('delete_ads_image', $roles))
                                                                 <a class="btn btn-sm btn-danger text-white"
                                                                    onclick="return confirm('Are you sure?')"
@@ -128,6 +147,35 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="Edit Image Order" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Image Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {!! Form::open([ 'route' => ['web.ads.image.update', $data['id']], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                {!! Form::hidden('id', null, ['id' => 'imageID']) !!}
+                <div class="modal-body">
+                    <div class="from-group">
+                        {{ Form::label('orderID', 'Order ID', ['class' => 'label-title'], false) }}
+                        <div class="controls">
+                            {!! Form::number('order_id', null, ['id' => 'orderID', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required']) !!}
+                            {!! $errors->first('order_id', '<label class="help-block text-danger">:message</label>') !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
+                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

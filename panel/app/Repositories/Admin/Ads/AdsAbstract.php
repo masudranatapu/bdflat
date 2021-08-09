@@ -148,6 +148,7 @@ class AdsAbstract implements AdsInterface
     public function getAdsImages($id): object
     {
         $data['images'] = $this->adsImages->orderByDesc('ORDER_ID')->get();
+        $data['id'] = $id;
         return $this->formatResponse(true, '', 'web.ads.images', $data);
     }
 
@@ -172,6 +173,28 @@ class AdsAbstract implements AdsInterface
 
             $status = true;
             $msg = 'Image added successfully!';
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'web.ads.image');
+    }
+
+    public function updateAdsImage($request): object
+    {
+        $status = false;
+        $msg = 'Image order could not be update!';
+
+        DB::beginTransaction();
+        try {
+            $adImg = AdsImages::find($request->id);
+            $adImg->ORDER_ID = $request->order_id;
+            $adImg->save();
+
+            $status = true;
+            $msg = 'Image order updated successfully!';
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);

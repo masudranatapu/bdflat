@@ -106,6 +106,17 @@ class AdsController extends Controller
         return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    public function updateAdsImage(Request $request, $id): RedirectResponse
+    {
+        $request->validate([
+            'order_id' => 'required',
+            'id' => 'required'
+        ]);
+
+        $this->resp = $this->ads->updateAdsImage($request);
+        return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
     public function deleteAdsImage($id): RedirectResponse
     {
         $this->resp = $this->ads->deleteAdsImage($id);
