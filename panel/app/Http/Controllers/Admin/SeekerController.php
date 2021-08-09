@@ -1,49 +1,38 @@
 <?php
 namespace App\Http\Controllers\Admin;
-use App\Models\Agent;
-use App\Models\Country;
-use App\Models\Customer;
-use App\Models\Reseller;
 
 use Illuminate\Http\Request;
-use App\Models\CustomerAddress;
-use App\Models\PaymentCustomer;
-use Illuminate\Support\Facades\DB;
-use App\Models\CustomerAddressType;
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Admin\CustomerRequest;
 use App\Repositories\Admin\Customer\CustomerInterface;
 
 class SeekerController extends BaseController
 {
     protected $customer;
-    protected $country;
 
-    public function __construct(CustomerInterface $customer, Customer $customermodel, Reseller $reseller, Agent $agent, CustomerAddress $cusAdd, CustomerAddressType $cusaddtype, Country $country)
+    public function __construct(CustomerInterface $customer)
     {
         $this->customer        = $customer;
-        $this->customermodel   = $customermodel;
-        $this->agent           = $agent;
-        $this->reseller        = $reseller;
-        $this->cusaddtype      = $cusaddtype;
-        $this->cusAdd          = $cusAdd;
-        $this->country         = $country;
+
     }
 
     public function getIndex(Request $request)
     {
-        $this->resp = $this->customer->getPaginatedList($request, 20);
-        return view('admin.property-seeker.index')->withRows($this->resp->data);
+        $this->resp = $this->customer->getPaginatedList($request);
+        $data = $this->resp->data;
+        return view('admin.seeker.index',compact('data'));
     }
 
     public function getEdit()
     {
-        return view('admin.property-seeker.edit');
+        return view('admin.seeker.edit');
     }
 
-    public function payment()
+    public function getPayment(Request $request, $id)
     {
-        return view('admin.property-seeker.payment');
+        // $this->resp = $this->customer->getPayment($id);
+        $this->resp = $this->customer->getPaginatedList($request);
+        $data = $this->resp->data;
+        return view('admin.seeker.payment',compact('data'));
     }
 
 

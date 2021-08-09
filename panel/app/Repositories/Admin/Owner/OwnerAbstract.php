@@ -24,7 +24,7 @@ class OwnerAbstract implements OwnerInterface
         }else{
             $data->whereNotIn('USER_TYPE',[1,5]);
         }
-        $data = $data->orderBy('NAME','asc')->get();
+        $data = $data->orderBy('NAME','ASC')->get();
         return $this->formatResponse(true, '', 'admin.owner.index', $data);
     }
 
