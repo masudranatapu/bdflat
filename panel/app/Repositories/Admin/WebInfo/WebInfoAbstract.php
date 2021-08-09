@@ -54,6 +54,7 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo = WebInfo::find(1);
             if (!$webInfo) {
                 $webInfo = new WebInfo();
+                $webInfo->PK_NO = 1;
             }
 
             $webInfo->TITLE = $request->title;
