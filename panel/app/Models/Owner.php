@@ -6,25 +6,45 @@ use App\Models\BankAccount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
-class Reseller extends Model
+class Owner extends Model
 {
-    protected $table 		= 'WEB_USER';
+    protected $table 		    = 'WEB_USER';
     protected $primaryKey   = 'PK_NO';
+    const CREATED_AT        = 'CREATED_AT';
+    const UPDATED_AT        = 'UPDATED_AT';
 
-    /*const CREATED_AT        = 'SS_CREATED_ON';
-    const UPDATED_AT        = 'SS_MODIFIED_ON';*/
+    protected $fillable = ['NAME'];
 
-    protected $fillable = [
-        'NAME'
-    ];
+
+    public static function boot()
+    {
+       parent::boot();
+       static::creating(function($model)
+       {
+           $user = Auth::user();
+           $model->F_SS_CREATED_BY = $user->PK_NO;
+       });
+
+       static::updating(function($model)
+       {
+           $user = Auth::user();
+           $model->F_SS_MODIFIED_BY = $user->PK_NO;
+       });
+   }
+
+
+
+
+   /*
+
     public function getResellerCombo(){
-        return Reseller::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        return Owner::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
     }
 
     public function getResellerComboCustomer(Type $var = null)
     {
         $response = '';
-        $data = Reseller::select('NAME','PK_NO')->where('IS_ACTIVE', 1)->get();
+        $data = Owner::select('NAME','PK_NO')->where('IS_ACTIVE', 1)->get();
         if ($data) {
             foreach ($data as $value) {
                 $response .= '<option value="'.$value->PK_NO.'">'.$value->NAME.'</option>';
@@ -53,24 +73,9 @@ class Reseller extends Model
     public function country() {
         return $this->hasOne('App\Models\Country', 'PK_NO', 'F_COUNTRY_NO');
     }
+    */
 
 
-
-    public static function boot()
-    {
-       parent::boot();
-       static::creating(function($model)
-       {
-           $user = Auth::user();
-           $model->F_SS_CREATED_BY = $user->PK_NO;
-       });
-
-       static::updating(function($model)
-       {
-           $user = Auth::user();
-           $model->F_SS_MODIFIED_BY = $user->PK_NO;
-       });
-   }
 
 
 }

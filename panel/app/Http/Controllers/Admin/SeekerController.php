@@ -33,10 +33,18 @@ class SeekerController extends BaseController
     public function getIndex(Request $request)
     {
         $this->resp = $this->customer->getPaginatedList($request, 20);
-        return view('admin.customer.index')->withRows($this->resp->data);
+        return view('admin.property-seeker.index')->withRows($this->resp->data);
     }
 
+    public function getEdit()
+    {
+        return view('admin.property-seeker.edit');
+    }
 
+    public function payment()
+    {
+        return view('admin.property-seeker.payment');
+    }
 
 
 

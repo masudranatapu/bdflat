@@ -1,26 +1,36 @@
 <?php
-namespace App\Repositories\Admin\Reseller;
+namespace App\Repositories\Admin\Owner;
 
 use DB;
 use App\Models\Customer;
-use App\Models\Reseller;
+use App\Models\Owner;
 use App\Traits\RepoResponse;
 use App\Models\CustomerAddress;
 
-class ResellerAbstract implements ResellerInterface
+class OwnerAbstract implements OwnerInterface
 {
     use RepoResponse;
-    protected $reseller;
-    public function __construct(Reseller $reseller)
+    protected $owner;
+    public function __construct(Owner $owner)
     {
-        $this->reseller = $reseller;
+        $this->owner = $owner;
     }
 
-    public function getPaginatedList($request, int $per_page = 5)
+    public function getPaginatedList($request)
     {
-        $data = $this->reseller->where('USER_TYPE',3)->orWhere('USER_TYPE',2)->orderBy('NAME','asc')->get();
-        return $this->formatResponse(true, '', 'admin.reseller.index', $data);
+        $data = $this->owner->where('STATUS','!=',3);
+        if($request->owner){
+            $data->where('USER_TYPE',$request->owner);
+        }else{
+            $data->whereNotIn('USER_TYPE',[1,5]);
+        }
+        $data = $data->orderBy('NAME','asc')->get();
+        return $this->formatResponse(true, '', 'admin.owner.index', $data);
     }
+
+
+
+    /*
 
     public function getShow(int $id)
     {
@@ -140,4 +150,6 @@ class ResellerAbstract implements ResellerInterface
         }
         return $this->formatResponse(false,'Unable to delete Reseller Account','admin.reseller.list');
     }
+
+    */
 }
