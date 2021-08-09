@@ -85,7 +85,7 @@
                                     <div class="form-group">
                                         {!! Form::label('email_two', 'Secondary Email', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::email('email_two', old('email_two', $webInfo->EMAIL_1), ['id' => 'email_two', 'class' => 'form-control', 'placeholder' => 'Email']) !!}
+                                            {!! Form::email('email_two', old('email_two', $webInfo->EMAIL_2), ['id' => 'email_two', 'class' => 'form-control', 'placeholder' => 'Email']) !!}
                                             {!! $errors->first('email_two', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -157,7 +157,7 @@
                                     <div class="form-group">
                                         {!! Form::label('copyright_text', 'Copyright Text <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('copyright_text', old('copyright_text', $webInfo->HQ_ADDRESS), ['id' => 'copyright_text', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Copyright Text']) !!}
+                                            {!! Form::tel('copyright_text', old('copyright_text', $webInfo->COPYRIGHT_TEXT), ['id' => 'copyright_text', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Copyright Text']) !!}
                                             {!! $errors->first('copyright_text', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -386,7 +386,7 @@
                                 <div class="col-md-4">
                                     {{ Form::label('favicon', 'Favicon Icon', ['class' => 'label-title'], false) }}
                                     <div class="form-group">
-                                        @if($webInfo->FAVICION)
+                                        @if($webInfo->FAVICON)
                                             <img src="{{ asset($webInfo->FAVICON) }}" alt=""
                                                  style="max-height: 150px;max-width: 100%">
                                         @endif
