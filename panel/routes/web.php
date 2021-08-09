@@ -461,6 +461,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('agents/{id}/update', ['middleware' => 'acl:agent_update', 'as' => 'admin.agents.update', 'uses' => 'AgentsController@postUpdate']);
     Route::get('agents/{id}/delete', ['middleware' => 'acl:agent_delete', 'as' => 'admin.agents.delete', 'uses' => 'AgentsController@getDelete']);
     Route::get('agents-earnings/{id}', ['middleware' => 'acl:view_agent_earnings', 'as' => 'admin.agent_earnings', 'uses' => 'AgentsController@getEarnings']);
+    Route::get('agents-withdraw_credit', ['middleware' => 'acl:view_agent_earnings', 'as' => 'admin.withdraw_credit', 'uses' => 'AgentsController@getWithdrawCredit']);
 
     //earnings
     //Route::get('earnings', ['as' => 'admin.earnings.list', 'uses' => 'EarningsController@getIndex']);
@@ -846,7 +847,10 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 
     //Payment Method
     Route::get('web/payment_method',['middleware' => 'acl:new_page', 'as' => 'web.payment_method', 'uses' => 'PaymentMethodController@getIndex']);
+    Route::get('web/payment_method/create',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.create', 'uses' => 'PaymentMethodController@getCreate']);
+    Route::post('web/payment_method/store',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.store', 'uses' => 'PaymentMethodController@postStore']);
     Route::get('web/payment_method/{id}/edit',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
+    Route::post('web/payment_method/{id}/update',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.update', 'uses' => 'PaymentMethodController@postUpdate']);
 
 
     // Ads

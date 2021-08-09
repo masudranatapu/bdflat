@@ -16,9 +16,7 @@ $methods = [
 ];
 ?>
 @section('content')
-    <!--
-     ============   dashboard   ============
- -->
+    <!-- ============   dashboard   ============ -->
     <div class="dashboard-sec">
         <!-- container -->
         <div class="container">
