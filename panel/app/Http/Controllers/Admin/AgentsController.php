@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Agent;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\AgentRequest;
@@ -39,11 +40,12 @@ class AgentsController extends BaseController
     public function getEdit($id)
     {
         $agent    = Agent::find($id);
+        $payment_method = PaymentMethod::orderBy('NAME')->pluck('NAME','PK_NO');
 
         if (!$agent) {
             return redirect()->route('admin.agent.list');
         }
-        return view('admin.agents.edit')->withAgent($agent);
+        return view('admin.agents.edit')->withAgent($agent)->withPayment($payment_method);
     }
 
     public function postUpdate(AgentRequest $request, $id)
@@ -61,6 +63,13 @@ class AgentsController extends BaseController
     public function getEarnings($id)
     {
         return view('admin.agents.earnings');
+    }
+
+    public function getWithdrawCredit()
+    {
+        $data = [];
+        $data['payment_method'] = PaymentMethod::where('IS_ACTIVE',1)->pluck('NAME','PK_NO');
+        return view('admin.agents.withdraw',compact('data'));
     }
 
 
