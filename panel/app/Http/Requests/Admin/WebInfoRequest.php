@@ -12,7 +12,7 @@ class WebInfoRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,23 +23,26 @@ class WebInfoRequest extends FormRequest
      * @return array
      */
 
-    public function rules()
-    {
-        $rules = [
-            'meta_title'               => 'required',
-            'meta_keywords'            => 'required',
-            'meta_description'         => 'required'
-        ];
-
-        return $rules;
-    }
-
-    public function messages()
+    public function rules(): array
     {
         return [
-            'meta_title.required' => 'Please enter meta title!',
-            'meta_keywords.required' => 'Please enter meta keywords!',
-            'meta_description.required' => 'Please enter meta description!'
+            'title' => 'required|max:50',
+            'description' => 'required',
+            'header_logo' => 'sometimes|array|min:1',
+            'header_logo.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif',
+            'footer_logo' => 'sometimes|array|min:1',
+            'footer_logo.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif',
+            'app_logo' => 'sometimes|array|min:1',
+            'app_logo.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif',
+            'meta_image' => 'sometimes|array|min:1',
+            'meta_image.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif',
+            'favicon' => 'sometimes|array|min:1',
+            'favicon.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif,ico',
+            'phone_one' => 'required|max:15',
+            'email_one' => 'required|email|max:100',
+            'hq_address' => 'required',
+            'url' => 'required|max:255',
+            'copyright_text' => 'required|max:255'
         ];
     }
 }
