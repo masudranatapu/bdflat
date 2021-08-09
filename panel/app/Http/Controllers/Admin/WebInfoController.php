@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use App\Models\State;
 use App\Models\WebInfo;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\WebInfoRequest;
@@ -12,14 +13,16 @@ use App\Repositories\Admin\WebInfo\WebInfoInterface;
 
 class WebInfoController extends BaseController
 {
-    protected $generalinfo;
-    protected $webinfo;
+    protected $generalInfo;
+    protected $webInfo;
+    protected $resp;
 
-    public function __construct(WebInfoInterface $generalinfo, WebInfo $webinfo)
+    public function __construct(WebInfoInterface $generalInfo, WebInfo $webInfo)
     {
-     
-        $this->generalinfo  = $generalinfo;
-        $this->webinfo      = $webinfo;
+        parent::__construct();
+
+        $this->generalInfo = $generalInfo;
+        $this->webInfo = $webInfo;
     }
 
     public function getIndex(Request $request)
@@ -29,18 +32,21 @@ class WebInfoController extends BaseController
 
     }
 
-    public function getCreate() {
-        $data['webinfo'] = $this->webinfo->where('PK_NO',1)->first();
+    public function getCreate()
+    {
+        $data['webInfo'] = $this->webInfo->where('PK_NO', 1)->first();
         return view('admin.general-info.create', compact('data'));
     }
 
-    public function postStore(WebInfoRequest $request) {
-        $this->resp = $this->generalinfo->postStore($request);
+    public function postStore(WebInfoRequest $request): RedirectResponse
+    {
+        $this->resp = $this->generalInfo->postStore($request);
         //dd($this->resp);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
-    public function getEdit(Request $request, $id){
+    public function getEdit(Request $request, $id)
+    {
 
         $this->resp = $this->address->findOrThrowException($id);
         return view('admin.address-type.edit')->withAddress($this->resp->data);
@@ -60,13 +66,15 @@ class WebInfoController extends BaseController
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
-    public function getCityAddress($id=null){
+    public function getCityAddress($id = null)
+    {
 
         $this->resp = $this->address->getCityAddress($id);
         return view('admin.customer-address.city_address')->withData($this->resp->data);
     }
 
-    public function getPostageAddress($id=null){
+    public function getPostageAddress($id = null)
+    {
 
         $this->resp = $this->address->getPostageAddress($id);
         return view('admin.customer-address.postage_address')->withData($this->resp->data);
@@ -78,16 +86,16 @@ class WebInfoController extends BaseController
         return $state;
     }
 
-    public function postCityAddress(Request $request,$id)
+    public function postCityAddress(Request $request, $id)
     {
-        $this->resp = $this->address->postCityAddress($request,$id);
+        $this->resp = $this->address->postCityAddress($request, $id);
 
         return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
     }
 
-    public function postPostageAddress(Request $request,$id)
+    public function postPostageAddress(Request $request, $id)
     {
-        $this->resp = $this->address->postPostageAddress($request,$id);
+        $this->resp = $this->address->postPostageAddress($request, $id);
 
         return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
     }
