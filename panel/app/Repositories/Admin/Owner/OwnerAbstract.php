@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Owner;
 use App\Traits\RepoResponse;
 use App\Models\CustomerAddress;
+use Illuminate\Support\Facades\Hash;
 
 class OwnerAbstract implements OwnerInterface
 {
@@ -94,6 +95,28 @@ class OwnerAbstract implements OwnerInterface
 
             $status = true;
             $msg = 'User updated successfully!';
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'admin.owner.list');
+    }
+
+    public function updatePassword($request, $id): object
+    {
+        $status = false;
+        $msg = 'Password could not be updated!';
+
+        DB::beginTransaction();
+        try {
+            $user = Owner::find($id);
+            $user->PASSWORD = Hash::make($request->password);
+            $user->save();
+
+            $status = true;
+            $msg = 'Password updated successfully!';
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);

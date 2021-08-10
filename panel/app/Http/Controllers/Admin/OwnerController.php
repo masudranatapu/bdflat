@@ -50,6 +50,21 @@ class OwnerController extends BaseController
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    public function getPasswordEdit($id)
+    {
+        $data['id'] = $id;
+        return view('admin.owner.edit-password', compact('data'));
+    }
+
+    public function postPasswordUpdate(Request $request, $id): RedirectResponse
+    {
+        $request->validate([
+            'password' => 'required|min:6'
+        ]);
+        $this->resp = $this->owner->updatePassword($request, $id);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
 
     /*
 
