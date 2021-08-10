@@ -224,6 +224,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     //Reseller Section
 
     Route::get('owner', ['middleware' => 'acl:view_owner', 'as' => 'admin.owner.list', 'uses' => 'OwnerController@getIndex']);
+    Route::get('owner/{id}/edit', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.edit', 'uses' => 'OwnerController@getEdit']);
+    Route::post('owner/{id}/update', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.update', 'uses' => 'OwnerController@postUpdate']);
 
     /* Route::post('reseller/all_reseller', 'DatatableController@all_reseller');
     Route::get('reseller/new', ['middleware' => 'acl:new_reseller', 'as' => 'admin.reseller.create', 'uses' => 'ResellerController@getCreate']);

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Repositories\Admin\Owner;
 
-use DB;
+use App\Models\OwnerInfo;
+use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\Owner;
 use App\Traits\RepoResponse;
@@ -10,24 +12,108 @@ use App\Models\CustomerAddress;
 class OwnerAbstract implements OwnerInterface
 {
     use RepoResponse;
+
     protected $owner;
+
     public function __construct(Owner $owner)
     {
         $this->owner = $owner;
     }
 
-    public function getPaginatedList($request)
+    public function getPaginatedList($request): object
     {
-        $data = $this->owner->where('STATUS','!=',3);
-        if($request->owner){
-            $data->where('USER_TYPE',$request->owner);
-        }else{
-            $data->whereNotIn('USER_TYPE',[1,5]);
+        $data = $this->owner->where('STATUS', '!=', 3);
+        if ($request->owner) {
+            $data->where('USER_TYPE', $request->owner);
+        } else {
+            $data->whereNotIn('USER_TYPE', [1, 5]);
         }
-        $data = $data->orderBy('NAME','ASC')->get();
+        $data = $data->orderBy('NAME', 'ASC')->get();
         return $this->formatResponse(true, '', 'admin.owner.index', $data);
     }
 
+    public function getShow(int $id): object
+    {
+        $owner = Owner::with(['properties', 'info'])->find($id);
+        return $this->formatResponse(true, '', '', $owner);
+    }
+
+    public function postUpdate($request, $id)
+    {
+        $status = false;
+        $msg = 'User not updated!';
+
+        DB::beginTransaction();
+        try {
+            $user = Owner::with('info')->find($id);
+
+            if ($user->USER_TYPE == 2) {
+                $user->NAME = $request->name;
+                $user->EMAIL = $request->email;
+                $user->MOBILE_NO = $request->mobile_no;
+                $user->LISTING_LIMIT = $request->listing_limit;
+
+                if ($request->hasFile('images')) {
+                    $user->PROFILE_PIC_URL = $this->uploadImage($request->file('images')[0], $user->PK_NO);
+                }
+            } else {
+                $user->NAME = $request->company_name;
+                $user->EMAIL = $request->email;
+                $user->MOBILE_NO = $request->mobile_no;
+                $user->LISTING_LIMIT = $request->listing_limit;
+                $user->DESIGNATION = $request->designation;
+                $user->CONTACT_PER_NAME = $request->contact_person_name;
+                $user->ADDRESS = $request->office_address;
+
+                $info = $user->info;
+                if (!$info) {
+                    $info = new OwnerInfo();
+                    $info->F_USER_NO = $user->PK_NO;
+                }
+
+                $info->META_TITLE = $request->meta_title;
+                $info->META_DESCRIPTION = $request->meta_description;
+                $info->SITE_URL = $request->site_url;
+                $info->ABOUT_COMPANY = $request->about_company;
+
+                if ($request->hasFile('images')) {
+                    $imgMap = ['LOGO', 'BANNER'];
+                    foreach ($request->file('images') as $key => $image) {
+                        if ($key >= count($imgMap)) {
+                            break;
+                        }
+                        $info->{$imgMap[$key]} = $this->uploadImage($image, $user->PK_NO);
+                    }
+                }
+
+                $info->save();
+            }
+
+            $user->USER_TYPE = $request->user_type;
+            $user->save();
+
+            $status = true;
+            $msg = 'User updated successfully!';
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'admin.owner.list');
+    }
+
+    private function uploadImage($image, $id = null): string
+    {
+        $imageUrl = '';
+        if ($image) {
+            $file_name = 'img_' . date('dmY') . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $imageUrl = '/uploads/images/owner/' . ($id ? $id . '/' : '');
+            $image->move(public_path($imageUrl), $file_name);
+            $imageUrl .= $file_name;
+        }
+        return $imageUrl;
+    }
 
 
     /*
