@@ -61,7 +61,7 @@ class RegisterController extends Controller
             'email'          => ['required', 'string', 'email', 'max:255', 'unique:WEB_USER'],
             'mobile'         => ['required', 'string', 'max:15'],
             'password'       => ['required', 'string', 'min:6'],
-            'person_name'    => ['nullable', 'string', 'max:50'],
+            'contact_name'   => ['nullable', 'string', 'max:50'],
             'designation'    => ['nullable', 'string', 'max:50'],
             'office_address' => ['nullable', 'string', 'max:255'],
         ]);
@@ -82,7 +82,7 @@ class RegisterController extends Controller
         $user->EMAIL        = $data['email'];
         $user->MOBILE_NO    = $data['mobile'];
         $user->PASSWORD     = Hash::make($data['password']);
-        $user->CONTACT_PER_NAME = $data['person_name'] ?? null;
+        $user->CONTACT_PER_NAME = $data['contact_name'] ?? null;
         $user->DESIGNATION  = $data['designation'] ?? null;
         $user->ADDRESS      = $data['office_address'] ?? null;
         $user->save();
