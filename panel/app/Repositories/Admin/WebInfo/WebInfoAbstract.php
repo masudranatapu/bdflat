@@ -54,6 +54,7 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo = WebInfo::find(1);
             if (!$webInfo) {
                 $webInfo = new WebInfo();
+                $webInfo->PK_NO = 1;
             }
 
             $webInfo->TITLE = $request->title;
@@ -88,14 +89,15 @@ class WebInfoAbstract implements WebInfoInterface
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $key => $image) {
+                    if ($key >= count($this->imageMap)) {
+                        break;
+                    }
                     $field = $this->imageMap[$key];
                     $webInfo->{$field} = $this->uploadImage($image);
                 }
             }
 
             $webInfo->save();
-
-
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);

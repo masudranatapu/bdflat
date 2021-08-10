@@ -95,7 +95,7 @@
                                                         <td class="text-center"><span class="t-pub">{{ $row->TOTAL_LISTING }}</span></td>
                                                         <td class="text-center">{{ $user_status[$row->STATUS] ?? '' }}</td>
                                                         <td style="width: 17%" class="text-center">
-                                                            <a href="#">Edit</a>
+                                                            <a href="{{ route('admin.owner.edit', $row->PK_NO) }}">Edit</a>
                                                             |
                                                             <a href="#">Payment</a>
                                                             |
