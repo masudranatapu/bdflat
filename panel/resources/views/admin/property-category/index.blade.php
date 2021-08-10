@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
 
-@section('Product Management','open')
+@section('System Settings','open')
 @section('property_category','active')
 
 @section('title') Property Category @endsection
@@ -12,31 +12,26 @@
 @endsection
 
 @php
-    $roles = userRolePermissionArray()
+    $roles = userRolePermissionArray();
 @endphp
+
 @push('custom_css')
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 @endpush
 
-@push('custom_js')
-<!-- BEGIN: Data Table-->
-<script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
-<script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
-<!-- END: Data Table-->
-@endpush
+
 
 @section('content')
 <div class="content-body min-height">
   <section id="pagination">
     <div class="row">
-      <div class="col-12">
+      <div class="col-6">
         <div class="card card-sm card-success">
           <div class="card-header pl-2">
             <div class="form-group">
               @if(hasAccessAbility('new_category', $roles))
-              <a class="text-white btn btn-sm btn-primary" href="{{ route('property.category.create')}}" title="Create new category"><i class="ft-plus text-white"></i> Create Property Category</a>
+                <a class="text-white btn btn-sm btn-primary" href="{{ route('property.category.create')}}" title="Create new category"><i class="ft-plus text-white"></i> Create Property Category</a>
               @endif
-
             </div>
             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
             <div class="heading-elements">
@@ -85,15 +80,13 @@
   </div>
 
 
-@include('admin.category._subcategory_add_edit_modal')
-
 @endsection
 
 
 @push('custom_js')
 
-<!--script only for brand page-->
-<script type="text/javascript" src="{{ asset('app-assets/pages/category.js')}}"></script>
+<script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
+<script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
 
 
 @endpush('custom_js')

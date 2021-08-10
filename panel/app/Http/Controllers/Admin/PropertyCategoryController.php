@@ -47,10 +47,7 @@ class PropertyCategoryController extends BaseController
 
     public function postUpdate(PropertyCategoryRequest $request, $id)
     {
-        //dd($id);
         $this->resp = $this->category->postUpdate($request, $id);
-        //dd($this->resp->data);
-
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 

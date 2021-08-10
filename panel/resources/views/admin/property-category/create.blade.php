@@ -1,21 +1,20 @@
 @extends('admin.layout.master')
 
-@section('Product Management','open')
+@section('System Settings','open')
 @section('property_category','active')
 
-@section('title')
-Create Property Category
-@endsection
-@section('page-name')
-Create Property Category
-@endsection
+@section('title') Create Property Category @endsection
+@section('page-name') Create Property Category @endsection
+
 @section('breadcrumb')
-<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('admin_role.breadcrumb_title')  </a></li>
-<li class="breadcrumb-item active">Create Property Category</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('admin_role.breadcrumb_title')  </a></li>
+    <li class="breadcrumb-item active">Create Property Category</li>
 @endsection
+
 @push('custom_css')
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
 @endpush('custom_css')
+
 @section('content')
 <section id="basic-form-layouts" class="min-height">
     <div class="row match-height">

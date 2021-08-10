@@ -104,6 +104,7 @@ class PropertyCategoryAbstract implements PropertyCategoryInterface
             $category->update();
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return $this->formatResponse(false, 'Unable to update category !', 'admin.property.category');
         }
         DB::commit();

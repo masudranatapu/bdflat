@@ -1,27 +1,24 @@
 @extends('admin.layout.master')
 
-@section('Product Management','open')
+@section('System Settings','open')
 @section('property_category','active')
 
-@section('title')
-   Update Property Category
-@endsection
-@section('page-name')
-    Update Property Category
-@endsection
+@section('title') Update Property Category @endsection
+@section('page-name') Update Property Category @endsection
+
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('admin_role.breadcrumb_title')  </a></li>
     <li class="breadcrumb-item active">Update property category</li>
 @endsection
+
 @push('custom_css')
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
 @endpush('custom_css')
 
 @section('content')
-
 <section id="basic-form-layouts">
                     <div class="row match-height">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="card card-success min-height">
                                 <div class="card-content collapse show">
                                     <div class="card-body">
@@ -171,9 +168,9 @@
                         </div>
                     </div>
                     </div>
-
                 </section>
-                @push('custom_js')
-                <script type="text/javascript" src="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.min.js') }}"></script>
-                @endpush('custom_js')
 @endsection
+
+@push('custom_js')
+    <script type="text/javascript" src="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.min.js') }}"></script>
+@endpush('custom_js')
