@@ -70,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 mb-1">
         {!! Form::label('about_company', 'About Company *', ['class' => 'label-title'], false) !!}
         <div class="controls">
             {!! Form::textarea('about_company', old('about_company', $owner->info->ABOUT_COMPANY ?? ''), ['class' => 'form-control', 'placeholder' => 'About Company', 'data-validation-required-message' => 'This field is required']) !!}

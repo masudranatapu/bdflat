@@ -99,9 +99,7 @@
                                                             |
                                                             <a href="#">Payment</a>
                                                             |
-                                                            <a href="#">CP</a>
-                                                            |
-                                                            <a href="#">Delete</a>
+                                                            <a href="{{ route('admin.owner.password.edit', $row->PK_NO) }}">CP</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

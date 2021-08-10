@@ -4,7 +4,7 @@
 @section('owner_list','active')
 
 @section('title') Owner | Update @endsection
-@section('page-name') Update Owner @endsection
+@section('page-name') Update Owner Password @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
@@ -58,13 +58,15 @@
         </div>
         <div class="card-content collapse show">
             <div class="card-body">
-                {!! Form::open([ 'route' => ['admin.owner.update', $owner->PK_NO], 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
-                @if($owner->USER_TYPE == 2)
-                    @include('admin.owner._owner_edit');
-                    @elseif($owner->USER_TYPE == 3 || $owner->USER_TYPE == 4)
-                    @include('admin.owner._developer_edit')
-                @endif
+                {!! Form::open([ 'route' => ['admin.owner.password.update', $data['id']], 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
                 <div class="row">
+                    <div class="col-md-4 mb-2">
+                        {!! Form::label('password', 'Password *', false) !!}
+                        <div class="controls">
+                            {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'placeholder' => 'Password']) !!}
+                            {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <a href="{{ route('admin.owner.list') }}" class="btn btn-info">Cancel</a>
                         {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
@@ -76,16 +78,9 @@
     </div>
 @endsection
 
-<!--push from page-->
 @push('custom_js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
     <script type="text/javascript" src="{{ asset('app-assets/pages/country.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js')}}"></script>
-    <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
-    <script>
-        $('#imageFile').imageUploader();
-        $('#bannerFile').imageUploader();
-        $('#logoFile').imageUploader();
-    </script>
 @endpush
