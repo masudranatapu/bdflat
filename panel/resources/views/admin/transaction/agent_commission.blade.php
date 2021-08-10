@@ -33,26 +33,71 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-success">
+                    <div class="card-header">
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <div class="row  mb-2">
+                            <div class="row">
                                 <div class="col-12">
-                                    <div class="row mb-1">
-                                        <div class="col-2">
-                                            <form action="">
-                                                <div style="position: relative">
-                                                    <i class="fa fa-search" style="position: absolute;top: 9px;left: 10px"></i>
-                                                    <input type="text" class="form-control" name="search" placeholder="Search"
-                                                           style="border-radius: 25px !important;padding-left: 28px;">
-                                                </div>
-                                            </form>
+                                    <div class="d-block mb-1">
+                                        <div class="controls">
+                                            {!! Form::radio('type','pending', old('type') == 'pending',[ 'id' => 'pending']) !!}
+                                            {{ Form::label('pending','Pending') }}
+                                            &emsp;
+                                            {!! Form::radio('type','approved', old('type') == 'approved',[ 'id' => 'approved']) !!}
+                                            {{ Form::label('approved','Approved') }}
+                                            &emsp;
+                                            {!! Form::radio('type','rejected', old('type') == 'rejected',[ 'id' => 'rejected']) !!}
+                                            {{ Form::label('rejected','Rejected') }}
                                         </div>
-                                        <div class="col-2 offset-8 text-right" style="padding-top: 10px">
-                                            <a href="" class="text-warning font-weight-bold"><i class="fa fa-plus"></i> Add New</a>
-                                        </div>
-                                        <img src="{{ asset('/assets/img/agent_commission.png') }}"  />
                                     </div>
-
+                                    <div class="row form-group" style="align-items: center">
+                                        <div class="col-md-6">
+                                            {!! Form::text('search', null, ['class' => 'form-control', 'style' => 'border-radius: 40px !important', 'placeholder' => 'Search by User ID']) !!}
+                                        </div>
+                                        <div class="col-md-6">
+                                            {!! Form::submit('Search', ['class' => 'btn btn-success']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-striped table-bordered text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>USER ID</th>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>Mobile</th>
+                                            <th>Amount</th>
+                                            <th>Payment Method</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>Oct 12, 2020</td>
+                                            <td>name</td>
+                                            <td>Mobile NO</td>
+                                            <td>100</td>
+                                            <td>bKash - 0170000000</td>
+                                            <td class="text-success">Approved</td>
+                                            <td>
+                                                <a href="#">Edit</a> |
+                                                <a href="#">Delete</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
