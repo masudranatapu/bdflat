@@ -97,7 +97,7 @@
                                                         <td style="width: 17%" class="text-center">
                                                             <a href="{{ route('admin.owner.edit', $row->PK_NO) }}">Edit</a>
                                                             |
-                                                            <a href="#">Payment</a>
+                                                            <a href="{{ route('admin.owner.payment', $row->PK_NO) }}">Payment</a>
                                                             |
                                                             <a href="{{ route('admin.owner.password.edit', $row->PK_NO) }}">CP</a>
                                                         </td>

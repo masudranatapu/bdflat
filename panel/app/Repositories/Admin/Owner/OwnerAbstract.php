@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin\Owner;
 
 use App\Models\OwnerInfo;
+use App\Models\PaymentCustomer;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\Owner;
@@ -136,6 +137,42 @@ class OwnerAbstract implements OwnerInterface
             $imageUrl .= $file_name;
         }
         return $imageUrl;
+    }
+
+    public function getPayments(int $id): object
+    {
+        $payments = PaymentCustomer::with('customer')
+            ->where('F_CUSTOMER_NO', '=', $id)
+            ->get();
+        return $this->formatResponse(true, '', 'admin.owner.payment', $payments);
+    }
+
+    public function storePayment($request, int $id)
+    {
+        $status = false;
+        $msg = 'Payment not successful!';
+
+        DB::beginTransaction();
+        try {
+            $payment = new PaymentCustomer();
+            $payment->F_CUSTOMER_NO = $id;
+            $payment->AMOUNT = $request->amount;
+            $payment->F_ACC_PAYMENT_BANK_NO = 3;
+            $payment->PAYMENT_CONFIRMED_STATUS = 1;
+            $payment->PAYMENT_NOTE = $request->note;
+            $payment->PAYMENT_DATE = date('Y-m-d');
+            $payment->PAYMENT_TYPE = 2;
+            $payment->save();
+
+            $status = true;
+            $msg = 'Payment successful!';
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'admin.owner.payment');
     }
 
 

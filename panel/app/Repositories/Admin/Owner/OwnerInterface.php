@@ -11,6 +11,10 @@ interface OwnerInterface
     public function postUpdate($request, int $id);
 
     public function updatePassword($request, int $id);
+
+    public function getPayments(int $id);
+
+    public function storePayment($request, int $id);
     /*
     public function getShow(int $id);
     public function postStore($request);

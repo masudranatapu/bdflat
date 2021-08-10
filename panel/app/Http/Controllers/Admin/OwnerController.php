@@ -65,6 +65,22 @@ class OwnerController extends BaseController
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
+    public function getPayment($id)
+    {
+        $data['payments'] = $this->owner->getPayments($id)->data;
+        $data['total'] = $data['payments']->sum('AMOUNT');
+        return view('admin.owner.payment', compact('data'));
+    }
+
+    public function postPayment(Request $request, $id)
+    {
+        $request->validate([
+            'amount' => 'required',
+            'note' => 'required'
+        ]);
+        $this->resp = $this->owner->storePayment($request, $id);
+        return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
+    }
 
     /*
 
