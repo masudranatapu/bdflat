@@ -31,7 +31,7 @@ return [
 
     'user_status' => [
 		1 => 'Active',
-		2 => 'Pending',
+		0 => 'Pending',
 		3 => 'Inactive',
 		4 => 'Deleted'
     ],

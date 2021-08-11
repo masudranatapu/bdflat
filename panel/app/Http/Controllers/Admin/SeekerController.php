@@ -1,6 +1,10 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Area;
+use App\Models\City;
+use App\Models\ProductRequirements;
+use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Repositories\Admin\Customer\CustomerInterface;
@@ -15,7 +19,6 @@ class SeekerController extends BaseController
 
     }
 
-
     public function getIndex(Request $request)
     {
         $this->resp = $this->customer->getPaginatedList($request);
@@ -23,9 +26,22 @@ class SeekerController extends BaseController
         return view('admin.seeker.index',compact('data'));
     }
 
-    public function getEdit()
+    public function getEdit($id)
     {
-        return view('admin.seeker.edit');
+        $this->resp = $this->customer->getEdit($id);
+        $data = $this->resp->data;
+        $city = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
+        $row = ProductRequirements::where('CREATED_BY',$id)->orderByDesc('PK_NO')->first();
+        $areas = Area::where('F_CITY_NO', 1)->pluck('AREA_NAME', 'PK_NO');
+        $property_types = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+        return view('admin.seeker.edit',compact('data','city', 'areas', 'row','property_types'));
+    }
+
+    public function postUpdate(Request $request)
+    {
+//        dd($request->all());
+        $this->resp = $this->customer->postUpdate($request);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getPayment(Request $request, $id)
@@ -34,6 +50,17 @@ class SeekerController extends BaseController
         $this->resp = $this->customer->getPaginatedList($request);
         $data = $this->resp->data;
         return view('admin.seeker.payment',compact('data'));
+    }
+
+    public function getArea($id)
+    {
+        $html = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
+        if($html){
+            return response()->json(['html' => $html, 'status' => 'success']);
+        }else{
+            return response()->json(['html' => [], 'status' => 'faild']);
+        }
+
     }
 
 

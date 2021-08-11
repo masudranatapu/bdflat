@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Admin\Customer;
 
+use App\Models\ProductRequirements;
 use DB;
 use App\Models\Booking;
 use App\Models\BankList;
@@ -35,21 +36,86 @@ class CustomerAbstract implements CustomerInterface
     public function getPayment($id){
 
     }
-
-    /*
-    public function getShow(int $id)
+    public function getEdit(int $id)
     {
-        $data =  Customer::join('SS_COUNTRY','SS_COUNTRY.PK_NO','SLS_CUSTOMERS.F_COUNTRY_NO')
-                        ->select('SLS_CUSTOMERS.*','SS_COUNTRY.DIAL_CODE')
-                        ->where('SLS_CUSTOMERS.PK_NO',$id)->first();
+        /*$data =  Customer::join('SS_COUNTRY','SS_COUNTRY.PK_NO','SLS_CUSTOMERS.F_COUNTRY_NO')
+            ->select('SLS_CUSTOMERS.*','SS_COUNTRY.DIAL_CODE')
+            ->where('SLS_CUSTOMERS.PK_NO',$id)->first();*/
+
+        $data =  Customer::where('PK_NO',$id)->first();
 
         if (!empty($data)) {
 
-            return $this->formatResponse(true, 'Data found', 'admin.customer.edit', $data);
+            return $this->formatResponse(true, '', 'admin.seeker.edit', $data);
         }
 
-        return $this->formatResponse(false, 'Did not found data !', 'admin.customer.list', null);
+        return $this->formatResponse(false, 'Did not found data !', 'admin.seeker.list', null);
     }
+
+    public function postUpdate($request)
+    {
+//        dd($request->all());
+        DB::beginTransaction();
+        try {
+            if ($request->pk_no){
+                $list = ProductRequirements::where('PK_NO',$request->pk_no)->first();
+
+            }else{
+                $list = new ProductRequirements();
+            }
+
+            $list->PROPERTY_FOR         = $request->itemCon;
+            $list->F_CITY_NO            = $request->city;
+            $list->F_AREAS              = json_encode($request->area);
+            $list->F_PROPERTY_TYPE_NO   = $request->property_type;
+            $list->MIN_SIZE             = $request->minimum_size;
+            $list->MAX_SIZE             = $request->maximum_size;
+            $list->MIN_BUDGET           = $request->minimum_budget;
+            $list->MAX_BUDGET           = $request->maximum_budget;
+            $list->BEDROOM              = json_encode($request->rooms);
+            $list->PROPERTY_CONDITION   = json_encode($request->condition);
+            $list->REQUIREMENT_DETAILS  = $request->requirement_details;
+            $list->PREP_CONT_TIME       = $request->time;
+            $list->EMAIL_ALERT          = $request->alert;
+            $list->IS_VERIFIED          = $request->v_status;
+            $list->CREATED_BY           = $request->user_id;
+            $list->MODIFYED_BY          = $request->user_id;
+
+            if ($request->pk_no){
+                $list->update();
+            }else{
+                $list->save();
+            }
+
+            $user                       = Customer::where('PK_NO',$request->user_id)->first();
+            $user->NAME                 = $request->name;
+            $user->EMAIL                = $request->email;
+            $user->ADDRESS              = $request->address;
+            $user->MOBILE_NO            = $request->mobile;
+            $user->STATUS               = $request->acc_status;
+            $user->update();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e);
+            if ($request->pk_no){
+                return $this->formatResponse(false, 'Property Seeker not updated successfully !', 'admin.seeker.list');
+            }else{
+                return $this->formatResponse(false, 'Property Seeker not created successfully !', 'admin.seeker.list');
+            }
+        }
+
+        DB::commit();
+        if ($request->pk_no) {
+            return $this->formatResponse(true, 'Property Seeker Updated successfully !', 'admin.seeker.list');
+        }else{
+            return $this->formatResponse(true, 'Property Seeker Created successfully !', 'admin.seeker.list');
+        }
+    }
+
+
+    /*
+
 
     public function getCusAdd(int $id)
     {
