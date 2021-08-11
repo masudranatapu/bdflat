@@ -226,6 +226,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('owner', ['middleware' => 'acl:view_owner', 'as' => 'admin.owner.list', 'uses' => 'OwnerController@getIndex']);
     Route::get('owner/{id}/edit', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.edit', 'uses' => 'OwnerController@getEdit']);
     Route::post('owner/{id}/update', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.update', 'uses' => 'OwnerController@postUpdate']);
+    Route::get('owner/{id}/payment', ['middleware' => 'acl:view_owner', 'as' => 'admin.owner.payment', 'uses' => 'OwnerController@getPayment']);
+    Route::post('owner/{id}/payment', ['middleware' => 'acl:view_owner', 'as' => 'admin.owner.payment.store', 'uses' => 'OwnerController@postPayment']);
     Route::get('owner/{id}/password', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.password.edit', 'uses' => 'OwnerController@getPasswordEdit']);
     Route::post('owner/{id}/password/update', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.password.update', 'uses' => 'OwnerController@postPasswordUpdate']);
 
