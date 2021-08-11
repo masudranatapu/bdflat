@@ -409,7 +409,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     //Seeker
     Route::get('seeker', ['middleware' => 'acl:view_seeker', 'as' => 'admin.seeker.list', 'uses' => 'SeekerController@getIndex']);
     Route::get('seeker/{id}/edit', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.edit', 'uses' => 'SeekerController@getEdit']);
+    Route::post('seeker/update', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.update', 'uses' => 'SeekerController@postUpdate']);
     Route::get('seeker/{id}/payment', ['middleware' => 'acl:seeker_payment', 'as' => 'admin.seeker.payment', 'uses' => 'SeekerController@getPayment']);
+    Route::get('seeker/get_area/{id}', ['middleware' => 'acl:seeker_payment', 'as' => 'admin.seeker.get_area', 'uses' => 'SeekerController@getArea']);
 
 /*
 

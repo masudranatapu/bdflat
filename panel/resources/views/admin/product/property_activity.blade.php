@@ -153,31 +153,28 @@
                                 <div class="col-12">
                                     <h2>Impression</h2>
                                     <div class="table-responsive ">
-                                        <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
+                                        <table class="table table-striped table-bordered table-sm text-center">
                                             <thead>
                                             <tr>
-                                                <th width="20%">Date</th>
-                                                <th>View</th>
+                                                <th width="10%"></th>
+                                                <th width="45%">Date</th>
+                                                <th width="45%">View</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td width="20%">
-                                                    <span>Dec 13, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>25</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td width="20%">
-                                                    <span>Dec 12, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>21</span>
-                                                </td>
-                                            </tr>
+                                                @if(isset($data['property']->getListingView) && count($data['property']->getListingView) > 0)
+                                                    @foreach($data['property']->getListingView as $k => $row)
+                                                        <tr>
+                                                            <td width="10%">{{ $k+1 }}</td>
+                                                            <td width="45%">
+                                                                <span>{{ date('M d, Y', strtotime($row->DATE)) }}</span>
+                                                            </td>
+                                                            <td width="45%">
+                                                                <span>{{ $row->COUNTER }}</span>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

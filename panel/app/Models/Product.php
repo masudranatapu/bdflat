@@ -83,30 +83,35 @@ class Product extends Model
         return $this->belongsTo('App\Models\User', 'F_USER_NO');
     }
 
-    public function subcategory() {
-        return $this->belongsTo('App\Models\SubCategory', 'F_PRD_SUB_CATEGORY_ID')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
+    public function getListingView()
+    {
+        return $this->hasMany('App\Models\ListingView', 'F_PRD_LISTING_NO');
     }
 
-    public function brand() {
-        return $this->belongsTo('App\Models\Brand', 'F_BRAND')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
-    }
+    // public function subcategory() {
+    //     return $this->belongsTo('App\Models\SubCategory', 'F_PRD_SUB_CATEGORY_ID')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
+    // }
 
-    public function productModel() {
-        return $this->belongsTo('App\Models\ProductModel', 'F_MODEL')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
-    }
+    // public function brand() {
+    //     return $this->belongsTo('App\Models\Brand', 'F_BRAND')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
+    // }
 
-    public function allDefaultPhotos() {
-        return $this->hasMany('App\Models\ProdImgLib', 'F_PRD_MASTER_NO');
-    }
+    // public function productModel() {
+    //     return $this->belongsTo('App\Models\ProductModel', 'F_MODEL')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
+    // }
+
+    // public function allDefaultPhotos() {
+    //     return $this->hasMany('App\Models\ProdImgLib', 'F_PRD_MASTER_NO');
+    // }
 
 
-    public function allVariantsProduct() {
-        return $this->hasMany('App\Models\ProductVariant', 'F_PRD_MASTER_SETUP_NO')->where('IS_ACTIVE',1)->orderBy('VARIANT_NAME','ASC');
-    }
+    // public function allVariantsProduct() {
+    //     return $this->hasMany('App\Models\ProductVariant', 'F_PRD_MASTER_SETUP_NO')->where('IS_ACTIVE',1)->orderBy('VARIANT_NAME','ASC');
+    // }
 
-    public function vatclass() {
-        return $this->belongsTo('App\Models\VatClass', 'F_DEFAULT_VAT_CLASS')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
-    }
+    // public function vatclass() {
+    //     return $this->belongsTo('App\Models\VatClass', 'F_DEFAULT_VAT_CLASS')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
+    // }
 
 
 
