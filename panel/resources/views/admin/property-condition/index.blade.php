@@ -30,7 +30,7 @@
     <div class="content-body min-height">
         <section id="pagination">
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="card card-sm card-success">
                         <div class="card-header pl-2">
                             <div class="form-group">
