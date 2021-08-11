@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 
-
 class TransactionController extends BaseController
 {
     public function __construct()
@@ -28,26 +27,30 @@ class TransactionController extends BaseController
         return view('admin.transaction.create');
     }
 
-    public function postStore() {
+    public function postStore()
+    {
 
     }
-    public function postUpdate() {
+
+    public function postUpdate()
+    {
 
     }
 
-    public function getRefundRequest() {
+    public function getRefundRequest()
+    {
         return view('admin.transaction.refund_request');
     }
 
-    public function getRechargeRequest() {
+    public function getRechargeRequest()
+    {
         return view('admin.transaction.recharge_request');
     }
 
-    public function getAgentCommission() {
+    public function getAgentCommission()
+    {
         return view('admin.transaction.agent_commission');
     }
-
-
 
 
 }

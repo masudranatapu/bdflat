@@ -103,15 +103,10 @@
                                                 <div class="col-md-3">
                                                     {!! Form::date('to_date', null, ['class' => 'form-control']) !!}
                                                 </div>
+                                                <div class="col-md-3">
+                                                    {!! Form::submit('Search', ['class' => 'btn btn-success']) !!}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group" style="align-items: center">
-                                        <div class="col-md-6">
-                                            {!! Form::text('search', null, ['class' => 'form-control', 'style' => 'border-radius: 40px !important', 'placeholder' => 'Search by User ID']) !!}
-                                        </div>
-                                        <div class="col-md-6">
-                                            {!! Form::submit('Search', ['class' => 'btn btn-success']) !!}
                                         </div>
                                     </div>
                                 </div>
