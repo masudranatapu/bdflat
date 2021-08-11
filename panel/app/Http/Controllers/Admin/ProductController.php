@@ -210,8 +210,8 @@ class ProductController extends BaseController
 
     public function getaAtivity($id)
     {
-        $data[] = '';
-        return view('admin.product.property_activity');
+        $data['property'] = Product::find($id);
+        return view('admin.product.property_activity',compact('data'));
     }
 
 

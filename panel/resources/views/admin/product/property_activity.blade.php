@@ -1,26 +1,19 @@
 @extends('admin.layout.master')
 
-@section('product_list','active')
-@section('Product Management','open')
+@section('Property Management','open')
+@section('property_list','active')
+
+@section('title') @lang('product.product_view') @endsection
+@section('page-name')Property Activities @endsection
 
 <!--push from page-->
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('app-assets/file_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
     <link rel="stylesheet" href="{{ asset('app-assets/lightgallery/dist/css/lightgallery.min.css') }}">
-    <style>
-        td table {
-            width: auto !important;
-        }
-    </style>
-
 @endpush('custom_css')
-
-@section('title') @lang('product.product_view') @endsection
-@section('page-name')Property Activities @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('product.breadcrumb_title')  </a></li>
@@ -28,7 +21,7 @@
 @endsection
 
 <?php
-$roles = userRolePermissionArray();
+    $roles = userRolePermissionArray();
 ?>
 
 @section('content')
@@ -38,6 +31,13 @@ $roles = userRolePermissionArray();
                 <div class="card card-success">
                     <div class="card-content">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Property Name : {{ $data['property']->TITLE ?? '' }}</h3>
+                                    <h3>Property Owner : {{ $data['property']->listingOwner->NAME ?? ''  }}</h3>
+                                    <br>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-xl-4 col-lg-6 col-12">
                                     <div class="card bg-info rounded">
