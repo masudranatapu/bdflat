@@ -2,19 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\PaymentCustomer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 
 class TransactionController extends BaseController
 {
-    public function __construct()
+    protected $paymentCustomer;
+
+    public function __construct(PaymentCustomer $paymentCustomer)
     {
         parent::__construct();
+        $this->paymentCustomer = $paymentCustomer;
     }
 
     public function getIndex(Request $request)
     {
-        return view('admin.transaction.index');
+        $date_from = $request->query->get('from_date');
+        $date_to = $request->query->get('to_date');
+        $type = $request->query->get('transaction_type');
+        $data['transactions'] = $this->paymentCustomer->getTransactions($date_from, $date_to, $type);
+//        dd($data);
+        return view('admin.transaction.index', compact('data'));
     }
 
     public function getCreate()

@@ -58,6 +58,7 @@
                                 </div>
                             </div>
                             <div class="row">
+                                {!! Form::open(['route' => 'admin.transaction.list', 'method' => 'get']) !!}
                                 <div class="col-12">
                                     <div class="row form-group">
                                         <div class="col-md-2">
@@ -65,25 +66,25 @@
                                         </div>
                                         <div class="col-md-10">
                                             <div class="controls">
-                                                {!! Form::radio('transaction_type','all', old('transaction_type', true) == 'all',[ 'id' => 'all']) !!}
+                                                {!! Form::radio('transaction_type','all', request()->query('transaction_type') == 'all' || null == request()->query('transaction_type'),[ 'id' => 'all']) !!}
                                                 {{ Form::label('all','All') }}
                                                 &emsp;
-                                                {!! Form::radio('transaction_type','listing_ad', old('transaction_type') == 'listing_ad',[ 'id' => 'listing_ad']) !!}
+                                                {!! Form::radio('transaction_type','listing_ad', request()->query('transaction_type') == 'listing_ad',[ 'id' => 'listing_ad']) !!}
                                                 {{ Form::label('listing_ad','Listing Ad') }}
                                                 &emsp;
-                                                {!! Form::radio('transaction_type','lead_purchase', old('transaction_type') == 'lead_purchase',[ 'id' => 'lead_purchase']) !!}
+                                                {!! Form::radio('transaction_type','lead_purchase', request()->query('transaction_type') == 'lead_purchase',[ 'id' => 'lead_purchase']) !!}
                                                 {{ Form::label('lead_purchase','Lead Purchase') }}
                                                 &emsp;
-                                                {!! Form::radio('transaction_type','contact_view', old('transaction_type') == 'contact_view',[ 'id' => 'contact_view']) !!}
+                                                {!! Form::radio('transaction_type','contact_view', request()->query('transaction_type') == 'contact_view',[ 'id' => 'contact_view']) !!}
                                                 {{ Form::label('contact_view','Contact View') }}
                                                 &emsp;
-                                                {!! Form::radio('transaction_type','recharge', old('transaction_type') == 'recharge',[ 'id' => 'recharge']) !!}
+                                                {!! Form::radio('transaction_type','recharge', request()->query('transaction_type') == 'recharge',[ 'id' => 'recharge']) !!}
                                                 {{ Form::label('recharge','Recharge') }}
                                                 &emsp;
-                                                {!! Form::radio('transaction_type','commission', old('transaction_type') == 'commission',[ 'id' => 'commission']) !!}
+                                                {!! Form::radio('transaction_type','commission', request()->query('transaction_type') == 'commission',[ 'id' => 'commission']) !!}
                                                 {{ Form::label('commission','Commission') }}
                                                 &emsp;
-                                                {!! Form::radio('transaction_type','refund', old('transaction_type') == 'refund',[ 'id' => 'refund']) !!}
+                                                {!! Form::radio('transaction_type','refund', request()->query('transaction_type') == 'refund',[ 'id' => 'refund']) !!}
                                                 {{ Form::label('refund','Refund') }}
 
                                                 {!! $errors->first('transaction_type', '<label class="help-block text-danger">:message</label>') !!}
@@ -91,17 +92,17 @@
                                         </div>
                                     </div>
                                     <div class="row form-group" style="align-items: center">
-                                        <div class="col-md-2">Search by Date: </div>
+                                        <div class="col-md-2">Search by Date:</div>
                                         <div class="col-md-10">
                                             <div class="row" style="align-items: center">
                                                 <div class="col-md-3">
-                                                    {!! Form::date('from_date', null, ['class' => 'form-control']) !!}
+                                                    {!! Form::date('from_date', request()->query->get('from_date'), ['class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-md-1 text-center">
                                                     <p>To</p>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    {!! Form::date('to_date', null, ['class' => 'form-control']) !!}
+                                                    {!! Form::date('to_date', request()->query->get('to_date'), ['class' => 'form-control']) !!}
                                                 </div>
                                                 <div class="col-md-3">
                                                     {!! Form::submit('Search', ['class' => 'btn btn-success']) !!}
@@ -110,6 +111,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {!! Form::close() !!}
                                 <div class="col-12">
                                     <table class="table table-striped table-bordered text-center">
                                         <thead>
@@ -124,18 +126,22 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>10001</td>
-                                            <td>Oct 12, 2020</td>
-                                            <td>Listing Ad</td>
-                                            <td>Paid for AD PACK NAME for PROPERTY ID</td>
-                                            <td>100</td>
-                                            <td>
-                                                <a href="#">Edit</a> |
-                                                <a href="#">Delete</a>
-                                            </td>
-                                        </tr>
+                                        @if(isset($data['transactions']) && count($data['transactions']))
+                                            @foreach($data['transactions'] as $transaction)
+                                                <tr>
+                                                    <td>{{ $transaction->CUSTOMER_NO }}</td>
+                                                    <td>{{ $transaction->SLIP_NUMBER }}</td>
+                                                    <td>{{ date('M d, Y', strtotime($transaction->PAYMENT_DATE)) }}</td>
+                                                    <td></td>
+                                                    <td>{{ $transaction->PAYMENT_NOTE }}</td>
+                                                    <td>{{ $transaction->AMOUNT }}</td>
+                                                    <td>
+                                                        <a href="#">Edit</a> |
+                                                        <a href="#">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
