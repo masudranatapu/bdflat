@@ -1,14 +1,14 @@
 @extends('admin.layout.master')
 
 @section('Product Management','open')
-@section('property_condition','active')
+@section('city_list','active')
 
-@section('title') Property Condition @endsection
-@section('page-name') Property Condition @endsection
+@section('title') City / Division @endsection
+@section('page-name') City / Division @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Property Condition</li>
+    <li class="breadcrumb-item active">City / Division</li>
 @endsection
 
 @php
@@ -30,14 +30,14 @@
     <div class="content-body min-height">
         <section id="pagination">
             <div class="row">
-                <div class="col-6">
+                <div class="col-8">
                     <div class="card card-sm card-success">
                         <div class="card-header pl-2">
                             <div class="form-group">
-                                @if(hasAccessAbility('new_category', $roles))
+                                @if(hasAccessAbility('add_city', $roles))
                                     <a class="text-white btn btn-sm btn-primary"
-                                       href="{{ route('admin.property.condition.create')}}" title="Create new condition"><i
-                                            class="ft-plus text-white"></i> Create Property Condition</a>
+                                       href="{{ route('admin.city.new')}}" title="Create new condition"><i
+                                            class="ft-plus text-white"></i> Add New</a>
                                 @endif
 
                             </div>
@@ -60,28 +60,26 @@
                                         <thead>
                                         <tr>
                                             <th class="text-center" style="width: 50px;">SL.</th>
-                                            <th class="" style="min-width: 100px;">Property Condition</th>
+                                            <th class="" style="min-width: 100px;">City Name</th>
+                                            <th>Latitude</th>
+                                            <th>Longitude</th>
                                             <th class="" style="">Order</th>
-                                            <th class="" style="">Status</th>
-                                            <th class="text-center" style="width: 200px;">Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(isset($data['conditions']) && count($data['conditions']))
-                                            @foreach($data['conditions'] as $key => $condition)
+                                        @if(isset($data['cities']) && count($data['cities']))
+                                            @foreach($data['cities'] as $key => $city)
                                                 <tr>
                                                     <td class="text-center"
                                                         style="width: 50px;">{{ $key + 1 }}</td>
-                                                    <td class="" style="">{{ $condition->PROD_CONDITION }}</td>
-                                                    <td class="" style="">{{ $condition->ORDER_ID }}</td>
-                                                    @if($condition->IS_ACTIVE)
-                                                        <td class="text-success">Active</td>
-                                                    @else
-                                                        <td class="text-danger">Inactive</td>
-                                                    @endif
+                                                    <td class="" style="">{{ $city->CITY_NAME }}</td>
+                                                    <td>{{ $city->LAT ?? 'N/A' }}</td>
+                                                    <td>{{ $city->LON ?? 'N/A' }}</td>
+                                                    <td class="" style="">{{ $city->ORDER_ID }}</td>
                                                     <td class="text-center" style="width: 200px;">
                                                         @if(hasAccessAbility('edit_property_condition', $roles))
-                                                            <a href="{{ route('admin.property.condition.edit', [$condition->PK_NO]) }}"
+                                                            <a href="{{ route('admin.city.edit', [$city->PK_NO]) }}"
                                                                title="EDIT" class="btn btn-xs btn-info  mb-1"><i
                                                                     class="la la-edit"></i></a>
                                                         @endif
@@ -99,10 +97,6 @@
             </div>
         </section>
     </div>
-
-
-    @include('admin.category._subcategory_add_edit_modal')
-
 @endsection
 
 

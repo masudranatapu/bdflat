@@ -1,14 +1,14 @@
 @extends('admin.layout.master')
 
 @section('Product Management','open')
-@section('property_condition','active')
+@section('city_list','active')
 
-@section('title') Property Condition | Create @endsection
-@section('page-name') Property Condition | Create @endsection
+@section('title') City / Division | Update @endsection
+@section('page-name') City / Division | Update @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Property Condition</li>
+    <li class="breadcrumb-item active">City / Division</li>
 @endsection
 
 @php
@@ -49,37 +49,46 @@ $status = [
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
-                                {!! Form::open([ 'route' => 'admin.property.condition.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
+                                {!! Form::open([ 'route' => ['admin.city.update', $data['city']->PK_NO], 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            {!! Form::label('property_condition', 'Property Condition *', ['class' => 'label-title']) !!}
+                                            {!! Form::label('city_name', 'City Name *', ['class' => 'label-title']) !!}
                                             <div class="controls">
-                                                {!! Form::text('property_condition', old('property_condition'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Property Condition']) !!}
-                                                {!! $errors->first('property_condition', '<label class="help-block text-danger">:message</label>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            {!! Form::label('order_id', 'Order ID *', ['class' => 'label-title']) !!}
-                                            <div class="controls">
-                                                {!! Form::text('order_id', old('order_id'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Order ID']) !!}
-                                                {!! $errors->first('order_id', '<label class="help-block text-danger">:message</label>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            {!! Form::label('status', 'Status *', ['class' => 'label-title']) !!}
-                                            <div class="controls">
-                                                {!! Form::select('status', $status ?? [], old('status'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Select Status']) !!}
-                                                {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}
+                                                {!! Form::text('city_name', old('city_name', $data['city']->CITY_NAME), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'City Name']) !!}
+                                                {!! $errors->first('city_name', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <a href="{{ route('admin.property.condition') }}"
+                                        <div class="form-group">
+                                            {!! Form::label('latitude', 'Latitude *', ['class' => 'label-title']) !!}
+                                            <div class="controls">
+                                                {!! Form::text('latitude', old('latitude', $data['city']->LAT), ['class' => 'form-control', 'placeholder' => 'Latitude']) !!}
+                                                {!! $errors->first('latitude', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {!! Form::label('longitude', 'Longitude *', ['class' => 'label-title']) !!}
+                                            <div class="controls">
+                                                {!! Form::text('longitude', old('longitude', $data['city']->LON), ['class' => 'form-control', 'placeholder' => 'Longitude']) !!}
+                                                {!! $errors->first('longitude', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {!! Form::label('order', 'Order *', ['class' => 'label-title']) !!}
+                                            <div class="controls">
+                                                {!! Form::number('order', old('order', $data['city']->ORDER_ID), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Order']) !!}
+                                                {!! $errors->first('order', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <a href="{{ route('admin.city.list') }}"
                                            class="btn btn-info">Cancel</a>
                                         {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
                                     </div>

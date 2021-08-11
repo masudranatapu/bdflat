@@ -86,6 +86,8 @@ class AdminAccessServiceProvider extends ServiceProvider
             'Earnings',
             'Ads',
             'Pages',
+            'Area',
+            'City'
         ];
 
         foreach ($repos as $repo) {

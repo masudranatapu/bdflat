@@ -465,24 +465,24 @@
                                                    href="{{route('admin.property.condition')}}"><i></i><span
                             data-i18n="Basic">Condition</span></a>
                 </li>
-                <li class="@yield('city_list')"><a class="menu-item"
+                <li class="@yield('features')"><a class="menu-item"
                                                    href="{{route('admin.address_type.city_list_')}}"><i></i><span
                             data-i18n="Basic">Features</span></a>
 
-                <li class="@yield('city_list')"><a class="menu-item"
+                <li class="@yield('facilities')"><a class="menu-item"
                                                    href="{{route('admin.address_type.city_list_')}}"><i></i><span
                             data-i18n="Basic">Facilities</span></a>
                 <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                                                   href="{{route('admin.city.list')}}"><i></i><span
                             data-i18n="Basic">City or Division</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                <li class="@yield('area_list')"><a class="menu-item"
+                                                   href="{{route('admin.area.list')}}"><i></i><span
                             data-i18n="Basic">Area</span></a>
 
-                <li class="@yield('city_list')"><a class="menu-item"
+                <li class="@yield('blog_categories')"><a class="menu-item"
                                                    href="{{route('admin.address_type.city_list_')}}"><i></i><span
                             data-i18n="Basic">Blog Categories</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
+                <li class="@yield('bedroom')"><a class="menu-item"
                                                    href="{{route('admin.address_type.city_list_')}}"><i></i><span
                             data-i18n="Basic">Bedroom</span></a>
                 <li class="@yield('city_list')"><a class="menu-item"

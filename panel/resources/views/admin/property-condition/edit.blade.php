@@ -34,7 +34,7 @@ $status = [
     <div class="content-body min-height">
         <section id="pagination">
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
                     <div class="card card-sm card-success">
                         <div class="card-header pl-2">
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
