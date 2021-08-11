@@ -39,16 +39,14 @@ class SeekerController extends BaseController
 
     public function postUpdate(Request $request)
     {
-//        dd($request->all());
         $this->resp = $this->customer->postUpdate($request);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getPayment(Request $request, $id)
     {
-        // $this->resp = $this->customer->getPayment($id);
-        $this->resp = $this->customer->getPaginatedList($request);
-        $data = $this->resp->data;
+        $this->resp = $this->customer->getCustomerPayment($id);
+        $data['rows'] = $this->resp->data;
         return view('admin.seeker.payment',compact('data'));
     }
 

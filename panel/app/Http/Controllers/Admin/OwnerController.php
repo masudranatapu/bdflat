@@ -52,7 +52,8 @@ class OwnerController extends BaseController
 
     public function getPasswordEdit($id)
     {
-        $data['id'] = $id;
+        $this->resp = $this->owner->getshow($id);
+        $data['row'] = $this->resp->data;
         return view('admin.owner.edit-password', compact('data'));
     }
 

@@ -6,6 +6,7 @@ interface CustomerInterface
 {
     public function getPaginatedList($request);
     public function getPayment($id);
+    public function getCustomerPayment($id);
     public function getEdit(int $id);
     public function postUpdate($request);
     // public function postStore($request);

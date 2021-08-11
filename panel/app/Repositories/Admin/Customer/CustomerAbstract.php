@@ -38,12 +38,7 @@ class CustomerAbstract implements CustomerInterface
     }
     public function getEdit(int $id)
     {
-        /*$data =  Customer::join('SS_COUNTRY','SS_COUNTRY.PK_NO','SLS_CUSTOMERS.F_COUNTRY_NO')
-            ->select('SLS_CUSTOMERS.*','SS_COUNTRY.DIAL_CODE')
-            ->where('SLS_CUSTOMERS.PK_NO',$id)->first();*/
-
         $data =  Customer::where('PK_NO',$id)->first();
-
         if (!empty($data)) {
 
             return $this->formatResponse(true, '', 'admin.seeker.edit', $data);
@@ -54,7 +49,6 @@ class CustomerAbstract implements CustomerInterface
 
     public function postUpdate($request)
     {
-//        dd($request->all());
         DB::beginTransaction();
         try {
             if ($request->pk_no){
@@ -111,6 +105,15 @@ class CustomerAbstract implements CustomerInterface
         }else{
             return $this->formatResponse(true, 'Property Seeker Created successfully !', 'admin.seeker.list');
         }
+    }
+
+    public function getCustomerPayment($id){
+        try {
+            $data = PaymentCustomer::where('F_CUSTOMER_NO',$id)->get();
+        } catch (\Throwable $th) {
+            return $this->formatResponse(fasle, 'Data not found', 'admin.seeker.list');
+        }
+       return $this->formatResponse(true, 'Payment list found successfully !', 'admin.seeker.list',$data);
     }
 
 

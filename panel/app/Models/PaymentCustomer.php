@@ -46,6 +46,7 @@ class PaymentCustomer extends Model
         return $this->belongsTo('App\Models\Auth', 'F_SS_CREATED_BY');
     }
 
+
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer', 'F_CUSTOMER_NO');
