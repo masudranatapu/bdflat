@@ -498,6 +498,12 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('property/category/{id}/edit', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.edit', 'uses' => 'PropertyCategoryController@getEdit']);
     Route::post('property/category/{id}/update', ['middleware' => 'acl:edit_property_category', 'as' => 'property.category.update', 'uses' => 'PropertyCategoryController@postUpdate']);
 
+    Route::get('property/condition', ['middleware' => 'acl:view_property_condition', 'as' => 'admin.property.condition', 'uses' => 'PropertyConditionController@getIndex']);
+    Route::get('property/condition/new', ['middleware' => 'acl:add_property_condition', 'as' => 'admin.property.condition.create', 'uses' => 'PropertyConditionController@getCreate']);
+    Route::post('property/condition/store', ['middleware' => 'acl:add_property_condition', 'as' => 'admin.property.condition.store', 'uses' => 'PropertyConditionController@postStore']);
+    Route::get('property/condition/{id}/edit', ['middleware' => 'acl:edit_property_condition', 'as' => 'admin.property.condition.edit', 'uses' => 'PropertyConditionController@getEdit']);
+    Route::post('property/condition/{id}/update', ['middleware' => 'acl:edit_property_condition', 'as' => 'admin.property.condition.update', 'uses' => 'PropertyConditionController@postUpdate']);
+    Route::get('property/condition/{id}/delete', ['middleware' => 'acl:delete_property_condition', 'as' => 'admin.property.condition.delete', 'uses' => 'PropertyConditionController@getDelete']);
 
     //POSTCODE CITY ADDRESS ADD UPDATE
     Route::get('address-type-city/list', ['middleware' => 'acl:view_city_list', 'as' => 'admin.address_type.city_list_', 'uses' => 'AddressController@getCityList']);
