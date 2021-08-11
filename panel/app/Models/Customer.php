@@ -10,7 +10,7 @@ class Customer extends Model
 {
     protected $table 		= 'WEB_USER';
     protected $primaryKey   = 'PK_NO';
-    //public $timestamps      = false;
+    public $timestamps      = false;
     /*const CREATED_AT        = 'SS_CREATED_ON';
     const UPDATED_AT        = 'SS_MODIFIED_ON';*/
 
@@ -40,7 +40,7 @@ class Customer extends Model
         return $this->hasOne('App\Models\Country', 'PK_NO', 'F_COUNTRY_NO');
     }
 
-    public static function boot()
+    /*public static function boot()
     {
        parent::boot();
        static::creating(function($model)
@@ -54,7 +54,7 @@ class Customer extends Model
            $user = Auth::user();
            $model->F_SS_MODIFIED_BY = $user->PK_NO;
        });
-   }
+   }*/
 
 
 
