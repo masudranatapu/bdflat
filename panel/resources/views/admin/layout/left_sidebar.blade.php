@@ -449,8 +449,8 @@
                                                            href="{{route('admin.property.category')}}"><i></i><span
                             data-i18n="Basic">Property Categories</span></a>
                 </li>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
+                <li class="@yield('property_condition')"><a class="menu-item"
+                                                   href="{{route('admin.property.condition')}}"><i></i><span
                             data-i18n="Basic">Condition</span></a>
                 </li>
                 <li class="@yield('city_list')"><a class="menu-item"
