@@ -45,7 +45,7 @@
                                             <h2 class="font-weight-bold text-success">BDT 1,150</h2>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
-                                            <a href="javascript:void(0);" data-toggle="modal" data-target="#recharge" class="btn btn-success">Recharge Balance</a>
+                                            <a href="{{ route('admin.seeker.recharge', request()->route('id')) }}" class="btn btn-success">Recharge Balance</a>
                                         </div>
                                     </div>
 
