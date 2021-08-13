@@ -25,8 +25,9 @@ class SeekerController extends BaseController
 
     public function getIndex(Request $request)
     {
+        $data = [];
         $this->resp = $this->customer->getPaginatedList($request);
-        $data = $this->resp->data;
+        $data['rows'] = $this->resp->data;
         return view('admin.seeker.index', compact('data'));
     }
 
