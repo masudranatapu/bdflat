@@ -4,6 +4,8 @@ namespace App\Repositories\Admin\Datatable;
 
 interface DatatableInterface
 {
+    public function getSeeker($request);
+    /*
     public function getDatatableCustomer();
     public function getDatatableReseller();
     public function getDatatableProduct($request);
@@ -27,4 +29,6 @@ interface DatatableInterface
     public function customerRefundedRequestList($request);
     public function ajaxbankToOther();
     public function ajaxbankToBank();
+
+    */
 }

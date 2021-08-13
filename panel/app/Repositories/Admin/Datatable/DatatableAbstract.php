@@ -19,6 +19,41 @@ class DatatableAbstract implements DatatableInterface
 
      }
 
+     public function getSeeker($request){
+
+        $dataSet = DB::table("WEB_USER as c")->where('STATUS','!=',3)->where('USER_TYPE',1)->orderBy('PK_NO', 'DESC')->get();
+        return Datatables::of($dataSet)
+
+            ->addColumn('status', function($dataSet){
+                $status = '';
+                if($dataSet->STATUS == 1){
+                    $status = '<span class="t-pub">Active</span>';
+                }else{
+                    $status = '<span class="t-del">Inactive</span>';
+                }
+                return $status;
+
+            })
+
+            ->addColumn('action', function($dataSet){
+                $roles = userRolePermissionArray();
+                $edit = $payment = '';
+                if (hasAccessAbility('edit_seeker', $roles)) {
+                    $edit = ' <a href="'.route("admin.seeker.edit", ['id' => $dataSet->PK_NO]). '" class="btn btn-xs btn-success mb-05 mr-05" title="Edit">Edit</a>';
+                }
+                if (hasAccessAbility('view_seeker_payment', $roles)) {
+                    $payment = ' <a href="'.route("admin.seeker.payment", ['id' => $dataSet->PK_NO]). '" class="btn btn-xs btn-success mb-05 mr-05" title="View Payment">Payment</a>';
+                }
+                return $edit.$payment;
+
+            })
+            ->rawColumns(['action','status'])
+            ->make(true);
+
+     }
+
+
+     /*
     public function getDatatableCustomer()
     {
         $dataSet = DB::table("SLS_CUSTOMERS as c")
@@ -144,20 +179,6 @@ class DatatableAbstract implements DatatableInterface
 
                     })
 
-                    /*
-                    ->addColumn('balance_actual', function($dataSet){
-                        $roles = userRolePermissionArray();
-                        $balance_actual = '';
-
-                        if (hasAccessAbility('new_payment', $roles)) {
-
-                            $balance_actual = '<a href="'.route('admin.payment.create',[ 'id' => $dataSet->PK_NO, 'type' => 'customer', 'payfrom' => 'credit' ]).'" class="" title="Add new payment ">'.number_format($dataSet->CUSTOMER_BALANCE_ACTUAL,2).'</a>';
-
-                        }
-
-                        return $balance_actual;
-
-                    }) */
 
                     ->rawColumns(['mobile','action','due', 'balance','customer_no','credit'])
                     ->make(true);
@@ -615,7 +636,7 @@ class DatatableAbstract implements DatatableInterface
                     $status .= '<div class="badge badge-warning d-block" title="Cancele Request Pending">CR</div>';
                 }else{
                     if($dataSet->IS_ADMIN_HOLD == 0){
-                        /*NO ACTION BY ADMIN*/
+
                         $assigned_user = DB::SELECT("SELECT RTS_COLLECTION_USER_ID FROM SLS_BOOKING_DETAILS WHERE F_BOOKING_NO = $dataSet->F_BOOKING_NO");
                         $assigned_user = count($assigned_user) ?? 0;
                         if ($dataSet->dispatch_type == 'rts' || $dataSet->dispatch_type == 'cod_rtc') {
@@ -661,17 +682,11 @@ class DatatableAbstract implements DatatableInterface
                         }
 
                     }else{
-                        /*ALL ADMIN ACTION*/
+
                         if($dataSet->IS_ADMIN_HOLD == 1){
                             $status = '<div class="badge badge-danger d-block" title="HOLD">HOLD</div>';
                         }
-                        /*elseif($dataSet->IS_ADMIN_HOLD == 2){
-                            $status = '<div class="badge badge-warning d-block" title="CASH ON DELIVERY"><a href="'.route("admin.order.dispatch",[$dataSet->F_BOOKING_NO]).'?type=cod">COD</a></div>';
-                        }elseif($dataSet->IS_ADMIN_HOLD == 3){
-                            $status = '<div class="badge badge-warning d-block" title="READY TO COLLECT"><a href="'.route("admin.order.dispatch",[$dataSet->F_BOOKING_NO]).'?type=rtc">RTC</a></div>';
-                        }else{
-                            $status = '<div class="badge badge-warning d-block" title="N/A">N/A</div>';
-                        } */
+
                     }
 
 
@@ -1191,7 +1206,7 @@ class DatatableAbstract implements DatatableInterface
 
             $status = '';
             if($dataSet->IS_ADMIN_HOLD == 0){
-                /*NO ACTION BY ADMIN*/
+
                 $assigned_user = DB::SELECT("SELECT RTS_COLLECTION_USER_ID FROM SLS_BOOKING_DETAILS WHERE F_BOOKING_NO = $dataSet->F_BOOKING_NO");
                 $assigned_user = count($assigned_user) ?? 0;
                 if ($dataSet->dispatch_type == 'rts' || $dataSet->dispatch_type == 'cod_rtc') {
@@ -1209,7 +1224,7 @@ class DatatableAbstract implements DatatableInterface
                     $status = '<div class="badge badge-success d-block" title="DISPACTHED (Partially)">Dispacthed(H)</div>';
                 }
             }else{
-                /*ALL ADMIN ACTION*/
+
                 if($dataSet->IS_ADMIN_HOLD == 1){
                     $status = '<div class="badge badge-warning d-block" title="HOLD">HOLD</div>';
                 }
@@ -1488,7 +1503,7 @@ class DatatableAbstract implements DatatableInterface
 
             $status = '';
             if($dataSet->IS_ADMIN_HOLD == 0){
-                /*NO ACTION BY ADMIN*/
+
                 $assigned_user = DB::SELECT("SELECT RTS_COLLECTION_USER_ID FROM SLS_BOOKING_DETAILS WHERE F_BOOKING_NO = $dataSet->F_BOOKING_NO");
                 $assigned_user = count($assigned_user) ?? 0;
                 if ($dataSet->dispatch_type == 'rts' || $dataSet->dispatch_type == 'cod_rtc') {
@@ -1506,7 +1521,7 @@ class DatatableAbstract implements DatatableInterface
                     $status = '<div class="badge badge-success d-block" title="DISPACTHED (Partially)">Dispacthed(H)</div>';
                 }
             }else{
-                /*ALL ADMIN ACTION*/
+
                 if($dataSet->IS_ADMIN_HOLD == 1){
                     $status = '<div class="badge badge-warning d-block" title="HOLD">HOLD</div>';
                 }
@@ -1818,7 +1833,7 @@ class DatatableAbstract implements DatatableInterface
 
             $status = '';
             if($dataSet->IS_ADMIN_HOLD == 0){
-                /*NO ACTION BY ADMIN*/
+
                 $assigned_user = DB::SELECT("SELECT RTS_COLLECTION_USER_ID FROM SLS_BOOKING_DETAILS WHERE F_BOOKING_NO = $dataSet->F_BOOKING_NO");
                 $assigned_user = count($assigned_user) ?? 0;
                 if ($dataSet->dispatch_type == 'rts' || $dataSet->dispatch_type == 'cod_rtc') {
@@ -1836,7 +1851,7 @@ class DatatableAbstract implements DatatableInterface
                     $status = '<div class="badge badge-success d-block" title="DISPACTHED (Partially)">Dispacthed(H)</div>';
                 }
             }else{
-                /*ALL ADMIN ACTION*/
+
                 if($dataSet->IS_ADMIN_HOLD == 1){
                     $status = '<div class="badge badge-warning d-block" title="HOLD">HOLD</div>';
                 }
@@ -2137,7 +2152,7 @@ class DatatableAbstract implements DatatableInterface
 
             $status = '';
             if($dataSet->IS_ADMIN_HOLD == 0){
-                /*NO ACTION BY ADMIN*/
+
                 $assigned_user = DB::SELECT("SELECT RTS_COLLECTION_USER_ID FROM SLS_BOOKING_DETAILS WHERE F_BOOKING_NO = $dataSet->F_BOOKING_NO");
                 $assigned_user = count($assigned_user) ?? 0;
                 if ($dataSet->dispatch_type == 'rts' || $dataSet->dispatch_type == 'cod_rtc') {
@@ -2155,7 +2170,7 @@ class DatatableAbstract implements DatatableInterface
                     $status = '<div class="badge badge-success d-block" title="DISPACTHED (Partially)">Dispacthed(H)</div>';
                 }
             }else{
-                /*ALL ADMIN ACTION*/
+
                 if($dataSet->IS_ADMIN_HOLD == 1){
                     $status = '<div class="badge badge-warning d-block" title="HOLD">HOLD</div>';
                 }
@@ -2317,37 +2332,7 @@ class DatatableAbstract implements DatatableInterface
     public function getDatatableProduct($request)
     {
 
-        /*
-        // $house = $request->get('columns')[4]['search']['value'];
 
-        // $count_not_boxed = Stock::selectRaw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_BOX_NO IS NULL OR F_BOX_NO = 0) and (PRODUCT_STATUS IS NULL OR PRODUCT_STATUS = 0 OR PRODUCT_STATUS = 90))')->limit(1)->getQuery();
-
-        // $count_boxed = Stock::selectRaw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_BOX_NO IS NOT NULL))')->limit(1)->getQuery();
-
-        // $count_shipped = Stock::selectRaw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_SHIPPMENT_NO IS NOT NULL and F_BOX_NO IS NOT NULL))')->limit(1)->getQuery();
-
-        // $count_shelved = Stock::selectRaw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_INV_ZONE_NO IS NOT NULL))')->limit(1)->getQuery();
-
-        // $count_not_shelved = Stock::selectRaw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_INV_ZONE_NO IS NULL and F_BOX_NO IS NOT NULL and F_SHIPPMENT_NO IS NOT NULL and PRODUCT_STATUS = 60))')->limit(1)->getQuery();
-
-        $dataSet = DB::table('INV_STOCK')
-                ->select('PK_NO','SKUID','IG_CODE as IG_CODE_','BARCODE','PRD_VARINAT_NAME','PRD_VARIANT_IMAGE_PATH','INV_WAREHOUSE_NAME','F_INV_WAREHOUSE_NO as WAREHOUSE_NO'
-                ,DB::raw('IFNULL(COUNT(SKUID),0) as COUNTET')
-                ,DB::raw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and F_SHIPPMENT_NO IS NULL and F_BOX_NO IS NOT NULL) as BOXED_QTY')
-                ,DB::raw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_INV_ZONE_NO IS NULL and F_BOX_NO IS NOT NULL and F_SHIPPMENT_NO IS NOT NULL and PRODUCT_STATUS = 60)) as NOT_SHELVED_QTY')
-                ,DB::raw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_BOX_NO IS NULL OR F_BOX_NO = 0) and (PRODUCT_STATUS IS NULL OR PRODUCT_STATUS = 0 OR PRODUCT_STATUS = 90)) as YET_TO_BOXED_QTY')
-                ,DB::raw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_INV_ZONE_NO IS NOT NULL)) as SHELVED_QTY')
-                ,DB::raw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and (F_SHIPPMENT_NO IS NOT NULL and F_BOX_NO IS NOT NULL and F_INV_ZONE_NO IS NULL)) as SHIPMENT_ASSIGNED_QTY')
-                ,DB::raw('(SELECT IFNULL(COUNT(IG_CODE),0) from INV_STOCK where IG_CODE = IG_CODE_ and F_INV_WAREHOUSE_NO = WAREHOUSE_NO and BOOKING_STATUS between 10 and 79) as ORDERED')
-                )
-                // ->selectSub($count_boxed, 'boxed_qty')
-                // ->selectSub($count_not_boxed, 'yet_to_boxed_qty')
-                // ->selectSub($count_shipped, 'shipment_assigned_qty')
-                // ->selectSub($count_shelved, 'shelved_qty')
-                // ->selectSub($count_not_shelved, 'not_shelved_qty')
-                // ->whereRaw('ORDER_STATUS IS NULL OR ORDER_STATUS < 80')
-                ->groupBy('SKUID', 'F_INV_WAREHOUSE_NO')
-                ->orderBy('PK_NO', 'DESC');  */
 
                 $stock = DB::SELECT(" SELECT PK_NO, SKUID, IG_CODE, BARCODE, PRD_VARINAT_NAME, PRD_VARIANT_IMAGE_PATH, INV_WAREHOUSE_NAME, F_INV_WAREHOUSE_NO,F_SHIPPMENT_NO, F_BOX_NO, F_INV_ZONE_NO, PRODUCT_STATUS, BOOKING_STATUS, ORDER_STATUS FROM INV_STOCK WHERE PRODUCT_STATUS IS NULL OR PRODUCT_STATUS < 420");
 
@@ -2884,7 +2869,7 @@ class DatatableAbstract implements DatatableInterface
                 }
 
                     // $link = 'javascript:void(0)'.$item_picked[0]->PICKED ?? 0;
-                /*NO ACTION BY ADMIN*/
+
                 if($dataSet->DISPATCH_STATUS == '30'){
                     $status = '<div class="badge badge-success d-block" title="READY TO SHIP"><a href="'.$link.'">'.$rts.'</a></div>';
                 }elseif($dataSet->DISPATCH_STATUS == '20'){
@@ -2894,7 +2879,7 @@ class DatatableAbstract implements DatatableInterface
                 }
 
             }else{
-                /*ALL ADMIN ACTION*/
+
                 if($dataSet->IS_ADMIN_HOLD == 1){
                     $status = '<div class="badge badge-warning d-block" title="HOLD">HOLD</div>';
                 }
@@ -3426,6 +3411,8 @@ class DatatableAbstract implements DatatableInterface
         ->make(true);
 
     }
+
+    */
 
 
 }

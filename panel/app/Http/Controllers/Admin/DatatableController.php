@@ -15,6 +15,15 @@ class DatatableController extends BaseController
         $this->datatable = $datatable;
     }
 
+    public function getSeeker(Request $request)
+    {
+        $this->resp = $this->datatable->getSeeker($request);
+        return $this->resp;
+    }
+
+
+    /*
+
     public function all_customer()
     {
         $this->resp = $this->datatable->getDatatableCustomer();
@@ -148,5 +157,10 @@ class DatatableController extends BaseController
         $this->resp = $this->datatable->ajaxbankToBank();
         return $this->resp;
     }
+
+    */
+
+
+
 }
 
