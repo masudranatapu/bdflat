@@ -26,7 +26,9 @@
 @endpush
 
 @php
-    $roles = userRolePermissionArray();
+    $roles      = userRolePermissionArray();
+    $txn_type   =  Config::get('static_array.txn_type');
+    $balance    = 0;
 @endphp
 
 
@@ -42,7 +44,7 @@
                                     <div class="row mb-1">
                                         <div class="col-2">
                                             <p class="font-weight-bold">Balance</p>
-                                            <h2 class="font-weight-bold text-success">BDT 1,150</h2>
+                                            <h2 class="font-weight-bold text-success">BDT {{ number_format($data['seeker']->UNUSED_TOPUP ?? 0,2) }}</h2>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
                                             <a href="{{ route('admin.seeker.recharge', request()->route('id')) }}" class="btn btn-success">Recharge Balance</a>
@@ -51,61 +53,35 @@
 
                                     <h3>Transaction History</h3>
                                     <div class="table-responsive ">
-                                        <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
+                                        <table class="table table-striped table-bordered table-sm text-center alt-pagination">
                                             <thead>
                                             <tr>
+                                                <th>SL</th>
                                                 <th>Tran. ID</th>
                                                 <th>Tran. Type</th>
                                                 <th>Date</th>
-                                                <th>Amount</th>
+                                                <th>Slip</th>
                                                 <th>Note</th>
+                                                <th>Amount</th>
                                                 <th>Balance</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span>10001</span>
-                                                </td>
-                                                <td>
-                                                    <span>Recharge</span>
-                                                </td>
-                                                <td>
-                                                    <span>Oct 12, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>1000</span>
-                                                </td>
-
-                                                <td>
-                                                    <span>Text</span>
-                                                </td>
-                                                <td>
-                                                    <span>1150</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <span>10001</span>
-                                                </td>
-                                                <td>
-                                                    <span>Mobile View</span>
-                                                </td>
-                                                <td>
-                                                    <span>Oct 12, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>1000</span>
-                                                </td>
-
-                                                <td>
-                                                    <span>Property ID</span>
-                                                </td>
-                                                <td>
-                                                    <span>150</span>
-                                                </td>
-                                            </tr>
+                                                @if(isset($data['rows']) && count($data['rows']) > 0 )
+                                                    @foreach($data['rows'] as $key => $row )
+                                                    @php $balance += $row->AMOUNT; @endphp
+                                                        <tr>
+                                                            <td> {{ $key+1 }} </td>
+                                                            <td><span>{{ $row->CODE }}</span></td>
+                                                            <td><span>{{ $txn_type[$row->TRANSACTION_TYPE] ?? '' }}</span></td>
+                                                            <td><span>{{ date('M d, Y', strtotime($row->TRANSACTION_DATE)) }}</span></td>
+                                                            <td><span>{{ $row->payment->SLIP_NUMBER }}</span></td>
+                                                            <td><span>{{ $row->payment->PAYMENT_NOTE }}</span></td>
+                                                            <td><span>{{ number_format($row->AMOUNT,2) }}</span></td>
+                                                            <td><span>{{ number_format($balance,2) }}</span></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

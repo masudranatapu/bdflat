@@ -21,6 +21,15 @@ return [
         1 => 'Paid',
     ],
 
+    'payment_type' => [
+        1 => 'Customer payment',
+        2 => 'Bonus payment',
+    ],
+    'txn_type' => [
+        1 => 'Recharge',
+        2 => 'Deduction',
+    ],
+
 	'user_type' => [
 		1 => 'Seeker',
 		2 => 'Owner',
