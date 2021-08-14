@@ -49,7 +49,8 @@
                                 <div class="col-md-6">
                                     <div class="mb-2">
                                         <p class="font-weight-bold">Credit Balance</p>
-                                        <h3 class="font-weight-bold">BDT {{ number_format($data['seeker']->UNUSED_TOPUP ?? 0, 2) }}</h3>
+                                        <h3 class="font-weight-bold">
+                                            BDT {{ number_format($data['seeker']->UNUSED_TOPUP ?? 0, 2) }}</h3>
                                     </div>
                                     {!! Form::open(['route' => ['admin.seeker.recharge', $data['seeker']->PK_NO],'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                                     <div class="form-group {!! $errors->has('amount') ? 'error' : '' !!}">
@@ -59,31 +60,38 @@
                                             {!! $errors->first('amount', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
-                                    <div class="form-group {!! $errors->has('method') ? 'error' : '' !!}">
-                                        {{ Form::label('method','Recharge Method') }}
+                                    <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
+                                        {{ Form::label('note','Payment Type') }}
                                         <div class="controls">
-                                            {!! Form::select('method', $payment_methods ?? [], old('method'), ['id' => 'method', 'class'=>'form-control', 'placeholder'=>'Select Method','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type'), ['id' => 'paymentType', 'class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
+                                            {!! $errors->first('payment_type', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                    <div class="bonus form-group {!! $errors->has('method') ? 'error' : '' !!}">
+                                        {{ Form::label('method','Payment Method') }}
+                                        <div class="controls">
+                                            {!! Form::select('method', $payment_methods ?? [], old('method'), ['id' => 'method', 'class'=>'form-control', 'placeholder'=>'Select Method']) !!}
                                             {!! $errors->first('method', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div
-                                        class="form-group bkash {!! $errors->has('bkash') ? 'error' : '' !!}">
-                                        {{ Form::label('bkash','bKash Number') }}
+                                        class="bonus form-group {!! $errors->has('payment_account') ? 'error' : '' !!}">
+                                        {{ Form::label('payment_account','Payment Account') }}
                                         <div class="controls">
-                                            {!! Form::number('bkash', old('bkash'), ['class'=>'form-control', 'placeholder'=>'bKash Number']) !!}
+                                            {!! Form::select('payment_account', [], old('payment_account'), ['id' => 'payment_account', 'class'=>'form-control', 'placeholder'=>'Select Method']) !!}
+                                            {!! $errors->first('payment_account', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="bonus bkash form-group bkash {!! $errors->has('bkash') ? 'error' : '' !!}">
+                                        {{ Form::label('bkash','Bkash/Nagad/Rocket Number') }}
+                                        <div class="controls">
+                                            {!! Form::number('bkash', old('bkash'), ['class'=>'form-control', 'placeholder'=>'bKash/Nagad/Rocket Number']) !!}
                                             {!! $errors->first('bkash', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div
-                                        class="form-group nagad {!! $errors->has('nagad') ? 'error' : '' !!}">
-                                        {{ Form::label('nagad','Nagad Number') }}
-                                        <div class="controls">
-                                            {!! Form::number('nagad', old('nagad'), ['class'=>'form-control', 'placeholder'=>'Nagad Number']) !!}
-                                            {!! $errors->first('nagad', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="form-group bank {!! $errors->has('bank_name') ? 'error' : '' !!}">
+                                        class="bonus bank form-group bank {!! $errors->has('bank_name') ? 'error' : '' !!}">
                                         {{ Form::label('bank_name','Bank Name') }}
                                         <div class="controls">
                                             {!! Form::text('bank_name', old('bank_name'), ['class'=>'form-control', 'placeholder'=>'Bank Name']) !!}
@@ -91,7 +99,7 @@
                                         </div>
                                     </div>
                                     <div
-                                        class="form-group bank {!! $errors->has('bank_acc_name') ? 'error' : '' !!}">
+                                        class="bonus bank form-group bank {!! $errors->has('bank_acc_name') ? 'error' : '' !!}">
                                         {{ Form::label('bank_acc_name','Bank Account Name') }}
                                         <div class="controls">
                                             {!! Form::text('bank_acc_name', old('bank_acc_name'), ['class'=>'form-control', 'placeholder'=>'Bank Account Name']) !!}
@@ -99,21 +107,22 @@
                                         </div>
                                     </div>
                                     <div
-                                        class="form-group bank {!! $errors->has('bank_acc_no') ? 'error' : '' !!}">
+                                        class="bonus bank form-group bank {!! $errors->has('bank_acc_no') ? 'error' : '' !!}">
                                         {{ Form::label('bank_acc_no','Bank Account No.') }}
                                         <div class="controls">
                                             {!! Form::number('bank_acc_no', old('bank_acc_no'), ['class'=>'form-control', 'placeholder'=>'Bank Account Number']) !!}
                                             {!! $errors->first('bank_acc_no', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
-                                    <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
-                                        {{ Form::label('note','Note') }}
+                                    <div
+                                        class="bonus bank form-group bank {!! $errors->has('slip_number') ? 'error' : '' !!}">
+                                        {{ Form::label('slip_number','Bank Account No.') }}
                                         <div class="controls">
-                                            {!! Form::textarea('note', old('note'), ['class'=>'form-control', 'placeholder'=>'Note', 'rows' => 4]) !!}
-                                            {!! $errors->first('note', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! Form::number('slip_number', old('slip_number'), ['class'=>'form-control', 'placeholder'=>'Slip Number']) !!}
+                                            {!! $errors->first('slip_number', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
-                                    <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
+                                    <div class="bonus form-group {!! $errors->has('note') ? 'error' : '' !!}">
                                         {{ Form::label('attachment','Attachment (optional)') }}
                                         <div class="controls">
                                             <div id="imageFile" style="padding-top: .5rem;"></div>
@@ -122,10 +131,10 @@
                                         {!! $errors->first('images.0', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                     <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
-                                        {{ Form::label('note','Payment Type') }}
+                                        {{ Form::label('note','Note') }}
                                         <div class="controls">
-                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type'), ['class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
-                                            {!! $errors->first('payment_type', '<label class="help-block text-danger">:message</label>') !!}
+                                            {!! Form::textarea('note', old('note'), ['class'=>'form-control', 'placeholder'=>'Note', 'rows' => 4]) !!}
+                                            {!! $errors->first('note', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -153,41 +162,46 @@
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
 
-    {{--<script>
+    <script>
         $(document).ready(function () {
+            let paymentType = $('#paymentType');
+            let bonus = $('.bonus');
             let method = $('#method');
             let bkash = $('.bkash');
-            let nagad = $('.nagad');
             let bank = $('.bank');
 
-            method.change(function () {
-                changeMethod();
-            })
+            bonus.hide();
 
-            function changeMethod() {
-                switch (parseInt(method.val())) {
-                    case 1:
-                        bkash.show();
-                        nagad.hide();
-                        bank.hide();
-                        break;
-                    case 2:
-                        bkash.hide();
-                        nagad.show();
-                        bank.hide();
-                        break;
-                    case 3:
-                        bkash.hide();
-                        nagad.hide();
-                        bank.show();
-                        break;
-                    default:
-                        bkash.hide();
-                        nagad.hide();
-                        bank.hide();
+            paymentType.change(function () {
+                if (parseInt($(this).val()) === 2) {
+                    bonus.hide(100);
+                } else {
+                    bonus.show(100);
                 }
+                bank.hide();
+                bkash.hide();
+            });
+
+            method.change(function () {
+                getPaymentAccounts(parseInt($(this).val()));
+                if (parseInt($(this).val()) === 4) {
+                    bank.show(100);
+                    bkash.hide(100);
+                } else {
+                    bank.hide(100);
+                    bkash.show(100);
+                }
+            });
+
+            function getPaymentAccounts(method_id) {
+                $.ajax('{{ route('ajax.payment-account.list') . '?query=' }}' + method_id)
+                    .done(res => {
+                        $('#payment_account').html(res);
+                    })
+                    .fail(err => {
+                        console.log(err)
+                    });
             }
-            changeMethod();
         });
-    </script>--}}
+    </script>
 @endpush

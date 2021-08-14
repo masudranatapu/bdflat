@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\RechargeRequest;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\PaymentBankAcc;
 use App\Models\PaymentMethod;
 use App\Models\ProductRequirements;
 use App\Models\PropertyType;
@@ -60,7 +61,7 @@ class SeekerController extends BaseController
 
     public function getRecharge($id)
     {
-        $data['paymentMethods'] = PaymentMethod::all()->where('IS_ACTIVE', '=', 1)->pluck('NAME', 'PK_NO');
+        $data['paymentMethods'] = PaymentMethod::all()->where('PK_NO', '!=', 1)->where('IS_ACTIVE', '=', 1)->pluck('NAME', 'PK_NO');
         $data['seeker'] = User::find($id);
         return view('admin.seeker.recharge', compact('data'));
     }
@@ -80,6 +81,25 @@ class SeekerController extends BaseController
             return response()->json(['html' => [], 'status' => 'faild']);
         }
 
+    }
+
+    public function paymentAccount(Request $request): string
+    {
+        $method = $request->query->get('query');
+        $accounts = PaymentBankAcc::all()
+            ->where('F_PAYMENT_METHOD_NO', '=', $method)
+            ->pluck('BANK_NAME', 'PK_NO');
+
+        $response = '';
+
+        if (!count($accounts)) {
+            $response = '<option selected disabled>No Account</option>';
+        }
+
+        foreach ($accounts as $key => $value) {
+            $response .= '<option value="' . $key . '">' . $value . '</option>';
+        }
+        return $response;
     }
 
 
