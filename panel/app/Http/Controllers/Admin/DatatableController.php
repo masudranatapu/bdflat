@@ -21,6 +21,18 @@ class DatatableController extends BaseController
         return $this->resp;
     }
 
+    public function getOwner(Request $request)
+    {
+        $this->resp = $this->datatable->getOwner($request);
+        return $this->resp;
+    }
+
+    public function getAgents(Request $request)
+    {
+        $this->resp = $this->datatable->getAgents($request);
+        return $this->resp;
+    }
+
 
     /*
 

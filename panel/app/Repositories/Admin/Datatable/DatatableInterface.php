@@ -5,6 +5,10 @@ namespace App\Repositories\Admin\Datatable;
 interface DatatableInterface
 {
     public function getSeeker($request);
+
+    public function getOwner($request);
+
+    public function getAgents($request);
     /*
     public function getDatatableCustomer();
     public function getDatatableReseller();

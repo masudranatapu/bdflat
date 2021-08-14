@@ -8,7 +8,7 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('invoice.breadcrumb_title')</a></li>
-    <li class="breadcrumb-item active">Property Owner </li>
+    <li class="breadcrumb-item active">Property Owner</li>
 @endsection
 
 @php
@@ -20,7 +20,8 @@
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 @endpush
 
 
@@ -31,22 +32,25 @@
                 <div class="col-md-12">
                     <div class="card card-sm card-success">
                         <div class="card-header">
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <a href="{{ route('admin.owner.list',['owner' => 2]) }}" class="btn btn-info btn-sm">Owner</a>
-                                    </div>
-
-                                    <div class="form-check form-check-inline">
-                                        <a href="{{ route('admin.owner.list',['owner' => 3]) }}" class="btn btn-info btn-sm">Builder</a>
-                                    </div>
-
-                                    <div class="form-check form-check-inline">
-                                        <a href="{{ route('admin.owner.list',['owner' => 4]) }}" class="btn btn-info btn-sm">Agency</a>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <a href="{{ route('admin.owner.list') }}" class="btn btn-info btn-sm">All</a>
-                                    </div>
+                            <div class="form-group">
+                                <div class="form-check form-check-inline">
+                                    <a href="{{ route('admin.owner.list',['owner' => 2]) }}"
+                                       class="btn btn-info btn-sm">Owner</a>
                                 </div>
+
+                                <div class="form-check form-check-inline">
+                                    <a href="{{ route('admin.owner.list',['owner' => 3]) }}"
+                                       class="btn btn-info btn-sm">Builder</a>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <a href="{{ route('admin.owner.list',['owner' => 4]) }}"
+                                       class="btn btn-info btn-sm">Agency</a>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <a href="{{ route('admin.owner.list') }}" class="btn btn-info btn-sm">All</a>
+                                </div>
+                            </div>
 
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
@@ -63,7 +67,7 @@
 
 
                                 <div class="table-responsive ">
-                                    <table class="table table-striped table-bordered table-sm" {{--id="process_data_table"--}}>
+                                    <table class="table table-striped table-bordered table-sm" id="dtable">
                                         <thead>
                                         <tr>
                                             <th class="text-center">SL</th>
@@ -73,37 +77,13 @@
                                             <th>Name</th>
                                             <th>Mobile</th>
                                             <th>Email</th>
-                                            <th class="text-center">Balance</th>
-                                            <th class="text-center">Properties</th>
-                                            <th class="text-center">Status</th>
+                                            <th>Balance</th>
+                                            <th>Properties</th>
+                                            <th>Status</th>
                                             <th style="width: 17%" class="text-center">Action</th>
                                         </tr>
                                         </thead>
-
                                         <tbody>
-                                            @if(isset($data['rows']) && count($data['rows']) > 0 )
-                                                @foreach($data['rows'] as $key => $row)
-                                                    <tr>
-                                                        <td class="text-center">{{ $key+1 }}</td>
-                                                        <td class="text-center">{{ $row->CODE }}</td>
-                                                        <td>{{ date('M d, Y', strtotime($row->CREATED_AT)) }}</td>
-                                                        <td>{{ $user_type[$row->USER_TYPE] ?? '' }}</td>
-                                                        <td>{{ $row->NAME }}</td>
-                                                        <td>{{ $row->MOBILE_NO }}</td>
-                                                        <td>{{ $row->EMAIL }}</td>
-                                                        <td class="text-center">{{ number_format($row->UNUSED_TOPUP,2) }}</td>
-                                                        <td class="text-center"><span class="t-pub">{{ $row->TOTAL_LISTING }}</span></td>
-                                                        <td class="text-center">{{ $user_status[$row->STATUS] ?? '' }}</td>
-                                                        <td style="width: 17%" class="text-center">
-                                                            <a href="{{ route('admin.owner.edit', $row->PK_NO) }}">Edit</a>
-                                                            |
-                                                            <a href="{{ route('admin.owner.payment', $row->PK_NO) }}">Payment</a>
-                                                            |
-                                                            <a href="{{ route('admin.owner.password.edit', $row->PK_NO) }}">CP</a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -128,129 +108,29 @@
             }
         });
 
-        var get_url = $('#base_url').val();
-
-        jQuery(document).ready(function ($) {
-            typeahead('customer');
-        })
-
-        $('#scrollable-dropdown-menu2 .search_to_customer').bind('typeahead:select', function (ev, suggestion) {
-            $('#to_customer_hidden').val(suggestion.pk_no1);
-
-        });
-
-        function typeahead(type) {
-            var get_url = $('#base_url').val();
-            var engine = new Bloodhound({
-                remote: {
-                    url: get_url + '/get-customer-info?q=%QUERY%&type=' + type,
-                    wildcard: '%QUERY%'
-                },
-                datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace
-            });
-
-            $(".search_to_customer").typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1,
-
-            }, {
-                source: engine.ttAdapter(),
-                // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
-                display: 'NAME',
-                limit: 20,
-
-                // the key from the array we want to display (name,id,email,etc...)
-                templates: {
-                    // empty: [
-                    //     // '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
-                    // ],
-                    empty: function (context) {
-                        $(".tt-dataset").html('<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>');
-
-                    },
-                    header: [
-                        '<div class="list-group search-results-dropdown">'
-                    ],
-                    suggestion: function (data) {
+        let get_url = $('#base_url').val();
 
 
-                        if (type == 'customer') {
-
-
-                            return '<span class="list-group-item" style="cursor: pointer;" data-id="' + data.pk_no1 + '" >' + data.NAME + '- Mobile : ' + data.MOBILE_NO + '- ID : ' + data.CUSTOMER_NO + '</span>';
-
-
-                        } else {
-
-                            return '<span class="list-group-item" style="cursor: pointer;" data-id="' + data.pk_no1 + '" >' + data.NAME + '- Mobile : ' + data.MOBILE_NO + '- ID : ' + data.RESELLER_NO + '</span>';
-
-                        }
-                    },
-                    updater: function (data) {
-                        //print the id to developer tool's console
-                        console.log(data);
-                    }
-                }
-            });
-        }
-
-        $(document).on('click', '.balanceTransBtn', function (e) {
-            var id = $(this).data('id');
-            var pageurl = get_url + '/get/' + id + '/remainingcustomerbalance';
-            $.ajax({
-                type: 'get',
-                url: pageurl,
-                async: true,
-                beforeSend: function () {
-                    $("body").css("cursor", "progress");
-                },
-                success: function (data) {
-                    console.log(data);
-                    if (data != '') {
-                        $('#payment_no').html(data);
-
-                    } else {
-                        $('#payment_no').html("<option value=''>data not found</option>");
-                    }
-
-                },
-                complete: function (data) {
-                    $("body").css("cursor", "default");
-
-                }
-            });
-
-            var name = $(this).data('name');
-            var payment_no = $(this).data('payment_no');
-            $('#customer_name').text(name);
-            // $('#payment_no').val(payment_no);
-            $('#from_customer').val(id);
-            $('#to_customer').val('');
-//    $('#amount_to_trans').attr('max', payment_no);
-
-        })
         $(document).ready(function () {
-            var value = getCookie('reseller_list');
+            let value = getCookie('owner_list');
 
             if (value !== null) {
-                var value = (value - 1) * 10;
+                let value = (value - 1) * 25;
                 // table.fnPageChange(value,true);
             } else {
-                var value = 0;
+                let value = 0;
             }
-            var table = callDatatable(value);
+            let table = callDatatable(value);
 
         });
 
         function callDatatable(value) {
-            var table =
-                $('#process_data_table').dataTable({
+            let table =
+                $('#dtable').dataTable({
                     processing: false,
                     serverSide: true,
                     paging: true,
-                    pageLength: 10,
+                    pageLength: 25,
                     lengthChange: true,
                     searching: true,
                     ordering: true,
@@ -258,82 +138,76 @@
                     autoWidth: false,
                     iDisplayStart: value,
                     ajax: {
-                        url: 'reseller/all_reseller',
+                        url: get_url + '/owner_list',
                         type: 'POST',
                         data: function (d) {
                             d._token = "{{ csrf_token() }}";
+                            d.owner = {{ request()->query('owner') ?? 'null' }};
                         }
                     },
                     columns: [
                         {
-                            data: 'RESELLER_NO',
-                            name: 'r.RESELLER_NO',
+                            data: 'PK_NO',
+                            name: 'PK_NO',
+                            searchable: false,
+                            sortable: false,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        },
+
+                        {
+                            data: 'CODE',
+                            name: 'CODE',
+                            searchable: true
+                        },
+                        {
+                            data: 'CREATED_AT',
+                            name: 'CREATED_AT',
+                            searchable: true
+                        },
+                        {
+                            data: 'user_type',
+                            name: 'user_type',
+                            searchable: true
+                        },
+                        {
+                            data: 'NAME',
+                            name: 'NAME',
                             searchable: true,
                             className: 'text-center'
                         },
-                        // {
-                        //     data: 'PK_NO',
-                        //     name: 'PK_NO',
-                        //     searchable: false,
-                        //     sortable:false,
-                        //     render: function(data, type, row, meta) {
-                        //         return meta.row + meta.settings._iDisplayStart + 1;
-                        //     }
-                        // },
-
-                        {
-                            data: 'NAME',
-                            name: 'r.NAME',
-                            searchable: true
-                        },
-
-                        {
-                            data: 'EMAIL',
-                            name: 'r.EMAIL',
-                            searchable: true,
-                            render: function (data, type, row) {
-                                if (row.EMAIL == null) {
-                                    return '----------------------------';
-                                } else {
-                                    return row.EMAIL;
-                                }
-                            }
-                        },
                         {
                             data: 'MOBILE_NO',
-                            name: 'r.MOBILE_NO',
-                            dial: 'c.DIAL_CODE',
+                            name: 'MOBILE_NO',
                             searchable: true,
-                            render: function (data, type, row) {
-                                return row.DIAL_CODE + ' ' + row.MOBILE_NO;
-                            }
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'EMAIL',
+                            name: 'EMAIL',
+                            searchable: true,
                         },
 
                         {
-                            data: 'total_unverified',
-                            name: 'total_unverified',
-                            searchable: false,
-                            className: 'text-right',
-                        },
-                        {
-                            data: 'balance',
-                            name: 'balance',
+                            data: 'UNUSED_TOPUP',
+                            name: 'UNUSED_TOPUP',
                             searchable: false,
                             className: 'text-right',
                         },
 
                         {
-                            data: 'due',
-                            name: 'due',
+                            data: 'TOTAL_LISTING',
+                            name: 'TOTAL_LISTING',
                             searchable: true,
                             className: 'text-right'
 
                         },
                         {
-                            data: 'credit',
-                            name: 'r.CUM_BALANCE',
+                            data: 'status',
+                            name: 'status',
                             searchable: true,
-                            className: 'text-right'
+                            className: 'text-center'
 
                         },
                         {
@@ -350,22 +224,22 @@
 
     <script>
         $(document).on('click', '.page-link', function () {
-            var pageNum = $(this).text();
-            setCookie('reseller_list', pageNum);
+            let pageNum = $(this).text();
+            setCookie('owner_list', pageNum);
         });
 
-        function setCookie(reseller_list, pageNum) {
-            var today = new Date();
-            var name = reseller_list;
-            var elementValue = pageNum;
-            var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+        function setCookie(owner_list, pageNum) {
+            let today = new Date();
+            let name = owner_list;
+            let elementValue = pageNum;
+            let expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
 
             document.cookie = name + "=" + elementValue + "; path=/; expires=" + expiry.toGMTString();
         }
 
         function getCookie(name) {
-            var re = new RegExp(name + "=([^;]+)");
-            var value = re.exec(document.cookie);
+            let re = new RegExp(name + "=([^;]+)");
+            let value = re.exec(document.cookie);
             return (value != null) ? unescape(value[1]) : null;
         }
     </script>
