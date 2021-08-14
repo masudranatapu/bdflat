@@ -8,17 +8,45 @@
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 
     <style>
-        .t-pub{color:#6aa586}
-        .t-unpub{color:#a54b82}
-        .t-pen{color:#726ba5}
-        .t-del{color:#e37b7f}
-        .key_search{position:relative}
-        .key_search i{position:absolute;top:20%;left:10%}
-        .key_search input{border-radius:25px!important;padding-left:30px;font-size:12px}
-        .br{border-radius:5px!important}
+        .t-pub {
+            color: #6aa586
+        }
+
+        .t-unpub {
+            color: #a54b82
+        }
+
+        .t-pen {
+            color: #726ba5
+        }
+
+        .t-del {
+            color: #e37b7f
+        }
+
+        .key_search {
+            position: relative
+        }
+
+        .key_search i {
+            position: absolute;
+            top: 20%;
+            left: 10%
+        }
+
+        .key_search input {
+            border-radius: 25px !important;
+            padding-left: 30px;
+            font-size: 12px
+        }
+
+        .br {
+            border-radius: 5px !important
+        }
     </style>
 @endpush
 
@@ -54,62 +82,67 @@
                                     <div class="row mb-1">
 
                                         <div class="col">
-                                           <div class="form-group {!! $errors->has('user_type') ? 'error' : '' !!}">
+                                            <div class="form-group {!! $errors->has('user_type') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                   {!! Form::select('user_type', $user_type_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select user type', 'tabindex' => 6]) !!}
-                                                   {!! $errors->first('user_type', '<label class="help-block text-danger">:message</label>') !!}
-                                               </div>
-                                           </div>
+                                                    {!! Form::select('user_type', $user_type_combo, request()->query->get('user_type'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select user type', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('user_type', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
 
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                   {!! Form::select('property_for', $property_for_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property for', 'tabindex' => 6]) !!}
-                                                   {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
-                                               </div>
-                                           </div>
+                                                    {!! Form::select('property_for', $property_for_combo, request()->query->get('property_for'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property for', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('listing_type') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                   {!! Form::select('listing_type', $listing_type_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select listing type', 'tabindex' => 6]) !!}
-                                                   {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
-                                               </div>
-                                           </div>
+                                                    {!! Form::select('listing_type', $listing_type_combo, request()->query->get('listing_type'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select listing type', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col">
-                                            <div class="form-group {!! $errors->has('payment_status') ? 'error' : '' !!}">
+                                            <div
+                                                class="form-group {!! $errors->has('payment_status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                   {!! Form::select('payment_status', $payment_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select payment status', 'tabindex' => 6]) !!}
-                                                   {!! $errors->first('payment_status', '<label class="help-block text-danger">:message</label>') !!}
-                                               </div>
-                                           </div>
+                                                    {!! Form::select('payment_status', $payment_status_combo, request()->query->get('payment_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select payment status', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('payment_status', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col">
-                                            <div class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
+                                            <div
+                                                class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                   {!! Form::select('property_status', $property_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
-                                                   {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
-                                               </div>
-                                           </div>
+                                                    {!! Form::select('property_status', $property_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col">
-                                            <input type="submit" class="btn btn-info btn-sm px-2" value="Search" style="border-radius: 0px">
-                                            <a class="btn btn-sm btn-primary text-white" href="{{ route('admin.product.list') }}" title="ADD NEW LISTING" style="color: #FC611F;margin-left: 10px;" >Reset</a>
+                                            <input type="submit" class="btn btn-info btn-sm px-2" value="Search"
+                                                   style="border-radius: 0px">
+                                            <a class="btn btn-sm btn-primary text-white"
+                                               href="{{ route('admin.product.list') }}" title="ADD NEW LISTING"
+                                               style="color: #FC611F;margin-left: 10px;">Reset</a>
                                         </div>
                                     </div>
                                 </form>
 
                                 <div class="table-responsive ">
-                                    <table class="table table-striped table-bordered alt-pagination50 table-sm" id="indextable">
+                                    <table class="table table-striped table-bordered table-sm" id="dtable">
                                         <thead>
                                         <tr>
                                             <th class="text-center">SL</th>
@@ -127,59 +160,7 @@
                                             <th style="width: 135px;">Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        @if(isset($rows) && ($rows->count() > 0))
-                                            @foreach($rows as $key => $row)
-                                                <tr>
-                                                    <td class="text-center">{{ $key+1 }}</td>
-                                                    <td class="text-center">{{ $row->listingOwner->CODE ?? '' }}</td>
-                                                    <td class="text-center">{{ $user_type_combo[$row->listingOwner->USER_TYPE] ?? '' }}</td>
-                                                    <td class="text-center">{{ $row->listingOwner->NAME ?? '' }}</td>
-                                                    <td class="text-center">{{ $row->CODE }}</td>
-                                                    <td>{{ $row->PROPERTY_FOR }}</td>
-                                                    <td>{{ $row->TITLE }}</td>
-                                                    <td>{{ $row->MOBILE1 }}</td>
-                                                    <td>{{ $row->CREATED_AT }}</td>
-                                                    <td>
-                                                        <?php
-                                                            $status_color = '';
-                                                            if($row->STATUS == 0 ){
-                                                                $status_color = 't-pen';
-                                                            }elseif($row->STATUS == 10 ){
-                                                                $status_color = 't-pub';
-                                                            }elseif($row->STATUS == 20 ){
-                                                                $status_color = 't-del';
-                                                            }elseif($row->STATUS == 30 ){
-                                                                $status_color = 't-del';
-                                                            }elseif($row->STATUS == 40 ){
-                                                                $status_color = 't-del';
-                                                            }elseif($row->STATUS == 50 ){
-                                                                $status_color = 't-del';
-                                                            }
-                                                        ?>
-
-                                                        <span class="{{ $status_color }}">{{ $property_status_combo[$row->STATUS] ?? '' }}</span>
-                                                    </td>
-
-                                                    <td>{{ $row->LISTING_TYPE }}</td>
-                                                    <td class="text-center">{{ $row->PAYMENT_STATUS == 1 ? 'Paid' : 'Due' }}</td>
-
-                                                    <td style="width: 135px;" class="text-center">
-                                                        @if(hasAccessAbility('view_product_activity', $roles))
-                                                            <a href="{{ route('admin.product.activity', [$row->PK_NO]) }}"
-                                                               title="ACTIVITY">Activities</a>
-                                                        @endif
-                                                        |
-                                                        @if(hasAccessAbility('edit_product', $roles))
-                                                            <a href="{{ route('admin.product.edit', [$row->PK_NO]) }}" title="EDIT">Edit</a>
-                                                        @endif                                                        
-                                                     
-
-                                                    </td>
-                                                </tr>
-                                            @endforeach()
-                                        @endif
-                                        </tbody>
+                                        <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -193,8 +174,162 @@
 
 
 @push('custom_js')
-    <!-- BEGIN: Data Table-->
     <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
     <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
-    <!-- END: Data Table-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let get_url = $('#base_url').val();
+
+
+        $(document).ready(function () {
+            let value = getCookie('property_list');
+
+            if (value !== null) {
+                let value = (value - 1) * 25;
+                // table.fnPageChange(value,true);
+            } else {
+                let value = 0;
+            }
+            let table = callDatatable(value);
+
+        });
+
+        function callDatatable(value) {
+            let table =
+                $('#dtable').dataTable({
+                    processing: false,
+                    serverSide: true,
+                    paging: true,
+                    pageLength: 25,
+                    lengthChange: true,
+                    searching: true,
+                    ordering: true,
+                    info: true,
+                    autoWidth: false,
+                    iDisplayStart: value,
+                    ajax: {
+                        url: get_url + '/property_list',
+                        type: 'POST',
+                        data: function (d) {
+                            d._token = "{{ csrf_token() }}";
+                            d.user_type = {{ request()->query('user_type') ?? 'null' }};
+                            d.property_for = {{ request()->query('property_for') ?? 'null' }};
+                            d.listing_type = {{ request()->query('listing_type') ?? 'null' }};
+                            d.property_status = {{ request()->query('property_status') ?? 'null' }};
+                        }
+                    },
+                    columns: [
+                        {
+                            data: 'PK_NO',
+                            name: 'PK_NO',
+                            searchable: false,
+                            sortable: false,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        },
+
+                        {
+                            data: 'user_id',
+                            name: 'user_id',
+                            searchable: true
+                        },
+                        {
+                            data: 'user_type',
+                            name: 'user_type',
+                            searchable: true
+                        },
+                        {
+                            data: 'user_name',
+                            name: 'user_name',
+                            searchable: true,
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'CODE',
+                            name: 'CODE',
+                            searchable: true
+                        },
+                        {
+                            data: 'PROPERTY_FOR',
+                            name: 'PROPERTY_FOR',
+                            searchable: true
+                        },
+                        {
+                            data: 'TITLE',
+                            name: 'TITLE',
+                            searchable: true
+                        },
+                        {
+                            data: 'mobile',
+                            name: 'mobile',
+                            searchable: true
+                        },
+                        {
+                            data: 'CREATED_AT',
+                            name: 'CREATED_AT',
+                            searchable: true,
+                        },
+
+                        {
+                            data: 'status',
+                            name: 'status',
+                            searchable: false,
+                            className: 'text-right',
+                        },
+
+                        {
+                            data: 'LISTING_TYPE',
+                            name: 'LISTING_TYPE',
+                            searchable: true,
+                            className: 'text-right'
+
+                        },
+                        {
+                            data: 'payment_status',
+                            name: 'payment_status',
+                            searchable: true,
+                            className: 'text-center'
+
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            searchable: false
+                        },
+
+                    ]
+                });
+            return table;
+        }
+    </script>
+
+    <script>
+        $(document).on('click', '.page-link', function () {
+            let pageNum = $(this).text();
+            setCookie('property_list', pageNum);
+        });
+
+        function setCookie(property_list, pageNum) {
+            let today = new Date();
+            let name = property_list;
+            let elementValue = pageNum;
+            let expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+
+            document.cookie = name + "=" + elementValue + "; path=/; expires=" + expiry.toGMTString();
+        }
+
+        function getCookie(name) {
+            let re = new RegExp(name + "=([^;]+)");
+            let value = re.exec(document.cookie);
+            return (value != null) ? unescape(value[1]) : null;
+        }
+    </script>
 @endpush

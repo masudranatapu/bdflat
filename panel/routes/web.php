@@ -75,6 +75,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     //product
     Route::get('property', ['middleware' => 'acl:view_property', 'as' => 'admin.product.list', 'uses' => 'ProductController@getIndex']);
+    Route::post('property_list', ['middleware' => 'acl:view_property', 'as' => 'ajax.seeker.list', 'uses' => 'DataTableController@getProperty']);
 
     // Route::get('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.product.searchlist', 'uses' => 'ProductController@getProductSearch']);
     // Route::post('product-search-list', ['middleware' => 'acl:view_product_list', 'as' => 'admin.searchlist.view.post', 'uses' => 'ProductController@getProductSearchList']);
@@ -474,7 +475,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('agents/{id}/delete', ['middleware' => 'acl:agent_delete', 'as' => 'admin.agents.delete', 'uses' => 'AgentsController@getDelete']);
     Route::get('agents-earnings/{id}', ['middleware' => 'acl:view_agent_earnings', 'as' => 'admin.agent_earnings', 'uses' => 'AgentsController@getEarnings']);
     Route::get('agents-withdraw_credit', ['middleware' => 'acl:view_agent_earnings', 'as' => 'admin.withdraw_credit', 'uses' => 'AgentsController@getWithdrawCredit']);
-    Route::post('owner_list', ['middleware' => 'acl:view_agent', 'as' => 'ajax.seeker.list', 'uses' => 'DataTableController@getAgents']);
+    Route::post('agents_list', ['middleware' => 'acl:view_agent', 'as' => 'ajax.seeker.list', 'uses' => 'DataTableController@getAgents']);
 
     //earnings
     //Route::get('earnings', ['as' => 'admin.earnings.list', 'uses' => 'EarningsController@getIndex']);
