@@ -220,7 +220,7 @@
                         data: function (d) {
                             d._token = "{{ csrf_token() }}";
                             d.user_type = {{ request()->query('user_type') ?? 'null' }};
-                            d.property_for = {{ request()->query('property_for') ?? 'null' }};
+                            d.property_for = {!! request()->query('property_for') ? '"' . request()->query('property_for') . '"' : 'null' !!};
                             d.listing_type = {{ request()->query('listing_type') ?? 'null' }};
                             d.property_status = {{ request()->query('property_status') ?? 'null' }};
                         }
