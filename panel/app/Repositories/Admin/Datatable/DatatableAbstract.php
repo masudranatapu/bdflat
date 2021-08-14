@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin\Datatable;
 
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Stock;
@@ -132,6 +133,86 @@ class DatatableAbstract implements DatatableInterface
                 return $edit . $payment;
             })
             ->rawColumns(['action', 'status'])
+            ->make(true);
+    }
+
+    public function getProperty($request)
+    {
+        $dataSet = DB::table('PRD_LISTINGS as p')
+            ->where('STATUS', '!=', 4)
+            ->orderBy('PK_NO', 'DESC');
+        if ($request->get('user_type')) {
+            $dataSet->where('USER_TYPE', $request->get('user_type'));
+        }
+        if ($request->get('property_for')) {
+            $dataSet->where('USER_TYPE', $request->get('property_for'));
+        }
+        if ($request->get('listing_type')) {
+            $dataSet->where('F_LISTING_TYPE', $request->get('listing_type'));
+        }
+        if ($request->get('property_status')) {
+            $dataSet->where('STATUS', $request->get('property_status'));
+        }
+        $dataSet = $dataSet->get();
+
+        return Datatables::of($dataSet)
+            ->addColumn('status', function ($dataSet) {
+                $status = [
+                    0 => 'Pending',
+                    10 => 'Published',
+                    20 => 'Unpublished',
+                    30 => 'Rejected',
+                    40 => 'Expired',
+                    50 => 'Deleted'
+                ];
+                return $status[$dataSet->STATUS];
+            })
+            ->addColumn('user_id', function ($dataSet) {
+                return DB::table('WEB_USER')->where('PK_NO', '=', $dataSet->F_USER_NO)
+                    ->first('CODE')->CODE;
+            })
+            ->addColumn('user_name', function ($dataSet) {
+                return DB::table('WEB_USER')->where('PK_NO', '=', $dataSet->F_USER_NO)
+                    ->first('NAME')->NAME;
+            })
+            ->addColumn('payment_status', function ($dataSet) {
+                $status = [
+                    0 => 'Due',
+                    1 => 'Paid'
+                ];
+                return $status[$dataSet->PAYMENT_STATUS];
+            })
+            ->addColumn('user_type', function ($dataSet) {
+                $status = [
+                    2 => 'Owner',
+                    3 => 'Builder',
+                    4 => 'Agency',
+                    5 => 'Agent'
+                ];
+                return $status[$dataSet->USER_TYPE];
+            })
+            ->addColumn('mobile', function ($dataSet) {
+                $mobile = '';
+                if ($dataSet->MOBILE1) {
+                    $mobile = '<span>' . $dataSet->MOBILE1 . '</span>';
+                }
+                if ($dataSet->MOBILE2) {
+                    $mobile .= '<br><span>' . $dataSet->MOBILE2 . '</span>';
+                }
+                return $mobile;
+            })
+            ->addColumn('action', function ($dataSet) {
+                $roles = userRolePermissionArray();
+                $edit = $activity = '';
+                if (hasAccessAbility('edit_product_activity', $roles)) {
+                    $activity = ' <a href="' . route("admin.product.activity", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Activities">Activities</a>';
+                }
+                if (hasAccessAbility('edit_product', $roles)) {
+                    $edit = ' <a href="' . route("admin.product.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-warning mb-05 mr-05" title="Edit">Edit</a>';
+                }
+                return $activity . $edit;
+            })
+            ->rawColumns(['action', 'status', 'mobile'])
             ->make(true);
     }
 
