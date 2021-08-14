@@ -84,7 +84,7 @@
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('user_type') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('user_type', $user_type_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select user type', 'tabindex' => 6]) !!}
+                                                    {!! Form::select('user_type', $user_type_combo, request()->query->get('user_type'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select user type', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('user_type', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -94,7 +94,7 @@
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('property_for', $property_for_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property for', 'tabindex' => 6]) !!}
+                                                    {!! Form::select('property_for', $property_for_combo, request()->query->get('property_for'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property for', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('listing_type') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('listing_type', $listing_type_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select listing type', 'tabindex' => 6]) !!}
+                                                    {!! Form::select('listing_type', $listing_type_combo, request()->query->get('listing_type'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select listing type', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -113,7 +113,7 @@
                                             <div
                                                 class="form-group {!! $errors->has('payment_status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('payment_status', $payment_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select payment status', 'tabindex' => 6]) !!}
+                                                    {!! Form::select('payment_status', $payment_status_combo, request()->query->get('payment_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select payment status', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('payment_status', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -219,7 +219,10 @@
                         type: 'POST',
                         data: function (d) {
                             d._token = "{{ csrf_token() }}";
-                            d.owner = {{ request()->query('owner') ?? 'null' }};
+                            d.user_type = {{ request()->query('user_type') ?? 'null' }};
+                            d.property_for = {{ request()->query('property_for') ?? 'null' }};
+                            d.listing_type = {{ request()->query('listing_type') ?? 'null' }};
+                            d.property_status = {{ request()->query('property_status') ?? 'null' }};
                         }
                     },
                     columns: [
