@@ -59,6 +59,14 @@
                                             {!! $errors->first('amount', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
+                                    <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
+                                        {{ Form::label('note','Payment Type') }}
+                                        <div class="controls">
+                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type'), ['class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
+                                            {!! $errors->first('payment_type', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+
                                     <div class="form-group {!! $errors->has('method') ? 'error' : '' !!}">
                                         {{ Form::label('method','Recharge Method') }}
                                         <div class="controls">
@@ -66,11 +74,18 @@
                                             {!! $errors->first('method', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
+                                    <div class="form-group {!! $errors->has('payment_acc') ? 'error' : '' !!}">
+                                        {{ Form::label('payment_acc','Payment Account') }}
+                                        <div class="controls">
+                                            {!! Form::select('payment_acc', $payment_acc ?? [], old('payment_acc'), ['id' => 'payment_acc', 'class'=>'form-control', 'placeholder'=>'Select account','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('payment_acc', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
                                     <div
                                         class="form-group bkash {!! $errors->has('bkash') ? 'error' : '' !!}">
-                                        {{ Form::label('bkash','bKash Number') }}
+                                        {{ Form::label('bkash','Bkash Number') }}
                                         <div class="controls">
-                                            {!! Form::number('bkash', old('bkash'), ['class'=>'form-control', 'placeholder'=>'bKash Number']) !!}
+                                            {!! Form::number('bkash', old('bkash'), ['class'=>'form-control', 'placeholder'=>'Bkash Number']) !!}
                                             {!! $errors->first('bkash', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -121,13 +136,7 @@
                                         {!! $errors->first('images', '<label class="help-block text-danger">:message</label>') !!}
                                         {!! $errors->first('images.0', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
-                                    <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
-                                        {{ Form::label('note','Payment Type') }}
-                                        <div class="controls">
-                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type'), ['class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
-                                            {!! $errors->first('payment_type', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
+
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-6">
