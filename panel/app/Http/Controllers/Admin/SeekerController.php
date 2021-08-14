@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\RechargeRequest;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\PaymentMethod;
 use App\Models\ProductRequirements;
 use App\Models\PropertyType;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
@@ -57,7 +60,15 @@ class SeekerController extends BaseController
 
     public function getRecharge($id)
     {
-        return view('admin.seeker.recharge');
+        $data['paymentMethods'] = PaymentMethod::all()->where('IS_ACTIVE', '=', 1)->pluck('NAME', 'PK_NO');
+        $data['seeker'] = User::find($id);
+        return view('admin.seeker.recharge', compact('data'));
+    }
+
+    public function postRecharge(RechargeRequest $request, $id): RedirectResponse
+    {
+        $this->resp = $this->customer->postRecharge($request, $id);
+        return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getArea($id)

@@ -14,7 +14,10 @@
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/custom/css/custom.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 @endpush
 
 @push('custom_js')
@@ -23,11 +26,16 @@
     <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
     <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
     <!-- END: Data Table-->
+    <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
+    <script>
+        $('#imageFile').imageUploader();
+    </script>
 @endpush
 
 @php
     $roles = userRolePermissionArray();
-    $payment_methods = $data['payment_method'] ?? [];
+    $payment_methods = $data['paymentMethods'] ?? [];
+    $payment_type = [1 => 'Customer Payment', 2 => 'Bonus Payment'];
 @endphp
 
 @section('content')
@@ -40,19 +48,19 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-2">
-                                        <p class="font-weight-bold">Your Credit Balance</p>
-                                        <h3 class="font-weight-bold">BDT 15000</h3>
+                                        <p class="font-weight-bold">Credit Balance</p>
+                                        <h3 class="font-weight-bold">BDT {{ number_format($data['seeker']->UNUSED_TOPUP ?? 0, 2) }}</h3>
                                     </div>
-                                    {!! Form::open([/* 'route' => 'agent-withdraw', */'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                                    {!! Form::open(['route' => ['admin.seeker.recharge', $data['seeker']->PK_NO],'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                                     <div class="form-group {!! $errors->has('amount') ? 'error' : '' !!}">
-                                        {{ Form::label('amount','Withdraw Amount') }}
+                                        {{ Form::label('amount','Recharge Amount') }}
                                         <div class="controls">
                                             {!! Form::number('amount', old('amount'), ['class'=>'form-control', 'placeholder'=>'0.00','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('amount', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group {!! $errors->has('method') ? 'error' : '' !!}">
-                                        {{ Form::label('method','Withdraw Method') }}
+                                        {{ Form::label('method','Recharge Method') }}
                                         <div class="controls">
                                             {!! Form::select('method', $payment_methods ?? [], old('method'), ['id' => 'method', 'class'=>'form-control', 'placeholder'=>'Select Method','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('method', '<label class="help-block text-danger">:message</label>') !!}
@@ -105,6 +113,21 @@
                                             {!! $errors->first('note', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
+                                    <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
+                                        {{ Form::label('attachment','Attachment (optional)') }}
+                                        <div class="controls">
+                                            <div id="imageFile" style="padding-top: .5rem;"></div>
+                                        </div>
+                                        {!! $errors->first('images', '<label class="help-block text-danger">:message</label>') !!}
+                                        {!! $errors->first('images.0', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
+                                    <div class="form-group {!! $errors->has('note') ? 'error' : '' !!}">
+                                        {{ Form::label('note','Payment Type') }}
+                                        <div class="controls">
+                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type'), ['class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
+                                            {!! $errors->first('payment_type', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-6">
@@ -113,7 +136,6 @@
                                                 {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
                                             </div>
                                         </div>
-
                                     </div>
                                     {!! Form::close() !!}
 

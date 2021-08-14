@@ -9,6 +9,8 @@ interface CustomerInterface
     public function getCustomerPayment($id);
     public function getEdit(int $id);
     public function postUpdate($request);
+
+    public function postRecharge($request, int $id);
     // public function postStore($request);
     // public function postBlanceTransfer($request);
     // public function getRemainingBalance($id);

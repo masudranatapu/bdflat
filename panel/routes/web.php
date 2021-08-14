@@ -412,6 +412,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('seeker/update', ['middleware' => 'acl:edit_seeker', 'as' => 'admin.seeker.update', 'uses' => 'SeekerController@postUpdate']);
     Route::get('seeker/{id}/payment', ['middleware' => 'acl:view_seeker_payment', 'as' => 'admin.seeker.payment', 'uses' => 'SeekerController@getPayment']);
     Route::get('seeker/{id}/recharge', ['middleware' => 'acl:view_seeker_payment', 'as' => 'admin.seeker.recharge', 'uses' => 'SeekerController@getRecharge']);
+    Route::post('seeker/{id}/recharge', ['middleware' => 'acl:add_seeker_payment', 'as' => 'admin.seeker.recharge', 'uses' => 'SeekerController@postRecharge']);
     Route::get('seeker/get_area/{id}', ['middleware' => 'acl:view_seeker_payment', 'as' => 'admin.seeker.get_area', 'uses' => 'SeekerController@getArea']);
     Route::post('seeker_list', ['middleware' => 'acl:view_seeker', 'as' => 'ajax.seeker.list', 'uses' => 'DataTableController@getSeeker']);
 
