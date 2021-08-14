@@ -150,9 +150,16 @@ class DatatableAbstract implements DatatableInterface
         if ($request->get('listing_type')) {
             $dataSet->where('F_LISTING_TYPE', $request->get('listing_type'));
         }
-        if ($request->get('property_status')) {
-            $dataSet->where('PAYMENT_STATUS', $request->get('property_status'));
+        if ($request->get('payment_status')) {
+            $dataSet->where('PAYMENT_STATUS', $request->get('payment_status'));
         }
+        if ($request->get('property_status')) {
+            $dataSet->where('STATUS', $request->get('property_status'));
+        }
+
+        // if ($request->get('payment_status')) {
+        //     $dataSet->where('PAYMENT_STATUS', $request->get('payment_status'));
+        // }
         $dataSet = $dataSet->get();
 //        dd(DB::getQueryLog());
 
