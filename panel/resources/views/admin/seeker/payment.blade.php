@@ -13,7 +13,8 @@
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/custom/css/custom.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 @endpush
 
 @push('custom_js')
@@ -47,13 +48,15 @@
                                             <h2 class="font-weight-bold text-success">BDT {{ number_format($data['seeker']->UNUSED_TOPUP ?? 0,2) }}</h2>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
-                                            <a href="{{ route('admin.seeker.recharge', request()->route('id')) }}" class="btn btn-success">Recharge Balance</a>
+                                            <a href="{{ route('admin.seeker.recharge', request()->route('id')) }}"
+                                               class="btn btn-success">Recharge Balance</a>
                                         </div>
                                     </div>
 
                                     <h3>Transaction History</h3>
                                     <div class="table-responsive ">
-                                        <table class="table table-striped table-bordered table-sm text-center alt-pagination">
+                                        <table
+                                            class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
                                             <thead>
                                             <tr>
                                                 <th>SL</th>
@@ -62,26 +65,31 @@
                                                 <th>Date</th>
                                                 <th>Slip</th>
                                                 <th>Note</th>
-                                                <th>Amount</th>
-                                                <th>Balance</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                @if(isset($data['rows']) && count($data['rows']) > 0 )
-                                                    @foreach($data['rows'] as $key => $row )
-                                                    @php $balance += $row->AMOUNT; @endphp
-                                                        <tr>
-                                                            <td> {{ $key+1 }} </td>
-                                                            <td><span>{{ $row->CODE }}</span></td>
-                                                            <td><span>{{ $txn_type[$row->TRANSACTION_TYPE] ?? '' }}</span></td>
-                                                            <td><span>{{ date('M d, Y', strtotime($row->TRANSACTION_DATE)) }}</span></td>
-                                                            <td><span>{{ $row->payment->SLIP_NUMBER }}</span></td>
-                                                            <td><span>{{ $row->payment->PAYMENT_NOTE }}</span></td>
-                                                            <td><span>{{ number_format($row->AMOUNT,2) }}</span></td>
-                                                            <td><span>{{ number_format($balance,2) }}</span></td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
+                                            @if(isset($data['rows']) && count($data['rows']))
+                                                @foreach($data['rows'] as $row)
+                                                    <tr>
+                                                        <td>
+                                                            <span>{{ $row->CODE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->PAYMENT_TYPE == 2 ? 'Bonus Payment' : 'Customer Payment' }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->PAYMENT_DATE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ number_format($row->AMOUNT, 2) }}</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <span>{{ $row->PAYMENT_NOTE }}</span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -95,7 +103,8 @@
     </div>
 
 
-    <div class="modal fade text-left" id="recharge" tabindex="-1" role="dialog" aria-labelledby="category_name" aria-hidden="true">
+    <div class="modal fade text-left" id="recharge" tabindex="-1" role="dialog" aria-labelledby="category_name"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

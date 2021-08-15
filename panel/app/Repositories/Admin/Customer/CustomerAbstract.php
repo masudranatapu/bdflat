@@ -111,7 +111,7 @@ class CustomerAbstract implements CustomerInterface
         }
     }
 
-    public function getCustomerTxn($id)
+    public function getCustomerPayment($id)
     {
         try {
             $data = Transaction::where('F_CUSTOMER_NO', $id)->get();
@@ -131,11 +131,12 @@ class CustomerAbstract implements CustomerInterface
             $payment = new PaymentCustomer();
             $payment->F_CUSTOMER_NO = $id;
             $payment->AMOUNT = $request->amount;
-            $payment->F_ACC_PAYMENT_BANK_NO = $request->method;
+            $payment->F_ACC_PAYMENT_BANK_NO = $request->payment_account;
             $payment->PAYMENT_CONFIRMED_STATUS = 1;
             $payment->PAYMENT_NOTE = $request->note;
             $payment->PAYMENT_DATE = date('Y-m-d');
             $payment->PAYMENT_TYPE = $request->payment_type;
+            $payment->SLIP_NUMBER = $request->slip_number;
 
             if ($request->hasFile('images')) {
                 $file = $request->file('images')[0];

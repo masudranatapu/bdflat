@@ -134,7 +134,7 @@
                                                     <td>{{ date('M d, Y', strtotime($transaction->PAYMENT_DATE)) }}</td>
                                                     <td></td>
                                                     <td>{{ $transaction->PAYMENT_NOTE }}</td>
-                                                    <td>{{ $transaction->AMOUNT }}</td>
+                                                    <td>{{ number_format($transaction->AMOUNT, 2) }}</td>
                                                     <td>
                                                         <a href="#">Edit</a> |
                                                         <a href="#">Delete</a>
