@@ -29,6 +29,7 @@
     $property_for_combo = Config::get('static_array.property_for');
     $property_status_combo = Config::get('static_array.property_status');
     $payment_status_combo = Config::get('static_array.payment_status');
+
 @endphp
 
 @section('content')
@@ -85,7 +86,7 @@
                                             <div
                                                 class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('property_status', $property_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
+                                                    {!! Form::select('property_status', $property_status_combo, request()->query->get('property_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>

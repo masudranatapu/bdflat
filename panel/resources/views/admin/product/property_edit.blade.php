@@ -3,9 +3,8 @@
 @section('product_list','active')
 @section('Product Management','open')
 
-@section('title')
-    Property Edit
-@endsection
+@section('title') Property Edit @endsection
+@section('page-name') Property Edit @endsection
 
 @push('custom_css')
     {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">--}}
@@ -17,48 +16,22 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link
-        href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
         rel="stylesheet">
 
     <style>
-        .show_img {
-            height: 82px;
-            width: 82px;
-            object-fit: cover;
-        }
-
-        .del_img {
-            background: #bbbbbb;
-            padding: 2px 7px;
-            border-radius: 77px;
-            font-weight: bold;
-            color: black;
-            position: absolute;
-            top: 5px;
-            right: 20px;
-        }
-
-        .del_btn {
-            border-radius: 75%;
-            height: 26px;
-            width: 26px;
-            position: absolute;
-            right: -8px;
-            top: 8px;
-        }
+        .show_img{height:82px;width:82px;object-fit:cover}
+        .del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}
+        .del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}
     </style>
 @endpush
 
-@section('page-name')
-    Property Edit
-@endsection
+
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">@lang('admin_action.breadcrumb_title')</a>
-    </li>
-    <li class="breadcrumb-item active">Property Edit
-    </li>
+    <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">@lang('admin_action.breadcrumb_title')</a></li>
+    <li class="breadcrumb-item active">Property Edit </li>
 @endsection
+
 @php
     $roles                      = userRolePermissionArray();
     $data                       = $data ?? [];
@@ -80,6 +53,10 @@
     //dd($area)
     $bed_room = Config::get('static_array.bed_room') ?? [];
     $bath_room = Config::get('static_array.bath_room') ?? [];
+    $user_type = Config::get('static_array.user_type') ?? [];
+    $property_status = Config::get('static_array.property_status') ?? [];
+    $payment_status = Config::get('static_array.payment_status') ?? [];
+
 @endphp
 
 @section('content')
@@ -111,30 +88,14 @@
                                             <p>Property ID: {{$product->CODE}}</p>
                                             <p>Create Date: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
                                             <p>Modified On: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
+                                            <p>Owner Name: {{ $product->getUser->NAME }}</p>
+                                            <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
+                                            <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
+                                            <p>Expaire Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else Not set yet @endif </p>
                                         </div>
                                         {!! Form::open([ 'route' => ['admin.product.update', $product->PK_NO], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                                         <div class="row">
-                                            <!-- Type User -->
-                                            <div class="col-md-6">
-                                                <div class="form-group {!! $errors->has('usertype') ? 'error' : '' !!}">
-                                                    <div class="controls">
-                                                        <label class="label-title">User Type</label>
-                                                        {!! Form::radio('usertype','individual', $product->USER_TYPE==2?true:false,[ 'id' => 'individual','data-validation-required-message' => 'This field is required','checked'=>'checked']) !!}
-                                                        {{ Form::label('individual','Individual') }}
 
-                                                        {!! Form::radio('usertype','developer', $product->USER_TYPE==3?true:false,[ 'id' => 'developer']) !!}
-                                                        {{ Form::label('developer','Developer') }}
-
-                                                        {!! Form::radio('usertype','agency',$product->USER_TYPE==4?true:false,[ 'id' => 'agency']) !!}
-                                                        {{ Form::label('agency','Agency') }}
-
-                                                        {!! Form::radio('usertype','agent',$product->USER_TYPE==0?true:false,[ 'id' => 'agent']) !!}
-                                                        {{ Form::label('agent','Agent') }}
-
-                                                        {!! $errors->first('usertype', '<label class="help-block text-danger">:message</label>') !!}
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <!-- Advertisment Type -->
                                             <div class="col-md-6">
                                                 <div class="form-group {!! $errors->has('alert') ? 'error' : '' !!}">
@@ -154,24 +115,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- User Name -->
-                                            <div class="col-md-6">
-                                                <div
-                                                    class="form-group {!! $errors->has('user_name') ? 'error' : '' !!}">
-                                                    <div class="controls">
-                                                        {{ Form::label('user_name','User Name',['class' => 'label-title']) }}
-                                                        {!! Form::text('user_name', $product->getUser->NAME, [ 'class' => 'form-control', 'placeholder' => 'User Name']) !!}
-                                                        {!! $errors->first('user_name', '<label class="help-block text-danger">:message</label>') !!}
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             <!-- Property Type -->
                                             <div class="col-md-6">
                                                 <div
                                                     class="form-group {!! $errors->has('propertyType') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('propertyType','Property Type',['class' => 'label-title']) }}
-                                                        {!! Form::select('propertyType',$property_types,$product->F_PROPERTY_TYPE_NO,array('id' => 'propertyType', 'class'=>'form-control propertyType', 'placeholder'=>'Select Property Type')) !!}
+                                                        {!! Form::select('propertyType',$property_types, $product->F_PROPERTY_TYPE_NO, ['id' => 'propertyType', 'class'=>'form-control propertyType', 'placeholder'=>'Select Property Type']) !!}
                                                         {!! $errors->first('propertyType', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -181,7 +132,7 @@
                                                 <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {!! Form::label('city','City <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                        {!! Form::select('city', $cities,$product->F_CITY_NO,array('class'=>'form-control city','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select City')) !!}
+                                                        {!! Form::select('city', $cities,$product->F_CITY_NO,['class'=>'form-control city','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select City']) !!}
                                                         {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -191,7 +142,7 @@
                                                 <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {!! Form::label('area','Area (Based on City) <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                        {!! Form::select('area', $area, $product->F_AREA_NO,array('class'=>'form-control area','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Area')) !!}
+                                                        {!! Form::select('area', $area, $product->F_AREA_NO, ['class'=>'form-control area','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Area']) !!}
                                                         {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -520,16 +471,11 @@
                                                     <label class="label-title">Meta descriptions</label>
                                                     <textarea class="form-control" id="metaDescr"></textarea>
                                                 </div>
-                                            </div>
-
-                                            <!-- Site.com -->
-                                            <div class="col-md-6">
-                                                <div class="form-title mb-2 mt-2">
-                                                    <h3>Site.com/</h3>
-                                                </div>
                                                 <div class="form-group">
-                                                    <input type="url" class="form-control site" id="site">
+                                                    <label class="label-title">URl Slug</label>
+                                                    <input type="text" class="form-control url_slug" id="url_slug" name="url_slug" >
                                                 </div>
+
                                             </div>
                                         </div>
 
@@ -556,15 +502,12 @@
                                                     <h3>Publishing Status</h3>
                                                 </div>
                                                 <div class="form-group publishingStatus">
-                                                    <input type="radio" {{ $product->STATUS == 0 ? 'checked' : '' }} name="status" value="0"
-                                                           id="pending">
-                                                    <label for="pending">Pending</label>
-                                                    <input type="radio" {{ $product->STATUS == 1 ? 'checked' : '' }} name="status" value="1" id="publish">
-                                                    <label for="publish">Published</label>
-                                                    <input type="radio" {{ $product->STATUS == 2 ? 'checked' : '' }} name="status" value="2" id="reject">
-                                                    <label for="reject">Reject</label>
-                                                    <input type="radio" {{ $product->STATUS == 3 ? 'checked' : '' }} name="status" value="3" id="expired">
-                                                    <label for="expired">Expired</label>
+                                                    @if($property_status)
+                                                        @foreach ( $property_status as $k => $st )
+                                                       <input type="radio" {{ $product->STATUS == $k ? 'checked' : '' }} name="status" value="{{ $k }}"
+                                                        id="prop_status_{{ $k }}">  <label for="prop_status_{{ $k }}"> {{ $st }}</label>
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

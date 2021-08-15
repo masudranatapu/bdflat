@@ -5,13 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Models\Area;
 use App\Models\City;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Traits\RepoResponse;
 use App\Models\PropertyCondition;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Listings extends Model
 {
@@ -103,25 +104,33 @@ class Listings extends Model
                 $floor_available = null;
             }
 
-            $list = new Listings();
-            $list->F_USER_NO = Auth::id();
-            $list->PROPERTY_FOR = $request->property_for;
+            $slug = Str::slug($request->property_title);
+            $check = Listings::where('URL_SLUG', $slug)->first();
+            if ($check) {
+                $sku = Listings::max('CODE') + 1;
+                $slug = $slug . '-' . $sku;
+            }
+
+            $list                   = new Listings();
+            $list->F_USER_NO        = Auth::id();
+            $list->PROPERTY_FOR     = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->property_type;
-            $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $request->area;
-            $list->ADDRESS = $request->address;
+            $list->F_CITY_NO        = $request->city;
+            $list->F_AREA_NO        = $request->area;
+            $list->ADDRESS          = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
-            $list->TITLE = $request->property_title;
-            $list->PRICE_TYPE = $request->property_price;
-            $list->CONTACT_PERSON1 = $request->contact_person;
-            $list->CONTACT_PERSON2 = $request->contact_person_2;
-            $list->MOBILE1 = $request->mobile;
-            $list->MOBILE2 = $request->mobile_2;
-            $list->F_LISTING_TYPE = $request->listing_type;
-            $list->TOTAL_FLOORS = $floors;
-            $list->FLOORS_AVAIABLE = $floor_available;
-            $list->CREATED_AT = Carbon::now();
-            $list->CREATED_BY = Auth::user()->PK_NO;
+            $list->TITLE            = $request->property_title;
+            $list->URL_SLUG         = $slug;
+            $list->PRICE_TYPE       = $request->property_price;
+            $list->CONTACT_PERSON1  = $request->contact_person;
+            $list->CONTACT_PERSON2  = $request->contact_person_2;
+            $list->MOBILE1          = $request->mobile;
+            $list->MOBILE2          = $request->mobile_2;
+            $list->F_LISTING_TYPE   = $request->listing_type;
+            $list->TOTAL_FLOORS     = $floors;
+            $list->FLOORS_AVAIABLE  = $floor_available;
+            $list->CREATED_AT       = Carbon::now();
+            $list->CREATED_BY       = Auth::user()->PK_NO;
             $list->save();
 
 //            for store listing variants
@@ -226,24 +235,32 @@ class Listings extends Model
     {
         DB::beginTransaction();
         try {
+            $slug = Str::slug($request->property_title);
+            $check = Listings::where('URL_SLUG', $slug)->where('PK_NO', '!=', $id)->first();
+            if ($check) {
+                $sku = Listings::max('CODE') + 1;
+                $slug = $slug . '-' . $sku;
+            }
+
             $list = $this->getListing($id);
-            $list->PROPERTY_FOR = $request->property_for;
-            $list->F_PROPERTY_TYPE_NO = $request->property_type;
-            $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $request->area;
-            $list->ADDRESS = $request->address;
+            $list->PROPERTY_FOR         = $request->property_for;
+            $list->F_PROPERTY_TYPE_NO   = $request->property_type;
+            $list->F_CITY_NO            = $request->city;
+            $list->F_AREA_NO            = $request->area;
+            $list->ADDRESS              = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
-            $list->TITLE = $request->property_title;
-            $list->PRICE_TYPE = $request->property_price;
-            $list->CONTACT_PERSON1 = $request->contact_person;
-            $list->CONTACT_PERSON2 = $request->contact_person_2;
-            $list->MOBILE1 = $request->mobile;
-            $list->MOBILE2 = $request->mobile_2;
-            $list->F_LISTING_TYPE = $request->listing_type;
-            $list->TOTAL_FLOORS = $request->floor;
-            $list->FLOORS_AVAIABLE = json_encode($request->floor_available);
-            $list->MODIFIED_BY = Auth::user()->PK_NO;
-            $list->MODIFIED_AT = Carbon::now();
+            $list->TITLE                = $request->property_title;
+            $list->URL_SLUG             = $slug;
+            $list->PRICE_TYPE           = $request->property_price;
+            $list->CONTACT_PERSON1      = $request->contact_person;
+            $list->CONTACT_PERSON2      = $request->contact_person_2;
+            $list->MOBILE1              = $request->mobile;
+            $list->MOBILE2              = $request->mobile_2;
+            $list->F_LISTING_TYPE       = $request->listing_type;
+            $list->TOTAL_FLOORS         = $request->floor;
+            $list->FLOORS_AVAIABLE      = json_encode($request->floor_available);
+            $list->MODIFIED_BY          = Auth::user()->PK_NO;
+            $list->MODIFIED_AT          = Carbon::now();
             $list->update();
 
 //            for store listing variants

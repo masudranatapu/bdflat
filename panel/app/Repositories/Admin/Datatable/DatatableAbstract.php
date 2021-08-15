@@ -2,17 +2,18 @@
 
 namespace App\Repositories\Admin\Datatable;
 
-use App\Models\Product;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Stock;
+use App\Models\Product;
 use App\Models\OrderRtc;
 use App\Traits\CommonTrait;
 use App\Models\AuthUserGroup;
 use App\Models\BookingDetails;
 use App\Models\PaymentBankAcc;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class DatatableAbstract implements DatatableInterface
 {
@@ -165,15 +166,8 @@ class DatatableAbstract implements DatatableInterface
 
         return Datatables::of($dataSet)
             ->addColumn('status', function ($dataSet) {
-                $status = [
-                    0 => 'Pending',
-                    10 => 'Published',
-                    20 => 'Unpublished',
-                    30 => 'Rejected',
-                    40 => 'Expired',
-                    50 => 'Deleted'
-                ];
-                return $status[$dataSet->STATUS];
+                $status = Config::get('static_array.property_status');
+                return $status[$dataSet->STATUS] ?? '';
             })
             ->addColumn('user_id', function ($dataSet) {
                 return DB::table('WEB_USER')->where('PK_NO', '=', $dataSet->F_USER_NO)
