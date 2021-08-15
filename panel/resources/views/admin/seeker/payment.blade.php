@@ -27,7 +27,9 @@
 @endpush
 
 @php
-    $roles = userRolePermissionArray();
+    $roles      = userRolePermissionArray();
+    $txn_type   =  Config::get('static_array.txn_type');
+    $balance    = 0;
 @endphp
 
 
@@ -43,7 +45,7 @@
                                     <div class="row mb-1">
                                         <div class="col-2">
                                             <p class="font-weight-bold">Balance</p>
-                                            <h2 class="font-weight-bold text-success">BDT 1,150</h2>
+                                            <h2 class="font-weight-bold text-success">BDT {{ number_format($data['seeker']->UNUSED_TOPUP ?? 0,2) }}</h2>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
                                             <a href="{{ route('admin.seeker.recharge', request()->route('id')) }}"
@@ -57,10 +59,11 @@
                                             class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
                                             <thead>
                                             <tr>
+                                                <th>SL</th>
                                                 <th>Tran. ID</th>
                                                 <th>Tran. Type</th>
                                                 <th>Date</th>
-                                                <th>Amount</th>
+                                                <th>Slip</th>
                                                 <th>Note</th>
                                             </tr>
                                             </thead>

@@ -10,44 +10,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
     <link rel="stylesheet" type="text/css"
           href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
-
-    <style>
-        .t-pub {
-            color: #6aa586
-        }
-
-        .t-unpub {
-            color: #a54b82
-        }
-
-        .t-pen {
-            color: #726ba5
-        }
-
-        .t-del {
-            color: #e37b7f
-        }
-
-        .key_search {
-            position: relative
-        }
-
-        .key_search i {
-            position: absolute;
-            top: 20%;
-            left: 10%
-        }
-
-        .key_search input {
-            border-radius: 25px !important;
-            padding-left: 30px;
-            font-size: 12px
-        }
-
-        .br {
-            border-radius: 5px !important
-        }
-    </style>
 @endpush
 
 
@@ -67,6 +29,7 @@
     $property_for_combo = Config::get('static_array.property_for');
     $property_status_combo = Config::get('static_array.property_status');
     $payment_status_combo = Config::get('static_array.payment_status');
+
 @endphp
 
 @section('content')
@@ -123,7 +86,7 @@
                                             <div
                                                 class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('property_status', $property_status_combo, null, ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
+                                                    {!! Form::select('property_status', $property_status_combo, request()->query->get('property_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
@@ -223,6 +186,7 @@
                             d.property_for = {!! request()->query('property_for') ? '"' . request()->query('property_for') . '"' : 'null' !!};
                             d.listing_type = {{ request()->query('listing_type') ?? 'null' }};
                             d.property_status = {{ request()->query('property_status') ?? 'null' }};
+                            d.payment_status = {{ request()->query('payment_status') ?? 'null' }};
                         }
                     },
                     columns: [
@@ -289,7 +253,7 @@
                             data: 'LISTING_TYPE',
                             name: 'LISTING_TYPE',
                             searchable: true,
-                            className: 'text-right'
+                            className: 'text-left'
 
                         },
                         {

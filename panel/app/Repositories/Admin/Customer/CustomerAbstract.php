@@ -2,17 +2,18 @@
 
 namespace App\Repositories\Admin\Customer;
 
-use App\Models\ProductRequirements;
-use Illuminate\Support\Facades\DB;
 use App\Models\Booking;
 use App\Models\BankList;
 use App\Models\Customer;
 use App\Models\Reseller;
+use App\Models\Transaction;
 use App\Models\OrderPayment;
 use App\Traits\RepoResponse;
 use App\Models\RefundRequest;
 use App\Models\CustomerAddress;
 use App\Models\PaymentCustomer;
+use Illuminate\Support\Facades\DB;
+use App\Models\ProductRequirements;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AccResellerCustomerTnx;
 
@@ -110,10 +111,10 @@ class CustomerAbstract implements CustomerInterface
         }
     }
 
-    public function getCustomerPayment($id): object
+    public function getCustomerPayment($id)
     {
         try {
-            $data = PaymentCustomer::where('F_CUSTOMER_NO', $id)->get();
+            $data = Transaction::where('F_CUSTOMER_NO', $id)->get();
         } catch (\Throwable $th) {
             return $this->formatResponse(fasle, 'Data not found', 'admin.seeker.list');
         }

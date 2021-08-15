@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\RechargeRequest;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\User;
+use App\Models\Customer;
+use App\Models\PropertyType;
+use Illuminate\Http\Request;
 use App\Models\PaymentBankAcc;
 use App\Models\PaymentMethod;
 use App\Models\ProductRequirements;
-use App\Models\PropertyType;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\RechargeRequest;
 use App\Http\Controllers\BaseController;
 use App\Repositories\Admin\Customer\CustomerInterface;
 
@@ -54,8 +55,9 @@ class SeekerController extends BaseController
 
     public function getPayment(Request $request, $id)
     {
-        $this->resp = $this->customer->getCustomerPayment($id);
+        $this->resp = $this->customer->getCustomerTxn($id);
         $data['rows'] = $this->resp->data;
+        $data['seeker'] = Customer::find($id);
         return view('admin.seeker.payment', compact('data'));
     }
 
@@ -83,7 +85,7 @@ class SeekerController extends BaseController
 
     }
 
-    public function paymentAccount(Request $request): string
+    public function paymentAccount(Request $request)
     {
         $method = $request->query->get('query');
         $accounts = PaymentBankAcc::all()
