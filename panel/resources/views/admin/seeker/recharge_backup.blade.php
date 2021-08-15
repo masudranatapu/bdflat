@@ -18,13 +18,6 @@
           href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
-    <style>
-        .ui-datepicker .ui-widget-content {
-            background: #999 none;
-        }
-    </style>
 @endpush
 
 @push('custom_js')
@@ -34,18 +27,8 @@
     <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
     <!-- END: Data Table-->
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
-    <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
-    <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script>
         $('#imageFile').imageUploader();
-        $('.datepicker').datetimepicker({
-            icons:
-                {
-                    next: 'fa fa-angle-right',
-                    previous: 'fa fa-angle-left'
-                },
-            format: 'DD-MM-YYYY'
-        });
     </script>
 @endpush
 
@@ -80,7 +63,7 @@
                                     <div class="form-group">
                                         {{ Form::label('note','Payment Type') }}
                                         <div class="controls">
-                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type', 1), ['id' => 'paymentType', 'class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
+                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type'), ['id' => 'paymentType', 'class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
                                             {!! $errors->first('payment_type', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -99,9 +82,41 @@
                                             {!! $errors->first('payment_account', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
+{{--                                    <div--}}
+{{--                                        class="bonus bkash form-group bkash">--}}
+{{--                                        {{ Form::label('bkash','Bkash/Nagad/Rocket Number') }}--}}
+{{--                                        <div class="controls">--}}
+{{--                                            {!! Form::number('bkash', old('bkash'), ['class'=>'form-control', 'placeholder'=>'bKash/Nagad/Rocket Number']) !!}--}}
+{{--                                            {!! $errors->first('bkash', '<label class="help-block text-danger">:message</label>') !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div--}}
+{{--                                        class="bonus bank form-group bank">--}}
+{{--                                        {{ Form::label('bank_name','Bank Name') }}--}}
+{{--                                        <div class="controls">--}}
+{{--                                            {!! Form::text('bank_name', old('bank_name'), ['class'=>'form-control', 'placeholder'=>'Bank Name']) !!}--}}
+{{--                                            {!! $errors->first('bank_name', '<label class="help-block text-danger">:message</label>') !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div--}}
+{{--                                        class="bonus bank form-group bank">--}}
+{{--                                        {{ Form::label('bank_acc_name','Bank Account Name') }}--}}
+{{--                                        <div class="controls">--}}
+{{--                                            {!! Form::text('bank_acc_name', old('bank_acc_name'), ['class'=>'form-control', 'placeholder'=>'Bank Account Name']) !!}--}}
+{{--                                            {!! $errors->first('bank_acc_name', '<label class="help-block text-danger">:message</label>') !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div--}}
+{{--                                        class="bonus bank form-group bank">--}}
+{{--                                        {{ Form::label('bank_acc_no','Bank Account No.') }}--}}
+{{--                                        <div class="controls">--}}
+{{--                                            {!! Form::number('bank_acc_no', old('bank_acc_no'), ['class'=>'form-control', 'placeholder'=>'Bank Account Number']) !!}--}}
+{{--                                            {!! $errors->first('bank_acc_no', '<label class="help-block text-danger">:message</label>') !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div
                                         class=" form-group ">
-                                        {{ Form::label('slip_number','Slip Number (optional)') }}
+                                        {{ Form::label('slip_number','Slip Number') }}
                                         <div class="controls">
                                             {!! Form::text('slip_number', old('slip_number'), ['class'=>'form-control', 'placeholder'=>'Slip Number']) !!}
                                             {!! $errors->first('slip_number', '<label class="help-block text-danger">:message</label>') !!}
@@ -120,13 +135,6 @@
                                         <div class="controls">
                                             {!! Form::textarea('note', old('note'), ['class'=>'form-control', 'placeholder'=>'Note', 'rows' => 4]) !!}
                                             {!! $errors->first('note', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        {{ Form::label('payment_date','Payment Date') }}
-                                        <div class="controls">
-                                            {!! Form::text('payment_date', old('payment_date'), ['class'=>'form-control datepicker', 'placeholder'=>'Payment Date', 'data-validation-required-message' => 'This field is required']) !!}
-                                            {!! $errors->first('payment_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group">
