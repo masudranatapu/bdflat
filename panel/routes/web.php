@@ -92,6 +92,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('property/{id}/activity', ['middleware' => 'acl:edit_product_activity', 'as' => 'admin.product.activity', 'uses' => 'ProductController@getaAtivity']);
     Route::get('property/{id}/view', ['middleware' => 'acl:view_product', 'as' => 'admin.product.view', 'uses' => 'ProductController@getView']);
     Route::post('property/{id}/update', ['middleware' => 'acl:edit_product', 'as' => 'admin.product.update', 'uses' => 'ProductController@putUpdate']);
+    Route::post('ajax-listings-delete_img', ['middleware' => 'acl:edit_product', 'as' => 'admin.product.delete_image', 'uses' => 'ProductController@postDeleteImage']);
 
 
     Route::get('property/ajax-listing-variant', ['middleware' => 'acl:edit_product', 'as' => 'admin.product.ajax.get.variant', 'uses' => 'ProductController@addListingVariant']);

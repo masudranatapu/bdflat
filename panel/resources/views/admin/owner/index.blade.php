@@ -194,6 +194,9 @@
                             name: 'UNUSED_TOPUP',
                             searchable: false,
                             className: 'text-right',
+                            render: function (data) {
+                                return formatter.format(data);
+                            }
                         },
 
                         {
@@ -220,6 +223,10 @@
                 });
             return table;
         }
+        let formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'BDT'
+        });
     </script>
 
     <script>

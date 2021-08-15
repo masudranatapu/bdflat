@@ -3,6 +3,7 @@ namespace App\Repositories\Admin\Product;
 
 use App\Models\ListingAdditionalInfo;
 use App\Models\ListingImages;
+use App\Models\ListingSEO;
 use App\Models\ListingVariants;
 use App\Models\Product;
 use App\Traits\RepoResponse;
@@ -139,11 +140,11 @@ class ProductAbstract implements ProductInterface
 
 
 
-    public function postUpdate($request, int $id)
+    public function postUpdate($request, int $id): object
     {
         DB::beginTransaction();
         try {
-            $list = Product::find($id);
+            $list = Product::with(['listingSEO'])->find($id);
             $list->STATUS = $request->status;
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->propertyType;
@@ -162,6 +163,7 @@ class ProductAbstract implements ProductInterface
             $list->FLOORS_AVAIABLE = json_encode($request->floor_available);
             $list->MODIFIED_BY = Auth::id();
             $list->MODIFIED_AT = Carbon::now();
+            $list->URL_SLUG_LOCKED = 1;
             $list->update();
 
 //            for store listing variants
@@ -177,6 +179,28 @@ class ProductAbstract implements ProductInterface
                 );
                 ListingVariants::insert($data);
             }
+
+            // SEO
+            $seo = $list->listingSEO;
+            if (!$seo) {
+                $seo = new ListingSEO();
+                $seo->F_LISTING_NO = $list->PK_NO;
+            }
+            $seo->META_TITLE = $request->meta_title;
+            $seo->META_DESCRIPTION = $request->meta_description;
+            $seo->META_URL = $request->meta_url;
+
+            if ($request->hasFile('seo_image')) {
+                if ($seo->OG_IMAGE_PATH) {
+                    $this->removeFile($seo->OG_IMAGE_PATH);
+                }
+                $image = $request->file('seo_image')[0];
+                $image_name = uniqid() . '.' . $image->getClientOriginalExtension();
+                $image_path = 'uploads/listings/' . $list->PK_NO . '/seo/';
+                $image->move($image_path, $image_name);
+                $seo->OG_IMAGE_PATH = $image_path . $image_name;
+            }
+            $seo->save();
 
 //            for image upload
             if ($request->hasfile('images')) {
@@ -236,9 +260,16 @@ class ProductAbstract implements ProductInterface
 
     }
 
-    public function getShow(int $id)
+    private function removeFile($path)
     {
-        $data =  Product::find($id);
+        if (file_exists(public_path($path))) {
+            unlink(public_path($path));
+        }
+    }
+
+    public function getShow(int $id): object
+    {
+        $data =  Product::with(['listingSEO'])->find($id);
 
         if (!empty($data)) {
             return $this->formatResponse(true, 'Data found', 'admin.product.edit', $data);
@@ -377,47 +408,20 @@ class ProductAbstract implements ProductInterface
     // }
 
 
-    public function deleteImage(int $id)
+    public function deleteImage(int $id): object
     {
         DB::begintransaction();
-
         try {
-
-            $prod_img = ProdImgLib::find($id);
-
-            if ($prod_img->IS_MASTER == 1) {
-                ProdImgLib::where('PK_NO', $id)->delete();
-                $product = Product::find($prod_img->F_PRD_MASTER_NO);
-
-                $prod_img = ProdImgLib::where('F_PRD_MASTER_NO', $product->PK_NO)->orderBy('SERIAL_NO','ASC')->first();
-
-                if ($prod_img) {
-
-                    $product->PRIMARY_IMG_RELATIVE_PATH = $prod_img->RELATIVE_PATH;
-                    $product->update();
-
-                    $prod_img->IS_MASTER = 1;
-                    $prod_img->update();
-
-                }else{
-                    $product->PRIMARY_IMG_RELATIVE_PATH = null;
-                    $product->update();
-                }
-            }else{
-                ProdImgLib::where('PK_NO', $id)->delete();
-            }
-
-
-
+            $image = ListingImages::find($id);
+            $this->removeFile($image->IMAGE_PATH);
+            $this->removeFile($image->THUMB_PATH);
+            $image->delete();
         } catch (\Exception $e) {
-
             DB::rollback();
-
             return $this->formatResponse(false, 'Unable to delete product photo !', 'admin.product.list');
         }
 
         DB::commit();
-
         return $this->formatResponse(true, 'Successfully delete product photo !', 'admin.product.list');
     }
 
