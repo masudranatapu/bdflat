@@ -235,13 +235,6 @@ class Listings extends Model
     {
         DB::beginTransaction();
         try {
-            $slug = Str::slug($request->property_title);
-            $check = Listings::where('URL_SLUG', $slug)->where('PK_NO', '!=', $id)->first();
-            if ($check) {
-                $sku = Listings::max('CODE') + 1;
-                $slug = $slug . '-' . $sku;
-            }
-
             $list = $this->getListing($id);
             $list->PROPERTY_FOR         = $request->property_for;
             $list->F_PROPERTY_TYPE_NO   = $request->property_type;
@@ -250,7 +243,6 @@ class Listings extends Model
             $list->ADDRESS              = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
             $list->TITLE                = $request->property_title;
-            $list->URL_SLUG             = $slug;
             $list->PRICE_TYPE           = $request->property_price;
             $list->CONTACT_PERSON1      = $request->contact_person;
             $list->CONTACT_PERSON2      = $request->contact_person_2;
