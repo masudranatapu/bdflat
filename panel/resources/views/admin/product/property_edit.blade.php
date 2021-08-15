@@ -465,15 +465,15 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">Title</label>
-                                                    <input type="text" class="form-control seoTitle" id="seoTitle">
+                                                    <input type="text" name="meta_title" class="form-control seoTitle" value="{{ $product->listingSEO->META_TITLE ?? '' }}" id="seoTitle">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">Meta descriptions</label>
-                                                    <textarea class="form-control" id="metaDescr"></textarea>
+                                                    <textarea name="meta_description" class="form-control" id="metaDescr">{{ $product->listingSEO->META_DESCRIPTION ?? '' }}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">URl Slug</label>
-                                                    <input type="text" class="form-control url_slug" id="url_slug" name="url_slug" >
+                                                    <input type="text" class="form-control url_slug" id="url_slug" value="{{ $product->listingSEO->META_URL ?? '' }}" name="meta_url" >
                                                 </div>
 
                                             </div>

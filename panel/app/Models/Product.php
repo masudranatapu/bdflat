@@ -88,6 +88,11 @@ class Product extends Model
         return $this->hasMany('App\Models\ListingView', 'F_PRD_LISTING_NO');
     }
 
+    public function listingSEO(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne('App\Models\ListingSEO', 'F_LISTING_NO', 'PK_NO');
+    }
+
     // public function subcategory() {
     //     return $this->belongsTo('App\Models\SubCategory', 'F_PRD_SUB_CATEGORY_ID')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
     // }

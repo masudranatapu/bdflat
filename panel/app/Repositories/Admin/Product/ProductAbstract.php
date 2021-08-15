@@ -3,6 +3,7 @@ namespace App\Repositories\Admin\Product;
 
 use App\Models\ListingAdditionalInfo;
 use App\Models\ListingImages;
+use App\Models\ListingSEO;
 use App\Models\ListingVariants;
 use App\Models\Product;
 use App\Traits\RepoResponse;
@@ -139,11 +140,11 @@ class ProductAbstract implements ProductInterface
 
 
 
-    public function postUpdate($request, int $id)
+    public function postUpdate($request, int $id): object
     {
         DB::beginTransaction();
         try {
-            $list = Product::find($id);
+            $list = Product::with(['listingSEO'])->find($id);
             $list->STATUS = $request->status;
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->propertyType;
@@ -177,6 +178,17 @@ class ProductAbstract implements ProductInterface
                 );
                 ListingVariants::insert($data);
             }
+
+            // SEO
+            $seo = $list->listingSEO;
+            if (!$seo) {
+                $seo = new ListingSEO();
+                $seo->F_LISTING_NO = $list->PK_NO;
+            }
+            $seo->META_TITLE = $request->meta_title;
+            $seo->META_DESCRIPTION = $request->meta_description;
+            $seo->META_URL = $request->meta_url;
+            $seo->save();
 
 //            for image upload
             if ($request->hasfile('images')) {
@@ -236,9 +248,9 @@ class ProductAbstract implements ProductInterface
 
     }
 
-    public function getShow(int $id)
+    public function getShow(int $id): object
     {
-        $data =  Product::find($id);
+        $data =  Product::with(['listingSEO'])->find($id);
 
         if (!empty($data)) {
             return $this->formatResponse(true, 'Data found', 'admin.product.edit', $data);
