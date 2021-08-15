@@ -163,6 +163,7 @@ class ProductAbstract implements ProductInterface
             $list->FLOORS_AVAIABLE = json_encode($request->floor_available);
             $list->MODIFIED_BY = Auth::id();
             $list->MODIFIED_AT = Carbon::now();
+            $list->URL_SLUG_LOCKED = 1;
             $list->update();
 
 //            for store listing variants
@@ -188,6 +189,17 @@ class ProductAbstract implements ProductInterface
             $seo->META_TITLE = $request->meta_title;
             $seo->META_DESCRIPTION = $request->meta_description;
             $seo->META_URL = $request->meta_url;
+
+            if ($request->hasFile('seo_image')) {
+                if ($seo->OG_IMAGE_PATH) {
+                    $this->removeFile($seo->OG_IMAGE_PATH);
+                }
+                $image = $request->file('seo_image')[0];
+                $image_name = uniqid() . '.' . $image->getClientOriginalExtension();
+                $image_path = 'uploads/listings/' . $list->PK_NO . '/seo/';
+                $image->move($image_path, $image_name);
+                $seo->OG_IMAGE_PATH = $image_path . $image_name;
+            }
             $seo->save();
 
 //            for image upload
@@ -246,6 +258,13 @@ class ProductAbstract implements ProductInterface
 
         return $this->formatResponse(true, 'Product has been updated successfully !', 'admin.product.list');
 
+    }
+
+    private function removeFile($path)
+    {
+        if (file_exists(public_path($path))) {
+            unlink(public_path($path));
+        }
     }
 
     public function getShow(int $id): object
@@ -389,47 +408,20 @@ class ProductAbstract implements ProductInterface
     // }
 
 
-    public function deleteImage(int $id)
+    public function deleteImage(int $id): object
     {
         DB::begintransaction();
-
         try {
-
-            $prod_img = ProdImgLib::find($id);
-
-            if ($prod_img->IS_MASTER == 1) {
-                ProdImgLib::where('PK_NO', $id)->delete();
-                $product = Product::find($prod_img->F_PRD_MASTER_NO);
-
-                $prod_img = ProdImgLib::where('F_PRD_MASTER_NO', $product->PK_NO)->orderBy('SERIAL_NO','ASC')->first();
-
-                if ($prod_img) {
-
-                    $product->PRIMARY_IMG_RELATIVE_PATH = $prod_img->RELATIVE_PATH;
-                    $product->update();
-
-                    $prod_img->IS_MASTER = 1;
-                    $prod_img->update();
-
-                }else{
-                    $product->PRIMARY_IMG_RELATIVE_PATH = null;
-                    $product->update();
-                }
-            }else{
-                ProdImgLib::where('PK_NO', $id)->delete();
-            }
-
-
-
+            $image = ListingImages::find($id);
+            $this->removeFile($image->IMAGE_PATH);
+            $this->removeFile($image->THUMB_PATH);
+            $image->delete();
         } catch (\Exception $e) {
-
             DB::rollback();
-
             return $this->formatResponse(false, 'Unable to delete product photo !', 'admin.product.list');
         }
 
         DB::commit();
-
         return $this->formatResponse(true, 'Successfully delete product photo !', 'admin.product.list');
     }
 

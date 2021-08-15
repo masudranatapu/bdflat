@@ -208,6 +208,12 @@ class ProductController extends BaseController
 
     }
 
+    public function postDeleteImage(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->resp = $this->productInt->deleteImage($request->get('id'));
+        return response()->json($this->resp);
+    }
+
     public function getaAtivity($id)
     {
         $data['property'] = Product::find($id);
@@ -222,7 +228,7 @@ class ProductController extends BaseController
         return view('admin.product.view')->withData($data);
     }
 
-    public function getDeleteImage($id)
+    public function getDeleteImage($id): \Illuminate\Http\JsonResponse
     {
         $this->resp = $this->productInt->deleteImage($id);
         return response()->json($this->resp);

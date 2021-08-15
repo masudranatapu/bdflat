@@ -16,20 +16,43 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
         rel="stylesheet">
 
     <style>
-        .show_img{height:82px;width:82px;object-fit:cover}
-        .del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}
-        .del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}
+        .show_img {
+            height: 82px;
+            width: 82px;
+            object-fit: cover
+        }
+
+        .del_img {
+            background: #bbb;
+            padding: 2px 7px;
+            border-radius: 77px;
+            font-weight: 700;
+            color: #000;
+            position: absolute;
+            top: 5px;
+            right: 20px
+        }
+
+        .del_btn {
+            border-radius: 75%;
+            height: 26px;
+            width: 26px;
+            position: absolute;
+            right: -8px;
+            top: 8px
+        }
     </style>
 @endpush
 
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">@lang('admin_action.breadcrumb_title')</a></li>
-    <li class="breadcrumb-item active">Property Edit </li>
+    <li class="breadcrumb-item active">Property Edit</li>
 @endsection
 
 @php
@@ -91,7 +114,9 @@
                                             <p>Owner Name: {{ $product->getUser->NAME }}</p>
                                             <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
                                             <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
-                                            <p>Expaire Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else Not set yet @endif </p>
+                                            <p>Expaire
+                                                Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
+                                                    Not set yet @endif </p>
                                         </div>
                                         {!! Form::open([ 'route' => ['admin.product.update', $product->PK_NO], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                                         <div class="row">
@@ -372,7 +397,8 @@
                                                 <div class="map">
                                                     <iframe
                                                         src="{{$property_additional_info->LOCATION_MAP}}"
-                                                        style="border:0; width:100%; height: 250px;" allowfullscreen="" loading="lazy"></iframe>
+                                                        style="border:0; width:100%; height: 250px;" allowfullscreen=""
+                                                        loading="lazy"></iframe>
                                                 </div>
                                             </div>
 
@@ -465,17 +491,38 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">Title</label>
-                                                    <input type="text" name="meta_title" class="form-control seoTitle" value="{{ $product->listingSEO->META_TITLE ?? '' }}" id="seoTitle">
+                                                    <input type="text" name="meta_title" class="form-control seoTitle"
+                                                           value="{{ $product->listingSEO->META_TITLE ?? '' }}"
+                                                           id="seoTitle">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">Meta descriptions</label>
-                                                    <textarea name="meta_description" class="form-control" id="metaDescr">{{ $product->listingSEO->META_DESCRIPTION ?? '' }}</textarea>
+                                                    <textarea name="meta_description" class="form-control"
+                                                              id="metaDescr">{{ $product->listingSEO->META_DESCRIPTION ?? '' }}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">URl Slug</label>
-                                                    <input type="text" class="form-control url_slug" id="url_slug" value="{{ $product->listingSEO->META_URL ?? '' }}" name="meta_url" >
+                                                    <input type="text" class="form-control url_slug"
+                                                           {{ $product->URL_SLUG_LOCKED ? 'readonly' : '' }} id="url_slug"
+                                                           value="{{ $product->listingSEO && $product->listingSEO->META_URL ? $product->listingSEO->META_URL : $product->URL_SLUG }}"
+                                                           name="meta_url">
                                                 </div>
-
+                                                <div
+                                                    class="form-group">
+                                                    <label class="label-title">OG Image</label>
+                                                    @if($product->listingSEO && $product->listingSEO->OG_IMAGE_PATH)
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <img src="{{ asset($product->listingSEO->OG_IMAGE_PATH) }}"
+                                                                 alt="" style="max-height: 150px;max-width: 200px">
+                                                        </div>
+                                                    </div>
+                                                    @endif
+                                                    <div class="controls">
+                                                        <div id="seoImage" style="padding-top: .5rem;"></div>
+                                                    </div>
+                                                    {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
                                             </div>
                                         </div>
 
@@ -504,8 +551,11 @@
                                                 <div class="form-group publishingStatus">
                                                     @if($property_status)
                                                         @foreach ( $property_status as $k => $st )
-                                                       <input type="radio" {{ $product->STATUS == $k ? 'checked' : '' }} name="status" value="{{ $k }}"
-                                                        id="prop_status_{{ $k }}">  <label for="prop_status_{{ $k }}"> {{ $st }}</label>
+                                                            <input type="radio"
+                                                                   {{ $product->STATUS == $k ? 'checked' : '' }} name="status"
+                                                                   value="{{ $k }}"
+                                                                   id="prop_status_{{ $k }}">  <label
+                                                                for="prop_status_{{ $k }}"> {{ ucwords($st) }}</label>
                                                         @endforeach
                                                     @endif
                                                 </div>
@@ -524,7 +574,7 @@
                                                     </div>
                                                     <input type="radio" checked="" name="billing" value="pending"
                                                            id="pending">
-                                                    <label for="pending">Pending</label>
+                                                    <label for="pending">Due</label>
                                                     <input type="radio" name="billing" value="paid" id="paid">
                                                     <label for="paid">Paid</label>
                                                 </div>
@@ -579,6 +629,10 @@
     <script>
 
         $('#imageFile').imageUploader();
+        $('#seoImage').imageUploader({
+            imagesInputName: 'seo_image',
+            maxFiles: 1
+        });
 
         $('.datetimepicker').datetimepicker({
             icons:
@@ -671,12 +725,16 @@
         });
 
         $(".del_img").on('click', function () {
-            var remove_img = '.remove_img' + $(this).data('id');
+            let remove_img = '.remove_img' + $(this).data('id');
             $.ajax({
-                url: basepath + "/ajax-listings-delete_img/" + $(this).data('id'),
-                type: 'GET',
+                url: '{{ route('admin.product.delete_image') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: $(this).data('id')
+                },
+                type: 'POST',
                 success: function (data) {
-                    if (data.success) {
+                    if (data.status) {
                         $(remove_img).remove();
                         toastr.success(data.success);
                     } else {
