@@ -74,15 +74,8 @@
                                             {!! $errors->first('method', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
-                                    <div class="form-group {!! $errors->has('payment_acc') ? 'error' : '' !!}">
-                                        {{ Form::label('payment_acc','Payment Account') }}
-                                        <div class="controls">
-                                            {!! Form::select('payment_acc', $payment_acc ?? [], old('payment_acc'), ['id' => 'payment_acc', 'class'=>'form-control', 'placeholder'=>'Select account','data-validation-required-message' => 'This field is required']) !!}
-                                            {!! $errors->first('payment_acc', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="bonus form-group">
+
+                                    <div class="bonus form-group">
                                         {{ Form::label('payment_account','Payment Account') }}
                                         <div class="controls">
                                             {!! Form::select('payment_account', [], old('payment_account'), ['id' => 'payment_account', 'class'=>'form-control', 'placeholder'=>'Select Method']) !!}

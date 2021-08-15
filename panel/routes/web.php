@@ -154,11 +154,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('product-brand/{id}/delete', ['middleware' => 'acl:delete_brand', 'as' => 'product.brand.delete', 'uses' => 'BrandController@getDelete']);
 
     //Account Source
-    Route::get('account', ['middleware' => 'acl:view_account_source', 'as' => 'admin.account.list', 'uses' => 'AccountController@getIndex']);
-    Route::get('account/new', ['middleware' => 'acl:new_account_source', 'as' => 'account.source.create', 'uses' => 'AccountController@getCreate']);
-    Route::post('account/store', ['middleware' => 'acl:new_account_source', 'as' => 'account.store', 'uses' => 'AccountController@postAccSource']);
-    Route::get('account/{id}/delete', ['middleware' => 'acl:delete_account_source', 'as' => 'account.source.delete', 'uses' => 'AccountController@getDelete']);
-    Route::post('account/{id}/update', ['middleware' => 'acl:edit_account_source', 'as' => 'account.source.update', 'uses' => 'AccountController@putUpdate']);
+    // Route::get('account', ['middleware' => 'acl:view_account_source', 'as' => 'admin.account.list', 'uses' => 'AccountController@getIndex']);
+    // Route::get('account/new', ['middleware' => 'acl:new_account_source', 'as' => 'account.source.create', 'uses' => 'AccountController@getCreate']);
+    // Route::post('account/store', ['middleware' => 'acl:new_account_source', 'as' => 'account.store', 'uses' => 'AccountController@postAccSource']);
+    // Route::get('account/{id}/delete', ['middleware' => 'acl:delete_account_source', 'as' => 'account.source.delete', 'uses' => 'AccountController@getDelete']);
+    // Route::post('account/{id}/update', ['middleware' => 'acl:edit_account_source', 'as' => 'account.source.update', 'uses' => 'AccountController@putUpdate']);
 
     //Transaction
     Route::get('transaction', ['middleware' => 'acl:view_transaction', 'as' => 'admin.transaction.list', 'uses' => 'TransactionController@getIndex']);
@@ -189,18 +189,16 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('pages-category/{id}/delete', ['middleware' => 'acl:delete_pages_category', 'as' => 'admin.pages-category.delete', 'uses' => 'PagesCategoryController@getDelete']);
 
     //Account Bank Name
-    Route::get('account-bank', ['middleware' => 'acl:view_account_name', 'as' => 'account.bank.list', 'uses' => 'BankAccountController@getIndex']);
-    Route::get('account-bank/new', ['middleware' => 'acl:new_account_name', 'as' => 'account.bank.create', 'uses' => 'BankAccountController@getCreateBank']);
-    Route::post('account-bank/store', ['middleware' => 'acl:new_account_name', 'as' => 'account.bank.store', 'uses' => 'BankAccountController@postStore']);
-    Route::post('account-bank/store', ['middleware' => 'acl:new_account_name', 'as' => 'account.bank.store.single', 'uses' => 'BankAccountController@postStoreSingle']);
-    Route::post('account-bank/{id}/update', ['middleware' => 'acl:edit_account_name', 'as' => 'account.bank.update', 'uses' => 'BankAccountController@putUpdate']);
-
-    Route::get('account-bank/{id}/delete', ['middleware' => 'acl:delete_account_name', 'as' => 'account.name.delete', 'uses' => 'BankAccountController@getDelete']);
-
-    Route::get('payment-bank', ['middleware' => 'acl:view_payment_bank', 'as' => 'admin.payment_bank.list', 'uses' => 'PaymentBankController@getIndex']);
-    Route::get('payment-bank/new', ['middleware' => 'acl:new_payment', 'as' => 'admin.payment_bank.create', 'uses' => 'PaymentBankController@getCreate']);
-    Route::post('payment-bank/store', ['middleware' => 'acl:new_payment', 'as' => 'admin.payment_bank.store', 'uses' => 'PaymentBankController@postStore']);
-    Route::post('payment-bank/store', ['middleware' => 'acl:new_payment', 'as' => 'admin.payment_bank.store', 'uses' => 'PaymentBankController@postStore']);
+    // Route::get('account-bank', ['middleware' => 'acl:view_account_name', 'as' => 'account.bank.list', 'uses' => 'BankAccountController@getIndex']);
+    // Route::get('account-bank/new', ['middleware' => 'acl:new_account_name', 'as' => 'account.bank.create', 'uses' => 'BankAccountController@getCreateBank']);
+    // Route::post('account-bank/store', ['middleware' => 'acl:new_account_name', 'as' => 'account.bank.store', 'uses' => 'BankAccountController@postStore']);
+    // Route::post('account-bank/store', ['middleware' => 'acl:new_account_name', 'as' => 'account.bank.store.single', 'uses' => 'BankAccountController@postStoreSingle']);
+    // Route::post('account-bank/{id}/update', ['middleware' => 'acl:edit_account_name', 'as' => 'account.bank.update', 'uses' => 'BankAccountController@putUpdate']);
+    // Route::get('account-bank/{id}/delete', ['middleware' => 'acl:delete_account_name', 'as' => 'account.name.delete', 'uses' => 'BankAccountController@getDelete']);
+    // Route::get('payment-bank', ['middleware' => 'acl:view_payment_bank', 'as' => 'admin.payment_bank.list', 'uses' => 'PaymentBankController@getIndex']);
+    // Route::get('payment-bank/new', ['middleware' => 'acl:new_payment', 'as' => 'admin.payment_bank.create', 'uses' => 'PaymentBankController@getCreate']);
+    // Route::post('payment-bank/store', ['middleware' => 'acl:new_payment', 'as' => 'admin.payment_bank.store', 'uses' => 'PaymentBankController@postStore']);
+    // Route::post('payment-bank/store', ['middleware' => 'acl:new_payment', 'as' => 'admin.payment_bank.store', 'uses' => 'PaymentBankController@postStore']);
     // Route::post('account-bank/store', ['middleware' => 'acl:new_payment', 'as' => 'account.bank.store.single', 'uses' => 'PaymentBankController@postStoreSingle']);
     // Route::post('account-bank/{id}/update', ['middleware' => 'acl:edit_account_name', 'as' => 'account.bank.update', 'uses' => 'PaymentBankController@putUpdate']);
 
@@ -208,10 +206,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
 
     //Account payment method
-
-    Route::post('account-method/{id}/update', ['middleware' => 'acl:edit_payment_method', 'as' => 'account.bank.method.update', 'uses' => 'AccountMethodController@putUpdate']);
-    Route::get('account-method/{id}/delete', ['middleware' => 'acl:delete_payment_method', 'as' => 'account.method.delete', 'uses' => 'AccountMethodController@getDelete']);
-    Route::post('account-method/store', ['middleware' => 'acl:new_payment_method', 'as' => 'account.method.store', 'uses' => 'AccountMethodController@postStore']);
+    // Route::post('account-method/{id}/update', ['middleware' => 'acl:edit_payment_method', 'as' => 'account.bank.method.update', 'uses' => 'AccountMethodController@putUpdate']);
+    // Route::get('account-method/{id}/delete', ['middleware' => 'acl:delete_payment_method', 'as' => 'account.method.delete', 'uses' => 'AccountMethodController@getDelete']);
+    // Route::post('account-method/store', ['middleware' => 'acl:new_payment_method', 'as' => 'account.method.store', 'uses' => 'AccountMethodController@postStore']);
 
     //Agent Section
 
@@ -417,7 +414,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('seeker/{id}/recharge', ['middleware' => 'acl:add_seeker_payment', 'as' => 'admin.seeker.recharge', 'uses' => 'SeekerController@postRecharge']);
     Route::get('seeker/get_area/{id}', ['middleware' => 'acl:view_seeker_payment', 'as' => 'admin.seeker.get_area', 'uses' => 'SeekerController@getArea']);
     Route::post('seeker_list', ['middleware' => 'acl:view_seeker', 'as' => 'ajax.seeker.list', 'uses' => 'DataTableController@getSeeker']);
-
     Route::get('payment-account', ['middleware' => 'acl:view_payment_account', 'as' => 'ajax.payment-account.list', 'uses' => 'SeekerController@paymentAccount']);
 /*
 
@@ -881,11 +877,19 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::post('web/about/store', ['middleware' => 'acl:new_page', 'as' => 'web.about.store', 'uses' => 'AboutController@postStore']);
 
     //Payment Method
-    Route::get('web/payment_method',['middleware' => 'acl:new_page', 'as' => 'web.payment_method', 'uses' => 'PaymentMethodController@getIndex']);
-    Route::get('web/payment_method/create',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.create', 'uses' => 'PaymentMethodController@getCreate']);
-    Route::post('web/payment_method/store',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.store', 'uses' => 'PaymentMethodController@postStore']);
-    Route::get('web/payment_method/{id}/edit',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
-    Route::post('web/payment_method/{id}/update',['middleware' => 'acl:new_page', 'as' => 'web.payment_method.update', 'uses' => 'PaymentMethodController@postUpdate']);
+    Route::get('web/payment_method',['middleware' => 'acl:view_payment_method', 'as' => 'web.payment_method', 'uses' => 'PaymentMethodController@getIndex']);
+    Route::get('web/payment_method/create',['middleware' => 'acl:new_payment_method', 'as' => 'web.payment_method.create', 'uses' => 'PaymentMethodController@getCreate']);
+    Route::post('web/payment_method/store',['middleware' => 'acl:new_payment_method', 'as' => 'web.payment_method.store', 'uses' => 'PaymentMethodController@postStore']);
+    Route::get('web/payment_method/{id}/edit',['middleware' => 'acl:edit_payment_method', 'as' => 'web.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
+    Route::post('web/payment_method/{id}/update',['middleware' => 'acl:edit_payment_method', 'as' => 'web.payment_method.update', 'uses' => 'PaymentMethodController@postUpdate']);
+
+    //Payment Method
+    Route::get('web/payment_acc',['middleware' => 'acl:view_payment_acc', 'as' => 'web.payment_acc', 'uses' => 'PaymentBankController@getIndex']);
+    Route::get('web/payment_acc/create',['middleware' => 'acl:new_payment_acc', 'as' => 'web.payment_acc.create', 'uses' => 'PaymentBankController@getCreate']);
+    Route::post('web/payment_acc/store',['middleware' => 'acl:new_payment_acc', 'as' => 'web.payment_acc.store', 'uses' => 'PaymentBankController@postStore']);
+    Route::get('web/payment_acc/{id}/edit',['middleware' => 'acl:edit_payment_acc', 'as' => 'web.payment_acc.edit', 'uses' => 'PaymentBankController@getEdit']);
+    Route::post('web/payment_acc/{id}/update',['middleware' => 'acl:edit_payment_acc', 'as' => 'web.payment_acc.update', 'uses' => 'PaymentBankController@postUpdate']);
+
 
 
     // Ads

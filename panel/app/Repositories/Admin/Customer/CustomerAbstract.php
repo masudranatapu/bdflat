@@ -159,6 +159,12 @@ class CustomerAbstract implements CustomerInterface
         return $this->formatResponse($status, $msg, 'admin.seeker.recharge');
     }
     public function getCustomerTxn($id){
+        try {
+            $data =  Transaction::where('F_CUSTOMER_NO',$id)->get();
+        } catch (\Throwable $th) {
+            return $this->formatResponse(fasle, 'Data not found', 'admin.seeker.list');
+        }
+        return $this->formatResponse(true, 'Payment list found successfully !', 'admin.seeker.list', $data);
 
     }
 

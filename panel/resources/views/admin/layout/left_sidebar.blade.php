@@ -554,6 +554,11 @@
                         <span data-i18n="@yield('payment_method')">Payment Method</span>
                     </a>
                 </li>
+                <li class="@yield('payment_account')">
+                    <a class="menu-item" href="{{route('web.payment_acc')}}"><i></i>
+                        <span data-i18n="@yield('payment_account')">Payment Account</span>
+                    </a>
+                </li>
 
             </ul>
         </li>
