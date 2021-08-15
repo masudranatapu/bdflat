@@ -25,7 +25,7 @@ $roles = userRolePermissionArray();
             <div class="col-md-6">
                 <div class="card card-success">
                     <div class="card-header">
-                        <a href="{{route('web.payment_method.create')}}" class="btn btn-primary float-lg-right btn-sm"> <i class="la la-plus"></i> Create New</a>
+                        <a href="{{route('admin.payment_method.create')}}" class="btn btn-primary float-lg-right btn-sm"> <i class="la la-plus"></i> Create New</a>
                     </div>
                     <hr>
                     <div class="card-content collapse show">
@@ -50,7 +50,7 @@ $roles = userRolePermissionArray();
                                             <td>{{ $row->NAME }}</td>
                                             <td>{{ $row->IS_ACTIVE == 1 ? 'Active' : 'Inactive' }}</td>
                                             <td>
-                                                <a href="{{ route('web.payment_method.edit',['id' => $row->PK_NO]) }}">Edit</a>
+                                                <a href="{{ route('admin.payment_method.edit',['id' => $row->PK_NO]) }}">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach

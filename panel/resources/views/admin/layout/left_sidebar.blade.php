@@ -448,82 +448,66 @@
 
     @if(hasAccessAbility('view_system_settings', $roles))
         <li class=" nav-item @yield('System Settings')">
-            <a href="#">
-                <i class="la la-cogs"></i>
-                <span class="menu-title"
-                      data-i18n="@lang('left_menu.system_settings')">@lang('left_menu.system_settings')</span>
-            </a>
+            <a href="#"><i class="la la-cogs"></i><span class="menu-title" data-i18n="@lang('left_menu.system_settings')">@lang('left_menu.system_settings')</span></a>
             <ul class="menu-content">
-                <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.general.info')}}"><i></i><span
-                            data-i18n="Basic">General</span></a>
-                </li>
-                <li class="@yield('property_category')"><a class="menu-item"
-                                                           href="{{route('admin.property.category')}}"><i></i><span
-                            data-i18n="Basic">Property Categories</span></a>
-                </li>
-                <li class="@yield('property_condition')"><a class="menu-item"
-                                                   href="{{route('admin.property.condition')}}"><i></i><span
-                            data-i18n="Basic">Condition</span></a>
-                </li>
-                <li class="@yield('features')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Features</span></a>
 
-                <li class="@yield('facilities')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Facilities</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.city.list')}}"><i></i><span
-                            data-i18n="Basic">City or Division</span></a>
-                <li class="@yield('area_list')"><a class="menu-item"
-                                                   href="{{route('admin.area.list')}}"><i></i><span
-                            data-i18n="Basic">Area</span></a>
-
-                <li class="@yield('blog_categories')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Blog Categories</span></a>
-                <li class="@yield('bedroom')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Bedroom</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Page Category</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Bathroom</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Refund Reason for Lead</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Refund Reason for property </span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Floor</span></a>
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">Facing</span></a>
-                <li class="@yield('listing_price')"><a class="menu-item"
-                                                       href="{{route('admin.listing_price.list')}}"><i></i><span
-                            data-i18n="Basic">Pricing</span></a>
-
-                <li class="@yield('city_list')"><a class="menu-item"
-                                                   href="{{route('admin.address_type.city_list_')}}"><i></i><span
-                            data-i18n="Basic">City List</span></a>
+                <li class="@yield('property_category')"><a class="menu-item" href="{{route('admin.property.category')}}"><i></i><span data-i18n="Basic">Property Categories</span></a></li>
+                <li class="@yield('property_condition')"><a class="menu-item" href="{{route('admin.property.condition')}}"><i></i><span data-i18n="Basic">Condition</span></a>
                 </li>
+                <li class="@yield('features')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Features</span></a></li>
+                <li class="@yield('facilities')"><a class="menu-item"href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facilities</span></a></li>
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.city.list')}}"><i></i><span data-i18n="Basic">City or Division</span></a></li>
+                <li class="@yield('area_list')"><a class="menu-item" href="{{route('admin.area.list')}}"><i></i><span data-i18n="Basic">Area</span></a></li>
 
-                <li class=" nav-item @yield('currency')"><a class="menu-item" href="{{ route('admin.currency.list') }}"><i></i><span
-                            data-i18n="Basic">@lang('left_menu.currency')</span></a></li>
+                <li class="@yield('bedroom')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bedroom</span></a> </li>
+
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bathroom</span></a></li>
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for Lead</span></a></li>
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for property </span></a></li>
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Floor</span></a></li>
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facing</span></a></li>
+                <li class="@yield('listing_price')"><a class="menu-item" href="{{route('admin.listing_price.list')}}"><i></i><span data-i18n="Basic">Pricing</span></a></li>
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">City List</span></a></li>
+
                 @if(hasAccessAbility('view_address_type', $roles))
-                    <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span
-                                data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a>
+                    <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a>
                     </li>
                 @endif
-                <li class="@yield('slider')">
-                    <a class="menu-item" href="{{route('web.home.slider')}}"><i></i>
-                        <span data-i18n="">Home Slider</span>
+
+
+                <li class="@yield('payment_method')">
+                    <a class="menu-item" href="{{route('admin.payment_method.list')}}"><i></i>
+                        <span data-i18n="@yield('payment_method')">Payment Method</span>
                     </a>
                 </li>
+                <li class="@yield('payment_account')">
+                    <a class="menu-item" href="{{route('admin.payment_acc.list')}}"><i></i>
+                        <span data-i18n="@yield('payment_account')">Payment Account</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+    @endif
+
+
+    @if(hasAccessAbility('view_web_settings', $roles))
+        <li class=" nav-item @yield('Web Settings')">
+            <a href="#"><i class="la la-cogs"></i><span class="menu-title" data-i18n="@lang('left_menu.web_settings')">Web Settings</span></a>
+            <ul class="menu-content">
+                <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.general.info')}}"><i></i><span data-i18n="Basic">General</span></a></li>
+
+                <li class="@yield('slider')"><a class="menu-item" href="{{route('web.home.slider')}}"><i></i><span data-i18n="">Home Slider</span></a>
+                </li>
+
+
+                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Page Category</span></a></li>
+                <li class="@yield('web_page')">
+                    <a class="menu-item" href="{{route('web.page')}}"><i></i>
+                        <span data-i18n="@yield('web_page')">Pages</span>
+                    </a>
+                </li>
+
                 <li class="@yield('blog-category')">
                     <a class="menu-item" href="{{route('web.blog.category')}}"><i></i>
                         <span data-i18n="@yield('blog-category')">Blog Category</span>
@@ -534,11 +518,7 @@
                         <span data-i18n="@yield('blog-article')">Blog Article</span>
                     </a>
                 </li>
-                <li class="@yield('web_page')">
-                    <a class="menu-item" href="{{route('web.page')}}"><i></i>
-                        <span data-i18n="@yield('web_page')">Pages</span>
-                    </a>
-                </li>
+
                 <li class="@yield('faq')">
                     <a class="menu-item" href="{{route('web.faq')}}"><i></i>
                         <span data-i18n="@yield('faq')">Faq</span>
@@ -549,16 +529,7 @@
                         <span data-i18n="@yield('about')">About</span>
                     </a>
                 </li>
-                <li class="@yield('payment_method')">
-                    <a class="menu-item" href="{{route('web.payment_method')}}"><i></i>
-                        <span data-i18n="@yield('payment_method')">Payment Method</span>
-                    </a>
-                </li>
-                <li class="@yield('payment_account')">
-                    <a class="menu-item" href="{{route('web.payment_acc')}}"><i></i>
-                        <span data-i18n="@yield('payment_account')">Payment Account</span>
-                    </a>
-                </li>
+
 
             </ul>
         </li>

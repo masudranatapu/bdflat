@@ -3,20 +3,20 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 @endpush
-@section('Accounts','open')
-@section('payment_bank','active')
+@section('System Settings','open')
+@section('payment_account','active')
 
 @section('title')
-    Payment bank account
+    Payment account
 @endsection
 
 @section('page-name')
-    Payment bank account
+    Payment account
 @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('payment.breadcrumb_title')</a></li>
-    <li class="breadcrumb-item active">Bank account</li>
+    <li class="breadcrumb-item active">Payment account</li>
 @endsection
 
 @push('custom_js')
@@ -40,7 +40,7 @@
                         <div class="card-header">
                             <div class="form-group">
                                 @if(hasAccessAbility('new_account_source', $roles))
-                                    <a class="text-white addsourceModal btn btn-round btn-sm btn-primary" title="Add new" href="{{ route('admin.payment_bank.create') }}" ><i class="ft-plus text-white"></i> Add New Bank</a>
+                                    <a class="text-white addsourceModal btn btn-round btn-sm btn-primary" title="Add new" href="{{ route('admin.payment_acc.create') }}" ><i class="ft-plus text-white"></i> Add New Account</a>
                                 @endif
                             </div>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
@@ -54,25 +54,26 @@
                             </div>
                         </div>
                         <div class="card-content collapse show">
-                            <div class="card-body card-dashboard text-center">
+                            <div class="card-body card-dashboard">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered alt-pagination table-sm" id="indextable">
                                         <thead>
                                             <tr>
-                                                <th style="width: 40px;">Sl.</th>
+                                                <th style="width: 40px;"  class="text-center">Sl.</th>
+                                                <th>Method</th>
                                                 <th  style="">Bank Name</th>
                                                 <th  style="">Account Name</th>
                                                 <th >Account No</th>
                                                 <th>Balance Actual</th>
-                                                <th>Balance Buffer</th>
                                                 <th style="width: 50px;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($rows as $key => $row)
                                                 <tr>
+                                                    <td  class="text-center">{{ $key+1 }}</td>
                                                     <td>
-                                                        {{ $key+1 }}
+                                                        {{ $row->method->NAME ?? '' }}
                                                     </td>
                                                     <td>{{ $row->BANK_NAME }}</td>
                                                     <td>{{ $row->BANK_ACC_NAME }}</td>
@@ -80,10 +81,10 @@
                                                     <td class="text-right">
                                                         {{ number_format($row->BALANCE_ACTUAL,2) }}
                                                     </td>
-                                                    <td class="text-right">
-                                                        {{ number_format($row->BALACNE_BUFFER,2) }}
+
+                                                    <td class="text-center">
+                                                        <a href="{{ route('admin.payment_acc.edit',['id' => $row->PK_NO]) }}">Edit</a>
                                                     </td>
-                                                    <td></td>
                                                 </tr>
                                             @endforeach()
                                         </tbody>
@@ -97,14 +98,11 @@
         </section>
     </div>
 
-@include('admin.account._account_edit_modal')
 
     <!--/ Alternative pagination table -->
 @endsection
 @push('custom_js')
 
-<!--script only for brand page-->
-<script type="text/javascript" src="{{ asset('app-assets/pages/account.js')}}"></script>
 
 
 @endpush('custom_js')

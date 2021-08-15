@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Admin;
 
 use App\Traits;
 use Illuminate\Http\Request;
@@ -20,17 +20,17 @@ class PaymentMethodController extends BaseController
     public function getIndex(Request $request) {
     	$data = [];
     	$data['rows'] = PaymentMethod::get();
-        return view('admin.web.payment_method.index',compact('data'));
+        return view('admin.payment_method.index',compact('data'));
     }
 
     public function getCreate() {
-        return view('admin.web.payment_method.create');
+        return view('admin.payment_method.create');
     }
 
     public function getEdit($id) {
         $data = [];
         $data['rows'] = PaymentMethod::where('PK_NO',$id)->first();
-        return view('admin.web.payment_method.edit',compact('data'));
+        return view('admin.payment_method.edit',compact('data'));
     }
 
     public function postStore(Request $request) {

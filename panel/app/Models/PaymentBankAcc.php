@@ -37,6 +37,11 @@ class PaymentBankAcc extends Model
         return $this->belongsTo('App\Models\Auth', 'F_SS_CREATED_BY');
     }
 
+    public function method()
+    {
+        return $this->belongsTo('App\Models\AccountMethod', 'F_PAYMENT_METHOD_NO');
+    }
+
     public static function getAllPaymentBanks()
     {
         $data = PaymentBankAcc::select('PK_NO','BANK_NAME','BANK_ACC_NAME')

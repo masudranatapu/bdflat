@@ -103,7 +103,8 @@ return [
     'payment_bank'          => 'Revenue Account List',
     'bankstatement'         => 'Bank Statement',
     'payment_verification'  => 'Payment Verification',
-    'system_settings'       => 'System',
+    'system_settings'       => 'Panel Settings',
+    'web_settings'          => 'Web Settings',
     'dispatch_management'   => 'Dispatch Management',
     'agent_list'            => 'agent list',
 

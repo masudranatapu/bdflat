@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body">
-                        {!! Form::open([ 'route' => 'web.payment_method.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
+                        {!! Form::open([ 'route' => 'admin.payment_method.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
                         @csrf
                         <div class="form-body">
                             <div class="row">
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="form-actions mt-10 mb-3">
-                            <a href="{{route('web.payment_method')}}">
+                            <a href="{{route('admin.payment_method')}}">
                                 <button type="button" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i> Cancel
                                 </button>

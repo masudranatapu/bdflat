@@ -822,6 +822,21 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('ajax/consignment/getTrackingId/{id}', ['middleware' => 'acl:edit_dispatch', 'as' => 'admin.consignment.getTrackingId', 'uses' => 'PosLazuController@getTrackingId']);
 
 
+    //Payment Method
+    Route::get('payment_method',['middleware' => 'acl:view_payment_method', 'as' => 'admin.payment_method.list', 'uses' => 'PaymentMethodController@getIndex']);
+    Route::get('payment_method/create',['middleware' => 'acl:new_payment_method', 'as' => 'admin.payment_method.create', 'uses' => 'PaymentMethodController@getCreate']);
+    Route::post('payment_method/store',['middleware' => 'acl:new_payment_method', 'as' => 'admin.payment_method.store', 'uses' => 'PaymentMethodController@postStore']);
+    Route::get('payment_method/{id}/edit',['middleware' => 'acl:edit_payment_method', 'as' => 'admin.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
+    Route::post('payment_method/{id}/update',['middleware' => 'acl:edit_payment_method', 'as' => 'admin.payment_method.update', 'uses' => 'PaymentMethodController@postUpdate']);
+
+    //Payment Method
+    Route::get('payment_acc',['middleware' => 'acl:view_payment_acc', 'as' => 'admin.payment_acc.list', 'uses' => 'PaymentBankController@getIndex']);
+    Route::get('payment_acc/create',['middleware' => 'acl:new_payment_acc', 'as' => 'admin.payment_acc.create', 'uses' => 'PaymentBankController@getCreate']);
+    Route::post('payment_acc/store',['middleware' => 'acl:new_payment_acc', 'as' => 'admin.payment_acc.store', 'uses' => 'PaymentBankController@postStore']);
+    Route::get('payment_acc/{id}/edit',['middleware' => 'acl:edit_payment_acc', 'as' => 'admin.payment_acc.edit', 'uses' => 'PaymentBankController@getEdit']);
+    Route::post('payment_acc/{id}/update',['middleware' => 'acl:edit_payment_acc', 'as' => 'admin.payment_acc.update', 'uses' => 'PaymentBankController@postUpdate']);
+
+
 });
 
 Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
@@ -877,19 +892,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::get('web/about', ['middleware' => 'acl:list_box', 'as' => 'web.about', 'uses' => 'AboutController@getIndex']);
     Route::post('web/about/store', ['middleware' => 'acl:new_page', 'as' => 'web.about.store', 'uses' => 'AboutController@postStore']);
 
-    //Payment Method
-    Route::get('web/payment_method',['middleware' => 'acl:view_payment_method', 'as' => 'web.payment_method', 'uses' => 'PaymentMethodController@getIndex']);
-    Route::get('web/payment_method/create',['middleware' => 'acl:new_payment_method', 'as' => 'web.payment_method.create', 'uses' => 'PaymentMethodController@getCreate']);
-    Route::post('web/payment_method/store',['middleware' => 'acl:new_payment_method', 'as' => 'web.payment_method.store', 'uses' => 'PaymentMethodController@postStore']);
-    Route::get('web/payment_method/{id}/edit',['middleware' => 'acl:edit_payment_method', 'as' => 'web.payment_method.edit', 'uses' => 'PaymentMethodController@getEdit']);
-    Route::post('web/payment_method/{id}/update',['middleware' => 'acl:edit_payment_method', 'as' => 'web.payment_method.update', 'uses' => 'PaymentMethodController@postUpdate']);
 
-    //Payment Method
-    Route::get('web/payment_acc',['middleware' => 'acl:view_payment_acc', 'as' => 'web.payment_acc', 'uses' => 'PaymentBankController@getIndex']);
-    Route::get('web/payment_acc/create',['middleware' => 'acl:new_payment_acc', 'as' => 'web.payment_acc.create', 'uses' => 'PaymentBankController@getCreate']);
-    Route::post('web/payment_acc/store',['middleware' => 'acl:new_payment_acc', 'as' => 'web.payment_acc.store', 'uses' => 'PaymentBankController@postStore']);
-    Route::get('web/payment_acc/{id}/edit',['middleware' => 'acl:edit_payment_acc', 'as' => 'web.payment_acc.edit', 'uses' => 'PaymentBankController@getEdit']);
-    Route::post('web/payment_acc/{id}/update',['middleware' => 'acl:edit_payment_acc', 'as' => 'web.payment_acc.update', 'uses' => 'PaymentBankController@postUpdate']);
 
 
 
