@@ -110,7 +110,7 @@ class CustomerAbstract implements CustomerInterface
         }
     }
 
-    public function getCustomerPayment($id)
+    public function getCustomerPayment($id): object
     {
         try {
             $data = PaymentCustomer::where('F_CUSTOMER_NO', $id)->get();

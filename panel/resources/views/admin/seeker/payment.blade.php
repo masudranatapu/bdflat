@@ -13,7 +13,8 @@
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/custom/css/custom.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 @endpush
 
 @push('custom_js')
@@ -45,13 +46,15 @@
                                             <h2 class="font-weight-bold text-success">BDT 1,150</h2>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
-                                            <a href="{{ route('admin.seeker.recharge', request()->route('id')) }}" class="btn btn-success">Recharge Balance</a>
+                                            <a href="{{ route('admin.seeker.recharge', request()->route('id')) }}"
+                                               class="btn btn-success">Recharge Balance</a>
                                         </div>
                                     </div>
 
                                     <h3>Transaction History</h3>
                                     <div class="table-responsive ">
-                                        <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
+                                        <table
+                                            class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
                                             <thead>
                                             <tr>
                                                 <th>Tran. ID</th>
@@ -59,53 +62,31 @@
                                                 <th>Date</th>
                                                 <th>Amount</th>
                                                 <th>Note</th>
-                                                <th>Balance</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span>10001</span>
-                                                </td>
-                                                <td>
-                                                    <span>Recharge</span>
-                                                </td>
-                                                <td>
-                                                    <span>Oct 12, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>1000</span>
-                                                </td>
+                                            @if(isset($data['rows']) && count($data['rows']))
+                                                @foreach($data['rows'] as $row)
+                                                    <tr>
+                                                        <td>
+                                                            <span>{{ $row->CODE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->PAYMENT_TYPE == 2 ? 'Bonus Payment' : 'Customer Payment' }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->PAYMENT_DATE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ number_format($row->AMOUNT, 2) }}</span>
+                                                        </td>
 
-                                                <td>
-                                                    <span>Text</span>
-                                                </td>
-                                                <td>
-                                                    <span>1150</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <span>10001</span>
-                                                </td>
-                                                <td>
-                                                    <span>Mobile View</span>
-                                                </td>
-                                                <td>
-                                                    <span>Oct 12, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>1000</span>
-                                                </td>
-
-                                                <td>
-                                                    <span>Property ID</span>
-                                                </td>
-                                                <td>
-                                                    <span>150</span>
-                                                </td>
-                                            </tr>
+                                                        <td>
+                                                            <span>{{ $row->PAYMENT_NOTE }}</span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -119,7 +100,8 @@
     </div>
 
 
-    <div class="modal fade text-left" id="recharge" tabindex="-1" role="dialog" aria-labelledby="category_name" aria-hidden="true">
+    <div class="modal fade text-left" id="recharge" tabindex="-1" role="dialog" aria-labelledby="category_name"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
