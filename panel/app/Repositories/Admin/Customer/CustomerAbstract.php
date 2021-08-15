@@ -158,6 +158,9 @@ class CustomerAbstract implements CustomerInterface
         DB::commit();
         return $this->formatResponse($status, $msg, 'admin.seeker.recharge');
     }
+    public function getCustomerTxn($id){
+
+    }
 
     /*
 
