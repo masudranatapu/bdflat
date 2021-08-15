@@ -63,7 +63,10 @@ class SeekerController extends BaseController
 
     public function getRecharge($id)
     {
-        $data['paymentMethods'] = PaymentMethod::all()->where('PK_NO', '!=', 1)->where('IS_ACTIVE', '=', 1)->pluck('NAME', 'PK_NO');
+        $data['paymentMethods'] = PaymentMethod::all()
+            ->whereNotIn('PK_NO', [1, 5, 7])
+            ->where('IS_ACTIVE', '=', 1)
+            ->pluck('NAME', 'PK_NO');
         $data['seeker'] = User::find($id);
         return view('admin.seeker.recharge', compact('data'));
     }
@@ -88,18 +91,16 @@ class SeekerController extends BaseController
     public function paymentAccount(Request $request)
     {
         $method = $request->query->get('query');
-        $accounts = PaymentBankAcc::all()
-            ->where('F_PAYMENT_METHOD_NO', '=', $method)
-            ->pluck('BANK_NAME', 'PK_NO');
+        $accounts = PaymentBankAcc::where('F_PAYMENT_METHOD_NO', '=', $method)
+            ->get(['PK_NO', 'BANK_ACC_NAME', 'BANK_ACC_NO']);
 
         $response = '';
-
         if (!count($accounts)) {
             $response = '<option selected disabled>No Account</option>';
         }
 
-        foreach ($accounts as $key => $value) {
-            $response .= '<option value="' . $key . '">' . $value . '</option>';
+        foreach ($accounts as $account) {
+            $response .= '<option value="' . $account->PK_NO . '">' . $account->BANK_ACC_NAME . '(' . $account->BANK_ACC_NO . ')' . '</option>';
         }
         return $response;
     }

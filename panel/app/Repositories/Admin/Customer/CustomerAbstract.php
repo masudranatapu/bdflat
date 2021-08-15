@@ -131,10 +131,10 @@ class CustomerAbstract implements CustomerInterface
             $payment = new PaymentCustomer();
             $payment->F_CUSTOMER_NO = $id;
             $payment->AMOUNT = $request->amount;
-            $payment->F_ACC_PAYMENT_BANK_NO = $request->payment_account;
+            $payment->F_ACC_PAYMENT_BANK_NO = $request->payment_account ?? 4;
             $payment->PAYMENT_CONFIRMED_STATUS = 1;
             $payment->PAYMENT_NOTE = $request->note;
-            $payment->PAYMENT_DATE = date('Y-m-d');
+            $payment->PAYMENT_DATE = date('Y-m-d', strtotime($request->payment_date));
             $payment->PAYMENT_TYPE = $request->payment_type;
             $payment->SLIP_NUMBER = $request->slip_number;
 
