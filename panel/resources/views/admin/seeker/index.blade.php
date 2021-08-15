@@ -151,6 +151,9 @@
                             name: 'UNUSED_TOPUP',
                             searchable: false,
                             className: 'text-right',
+                            render: function (data, type, row, meta) {
+                                return formatter.format(data);
+                            }
                         },
                         {
                             data: 'CREATED_AT',
@@ -183,6 +186,11 @@
                 });
             return table;
         }
+
+        let formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'BDT'
+        });
     </script>
 
     <script>
