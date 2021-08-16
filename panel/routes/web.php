@@ -518,6 +518,22 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('property/features/{id}/update', ['middleware' => 'acl:edit_property_features', 'as' => 'admin.property.features.update', 'uses' => 'PropertyFeaturesController@postUpdate']);
     Route::get('property/features/{id}/delete', ['middleware' => 'acl:delete_property_features', 'as' => 'admin.property.features.delete', 'uses' => 'PropertyFeaturesController@getDelete']);
 
+    // Property Floor
+    Route::get('property/floor', ['middleware' => 'acl:view_property_floor', 'as' => 'admin.property.floor', 'uses' => 'PropertyFloorController@getIndex']);
+    Route::get('property/floor/new', ['middleware' => 'acl:add_property_floor', 'as' => 'admin.property.floor.create', 'uses' => 'PropertyFloorController@getCreate']);
+    Route::post('property/floor/store', ['middleware' => 'acl:add_property_floor', 'as' => 'admin.property.floor.store', 'uses' => 'PropertyFloorController@postStore']);
+    Route::get('property/floor/{id}/edit', ['middleware' => 'acl:edit_property_floor', 'as' => 'admin.property.floor.edit', 'uses' => 'PropertyFloorController@getEdit']);
+    Route::post('property/floor/{id}/update', ['middleware' => 'acl:edit_property_floor', 'as' => 'admin.property.floor.update', 'uses' => 'PropertyFloorController@postUpdate']);
+    Route::get('property/floor/{id}/delete', ['middleware' => 'acl:delete_property_floor', 'as' => 'admin.property.floor.delete', 'uses' => 'PropertyFloorController@getDelete']);
+
+    // Property Facing
+    Route::get('property/facing', ['middleware' => 'acl:view_property_facing', 'as' => 'admin.property.facing', 'uses' => 'PropertyFacingController@getIndex']);
+    Route::get('property/facing/new', ['middleware' => 'acl:add_property_facing', 'as' => 'admin.property.facing.create', 'uses' => 'PropertyFacingController@getCreate']);
+    Route::post('property/facing/store', ['middleware' => 'acl:add_property_facing', 'as' => 'admin.property.facing.store', 'uses' => 'PropertyFacingController@postStore']);
+    Route::get('property/facing/{id}/edit', ['middleware' => 'acl:edit_property_facing', 'as' => 'admin.property.facing.edit', 'uses' => 'PropertyFacingController@getEdit']);
+    Route::post('property/facing/{id}/update', ['middleware' => 'acl:edit_property_facing', 'as' => 'admin.property.facing.update', 'uses' => 'PropertyFacingController@postUpdate']);
+    Route::get('property/facing/{id}/delete', ['middleware' => 'acl:delete_property_facing', 'as' => 'admin.property.facing.delete', 'uses' => 'PropertyFacingController@getDelete']);
+
     // City / Division / Area
     Route::get('property/city', ['middleware' => 'acl:view_city', 'as' => 'admin.city.list', 'uses' => 'CityController@getIndex']);
     Route::get('property/city/new', ['middleware' => 'acl:add_city', 'as' => 'admin.city.new', 'uses' => 'CityController@getCreate']);

@@ -455,24 +455,23 @@
                 <li class="@yield('property_condition')"><a class="menu-item" href="{{route('admin.property.condition')}}"><i></i><span data-i18n="Basic">Condition</span></a>
                 </li>
                 <li class="@yield('features')"><a class="menu-item" href="{{route('admin.property.features')}}"><i></i><span data-i18n="Basic">Features</span></a></li>
-                <li class="@yield('facilities')"><a class="menu-item"href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facilities</span></a></li>
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.city.list')}}"><i></i><span data-i18n="Basic">City or Division</span></a></li>
                 <li class="@yield('area_list')"><a class="menu-item" href="{{route('admin.area.list')}}"><i></i><span data-i18n="Basic">Area</span></a></li>
 
-                <li class="@yield('bedroom')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bedroom</span></a> </li>
+{{--                <li class="@yield('bedroom')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bedroom</span></a> </li>--}}
 
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bathroom</span></a></li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for Lead</span></a></li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for property </span></a></li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Floor</span></a></li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facing</span></a></li>
+{{--                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Bathroom</span></a></li>--}}
+{{--                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for Lead</span></a></li>--}}
+{{--                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Refund Reason for property </span></a></li>--}}
+                <li class="@yield('floor_list')"><a class="menu-item" href="{{route('admin.property.floor')}}"><i></i><span data-i18n="Basic">Floor</span></a></li>
+                <li class="@yield('facing_list')"><a class="menu-item" href="{{route('admin.property.facing')}}"><i></i><span data-i18n="Basic">Facing</span></a></li>
                 <li class="@yield('listing_price')"><a class="menu-item" href="{{route('admin.listing_price.list')}}"><i></i><span data-i18n="Basic">Pricing</span></a></li>
 {{--                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">City List</span></a></li>--}}
 
-                @if(hasAccessAbility('view_address_type', $roles))
-                    <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a>
-                    </li>
-                @endif
+{{--                @if(hasAccessAbility('view_address_type', $roles))--}}
+{{--                    <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a>--}}
+{{--                    </li>--}}
+{{--                @endif--}}
 
 
                 <li class="@yield('payment_method')">
