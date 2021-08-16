@@ -454,7 +454,7 @@
                 <li class="@yield('property_category')"><a class="menu-item" href="{{route('admin.property.category')}}"><i></i><span data-i18n="Basic">Property Categories</span></a></li>
                 <li class="@yield('property_condition')"><a class="menu-item" href="{{route('admin.property.condition')}}"><i></i><span data-i18n="Basic">Condition</span></a>
                 </li>
-                <li class="@yield('features')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Features</span></a></li>
+                <li class="@yield('features')"><a class="menu-item" href="{{route('admin.property.features')}}"><i></i><span data-i18n="Basic">Features</span></a></li>
                 <li class="@yield('facilities')"><a class="menu-item"href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facilities</span></a></li>
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.city.list')}}"><i></i><span data-i18n="Basic">City or Division</span></a></li>
                 <li class="@yield('area_list')"><a class="menu-item" href="{{route('admin.area.list')}}"><i></i><span data-i18n="Basic">Area</span></a></li>

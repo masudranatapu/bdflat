@@ -510,6 +510,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('property/condition/{id}/update', ['middleware' => 'acl:edit_property_condition', 'as' => 'admin.property.condition.update', 'uses' => 'PropertyConditionController@postUpdate']);
     Route::get('property/condition/{id}/delete', ['middleware' => 'acl:delete_property_condition', 'as' => 'admin.property.condition.delete', 'uses' => 'PropertyConditionController@getDelete']);
 
+    // Property Features
+    Route::get('property/features', ['middleware' => 'acl:view_property_features', 'as' => 'admin.property.features', 'uses' => 'PropertyFeaturesController@getIndex']);
+    Route::get('property/features/new', ['middleware' => 'acl:add_property_features', 'as' => 'admin.property.features.create', 'uses' => 'PropertyFeaturesController@getCreate']);
+    Route::post('property/features/store', ['middleware' => 'acl:add_property_features', 'as' => 'admin.property.features.store', 'uses' => 'PropertyFeaturesController@postStore']);
+    Route::get('property/features/{id}/edit', ['middleware' => 'acl:edit_property_features', 'as' => 'admin.property.features.edit', 'uses' => 'PropertyFeaturesController@getEdit']);
+    Route::post('property/features/{id}/update', ['middleware' => 'acl:edit_property_features', 'as' => 'admin.property.features.update', 'uses' => 'PropertyFeaturesController@postUpdate']);
+    Route::get('property/features/{id}/delete', ['middleware' => 'acl:delete_property_features', 'as' => 'admin.property.features.delete', 'uses' => 'PropertyFeaturesController@getDelete']);
+
     // City / Division / Area
     Route::get('property/city', ['middleware' => 'acl:view_city', 'as' => 'admin.city.list', 'uses' => 'CityController@getIndex']);
     Route::get('property/city/new', ['middleware' => 'acl:add_city', 'as' => 'admin.city.new', 'uses' => 'CityController@getCreate']);
