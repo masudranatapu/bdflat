@@ -18,7 +18,7 @@ class AreaAbstract implements AreaInterface
 
     public function getAreas($limit = 2000): object
     {
-        $areas = Area::all()->take($limit);
+        $areas = Area::orderBy('ORDER_ID', 'DESC')->paginate($limit);
         return $this->formatResponse(true, '', 'admin.area.list', $areas);
     }
 

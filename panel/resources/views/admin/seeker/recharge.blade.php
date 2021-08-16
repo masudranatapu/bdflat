@@ -53,6 +53,7 @@
     $roles = userRolePermissionArray();
     $payment_methods = $data['paymentMethods'] ?? [];
     $payment_type = [1 => 'Customer Payment', 2 => 'Bonus Payment'];
+    $tabIndex = 0;
 @endphp
 
 @section('content')
@@ -73,21 +74,21 @@
                                     <div class="form-group">
                                         {{ Form::label('amount','Recharge Amount') }}
                                         <div class="controls">
-                                            {!! Form::number('amount', old('amount'), ['class'=>'form-control', 'placeholder'=>'0.00','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::number('amount', old('amount'), ['class'=>'form-control', 'placeholder'=>'0.00','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                             {!! $errors->first('amount', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{ Form::label('note','Payment Type') }}
                                         <div class="controls">
-                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type', 1), ['id' => 'paymentType', 'class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4]) !!}
+                                            {!! Form::select('payment_type', $payment_type ?? [], old('payment_type', 1), ['id' => 'paymentType', 'class'=>'form-control', 'placeholder'=>'Payment Type', 'rows' => 4, 'tabIndex' => ++$tabIndex]) !!}
                                             {!! $errors->first('payment_type', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="bonus form-group">
                                         {{ Form::label('method','Payment Method') }}
                                         <div class="controls">
-                                            {!! Form::select('method', $payment_methods ?? [], old('method'), ['id' => 'method', 'class'=>'form-control', 'placeholder'=>'Select Method']) !!}
+                                            {!! Form::select('method', $payment_methods ?? [], old('method'), ['id' => 'method', 'class'=>'form-control', 'placeholder'=>'Select Method', 'tabIndex' => ++$tabIndex]) !!}
                                             {!! $errors->first('method', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -95,7 +96,7 @@
                                     <div class="bonus form-group">
                                         {{ Form::label('payment_account','Payment Account') }}
                                         <div class="controls">
-                                            {!! Form::select('payment_account', [], old('payment_account'), ['id' => 'payment_account', 'class'=>'form-control', 'placeholder'=>'Select Method']) !!}
+                                            {!! Form::select('payment_account', [], old('payment_account'), ['id' => 'payment_account', 'class'=>'form-control', 'placeholder'=>'Select Method', 'tabIndex' => ++$tabIndex]) !!}
                                             {!! $errors->first('payment_account', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -103,7 +104,7 @@
                                         class=" form-group ">
                                         {{ Form::label('slip_number','Slip Number (optional)') }}
                                         <div class="controls">
-                                            {!! Form::text('slip_number', old('slip_number'), ['class'=>'form-control', 'placeholder'=>'Slip Number']) !!}
+                                            {!! Form::text('slip_number', old('slip_number'), ['class'=>'form-control', 'placeholder'=>'Slip Number', 'tabIndex' => ++$tabIndex]) !!}
                                             {!! $errors->first('slip_number', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -118,14 +119,14 @@
                                     <div class="form-group">
                                         {{ Form::label('note','Note') }}
                                         <div class="controls">
-                                            {!! Form::textarea('note', old('note'), ['class'=>'form-control', 'placeholder'=>'Note', 'rows' => 4]) !!}
+                                            {!! Form::textarea('note', old('note'), ['class'=>'form-control', 'placeholder'=>'Note', 'rows' => 4, 'tabIndex' => ++$tabIndex]) !!}
                                             {!! $errors->first('note', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{ Form::label('payment_date','Payment Date') }}
                                         <div class="controls">
-                                            {!! Form::text('payment_date', old('payment_date'), ['class'=>'form-control datepicker', 'placeholder'=>'Payment Date', 'data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::text('payment_date', old('payment_date'), ['class'=>'form-control datepicker', 'placeholder'=>'Payment Date', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('payment_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

@@ -188,6 +188,7 @@
     } else {
         $prop_cond = [];
     }
+    $tabIndex = 0;
 @endphp
 
 
@@ -240,7 +241,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('name') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('name', $data->NAME ?? old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name']) !!}
+                                    {!! Form::text('name', $data->NAME ?? old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -256,7 +257,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('email') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('email',$data->EMAIL ?? old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email']) !!}
+                                    {!! Form::text('email',$data->EMAIL ?? old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -272,7 +273,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('address') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('address', $data->ADDRESS ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Address']) !!}
+                                    {!! Form::text('address', $data->ADDRESS ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Address', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('address', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -288,7 +289,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('mobile', $data->MOBILE_NO ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Mobile Number']) !!}
+                                    {!! Form::text('mobile', $data->MOBILE_NO ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Mobile Number', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -305,7 +306,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('city', $cities, $row->F_CITY_NO ?? null,['class'=>'form-control','id'=>'cities', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::select('city', $cities, $row->F_CITY_NO ?? null,['class'=>'form-control','id'=>'cities', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -321,7 +322,7 @@
                         <div class="col-md-6">
                             <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('area[]', $areas ?? [], json_decode($row->F_AREAS ?? null),array('class'=>'form-control select2','id' => 'area', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required', 'multiple')) !!}
+                                    {!! Form::select('area[]', $areas ?? [], json_decode($row->F_AREAS ?? null),array('class'=>'form-control select2','id' => 'area', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required', 'multiple', 'tabIndex' => ++$tabIndex)) !!}
                                     {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -337,10 +338,10 @@
                         <div class="col-md-6">
                             <div class="form-group {!! $errors->has('itemCon') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('itemCon','buy', !empty($row)?$row->PROPERTY_FOR=='buy'?true:false:old('itemCon'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('itemCon','buy', !empty($row)?$row->PROPERTY_FOR=='buy'?true:false:old('itemCon'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('sell','Buy') }}
                                     &emsp;
-                                    {!! Form::radio('itemCon','rent', !empty($row)?$row->PROPERTY_FOR=='rent'?true:false:old('itemCon'),[ 'id' => 'roommate']) !!}
+                                    {!! Form::radio('itemCon','rent', !empty($row)?$row->PROPERTY_FOR=='rent'?true:false:old('itemCon'),[ 'id' => 'roommate', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('roommate','Rent') }}
 
                                     {!! $errors->first('itemCon', '<label class="help-block text-danger">:message</label>') !!}
@@ -358,7 +359,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('property_type', $property_types,!empty($row)?$row->F_PROPERTY_TYPE_NO:null,['id'=>'property-type','class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::select('property_type', $property_types,!empty($row)?$row->F_PROPERTY_TYPE_NO:null,['id'=>'property-type','class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -407,7 +408,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('minimum_size') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::number('minimum_size', !empty($row)?$row->MIN_SIZE:old('minimum_size'), ['id'=>'minimum_size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::number('minimum_size', !empty($row)?$row->MIN_SIZE:old('minimum_size'), ['id'=>'minimum_size', 'class' => 'form-control',  'placeholder' => 'Minimum Size','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('minimum_size', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -416,7 +417,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('maximum_size') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::number('maximum_size',!empty($row)?$row->MAX_SIZE:old('maximum_size'), ['id'=>'maximum_size', 'class' => 'form-control',  'placeholder' => 'Maximum Size','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::number('maximum_size',!empty($row)?$row->MAX_SIZE:old('maximum_size'), ['id'=>'maximum_size', 'class' => 'form-control',  'placeholder' => 'Maximum Size','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('maximum_size', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -432,7 +433,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('minimum_budget') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::number('minimum_budget',!empty($row)?$row->MIN_BUDGET:old('minimum_budget'), ['id'=>'minimum_budget','max'=>'', 'data-validation-max-message'=>'Minimum Budget may not be greater than Maximum Budget', 'class' => 'form-control',  'placeholder' => 'Minimum Budget','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::number('minimum_budget',!empty($row)?$row->MIN_BUDGET:old('minimum_budget'), ['id'=>'minimum_budget','max'=>'', 'data-validation-max-message'=>'Minimum Budget may not be greater than Maximum Budget', 'tabIndex' => ++$tabIndex, 'class' => 'form-control',  'placeholder' => 'Minimum Budget','data-validation-required-message' => 'This field is required']) !!}
                                     {!! $errors->first('minimum_budget', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -441,7 +442,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('maximum_budget') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::number('maximum_budget', !empty($row)?$row->MAX_BUDGET:old('maximum_budget'), ['id'=>'maximum_budget', 'class' => 'form-control',  'placeholder' => 'Maximum Budget','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::number('maximum_budget', !empty($row)?$row->MAX_BUDGET:old('maximum_budget'), ['id'=>'maximum_budget', 'class' => 'form-control',  'placeholder' => 'Maximum Budget','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('maximum_budget', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -458,28 +459,28 @@
                             <div class="form-group {!! $errors->has('minimum_budget') ? 'error' : '' !!}">
                                 <div class="controls">
                                     <label for="any">
-                                        {!! Form::checkbox('rooms[]','any',!empty($bedrooms)? in_array('any',$bedrooms)?true:false:old('rooms'),[ 'id' => 'any','class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('rooms[]','any',!empty($bedrooms)? in_array('any',$bedrooms)?true:false:old('rooms'),[ 'id' => 'any','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         Any
                                         <span class="checkmark"></span>
                                     </label>
 
                                     <label for="1bed">
-                                        {!! Form::checkbox('rooms[]','1bed', !empty($bedrooms)? in_array('1bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '1bed','class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('rooms[]','1bed', !empty($bedrooms)? in_array('1bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '1bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         1
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="2bed">
-                                        {!! Form::checkbox('rooms[]','2bed', !empty($bedrooms)? in_array('2bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '2bed','class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('rooms[]','2bed', !empty($bedrooms)? in_array('2bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '2bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         2
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="3bed">
-                                        {!! Form::checkbox('rooms[]','3bed', !empty($bedrooms)? in_array('3bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '3bed','class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('rooms[]','3bed', !empty($bedrooms)? in_array('3bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '3bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         3
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="4plus">
-                                        {!! Form::checkbox('rooms[]','4plus', !empty($bedrooms)? in_array('4plus',$bedrooms)?true:false:old('rooms'),[ 'id' => '4plus' ,'class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('rooms[]','4plus', !empty($bedrooms)? in_array('4plus',$bedrooms)?true:false:old('rooms'),[ 'id' => '4plus' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         4 +
                                         <span class="checkmark"></span>
                                     </label>
@@ -499,24 +500,24 @@
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
                                     <label for="ready">
-                                        {!! Form::checkbox('condition[]','ready', !empty($bedrooms)? in_array('ready',$prop_cond)?true:false:old('condition'),[ 'id' => 'ready' ,'class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('condition[]','ready', !empty($bedrooms)? in_array('ready',$prop_cond)?true:false:old('condition'),[ 'id' => 'ready' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         Ready
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="semi">
-                                        {!! Form::checkbox('condition[]','semi', !empty($bedrooms)? in_array('semi',$prop_cond)?true:false:old('condition'),[ 'id' => 'semi' ,'class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('condition[]','semi', !empty($bedrooms)? in_array('semi',$prop_cond)?true:false:old('condition'),[ 'id' => 'semi' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         Semi Ready
                                         <span class="checkmark"></span>
                                     </label>
 
                                     <label for="ongoing">
-                                        {!! Form::checkbox('condition[]','ongoing', !empty($bedrooms)? in_array('ongoing',$prop_cond)?true:false:old('condition'),[ 'id' => 'ongoing' ,'class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('condition[]','ongoing', !empty($bedrooms)? in_array('ongoing',$prop_cond)?true:false:old('condition'),[ 'id' => 'ongoing' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         Ongoing
                                         <span class="checkmark"></span>
                                     </label>
 
                                     <label for="used">
-                                        {!! Form::checkbox('condition[]','used', !empty($bedrooms)? in_array('used',$prop_cond)?true:false:old('condition'),[ 'id' => 'used' ,'class' =>'form-check-input']) !!}
+                                        {!! Form::checkbox('condition[]','used', !empty($bedrooms)? in_array('used',$prop_cond)?true:false:old('condition'),[ 'id' => 'used' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         Used
                                         <span class="checkmark"></span>
                                     </label>
@@ -535,7 +536,7 @@
                         <div class="col-md-6">
                             <div class="form-group {!! $errors->has('requirement_details') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::textarea('requirement_details', !empty($row)?$row->REQUIREMENT_DETAILS:old('requirement_details'), ['rows'=>'6', 'maxlength'=>'1000', 'data-validation-maxlength-message'=>'Requirement Details may not be greater than 1000 characters', 'id'=>'requirement_details','class' => 'form-control', 'placeholder' => 'Type Here']) !!}
+                                    {!! Form::textarea('requirement_details', !empty($row)?$row->REQUIREMENT_DETAILS:old('requirement_details'), ['rows'=>'6', 'maxlength'=>'1000', 'data-validation-maxlength-message'=>'Requirement Details may not be greater than 1000 characters', 'id'=>'requirement_details','class' => 'form-control', 'placeholder' => 'Type Here', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('requirement_details', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -552,7 +553,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('time') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::time('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::time('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('time', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -584,13 +585,13 @@
                         <div class="col-md-8">
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('alert','daily',!empty($row)? $row->EMAIL_ALERT=='daily'?true:false:old('alert'),[ 'id' => 'daily','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('alert','daily',!empty($row)? $row->EMAIL_ALERT=='daily'?true:false:old('alert'),[ 'id' => 'daily','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('daily','Daily') }}
 
-                                    {!! Form::radio('alert','weekly', !empty($row)? $row->EMAIL_ALERT=='weekly'?true:false:old('alert'),[ 'id' => 'weekly','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('alert','weekly', !empty($row)? $row->EMAIL_ALERT=='weekly'?true:false:old('alert'),[ 'id' => 'weekly','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('weekly','Weekly') }}
 
-                                    {!! Form::radio('alert','monthly', !empty($row)? $row->EMAIL_ALERT=='monthly'?true:false:old('alert'),[ 'id' => 'monthly','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('alert','monthly', !empty($row)? $row->EMAIL_ALERT=='monthly'?true:false:old('alert'),[ 'id' => 'monthly','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('monthly','Monthly') }}
                                     {!! $errors->first('alert', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
@@ -607,10 +608,10 @@
                         <div class="col-md-8">
                             <div class="form-group {!! $errors->has('v_status') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('v_status','1',!empty($row)? $row->IS_VERIFIED==1?true:false:old('alert'),[ 'id' => 'verified','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('v_status','1',!empty($row)? $row->IS_VERIFIED==1?true:false:old('alert'),[ 'id' => 'verified','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('verified','Daily') }}
 
-                                    {!! Form::radio('v_status','0', !empty($row)? $row->IS_VERIFIED==0?true:false:old('alert'),[ 'id' => 'not_verified','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('v_status','0', !empty($row)? $row->IS_VERIFIED==0?true:false:old('alert'),[ 'id' => 'not_verified','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('not_verified','Not Verified') }}
 
                                     {!! $errors->first('alert', '<label class="help-block text-danger">:message</label>') !!}
@@ -684,7 +685,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('acc_status') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('acc_status', $user_status, $data->STATUS ?? null,['class'=>'form-control','id'=>'acc_status', 'placeholder'=>'Select','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::select('acc_status', $user_status, $data->STATUS ?? null,['class'=>'form-control','id'=>'acc_status', 'placeholder'=>'Select','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('acc_status', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -720,13 +721,13 @@
                         <div class="col-md-6">
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('property_for','sell', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('property_for','sell', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('sell','Individual') }}
                                     &emsp;
-                                    {!! Form::radio('property_for','rent', old('property_for'),[ 'id' => 'rent']) !!}
+                                    {!! Form::radio('property_for','rent', old('property_for'),[ 'id' => 'rent', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('rent','Developer') }}
                                     &emsp;
-                                    {!! Form::radio('property_for','roommate', old('property_for'),[ 'id' => 'roommate']) !!}
+                                    {!! Form::radio('property_for','roommate', old('property_for'),[ 'id' => 'roommate', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('roommate','Agency') }}
 
                                     {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
@@ -744,7 +745,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('area', [],null,array('class'=>'form-control', 'placeholder'=>'Search & Select','data-validation-required-message' => 'This field is required')) !!}
+                                    {!! Form::select('area', [],null,array('class'=>'form-control', 'placeholder'=>'Search & Select','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex)) !!}
                                     {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>

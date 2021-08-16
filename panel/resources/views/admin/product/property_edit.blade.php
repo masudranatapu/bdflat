@@ -79,6 +79,7 @@
     $user_type = Config::get('static_array.user_type') ?? [];
     $property_status = Config::get('static_array.property_status') ?? [];
     $payment_status = Config::get('static_array.payment_status') ?? [];
+    $tabIndex = 0;
 
 @endphp
 
@@ -114,7 +115,7 @@
                                             <p>Owner Name: {{ $product->getUser->NAME }}</p>
                                             <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
                                             <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
-                                            <p>Expaire
+                                            <p>Expire
                                                 Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
                                                     Not set yet @endif </p>
                                         </div>
@@ -147,7 +148,7 @@
                                                     class="form-group {!! $errors->has('propertyType') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('propertyType','Property Type',['class' => 'label-title']) }}
-                                                        {!! Form::select('propertyType',$property_types, $product->F_PROPERTY_TYPE_NO, ['id' => 'propertyType', 'class'=>'form-control propertyType', 'placeholder'=>'Select Property Type']) !!}
+                                                        {!! Form::select('propertyType',$property_types, $product->F_PROPERTY_TYPE_NO, ['id' => 'propertyType', 'class'=>'form-control propertyType', 'placeholder'=>'Select Property Type', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('propertyType', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -157,7 +158,7 @@
                                                 <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {!! Form::label('city','City <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                        {!! Form::select('city', $cities,$product->F_CITY_NO,['class'=>'form-control city','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select City']) !!}
+                                                        {!! Form::select('city', $cities,$product->F_CITY_NO,['class'=>'form-control city','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select City', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -167,7 +168,7 @@
                                                 <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {!! Form::label('area','Area (Based on City) <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                        {!! Form::select('area', $area, $product->F_AREA_NO, ['class'=>'form-control area','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Area']) !!}
+                                                        {!! Form::select('area', $area, $product->F_AREA_NO, ['class'=>'form-control area','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Area', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -177,7 +178,7 @@
                                                 <div class="form-group {!! $errors->has('address') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('address','Address <span>*</span>',['class' => 'label-title'],false) }}
-                                                        {!! Form::text('address', $product->ADDRESS, [ 'class' => 'form-control address','data-validation-required-message' => 'This field is required', 'placeholder' => 'Address']) !!}
+                                                        {!! Form::text('address', $product->ADDRESS, [ 'class' => 'form-control address','data-validation-required-message' => 'This field is required', 'placeholder' => 'Address', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('address', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -188,7 +189,7 @@
                                                     class="form-group {!! $errors->has('condition') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {!! Form::label('condition','Condition <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                        {!! Form::select('condition', $property_conditions,$product->F_PROPERTY_CONDITION,array('class'=>'form-control condition','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Condition')) !!}
+                                                        {!! Form::select('condition', $property_conditions,$product->F_PROPERTY_CONDITION,array('class'=>'form-control condition','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex, 'placeholder'=>'Select Condition')) !!}
                                                         {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -198,7 +199,7 @@
                                                 <div class="form-group {!! $errors->has('ad_title') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('ad_title','Title for your ad <span>*</span>',['class' => 'label-title '],false) }}
-                                                        {!! Form::text('ad_title', $product->TITLE, [ 'class' => 'form-control ad_title','data-validation-required-message' => 'This field is required', 'placeholder' => 'Type here']) !!}
+                                                        {!! Form::text('ad_title', $product->TITLE, [ 'class' => 'form-control ad_title','data-validation-required-message' => 'This field is required', 'placeholder' => 'Type here', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('ad_title', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -219,7 +220,7 @@
                                                                 <div
                                                                     class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
                                                                     <div class="controls">
-                                                                        {!! Form::number('size[]', $item->PROPERTY_SIZE, [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
+                                                                        {!! Form::number('size[]', $item->PROPERTY_SIZE, [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                                                         {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
                                                                     </div>
                                                                 </div>
@@ -229,7 +230,7 @@
                                                                 <div
                                                                     class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                                                     <div class="controls">
-                                                                        {!! Form::select('bedroom[]', $bed_room ?? [], $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
+                                                                        {!! Form::select('bedroom[]', $bed_room ?? [], $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom', 'tabIndex' => ++$tabIndex)) !!}
                                                                         {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                                                     </div>
                                                                 </div>
@@ -239,7 +240,7 @@
                                                                 <div
                                                                     class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                                                     <div class="controls">
-                                                                        {!! Form::select('bathroom[]', $bath_room ?? [], $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
+                                                                        {!! Form::select('bathroom[]', $bath_room ?? [], $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom', 'tabIndex' => ++$tabIndex)) !!}
                                                                         {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                                                     </div>
                                                                 </div>
@@ -249,7 +250,7 @@
                                                                 <div
                                                                     class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
                                                                     <div class="controls">
-                                                                        {!! Form::number('price[]', $item->TOTAL_PRICE, ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
+                                                                        {!! Form::number('price[]', $item->TOTAL_PRICE, ['class' => 'form-control',  'placeholder' => 'Price', 'tabIndex' => ++$tabIndex,'data-validation-required-message' => 'This field is required']) !!}
                                                                         {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
                                                                     </div>
                                                                 </div>
@@ -296,7 +297,7 @@
                                                 <div class="form-group {!! $errors->has('floor') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('floor','Total Number of Floor',['class' => 'label-title '],false) }}
-                                                        {!! Form::select('floor', $floor_lists,$product->TOTAL_FLOORS,array('class'=>'form-control floor','placeholder'=>'Select Total Floor')) !!}
+                                                        {!! Form::select('floor', $floor_lists,$product->TOTAL_FLOORS,array('class'=>'form-control floor','placeholder'=>'Select Total Floor', 'tabIndex' => ++$tabIndex)) !!}
                                                         {!! $errors->first('floor', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
 
@@ -307,10 +308,10 @@
                                                     class="form-group {!! $errors->has('floorChek') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         <label class="label-title">Floor available</label>
-                                                        {!! Form::radio('floorChek','ground',null /*$row->PROPERTY_FOR=='sell'?true:false*/,[ 'id' => 'ground','checked'=>'checked']) !!}
+                                                        {!! Form::radio('floorChek','ground',null /*$row->PROPERTY_FOR=='sell'?true:false*/,[ 'id' => 'ground','checked'=>'checked', 'tabIndex' => ++$tabIndex]) !!}
                                                         {{ Form::label('ground','Ground Floor') }}
 
-                                                        {!! Form::radio('floorChek','1arFloor',null /*$row->PROPERTY_FOR=='sell'?true:false*/,[ 'id' => '1arFloor']) !!}
+                                                        {!! Form::radio('floorChek','1arFloor',null /*$row->PROPERTY_FOR=='sell'?true:false*/,[ 'id' => '1arFloor', 'tabIndex' => ++$tabIndex]) !!}
                                                         {{ Form::label('1arFloor','1st Floor') }}
 
                                                         {!! $errors->first('floorChek', '<label class="help-block text-danger">:message</label>') !!}
@@ -321,7 +322,7 @@
                                                 <div class="form-group {!! $errors->has('floor') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('facing','Facing',['class' => 'label-title '],false) }}
-                                                        {!! Form::select('facing',$property_facing,$property_additional_info->FACING,array('class'=>'form-control facing','placeholder'=>'Select Facing')) !!}
+                                                        {!! Form::select('facing',$property_facing,$property_additional_info->FACING,array('class'=>'form-control facing','placeholder'=>'Select Facing', 'tabIndex' => ++$tabIndex)) !!}
                                                         {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -330,7 +331,7 @@
                                                 <div class="form-group">
                                                     {{ Form::label('datepicker','Handover Date',['class' => 'label-title']) }}
                                                     <div class="controls">
-                                                        {!! Form::text('handover_date', date('d-m-Y', strtotime($property_additional_info->HANDOVER_DATE)), [ 'id'=>'datepicker','class' => 'form-control datetimepicker','placeholder' => 'Handover date','autocomplete' => 'off', 'tabindex' => 1]) !!}
+                                                        {!! Form::text('handover_date', date('d-m-Y', strtotime($property_additional_info->HANDOVER_DATE)), [ 'id'=>'datepicker','class' => 'form-control datetimepicker','placeholder' => 'Handover date','autocomplete' => 'off', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('handover_date', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -340,7 +341,7 @@
                                                     {{ Form::label('description','Descriptions',['class' => 'label-title']) }}
                                                     {{--                    <textarea class="form-control" id="description"></textarea>--}}
                                                     <div class="controls">
-                                                        {!! Form::textarea('description',$property_additional_info->DESCRIPTION, [ 'id'=>'description','class' => 'form-control', 'placeholder' => 'Type here']) !!}
+                                                        {!! Form::textarea('description',$property_additional_info->DESCRIPTION, [ 'id'=>'description','class' => 'form-control', 'placeholder' => 'Type here', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('description', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -358,7 +359,7 @@
                                                         <div
                                                             class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                                             <div class="controls">
-                                                                {!! Form::checkbox('features[]',$key, in_array($key,$features),[ 'id' => 'features'.$key]) !!}
+                                                                {!! Form::checkbox('features[]',$key, in_array($key,$features),[ 'id' => 'features'.$key, 'tabIndex' => ++$tabIndex]) !!}
                                                                 {{ Form::label('features'.$key,$listing_feature) }}
                                                             </div>
                                                         </div>
@@ -376,7 +377,7 @@
                                                         <div
                                                             class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
                                                             <div class="controls">
-                                                                {!! Form::checkbox('nearby[]',$key, in_array($key,$near),[ 'id' => 'nearby'.$key]) !!}
+                                                                {!! Form::checkbox('nearby[]',$key, in_array($key,$near),[ 'id' => 'nearby'.$key, 'tabIndex' => ++$tabIndex]) !!}
                                                                 {{ Form::label('nearby'.$key,$item) }}
                                                             </div>
                                                         </div>
@@ -391,7 +392,7 @@
                                                     <h3>Property Location on map</h3>
                                                 </div>
                                                 <div class="controls">
-                                                    {!! Form::text('map_url', $property_additional_info->LOCATION_MAP, [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL']) !!}
+                                                    {!! Form::text('map_url', $property_additional_info->LOCATION_MAP, [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL', 'tabIndex' => ++$tabIndex]) !!}
                                                     {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                                 <div class="map">
@@ -434,7 +435,7 @@
                                                 <div class="form-group">
                                                     {{ Form::label('videoURL','Video:',['class' => 'label-title']) }}
                                                     <div class="controls">
-                                                        {!! Form::text('videoURL',$property_additional_info->VIDEO_CODE, [ 'id'=>'videoURL','class' => 'form-control','placeholder'=>'Paste your youtube video URL']) !!}
+                                                        {!! Form::text('videoURL',$property_additional_info->VIDEO_CODE, [ 'id'=>'videoURL','class' => 'form-control','placeholder'=>'Paste your youtube video URL', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('videoURL', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -449,14 +450,14 @@
                                                     class="form-group {!! $errors->has('contact_person') ? 'error' : '' !!}">
                                                     {{ Form::label('contact_person','Contact Person',['class' => 'label-title']) }}
                                                     <div class="controls">
-                                                        {!! Form::text('contact_person',$product->CONTACT_PERSON1, [ 'id'=>'contact_person','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
+                                                        {!! Form::text('contact_person',$product->CONTACT_PERSON1, [ 'id'=>'contact_person','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('contact_person', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
                                                     {{ Form::label('mobile','Mobile',['class' => 'label-title']) }}
                                                     <div class="controls">
-                                                        {!! Form::number('mobile',$product->MOBILE1, [ 'id'=>'mobile','class' => 'form-control','data-validation-required-message' => 'This field is required']) !!}
+                                                        {!! Form::number('mobile',$product->MOBILE1, [ 'id'=>'mobile','class' => 'form-control','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -466,7 +467,7 @@
                                                     <div
                                                         class="form-group {!! $errors->has('contact_person_2') ? 'error' : '' !!}">
                                                         <div class="controls">
-                                                            {!! Form::text('contact_person_2', old('contact_person_2', $product->CONTACT_PERSON2), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Contact person name','data-validation-required-message' => 'This field is required']) !!}
+                                                            {!! Form::text('contact_person_2', old('contact_person_2', $product->CONTACT_PERSON2), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Contact person name','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                                             {!! $errors->first('contact_person_2', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
 
@@ -477,7 +478,7 @@
                                                     <div
                                                         class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
                                                         <div class="controls">
-                                                            {!! Form::number('mobile_2', old('mobile_2', $product->MOBILE2), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Contact person mobile number','data-validation-required-message' => 'This field is required']) !!}
+                                                            {!! Form::number('mobile_2', old('mobile_2', $product->MOBILE2), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Contact person mobile number','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                                             {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
@@ -493,16 +494,16 @@
                                                     <label class="label-title">Title</label>
                                                     <input type="text" name="meta_title" class="form-control seoTitle"
                                                            value="{{ $product->listingSEO->META_TITLE ?? '' }}"
-                                                           id="seoTitle">
+                                                           id="seoTitle" tabindex="{{ ++$tabIndex}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">Meta descriptions</label>
-                                                    <textarea name="meta_description" class="form-control"
+                                                    <textarea name="meta_description" class="form-control" tabindex="{{ ++$tabIndex}}"
                                                               id="metaDescr">{{ $product->listingSEO->META_DESCRIPTION ?? '' }}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">URl Slug</label>
-                                                    <input type="text" class="form-control url_slug"
+                                                    <input type="text" class="form-control url_slug" tabindex="{{ ++$tabIndex}}"
                                                            {{ $product->URL_SLUG_LOCKED ? 'readonly' : '' }} id="url_slug"
                                                            value="{{ $product->listingSEO && $product->listingSEO->META_URL ? $product->listingSEO->META_URL : $product->URL_SLUG }}"
                                                            name="meta_url">
@@ -535,7 +536,7 @@
                                                 <div class="form-group listingType">
                                                     <div class="controls">
                                                         @foreach($property_listing_types as $key => $item)
-                                                            {!! Form::radio('listing_type',$key, $product->F_LISTING_TYPE==$key?true:false,[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required']) !!}
+                                                            {!! Form::radio('listing_type',$key, $product->F_LISTING_TYPE==$key?true:false,[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                                             {{ Form::label('listing_type'.$key,$item) }}
                                                         @endforeach
                                                         {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
@@ -553,7 +554,7 @@
                                                         @foreach ( $property_status as $k => $st )
                                                             <input type="radio"
                                                                    {{ $product->STATUS == $k ? 'checked' : '' }} name="status"
-                                                                   value="{{ $k }}"
+                                                                   value="{{ $k }}" tabindex="{{ ++$tabIndex}}"
                                                                    id="prop_status_{{ $k }}">  <label
                                                                 for="prop_status_{{ $k }}"> {{ ucwords($st) }}</label>
                                                         @endforeach
@@ -573,25 +574,25 @@
                                                         <h5>Billin amount: 25 tk</h5>
                                                     </div>
                                                     <input type="radio" checked="" name="billing" value="pending"
-                                                           id="pending">
+                                                           id="pending" tabindex="{{ ++$tabIndex}}">
                                                     <label for="pending">Due</label>
-                                                    <input type="radio" name="billing" value="paid" id="paid">
+                                                    <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing" value="paid" id="paid">
                                                     <label for="paid">Paid</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-switch">
-                                                        <input type="checkbox" checked="" class="custom-control-input"
+                                                        <input type="checkbox" name="is_verified" {{ $product->IS_VERIFIED ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}" class="custom-control-input"
                                                                id="customSwitch1">
                                                         <label class="custom-control-label" for="customSwitch1">Verified
                                                             BDF</label>
                                                     </div>
                                                     <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
+                                                        <input type="checkbox" name="ci_payment" {{ $product->CI_PAYMENT ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}" class="custom-control-input"
                                                                id="customSwitch2">
                                                         <label class="custom-control-label" for="customSwitch2">Need
-                                                            payment to view CI</label>
+                                                            payment to view</label>
                                                     </div>
                                                 </div>
                                             </div>

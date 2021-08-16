@@ -16,7 +16,9 @@
 <!--push from page-->
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-@endpush('custom_css')
+@endpush
+
+@php($tabIndex = 0)
 
 @section('content')
     <div class="row">
@@ -43,7 +45,7 @@
                                     <div class="form-group {!! $errors->has('payment_method_name') ? 'error' : '' !!}">
                                         <label>Payment Method Name<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('payment_method_name', $data['rows']->NAME,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Payment Method Name', 'tabindex' => 1 ]) !!}
+                                            {!! Form::text('payment_method_name', $data['rows']->NAME,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Payment Method Name', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('payment_method_name', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -55,7 +57,7 @@
                                     <div class="form-group {!! $errors->has('status') ? 'status' : '' !!}">
                                         <label>Status<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::select('status',['1'=>'Active','0'=>'Inactive'],$data['rows']->IS_ACTIVE,[ 'class' => 'form-control mb-1','data-validation-required-message' => 'This field is required', 'placeholder' => 'Select Status' ]) !!}
+                                            {!! Form::select('status',['1'=>'Active','0'=>'Inactive'],$data['rows']->IS_ACTIVE,[ 'class' => 'form-control mb-1','data-validation-required-message' => 'This field is required', 'placeholder' => 'Select Status', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -64,7 +66,7 @@
                         </div>
 
                         <div class="form-actions mt-10 mb-3">
-                            <a href="{{route('admin.payment_method')}}">
+                            <a href="{{route('admin.payment_method.list')}}">
                                 <button type="button" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i> Cancel
                                 </button>

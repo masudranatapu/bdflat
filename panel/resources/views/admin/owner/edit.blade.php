@@ -41,6 +41,7 @@
     $user_type      = Config::get('static_array.user_type');
     $user_status    = Config::get('static_array.user_status');
     $owner          = $data['owner'] ?? [];
+    $tabIndex = 0;
 @endphp
 
 @section('content')

@@ -35,7 +35,9 @@
             right: 20px;
         }
     </style>
-@endpush('custom_css')
+@endpush
+
+@php($tabIndex = 0)
 
 @section('content')
     <div class="row">
@@ -62,7 +64,7 @@
                                     <div class="form-group {!! $errors->has('name') ? 'error' : '' !!}">
                                         <label>Agent Name<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('name', null,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Agent Name', 'tabindex' => 1 ]) !!}
+                                            {!! Form::text('name', null,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Agent Name', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -73,7 +75,7 @@
                                     <div class="form-group {!! $errors->has('phone') ? 'error' : '' !!}">
                                         <label>Agent Mobile Number<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('phone', null,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Agent Mobile Number', 'tabindex' => 1 ]) !!}
+                                            {!! Form::text('phone', null,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Agent Mobile Number', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('phone', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -84,7 +86,7 @@
                                     <div class="form-group {!! $errors->has('email') ? 'error' : '' !!}">
                                         <label>Agent Email Address</label>
                                         <div class="controls">
-                                            {!! Form::text('email', null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Agent Email Address', 'tabindex' => 1 ]) !!}
+                                            {!! Form::text('email', null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Agent Email Address', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -96,7 +98,7 @@
                                     <div class="form-group {!! $errors->has('payment_details') ? 'error' : '' !!}">
                                         <label>Payment Method Details</label>
                                         <div class="controls">
-                                            {!! Form::text('payment_details', null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Payment Method Details', 'tabindex' => 1 ]) !!}
+                                            {!! Form::text('payment_details', null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Payment Method Details', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('payment_details', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -108,7 +110,7 @@
                                     <div class="form-group {!! $errors->has('pass') ? 'error' : '' !!}">
                                         <label>@lang('agent.password')<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::password('pass',[ 'class' => 'form-control mb-1', 'placeholder' => 'Enter Password', 'tabindex' => 1 ]) !!}
+                                            {!! Form::password('pass',[ 'class' => 'form-control mb-1', 'placeholder' => 'Enter Password', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('pass', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -120,7 +122,7 @@
                                     <div class="form-group {!! $errors->has('payment_method') ? 'status' : '' !!}">
                                         <label>Payment Methods<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::select('payment_method',$payment,null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Select Method' ]) !!}
+                                            {!! Form::select('payment_method',$payment,null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Select Method', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('payment_method', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -132,7 +134,7 @@
                                     <div class="form-group {!! $errors->has('payment_system') ? 'status' : '' !!}">
                                         <label>Payment System<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::textarea('payment_system',null,[ 'class' => 'form-control mb-1', 'rows'=>'4', 'placeholder' => 'Type Here' ]) !!}
+                                            {!! Form::textarea('payment_system',null,[ 'class' => 'form-control mb-1', 'rows'=>'4', 'placeholder' => 'Type Here', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('payment_system', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -174,7 +176,7 @@
                                     <div class="form-group {!! $errors->has('status') ? 'status' : '' !!}">
                                         <label>Status<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::select('status',['1'=>'Active','0'=>'Inactive'],null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Select Status' ]) !!}
+                                            {!! Form::select('status',['1'=>'Active','0'=>'Inactive'],null,[ 'class' => 'form-control mb-1', 'placeholder' => 'Select Status', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

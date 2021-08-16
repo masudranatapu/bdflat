@@ -18,7 +18,7 @@ class PropertyConditionAbstract implements PropertyConditionInterface
 
     public function getPropertyConditions($limit = 2000): object
     {
-        $conditions = PropertyCondition::paginate($limit);
+        $conditions = PropertyCondition::orderBy('ORDER_ID', 'DESC')->paginate($limit);
         return $this->formatResponse(true, '', 'admin.property-condition', $conditions);
     }
 

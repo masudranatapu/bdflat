@@ -164,6 +164,8 @@ class ProductAbstract implements ProductInterface
             $list->MODIFIED_BY = Auth::id();
             $list->MODIFIED_AT = Carbon::now();
             $list->URL_SLUG_LOCKED = 1;
+            $list->IS_VERIFIED = $request->is_verified ? 1 : 0;
+            $list->CI_PAYMENT = $request->ci_payment ? 1 : 0;
             $list->update();
 
 //            for store listing variants

@@ -467,7 +467,7 @@
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Floor</span></a></li>
                 <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Facing</span></a></li>
                 <li class="@yield('listing_price')"><a class="menu-item" href="{{route('admin.listing_price.list')}}"><i></i><span data-i18n="Basic">Pricing</span></a></li>
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">City List</span></a></li>
+{{--                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">City List</span></a></li>--}}
 
                 @if(hasAccessAbility('view_address_type', $roles))
                     <li class="@yield('address_type')"><a class="menu-item" href="{{route('admin.address_type.list')}}"><i></i><span data-i18n="@lang('left_menu.address_type')">@lang('left_menu.address_type')</span></a>

@@ -3,13 +3,13 @@
         <div class="form-group">
             {!! Form::label('user_type', 'User Type *', ['class' => 'lable-title']) !!}
             <div class="controls">
-                {!! Form::radio('user_type','2', old('user_type') ? $owner->USER_TYPE == old('user_type') : $owner->USER_TYPE == 2,[ 'id' => 'owner']) !!}
+                {!! Form::radio('user_type','2', old('user_type') ? $owner->USER_TYPE == old('user_type') : $owner->USER_TYPE == 2,[ 'id' => 'owner', 'tabIndex' => ++$tabIndex]) !!}
                 {{ Form::label('owner','Owner') }}
                 &emsp;
-                {!! Form::radio('user_type','3', old('user_type') ? $owner->USER_TYPE == old('user_type') : $owner->USER_TYPE == 3,[ 'id' => 'builder']) !!}
+                {!! Form::radio('user_type','3', old('user_type') ? $owner->USER_TYPE == old('user_type') : $owner->USER_TYPE == 3,[ 'id' => 'builder', 'tabIndex' => ++$tabIndex]) !!}
                 {{ Form::label('builder','Builder') }}
                 &emsp;
-                {!! Form::radio('user_type','4', old('user_type') ? $owner->USER_TYPE == old('user_type') : $owner->USER_TYPE == 4,[ 'id' => 'agency']) !!}
+                {!! Form::radio('user_type','4', old('user_type') ? $owner->USER_TYPE == old('user_type') : $owner->USER_TYPE == 4,[ 'id' => 'agency', 'tabIndex' => ++$tabIndex]) !!}
                 {{ Form::label('agency','Agency') }}
 
                 {!! $errors->first('user_type', '<label class="help-block text-danger">:message</label>') !!}
@@ -20,7 +20,7 @@
         <div class="form-group">
             {!! Form::label('name', 'Name *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::text('name', old('name', $owner->NAME), ['class' => 'form-control', 'placeholder' => 'Name', 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::text('name', old('name', $owner->NAME), ['class' => 'form-control', 'placeholder' => 'Name', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             {!! Form::label('email', 'Email *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::email('email', old('email', $owner->EMAIL), ['class' => 'form-control', 'placeholder' => 'Email', 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::email('email', old('email', $owner->EMAIL), ['class' => 'form-control', 'placeholder' => 'Email', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="form-group">
             {!! Form::label('mobile_no', 'Phone *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::tel('mobile_no', old('mobile_no', $owner->MOBILE_NO), ['class' => 'form-control', 'placeholder' => 'Phone', 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::tel('mobile_no', old('mobile_no', $owner->MOBILE_NO), ['class' => 'form-control', 'placeholder' => 'Phone', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('mobile_no', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
@@ -47,7 +47,7 @@
         <div class="form-group">
             {!! Form::label('listing_limit', 'Listing Limit *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::number('listing_limit', old('listing_limit', $owner->LISTING_LIMIT), ['class' => 'form-control', 'placeholder' => 'Listing Limit', 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::number('listing_limit', old('listing_limit', $owner->LISTING_LIMIT), ['class' => 'form-control', 'placeholder' => 'Listing Limit', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('listing_limit', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>

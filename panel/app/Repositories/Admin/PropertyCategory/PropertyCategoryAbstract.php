@@ -16,7 +16,7 @@ class PropertyCategoryAbstract implements PropertyCategoryInterface
     }
     public function getPaginatedList($request, int $per_page = 20)
     {
-        $data = $this->category->where('IS_ACTIVE',1)->orderBy('PROPERTY_TYPE', 'ASC')->get();
+        $data = $this->category->where('IS_ACTIVE',1)->orderBy('ORDER_ID', 'DESC')->get();
         return $this->formatResponse(true, '', 'admin.property-category.index', $data);
     }
     public function getSlugByText($txt){

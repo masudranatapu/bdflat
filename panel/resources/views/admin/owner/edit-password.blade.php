@@ -37,7 +37,7 @@
                     {!! Form::label('password', 'Password *', false) !!}
                     <div class="form-group">
                         <div class="controls">
-                            {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'placeholder' => 'Password']) !!}
+                            {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'placeholder' => 'Password', 'tabIndex' => 1]) !!}
                             {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
                         </div>
                     </div>

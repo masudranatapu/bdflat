@@ -18,7 +18,7 @@ class CityAbstract implements CityInterface
 
     public function getCities($limit = 2000): object
     {
-        $cities = City::all()->take($limit);
+        $cities = City::orderBy('ORDER_ID', 'DESC')->paginate($limit);
         return $this->formatResponse(true, '', 'admin.city.list', $cities);
     }
 
