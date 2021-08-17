@@ -34,24 +34,24 @@ $roles = userRolePermissionArray();
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>SL</th>
+                                    <th class="text-center">SL</th>
                                     <th>Title</th>
-                                    <th>Banner</th>
-                                    <th>Is Active</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Banner</th>
+                                    <th class="text-center">Is Active</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(!empty($rows) && count($rows)>0)
                                 @foreach($rows as $key=>$row)
                                 <tr>
-                                    <td>{{$loop->index + 1}}</td>
+                                    <td class="text-center">{{$loop->index + 1}}</td>
                                     <td>{{ $row->NAME }}</td>
-                                    <td><img src="{{ asset($row->BANNER) }}" alt="" width="100px;" class="img-fluid"></td>
-                                    <td>
+                                    <td class="text-center"><img src="{{ asset($row->BANNER) }}" alt="" width="100px;" class="img-fluid"></td>
+                                    <td class="text-center">
                                         <input type="checkbox" class="is_feature" data-id="{{$row->PK_NO}}" @if ($row->IS_ACTIVE) checked @endif>
                                     </td>
-                                      <td style="width: 140px;">
+                                      <td class="text-center" style="width: 140px;">
                                         @if(hasAccessAbility('edit_blog', $roles))
                                         <a href="{{ route('web.blog.category.edit', [$row->PK_NO]) }}" class="btn btn-xs btn-info" title="EDIT"><i class="la la-edit"></i></a>
                                         @endif

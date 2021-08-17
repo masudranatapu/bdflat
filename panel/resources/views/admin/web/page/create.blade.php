@@ -4,8 +4,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css')}}">
 @endpush('custom_css')
-@section('pages','open')
-@section('pages','active')
+@section('web','open')
+@section('web_page','active')
 @section('title') Page @endsection
 @section('page-name') Create Page @endsection
 @section('breadcrumb')

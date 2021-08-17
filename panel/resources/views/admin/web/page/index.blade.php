@@ -33,24 +33,24 @@ Page List
                   <table class="table table-bordered">
                      <thead>
                         <tr>
-                           <th>SL</th>
+                           <th class="text-center">SL</th>
                            <th>Title</th>
-                           <th>Feature Image</th>
-                           <th>Is Acive</th>
-                           <th>Action</th>
+                           <th class="text-center">Feature Image</th>
+                           <th class="text-center">Is Active</th>
+                           <th class="text-center">Action</th>
                         </tr>
                      </thead>
                      <tbody>
                         @if(!empty($rows) && count($rows)>0)
                         @foreach($rows as $key=>$row)
                         <tr>
-                           <td>{{$loop->index + 1}}</td>
+                           <td class="text-center">{{$loop->index + 1}}</td>
                            <td>{{ $row->TITLE }}</td>
-                           <td><img src="{{ asset($row->FEATURE_IMAGE) }}" alt="" width="100px;" class="img-fluid"></td>
-                           <td>
-                              <input type="checkbox" class="is_active" data-id="{{$row->PK_NO}}" @if ($row->IS_ACTIVE) checked @endif>
+                           <td class="text-center"><img src="{{ asset($row->FEATURE_IMAGE) }}" alt="" width="100px;" class="img-fluid"></td>
+                           <td class="text-center">
+                              <input type="checkbox" readonly class="is_active" data-id="{{$row->PK_NO}}" @if ($row->IS_ACTIVE) checked @endif>
                            </td>
-                           <td style="width: 140px;">
+                           <td class="text-center" style="width: 140px;">
                               @if(hasAccessAbility('edit_page', $roles))
                               <a href="{{ route('web.page.edit', [$row->PK_NO]) }}" class="btn btn-xs btn-info" title="EDIT"><i class="la la-edit"></i></a>
                               @endif

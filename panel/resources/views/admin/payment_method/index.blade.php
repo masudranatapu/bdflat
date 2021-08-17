@@ -33,11 +33,11 @@ $roles = userRolePermissionArray();
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>SL</th>
-                                    <th>Code</th>
+                                    <th class="text-center">SL</th>
+                                    <th class="text-center">Code</th>
                                     <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -45,11 +45,11 @@ $roles = userRolePermissionArray();
                                 @if(isset($data['rows']) && count($data['rows']) > 0 )
                                     @foreach( $data['rows'] as $key => $row )
                                         <tr>
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $row->CODE }}</td>
+                                            <td class="text-center">{{ $key+1 }}</td>
+                                            <td class="text-center">{{ $row->CODE }}</td>
                                             <td>{{ $row->NAME }}</td>
-                                            <td>{{ $row->IS_ACTIVE == 1 ? 'Active' : 'Inactive' }}</td>
-                                            <td>
+                                            <td class="text-center">{{ $row->IS_ACTIVE == 1 ? 'Active' : 'Inactive' }}</td>
+                                            <td class="text-center">
                                                 <a href="{{ route('admin.payment_method.edit',['id' => $row->PK_NO]) }}">Edit</a>
                                             </td>
                                         </tr>
