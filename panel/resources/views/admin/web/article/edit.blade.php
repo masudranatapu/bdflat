@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css')}}">
 @endpush('custom_css')
 @section('article','open')
-@section('article','active')
+@section('blog-article','active')
 @section('title') article @endsection
 @section('page-name') Create article @endsection
 @section('breadcrumb')
@@ -152,7 +152,7 @@
                      </div>
                      <div class="col-md-12">
                         <div class="form-actions text-center">
-                           <a href="{{route('admin.product.list')}}" class="btn btn-warning mr-1"><i class="ft-x"></i> {{ trans('form.btn_cancle') }}</a>
+                           <a href="{{route('web.blog.article')}}" class="btn btn-warning mr-1"><i class="ft-x"></i> {{ trans('form.btn_cancle') }}</a>
                            <button type="submit" class="btn bg-primary bg-darken-1 text-white">
                            <i class="la la-check-square-o"></i> {{ trans('form.btn_save') }} </button>
                         </div>

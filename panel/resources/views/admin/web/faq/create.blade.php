@@ -3,7 +3,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css')}}">
 @endpush('custom_css')
-@section('faq','open')
 @section('faq','active')
 @section('title') faq @endsection
 @section('page-name') Create faq @endsection

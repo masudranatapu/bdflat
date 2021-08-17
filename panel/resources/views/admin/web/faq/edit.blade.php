@@ -2,7 +2,6 @@
 <!--push from page-->
 @push('custom_css')
 @endpush('custom_css')
-@section('faq','open')
 @section('faq','active')
 @section('title') faq @endsection
 @section('page-name') Edit faq @endsection
