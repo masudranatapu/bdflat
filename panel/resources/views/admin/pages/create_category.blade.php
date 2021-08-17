@@ -37,7 +37,7 @@
 @section('content')
     <div class="content-body min-height">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="card card-success">
                     <div class="card-content">
                         <div class="card-header">
