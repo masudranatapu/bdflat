@@ -35,6 +35,7 @@
                 <div class="card card-success">
                     <div class="card-content">
                         <div class="card-header">
+                            <a href="{{ route('admin.pages.create') }}" class="text-warning font-weight-bold"><i class="fa fa-plus"></i> Add New</a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
                                     <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
@@ -47,27 +48,8 @@
                         <div class="card-body">
                             <div class="row  mb-2">
                                 <div class="col-12">
-                                    <div class="row mb-1">
-                                        <div class="col-2">
-                                            <form action="">
-                                                <div style="position: relative">
-                                                    <i class="fa fa-search"
-                                                       style="position: absolute;top: 9px;left: 10px"></i>
-                                                    <input type="text" class="form-control" name="search"
-                                                           placeholder="Search"
-                                                           style="border-radius: 25px !important;padding-left: 28px;">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-2 offset-8 text-right" style="padding-top: 10px">
-                                            <a href="{{ route('admin.pages.create') }}"
-                                               class="text-warning font-weight-bold"><i class="fa fa-plus"></i> Add New</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table table-striped text-center table-sm table-bordered">
+                                        <table class="table table-striped table-sm table-bordered alt-pagination">
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
