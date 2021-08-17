@@ -4,6 +4,7 @@ namespace App\Repositories\Admin\Owner;
 
 use App\Models\OwnerInfo;
 use App\Models\PaymentCustomer;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\Owner;
@@ -147,6 +148,17 @@ class OwnerAbstract implements OwnerInterface
         return $this->formatResponse(true, '', 'admin.owner.payment', $payments);
     }
 
+    public function getCustomerTxn($id): object
+    {
+        try {
+            $data = Transaction::with(['payment'])->where('F_CUSTOMER_NO', $id)->get();
+        } catch (\Throwable $th) {
+            return $this->formatResponse(false, 'Data not found', 'admin.owner.list');
+        }
+        return $this->formatResponse(true, 'Payment list found successfully !', 'admin.owner.list', $data);
+
+    }
+
     public function storePayment($request, int $id)
     {
         $status = false;
@@ -173,6 +185,44 @@ class OwnerAbstract implements OwnerInterface
 
         DB::commit();
         return $this->formatResponse($status, $msg, 'admin.owner.payment');
+    }
+
+    public function postRecharge($request, int $id): object
+    {
+        $status = false;
+        $msg = 'Recharge not successful!';
+
+        DB::beginTransaction();
+        try {
+            $payment = new PaymentCustomer();
+            $payment->F_CUSTOMER_NO = $id;
+            $payment->AMOUNT = $request->amount;
+            $payment->F_ACC_PAYMENT_BANK_NO = $request->payment_account ?? 4;
+            $payment->PAYMENT_CONFIRMED_STATUS = 1;
+            $payment->PAYMENT_NOTE = $request->note;
+            $payment->PAYMENT_DATE = date('Y-m-d', strtotime($request->payment_date));
+            $payment->PAYMENT_TYPE = $request->payment_type;
+            $payment->SLIP_NUMBER = $request->slip_number;
+
+            if ($request->hasFile('images')) {
+                $file = $request->file('images')[0];
+                $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
+                $file_path = 'uploads/attachments/' . $id . '/';
+                $file->move(public_path($file_path), $file_name);
+
+                $payment->ATTACHMENT_PATH = $file_path . $file_name;
+            }
+            $payment->save();
+
+            $status = true;
+            $msg = 'Recharge successful!';
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+        return $this->formatResponse($status, $msg, 'admin.owner.recharge');
     }
 
 

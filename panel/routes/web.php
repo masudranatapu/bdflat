@@ -229,6 +229,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('owner/{id}/payment', ['middleware' => 'acl:view_owner', 'as' => 'admin.owner.payment.store', 'uses' => 'OwnerController@postPayment']);
     Route::get('owner/{id}/password', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.password.edit', 'uses' => 'OwnerController@getPasswordEdit']);
     Route::post('owner/{id}/password/update', ['middleware' => 'acl:edit_owner', 'as' => 'admin.owner.password.update', 'uses' => 'OwnerController@postPasswordUpdate']);
+    Route::get('owner/{id}/recharge', ['middleware' => 'acl:view_owner_payment', 'as' => 'admin.owner.recharge', 'uses' => 'OwnerController@getRecharge']);
+    Route::post('owner/{id}/recharge', ['middleware' => 'acl:add_owner_payment', 'as' => 'admin.owner.recharge', 'uses' => 'OwnerController@postRecharge']);
     Route::post('owner_list', ['middleware' => 'acl:view_owner', 'as' => 'ajax.seeker.list', 'uses' => 'DataTableController@getOwner']);
 
     /* Route::post('reseller/all_reseller', 'DatatableController@all_reseller');

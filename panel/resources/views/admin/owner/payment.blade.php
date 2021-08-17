@@ -46,7 +46,7 @@
                                             <h2 class="font-weight-bold text-success">BDT {{ number_format($data['total'] ?? 0, 2) }}</h2>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
-                                            <a href="javascript:void(0);" data-toggle="modal" data-target="#recharge"
+                                            <a href="{{ route('admin.owner.recharge', request()->route('id')) }}"
                                                class="btn btn-success">Recharge Balance</a>
                                         </div>
                                     </div>
@@ -57,31 +57,43 @@
                                             class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
                                             <thead>
                                             <tr>
-                                                <th>Sl.</th>
+                                                <th>SL</th>
                                                 <th>Tran. ID</th>
                                                 <th>Tran. Type</th>
                                                 <th>Date</th>
-                                                <th>Amount</th>
+                                                <th>Slip</th>
                                                 <th>Note</th>
+                                                <th>Amount</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @if(isset($data['payments']) && count($data['payments']))
-                                                @foreach($data['payments'] as $key => $payment)
+                                            @if(isset($data['rows']) && count($data['rows']))
+                                                @foreach($data['rows'] as $key => $row)
                                                     <tr>
-                                                        <td>{{ $key + 1 }}</td>
-                                                        <td>{{ $payment->SLIP_NUMBER }}</td>
-                                                        <td>{{ $payment->PAYMENT_TYPE == 1 ? 'Customer Payment' : 'Bonus by BDFLAT' }}</td>
-                                                        <td>{{ date('M d, Y', strtotime($payment->PAYMENT_DATE)) }}</td>
-                                                        <td>{{ $payment->AMOUNT }}</td>
+                                                        <td>
+                                                            <span>{{ $key + 1 }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->CODE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->payment->PAYMENT_TYPE == 2 ? 'Bonus Payment' : 'Customer Payment' }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->TRANSACTION_DATE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ $row->payment->SLIP_NUMBER }}</span>
+                                                        </td>
 
-                                                        <td>{{ $payment->PAYMENT_NOTE }}</td>
+                                                        <td>
+                                                            <span>{{ $row->payment->PAYMENT_NOTE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ number_format($row->AMOUNT, 2) }}</span>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="6" class="text-center">No payments!</td>
-                                                </tr>
                                             @endif
                                             </tbody>
                                         </table>
