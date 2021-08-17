@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin\Datatable;
 
+use App\Models\ProductRequirements;
 use Carbon\Carbon;
 use App\Models\Stock;
 use App\Models\Product;
@@ -38,6 +39,13 @@ class DatatableAbstract implements DatatableInterface
                 }
                 return $status;
 
+            })
+            ->addColumn('leadStatus', function ($dataSet) {
+                $requirement = ProductRequirements::where('F_USER_NO', $dataSet->PK_NO)->where('IS_ACTIVE', 1)->first('PK_NO');
+                if ($requirement) {
+                    return 1;
+                }
+                return 'N/A';
             })
             ->addColumn('action', function ($dataSet) {
                 $roles = userRolePermissionArray();

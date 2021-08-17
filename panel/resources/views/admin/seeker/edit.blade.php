@@ -608,11 +608,12 @@
                         <div class="col-md-8">
                             <div class="form-group {!! $errors->has('v_status') ? 'error' : '' !!}">
                                 <div class="controls">
+                                    {!! Form::radio('v_status','0', !empty($row)? $row->IS_VERIFIED==0?true:false:old('alert'),[ 'id' => 'pending','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {{ Form::label('pending','Pending') }}
                                     {!! Form::radio('v_status','1',!empty($row)? $row->IS_VERIFIED==1?true:false:old('alert'),[ 'id' => 'verified','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
-                                    {{ Form::label('verified','Daily') }}
-
-                                    {!! Form::radio('v_status','0', !empty($row)? $row->IS_VERIFIED==0?true:false:old('alert'),[ 'id' => 'not_verified','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
-                                    {{ Form::label('not_verified','Not Verified') }}
+                                    {{ Form::label('verified','Valid') }}
+                                    {!! Form::radio('v_status','2', !empty($row)? $row->IS_VERIFIED==2?true:false:old('alert'),[ 'id' => 'invalid','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {{ Form::label('invalid','Invalid') }}
 
                                     {!! $errors->first('alert', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>

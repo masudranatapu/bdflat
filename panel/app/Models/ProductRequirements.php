@@ -14,7 +14,8 @@ class ProductRequirements extends Model
 
     protected $table = 'PRD_REQUIREMENTS';
     protected $primaryKey = 'PK_NO';
-    public $timestamps = false;
+    const CREATED_AT = 'CREATED_AT';
+    const UPDATED_AT = 'MODIFYED_AT';
     protected $fillable = [
         'F_CITY_NO',
         'F_AREAS',
@@ -42,5 +43,17 @@ class ProductRequirements extends Model
         'VERIFIED_AT',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->CREATED_BY = Auth::id();
+        });
+
+        static::updating(function ($model) {
+            $model->MODIFYED_BY = Auth::id();
+        });
+    }
 
 }

@@ -42,7 +42,7 @@ class ProductRequirements extends Model
         'VERIFIED_AT',
     ];
 
-    public function storeOrUpdate($request)
+    public function storeOrUpdate($request): object
     {
         DB::beginTransaction();
         try {
@@ -66,7 +66,13 @@ class ProductRequirements extends Model
             $list->EMAIL_ALERT          = $request->alert;
             $list->CREATED_BY           = Auth::id() ?? $request->auth_id;
             $list->MODIFYED_BY          = Auth::id() ?? $request->auth_id;
+            $list->IS_ACTIVE            = 1;
             $list->save();
+
+            DB::table('PRD_REQUIREMENTS')
+                ->where('F_USER_NO', '=', $list->F_USER_NO)
+                ->where('PK_NO', '!=', $list->PK_NO)
+                ->update(['IS_ACTIVE' => 0]);
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);

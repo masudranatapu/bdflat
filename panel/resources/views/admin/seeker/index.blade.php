@@ -164,9 +164,9 @@
                         },
 
                         {
-                            data: 'STATUS',
-                            name: 'STATUS',
-                            searchable: true,
+                            data: 'leadStatus',
+                            name: 'leadStatus',
+                            searchable: false,
                             className: 'text-center'
 
                         },

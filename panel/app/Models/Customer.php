@@ -40,6 +40,11 @@ class Customer extends Model
         return $this->hasOne('App\Models\Country', 'PK_NO', 'F_COUNTRY_NO');
     }
 
+    public function propertyRequirement()
+    {
+        return $this->hasOne('App\Models\ProductRequirements', 'F_USER_NO', 'PK_NO')->where('IS_ACTIVE', '=', 1);
+    }
+
     /*public static function boot()
     {
        parent::boot();

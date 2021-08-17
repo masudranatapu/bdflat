@@ -29,9 +29,13 @@ class CustomerAbstract implements CustomerInterface
         $this->cusAdd = $cusAdd;
     }
 
-    public function getPaginatedList($request)
+    public function getPaginatedList($request): object
     {
-        $data = $this->customer->where('STATUS', '!=', 3)->where('USER_TYPE', 1)->orderBy('NAME', 'ASC')->get();
+        $data = $this->customer->with(['propertyRequirement'])
+            ->where('STATUS', '!=', 3)
+            ->where('USER_TYPE', 1)
+            ->orderBy('NAME', 'ASC')
+            ->get();
         return $this->formatResponse(true, '', 'admin.customer.index', $data);
     }
 
@@ -51,13 +55,12 @@ class CustomerAbstract implements CustomerInterface
         return $this->formatResponse(false, 'Did not found data !', 'admin.seeker.list', null);
     }
 
-    public function postUpdate($request)
+    public function postUpdate($request): object
     {
         DB::beginTransaction();
         try {
             if ($request->pk_no) {
                 $list = ProductRequirements::where('PK_NO', $request->pk_no)->first();
-
             } else {
                 $list = new ProductRequirements();
             }
@@ -79,11 +82,13 @@ class CustomerAbstract implements CustomerInterface
             $list->CREATED_BY = $request->user_id;
             $list->MODIFYED_BY = $request->user_id;
 
-            if ($request->pk_no) {
-                $list->update();
-            } else {
-                $list->save();
+            if ($request->v_status == 1) {
+                $list->F_VERIFIED_BY = Auth::id();
+                $list->VERIFIED_AT = date('Y-m-d H:i:s');
             }
+
+            $list->save();
+
 
             $user = Customer::where('PK_NO', $request->user_id)->first();
             $user->NAME = $request->name;
