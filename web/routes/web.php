@@ -86,6 +86,9 @@ Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
+    Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
+    Route::post('/property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
+    Route::get('property-requirements/get_area/{id}', 'RequirementController@getArea')->name('property-requirements.get_area');
     Route::get('/suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');
     Route::get('/contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');
     Route::get('/browsed-properties', 'SeekerController@getBrowsedProperties')->name('browsed-properties');
@@ -98,10 +101,6 @@ Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
-
-    Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
-    Route::post('/property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
-    Route::get('property-requirements/get_area/{id}', 'RequirementController@getArea')->name('property-requirements.get_area');
 
     Route::get('/owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
     Route::get('/owner-buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');

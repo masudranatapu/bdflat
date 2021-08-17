@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Owner;
+namespace App\Http\Controllers\Seeker;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequirementsRequest;
 use App\Http\Requests\updateProfileRequest;
@@ -36,8 +36,8 @@ class RequirementController extends Controller
         $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
         $data['row'] = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->orderByDesc('PK_NO')->first();
 //        $data['city'] = City::select('CITY_NAME', 'PK_NO')->get(); // Previous modal version
-        $data['city'] = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
-        $data['areas'] = Area::where('F_CITY_NO', 1)->pluck('AREA_NAME', 'PK_NO');
+        $data['city'] = City::orderByDesc('ORDER_ID')->pluck('CITY_NAME', 'PK_NO');
+        $data['areas'] = Area::where('F_CITY_NO', 1)->orderByDesc('ORDER_ID')->pluck('AREA_NAME', 'PK_NO');
         return view('seeker.my_requirement',compact('data'));
     }
 

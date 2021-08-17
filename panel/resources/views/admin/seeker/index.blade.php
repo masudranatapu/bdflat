@@ -31,7 +31,7 @@
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                                 <div class="table-responsive ">
-                                    <table class="table table-striped table-bordered table-sm text-center" id="dtable">
+                                    <table class="table table-striped table-bordered table-sm" id="dtable">
                                         <thead>
                                         <tr>
                                             <th class="text-center">SL</th>
@@ -39,7 +39,7 @@
                                             <th>Name</th>
                                             <th>Mobile</th>
                                             <th>Email</th>
-                                            <th>Balance</th>
+                                            <th>Balance (BDT)</th>
                                             <th>Create Date</th>
                                             <th>Lead Status</th>
                                             <th>Account Status</th>
@@ -126,19 +126,20 @@
                         {
                             data: 'CODE',
                             name: 'CODE',
-                            searchable: true
+                            searchable: true,
+                            className: 'text-center',
                         },
                         {
                             data: 'NAME',
                             name: 'NAME',
                             searchable: true,
-                            className: 'text-center'
+
                         },
                         {
                             data: 'MOBILE_NO',
                             name: 'MOBILE_NO',
                             searchable: true,
-                            className: 'text-center'
+
                         },
                         {
                             data: 'EMAIL',
@@ -159,14 +160,14 @@
                             data: 'CREATED_AT',
                             name: 'CREATED_AT',
                             searchable: false,
-                            className: 'text-right',
+
                         },
 
                         {
                             data: 'STATUS',
                             name: 'STATUS',
                             searchable: true,
-                            className: 'text-right'
+                            className: 'text-center'
 
                         },
                         {
@@ -179,7 +180,8 @@
                         {
                             data: 'action',
                             name: 'action',
-                            searchable: false
+                            searchable: false,
+                            className: 'text-center'
                         },
 
                     ]

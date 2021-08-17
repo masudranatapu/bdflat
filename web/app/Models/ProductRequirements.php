@@ -50,6 +50,7 @@ class ProductRequirements extends Model
                 assert(Auth::user()->USER_TYPE == 1);
             }
             $list = new ProductRequirements();
+            $list->F_USER_NO            = Auth::id() ?? $request->auth_id;
             $list->PROPERTY_FOR         = $request->itemCon;
             $list->F_CITY_NO            = $request->f_city_id;
             $list->F_AREAS              = json_encode($request->area);

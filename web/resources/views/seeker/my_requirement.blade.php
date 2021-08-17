@@ -22,6 +22,11 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 } else {
     $prop_cond = [];
 }
+if(isset($row->F_AREAS) && $row->F_AREAS != ''){   
+$old_areas = json_decode($row->F_AREAS);
+}else{
+   $old_areas = []; 
+}
 
 ?>
 
@@ -74,7 +79,6 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                                              <div class="row">
                                                  <div class="col-6">
                                                      <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-
                                                          <div class="city_title">
                                                              <h3><i class="fa fa-tags"></i>Cities</h3>
                                                          </div>
@@ -123,7 +127,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                             {{ Form::label('city', 'Select area:', ['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8" style="margin-left: -5px">
                                 <div class="controls">
-                                    {!! Form::select('area[]', $data['areas'] ?? [], json_decode($row->F_AREAS), ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple']) !!}
+                                    {!! Form::select('area[]', $data['areas'] ?? [], $old_areas, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple']) !!}
                                     {!! $errors->first('f_area_id', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -155,7 +159,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
                         <!-- property size -->
                         <div class="row form-group property-size">
-                            {{ Form::label(null,'Property Size:',['class' => 'col-sm-4 label-title']) }}
+                            {{ Form::label(null,'Property Size (Sqft):',['class' => 'col-sm-4 label-title']) }}
                             <div class="col-md-8">
                                 <div class="row">
                                     <div class="col-5">
@@ -185,7 +189,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 
                         <!-- property budget -->
                         <div class="row form-group property-size">
-                            {{ Form::label(null,'Property Budget:',['class' => 'col-sm-4 label-title']) }}
+                            {{ Form::label(null,'Property Budget (BDT):',['class' => 'col-sm-4 label-title']) }}
                             <div class="col-md-8">
                                 <div class="row">
                                     <div class="col-5">
