@@ -4,9 +4,8 @@
 {{-- <link rel="stylesheet" href="{{ asset('app-assets/file_upload/image-uploader.min.css')}}"> --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
 @endpush('custom_css')
-@section('blog-category','open')
 @section('blog-category','active')
-@section('title') category @endsection
+@section('title') Edit Category @endsection
 @section('page-name') Edit category @endsection
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">category</a></li>
@@ -93,7 +92,7 @@ $row = $data ?? [];
 
                                     <div class="col-md-12">
                                         <div class="form-actions text-center">
-                                            <a href="{{route('admin.product.list')}}" class="btn btn-warning mr-1"><i class="ft-x"></i> {{ trans('form.btn_cancle') }}</a>
+                                            <a href="{{route('web.blog.category')}}" class="btn btn-warning mr-1"><i class="ft-x"></i> {{ trans('form.btn_cancle') }}</a>
                                             <button type="submit" class="btn bg-primary bg-darken-1 text-white">
                                              <i class="la la-check-square-o"></i> {{ trans('form.btn_save') }} </button>
                                          </div>

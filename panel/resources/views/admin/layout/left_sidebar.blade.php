@@ -500,7 +500,7 @@
                 </li>
 
 
-                <li class="@yield('city_list')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Page Category</span></a></li>
+                <li class="@yield('page_category')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Page Category</span></a></li>
                 <li class="@yield('web_page')">
                     <a class="menu-item" href="{{route('web.page')}}"><i></i>
                         <span data-i18n="@yield('web_page')">Pages</span>

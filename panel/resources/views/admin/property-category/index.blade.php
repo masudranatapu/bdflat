@@ -51,7 +51,7 @@
                     <tr>
                       <th class="text-center" style="width: 50px;">SL.</th>
                       <th class="" style="min-width: 100px;">Property Type</th>
-                      <th class="" style="">Order</th>
+                      <th class="text-center" style="">Order</th>
                       <th class="text-center" style="width: 200px;">Action</th>
                     </tr>
                   </thead>
@@ -60,7 +60,7 @@
                     <tr>
                       <td class="text-center" style="width: 50px;">{{ $loop->index + 1 }}</td>
                       <td class="" style="">{{ $row->PROPERTY_TYPE }}</td>
-                      <td class="" style="">{{ $row->ORDER_ID }}</td>
+                      <td class="text-center" style="">{{ $row->ORDER_ID }}</td>
                         <td class="text-center" style="width: 200px;">
                           @if(hasAccessAbility('edit_property_category', $roles))
                           <a href="{{ route('property.category.edit', [$row->PK_NO]) }}" title="EDIT" class="btn btn-xs btn-info  mb-1"><i class="la la-edit"></i></a>

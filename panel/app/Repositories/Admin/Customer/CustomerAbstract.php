@@ -121,7 +121,7 @@ class CustomerAbstract implements CustomerInterface
         return $this->formatResponse(true, 'Payment list found successfully !', 'admin.seeker.list', $data);
     }
 
-    public function postRecharge($request, int $id)
+    public function postRecharge($request, int $id): object
     {
         $status = false;
         $msg = 'Recharge not successful!';
@@ -158,11 +158,13 @@ class CustomerAbstract implements CustomerInterface
         DB::commit();
         return $this->formatResponse($status, $msg, 'admin.seeker.recharge');
     }
-    public function getCustomerTxn($id){
+
+    public function getCustomerTxn($id): object
+    {
         try {
-            $data =  Transaction::where('F_CUSTOMER_NO',$id)->get();
+            $data = Transaction::with(['payment'])->where('F_CUSTOMER_NO', $id)->get();
         } catch (\Throwable $th) {
-            return $this->formatResponse(fasle, 'Data not found', 'admin.seeker.list');
+            return $this->formatResponse(false, 'Data not found', 'admin.seeker.list');
         }
         return $this->formatResponse(true, 'Payment list found successfully !', 'admin.seeker.list', $data);
 

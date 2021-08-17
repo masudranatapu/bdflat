@@ -153,7 +153,7 @@
                                             </div>
                                          </div>
                                          <div class="form-actions text-center mt-3">
-                                            <a href="{{ route('product.category.list') }}">
+                                            <a href="{{ route('admin.property.category') }}">
                                             <button type="button" class="btn btn-warning mr-1" title="Cancel">
                                             <i class="ft-x"></i> @lang('form.btn_cancle')
                                             </button>

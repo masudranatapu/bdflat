@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\OwnerRequest;
+use App\Http\Requests\RechargeRequest;
 use App\Models\City;
 use App\Models\Agent;
+use App\Models\PaymentMethod;
 use App\Models\PoCode;
 use App\Models\Country;
 use App\Models\Owner;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
@@ -68,9 +71,25 @@ class OwnerController extends BaseController
 
     public function getPayment($id)
     {
-        $data['payments'] = $this->owner->getPayments($id)->data;
-        $data['total'] = $data['payments']->sum('AMOUNT');
+        $data['rows'] = $this->owner->getCustomerTxn($id)->data;
+        $data['total'] = $data['rows']->sum('AMOUNT');
         return view('admin.owner.payment', compact('data'));
+    }
+
+    public function getRecharge($id)
+    {
+        $data['paymentMethods'] = PaymentMethod::all()
+            ->whereNotIn('PK_NO', [1, 5, 7])
+            ->where('IS_ACTIVE', '=', 1)
+            ->pluck('NAME', 'PK_NO');
+        $data['owner'] = User::find($id);
+        return view('admin.owner.recharge', compact('data'));
+    }
+
+    public function postRecharge(RechargeRequest $request, $id): RedirectResponse
+    {
+        $this->resp = $this->owner->postRecharge($request, $id);
+        return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function postPayment(Request $request, $id)

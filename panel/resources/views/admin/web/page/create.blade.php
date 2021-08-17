@@ -4,8 +4,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/fileupload/bootstrap-fileupload.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css')}}">
 @endpush('custom_css')
-@section('pages','open')
-@section('pages','active')
+@section('web','open')
+@section('web_page','active')
 @section('title') Page @endsection
 @section('page-name') Create Page @endsection
 @section('breadcrumb')
@@ -129,7 +129,7 @@
                      </div>
                      <div class="col-md-12">
                         <div class="form-actions text-center">
-                           <a href="{{route('admin.product.list')}}" class="btn btn-warning mr-1"><i class="ft-x"></i> {{ trans('form.btn_cancle') }}</a>
+                           <a href="{{route('web.page')}}" class="btn btn-warning mr-1"><i class="ft-x"></i> {{ trans('form.btn_cancle') }}</a>
                            <button type="submit" class="btn bg-primary bg-darken-1 text-white">
                            <i class="la la-check-square-o"></i> {{ trans('form.btn_save') }} </button>
                         </div>

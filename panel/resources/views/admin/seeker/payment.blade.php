@@ -65,27 +65,34 @@
                                                 <th>Date</th>
                                                 <th>Slip</th>
                                                 <th>Note</th>
+                                                <th>Amount</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @if(isset($data['rows']) && count($data['rows']))
-                                                @foreach($data['rows'] as $row)
+                                                @foreach($data['rows'] as $key => $row)
                                                     <tr>
+                                                        <td>
+                                                            <span>{{ $key + 1 }}</span>
+                                                        </td>
                                                         <td>
                                                             <span>{{ $row->CODE }}</span>
                                                         </td>
                                                         <td>
-                                                            <span>{{ $row->PAYMENT_TYPE == 2 ? 'Bonus Payment' : 'Customer Payment' }}</span>
+                                                            <span>{{ $row->payment->PAYMENT_TYPE == 2 ? 'Bonus Payment' : 'Customer Payment' }}</span>
                                                         </td>
                                                         <td>
-                                                            <span>{{ $row->PAYMENT_DATE }}</span>
+                                                            <span>{{ $row->TRANSACTION_DATE }}</span>
                                                         </td>
                                                         <td>
-                                                            <span>{{ number_format($row->AMOUNT, 2) }}</span>
+                                                            <span>{{ $row->payment->SLIP_NUMBER }}</span>
                                                         </td>
 
                                                         <td>
-                                                            <span>{{ $row->PAYMENT_NOTE }}</span>
+                                                            <span>{{ $row->payment->PAYMENT_NOTE }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{{ number_format($row->AMOUNT, 2) }}</span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
