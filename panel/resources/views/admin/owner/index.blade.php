@@ -151,6 +151,7 @@
                             name: 'PK_NO',
                             searchable: false,
                             sortable: false,
+                            className: 'text-center',
                             render: function (data, type, row, meta) {
                                 return meta.row + meta.settings._iDisplayStart + 1;
                             }
@@ -159,6 +160,7 @@
                         {
                             data: 'CODE',
                             name: 'CODE',
+                            className: 'text-center',
                             searchable: true
                         },
                         {
@@ -175,13 +177,11 @@
                             data: 'NAME',
                             name: 'NAME',
                             searchable: true,
-                            className: 'text-center'
                         },
                         {
                             data: 'MOBILE_NO',
                             name: 'MOBILE_NO',
                             searchable: true,
-                            className: 'text-center'
                         },
                         {
                             data: 'EMAIL',
@@ -202,9 +202,8 @@
                         {
                             data: 'TOTAL_LISTING',
                             name: 'TOTAL_LISTING',
-                            searchable: true,
-                            className: 'text-right'
-
+                            className: 'text-center'
+                            searchable: true
                         },
                         {
                             data: 'status',
@@ -216,6 +215,7 @@
                         {
                             data: 'action',
                             name: 'action',
+                            className: 'text-center',
                             searchable: false
                         },
 

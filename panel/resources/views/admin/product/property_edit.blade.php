@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
-@section('product_list','active')
-@section('Product Management','open')
+@section('Property Management','open')
+@section('property_list','active')
 
 @section('title') Property Edit @endsection
 @section('page-name') Property Edit @endsection
@@ -304,18 +304,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div
-                                                    class="form-group {!! $errors->has('floorChek') ? 'error' : '' !!}">
-                                                    <div class="controls">
-                                                        <label class="label-title">Floor available</label>
-                                                        {!! Form::radio('floorChek','ground',null /*$row->PROPERTY_FOR=='sell'?true:false*/,[ 'id' => 'ground','checked'=>'checked', 'tabIndex' => ++$tabIndex]) !!}
-                                                        {{ Form::label('ground','Ground Floor') }}
-
-                                                        {!! Form::radio('floorChek','1arFloor',null /*$row->PROPERTY_FOR=='sell'?true:false*/,[ 'id' => '1arFloor', 'tabIndex' => ++$tabIndex]) !!}
-                                                        {{ Form::label('1arFloor','1st Floor') }}
-
-                                                        {!! $errors->first('floorChek', '<label class="help-block text-danger">:message</label>') !!}
-                                                    </div>
+                                                <div class="form-group">
+                                                    {{ Form::label('','Floor Available:',['class' => 'col-sm-4 advertis-label']) }}
+                                                        <div class="form-group {!! $errors->has('floor_available') ? 'error' : '' !!}">
+                                                            <div class="controls">
+                                                                {!! Form::select('floor_available[]',$floor_lists, json_decode($product->FLOORS_AVAIABLE),array('multiple'=>'multiple','class'=>'form-control floor_available_select')) !!}
+                                                                {!! $errors->first('floor_available', '<label class="help-block text-danger">:message</label>') !!}
+                                                            </div>
+                                                        </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -498,12 +494,14 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">Meta descriptions</label>
-                                                    <textarea name="meta_description" class="form-control" tabindex="{{ ++$tabIndex}}"
+                                                    <textarea name="meta_description" class="form-control"
+                                                              tabindex="{{ ++$tabIndex}}"
                                                               id="metaDescr">{{ $product->listingSEO->META_DESCRIPTION ?? '' }}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-title">URl Slug</label>
-                                                    <input type="text" class="form-control url_slug" tabindex="{{ ++$tabIndex}}"
+                                                    <input type="text" class="form-control url_slug"
+                                                           tabindex="{{ ++$tabIndex}}"
                                                            {{ $product->URL_SLUG_LOCKED ? 'readonly' : '' }} id="url_slug"
                                                            value="{{ $product->listingSEO && $product->listingSEO->META_URL ? $product->listingSEO->META_URL : $product->URL_SLUG }}"
                                                            name="meta_url">
@@ -512,12 +510,13 @@
                                                     class="form-group">
                                                     <label class="label-title">OG Image</label>
                                                     @if($product->listingSEO && $product->listingSEO->OG_IMAGE_PATH)
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <img src="{{ asset($product->listingSEO->OG_IMAGE_PATH) }}"
-                                                                 alt="" style="max-height: 150px;max-width: 200px">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <img
+                                                                    src="{{ asset($product->listingSEO->OG_IMAGE_PATH) }}"
+                                                                    alt="" style="max-height: 150px;max-width: 200px">
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     @endif
                                                     <div class="controls">
                                                         <div id="seoImage" style="padding-top: .5rem;"></div>
@@ -576,20 +575,25 @@
                                                     <input type="radio" checked="" name="billing" value="pending"
                                                            id="pending" tabindex="{{ ++$tabIndex}}">
                                                     <label for="pending">Due</label>
-                                                    <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing" value="paid" id="paid">
+                                                    <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing"
+                                                           value="paid" id="paid">
                                                     <label for="paid">Paid</label>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-switch">
-                                                        <input type="checkbox" name="is_verified" {{ $product->IS_VERIFIED ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}" class="custom-control-input"
+                                                        <input type="checkbox" name="is_verified"
+                                                               {{ $product->IS_VERIFIED ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}"
+                                                               class="custom-control-input"
                                                                id="customSwitch1">
                                                         <label class="custom-control-label" for="customSwitch1">Verified
                                                             BDF</label>
                                                     </div>
                                                     <div class="custom-control custom-switch">
-                                                        <input type="checkbox" name="ci_payment" {{ $product->CI_PAYMENT ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}" class="custom-control-input"
+                                                        <input type="checkbox" name="ci_payment"
+                                                               {{ $product->CI_PAYMENT ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}"
+                                                               class="custom-control-input"
                                                                id="customSwitch2">
                                                         <label class="custom-control-label" for="customSwitch2">Need
                                                             payment to view</label>
@@ -597,9 +601,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 mt-2">
-                                                <div class="submit-btn">
-                                                    <input type="submit" value="Submit">
-                                                </div>
+                                                <a href="{{ route('admin.product.list') }}"
+                                                   class="btn btn-info">Cancel</a>
+                                                <input type="submit" value="Submit" class="btn btn-primary">
                                             </div>
                                         </div>
                                     </div>

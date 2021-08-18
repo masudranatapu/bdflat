@@ -213,14 +213,17 @@ class DatatableAbstract implements DatatableInterface
             })
             ->addColumn('action', function ($dataSet) {
                 $roles = userRolePermissionArray();
-                $edit = $activity = '';
+                $edit = $view = $activity = '';
                 if (hasAccessAbility('edit_product_activity', $roles)) {
                     $activity = ' <a href="' . route("admin.product.activity", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Activities">Activities</a>';
                 }
                 if (hasAccessAbility('edit_product', $roles)) {
                     $edit = ' <a href="' . route("admin.product.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-warning mb-05 mr-05" title="Edit">Edit</a>';
                 }
-                return $activity . $edit;
+                if (hasAccessAbility('view_product', $roles)) {
+                    $view = ' <a href="' . route("admin.product.view", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-info mb-05 mr-05" title="View">View</a>';
+                }
+                return $activity . $edit . $view;
             })
             ->rawColumns(['action', 'status', 'mobile'])
             ->make(true);

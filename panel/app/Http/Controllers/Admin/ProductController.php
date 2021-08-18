@@ -223,9 +223,22 @@ class ProductController extends BaseController
 
     public function getView($id)
     {
-        $data[] = '';
+        $data = [];
+        $this->resp = $this->productInt->getShow($id);
+        $data['property_type'] = $this->property_type->getProperty();
+        $data['city'] = $this->city->getCity();
+        $data['area'] = $this->area->getArea($this->resp->data->F_CITY_NO);
+        $data['property_condition'] = $this->property_condition->getPropertyCondition();
+        $data['listing_variants'] = $this->listing_variants->getListingVariants($id);
+        $data['floor_list'] = $this->floor_list->getFloorList();
+        $data['property_facing'] = $this->property_facing->getPropertyFacing();
+        $data['property_additional_info'] = $this->property_additional_info->getAdditionalInfo($id);
+        $data['listing_feature'] = $this->listing_feature->getListingFeature();
+        $data['near_by'] = $this->near_by->getNearBy();
+        $data['property_listing_type'] = $this->property_listing_type->getPropertyListingType();
+        $data['property_listing_images'] = $this->property_listing_images->getListingImages($id);
 
-        return view('admin.product.view')->withData($data);
+        return view('admin.product.view')->withProduct($this->resp->data)->withData($data);
     }
 
     public function getDeleteImage($id): \Illuminate\Http\JsonResponse
@@ -330,7 +343,7 @@ class ProductController extends BaseController
 
     public function addListingVariant(Request $request)
     {
-        $data['html'] = view('admin.product.add_listing_variant',compact('request'))->render();
+        $data['html'] = view('admin.product._add_listing_variant',compact('request'))->render();
         return response()->json($data);
     }
 

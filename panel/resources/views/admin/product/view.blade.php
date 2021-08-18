@@ -20,15 +20,20 @@
 @endpush('custom_css')
 
 @section('title') @lang('product.product_view') @endsection
-@section('page-name')Property Activities @endsection
+@section('page-name')Property | View @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('product.breadcrumb_title')  </a></li>
-    <li class="breadcrumb-item active">Property Activities</li>
+    <li class="breadcrumb-item active">Property | View</li>
 @endsection
 
 <?php
 $roles = userRolePermissionArray();
+$bed_room = Config::get('static_array.bed_room') ?? [];
+$bath_room = Config::get('static_array.bath_room') ?? [];
+$user_type = Config::get('static_array.user_type') ?? [];
+$property_status = Config::get('static_array.property_status') ?? [];
+$payment_status = Config::get('static_array.payment_status') ?? [];
 ?>
 
 @section('content')
@@ -37,150 +42,36 @@ $roles = userRolePermissionArray();
             <div class="col-md-12">
                 <div class="card card-success">
                     <div class="card-content">
+                        <div class="card-header">
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-xl-4 col-lg-6 col-12">
-                                    <div class="card bg-info rounded">
-                                        <div class="card-content">
-                                            <div class="card-body">
-                                                <div class="media d-flex">
-                                                    <div class="media-body text-center">
-                                                        <h6 class="text-white">Total View</h6>
-                                                        <h1 class="info text-white font-weight-bold">100010</h1>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-6 col-12">
-                                    <div class="card bg-success rounded">
-                                        <div class="card-content">
-                                            <div class="card-body">
-                                                <div class="media d-flex">
-                                                    <div class="media-body text-center">
-                                                        <h6 class="text-white">Lead Generated</h6>
-                                                        <h1 class="info text-white font-weight-bold">39</h1>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-6 col-12">
-                                    <div class="card">
-                                        <div class="card-content">
-                                            <div class="card-body bg-warning rounded">
-                                                <div class="media d-flex">
-                                                    <div class="media-body text-center">
-                                                        <h6 class="text-white">Earning</h6>
-                                                        <h1 class="info text-white font-weight-bold">1250</h1>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row  mb-2">
-                                <div class="col-12">
-                                    <h2>Lead & Earning Overview</h2>
-                                    <div class="table-responsive ">
-                                        <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
-                                            <thead>
-                                            <tr>
-                                                <th>Lead ID</th>
-                                                <th>Lead Type</th>
-                                                <th>Seeker Name</th>
-                                                <th>Seeker Mobile</th>
-                                                <th>Date</th>
-                                                <th>Earning</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span>10000001</span>
-                                                </td>
-                                                <td>
-                                                    <span>View Mobile No</span>
-                                                </td>
-                                                <td>
-                                                    <span>Ada Loveace</span>
-                                                </td>
-                                                <td>
-                                                    <span>0123456789</span>
-                                                </td>
-                                                <td>
-                                                    <span>Dec 10, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>25</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <span>10000002</span>
-                                                </td>
-                                                <td>
-                                                    <span>Send Message</span>
-                                                </td>
-                                                <td>
-                                                    <span>Grace Hopper</span>
-                                                </td>
-                                                <td>
-                                                    <span>0123456789</span>
-                                                </td>
-                                                <td>
-                                                    <span>Dec 10, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>25</span>
-                                                </td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="row">
                                 <div class="col-12">
-                                    <h2>Impression</h2>
-                                    <div class="table-responsive ">
-                                        <table class="table table-striped table-bordered table-sm text-center" {{--id="process_data_table"--}}>
-                                            <thead>
-                                            <tr>
-                                                <th width="20%">Date</th>
-                                                <th>View</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td width="20%">
-                                                    <span>Dec 13, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>25</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td width="20%">
-                                                    <span>Dec 12, 2020</span>
-                                                </td>
-                                                <td>
-                                                    <span>21</span>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="form-title mb-2">
+                                        <h3>Basic Information</h3>
                                     </div>
+                                    <div class="saleform-header mb-2">
+                                        <p>Property ID: {{$product->CODE}}</p>
+                                        <p>Create Date: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
+                                        <p>Modified On: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
+                                        <p>Owner Name: {{ $product->getUser->NAME }}</p>
+                                        <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
+                                        <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? 'N/A' }}</p>
+                                        <p>Expire
+                                            Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
+                                                Not set yet @endif </p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <p><span class="font-weight-bold">Advertisement Type: </span>{{  }}</p>
                                 </div>
                             </div>
                         </div>
