@@ -25,7 +25,7 @@
 <div class="content-body min-height">
   <section id="pagination">
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <div class="card card-sm card-success">
           <div class="card-header pl-2">
             <div class="form-group">
@@ -51,6 +51,12 @@
                     <tr>
                       <th class="text-center" style="width: 50px;">SL.</th>
                       <th class="" style="min-width: 100px;">Property Type</th>
+                      <th class="" style="min-width: 100px;">Meta Title</th>
+                      <th class="" style="min-width: 100px;">Meta Description</th>
+                      <th class="" style="min-width: 100px;">Body Description</th>
+                      <th class="" style="min-width: 100px;">URL</th>
+                      <th class="" style="min-width: 100px;">Image</th>
+                      <th class="" style="min-width: 100px;">Icon</th>
                       <th class="text-center" style="">Order</th>
                       <th class="text-center" style="width: 200px;">Action</th>
                     </tr>
@@ -60,6 +66,16 @@
                     <tr>
                       <td class="text-center" style="width: 50px;">{{ $loop->index + 1 }}</td>
                       <td class="" style="">{{ $row->PROPERTY_TYPE }}</td>
+                        <td>{{ $row->META_TITLE }}</td>
+                        <td>{{ $row->META_DESC }}</td>
+                        <td>{{ $row->BODY_DESC }}</td>
+                        <td>{{ $row->URL_SLUG }}</td>
+                        <td>
+                            <img src="{{ asset($row->IMG_PATH) }}" alt="" style="max-width: 150px;max-height: 120px">
+                        </td>
+                        <td>
+                        <img src="{{ asset($row->ICON_PATH) }}" alt="" style="max-width: 150px;max-height: 120px">
+                        </td>
                       <td class="text-center" style="">{{ $row->ORDER_ID }}</td>
                         <td class="text-center" style="width: 200px;">
                           @if(hasAccessAbility('edit_property_category', $roles))
