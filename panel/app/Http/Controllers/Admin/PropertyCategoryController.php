@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Repositories\Admin\PropertyCategory\PropertyCategoryInterface;
 use App\Http\Requests\Admin\PropertyCategoryRequest;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class PropertyCategoryController extends BaseController
 {
