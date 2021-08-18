@@ -29,6 +29,22 @@
 
 <?php
 $roles = userRolePermissionArray();
+$data = $data ?? [];
+$product = $product ?? [];
+$property_types = $data['property_type'] ?? [];
+$cities = $data['city'] ?? [];
+$area = $data['area'] ?? [];
+$property_conditions = $data['property_condition'] ?? [];
+$listing_variants = $data['listing_variants'] ?? [];
+$floor_lists = $data['floor_list'] ?? [];
+$property_facing = $data['property_facing'] ?? [];
+$property_additional_info = $data['property_additional_info'] ?? [];
+$listing_features = $data['listing_feature'] ?? [];
+$nearby = $data['near_by'] ?? [];
+$property_listing_types = $data['property_listing_type'] ?? [];
+$property_listing_images = $data['property_listing_images'] ?? [];
+$features = json_decode($property_additional_info->F_FEATURE_NOS) ?? [];
+$near = json_decode($property_additional_info->F_NEARBY_NOS) ?? [];
 $bed_room = Config::get('static_array.bed_room') ?? [];
 $bath_room = Config::get('static_array.bath_room') ?? [];
 $user_type = Config::get('static_array.user_type') ?? [];
@@ -56,7 +72,7 @@ $payment_status = Config::get('static_array.payment_status') ?? [];
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-title mb-2">
-                                        <h3>Basic Information</h3>
+                                        <h3 class="font-weight-bold">Basic Information</h3>
                                     </div>
                                     <div class="saleform-header mb-2">
                                         <p>Property ID: {{$product->CODE}}</p>
@@ -71,8 +87,127 @@ $payment_status = Config::get('static_array.payment_status') ?? [];
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <p><span class="font-weight-bold">Advertisement Type: </span>{{  }}</p>
+                                    <p><span
+                                            class="font-weight-bold">Advertisement Type: </span>{{ ucwords($product->PROPERTY_FOR ?? '') }}
+                                    </p>
+                                    <p><span
+                                            class="font-weight-bold">Property Type: </span>{{ $property_types[$product->F_PROPERTY_TYPE_NO] }}
+                                    </p>
+                                    <p><span class="font-weight-bold">City: </span>{{ $cities[$product->F_CITY_NO] }}
+                                    </p>
+                                    <p><span class="font-weight-bold">Area: </span>{{ $area[$product->F_AREA_NO] }}</p>
+                                    <p><span class="font-weight-bold">Address: </span>{{ $product->ADDRESS ?? '' }}</p>
+                                    <p><span
+                                            class="font-weight-bold">Condition: </span>{{ $property_conditions[$product->F_PROPERTY_CONDITION] }}
+                                    </p>
+                                    <p><span class="font-weight-bold">Title: </span>{{ $product->TITLE }}</p>
                                 </div>
+                                <div class="col-6 mt-2">
+                                    <p class="font-weight-bold">Property Size & Price</p>
+                                    <ul class="list-group list-group-flush">
+                                        @foreach($data['listing_variants'] as $key => $item)
+                                            <li class="list-group-item" style="margin-bottom: unset">
+                                                {{ $item->PROPERTY_SIZE }}
+                                                {{ $item->BEDROOM ? ', ' . ($bed_room[$item->BEDROOM] ?? '') : '' }}
+                                                {{ $item->BATHROOM ? ', ' . ($bath_room[$item->BATHROOM] ?? '') : '' }}
+                                                {{ ', ' . number_format($item->TOTAL_PRICE, 2) . 'TK' }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <p><span
+                                            class="font-weight-bold">Property Price Is: </span>{{ $product->PRICE_TYPE == 2 ? 'Negotiable' : 'Fixed' }}
+                                    </p>
+                                    <p><span
+                                            class="font-weight-bold">Total Number of Floor: </span>{{ $product->TOTAL_FLOORS }}
+                                    </p>
+                                    <p><span
+                                            class="font-weight-bold">Floor(s) Available: </span>{{ implode('th Floor, ', json_decode($product->FLOORS_AVAIABLE)) }}
+                                        th Floor</p>
+                                    <p><span
+                                            class="font-weight-bold">Facing: </span>{{ $property_facing[$property_additional_info->FACING] }}
+                                    </p>
+                                    <p><span
+                                            class="font-weight-bold">Handover Date: </span>{{ date('d-m-Y', strtotime($property_additional_info->HANDOVER_DATE)) }}
+                                    </p>
+                                    <p><span class="font-weight-bold">Description: </span></p>
+                                    "{!! $property_additional_info->DESCRIPTION !!}"
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <p class="font-weight-bold">Features</p>
+                                    <ul>
+                                        @foreach($listing_features as $key => $listing_feature)
+                                            @if(in_array($key,$features))
+                                                <li>{{ $listing_feature }}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <p class="font-weight-bold">Facilities within 1km</p>
+                                    <ul>
+                                        @foreach($nearby as $key => $item)
+                                            @if(in_array($key,$near))
+                                                <li>{{ $item }}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-md-12">
+                                    <p><span
+                                            class="font-weight-bold">Location on Map: </span>{{ $property_additional_info->LOCATION_MAP ? '' : 'N/A' }}
+                                    </p>
+                                    @if($property_additional_info->LOCATION_MAP)
+                                        <div class="map">
+                                            <iframe
+                                                src="{{$property_additional_info->LOCATION_MAP}}"
+                                                style="border:0; width:100%; height: 250px;" allowfullscreen=""
+                                                loading="lazy"></iframe>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="font-weight-bold">Images</p>
+                                    <div class="row">
+                                        @foreach($property_listing_images as $key => $item)
+                                            <div class="col-3 mb-1">
+                                                <img style="width: 100%"
+                                                     src="{{asset('/')}}{{$item->IMAGE_PATH}}"
+                                                     alt="">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p><span class="font-weight-bold">Video: </span>{{ $property_additional_info->VIDEO_CODE ?? 'N/A' }}</p>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h3 class="font-weight-bold">Property Owner Details</h3>
+                                    <p><span class="font-weight-bold">Contact Person: </span>{{ $product->CONTACT_PERSON1 }}</p>
+                                    <p><span class="font-weight-bold">Mobile: </span>{{ $product->MOBILE1 }}</p>
+                                    <p><span class="font-weight-bold">Second Contact Person: </span>{{ $product->CONTACT_PERSON2 }}</p>
+                                    <p><span class="font-weight-bold">Mobile: </span>{{ $product->MOBILE2 }}</p>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h3 class="font-weight-bold">SEO</h3>
+                                    <p><span class="font-weight-bold">Meta Title: </span>{{ $product->listingSEO->META_TITLE ?? 'N/A' }}</p>
+                                    <p><span class="font-weight-bold">Meta Description: </span>{{ $product->listingSEO->META_DESCRIPTION ?? 'N/A' }}</p>
+                                    <p><span class="font-weight-bold">URL Slug: </span>{{ $product->listingSEO->META_URL ?? 'N/A' }}</p>
+                                    <p><span class="font-weight-bold">Image: </span></p>
+                                    <img src="{{ asset($product->listingSEO->OG_IMAGE_PATH ?? '') }}" alt="" style="max-height: 150px;max-width: 200px">
+                                </div>
+
+                                <div class="col-md-12">
+                                    <p><span class="font-weight-bold">Listing Type</span>: {{ $property_listing_types[$product->F_LISTING_TYPE] }}</p>
+                                    <p><span class="font-weight-bold">Publishing Status</span>: {{ $property_status[$product->STATUS] }}</p>
+                                    <p><span class="font-weight-bold">Payment Status</span>: {{ $product->PAYMENT_STATUS ? 'Paid' : 'Due' }}</p>
+                                    <p><span class="font-weight-bold">Verified by BDF</span>: {{ $product->IS_VERIFIED ? 'Yes' : 'No' }}</p>
+                                    <p><span class="font-weight-bold">Need Payment to View Contact</span>: {{ $product->CI_PAYMENT ? 'Yes' : 'No' }}</p>
+                                </div>
+
                             </div>
                         </div>
                     </div>
