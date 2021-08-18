@@ -91,8 +91,13 @@ class Listings extends Model
 
     public function store($request)
     {
+        if( Auth::user()->TOTAL_LISTING >= Auth::user()->LISTING_LIMIT ){
+            return $this->formatResponse(false, 'Your listings limit is overed !', 'listings.create');
+        }
+
         DB::beginTransaction();
         try {
+
             if ($request->p_type == 'A') {
                 $floors = $request->floor;
                 $floor_available = json_encode($request->floor_available);
@@ -133,7 +138,7 @@ class Listings extends Model
             $list->CREATED_BY       = Auth::user()->PK_NO;
             $list->save();
 
-//            for store listing variants
+//           for store listing variants
             $property_size = $request->size;
             foreach ($property_size as $key => $item) {
 

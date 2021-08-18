@@ -40,22 +40,23 @@
                                 </form>
                             </div>
                         </div>
+                        @if(Auth::user()->USER_TYPE == 3)
                         <div class="user-wrapper">
                             <div class="user-nav">
                                 <div class="row text-center">
                                     <div class="col-4 mb-2">
                                         <div class="user-box">
                                             <a href="#">
-                                                <span>01</span><br/>
-                                                Suggested Properties
+                                                <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/>
+                                                My Properties
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-4 mb-2">
                                         <div class="user-box box2">
                                             <a href="#">
-                                                <span>02</span><br/>
-                                                Contacted
+                                                <span>{{ Auth::user()->TOTAL_LEAD }}</span><br/>
+                                                Leads
                                             </a>
                                         </div>
                                     </div>
@@ -70,6 +71,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+
                         @if(isset($data['properties']) && count($data['properties']))
                             <div class="property-wrapper">
                                 <div class="new-property">

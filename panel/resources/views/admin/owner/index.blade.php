@@ -202,7 +202,7 @@
                         {
                             data: 'TOTAL_LISTING',
                             name: 'TOTAL_LISTING',
-                            className: 'text-center'
+                            className: 'text-center',
                             searchable: true
                         },
                         {
