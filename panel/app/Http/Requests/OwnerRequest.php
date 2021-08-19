@@ -33,7 +33,8 @@ class OwnerRequest extends FormRequest
                 'images' => 'sometimes|array|min:1',
                 'images.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif',
                 'mobile_no' => 'required|max:20',
-                'listing_limit' => 'required'
+                'listing_limit' => 'required',
+                'auto_payment_renew' => 'required|min:0|max:1'
             ];
         } else {
             $rules = [
@@ -47,7 +48,8 @@ class OwnerRequest extends FormRequest
                 'office_address' => 'required|max:200',
                 'mobile_no' => 'required|max:20',
                 'about_company' => 'required',
-                'listing_limit' => 'required'
+                'listing_limit' => 'required',
+                'auto_payment_renew' => 'required|min:0|max:1'
             ];
         }
 
