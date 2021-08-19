@@ -222,7 +222,7 @@ class OwnerAbstract implements OwnerInterface
         }
 
         DB::commit();
-        return $this->formatResponse($status, $msg, 'admin.owner.recharge');
+        return $this->formatResponse($status, $msg, 'admin.owner.payment');
     }
 
 
