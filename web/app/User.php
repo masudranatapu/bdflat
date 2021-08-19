@@ -64,6 +64,7 @@ class User extends Authenticatable
             $list->NAME                     = $request->name;
 //            $list->EMAIL                    = $request->email;
             $list->MOBILE_NO                = $request->mobile;
+            $list->AUTO_PAYMENT_RENEW = $request->payment_auto_renew;
 
             if ($request->hasfile('image')) {
                 if(\File::exists(public_path($list->PROFILE_PIC_URL))){

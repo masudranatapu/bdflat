@@ -55,8 +55,8 @@
                       <th class="" style="min-width: 100px;">Meta Description</th>
                       <th class="" style="min-width: 100px;">Body Description</th>
                       <th class="" style="min-width: 100px;">URL</th>
-                      <th class="" style="min-width: 100px;">Image</th>
-                      <th class="" style="min-width: 100px;">Icon</th>
+                      <th class="text-center" style="min-width: 100px;">Image</th>
+                      <th class="text-center" style="min-width: 100px;">Icon</th>
                       <th class="text-center" style="">Order</th>
                       <th class="text-center" style="width: 200px;">Action</th>
                     </tr>
@@ -70,11 +70,15 @@
                         <td>{{ $row->META_DESC }}</td>
                         <td>{{ $row->BODY_DESC }}</td>
                         <td>{{ $row->URL_SLUG }}</td>
-                        <td>
-                            <img src="{{ asset($row->IMG_PATH) }}" alt="" style="max-width: 150px;max-height: 120px">
+                        <td class="text-center">
+                            <a href="{{ asset($row->IMG_PATH) }}" target="_blank">
+                                <img src="{{ asset($row->IMG_PATH) }}" alt="" style="max-width: 150px;max-height: 120px">
+                            </a>
                         </td>
-                        <td>
-                        <img src="{{ asset($row->ICON_PATH) }}" alt="" style="max-width: 150px;max-height: 120px">
+                        <td class="text-center">
+                            <a href="{{ asset($row->ICON_PATH) }}" target="_blank">
+                                <img src="{{ asset($row->ICON_PATH) }}" alt="" style="max-width: 150px;max-height: 120px">
+                            </a>
                         </td>
                       <td class="text-center" style="">{{ $row->ORDER_ID }}</td>
                         <td class="text-center" style="width: 200px;">

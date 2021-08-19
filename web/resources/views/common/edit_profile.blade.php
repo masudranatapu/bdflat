@@ -81,10 +81,23 @@ $user_data = $data['user_data'] ?? [];
                                     <img class="profile_photo" width="50" src="{{asset($user_data->PROFILE_PIC_URL)}}" alt="{{ $user_data->NAME ?? '' }}"></a>
                                 </td>
                             </tr>
+                            @if(in_array($user_data->USER_TYPE, [2, 3, 4, 5]))
+                            <tr>
+                                <td class="label">Property Payment Auto Renew :</td>
+                                <td>
+                                    <div class="form-group mb-0 {!! $errors->has('payment_auto_renew') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('payment_auto_renew', [1 => 'Active', 0 => 'Inactive'], old('payment_auto_renew') ?? $user_data->AUTO_PAYMENT_RENEW, [ 'class' => 'form-control', 'style' => 'padding: .5rem 1rem;height:unset', 'data-validation-required-message' => 'This field is required']) !!}
+                                            {!! $errors->first('payment_auto_renew', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endif
                             <tr>
                                 <td></td>
                                 <td>
-                                    <div class="advertisment-btn">
+                                    <div class="advertisment-btn mt-2">
                                         {!! Form::submit('update', ['id' => 'submit']) !!}
                                     </div>
                                 </td>
