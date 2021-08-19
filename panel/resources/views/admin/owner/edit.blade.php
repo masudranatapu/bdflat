@@ -11,28 +11,13 @@
     <li class="breadcrumb-item active">Update Owner</li>
 @endsection
 
-<!--push from page-->
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/custom/css/custom.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
-        #scrollable-dropdown-menu2 .tt-menu {
-            max-height: 260px;
-            overflow-y: auto;
-            width: 100%;
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
-
-        .twitter-typeahead {
-            display: block !important;
-        }
-
-        .tt-hint {
-            color: #999 !important;
-        }
+        #scrollable-dropdown-menu2 .tt-menu{max-height:260px;overflow-y:auto;width:100%;border:1px solid #333;border-radius:5px}.twitter-typeahead{display:block!important}.tt-hint{color:#999!important}
     </style>
 @endpush
 

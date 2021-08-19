@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('app-assets/lightgallery/dist/css/lightgallery.min.css') }}">
     <style>
         td table {width: auto !important;}
+        a.ui-state-default{background-color:red!important}
+        .ctm{min-width: 140px; display: inline-block;}
     </style>
 @endpush('custom_css')
 
@@ -69,19 +71,18 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-title mb-2">
                                         <h3 class="font-weight-bold">Basic Information</h3>
                                     </div>
                                     <div class="saleform-header mb-2">
-                                        <p>Property ID: {{$product->CODE}}</p>
-                                        <p>Create Date: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
-                                        <p>Modified On: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
-                                        <p>Owner Name: {{ $product->getUser->NAME }}</p>
-                                        <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
-                                        <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? 'N/A' }}</p>
-                                        <p>Expire
-                                            Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
+                                        <p><span class="ctm">Property ID </span>: {{$product->CODE}}</p>
+                                        <p><span class="ctm">Create Date </span>: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
+                                        <p><span class="ctm">Modified On </span>: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
+                                        <p><span class="ctm">Owner Name </span>: {{ $product->getUser->NAME }}</p>
+                                        <p><span class="ctm">Owner Type </span>: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
+                                        <p><span class="ctm">Payment Status </span>: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
+                                        <p><span class="ctm">Expire Date </span>: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
                                                 Not set yet @endif </p>
                                     </div>
                                 </div>

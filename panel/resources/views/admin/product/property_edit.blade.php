@@ -7,45 +7,20 @@
 @section('page-name') Property Edit @endsection
 
 @push('custom_css')
-    {{--    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
-
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link
-        href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
         rel="stylesheet">
 
     <style>
-        .show_img {
-            height: 82px;
-            width: 82px;
-            object-fit: cover
-        }
-
-        .del_img {
-            background: #bbb;
-            padding: 2px 7px;
-            border-radius: 77px;
-            font-weight: 700;
-            color: #000;
-            position: absolute;
-            top: 5px;
-            right: 20px
-        }
-
-        .del_btn {
-            border-radius: 75%;
-            height: 26px;
-            width: 26px;
-            position: absolute;
-            right: -8px;
-            top: 8px
-        }
+        .show_img{height:82px;width:82px;object-fit:cover}
+        .del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}.del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}
+        .select2{width:100%!important}
+        a.ui-state-default{background-color:red!important}
+        .ctm{min-width: 140px; display: inline-block;}
     </style>
 @endpush
 
@@ -112,14 +87,13 @@
                                                     <h3>Basic Information</h3>
                                                 </div>
                                                 <div class="saleform-header mb-2">
-                                                    <p>Property ID: {{$product->CODE}}</p>
-                                                    <p>Create Date: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
-                                                    <p>Modified On: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
-                                                    <p>Owner Name: {{ $product->getUser->NAME }}</p>
-                                                    <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
-                                                    <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
-                                                    <p>Expire
-                                                        Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
+                                                    <p><span class="ctm">Property ID </span>: {{$product->CODE}}</p>
+                                                    <p><span class="ctm">Create Date </span>: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
+                                                    <p><span class="ctm">Modified On </span>: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
+                                                    <p><span class="ctm">Owner Name </span>: {{ $product->getUser->NAME }}</p>
+                                                    <p><span class="ctm">Owner Type </span>: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
+                                                    <p><span class="ctm">Payment Status </span>: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
+                                                    <p><span class="ctm">Expire Date </span>: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
                                                             Not set yet @endif </p>
                                                 </div>
                                             </div>
@@ -158,8 +132,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <hr><br>
 
+                                        <div class="row">
                                             <!-- Advertisment Type -->
                                             <div class="col-md-6">
                                                 <div class="form-group {!! $errors->has('alert') ? 'error' : '' !!}">
@@ -253,7 +228,7 @@
                                             </div>
                                             </div>
                                         </div>
-
+<hr><br>
                                         <!-- Property Size & Price -->
                                         <div class="form-title mb-2 mt-2">
                                             <h3>Property Size & Price</h3>
@@ -355,7 +330,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    {{ Form::label('','Floor Available:',['class' => 'col-sm-4 label-title advertis-label']) }}
+                                                    {{ Form::label('','Floor Available:',['class' => 'label-title advertis-label']) }}
                                                         <div class="form-group {!! $errors->has('floor_available') ? 'error' : '' !!}">
                                                             <div class="controls">
                                                                 {!! Form::select('floor_available[]',$floor_lists, json_decode($product->FLOORS_AVAIABLE),array('multiple'=>'multiple','class'=>'form-control floor_available_select')) !!}
@@ -444,11 +419,13 @@
                                                         {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
+                                                @if($property_additional_info->LOCATION_MAP)
                                                 <div class="map">
-                                                    <iframe src="{{$property_additional_info->LOCATION_MAP}}"
+                                                    <iframe src="{{ $property_additional_info->LOCATION_MAP }}"
                                                         style="border:0; width:100%; height: 250px;" allowfullscreen=""
                                                         loading="lazy"></iframe>
                                                 </div>
+                                                @endif
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -460,16 +437,46 @@
                                                 </div>
                                             </div>
                                           </div>
-                                          
 
-
+                                            <!-- Image & video -->
+                                           <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-title mb-2 mt-2">
+                                                    <h3>Images</h3>
+                                                </div>
+                                                <div
+                                                    class="row form-group {!! $errors->has('image') ? 'error' : '' !!}">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            @foreach($property_listing_images as $key => $item)
+                                                                <div class="col-3 mb-1 remove_img{{$item->PK_NO}}">
+                                                                    <a href="javascript:void(0)" class="del_img"
+                                                                       data-id="{{$item->PK_NO}}">
+                                                                        ✕
+                                                                    </a>
+                                                                    <img class="show_img"
+                                                                         src="{{asset('/')}}{{$item->IMAGE_PATH}}"
+                                                                         alt="">
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="controls">
+                                                            <div id="imageFile" style="padding-top: .5rem;"></div>
+                                                        </div>
+                                                        {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           </div>
+                                           <hr>
+                                           <br>
+                                           <div class="row">
                                             <!-- Property Owner Details -->
                                             <div class="col-md-6">
                                                 <div class="form-title mb-2 mt-2">
                                                     <h3>Property Owner Details</h3>
                                                 </div>
-                                                <div
-                                                    class="form-group {!! $errors->has('contact_person') ? 'error' : '' !!}">
+                                                <div class="form-group {!! $errors->has('contact_person') ? 'error' : '' !!}">
                                                     {{ Form::label('contact_person','Contact Person',['class' => 'label-title']) }}
                                                     <div class="controls">
                                                         {!! Form::text('contact_person',$product->CONTACT_PERSON1, [ 'id'=>'contact_person','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
@@ -543,8 +550,9 @@
                                                     {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
+                                           </div>
 
-
+<hr><br>
                                         <div class="row">
                                             <!-- Listing Type -->
                                             <div class="col-md-6">

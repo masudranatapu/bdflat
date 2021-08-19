@@ -133,6 +133,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('meta_description', 'Meta Description *', ['class' => 'label-title'], false) !!}

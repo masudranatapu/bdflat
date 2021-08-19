@@ -659,7 +659,7 @@ ul[role="alert"]{
 }
 
 
-.saleform-wrapper .form-group.validate input, 
+.saleform-wrapper .form-group.validate input,
 .saleform-wrapper .form-group.validate select,
 .saleform-wrapper .form-group.validate textarea {
     color: #000;
@@ -782,3 +782,4 @@ ul[role="alert"]{
     border-radius: 50px !important;
 }
 
+.datepicker { background-color: #fff ; color: #333 ;}
