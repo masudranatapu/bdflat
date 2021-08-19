@@ -35,8 +35,6 @@ class ListingsRequest extends FormRequest
             'property_price'    => 'required|integer',
             'contact_person'    => 'required|max:45',
             'mobile'            => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
-            'contact_person_2'  => 'required|max:45',
-            'mobile_2'          => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
             'floor'             => 'nullable|integer',
             'facing'            => 'nullable|integer',
             'description'       => 'max:4000',

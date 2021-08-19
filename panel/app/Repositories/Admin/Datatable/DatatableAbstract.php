@@ -27,7 +27,6 @@ class DatatableAbstract implements DatatableInterface
 
     public function getSeeker($request)
     {
-
         $dataSet = DB::table("WEB_USER as c")->where('STATUS', '!=', 3)->where('USER_TYPE', 1)->orderBy('PK_NO', 'DESC')->get();
         return Datatables::of($dataSet)
             ->addColumn('status', function ($dataSet) {
@@ -49,14 +48,17 @@ class DatatableAbstract implements DatatableInterface
             })
             ->addColumn('action', function ($dataSet) {
                 $roles = userRolePermissionArray();
-                $edit = $payment = '';
+                $edit = $view = $payment = '';
+                if (hasAccessAbility('view_seeker', $roles)) {
+                    $view = ' <a href="' . route("admin.seeker.view", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-info mb-05 mr-05" title="View">View</a>';
+                }
                 if (hasAccessAbility('edit_seeker', $roles)) {
-                    $edit = ' <a href="' . route("admin.seeker.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Edit">Edit</a>';
+                    $edit = ' <a href="' . route("admin.seeker.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-warning mb-05 mr-05" title="Edit">Edit</a>';
                 }
                 if (hasAccessAbility('view_seeker_payment', $roles)) {
                     $payment = ' <a href="' . route("admin.seeker.payment", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="View Payment">Payment</a>';
                 }
-                return $edit . $payment;
+                return $view . $edit . $payment;
 
             })
             ->rawColumns(['action', 'status'])
@@ -98,7 +100,10 @@ class DatatableAbstract implements DatatableInterface
             })
             ->addColumn('action', function ($dataSet) {
                 $roles = userRolePermissionArray();
-                $edit = $payment = '';
+                $edit = $cp = $view = $payment = '';
+                if (hasAccessAbility('view_owner', $roles)) {
+                    $view = ' <a href="' . route("admin.owner.view", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-info mb-05 mr-05" title="View">View</a>';
+                }
                 if (hasAccessAbility('edit_owner', $roles)) {
                     $edit = ' <a href="' . route("admin.owner.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Edit">Edit</a>';
                 }
@@ -108,7 +113,7 @@ class DatatableAbstract implements DatatableInterface
                 if (hasAccessAbility('edit_owner', $roles)) {
                     $cp = ' <a href="' . route("admin.owner.password.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Change Password">CP</a>';
                 }
-                return $edit . $payment . $cp;
+                return $view . $edit . $payment . $cp;
             })
             ->rawColumns(['action', 'status'])
             ->make(true);

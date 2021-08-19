@@ -420,7 +420,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('contact_person_2') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('contact_person_2', old('contact_person_2', $row->CONTACT_PERSON2), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::text('contact_person_2', old('contact_person_2', $row->CONTACT_PERSON2), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user']) !!}
                                             {!! $errors->first('contact_person_2', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -431,7 +431,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::number('mobile_2', old('mobile_2', $row->MOBILE2), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::number('mobile_2', old('mobile_2', $row->MOBILE2), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Property Owner Number']) !!}
                                             {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
