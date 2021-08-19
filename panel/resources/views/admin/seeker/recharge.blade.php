@@ -126,7 +126,7 @@
                                     <div class="form-group">
                                         {{ Form::label('payment_date','Payment Date') }}
                                         <div class="controls">
-                                            {!! Form::text('payment_date', old('payment_date'), ['class'=>'form-control datepicker', 'placeholder'=>'Payment Date', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::text('payment_date', old('payment_date', date('Y-m-d')), ['class'=>'form-control datepicker', 'placeholder'=>'Payment Date', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('payment_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

@@ -15,9 +15,7 @@
 use App\Http\Controllers\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home.home');
-});
+Route::get('/', 'HomeController@index')->name('web.home');
 
 Route::get('/cc', function () {
     \Artisan::call('cache:clear');
