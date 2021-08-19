@@ -1,7 +1,10 @@
 @extends('admin.layout.master')
 
-@section('product_list','active')
-@section('Product Management','open')
+@section('Property Management','open')
+@section('property_list','active')
+
+@section('title') @lang('product.product_view') @endsection
+@section('page-name') Property | View @endsection
 
 <!--push from page-->
 @push('custom_css')
@@ -12,15 +15,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
     <link rel="stylesheet" href="{{ asset('app-assets/lightgallery/dist/css/lightgallery.min.css') }}">
     <style>
-        td table {
-            width: auto !important;
-        }
+        td table {width: auto !important;}
     </style>
-
 @endpush('custom_css')
-
-@section('title') @lang('product.product_view') @endsection
-@section('page-name')Property | View @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('product.breadcrumb_title')  </a></li>
@@ -28,28 +25,30 @@
 @endsection
 
 <?php
-$roles = userRolePermissionArray();
-$data = $data ?? [];
-$product = $product ?? [];
-$property_types = $data['property_type'] ?? [];
-$cities = $data['city'] ?? [];
-$area = $data['area'] ?? [];
-$property_conditions = $data['property_condition'] ?? [];
-$listing_variants = $data['listing_variants'] ?? [];
-$floor_lists = $data['floor_list'] ?? [];
-$property_facing = $data['property_facing'] ?? [];
-$property_additional_info = $data['property_additional_info'] ?? [];
-$listing_features = $data['listing_feature'] ?? [];
-$nearby = $data['near_by'] ?? [];
-$property_listing_types = $data['property_listing_type'] ?? [];
-$property_listing_images = $data['property_listing_images'] ?? [];
-$features = json_decode($property_additional_info->F_FEATURE_NOS) ?? [];
-$near = json_decode($property_additional_info->F_NEARBY_NOS) ?? [];
-$bed_room = Config::get('static_array.bed_room') ?? [];
-$bath_room = Config::get('static_array.bath_room') ?? [];
-$user_type = Config::get('static_array.user_type') ?? [];
-$property_status = Config::get('static_array.property_status') ?? [];
-$payment_status = Config::get('static_array.payment_status') ?? [];
+
+    $roles              = userRolePermissionArray();
+    $data               = $data ?? [];
+    $product            = $product ?? [];
+    $property_types     = $data['property_type'] ?? [];
+    $cities             = $data['city'] ?? [];
+    $area               = $data['area'] ?? [];
+    $property_conditions = $data['property_condition'] ?? [];
+    $listing_variants   = $data['listing_variants'] ?? [];
+    $floor_lists        = $data['floor_list'] ?? [];
+    $property_facing    = $data['property_facing'] ?? [];
+    $property_additional_info = $data['property_additional_info'] ?? [];
+    $listing_features   = $data['listing_feature'] ?? [];
+    $nearby             = $data['near_by'] ?? [];
+    $property_listing_types = $data['property_listing_type'] ?? [];
+    $property_listing_images = $data['property_listing_images'] ?? [];
+    $features           = json_decode($property_additional_info->F_FEATURE_NOS) ?? [];
+    $near               = json_decode($property_additional_info->F_NEARBY_NOS) ?? [];
+    $bed_room           = Config::get('static_array.bed_room') ?? [];
+    $bath_room          = Config::get('static_array.bath_room') ?? [];
+    $user_type          = Config::get('static_array.user_type') ?? [];
+    $property_status    = Config::get('static_array.property_status') ?? [];
+    $payment_status     = Config::get('static_array.payment_status') ?? [];
+
 ?>
 
 @section('content')
@@ -57,7 +56,7 @@ $payment_status = Config::get('static_array.payment_status') ?? [];
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-success">
-                    <div class="card-content">
+                    <div class="card-content container">
                         <div class="card-header">
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -107,7 +106,7 @@ $payment_status = Config::get('static_array.payment_status') ?? [];
                                     <ul class="list-group list-group-flush">
                                         @foreach($data['listing_variants'] as $key => $item)
                                             <li class="list-group-item" style="margin-bottom: unset">
-                                                {{ $item->PROPERTY_SIZE }}
+                                                {{ $item->PROPERTY_SIZE }} Sqft
                                                 {{ $item->BEDROOM ? ', ' . ($bed_room[$item->BEDROOM] ?? '') : '' }}
                                                 {{ $item->BATHROOM ? ', ' . ($bath_room[$item->BATHROOM] ?? '') : '' }}
                                                 {{ ', ' . number_format($item->TOTAL_PRICE, 2) . 'TK' }}
@@ -116,23 +115,15 @@ $payment_status = Config::get('static_array.payment_status') ?? [];
                                     </ul>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <p><span
-                                            class="font-weight-bold">Property Price Is: </span>{{ $product->PRICE_TYPE == 2 ? 'Negotiable' : 'Fixed' }}
-                                    </p>
-                                    <p><span
-                                            class="font-weight-bold">Total Number of Floor: </span>{{ $product->TOTAL_FLOORS }}
-                                    </p>
-                                    <p><span
-                                            class="font-weight-bold">Floor(s) Available: </span>{{ implode('th Floor, ', json_decode($product->FLOORS_AVAIABLE)) }}
-                                        th Floor</p>
-                                    <p><span
-                                            class="font-weight-bold">Facing: </span>{{ $property_facing[$property_additional_info->FACING] }}
-                                    </p>
-                                    <p><span
-                                            class="font-weight-bold">Handover Date: </span>{{ date('d-m-Y', strtotime($property_additional_info->HANDOVER_DATE)) }}
-                                    </p>
+                                    <p><span class="font-weight-bold">Property Price Is: </span>{{ $product->PRICE_TYPE == 2 ? 'Negotiable' : 'Fixed' }}</p>
+                                    <p><span class="font-weight-bold">Total Number of Floor: </span>{{ $product->TOTAL_FLOORS }}</p>
+                                    @if($product->FLOORS_AVAIABLE)
+                                    <p><span class="font-weight-bold">Floor(s) Available: </span>{{ implode('th Floor, ', json_decode($product->FLOORS_AVAIABLE)) }} th Floor</p>
+                                    @endif
+                                    <p><span class="font-weight-bold">Facing: </span>{{ $property_facing[$property_additional_info->FACING] }}</p>
+                                    <p><span class="font-weight-bold">Handover Date: </span>{{ date('d-m-Y', strtotime($property_additional_info->HANDOVER_DATE)) }}</p>
                                     <p><span class="font-weight-bold">Description: </span></p>
-                                    "{!! $property_additional_info->DESCRIPTION !!}"
+                                    {!! $property_additional_info->DESCRIPTION !!}
                                 </div>
                                 <div class="col-12 mt-2">
                                     <p class="font-weight-bold">Features</p>

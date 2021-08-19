@@ -104,22 +104,60 @@
                             <div class="card-body card-dashboard">
                                 <div class="saleform-wrapper mt-2">
                                     <div class="container">
-                                        {{ $errors }}
-                                        <div class="form-title mb-2">
-                                            <h3>Basic Information</h3>
-                                        </div>
-                                        <div class="saleform-header mb-2">
-                                            <p>Property ID: {{$product->CODE}}</p>
-                                            <p>Create Date: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
-                                            <p>Modified On: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
-                                            <p>Owner Name: {{ $product->getUser->NAME }}</p>
-                                            <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
-                                            <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
-                                            <p>Expire
-                                                Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
-                                                    Not set yet @endif </p>
-                                        </div>
                                         {!! Form::open([ 'route' => ['admin.product.update', $product->PK_NO], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-title mb-2">
+                                                    <h3>Basic Information</h3>
+                                                </div>
+                                                <div class="saleform-header mb-2">
+                                                    <p>Property ID: {{$product->CODE}}</p>
+                                                    <p>Create Date: {{date('M d, Y', strtotime($product->CREATED_AT))}}</p>
+                                                    <p>Modified On: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
+                                                    <p>Owner Name: {{ $product->getUser->NAME }}</p>
+                                                    <p>Owner Type: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
+                                                    <p>Payment Status: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
+                                                    <p>Expire
+                                                        Date: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
+                                                            Not set yet @endif </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-title mb-2 mt-2">
+                                                    <h3>Billing information</h3>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="billing-amounot">
+                                                        <h5>Billin amount: 25 tk</h5>
+                                                    </div>
+                                                    <input type="radio" checked="" name="billing" value="pending"
+                                                           id="pending" tabindex="{{ ++$tabIndex}}">
+                                                    <label for="pending">Due</label>
+                                                    <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing"
+                                                           value="paid" id="paid">
+                                                    <label for="paid">Paid</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" name="is_verified"
+                                                               {{ $product->IS_VERIFIED ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}"
+                                                               class="custom-control-input"
+                                                               id="customSwitch1">
+                                                        <label class="custom-control-label" for="customSwitch1">Verified
+                                                            BDF</label>
+                                                    </div>
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" name="ci_payment"
+                                                               {{ $product->CI_PAYMENT ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}"
+                                                               class="custom-control-input"
+                                                               id="customSwitch2">
+                                                        <label class="custom-control-label" for="customSwitch2">Need
+                                                            payment to view</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
 
                                             <!-- Advertisment Type -->
@@ -204,6 +242,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="label-title">URl Slug</label>
+                                                <input type="text" class="form-control url_slug"
+                                                       tabindex="{{ ++$tabIndex}}"
+                                                       {{ $product->URL_SLUG_LOCKED ? 'readonly' : '' }} id="url_slug"
+                                                       value="{{ $product->listingSEO && $product->listingSEO->META_URL ? $product->listingSEO->META_URL : $product->URL_SLUG }}"
+                                                       name="meta_url">
+                                            </div>
+                                            </div>
                                         </div>
 
                                         <!-- Property Size & Price -->
@@ -276,7 +324,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="controls">
-                                                    <label class="label-title">Property property price is</label>
+                                                    <label class="label-title">Property price is</label>
                                                     {!! Form::radio('property_priceChek','1', $product->PRICE_TYPE==1,[ 'id' => 'fixed','checked'=>'checked']) !!}
                                                     {{ Form::label('fixed','Fixed') }}
 
@@ -287,6 +335,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr>
+                                        <br>
 
 
                                         <div class="form-title mb-2 mt-2">
@@ -305,7 +355,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    {{ Form::label('','Floor Available:',['class' => 'col-sm-4 advertis-label']) }}
+                                                    {{ Form::label('','Floor Available:',['class' => 'col-sm-4 label-title advertis-label']) }}
                                                         <div class="form-group {!! $errors->has('floor_available') ? 'error' : '' !!}">
                                                             <div class="controls">
                                                                 {!! Form::select('floor_available[]',$floor_lists, json_decode($product->FLOORS_AVAIABLE),array('multiple'=>'multiple','class'=>'form-control floor_available_select')) !!}
@@ -381,53 +431,26 @@
                                                     {!! $errors->first('nearby', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
+                                            </div>
+
 
                                             <!-- map -->
+                                          <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-title mb-2 mt-2">
-                                                    <h3>Property Location on map</h3>
-                                                </div>
-                                                <div class="controls">
-                                                    {!! Form::text('map_url', $property_additional_info->LOCATION_MAP, [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL', 'tabIndex' => ++$tabIndex]) !!}
-                                                    {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
+                                                <div class="form-group">
+                                                    {{ Form::label('map_url','Property Location on map:',['class' => 'label-title']) }}
+                                                    <div class="controls">
+                                                        {!! Form::text('map_url', $property_additional_info->LOCATION_MAP, [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL', 'tabIndex' => ++$tabIndex]) !!}
+                                                        {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
+                                                    </div>
                                                 </div>
                                                 <div class="map">
-                                                    <iframe
-                                                        src="{{$property_additional_info->LOCATION_MAP}}"
+                                                    <iframe src="{{$property_additional_info->LOCATION_MAP}}"
                                                         style="border:0; width:100%; height: 250px;" allowfullscreen=""
                                                         loading="lazy"></iframe>
                                                 </div>
                                             </div>
-
-                                            <!-- Image & video -->
                                             <div class="col-md-6">
-                                                <div class="form-title mb-2 mt-2">
-                                                    <h3>Image & Video</h3>
-                                                </div>
-                                                <div
-                                                    class="row form-group {!! $errors->has('image') ? 'error' : '' !!}">
-                                                    <div class="col-sm-8">
-                                                        <div class="row">
-                                                            @foreach($property_listing_images as $key => $item)
-                                                                <div class="col-3 mb-1 remove_img{{$item->PK_NO}}">
-                                                                    <a href="javascript:void(0)" class="del_img"
-                                                                       data-id="{{$item->PK_NO}}">
-                                                                        ✕
-                                                                    </a>
-                                                                    <img class="show_img"
-                                                                         src="{{asset('/')}}{{$item->IMAGE_PATH}}"
-                                                                         alt="">
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="controls">
-                                                            <div id="imageFile" style="padding-top: .5rem;"></div>
-                                                        </div>
-                                                        {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
-                                                    </div>
-                                                </div>
-
-
                                                 <div class="form-group">
                                                     {{ Form::label('videoURL','Video:',['class' => 'label-title']) }}
                                                     <div class="controls">
@@ -436,6 +459,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                          </div>
+                                          
+
 
                                             <!-- Property Owner Details -->
                                             <div class="col-md-6">
@@ -498,14 +524,7 @@
                                                               tabindex="{{ ++$tabIndex}}"
                                                               id="metaDescr">{{ $product->listingSEO->META_DESCRIPTION ?? '' }}</textarea>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="label-title">URl Slug</label>
-                                                    <input type="text" class="form-control url_slug"
-                                                           tabindex="{{ ++$tabIndex}}"
-                                                           {{ $product->URL_SLUG_LOCKED ? 'readonly' : '' }} id="url_slug"
-                                                           value="{{ $product->listingSEO && $product->listingSEO->META_URL ? $product->listingSEO->META_URL : $product->URL_SLUG }}"
-                                                           name="meta_url">
-                                                </div>
+
                                                 <div
                                                     class="form-group">
                                                     <label class="label-title">OG Image</label>
@@ -524,7 +543,7 @@
                                                     {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
-                                        </div>
+
 
                                         <div class="row">
                                             <!-- Listing Type -->
@@ -563,43 +582,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <!-- Biling -->
-                                            <div class="col-12">
-                                                <div class="form-title mb-2 mt-2">
-                                                    <h3>Billing information</h3>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="billing-amounot">
-                                                        <h5>Billin amount: 25 tk</h5>
-                                                    </div>
-                                                    <input type="radio" checked="" name="billing" value="pending"
-                                                           id="pending" tabindex="{{ ++$tabIndex}}">
-                                                    <label for="pending">Due</label>
-                                                    <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing"
-                                                           value="paid" id="paid">
-                                                    <label for="paid">Paid</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" name="is_verified"
-                                                               {{ $product->IS_VERIFIED ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}"
-                                                               class="custom-control-input"
-                                                               id="customSwitch1">
-                                                        <label class="custom-control-label" for="customSwitch1">Verified
-                                                            BDF</label>
-                                                    </div>
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" name="ci_payment"
-                                                               {{ $product->CI_PAYMENT ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}"
-                                                               class="custom-control-input"
-                                                               id="customSwitch2">
-                                                        <label class="custom-control-label" for="customSwitch2">Need
-                                                            payment to view</label>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             <div class="col-12 mt-2">
                                                 <a href="{{ route('admin.product.list') }}"
                                                    class="btn btn-info">Cancel</a>
