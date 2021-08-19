@@ -40,6 +40,13 @@ class OwnerController extends BaseController
         return view('admin.owner.index', compact('data'));
     }
 
+    public function getView($id)
+    {
+        $this->resp = $this->owner->getShow($id);
+        $data['owner'] = $this->resp->data;
+        return view('admin.owner.view', compact('data'));
+    }
+
     public function getEdit($id)
     {
         $this->resp = $this->owner->getShow($id);
