@@ -2,7 +2,7 @@
 @push('custom_css')
 @endpush
 @php
-$panel_path = 'http://bdflatpanel.local/';
+$panel_path = env('PANEL_PATH');
 @endphp
 @section('content')
     <!--

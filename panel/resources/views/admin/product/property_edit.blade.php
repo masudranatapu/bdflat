@@ -611,6 +611,54 @@
         </section>
     </div>
 
+    <div class="modal fade text-left" id="paidModal" tabindex="-1" role="dialog" aria-labelledby="brand_name" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="brand_name">Payment for the property</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                    <form method="POST" action="http://dev.ukshop.my/product-model/store" accept-charset="UTF-8" class="form-horizontal" novalidate="" id="model_update_frm" enctype="multipart/form-data"><input name="_token" type="hidden" value="IGLL3FtXu9uC20rps5E8XLzsXt3h8K19J7HgJxfb">
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-sm text-center">
+                            <thead>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                                <tr>
+                                    <th>01-01-2021</th>
+                                    <th>01-02-2021</th>
+                                    <th>30</th>
+                                    <th>
+                                        <button class="btn btn-sm btn-info">Paid</button>
+                                        <input type="reset" class="btn btn-secondary btn-sm" data-dismiss="modal" value="Close">
+                                    </th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                        </div>
+
+                        {{-- <div class="form-group ">
+                            <label>Name<span class="text-danger">*</span></label>
+                            <div class="controls">
+                                <input class="form-control mb-1 model_name" data-validation-required-message="This field is required" placeholder="Enter model name" tabindex="1" name="name" type="text">
+
+                            <div class="help-block"></div></div>
+                        </div> --}}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 @push('custom_js')
@@ -778,6 +826,14 @@
                 }
             });
         }
+
+        //Payment
+
+        $(document).on('click','#paid', function(e){
+            $('#paidModal').modal('show');
+        })
+
+
     </script>
 
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
