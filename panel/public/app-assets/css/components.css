@@ -3632,7 +3632,7 @@ input[type="month"].form-control {
   .select2-container--classic .select2-selection--multiple .select2-selection__choice,
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     padding: 1px 11px  !important;
-    margin-top: 0px !important;
+    margin-top: 2px !important;
     background-color: #666ee8 !important;
     border-color: transparent !important;
     color: #fff;
