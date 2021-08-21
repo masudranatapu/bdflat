@@ -174,19 +174,6 @@ class ProductController extends BaseController
     {
         $data[] = '';
         $this->resp = $this->productInt->getShow($id);
-        /*$cat_id     = $this->resp->data->subcategory->category->PK_NO ?? 0;
-        $brand_id   = $this->resp->data->F_BRAND ?? 0;
-        $subcat_id  = $this->resp->data->subcategory->PK_NO;
-
-
-        $data['category_combo']     =  $this->category->getCategorCombo();
-        $data['subcategory_combo']  =  $this->subCategory->getSubcateByCategor($cat_id, 'list');
-        $data['brand_combo']        =  $this->brand->getBrandCombo();
-        $data['prod_color_combo']   =  $this->color->getColorCombo($brand_id);
-
-        $data['prod_size_combo']    =  $this->size->getProductSize($brand_id);
-        $data['prod_model_combo']   =  $this->productModel->getProdModel($brand_id, 'list');
-        $data['hscode_combo']       =  $this->hscode->getHscodeCombo($subcat_id,'list');*/
         $data['property_type'] = $this->property_type->getProperty();
         $data['city'] = $this->city->getCity();
         $data['area'] = $this->area->getArea($this->resp->data->F_CITY_NO);
@@ -200,7 +187,6 @@ class ProductController extends BaseController
         $data['property_listing_type'] = $this->property_listing_type->getPropertyListingType();
         $data['property_listing_images'] = $this->property_listing_images->getListingImages($id);
 
-//    dd($data['listing_variants']);
         if (!$this->resp->status) {
             return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
         }

@@ -93,6 +93,8 @@ class Product extends Model
         return $this->hasOne('App\Models\ListingSEO', 'F_LISTING_NO', 'PK_NO');
     }
 
+
+
     // public function subcategory() {
     //     return $this->belongsTo('App\Models\SubCategory', 'F_PRD_SUB_CATEGORY_ID')->where('IS_ACTIVE',1)->orderBy('NAME','ASC');
     // }

@@ -2,14 +2,15 @@
 
 namespace App\Repositories\Admin\Owner;
 
-use App\Models\OwnerInfo;
-use App\Models\PaymentCustomer;
-use App\Models\Transaction;
-use Illuminate\Support\Facades\DB;
-use App\Models\Customer;
 use App\Models\Owner;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\OwnerInfo;
+use App\Models\Transaction;
 use App\Traits\RepoResponse;
 use App\Models\CustomerAddress;
+use App\Models\PaymentCustomer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class OwnerAbstract implements OwnerInterface
@@ -23,7 +24,7 @@ class OwnerAbstract implements OwnerInterface
         $this->owner = $owner;
     }
 
-    public function getPaginatedList($request): object
+    public function getPaginatedList($request)
     {
         $data = $this->owner->where('STATUS', '!=', 3);
         if ($request->owner) {
@@ -35,7 +36,7 @@ class OwnerAbstract implements OwnerInterface
         return $this->formatResponse(true, '', 'admin.owner.index', $data);
     }
 
-    public function getShow(int $id): object
+    public function getShow(int $id)
     {
         $owner = Owner::with(['properties', 'info'])->find($id);
         return $this->formatResponse(true, '', '', $owner);
@@ -94,20 +95,22 @@ class OwnerAbstract implements OwnerInterface
 
             $user->AUTO_PAYMENT_RENEW = $request->auto_payment_renew;
             $user->USER_TYPE = $request->user_type;
-            $user->save();
 
+            if($user->USER_TYPE != $request->user_type){
+                Product::where('F_USER_NO',$id)->update(['USER_TYPE' => $request->user_type]);
+            }
+            $user->save();
             $status = true;
             $msg = 'User updated successfully!';
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            return $this->formatResponse(false, $msg, 'admin.owner.list');
         }
-
         DB::commit();
         return $this->formatResponse($status, $msg, 'admin.owner.list');
     }
 
-    public function updatePassword($request, $id): object
+    public function updatePassword($request, $id)
     {
         $status = false;
         $msg = 'Password could not be updated!';
@@ -141,7 +144,7 @@ class OwnerAbstract implements OwnerInterface
         return $imageUrl;
     }
 
-    public function getPayments(int $id): object
+    public function getPayments(int $id)
     {
         $payments = PaymentCustomer::with('customer')
             ->where('F_CUSTOMER_NO', '=', $id)
@@ -149,7 +152,7 @@ class OwnerAbstract implements OwnerInterface
         return $this->formatResponse(true, '', 'admin.owner.payment', $payments);
     }
 
-    public function getCustomerTxn($id): object
+    public function getCustomerTxn($id)
     {
         try {
             $data = Transaction::with(['payment'])->where('F_CUSTOMER_NO', $id)->get();
@@ -188,7 +191,7 @@ class OwnerAbstract implements OwnerInterface
         return $this->formatResponse($status, $msg, 'admin.owner.payment');
     }
 
-    public function postRecharge($request, int $id): object
+    public function postRecharge($request, int $id)
     {
         $status = false;
         $msg = 'Recharge not successful!';

@@ -54,7 +54,7 @@ class OwnerController extends BaseController
         return view('admin.owner.edit', compact('data'));
     }
 
-    public function postUpdate(OwnerRequest $request, $id): RedirectResponse
+    public function postUpdate(OwnerRequest $request, $id)
     {
         $this->resp = $this->owner->postUpdate($request, $id);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
@@ -67,7 +67,7 @@ class OwnerController extends BaseController
         return view('admin.owner.edit-password', compact('data'));
     }
 
-    public function postPasswordUpdate(Request $request, $id): RedirectResponse
+    public function postPasswordUpdate(Request $request, $id)
     {
         $request->validate([
             'password' => 'required|min:6'

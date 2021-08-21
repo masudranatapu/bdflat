@@ -56,6 +56,16 @@
     $payment_status = Config::get('static_array.payment_status') ?? [];
     $tabIndex = 0;
 
+    $property_price = 0;
+    if($product->PROPERTY_FOR == 'roommate'){
+        $property_price = $product->ROOMMAT_PRICE;
+    }elseif($product->PROPERTY_FOR == 'sell'){
+    $property_price = $product->SELL_PRICE;
+    }elseif($product->PROPERTY_FOR == 'rent'){
+        $property_price = $product->RENT_PRICE;
+    }
+
+
 @endphp
 
 @section('content')
@@ -92,26 +102,35 @@
                                                     <p><span class="ctm">Modified On </span>: {{date('M d, Y', strtotime($product->MODIFIED_AT))}}</p>
                                                     <p><span class="ctm">Owner Name </span>: {{ $product->getUser->NAME }}</p>
                                                     <p><span class="ctm">Owner Type </span>: {{ $user_type[$product->USER_TYPE] ?? '' }}</p>
+                                                    @if($product->getUser->USER_TYPE != 5 )
                                                     <p><span class="ctm">Payment Status </span>: {{ $payment_status[$product->PAYMENT_STATUS] ?? '' }}</p>
-                                                    <p><span class="ctm">Expire Date </span>: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else
-                                                            Not set yet @endif </p>
+                                                    <p><span class="ctm">Expire Date </span>: @if($product->EXPAIRED_AT) {{ date('d-m-Y',strtotime($product->EXPAIRED_AT)) }} @else Not set yet @endif </p>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-title mb-2 mt-2">
                                                     <h3>Billing information</h3>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="billing-amounot">
-                                                        <h5>Billin amount: 25 tk</h5>
+                                                @if($product->getUser->USER_TYPE != 5 )
+                                                    <div class="form-group">
+                                                        <div class="billing-amounot">
+                                                            <h5>Billin amount: {{ number_format($property_price,2) }} TK</h5>
+                                                        </div>
+                                                        @if( $product->PAYMENT_STATUS == 0 )
+                                                        <input type="radio" checked="" name="billing" value="pending"
+                                                            id="pending" tabindex="{{ ++$tabIndex}}">
+                                                        <label for="pending">Due</label>
+                                                            @if($product->getUser->UNUSED_TOPUP < $property_price )
+                                                                <a href="{{ route('admin.owner.recharge',$product->F_USER_NO) }}">Balance not avaiable, Pay first</a>
+                                                            @else
+                                                            <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing"
+                                                                value="paid" id="paid">
+                                                            <label for="paid">Paid</label>
+                                                            @endif
+                                                        @endif
                                                     </div>
-                                                    <input type="radio" checked="" name="billing" value="pending"
-                                                           id="pending" tabindex="{{ ++$tabIndex}}">
-                                                    <label for="pending">Due</label>
-                                                    <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing"
-                                                           value="paid" id="paid">
-                                                    <label for="paid">Paid</label>
-                                                </div>
+                                                @endif
                                                 <div class="form-group">
                                                     <div class="custom-control custom-switch">
                                                         <input type="checkbox" name="is_verified"
@@ -632,9 +651,9 @@
                                     <th>Action</th>
                                 </tr>
                                 <tr>
-                                    <th>01-01-2021</th>
-                                    <th>01-02-2021</th>
-                                    <th>30</th>
+                                    <th>{{ date('d-m-Y', strtotime("+1 days")) }}</th>
+                                    <th>{{ date('d-m-Y', strtotime($product->DURATION.' days')) }}</th>
+                                    <th>{{ number_format($property_price,2) }}</th>
                                     <th>
                                         <button class="btn btn-sm btn-info">Paid</button>
                                         <input type="reset" class="btn btn-secondary btn-sm" data-dismiss="modal" value="Close">
@@ -829,9 +848,9 @@
 
         //Payment
 
-        $(document).on('click','#paid', function(e){
-            $('#paidModal').modal('show');
-        })
+        // $(document).on('click','#paid', function(e){
+        //     $('#paidModal').modal('show');
+        // })
 
 
     </script>

@@ -42,7 +42,7 @@ class DashboardController extends BaseController
     {
     }
 
-    public function getIndex() {      
+    public function getIndex() {
 
         return view('admin.dashboard.home');
     }

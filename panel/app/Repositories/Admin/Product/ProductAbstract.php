@@ -1,21 +1,23 @@
 <?php
 namespace App\Repositories\Admin\Product;
 
-use App\Models\ListingAdditionalInfo;
-use App\Models\ListingImages;
-use App\Models\ListingSEO;
-use App\Models\ListingVariants;
-use App\Models\Product;
-use App\Traits\RepoResponse;
-use App\Repositories\Admin\Auth\AuthAbstract;
-use App\Models\AdminUser as User;
-use App\Models\ProductVariant;
-use App\Models\ProdImgLib;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Models\Product;
+use App\Models\ListingSEO;
+use App\Models\ProdImgLib;
+use App\Models\ListingType;
 use Illuminate\Support\Str;
+use App\Traits\RepoResponse;
+use App\Models\ListingImages;
+use App\Models\ListingPayment;
+use App\Models\ProductVariant;
+use App\Models\ListingVariants;
+use App\Models\AdminUser as User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ListingAdditionalInfo;
 use Intervention\Image\Facades\Image;
+use App\Repositories\Admin\Auth\AuthAbstract;
 
 class ProductAbstract implements ProductInterface
 {
@@ -140,35 +142,66 @@ class ProductAbstract implements ProductInterface
 
 
 
-    public function postUpdate($request, int $id): object
+    public function postUpdate($request, int $id)
     {
         DB::beginTransaction();
         try {
             $list = Product::with(['listingSEO'])->find($id);
-            $list->STATUS = $request->status;
-            $list->PROPERTY_FOR = $request->property_for;
-            $list->F_PROPERTY_TYPE_NO = $request->propertyType;
-            $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $request->area;
-            $list->ADDRESS = $request->address;
-            $list->F_PROPERTY_CONDITION = $request->condition;
-            $list->TITLE = $request->ad_title;
-            $list->PRICE_TYPE = $request->property_priceChek;
-            $list->CONTACT_PERSON1 = $request->contact_person;
-            $list->CONTACT_PERSON2 = $request->contact_person_2;
-            $list->MOBILE1 = $request->mobile;
-            $list->MOBILE2 = $request->mobile_2;
-            $list->F_LISTING_TYPE = $request->listing_type;
-            $list->TOTAL_FLOORS = $request->floor;
-            $list->FLOORS_AVAIABLE = json_encode($request->floor_available);
-            $list->MODIFIED_BY = Auth::id();
-            $list->MODIFIED_AT = Carbon::now();
-            $list->URL_SLUG_LOCKED = 1;
-            $list->IS_VERIFIED = $request->is_verified ? 1 : 0;
-            $list->CI_PAYMENT = $request->ci_payment ? 1 : 0;
+            $list->PROPERTY_FOR             = $request->property_for;
+            $list->F_PROPERTY_TYPE_NO       = $request->propertyType;
+            $list->F_CITY_NO                = $request->city;
+            $list->F_AREA_NO                = $request->area;
+            $list->ADDRESS                  = $request->address;
+            $list->F_PROPERTY_CONDITION     = $request->condition;
+            $list->TITLE                    = $request->ad_title;
+            $list->PRICE_TYPE               = $request->property_priceChek;
+            $list->CONTACT_PERSON1          = $request->contact_person;
+            $list->CONTACT_PERSON2          = $request->contact_person_2;
+            $list->MOBILE1                  = $request->mobile;
+            $list->MOBILE2                  = $request->mobile_2;
+            $list->F_LISTING_TYPE           = $request->listing_type;
+            $list->TOTAL_FLOORS             = $request->floor;
+            $list->FLOORS_AVAIABLE          = json_encode($request->floor_available);
+            $list->MODIFIED_BY              = Auth::id();
+            $list->MODIFIED_AT              = Carbon::now();
+            $list->URL_SLUG_LOCKED          = 1;
+            $list->IS_VERIFIED              = $request->is_verified ? 1 : 0;
+            $list->CI_PAYMENT               = $request->ci_payment ? 1 : 0;
+            if($request->billing == 'paid'){
+                $price = ListingPrice::where('F_LISTING_TYPE_NO',$request->listing_type)->first();
+                $list_type = ListingType::where('PK_NO',$request->listing_type)->first();
+                $property_price = 0 ;
+                if($request->property_for == 'roommate'){
+                    $property_price = $price->ROOMMAT_PRICE;
+                }elseif($request->property_for == 'sell'){
+                    $property_price = $price->SELL_PRICE;
+                }elseif($request->property_for == 'rent'){
+                    $property_price = $price->RENT_PRICE;
+                }
+                if($property_price <= $list->getUser->UNUSED_TOPUP ){
+                    $list->PAYMENT_STATUS = 1;
+                    $pay = new ListingPayment();
+                    $pay->F_LISTING_NO  = $id;
+                    $pay->F_USER_NO     = $list->F_USER_NO;
+                    $pay->START_DATE    = date('Y-m-d');
+                    $pay->END_DATE      = date('Y-m-d', strtotime($list_type->DURATION.' days'));
+                    $pay->CREATE_AT     = Carbon::now();
+                    $pay->CREATED_BY    = Auth::id();
+                    $pay->AMOUNT        = $property_price;
+                    $pay->save();
+                    if($request->status == 10){
+                        $list->STATUS  = $request->status;
+                    }
+                }
+
+            }
+
+            if($request->status != 10){
+                $list->STATUS  = $request->status;
+            }
+
             $list->update();
 
-//            for store listing variants
             $property_size = $request->size;
             ListingVariants::where('F_LISTING_NO', $id)->delete();
             foreach ($property_size as $key => $item) {
@@ -204,7 +237,7 @@ class ProductAbstract implements ProductInterface
             }
             $seo->save();
 
-//            for image upload
+            // for image upload
             if ($request->hasfile('images')) {
                 foreach ($request->file('images') as $key => $image) {
                     $name = uniqid() . '.' . $image->getClientOriginalExtension();
@@ -254,11 +287,10 @@ class ProductAbstract implements ProductInterface
         } catch (\Exception $e) {
             DB::rollback();
 //            dd($e);
-            return $this->formatResponse(false, 'Your listings not updated !', 'admin.product.list');
+            return $this->formatResponse(false, 'Listings not updated !', 'admin.product.list');
         }
         DB::commit();
-
-        return $this->formatResponse(true, 'Product has been updated successfully !', 'admin.product.list');
+        return $this->formatResponse(true, 'Listings has been updated successfully !', 'admin.product.list');
 
     }
 
@@ -271,7 +303,11 @@ class ProductAbstract implements ProductInterface
 
     public function getShow(int $id): object
     {
-        $data =  Product::with(['listingSEO'])->find($id);
+        $data =  Product::select('PRD_LISTINGS.*','a.SELL_PRICE','a.RENT_PRICE','a.ROOMMAT_PRICE','b.DURATION')
+        ->leftJoin('SS_LISTING_PRICE as a','a.F_LISTING_TYPE_NO','PRD_LISTINGS.F_LISTING_TYPE')
+        ->leftJoin('PRD_LISTING_TYPE as b','b.PK_NO','PRD_LISTINGS.F_LISTING_TYPE')
+        ->where('PRD_LISTINGS.PK_NO',$id)
+        ->first();
 
         if (!empty($data)) {
             return $this->formatResponse(true, 'Data found', 'admin.product.edit', $data);
