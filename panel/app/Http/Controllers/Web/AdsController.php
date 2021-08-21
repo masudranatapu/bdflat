@@ -4,15 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\AdsPositionRequest;
 use App\Http\Requests\AdsRequest;
-use Auth;
-use App\Models\Web\Ads;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Web\BlogCategory;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
 use App\Repositories\Admin\Ads\AdsInterface;
-
 
 class AdsController extends Controller
 {
@@ -91,6 +86,7 @@ class AdsController extends Controller
     public function getAdsImages($id)
     {
         $data = $this->ads->getAdsImages($id)->data;
+        $data['id'] = $id;
         return view('admin.ads.images', compact('data'));
     }
 

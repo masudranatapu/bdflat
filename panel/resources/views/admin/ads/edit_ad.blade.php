@@ -66,7 +66,7 @@ $status = [
                                     <div class="form-group {!! $errors->has('start_date') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('start_date','Start Date <span>*</span>', ['class' => 'label-title'], false) !!}
-                                            {!! Form::text('start_date', old('start_date', $data['ad']->AVAILABLE_FROM), ['class'=>'datetimepicker form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Available From']) !!}
+                                            {!! Form::text('start_date', old('start_date', date('d-m-Y', strtotime($data['ad']->AVAILABLE_FROM))), ['class'=>'datetimepicker form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Available From']) !!}
                                             {!! $errors->first('start_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -75,7 +75,7 @@ $status = [
                                     <div class="form-group {!! $errors->has('end_date') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::label('end_date','End Date <span>*</span>', ['class' => 'label-title'], false) !!}
-                                            {!! Form::text('end_date', old('end_date', $data['ad']->AVAILABLE_TO), ['class'=>'datetimepicker form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Available To']) !!}
+                                            {!! Form::text('end_date', old('end_date', date('d-m-Y', strtotime($data['ad']->AVAILABLE_TO))), ['class'=>'datetimepicker form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Available To']) !!}
                                             {!! $errors->first('end_date', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

@@ -67,7 +67,7 @@
                         <div class="card-body pt-0">
                             <div class="row  mb-2">
                                 <div class="col-12">
-                                    {!! Form::open([ 'route' => ['web.ads.image.store', 1], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                                    {!! Form::open([ 'route' => ['web.ads.image.store', $data['id']], 'method' => 'post', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                                     <div class="row form-group {!! $errors->has('images') ? 'error' : '' !!}">
                                         <div class="col-sm-4 offset-sm-4">
                                             <div class="controls">
@@ -109,7 +109,7 @@
                                                         <td>{{ $key+1 }}</td>
                                                         <td>
                                                             <img src="{{ asset($image->IMAGE_PATH) }}" alt=""
-                                                                 style="max-height: 100px">
+                                                                 style="max-height: 100px;max-width: 500px">
                                                         </td>
                                                         <td>{{ $image->ORDER_ID }}</td>
                                                         <td>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\State;
 use App\Models\WebInfo;
 use Illuminate\Http\RedirectResponse;

@@ -74,10 +74,12 @@
             <!-- row -->
             <div class="row">
                 <div class="d-none d-md-block col-md-2 text-center">
+                    @if($data['leftAd'])
                     <div class="advertisement">
-                        <a href="#"><img src="{{asset('assets/img/ads/verticle-ad.png')}}" alt="Images"
+                        <a href="{{ $data['leftAd']->URL_SLUG }}"><img src="{{ $panel_path . ($data['leftAd']->images ? $data['leftAd']->images[0]->IMAGE_PATH : '') }}" alt="Images"
                                          class="img-fluid"></a>
                     </div>
+                    @endif
                 </div>
 
                 <!-- product-list -->
@@ -96,7 +98,8 @@
                                                             src="{{ $panel_path . $category->ICON_PATH }}"
                                                             alt="" class="img-fluid"></div>
                                                     <span class="category-title">{{ $category->PROPERTY_TYPE }}</span>
-                                                    <span class="category-quantity">({{ $category->TOTAL_LISTING }})</span>
+                                                    <span
+                                                        class="category-quantity">({{ $category->TOTAL_LISTING }})</span>
                                                 </a>
                                             </li>
                                         </div>
@@ -107,28 +110,34 @@
                     </div><!-- category-ad -->
                 </div>
 
-                <div class="d-none d-md-block col-md-2 text-center">
-                    <div class="advertisement">
-                        <a href="#"><img src="{{asset('assets/img/ads/verticle-ad.png')}}" alt="Images"
-                                         class="img-fluid"></a>
+                    <div class="d-none d-md-block col-md-2 text-center">
+                        @if($data['rightAd'])
+                        <div class="advertisement">
+                            <a href="#{{ $data['rightAd']->URL_SLUG }}"><img src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->IMAGE_PATH : '') }}" alt="Images"
+                                             class="img-fluid"></a>
+                        </div>
+                        @endif
                     </div>
-                </div>
 
             </div><!-- row -->
         </div><!-- container -->
     </div>
 
     <!--
-        ============ ads ============
+        ============ Bottom ads ============
     -->
-    <div class="ads-sec mb-4 mt-3">
-        <!-- container -->
-        <div class="container text-center">
-            <div class="ads">
-                <a href="#"><img src="{{asset('assets/img/ads/2.jpg')}}" class="img-fluid" alt="image"></a>
-            </div>
-        </div><!-- container -->
-    </div>
+    @if(isset($data['bottomAd']) && $data['bottomAd'])
+        <div class="ads-sec mb-4 mt-3">
+            <!-- container -->
+            <div class="container text-center">
+                <div class="ads">
+                    <a href="{{ $data['bottomAd']->URL_SLUG }}"><img
+                            src="{{ $panel_path . ($data['bottomAd']->images ? $data['bottomAd']->images[0]->IMAGE_PATH : '') }}"
+                            class="img-fluid" alt="image"></a>
+                </div>
+            </div><!-- container -->
+        </div>
+    @endif
 
 
     <!--

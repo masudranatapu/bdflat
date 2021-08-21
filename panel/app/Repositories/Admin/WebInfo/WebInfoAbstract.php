@@ -83,6 +83,7 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo->IPHONE_APP_LINK = $request->ios_app_link;
             $webInfo->IPHONE_APP_VERSION = $request->ios_app_version;
             $webInfo->COPYRIGHT_TEXT = $request->copyright_text;
+            $webInfo->FEATURE_PROPERTY_LIMIT = $request->feature_property_limit;
             $webInfo->META_TITLE = $request->meta_title;
             $webInfo->META_KEYWARDS = $request->meta_keywords;
             $webInfo->META_DESCRIPTION = $request->meta_description;
@@ -100,7 +101,7 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo->save();
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
+//            dd($e);
             return $this->formatResponse(false, $e, 'admin.general.info');
         }
         DB::commit();

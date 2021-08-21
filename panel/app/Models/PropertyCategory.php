@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 class PropertyCategory extends Model
 {
     protected $table        = 'PRD_PROPERTY_TYPE';

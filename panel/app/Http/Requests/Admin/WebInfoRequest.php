@@ -42,7 +42,8 @@ class WebInfoRequest extends FormRequest
             'email_one' => 'required|email|max:100',
             'hq_address' => 'required',
             'url' => 'required|max:255',
-            'copyright_text' => 'required|max:255'
+            'copyright_text' => 'required|max:255',
+            'feature_property_limit' => 'required|min:0'
         ];
     }
 }

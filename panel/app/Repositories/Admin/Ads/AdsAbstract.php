@@ -147,7 +147,7 @@ class AdsAbstract implements AdsInterface
 
     public function getAdsImages($id): object
     {
-        $data['images'] = $this->adsImages->orderByDesc('ORDER_ID')->get();
+        $data['images'] = $this->adsImages->where('F_ADS_NO', $id)->orderByDesc('ORDER_ID')->get();
         $data['id'] = $id;
         return $this->formatResponse(true, '', 'web.ads.images', $data);
     }

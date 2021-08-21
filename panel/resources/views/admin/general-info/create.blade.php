@@ -165,6 +165,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('feature_property_limit', 'Feature Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::tel('feature_property_limit', old('feature_property_limit', $webInfo->FEATURE_PROPERTY_LIMIT ?? ''), ['id' => 'feature_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Feature Property Limit']) !!}
+                                            {!! $errors->first('feature_property_limit', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <h2>Social Media Links</h2>
                                 </div>
@@ -405,7 +414,7 @@
                                     <a href="{{route('admin.general.info')}}" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i>@lang('form.btn_cancle')</a>
                                     <button type="submit" class="btn btn-primary"><i class="la la-check-square-o"></i>@lang('form.btn_save')</button>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
                             {!! Form::close() !!}
