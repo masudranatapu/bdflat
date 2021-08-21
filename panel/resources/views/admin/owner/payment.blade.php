@@ -43,7 +43,7 @@
                                     <div class="row mb-1">
                                         <div class="col-2">
                                             <p class="font-weight-bold">Balance</p>
-                                            <h2 class="font-weight-bold text-success">BDT {{ number_format($data['total'] ?? 0, 2) }}</h2>
+                                            <h2 class="font-weight-bold text-success">BDT {{ number_format($data['rows'][0]->customer->UNUSED_TOPUP ?? 0, 2) }}</h2>
                                         </div>
                                         <div class="col-2 offset-8 text-right" style="padding-top: 10px">
                                             <a href="{{ route('admin.owner.recharge', request()->route('id')) }}"
@@ -64,6 +64,7 @@
                                                 <th>Slip</th>
                                                 <th>Note</th>
                                                 <th>Amount</th>
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -91,6 +92,9 @@
                                                         </td>
                                                         <td>
                                                             <span>{{ number_format($row->AMOUNT, 2) }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('admin.owner.payment.view', ['id' => $row->F_CUSTOMER_NO, 'payment' => $row->PK_NO]) }}" class="btn btn-info btn-sm">View</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

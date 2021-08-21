@@ -152,7 +152,7 @@ class OwnerAbstract implements OwnerInterface
     public function getCustomerTxn($id): object
     {
         try {
-            $data = Transaction::with(['payment'])->where('F_CUSTOMER_NO', $id)->get();
+            $data = Transaction::with(['payment', 'customer'])->where('F_CUSTOMER_NO', $id)->get();
         } catch (\Throwable $th) {
             return $this->formatResponse(false, 'Data not found', 'admin.owner.list');
         }
@@ -226,6 +226,11 @@ class OwnerAbstract implements OwnerInterface
         return $this->formatResponse($status, $msg, 'admin.owner.payment');
     }
 
+    public function getTransaction($id): object
+    {
+        $transaction = Transaction::with(['customer', 'payment'])->find($id);
+        return $this->formatResponse(true, '', '', $transaction);
+    }
 
     /*
 
