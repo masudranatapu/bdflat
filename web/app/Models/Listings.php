@@ -89,7 +89,17 @@ class Listings extends Model
             ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', '=', 'PRD_LISTING_TYPE.PK_NO');
     }
 
-    public function store($request)
+    public function getFeatureListings()
+    {
+        $limit = WebSetting::where('PK_NO', 1)->first('FEATURE_PROPERTY_LIMIT')->FEATURE_PROPERTY_LIMIT;
+        return Listings::with(['getDefaultThumb'])
+            ->where('STATUS', '=', 1)
+            ->where('IS_FEATURE', '=', 10)
+            ->take($limit)
+            ->get();
+    }
+
+    public function store($request): object
     {
         if( Auth::user()->TOTAL_LISTING >= Auth::user()->LISTING_LIMIT ){
             return $this->formatResponse(false, 'Your listings limit is overed !', 'listings.create');
@@ -236,7 +246,7 @@ class Listings extends Model
         return $this->formatResponse(true, 'Your listings added successfully !', 'owner-listings');
     }
 
-    public function postUpdate($request, $id)
+    public function postUpdate($request, $id): object
     {
         DB::beginTransaction();
         try {
