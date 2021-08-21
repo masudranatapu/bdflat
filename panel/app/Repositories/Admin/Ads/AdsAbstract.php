@@ -162,6 +162,7 @@ class AdsAbstract implements AdsInterface
             $adImg = new AdsImages();
             $adImg->F_ADS_NO = $id;
             $adImg->ORDER_ID = $request->order_id;
+            $adImg->URL = $request->url;
 
             $image = $request->file('images')[0];
             $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
@@ -191,6 +192,7 @@ class AdsAbstract implements AdsInterface
         try {
             $adImg = AdsImages::find($request->id);
             $adImg->ORDER_ID = $request->order_id;
+            $adImg->URL = $request->url;
             $adImg->save();
 
             $status = true;

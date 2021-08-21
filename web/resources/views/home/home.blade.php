@@ -76,7 +76,7 @@
                 <div class="d-none d-md-block col-md-2 text-center">
                     @if($data['leftAd'])
                     <div class="advertisement">
-                        <a href="{{ $data['leftAd']->URL_SLUG }}"><img src="{{ $panel_path . ($data['leftAd']->images ? $data['leftAd']->images[0]->IMAGE_PATH : '') }}" alt="Images"
+                        <a href="{{ $data['leftAd']->images[0]->URL ?? 'javascript:void(0)' }}" target="_blank"><img src="{{ $panel_path . ($data['leftAd']->images ? $data['leftAd']->images[0]->IMAGE_PATH : '') }}" alt="Images"
                                          class="img-fluid"></a>
                     </div>
                     @endif
@@ -113,7 +113,7 @@
                     <div class="d-none d-md-block col-md-2 text-center">
                         @if($data['rightAd'])
                         <div class="advertisement">
-                            <a href="#{{ $data['rightAd']->URL_SLUG }}"><img src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->IMAGE_PATH : '') }}" alt="Images"
+                            <a href="{{ $data['rightAd']->images[0]->URL ?? 'javascript:void(0)' }}"><img src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->IMAGE_PATH : '') }}" alt="Images"
                                              class="img-fluid"></a>
                         </div>
                         @endif
@@ -131,7 +131,7 @@
             <!-- container -->
             <div class="container text-center">
                 <div class="ads">
-                    <a href="{{ $data['bottomAd']->URL_SLUG }}"><img
+                    <a href="{{ $data['bottomAd']->images[0]->URL ?? 'javascript:void(0)' }}"><img
                             src="{{ $panel_path . ($data['bottomAd']->images ? $data['bottomAd']->images[0]->IMAGE_PATH : '') }}"
                             class="img-fluid" alt="image"></a>
                 </div>
@@ -143,6 +143,7 @@
     <!--
        ============  featured properties   ============
     -->
+    @if(isset($data['featuredProperties']) && count($data['featuredProperties']))
     <div class="featured-sec">
         <!-- container -->
         <div class="container">
@@ -156,133 +157,57 @@
 
             <!--  featured product  -->
             <div class="owl-carousel owl-theme">
-
+                @foreach($data['featuredProperties'] as $property)
                 <!-- featured -->
                 <div class="item">
                     <div class="featured-wrap">
                         <div class="featured-bx">
-                            <a href="details.html"><img src="{{asset('assets/img/featured/1.jpg')}}" class="img-fluid"
-                                                        alt="image"></a>
+                            <a href="details.html"><img src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}" class="img-fluid"
+                                                        alt="{{ $property->TITLE }}"></a>
                         </div>
                         <div class="featured-content">
                             <div class="featured-price">
-                                <h3>TK 50.00</h3>
+                                <h3>TK {{ number_format($property->getListingVariant->TOTAL_PRICE) }}</h3>
                             </div>
                             <div class="featured-info">
-                                <h2><a href="details.html">Apple MacBook Pro with Retina Display</a></h2>
-                                <span>2 Bed, 3 Bath</span>
+                                <h2><a href="details.html">{{ $property->TITLE }}</a></h2>
+                                <span>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</span>
                             </div>
                             <div class="featured-footer">
                                 <div class="address">
-                                    <a href="#"><i class="fa fa-map-marker"></i>Mirpur, Dhaka</a>
+                                    <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- featured -->
-                <div class="item">
-                    <div class="featured-wrap">
-                        <div class="featured-bx">
-                            <a href="details.html"><img src="{{asset('assets/img/featured/2.jpg')}}" class="img-fluid"
-                                                        alt="image"></a>
-                        </div>
-                        <div class="featured-content">
-                            <div class="featured-price">
-                                <h3>TK 50.00</h3>
-                            </div>
-                            <div class="featured-info">
-                                <h2><a href="details.html">Apple MacBook Pro with Retina Display</a></h2>
-                                <span>5 Katha</span>
-                            </div>
-                            <div class="featured-footer">
-                                <div class="address">
-                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- featured -->
-                <div class="item">
-                    <div class="featured-wrap">
-                        <div class="featured-bx">
-                            <a href="details.html"><img src="{{asset('assets/img/featured/3.jpg')}}" class="img-fluid"
-                                                        alt="image"></a>
-                        </div>
-                        <div class="featured-content">
-                            <div class="featured-price">
-                                <h3>TK 50.00</h3>
-                            </div>
-                            <div class="featured-info">
-                                <h2><a href="details.html">Apple MacBook Pro with Retina Display</a></h2>
-                                <span>2 Bed, 3 Bath</span>
-                            </div>
-                            <div class="featured-footer">
-                                <div class="address">
-                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- featured -->
-                <div class="item">
-                    <div class="featured-wrap">
-                        <div class="featured-bx">
-                            <a href="details.html"><img src="{{asset('assets/img/featured/4.jpg')}}" class="img-fluid"
-                                                        alt="image"></a>
-                        </div>
-                        <div class="featured-content">
-                            <div class="featured-price">
-                                <h3>TK 50.00</h3>
-                            </div>
-                            <div class="featured-info">
-                                <h2><a href="details.html">Apple MacBook Pro with Retina Display</a></h2>
-                                <span>2 Bed, 3 Bath</span>
-                            </div>
-                            <div class="featured-footer">
-                                <div class="address">
-                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div><!--  featured product  -->
         </div><!-- container -->
     </div>
+    @endif
 
 
     <!--
        ============ ads ============
      -->
+    @if(isset($data['bottomFeatureAds']) && count($data['bottomFeatureAds'])))
     <div class="ads-sec mb-2">
         <!-- container -->
         <div class="container">
             <!-- row -->
             <div class="row text-center">
+                @foreach($data['bottomFeatureAds'] as $ad)
                 <div class="col-md-4 mb-4">
                     <div class="ads">
-                        <a href="#"><img src="{{asset('assets/img/ads/3.jpg')}}" class="img-fluid" alt="image"></a>
+                        <a href="{{ $ad->images[0]->URL ?? 'javascript:void(0)' }}" target="_blank"><img src="{{ $panel_path . ($ad->images[0]->IMAGE_PATH ?? '') }}" class="img-fluid" alt="image"></a>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="ads">
-                        <a href="#"><img src="{{asset('assets/img/ads/3.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="ads">
-                        <a href="#"><img src="{{asset('assets/img/ads/3.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
+                @endforeach
             </div><!-- row -->
         </div><!-- container -->
     </div>
+    @endif
 
 
 

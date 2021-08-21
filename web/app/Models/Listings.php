@@ -92,9 +92,9 @@ class Listings extends Model
     public function getFeatureListings()
     {
         $limit = WebSetting::where('PK_NO', 1)->first('FEATURE_PROPERTY_LIMIT')->FEATURE_PROPERTY_LIMIT;
-        return Listings::with(['getDefaultThumb'])
-            ->where('STATUS', '=', 1)
-            ->where('IS_FEATURE', '=', 10)
+        return Listings::with(['getDefaultThumb', 'getListingVariant'])
+            ->where('STATUS', '=', 10)
+            ->where('IS_FEATURE', '=', 1)
             ->take($limit)
             ->get();
     }

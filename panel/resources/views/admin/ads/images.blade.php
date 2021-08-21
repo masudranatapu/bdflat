@@ -84,6 +84,13 @@
                                             </div>
                                             {!! $errors->first('order_id', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
+                                        <div class="col-sm-4 offset-sm-4">
+                                            <div class="controls">
+                                                {{ Form::label('url', 'URL <span>*</span>', ['class' => 'label-title'], false) }}
+                                                {!! Form::text('url', old('url'), ['class' => 'form-control', 'placeholder' => 'URL']) !!}
+                                            </div>
+                                            {!! $errors->first('url', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
                                         <div class="col-sm-4 offset-sm-4 mt-2">
                                             {!! Form::submit('Save', ['class' => 'btn btn-success btn-block']) !!}
                                         </div>
@@ -99,6 +106,7 @@
                                                 <th>SL</th>
                                                 <th>Photo</th>
                                                 <th>Order ID</th>
+                                                <th>URL</th>
                                                 <th>Actions</th>
                                             </tr>
                                             </thead>
@@ -112,6 +120,7 @@
                                                                  style="max-height: 100px;max-width: 500px">
                                                         </td>
                                                         <td>{{ $image->ORDER_ID }}</td>
+                                                        <td>{{ $image->URL }}</td>
                                                         <td>
                                                             @if(hasAccessAbility('edit_ads_image', $roles))
                                                                 <a class="btn edit-btn btn-sm btn-warning text-white"
@@ -168,6 +177,13 @@
                         <div class="controls">
                             {!! Form::number('order_id', null, ['id' => 'orderID', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required']) !!}
                             {!! $errors->first('order_id', '<label class="help-block text-danger">:message</label>') !!}
+                        </div>
+                    </div>
+                    <div class="from-group">
+                        {{ Form::label('url', 'URL', ['class' => 'label-title'], false) }}
+                        <div class="controls">
+                            {!! Form::text('url', null, ['id' => 'url', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required']) !!}
+                            {!! $errors->first('url', '<label class="help-block text-danger">:message</label>') !!}
                         </div>
                     </div>
                 </div>

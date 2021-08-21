@@ -18,7 +18,7 @@ class WebAds extends Model
             ->orderByDesc('ORDER_ID');
     }
 
-    public function getRandomAd($position_id)
+    public function getRandomAd($position_id, $limit = 1)
     {
         return WebAds::with(['images'])
             ->where('F_AD_POSITION_NO', '=', $position_id)
@@ -26,6 +26,7 @@ class WebAds extends Model
             ->whereDate('AVAILABLE_FROM', '<=', DB::raw('CURRENT_DATE()'))
             ->whereDate('AVAILABLE_TO', '>=', DB::raw('CURRENT_DATE()'))
             ->inRandomOrder()
-            ->first();
+            ->take($limit)
+            ->get();
     }
 }

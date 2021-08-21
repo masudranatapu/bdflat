@@ -94,6 +94,7 @@ class AdsController extends Controller
     {
         $request->validate([
             'order_id' => 'required',
+            'url' => 'max:150',
             'images' => 'required|min:1|max:1',
             'images.*' => 'image|mimes:jpg,jpeg,png,gif'
         ]);
@@ -106,6 +107,7 @@ class AdsController extends Controller
     {
         $request->validate([
             'order_id' => 'required',
+            'url' => 'max:150',
             'id' => 'required'
         ]);
 
