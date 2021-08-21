@@ -2,7 +2,7 @@
 @push('custom_css')
 @endpush
 @php
-$panel_path = env('PANEL_PATH');
+    $panel_path = env('PANEL_PATH');
 @endphp
 @section('content')
     <!--
@@ -46,7 +46,8 @@ $panel_path = env('PANEL_PATH');
                 <div class="carousel-inner">
                     @foreach($data['sliders'] as $key => $slider)
                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <img src="{{ $panel_path . $slider->BANNER }}" class="d-block w-100" alt="{{ $slider->TITLE }}">
+                            <img src="{{ $panel_path . $slider->BANNER }}" class="d-block w-100"
+                                 alt="{{ $slider->TITLE }}">
                         </div>
                     @endforeach
                 </div>
@@ -84,97 +85,24 @@ $panel_path = env('PANEL_PATH');
                     <!-- categorys -->
                     <div class="section category-ad text-center">
                         <ul class="category-list">
-                            <div class="row">
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/1.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Flats</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
+                            @if(isset($data['categories']) && count($data['categories']))
+                                <div class="row">
+                                    @foreach($data['categories'] as $category)
+                                        <div class="col-6 col-sm-3">
+                                            <!-- category-item -->
+                                            <li class="category-item">
+                                                <a href="#{{ $category->URL_SLUG }}">
+                                                    <div class="category-icon"><img
+                                                            src="{{ $panel_path . $category->ICON_PATH }}"
+                                                            alt="" class="img-fluid"></div>
+                                                    <span class="category-title">{{ $category->PROPERTY_TYPE }}</span>
+                                                    <span class="category-quantity">({{ $category->TOTAL_LISTING }})</span>
+                                                </a>
+                                            </li>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/2.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Land</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/3.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Office</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/4.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Commercial</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/5.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Room</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/6.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Shop</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/1.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Flats</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <!-- category-item -->
-                                    <li class="category-item">
-                                        <a href="categories.html">
-                                            <div class="category-icon"><img src="{{asset('assets/img/icon/1.png')}}"
-                                                                            alt="imags" class="img-fluid"></div>
-                                            <span class="category-title">Flats</span>
-                                            <span class="category-quantity">(7612)</span>
-                                        </a>
-                                    </li>
-                                </div>
-
-                            </div>
+                            @endif
                         </ul>
                     </div><!-- category-ad -->
                 </div>

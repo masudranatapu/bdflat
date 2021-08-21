@@ -19,6 +19,8 @@ interface OwnerInterface
     public function storePayment($request, int $id);
 
     public function postRecharge($request, int $id);
+
+    public function getTransaction($id);
     /*
     public function getShow(int $id);
     public function postStore($request);

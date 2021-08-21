@@ -4,17 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\OwnerRequest;
 use App\Http\Requests\RechargeRequest;
-use App\Models\City;
 use App\Models\Agent;
 use App\Models\PaymentMethod;
-use App\Models\PoCode;
 use App\Models\Country;
-use App\Models\Owner;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Admin\ResellerRequest;
 use App\Repositories\Admin\Owner\OwnerInterface;
 
 
@@ -107,6 +103,12 @@ class OwnerController extends BaseController
         ]);
         $this->resp = $this->owner->storePayment($request, $id);
         return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
+    public function getPaymentView($id, $payment)
+    {
+        $data['payment'] = $this->owner->getTransaction($payment)->data;
+        return view('admin.owner.view-payment', compact('data'));
     }
 
     /*

@@ -30,8 +30,14 @@ class Transaction extends Model
        });
    }
 
-    public function payment() {
+    public function payment(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
        return $this->belongsTo('App\Models\PaymentCustomer', 'F_CUSTOMER_PAYMENT_NO', 'PK_NO');
+    }
+
+    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+       return $this->belongsTo('App\Models\Owner', 'F_CUSTOMER_NO', 'PK_NO');
     }
 
 
