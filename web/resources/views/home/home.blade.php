@@ -704,7 +704,7 @@
                                 <h3>{{ $category->NAME }}</h3>
                                 <ul>
                                     @foreach($category->pages as $page)
-                                        <li><a href="#{{ $page->URL_SLUG }}">{{ $page->TITLE }}</a></li>
+                                        <li><a href="{{ $page->URL_SLUG }}">{{ $page->TITLE }}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
