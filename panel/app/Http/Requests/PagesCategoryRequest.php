@@ -28,7 +28,8 @@ class PagesCategoryRequest extends FormRequest
             'status' => 'required',
             'meta_keywords' => 'required',
             'meta_description' => 'required',
-            'order_id' => 'required'
+            'order_id' => 'required',
+            'property_for' => 'required',
         ];
     }
 }

@@ -688,89 +688,54 @@
             <div class="sec-heading text-center mb-4">
                 <h3>Popular Location</h3>
             </div>
-            <div class="location-heading mb-3">
-                <h2>Popular Locations to Buy Properties</h2>
-            </div>
-            <!-- row -->
-            <div class="row mb-1">
-                <div class="col-md-4">
-                    <div class="locations-wrap">
-                        <h3>Flat And Apartment</h3>
-                        <ul>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                        </ul>
-                    </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="locations-wrap">
-                        <h3>Land And Ploat</h3>
-                        <ul>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                        </ul>
-                    </div>
+            @if(isset($data['sellPageCategories']) && count($data['sellPageCategories']))
+                <div class="location-heading mb-3">
+                    <h2>Popular Locations to Buy Properties</h2>
                 </div>
+                <!-- row -->
+                <div class="row mb-1">
+                    @foreach($data['sellPageCategories'] as $category)
+                        @if(!count($category->pages))
+                            @continue
+                        @endif
+                        <div class="col-md-4">
+                            <div class="locations-wrap">
+                                <h3>{{ $category->NAME }}</h3>
+                                <ul>
+                                    @foreach($category->pages as $page)
+                                        <li><a href="#{{ $page->URL_SLUG }}">{{ $page->TITLE }}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endforeach
+                </div><!-- row -->
+            @endif
 
-                <div class="col-md-4">
-                    <div class="locations-wrap">
-                        <h3>Office Space</h3>
-                        <ul>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                        </ul>
-                    </div>
+            @if(isset($data['sellPageCategories']) && count($data['sellPageCategories']))
+                <div class="location-heading mb-3">
+                    <h2>Popular Locations for Rent</h2>
                 </div>
-            </div><!-- row -->
-
-            <div class="location-heading mb-3">
-                <h2>Popular Locations for Rent</h2>
-            </div>
-            <!-- row -->
-            <div class="row mb-2">
-                <div class="col-md-4">
-                    <div class="locations-wrap">
-                        <h3>Flat And Apartment</h3>
-                        <ul>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="locations-wrap">
-                        <h3>Land And Ploat</h3>
-                        <ul>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="locations-wrap">
-                        <h3>Office Space</h3>
-                        <ul>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                            <li><a href="#">Apartment and flat sale in Dhaka</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div><!-- row -->
+                <!-- row -->
+                <div class="row mb-2">
+                    @foreach($data['sellPageCategories'] as $category)
+                        @if(!count($category->pages))
+                            @continue
+                        @endif
+                        <div class="col-md-4">
+                            <div class="locations-wrap">
+                                <h3>{{ $category->NAME }}</h3>
+                                <ul>
+                                    @foreach($category->pages as $page)
+                                        <li><a href="#{{ $page->URL_SLUG }}">{{ $page->TITLE }}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endforeach
+                </div><!-- row -->
+            @endif
         </div><!-- container -->
     </div>
 

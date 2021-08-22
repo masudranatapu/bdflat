@@ -31,7 +31,12 @@
 @endpush
 
 @php
-    $roles = userRolePermissionArray()
+    $roles = userRolePermissionArray();
+$property_for = [
+    'sell' => 'Sell',
+    'rent' => 'Rent',
+    'roommate' => 'Roommate'
+];
 @endphp
 
 @section('content')
@@ -80,6 +85,16 @@
                                                     {!! Form::label('meta_keywords','Meta Keywords <span>*</span>', ['class' => 'label-title'], false) !!}
                                                     {!! Form::text('meta_keywords', old('meta_keywords'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Meta Keywords']) !!}
                                                     {!! $errors->first('meta_keywords', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div
+                                                class="form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::label('property_for','Property For <span>*</span>', ['class' => 'label-title'], false) !!}
+                                                    {!! Form::select('property_for', $property_for ?? [], old('property_for'), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Property For']) !!}
+                                                    {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
                                         </div>

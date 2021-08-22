@@ -147,6 +147,7 @@ class PagesAbstract implements PagesInterface
             $category->META_KEYWARDS = $request->meta_keywords;
             $category->META_DESCRIPTION = $request->meta_description;
             $category->ORDER_ID = $request->order_id;
+            $category->PROPERTY_FOR = $request->property_for;
             $category->save();
 
             $this->status = true;
@@ -173,6 +174,7 @@ class PagesAbstract implements PagesInterface
             $category->META_KEYWARDS = $request->meta_keywords;
             $category->META_DESCRIPTION = $request->meta_description;
             $category->ORDER_ID = $request->order_id;
+            $category->PROPERTY_FOR = $request->property_for;
             $category->save();
 
             $this->status = true;

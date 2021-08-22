@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Listings;
+use App\Models\PageCategory;
 use App\Models\PropertyType;
 use App\Models\Slider;
 use App\Models\WebAds;
@@ -16,14 +17,22 @@ class HomeController extends Controller
     protected $slider;
     protected $propertyType;
     protected $city;
+    protected $pageCategory;
 
-    public function __construct(Slider $slider, PropertyType $propertyType, WebAds $ads, Listings $listings, City $city)
+    public function __construct(
+        Slider $slider,
+        PropertyType $propertyType,
+        WebAds $ads, Listings $listings,
+        City $city,
+        PageCategory $pageCategory
+    )
     {
         $this->slider = $slider;
         $this->propertyType = $propertyType;
         $this->ads = $ads;
         $this->listings = $listings;
         $this->city = $city;
+        $this->pageCategory = $pageCategory;
     }
 
     public function index()
@@ -43,6 +52,8 @@ class HomeController extends Controller
         $data['rentProperties'] = $this->listings->getListings('rent');
         $data['roommateProperties'] = $this->listings->getListings('roommate');
         $data['popularCities'] = $this->city->getPopularCities();
+        $data['sellPageCategories'] = $this->pageCategory->getPageCategories('sell');
+        $data['rentPageCategories'] = $this->pageCategory->getPageCategories('rent');
 //        dd($data['verifiedProperties']);
         return view('home.home', compact('data'));
     }
