@@ -44,7 +44,7 @@ class OwnerRequest extends FormRequest
                 'designation' => 'required|max:255',
                 'email' => 'required|email|unique:WEB_USER,EMAIL,' . $userID . ',PK_NO',
                 'images' => 'sometimes|array|min:1',
-                'images.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif',
+                'images.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif|dimensions:width=300,height=300',
                 'office_address' => 'required|max:200',
                 'mobile_no' => 'required|max:20',
                 'about_company' => 'required',
@@ -54,5 +54,12 @@ class OwnerRequest extends FormRequest
         }
 
         return $rules;
+    }
+
+    public function messages(): array
+    {
+        return [
+            'images.*.dimensions' => 'The image must be 300x300'
+        ];
     }
 }

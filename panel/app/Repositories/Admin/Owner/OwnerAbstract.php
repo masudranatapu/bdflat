@@ -94,6 +94,7 @@ class OwnerAbstract implements OwnerInterface
             }
 
             $user->AUTO_PAYMENT_RENEW = $request->auto_payment_renew;
+            $user->IS_FEATURE = $request->feature;
             $user->USER_TYPE = $request->user_type;
 
             if($user->USER_TYPE != $request->user_type){

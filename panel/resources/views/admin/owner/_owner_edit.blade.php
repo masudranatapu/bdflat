@@ -61,7 +61,15 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6"></div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('feature', 'Is Feature *', ['class' => 'label-title'], false) !!}
+            <div class="controls">
+                {!! Form::select('feature', [1 => 'Feature', 0 => 'General'], old('feature', $owner->IS_FEATURE), ['class' => 'form-control', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! $errors->first('feature', '<label class="help-block text-danger">:message</label>') !!}
+            </div>
+        </div>
+    </div>
     <div class="col-md-4">
         <div class="form-group">
             {!! Form::label('images','User Image <span>*</span>', ['class' => 'label-title'], false) !!}
