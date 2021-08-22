@@ -88,6 +88,24 @@ $status = [
                                         </div>
                                     </div>
                                     <div class="col-md-12">
+                                        <div class="form-group">
+                                            {!! Form::label('status', 'Status *', ['class' => 'label-title']) !!}
+                                            <div class="controls">
+                                                {!! Form::select('status', $status ?? [], old('status'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            {!! Form::label('populate', 'Is Populate *', ['class' => 'label-title']) !!}
+                                            <div class="controls">
+                                                {!! Form::select('populate', [1 => 'Populate', 0 => 'Common'], old('populate'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('populate', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
                                         <a href="{{ route('admin.city.list') }}"
                                            class="btn btn-info">Cancel</a>
                                         {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}

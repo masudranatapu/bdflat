@@ -61,9 +61,12 @@
                                         <tr>
                                             <th class="text-center" style="width: 50px;">SL.</th>
                                             <th class="" style="min-width: 100px;">City Name</th>
+                                            <th class="" style="min-width: 100px;">Is Populated</th>
                                             <th>Latitude</th>
                                             <th>Longitude</th>
                                             <th class="" style="">Order</th>
+                                            <th class="" style="">Status</th>
+                                            <th class="" style="">Total Properties</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                         </thead>
@@ -74,9 +77,12 @@
                                                     <td class="text-center"
                                                         style="width: 50px;">{{ $key + 1 }}</td>
                                                     <td class="" style="">{{ $city->CITY_NAME }}</td>
+                                                    <td class="" style="">{{ $city->IS_POPULATED ? 'Populate' : 'Common' }}</td>
                                                     <td>{{ $city->LAT ?? 'N/A' }}</td>
                                                     <td>{{ $city->LON ?? 'N/A' }}</td>
                                                     <td class="" style="">{{ $city->ORDER_ID }}</td>
+                                                    <td class="" style="">{{ $city->IS_ACTIVE ? 'Active' : 'Inactive' }}</td>
+                                                    <td class="" style="">{{ $city->TOTAL_LISTING }}</td>
                                                     <td class="text-center" style="width: 200px;">
                                                         @if(hasAccessAbility('edit_property_condition', $roles))
                                                             <a href="{{ route('admin.city.edit', [$city->PK_NO]) }}"

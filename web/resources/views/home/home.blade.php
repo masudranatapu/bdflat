@@ -467,97 +467,31 @@
     <!--
        ============  Popular Cities  ============
     -->
-    <div class="popular-cities">
-        <!-- container -->
-        <div class="container">
-            <div class="sec-heading text-center mb-3">
-                <h3>Popular Cities</h3>
-            </div>
-            <!-- row -->
-            <div class="row">
-                <!-- Dhaka Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>200</h3>
-                            <h4><i class="fa fa-map-marker"></i>Dhaka </h4>
-                        </div>
-                    </a>
+    @if(isset($data['popularCities']) && count($data['popularCities']))
+        <div class="popular-cities">
+            <!-- container -->
+            <div class="container">
+                <div class="sec-heading text-center mb-3">
+                    <h3>Popular Cities</h3>
                 </div>
-
-                <!-- Chittagong Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>365</h3>
-                            <h4><i class="fa fa-map-marker"></i>Khulna </h4>
+                <!-- row -->
+                <div class="row">
+                    <!-- Dhaka Division -->
+                    @foreach($data['popularCities'] as $city)
+                        <div class="col-6 col-md-4 col-lg-3 text-center">
+                            <a href="#{{ $city->URL_SLUG }}">
+                                <div class="location-article text-center">
+                                    <h3>{{ $city->TOTAL_LISTING }}</h3>
+                                    <h4><i class="fa fa-map-marker"></i>{{ $city->CITY_NAME }}</h4>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
+                    @endforeach
 
-                <!-- Khulna Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>1201</h3>
-                            <h4><i class="fa fa-map-marker"></i>Barisal </h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Barisal Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>105</h3>
-                            <h4><i class="fa fa-map-marker"></i>Sylhet </h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Sylhet Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>2005</h3>
-                            <h4><i class="fa fa-map-marker"></i>Rangpur </h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Rajshahi Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>3652</h3>
-                            <h4><i class="fa fa-map-marker"></i>Mymensingh </h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Rangpur Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>1254</h3>
-                            <h4><i class="fa fa-map-marker"></i>Chittagong </h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Mymensingh Division -->
-                <div class="col-6 col-md-4 col-lg-3 text-center">
-                    <a href="">
-                        <div class="location-article text-center">
-                            <h3>3654</h3>
-                            <h4><i class="fa fa-map-marker"></i>Rajshahi </h4>
-                        </div>
-                    </a>
-                </div>
-
-            </div><!-- row -->
-        </div><!-- container -->
-    </div>
+                </div><!-- row -->
+            </div><!-- container -->
+        </div>
+    @endif
 
     <!--
        ============  featured Developers   ============

@@ -41,6 +41,8 @@ class CityAbstract implements CityInterface
             $city->ORDER_ID = $request->order;
             $city->LAT = $request->latitude;
             $city->LON = $request->longitude;
+            $city->IS_POPULATED = $request->populate;
+            $city->IS_ACTIVE = $request->status;
             $city->save();
 
             $this->status = true;
@@ -67,6 +69,8 @@ class CityAbstract implements CityInterface
             $city->ORDER_ID = $request->order;
             $city->LAT = $request->latitude;
             $city->LON = $request->longitude;
+            $city->IS_POPULATED = $request->populate;
+            $city->IS_ACTIVE = $request->status;
             $city->save();
 
             $this->status = true;
