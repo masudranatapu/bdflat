@@ -174,6 +174,42 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('verified_property_limit', 'Verified Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::tel('verified_property_limit', old('verified_property_limit', $webInfo->VERIFIED_PROPERTY_LIMIT ?? ''), ['id' => 'verified_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Verified Property Limit']) !!}
+                                            {!! $errors->first('verified_property_limit', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('sale_property_limit', 'Sale Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::tel('sale_property_limit', old('sale_property_limit', $webInfo->SALE_PROPERTY_LIMIT ?? ''), ['id' => 'sale_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Sale Property Limit']) !!}
+                                            {!! $errors->first('sale_property_limit', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('rent_property_limit', 'Rent Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::tel('rent_property_limit', old('rent_property_limit', $webInfo->RENT_PROPERTY_LIMIT ?? ''), ['id' => 'rent_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Rent Property Limit']) !!}
+                                            {!! $errors->first('rent_property_limit', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('roommate_property_limit', 'Roommate Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::tel('roommate_property_limit', old('roommate_property_limit', $webInfo->ROOMMATE_PROPERTY_LIMIT ?? ''), ['id' => 'roommate_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Roommate Property Limit']) !!}
+                                            {!! $errors->first('roommate_property_limit', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <h2>Social Media Links</h2>
                                 </div>

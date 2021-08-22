@@ -99,6 +99,37 @@ class Listings extends Model
             ->get();
     }
 
+    public function getVerifiedListings()
+    {
+        $limit = WebSetting::where('PK_NO', 1)->first('VERIFIED_PROPERTY_LIMIT')->VERIFIED_PROPERTY_LIMIT;
+        return Listings::with(['getDefaultThumb', 'getListingVariant'])
+            ->where('STATUS', '=', 10)
+            ->where('IS_VERIFIED', '=', 1)
+            ->take($limit)
+            ->get();
+    }
+
+    public function getListings($for)
+    {
+        $limit = WebSetting::where('PK_NO', 1)->first(['SALE_PROPERTY_LIMIT', 'RENT_PROPERTY_LIMIT', 'ROOMMATE_PROPERTY_LIMIT']);
+        switch ($for) {
+            case 'sell':
+                $limit = $limit->SALTE_PROPERTY_LIMIT;
+                break;
+            case 'rent':
+                $limit = $limit->RENT_PROPERTY_LIMIT;
+                break;
+            default:
+                $limit = $limit->ROOMMATE_PROPERTY_LIMIT;
+        }
+
+        return Listings::with(['getDefaultThumb', 'getListingVariant'])
+//            ->where('STATUS', '=', 10)
+            ->where('PROPERTY_FOR', '=', $for)
+            ->take($limit)
+            ->get();
+    }
+
     public function store($request): object
     {
         if( Auth::user()->TOTAL_LISTING >= Auth::user()->LISTING_LIMIT ){

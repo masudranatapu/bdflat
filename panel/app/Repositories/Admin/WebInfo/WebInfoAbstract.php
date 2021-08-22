@@ -84,6 +84,10 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo->IPHONE_APP_VERSION = $request->ios_app_version;
             $webInfo->COPYRIGHT_TEXT = $request->copyright_text;
             $webInfo->FEATURE_PROPERTY_LIMIT = $request->feature_property_limit;
+            $webInfo->ROOMMATE_PROPERTY_LIMIT = $request->roommate_property_limit;
+            $webInfo->RENT_PROPERTY_LIMIT = $request->rent_property_limit;
+            $webInfo->SALE_PROPERTY_LIMIT = $request->sale_property_limit;
+            $webInfo->VERIFIED_PROPERTY_LIMIT = $request->verified_property_limit;
             $webInfo->META_TITLE = $request->meta_title;
             $webInfo->META_KEYWARDS = $request->meta_keywords;
             $webInfo->META_DESCRIPTION = $request->meta_description;

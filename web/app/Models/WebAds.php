@@ -15,18 +15,17 @@ class WebAds extends Model
     public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\WebAdsImage', 'F_ADS_NO', 'PK_NO')
-            ->orderByDesc('ORDER_ID');
+            ->inRandomOrder(time());
     }
 
-    public function getRandomAd($position_id, $limit = 1)
+    public function getRandomAd($position_id)
     {
         return WebAds::with(['images'])
             ->where('F_AD_POSITION_NO', '=', $position_id)
             ->where('STATUS', '=', 1)
             ->whereDate('AVAILABLE_FROM', '<=', DB::raw('CURRENT_DATE()'))
             ->whereDate('AVAILABLE_TO', '>=', DB::raw('CURRENT_DATE()'))
-            ->inRandomOrder()
-            ->take($limit)
-            ->get();
+            ->inRandomOrder(time())
+            ->first();
     }
 }

@@ -27,11 +27,19 @@ class HomeController extends Controller
     {
         $data['sliders'] = $this->slider->getSliders();
         $data['categories'] = $this->propertyType->getPropertyTypes();
-        $data['leftAd'] = $this->ads->getRandomAd(10)->first();
-        $data['rightAd'] = $this->ads->getRandomAd(102)->first();
-        $data['bottomAd'] = $this->ads->getRandomAd(101)->first();
-        $data['bottomFeatureAds'] = $this->ads->getRandomAd(103, 3);
+        $data['leftAd'] = $this->ads->getRandomAd(10);
+        $data['rightAd'] = $this->ads->getRandomAd(102);
+        $data['bottomAd'] = $this->ads->getRandomAd(101);
+        $data['bottomFeatureAdLeft'] = $this->ads->getRandomAd(103);
+        $data['bottomFeatureAdCenter'] = $this->ads->getRandomAd(104);
+        $data['bottomFeatureAdRight'] = $this->ads->getRandomAd(105);
         $data['featuredProperties'] = $this->listings->getFeatureListings();
+        $data['verifiedProperties'] = $this->listings->getVerifiedListings();
+        $data['verifiedBottomAd'] = $this->ads->getRandomAd(106);
+        $data['sellProperties'] = $this->listings->getListings('sell');
+        $data['rentProperties'] = $this->listings->getListings('rent');
+        $data['roommateProperties'] = $this->listings->getListings('roommate');
+//        dd($data['verifiedProperties']);
         return view('home.home', compact('data'));
     }
 }
