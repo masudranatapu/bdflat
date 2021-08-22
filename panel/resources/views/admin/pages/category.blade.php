@@ -56,6 +56,7 @@
                                                 <th class="text-center">Sl.</th>
                                                 <th>Category Name</th>
                                                 <th>Order ID</th>
+                                                <th>Property For</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -67,6 +68,7 @@
                                                         <td>{{ $key + 1 }}</td>
                                                         <td>{{ $category->NAME }}</td>
                                                         <td class="font-weight-bold text-primary">{{ $category->ORDER_ID }}</td>
+                                                        <td>{{ ucwords($category->PROPERTY_FOR) }}</td>
                                                         @if($category->IS_ACTIVE)
                                                             <td class="text-success">Active</td>
                                                         @else
