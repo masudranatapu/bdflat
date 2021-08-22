@@ -77,6 +77,7 @@
                                             <th>Name</th>
                                             <th>Mobile</th>
                                             <th>Email</th>
+                                            <th>Is Feature</th>
                                             <th>Balance</th>
                                             <th>Properties</th>
                                             <th>Status</th>
@@ -187,6 +188,14 @@
                             data: 'EMAIL',
                             name: 'EMAIL',
                             searchable: true,
+                        },
+                        {
+                            data: 'IS_FEATURE',
+                            name: 'IS_FEATURE',
+                            searchable: true,
+                            render: function (data) {
+                                return data === 1 ? 'Feature' : 'General';
+                            }
                         },
 
                         {

@@ -79,7 +79,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            {!! Form::label('images','Logo <span>*</span>', ['class' => 'label-title'], false) !!}
+            {!! Form::label('images','Logo (300x300) <span>*</span>', ['class' => 'label-title'], false) !!}
             <div class="controls">
                 @if($owner->info && $owner->info->LOGO)
                     <img src="{{ asset($owner->info->LOGO) }}" alt="" style="max-width: 200px;max-height: 120px">
@@ -92,7 +92,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            {!! Form::label('images','Banner <span>*</span>', ['class' => 'label-title'], false) !!}
+            {!! Form::label('images','Banner (300x300) <span>*</span>', ['class' => 'label-title'], false) !!}
             <div class="controls">
                 @if($owner->info && $owner->info->BANNER)
                     <img src="{{ asset($owner->info->BANNER) }}" alt="" style="max-width: 200px;max-height: 120px">
@@ -130,6 +130,15 @@
             <div class="controls">
                 {!! Form::number('listing_limit', old('listing_limit', $owner->LISTING_LIMIT), ['class' => 'form-control', 'placeholder' => 'Listing Limit', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('listing_limit', '<label class="help-block text-danger">:message</label>') !!}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('feature', 'Is Feature *', ['class' => 'label-title'], false) !!}
+            <div class="controls">
+                {!! Form::select('feature', [1 => 'Feature', 0 => 'General'], old('feature', $owner->IS_FEATURE), ['class' => 'form-control', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! $errors->first('feature', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
     </div>
