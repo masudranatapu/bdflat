@@ -713,13 +713,13 @@
                 </div><!-- row -->
             @endif
 
-            @if(isset($data['sellPageCategories']) && count($data['sellPageCategories']))
+            @if(isset($data['rentPageCategories']) && count($data['rentPageCategories']))
                 <div class="location-heading mb-3">
                     <h2>Popular Locations for Rent</h2>
                 </div>
                 <!-- row -->
                 <div class="row mb-2">
-                    @foreach($data['sellPageCategories'] as $category)
+                    @foreach($data['rentPageCategories'] as $category)
                         @if(!count($category->pages))
                             @continue
                         @endif
