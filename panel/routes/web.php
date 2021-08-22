@@ -500,6 +500,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('general/info', ['middleware' => 'acl:view_general_info', 'as' => 'admin.general.info', 'uses' => 'WebInfoController@getCreate']);
     Route::post('webinfo/store', ['middleware' => 'acl:new_webinfo', 'as' => 'admin.web.info', 'uses' => 'WebInfoController@postStore']);
 
+
     //PROPERTY CATEGORY
     Route::get('property/category', ['middleware' => 'acl:list_box', 'as' => 'admin.property.category', 'uses' => 'PropertyCategoryController@getIndex']);
     Route::get('property/category/new', ['middleware' => 'acl:new_property_category', 'as' => 'property.category.create', 'uses' => 'PropertyCategoryController@getCreate']);
@@ -873,6 +874,12 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     //Mail
     Route::get('mail/config', 'MailController@getIndex')->name('web.mail.index');
     Route::post('mail/env-update', 'MailController@env_key_update')->name('env_key_update.update');
+
+    //About Us
+    Route::get('about/us', 'MailController@getIndex')->name('web.mail.index');
+    Route::post('mail/env-update', 'MailController@env_key_update')->name('env_key_update.update');
+
+
     //WEB ROUTE
     Route::get('home/slider', ['middleware' => 'acl:list_box', 'as' => 'web.home.slider', 'uses' => 'SliderController@getAllSlider']);
     Route::get('home/slider/create', ['middleware' => 'acl:list_box', 'as' => 'web.home.slider.create', 'uses' => 'SliderController@createSlider']);
@@ -943,7 +950,25 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::get('web/ads_position/{id}/edit',['middleware' => 'acl:edit_ads_position', 'as' => 'web.ads_position.edit', 'uses' => 'AdsController@editAdsPosition']);
     Route::post('web/ads_position/{id}/update',['middleware' => 'acl:edit_ads_position', 'as' => 'web.ads_position.update', 'uses' => 'AdsController@updateAdsPosition']);
 
+    //web about us
+    Route::get('web/about-us', ['middleware' => 'acl:list_box', 'as' => 'web.about.us', 'uses' => 'AboutUsController@getIndex']);
+    Route::post('web/about-us/store', ['middleware' => 'acl:new_page', 'as' => 'web.about.us.store', 'uses' => 'AboutUsController@postStore']);
 
+    //testimonial
+    Route::get('web/testimonial', ['middleware' => 'acl:list_box', 'as' => 'web.testimonial', 'uses' => 'TestimonialController@getIndex']);
+    Route::get('web/testimonial/create', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.create', 'uses' => 'TestimonialController@getCreate']);
+    Route::post('web/testimonial/store', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.store', 'uses' => 'TestimonialController@postStore']);
+    Route::get('web/testimonial/{id}/edit', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.edit', 'uses' => 'TestimonialController@getEdit']);
+    Route::post('web/testimonial/{id}/update', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.update', 'uses' => 'TestimonialController@postUpdate']);
+    Route::get('web/testimonial/{id}/delete', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.delete', 'uses' => 'TestimonialController@getDelete']);
+
+    //team members
+    Route::get('web/team_members', ['middleware' => 'acl:list_box', 'as' => 'web.team_members', 'uses' => 'TeamMemberController@getIndex']);
+    Route::get('web/team_members/create', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.create', 'uses' => 'TeamMemberController@getCreate']);
+    Route::post('web/team_members/store', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.store', 'uses' => 'TeamMemberController@postStore']);
+    Route::get('web/team_members/{id}/edit', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.edit', 'uses' => 'TeamMemberController@getEdit']);
+    Route::post('web/team_members/{id}/update', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.update', 'uses' => 'TeamMemberController@postUpdate']);
+    Route::get('web/team_members/{id}/delete', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.delete', 'uses' => 'TeamMemberController@getDelete']);
 
 
 });
