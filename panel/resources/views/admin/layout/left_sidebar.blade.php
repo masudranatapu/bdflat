@@ -496,6 +496,12 @@
             <ul class="menu-content">
                 <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.general.info')}}"><i></i><span data-i18n="Basic">General</span></a></li>
 
+                <li class="@yield('About Us')"><a class="menu-item" href="{{route('web.about.us')}}"><i></i><span data-i18n="About Us">About Us</span></a></li>
+
+                <li class="@yield('Testimonial')"><a class="menu-item" href="{{route('web.testimonial')}}"><i></i><span data-i18n="Testimonial">Testimonial</span></a></li>
+
+                <li class="@yield('Team Members')"><a class="menu-item" href="{{route('web.team_members')}}"><i></i><span data-i18n="Team Members">Team Members</span></a></li>
+
                 <li class="@yield('slider')"><a class="menu-item" href="{{route('web.home.slider')}}"><i></i><span data-i18n="">Home Slider</span></a>
                 </li>
 

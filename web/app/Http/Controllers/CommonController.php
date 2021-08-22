@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Toastr;
-
+si
 class CommonController extends Controller
 {
     protected $category;
@@ -30,7 +30,7 @@ class CommonController extends Controller
 
     public function __construct(ProductRequirements $requirements, Category $category, ContactForm $contacts, CustomerPayment $payment)
     {
-        $this->middleware('auth')->except(['getPostRequirement', 'storePostRequirement']);
+//        $this->middleware('auth')->except(['getPostRequirement', 'storePostRequirement']);
         $this->category = $category;
         $this->contact = $contacts;
         $this->payment = $payment;
