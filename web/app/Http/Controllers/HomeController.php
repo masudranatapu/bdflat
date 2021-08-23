@@ -83,6 +83,7 @@ class HomeController extends Controller
             DB::rollBack();
         }
 
+        DB::commit();
         return back();
     }
 

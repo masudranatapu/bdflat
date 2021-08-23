@@ -879,6 +879,8 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::get('about/us', 'MailController@getIndex')->name('web.mail.index');
     Route::post('mail/env-update', 'MailController@env_key_update')->name('env_key_update.update');
 
+    // Newsletter
+    Route::get('home/newsletter', ['middleware' => 'acl:view_newsletter', 'as' => 'web.home.newsletter', 'uses' => 'NewsletterController@getIndex']);
 
     //WEB ROUTE
     Route::get('home/slider', ['middleware' => 'acl:list_box', 'as' => 'web.home.slider', 'uses' => 'SliderController@getAllSlider']);

@@ -505,6 +505,9 @@
                 <li class="@yield('slider')"><a class="menu-item" href="{{route('web.home.slider')}}"><i></i><span data-i18n="">Home Slider</span></a>
                 </li>
 
+                <li class="@yield('newsletter')"><a class="menu-item" href="{{route('web.home.newsletter')}}"><i></i><span data-i18n="">Newsletter</span></a>
+                </li>
+
 
                 <li class="@yield('page_category')"><a class="menu-item" href="{{route('admin.address_type.city_list_')}}"><i></i><span data-i18n="Basic">Page Category</span></a></li>
                 <li class="@yield('web_page')">
