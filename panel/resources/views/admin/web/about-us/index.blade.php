@@ -127,14 +127,14 @@ $row = $data['about'] ?? [];
                                     <div class="form-group {!! $errors->has('intro_title') ? 'error' : '' !!}">
                                         <label>Approach Title<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('intro_title', $row->INTRO_TITLE, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Intro title', 'tabindex' => 8]) !!}
+                                            {!! Form::text('intro_title', $row->APPROACH_TITLE, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Intro title', 'tabindex' => 8]) !!}
                                             {!! $errors->first('intro_title', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group {!! $errors->has('intro_description') ? 'error' : '' !!}">
                                         <label>Approach Description</label>
                                         <div class="controls">
-                                            {!! Form::textarea('intro_description', $row->INTRO_DESCRIPTION, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 10, 'rows' => 3,'id' =>'text-editor' ]) !!}
+                                            {!! Form::textarea('intro_description', $row->APPROACH_DESCRIPTION, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 10, 'rows' => 3,'id' =>'text-editor' ]) !!}
                                             {!! $errors->first('intro_description', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

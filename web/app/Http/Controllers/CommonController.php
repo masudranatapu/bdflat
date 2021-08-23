@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\contactRequest;
 use App\Http\Requests\ProductRequirementsRequest;
+use App\Models\AboutUs;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\ContactForm;
@@ -11,6 +12,8 @@ use App\Models\CustomerPayment;
 use App\Models\Listings;
 use App\Models\ProductRequirements;
 use App\Models\PropertyType;
+use App\Models\TeamMember;
+use App\Models\Testimonials;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -19,18 +22,23 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Toastr;
-si
 class CommonController extends Controller
 {
+    protected $about_us;
+    protected $team_members;
+    protected $testimonials;
     protected $category;
     protected $contact;
     protected $payment;
     protected $requirements;
     protected $resp;
 
-    public function __construct(ProductRequirements $requirements, Category $category, ContactForm $contacts, CustomerPayment $payment)
+    public function __construct(Testimonials $testimonials,TeamMember $team_members,AboutUs $about_us,ProductRequirements $requirements, Category $category, ContactForm $contacts, CustomerPayment $payment)
     {
 //        $this->middleware('auth')->except(['getPostRequirement', 'storePostRequirement']);
+        $this->testimonials = $testimonials;
+        $this->team_members = $team_members;
+        $this->about_us = $about_us;
         $this->category = $category;
         $this->contact = $contacts;
         $this->payment = $payment;
@@ -51,10 +59,12 @@ class CommonController extends Controller
         }*/
 
 
-    public function getAboutUs(Request $request)
+    public function getAboutUs()
     {
-
-        return view('common.about_us');
+        $data['about_us'] = $this->about_us->getAbout();
+        $data['team_members'] = $this->team_members->getTeamMembers();
+        $data['testimonials'] = $this->testimonials->getTestimonials();
+        return view('common.about_us',compact('data'));
     }
 
 
