@@ -16,6 +16,7 @@ use App\Http\Controllers\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('web.home');
+Route::post('/newsletter', 'HomeController@storeNewsLetter')->name('newsletter.store');
 
 Route::get('/cc', function () {
     \Artisan::call('cache:clear');

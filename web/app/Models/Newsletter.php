@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class WebSetting extends Model
+class Newsletter extends Model
 {
-    protected $table = 'WEB_SETTINGS';
+    protected $table = 'WEB_NEWSLETTER';
     protected $primaryKey = 'PK_NO';
+    public $timestamps = false;
 }

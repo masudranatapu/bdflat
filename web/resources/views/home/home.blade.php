@@ -689,7 +689,7 @@
                 <h3>Popular Location</h3>
             </div>
 
-            @if(isset($data['sellPageCategories']) && count($data['sellPageCategories']))
+            @if(isset($data['sellPageCategories']) && count($data['sellPageCategories']) && isset($data['hasSellPageCategories']) && $data['hasSellPageCategories'])
                 <div class="location-heading mb-3">
                     <h2>Popular Locations to Buy Properties</h2>
                 </div>
@@ -713,13 +713,37 @@
                 </div><!-- row -->
             @endif
 
-            @if(isset($data['rentPageCategories']) && count($data['rentPageCategories']))
+            @if(isset($data['rentPageCategories']) && count($data['rentPageCategories']) && isset($data['hasRentPageCategories']) && $data['hasRentPageCategories'])
                 <div class="location-heading mb-3">
                     <h2>Popular Locations for Rent</h2>
                 </div>
                 <!-- row -->
                 <div class="row mb-2">
                     @foreach($data['rentPageCategories'] as $category)
+                        @if(!count($category->pages))
+                            @continue
+                        @endif
+                        <div class="col-md-4">
+                            <div class="locations-wrap">
+                                <h3>{{ $category->NAME }}</h3>
+                                <ul>
+                                    @foreach($category->pages as $page)
+                                        <li><a href="{{ $page->URL_SLUG }}">{{ $page->TITLE }}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endforeach
+                </div><!-- row -->
+            @endif
+
+            @if(isset($data['roommatePageCategories']) && count($data['roommatePageCategories']) && isset($data['hasRoommatePageCategories']) && $data['hasRoommatePageCategories'])
+                <div class="location-heading mb-3">
+                    <h2>Searching for Roommate</h2>
+                </div>
+                <!-- row -->
+                <div class="row mb-2">
+                    @foreach($data['roommatePageCategories'] as $category)
                         @if(!count($category->pages))
                             @continue
                         @endif

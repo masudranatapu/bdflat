@@ -27,13 +27,21 @@ class PagesController extends Controller
 
     public function getCreate()
     {
-        $data['page_categories'] = $this->pages->getPagesCategories()->data->pluck('NAME', 'PK_NO');
+        $data['page_categories'] = [];
+        $categories = $this->pages->getPagesCategories()->data;
+        foreach ($categories as $category) {
+            $data['page_categories'][$category->PK_NO] = $category->NAME . ' (' . $category->PROPERTY_FOR . ')';
+        }
         return view('admin.pages.create', compact('data'));
     }
 
     public function getEdit($id)
     {
-        $data['page_categories'] = $this->pages->getPagesCategories()->data->pluck('NAME', 'PK_NO');
+        $data['page_categories'] = [];
+        $categories = $this->pages->getPagesCategories()->data;
+        foreach ($categories as $category) {
+            $data['page_categories'][$category->PK_NO] = $category->NAME . ' (' . $category->PROPERTY_FOR . ')';
+        }
         $data['page'] = $this->pages->getPage($id)->data;
         return view('admin.pages.edit', compact('data'));
     }

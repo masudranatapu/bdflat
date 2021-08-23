@@ -1,6 +1,9 @@
 <!--
      ============  footer   ============
  -->
+@php
+    $webSetting = \App\Models\WebSetting::find(1);
+@endphp
 <footer class="footer-sec">
     <!-- container -->
     <div class="container">
@@ -13,9 +16,8 @@
                         <h3>About Bdflats</h3>
                     </div>
                     <div class="about-bdflats">
-                        <p>Lorem ipsum dolor, sit, amet consectetur adipisicing elit. A quibusdam nisi corrupti minus
-                            architecto at impedit amet repudiandae voluptate sed.</p>
-                        <p>Unit 1A, House 01, Road 02, Block A Banani C/A, Dhaka 1213</p>
+                        <p>{{ $webSetting->DESCRIPTION ?? '' }}</p>
+                        <p>{{ $webSetting->HQ_ADDRESS ?? '' }}</p>
                     </div>
                 </div>
             </div>
@@ -48,11 +50,24 @@
                     </div>
                     <div class="widget-list">
                         <ul>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Linkedin</a></li>
-                            <li><a href="#">Pinterest</a></li>
-                            <li><a href="#">Youtube</a></li>
+                            @if($webSetting->FACEBOOK_URL)
+                                <li><a href="{{ $webSetting->FACEBOOK_URL }}" target="_blank">Facebook</a></li>
+                            @endif
+                            @if($webSetting->TWITTER_URL)
+                                <li><a href="{{ $webSetting->TWITTER_URL }}" target="_blank">Twitter</a></li>
+                            @endif
+                            @if($webSetting->INSTAGRAM_URL)
+                                <li><a href="{{ $webSetting->INSTAGRAM_URL }}" target="_blank">Instagram</a></li>
+                            @endif
+                            @if($webSetting->YOUTUBE_URL)
+                                <li><a href="{{ $webSetting->YOUTUBE_URL }}" target="_blank">YouTube</a></li>
+                            @endif
+                            @if($webSetting->PINTEREST_URL)
+                                <li><a href="{{ $webSetting->PINTEREST_URL }}" target="_blank">Pinterest</a></li>
+                            @endif
+                            @if($webSetting->WHATS_APP)
+                                <li><a href="{{ $webSetting->WHATS_APP }}" target="_blank">WhatsApp</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -64,10 +79,11 @@
                         <h3>Newsletter</h3>
                     </div>
                     <div class="widget-list">
-                        <p>Trade is Worldest leading classifieds platform that brings!</p>
-                        <form action="#" method="post">
+                        <p>Trade is Worlds leading classifieds platform that brings!</p>
+                        <form action="{{ route('newsletter.store') }}" method="post">
                             <div class="subscribe_form">
-                                <input type="text" class="form-control mb-3" name="email" id="newsletter_email"
+                                @csrf
+                                <input type="email" required class="form-control mb-3" name="email" id="newsletter_email"
                                        placeholder="Enter your email">
                                 <input type="submit" id="submit" name="submit" value="Subscribe">
                             </div>

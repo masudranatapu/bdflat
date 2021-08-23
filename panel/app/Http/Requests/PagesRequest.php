@@ -27,12 +27,12 @@ class PagesRequest extends FormRequest
             'page_category' => 'required',
             'page_title' => 'required|min:2|max:255',
             'page_url' => 'required',
-            'search_url' => 'required',
+//            'search_url' => 'required',
             'meta_keywords' => 'required|max:255',
             'status' => 'required',
             'order_id' => 'required|min:1',
-            'images' => 'required',
-            'images.*' => 'required|image|mimes:jpg,png,jpeg,gif',
+//            'images' => 'required',
+            'images.*' => 'sometimes|image|mimes:jpg,png,jpeg,gif',
         ];
 
         if ($this->has('update')) {

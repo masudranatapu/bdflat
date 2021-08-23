@@ -44,12 +44,14 @@ class PagesAbstract implements PagesInterface
             $page->IS_ACTIVE = $request->status;
             $page->IS_BOTTOM_VIEW = $request->view_on_bottom_list ? 1 : 0;
 
-            $image = $request->file('images')[0];
-            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-            $imagePath = '/uploads/pages/';
-            $image->move(public_path($imagePath), $imageName);
+            if ($request->hasFile('images')) {
+                $image = $request->file('images')[0];
+                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+                $imagePath = '/uploads/pages/';
+                $image->move(public_path($imagePath), $imageName);
 
-            $page->IMAGE_PATH = $imagePath . $imageName;
+                $page->IMAGE_PATH = $imagePath . $imageName;
+            }
             $page->save();
 
             $this->status = true;
@@ -124,7 +126,7 @@ class PagesAbstract implements PagesInterface
 
     public function getPagesCategories($limit = 2000): object
     {
-        $categories = PagesCategory::orderByDesc('ORDER_ID')->paginate($limit);
+        $categories = PagesCategory::orderByDesc('PROPERTY_FOR')->paginate($limit);
         return $this->formatResponse(true, '', '', $categories);
     }
 

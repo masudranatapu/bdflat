@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Listings;
+use App\Models\Newsletter;
 use App\Models\PageCategory;
 use App\Models\PropertyType;
 use App\Models\Slider;
 use App\Models\WebAds;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -53,8 +55,44 @@ class HomeController extends Controller
         $data['roommateProperties'] = $this->listings->getListings('roommate');
         $data['popularCities'] = $this->city->getPopularCities();
         $data['sellPageCategories'] = $this->pageCategory->getPageCategories('sell');
+        $data['hasSellPageCategories'] = $this->isAvailable($data['sellPageCategories']);
         $data['rentPageCategories'] = $this->pageCategory->getPageCategories('rent');
+        $data['hasRentPageCategories'] = $this->isAvailable($data['rentPageCategories']);
+        $data['roommatePageCategories'] = $this->pageCategory->getPageCategories('roommate');
+        $data['hasRoommatePageCategories'] = $this->isAvailable($data['roommatePageCategories']);
 //        dd($data['verifiedProperties']);
         return view('home.home', compact('data'));
+    }
+
+    public function storeNewsLetter(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'email' => 'required|email|unique:WEB_NEWSLETTER,EMAIL',
+            ]);
+
+            $news = new Newsletter();
+            $news->EMAIL = $request->get('email');
+            $news->CREATED_ON = date('Y-m-d H:i:s');
+            $news->save();
+
+            Toastr()->success('Thank you for subscription!');
+        } catch (\Exception $e) {
+            Toastr()->error('Subscription unsuccessful!');
+            DB::rollBack();
+        }
+
+        return back();
+    }
+
+    private function isAvailable($categories): bool
+    {
+        foreach ($categories as $category) {
+            if ($category->pages && count($category->pages)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

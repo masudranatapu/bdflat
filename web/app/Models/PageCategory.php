@@ -18,8 +18,11 @@ class PageCategory extends Model
 
     public function getPageCategories($type, $limit = 6)
     {
-        return PageCategory::with(['pages'])
+        return PageCategory::with(['pages' => function ($query) {
+            $query->where('IS_BOTTOM_VIEW', '=', 1);
+        }])
             ->where('PROPERTY_FOR', '=', $type)
+            ->where('IS_ACTIVE', '=', 1)
             ->orderByDesc('ORDER_ID')
             ->take($limit)
             ->get();

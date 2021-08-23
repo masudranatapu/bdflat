@@ -112,7 +112,7 @@
                                             <div class="form-group {!! $errors->has('search_url') ? 'error' : '' !!}">
                                                 <div class="controls">
                                                     {!! Form::label('search_url','Search URL <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                    {!! Form::text('search_url', old('search_url', $data['page']->SEARCH_URL), ['class'=>'form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Search URL']) !!}
+                                                    {!! Form::text('search_url', old('search_url', $data['page']->SEARCH_URL), ['class'=>'form-control', 'placeholder'=>'Search URL']) !!}
                                                     {!! $errors->first('search_url', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
