@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\Listings;
 use App\Models\Newsletter;
+use App\Models\Owner;
 use App\Models\PageCategory;
 use App\Models\PropertyType;
 use App\Models\Slider;
@@ -20,13 +21,15 @@ class HomeController extends Controller
     protected $propertyType;
     protected $city;
     protected $pageCategory;
+    protected $owner;
 
     public function __construct(
         Slider $slider,
         PropertyType $propertyType,
         WebAds $ads, Listings $listings,
         City $city,
-        PageCategory $pageCategory
+        PageCategory $pageCategory,
+        Owner $owner
     )
     {
         $this->slider = $slider;
@@ -35,6 +38,7 @@ class HomeController extends Controller
         $this->listings = $listings;
         $this->city = $city;
         $this->pageCategory = $pageCategory;
+        $this->owner = $owner;
     }
 
     public function index()
@@ -60,6 +64,8 @@ class HomeController extends Controller
         $data['hasRentPageCategories'] = $this->isAvailable($data['rentPageCategories']);
         $data['roommatePageCategories'] = $this->pageCategory->getPageCategories('roommate');
         $data['hasRoommatePageCategories'] = $this->isAvailable($data['roommatePageCategories']);
+        $data['featuredDevelopers'] = $this->owner->getFeatured(3);
+        $data['featuredAgencies'] = $this->owner->getFeatured(4);
 //        dd($data['verifiedProperties']);
         return view('home.home', compact('data'));
     }
