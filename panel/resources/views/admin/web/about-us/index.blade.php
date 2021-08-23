@@ -12,7 +12,7 @@
     <li class="breadcrumb-item active"> About</li>
 @endsection
 <?php
-$row = $data['about'] ?? [];
+$row = $data['about'] ?? null;
 ?>
 @section('content')
     <div class="content-body min-height">
@@ -23,14 +23,14 @@ $row = $data['about'] ?? [];
                         <div class="card-body">
                             {!! Form::open([ 'route' => 'web.about.us.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
                             @if(!empty($row->PK_NO))
-                                {!! Form::hidden('id', $row->PK_NO) !!}
+                                {!! Form::hidden('id', $row->PK_NO ?? null) !!}
                             @endif
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group {!! $errors->has('title') ? 'error' : '' !!}">
                                         <label>Title<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('title', $row->TITLE, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Title', 'tabindex' => 1]) !!}
+                                            {!! Form::text('title', $row->TITLE ?? null, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Title', 'tabindex' => 1]) !!}
                                             {!! $errors->first('title', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -39,7 +39,7 @@ $row = $data['about'] ?? [];
                                     <div class="form-group {!! $errors->has('subtitle') ? 'error' : '' !!}">
                                         <label>Subtitle<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('subtitle', $row->SUB_TITLE, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter subtitle', 'tabindex' => 2]) !!}
+                                            {!! Form::text('subtitle', $row->SUB_TITLE ?? null, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter subtitle', 'tabindex' => 2]) !!}
                                             {!! $errors->first('subtitle', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@ $row = $data['about'] ?? [];
                                     <div class="form-group {!! $errors->has('description') ? 'error' : '' !!}">
                                         <label>Description</label>
                                         <div class="controls">
-                                            {!! Form::textarea('description', $row->DESCRIPTION, [ 'class' => 'form-control', 'placeholder' => 'Enter description', 'tabindex' => 5, 'rows' => 3,'id' =>'text-editor' ]) !!}
+                                            {!! Form::textarea('description', $row->DESCRIPTION ?? null, [ 'class' => 'form-control', 'placeholder' => 'Enter description', 'tabindex' => 5, 'rows' => 3,'id' =>'text-editor' ]) !!}
                                             {!! $errors->first('description', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -61,7 +61,7 @@ $row = $data['about'] ?? [];
                                                  data-provides="fileupload">
                                  <span class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 120px;">
                                  @if(!empty($row->BANNER))
-                                         <img src="{{asset($row->BANNER)}}" alt="Photo" class="img-fluid" height="150px" width="120px"/>
+                                         <img src="{{asset($row->BANNER ?? null)}}" alt="Photo" class="img-fluid" height="150px" width="120px"/>
                                      @endif
                                  </span>
                                                 <span>
@@ -92,14 +92,14 @@ $row = $data['about'] ?? [];
                                     <div class="form-group {!! $errors->has('vision_title') ? 'error' : '' !!}">
                                         <label>Vision Title<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('vision_title', $row->VISION_TITLE, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter vision title', 'tabindex' => 4]) !!}
+                                            {!! Form::text('vision_title', $row->VISION_TITLE ?? null, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter vision title', 'tabindex' => 4]) !!}
                                             {!! $errors->first('vision_title', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group {!! $errors->has('vision_description') ? 'error' : '' !!}">
                                         <label>Vision Description</label>
                                         <div class="controls">
-                                            {!! Form::textarea('vision_description', $row->VISION_DESCRIPTION, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 5, 'rows' => 3,'id' =>'text-editor' ]) !!}
+                                            {!! Form::textarea('vision_description', $row->VISION_DESCRIPTION ?? null, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 5, 'rows' => 3,'id' =>'text-editor' ]) !!}
                                             {!! $errors->first('vision_description', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -108,14 +108,14 @@ $row = $data['about'] ?? [];
                                     <div class="form-group {!! $errors->has('mission_title') ? 'error' : '' !!}">
                                         <label>Mission Title<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('mission_title', $row->MISSION_TITLE, [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Mission title', 'tabindex' => 6]) !!}
+                                            {!! Form::text('mission_title', $row->MISSION_TITLE ?? null, [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Mission title', 'tabindex' => 6]) !!}
                                             {!! $errors->first('mission_title', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group {!! $errors->has('mission_description') ? 'error' : '' !!}">
                                         <label>Mission Description</label>
                                         <div class="controls">
-                                            {!! Form::textarea('mission_description', $row->MISSION_DESCRIPTION, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 7, 'rows' => 3,'id' =>'text-editor' ]) !!}
+                                            {!! Form::textarea('mission_description', $row->MISSION_DESCRIPTION ?? null, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 7, 'rows' => 3,'id' =>'text-editor' ]) !!}
                                             {!! $errors->first('mission_description', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -127,14 +127,14 @@ $row = $data['about'] ?? [];
                                     <div class="form-group {!! $errors->has('intro_title') ? 'error' : '' !!}">
                                         <label>Approach Title<span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::text('intro_title', $row->APPROACH_TITLE, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Intro title', 'tabindex' => 8]) !!}
+                                            {!! Form::text('intro_title', $row->APPROACH_TITLE ?? null, [ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Enter Intro title', 'tabindex' => 8]) !!}
                                             {!! $errors->first('intro_title', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                     <div class="form-group {!! $errors->has('intro_description') ? 'error' : '' !!}">
                                         <label>Approach Description</label>
                                         <div class="controls">
-                                            {!! Form::textarea('intro_description', $row->APPROACH_DESCRIPTION, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 10, 'rows' => 3,'id' =>'text-editor' ]) !!}
+                                            {!! Form::textarea('intro_description', $row->APPROACH_DESCRIPTION ?? null, [ 'class' => 'form-control', 'placeholder' => 'Enter short description', 'tabindex' => 10, 'rows' => 3,'id' =>'text-editor' ]) !!}
                                             {!! $errors->first('intro_description', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -144,7 +144,7 @@ $row = $data['about'] ?? [];
                                     <div class="form-group {!! $errors->has('is_active') ? 'error' : '' !!}">
                                         <label>Is Active <span class="text-danger">*</span></label>
                                         <div class="controls">
-                                            {!! Form::select('is_active', ['1'=> 'YES','0'=> 'NO'], $row->IS_ACTIVE,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'tabindex' => 13]) !!}
+                                            {!! Form::select('is_active', ['1'=> 'YES','0'=> 'NO'], $row->IS_ACTIVE ?? null,[ 'class' => 'form-control mb-1', 'data-validation-required-message' => 'This field is required', 'tabindex' => 13]) !!}
                                             {!! $errors->first('is_active', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
