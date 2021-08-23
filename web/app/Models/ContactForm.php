@@ -2,16 +2,34 @@
 
 namespace App\Models;
 use App\Traits\RepoResponse;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class ContactForm extends Model
 {
     use RepoResponse;
 
-    protected $table        = 'CONTACT_FORM';
+    protected $table        = 'WEB_CONTACT_MESSAGE';
     protected $primaryKey   = 'PK_NO';
-    protected $fillable     = ['NAME','EMAIL','SUBJECT','MESSAGE'];
+    public $timestamps      = false;
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function($model)
+        {
+            $user = Auth::user();
+            $model->SS_CREATED_BY = $user->PK_NO ?? null;
+        });
+
+        static::updating(function($model)
+        {
+            $user = Auth::user();
+            $model->SS_MODIFIED_BY = $user->PK_NO ?? null;
+        });
+    }
 
     public function store($request)
     {
@@ -21,11 +39,13 @@ class ContactForm extends Model
             $list->NAME                     = $request->name;
             $list->EMAIL                    = $request->email;
             $list->SUBJECT                  = $request->subject;
-            $list->MESSAGE                  = $request->message;
+            $list->MESSAGE_TEXT             = $request->message;
+            $list->SS_CREATED_ON            = Carbon::now();
+            $list->SS_MODIFIED_ON           = Carbon::now();
             $list->save();
 
         }catch (\Exception $e){
-//            dd($e);
+            dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your Message is not submitted successfully !', 'contact-us');
         }

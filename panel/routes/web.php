@@ -972,5 +972,8 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::post('team_members/{id}/update', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.update', 'uses' => 'TeamMemberController@postUpdate']);
     Route::get('team_members/{id}/delete', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.delete', 'uses' => 'TeamMemberController@getDelete']);
 
+    //contact message
+    Route::get('contact-message', ['middleware' => 'acl:contact_message', 'as' => 'web.contact_message', 'uses' => 'ContactFormController@getIndex']);
+
 
 });
