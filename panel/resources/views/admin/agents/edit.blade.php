@@ -186,7 +186,7 @@
                         </div>
                     </div>
 
-                    <div class="form-actions mt-10 mb-3 text-center">
+                    <div class="form-actions mt-10 mb-3 ml-2">
                         <a href="{{ route('admin.agents.list')}}">
                             <button type="button" class="btn btn-warning mr-1">
                                 <i class="ft-x"></i> Cancel

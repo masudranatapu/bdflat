@@ -702,7 +702,7 @@
                     </button>
                 </a>
                 <button type="submit" class="btn btn-primary">
-                    <i class="la la-check-square-o"></i> Update
+                    <i class="la la-check-square-o"></i> Save
                 </button>
             </div>
             {!! Form::close() !!}

@@ -611,9 +611,14 @@
                                         <div class="row">
 
                                             <div class="col-12 mt-2">
-                                                <a href="{{ route('admin.product.list') }}"
-                                                   class="btn btn-info">Cancel</a>
-                                                <input type="submit" value="Submit" class="btn btn-primary">
+                                                <a href="{{ route('admin.product.list')}}">
+                                                    <button type="button" class="btn btn-warning mr-1">
+                                                        <i class="ft-x"></i> Cancel
+                                                    </button>
+                                                </a>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="la la-check-square-o"></i> Save
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
