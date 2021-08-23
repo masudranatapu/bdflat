@@ -90,10 +90,14 @@ $status = [
                                     </div>
                                 </div>
                             </div>
-                            @if(hasAccessAbility('view_ads', $roles))
-                                <a href="{{ route('web.ads') }}" class="btn btn-primary">Cancel</a>
-                            @endif
-                            {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
+                            <a href="{{ route('web.ads')}}">
+                                <button type="button" class="btn btn-warning mr-1">
+                                    <i class="ft-x"></i> Cancel
+                                </button>
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="la la-check-square-o"></i> Save
+                            </button>
                             {!! Form::close() !!}
                         </div>
                     </div>

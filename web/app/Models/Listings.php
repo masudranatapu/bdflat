@@ -73,6 +73,21 @@ class Listings extends Model
         return $this->hasOne('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO')->where('IS_DEFAULT', 1);
     }
 
+    public function images()
+    {
+        return $this->hasMany('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO');
+    }
+
+    public function additionalInfo()
+    {
+        return $this->hasOne('App\Models\ListingAdditionalInfo', 'F_LISTING_NO', 'PK_NO');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\Owner', 'F_USER_NO', 'PK_NO');
+    }
+
     public function getListingVariant()
     {
         return $this->hasOne('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO')->where('PRD_LISTING_VARIANTS.IS_DEFAULT', 1);
@@ -128,6 +143,22 @@ class Listings extends Model
             ->where('PROPERTY_FOR', '=', $for)
             ->take($limit)
             ->get();
+    }
+
+    public function getListingDetails($url_slug)
+    {
+        $listing = Listings::with(['images', 'getListingVariant', 'additionalInfo', 'owner'])
+            ->where('URL_SLUG', '=', $url_slug)
+            ->first();
+        if (!$listing) {
+            abort(404);
+        }
+        return $listing;
+    }
+
+    public function getListingFeatures($features)
+    {
+        return ListingFeatures::whereIn('PK_NO', json_decode($features))->get();
     }
 
     public function store($request): object
@@ -384,7 +415,7 @@ class Listings extends Model
         return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
     }
 
-    public function postDelete($id)
+    public function postDelete($id): object
     {
         DB::beginTransaction();
         try {

@@ -26,7 +26,8 @@ class HomeController extends Controller
     public function __construct(
         Slider $slider,
         PropertyType $propertyType,
-        WebAds $ads, Listings $listings,
+        WebAds $ads,
+        Listings $listings,
         City $city,
         PageCategory $pageCategory,
         Owner $owner
@@ -68,6 +69,13 @@ class HomeController extends Controller
         $data['featuredAgencies'] = $this->owner->getFeatured(4);
 //        dd($data['verifiedProperties']);
         return view('home.home', compact('data'));
+    }
+
+    public function details($slug)
+    {
+        $data['listing'] = $this->listings->getListingDetails($slug);
+        $data['features'] = $this->listings->getListingFeatures($data['listing']->additionalInfo->F_FEATURE_NOS);
+        return view('page.details', compact('data'));
     }
 
     public function storeNewsLetter(Request $request)

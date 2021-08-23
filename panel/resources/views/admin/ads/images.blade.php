@@ -92,7 +92,9 @@
                                             {!! $errors->first('url', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                         <div class="col-sm-4 offset-sm-4 mt-2">
-                                            {!! Form::submit('Save', ['class' => 'btn btn-success btn-block']) !!}
+                                            <button type="submit" class="btn btn-primary btn-block">
+                                                <i class="la la-check-square-o"></i> Save
+                                            </button>
                                         </div>
                                     </div>
                                     {!! Form::close() !!}
@@ -160,7 +162,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="Edit Image Order" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="Edit Image Order"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -188,8 +191,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
+                    <button type="button" class="btn btn-warning mr-1" data-dismiss="modal">
+                        <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="la la-check-square-o"></i> Save
+                    </button>
                 </div>
                 {!! Form::close() !!}
             </div>

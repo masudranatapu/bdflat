@@ -334,7 +334,7 @@
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
-                                                            <a href="details.html"><img
+                                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                     src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
@@ -346,7 +346,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="details.html">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
@@ -381,7 +381,7 @@
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
-                                                            <a href="details.html"><img
+                                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                     src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
@@ -393,7 +393,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="details.html">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
@@ -429,7 +429,7 @@
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
-                                                            <a href="details.html"><img
+                                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                     src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
@@ -441,7 +441,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="details.html">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
