@@ -145,6 +145,17 @@ class Listings extends Model
             ->get();
     }
 
+    public function getSimilarListings($for)
+    {
+        $limit = WebSetting::where('PK_NO', 1)->first('SIMILAR_PROPERTY_LIMIT')->SIMILAR_PROPERTY_LIMIT;
+        return Listings::with(['getDefaultThumb', 'getListingVariant'])
+//            ->where('STATUS', '=', 10)
+            ->where('PROPERTY_FOR', '=', $for)
+            ->take($limit)
+            ->orderByDesc('PK_NO')
+            ->get();
+    }
+
     public function getListingDetails($url_slug)
     {
         $listing = Listings::with(['images', 'getListingVariant', 'additionalInfo', 'owner'])

@@ -75,6 +75,7 @@ class HomeController extends Controller
     {
         $data['listing'] = $this->listings->getListingDetails($slug);
         $data['features'] = $this->listings->getListingFeatures($data['listing']->additionalInfo->F_FEATURE_NOS);
+        $data['similarListings'] = $this->listings->getSimilarListings($data['listing']->PROPERTY_FOR);
         return view('page.details', compact('data'));
     }
 

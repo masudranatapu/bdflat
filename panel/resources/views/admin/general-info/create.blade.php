@@ -210,6 +210,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('similar_property_limit', 'Similar Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::tel('similar_property_limit', old('similar_property_limit', $webInfo->SIMILAR_PROPERTY_LIMIT ?? ''), ['id' => 'similar_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Similar Property Limit']) !!}
+                                            {!! $errors->first('similar_property_limit', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <h2>Social Media Links</h2>
                                 </div>

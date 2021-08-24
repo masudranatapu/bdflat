@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @push('custom_css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
 @endpush
 @php
     $panel_path = env('PANEL_PATH');
@@ -278,10 +284,11 @@
                 <!-- row -->
                 <div class="row">
                     <div class="col-lg-7">
-                        <div class="single-product-slider">
-                            <div id="carouselExampleIndicators" class="carousel slide pointer-event"
-                                 data-ride="carousel">
-                                @if(isset($listing->images) && count($listing->images))
+                        @if(isset($listing->images) && count($listing->images))
+                            <div class="single-product-slider">
+                                <div id="carouselExampleIndicators" class="carousel slide pointer-event"
+                                     data-ride="carousel">
+
                                     <ol class="carousel-indicators">
                                         @foreach($listing->images as $key => $image)
                                             <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
@@ -294,53 +301,54 @@
 
                                     <div class="carousel-inner">
                                         @foreach($listing->images as $key => $image)
-                                            <div class="carousel-item">
-                                                <a href="{{ asset($image->IMAGE_PATH) }}" class="popup"><img
-                                                        src="{{ asset($image->IMAGE_PATH) }}" class="d-block w-100"
-                                                        alt="image"></a>
+                                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                                <a href="{{ asset($image->IMAGE_PATH) }}" class="popup">
+                                                    <img style="max-height: 415px"
+                                                         src="{{ asset($image->IMAGE_PATH) }}" class="d-block w-100"
+                                                         alt="image"></a>
                                             </div>
                                         @endforeach
                                     </div>
-                                @endif
 
-                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                                   data-slide="prev">
-                                    <i class="fa fa-angle-left"></i>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-                                   data-slide="next">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                       data-slide="prev">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                       data-slide="next">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
 
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                     <div class="col-lg-5">
                         <div class="single-product-details">
                             <div class="single-product">
                                 <div class="single-price">
-                                    <h4>Tk {{ number_format($listing->getListingVariant->TOTAL_PRICE, 2) }}</h4>
+                                    <h4>Tk {{ number_format($listing->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h4>
                                 </div>
                                 <div class="single-title">
                                     <h1>{{ $listing->TITLE }}</h1>
-                                    <p><span>Offered by: <a href="#">{{ $listing->owner->NAME }}</a></span></p>
+                                    <p><span>Offered by: <a href="#">{{ $listing->owner->NAME ?? '' }}</a></span></p>
                                     <p><span>Ad ID: <a href="#">251716765</a></span>
                                     </p></div>
                                 <div class="single-pro-ads">
                                     <h4>
-                                        <a href="#"><i class="fa fa-map-marker"></i> {{ $listing->AREA_NAME }}
+                                        <a href="#"><i class="fa fa-map-marker"></i> {{ $listing->AREA_NAME ?? '' }}
                                             , {{ $listing->CITY_NAME }}</a>
                                         <i class="fa fa-suitcase"></i><a
-                                            href="#"><strong>({{ ucwords($listing->PROPERTY_FOR) }})</strong></a>
+                                            href="#"><strong>({{ ucwords($listing->PROPERTY_FOR ?? '') }})</strong></a>
                                     </h4>
                                 </div>
                                 <div class="short-info">
                                     <h3>Short Info</h3>
-                                    <p>Condition:<a href="#">{{ $listing->PROPERTY_CONDITION }}</a></p>
-                                    <p>Size:<a href="#">{{ $listing->getListingVariant->PROPERTY_SIZE }}</a></p>
-                                    <p>Bedroom:<a href="#">{{ $listing->getListingVariant->BEDROOM }}</a></p>
-                                    <p>Bathroom:<a href="#">{{ $listing->getListingVariant->BATHROOM }}</a></p>
-                                    <p>Facing:<a href="#">{{ $listing->additionalInfo->FACING }}</a></p>
+                                    <p>Condition:<a href="#">{{ $listing->PROPERTY_CONDITION ?? '' }}</a></p>
+                                    <p>Size:<a href="#">{{ $listing->getListingVariant->PROPERTY_SIZE ?? '' }}</a></p>
+                                    <p>Bedroom:<a href="#">{{ $listing->getListingVariant->BEDROOM ?? '' }}</a></p>
+                                    <p>Bathroom:<a href="#">{{ $listing->getListingVariant->BATHROOM ?? '' }}</a></p>
+                                    <p>Facing:<a href="#">{{ $listing->additionalInfo->FACING ?? '' }}</a></p>
                                     <p>Features:
                                         @foreach($features as $key => $feature)
                                             <a href="{{ $feature->URL_SLUG }}">{{ $feature->TITLE }}</a>
@@ -353,7 +361,7 @@
                                     <span class="show-number mb-2 mr-3">
                                    <i class="fa fa-phone"></i>
                                    <span class="hide_text">Show Number</span>
-                                   <span class="Show_num d-none">088+ 01234-56789</span>
+                                   <span class="Show_num d-none">{{ $listing->MOBILE1 }}</span>
                                 </span>
                                     <a href="#"><i class="fa fa-envelope"></i>Reply by email</a>
                                 </div>
@@ -384,7 +392,7 @@
                 <div class="col-md-8 mb-4">
                     <div class="des-product">
                         <h3>Description</h3>
-                        {!! $listing->additionalInfo->DESCRIPTION !!}
+                        {!! $listing->additionalInfo->DESCRIPTION ?? '' !!}
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">
@@ -404,261 +412,42 @@
                 <div class="col-md-8 mb-5">
                     <div class="recommended-product">
 
-                        <div class="recommended-title">
-                            <h2>Similar Properties for you</h2>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/1.jpg" class="img-fluid" alt="image"></a>
+                        @if(isset($data['similarListings']) && count($data['similarListings']))
+                            <div class="recommended-title">
+                                <h2>Similar Properties for you</h2>
+                            </div>
+                            <div class="row">
+                                @foreach($data['similarListings'] as $property)
+                                <div class="col-lg-6 mb-3">
+                                    <!-- product -->
+                                    <div class="sale-wrapper">
+                                        <div class="sale-product">
+                                            <div class="row no-gutters position-relative">
+                                                <div class="col-5">
+                                                    <div class="category-bx">
+                                                        <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
+                                                                                    class="img-fluid" alt="image"></a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
+                                                <div class="col-7 position-static pl-3">
+                                                    <div class="category-price">
+                                                        <h3>TK {{ number_format($property->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h3>
+                                                    </div>
+                                                    <div class="category-title">
+                                                        <h5 class="mt-0"><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
+                                                    </div>
+                                                    <div class="category-address">
+                                                        <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
+                                                            , {{ $property->CITY_NAME }}</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/2.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/3.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/4.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/1.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/2.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/3.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/4.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/4.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <!-- product -->
-                                <div class="sale-wrapper">
-                                    <div class="sale-product">
-                                        <div class="row no-gutters position-relative">
-                                            <div class="col-5">
-                                                <div class="category-bx">
-                                                    <a href="details.html"><img src="assets/img/sale/1.jpg" class="img-fluid" alt="image"></a>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 position-static pl-3">
-                                                <div class="category-price">
-                                                    <h3>TK 50.00</h3>
-                                                </div>
-                                                <div class="category-title">
-                                                    <h5 class="mt-0"><a href="details.html">Apple MacBook Pro with Retina Display</a></h5>
-                                                </div>
-                                                <div class="category-address">
-                                                    <a href="#"><i class="fa fa-map-marker"></i>Gulshan, Dhaka</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-4 text-center mb-5">
@@ -698,4 +487,42 @@
 @endsection
 
 @push('custom_js')
+    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script>
+        $(document).on('click', '.modalcategory .nav-link', function () {
+            $('.modalcategory').hide();
+            $('.modalsubcategory').show();
+            $('.backcategory').show();
+        });
+        $(document).on('click', '.backcategory', function () {
+            $('.modalsubcategory').hide();
+            $('.modalcategory').show();
+        });
+
+        // multiple select area
+        $(document).ready(function () {
+            $('.multipleSelect').fastselect();
+        })
+
+        // image Magnific Popup
+        $('.popup').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+
+        (function ($) {
+            //  sidebar menu
+            var Nav = new hcOffcanvasNav('#main-nav', {
+                disableAt: false,
+                customToggle: '.toggle',
+                levelSpacing: 40,
+                levelTitles: false,
+                levelTitleAsBack: true,
+                labelClose: false
+            });
+
+        })(jQuery);
+    </script>
 @endpush
