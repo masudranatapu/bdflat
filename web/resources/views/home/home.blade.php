@@ -334,7 +334,7 @@
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
-                                                            <a href="details.html"><img
+                                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                     src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
@@ -346,7 +346,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="details.html">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
@@ -381,7 +381,7 @@
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
-                                                            <a href="details.html"><img
+                                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                     src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
@@ -393,7 +393,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="details.html">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
@@ -429,7 +429,7 @@
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
-                                                            <a href="details.html"><img
+                                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                     src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
@@ -441,7 +441,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="details.html">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
@@ -496,6 +496,7 @@
     <!--
        ============  featured Developers   ============
     -->
+    @if(isset($data['featuredDevelopers']) && count($data['featuredDevelopers']))
     <div class="featured-developers">
         <!-- container -->
         <div class="container">
@@ -504,180 +505,45 @@
             </div>
             <!-- row -->
             <div class="row text-center">
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/1.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
+                @foreach($data['featuredDevelopers'] as $agency)
+                    <div class="col-3 col-md-2 col-xl-1">
+                        <div class="agencies">
+                            <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
+                                    src="{{ $panel_path . $agency->info->LOGO ?? '' }}" class="img-fluid"
+                                    alt="{{ $agency->NAME }}"></a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/2.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/3.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/4.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/5.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/6.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/7.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/8.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/9.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/10.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/11.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="developers">
-                        <a href="#"><img src="{{asset('assets/img/developers/12.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
+                @endforeach
             </div><!-- row -->
         </div><!-- container -->
     </div>
+    @endif
 
     <!--
         ============  featured Agencies   ============
     -->
-    <div class="featured-agencies">
-        <!-- container -->
-        <div class="container">
-            <div class="sec-heading text-center mb-3">
-                <h3>Featured Agencies</h3>
-            </div>
-            <!-- row -->
-            <div class="row text-center">
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/1.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
+    @if(isset($data['featuredAgencies']) && count($data['featuredAgencies']))
+        <div class="featured-agencies">
+            <!-- container -->
+            <div class="container">
+                <div class="sec-heading text-center mb-3">
+                    <h3>Featured Agencies</h3>
                 </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/2.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/3.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/4.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/5.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/6.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/7.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/8.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/9.jpg')}}" class="img-fluid" alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/10.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/11.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-                <div class="col-3 col-md-2 col-xl-1">
-                    <div class="agencies">
-                        <a href="#"><img src="{{asset('assets/img/agencies/12.jpg')}}" class="img-fluid"
-                                         alt="image"></a>
-                    </div>
-                </div>
-
-            </div><!-- row -->
-        </div><!-- container -->
-    </div>
+                <!-- row -->
+                <div class="row text-center">
+                    @foreach($data['featuredAgencies'] as $agency)
+                        <div class="col-3 col-md-2 col-xl-1">
+                            <div class="agencies">
+                                <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
+                                        src="{{ $panel_path . $agency->info->LOGO ?? '' }}" class="img-fluid"
+                                        alt="{{ $agency->NAME }}"></a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div><!-- row -->
+            </div><!-- container -->
+        </div>
+    @endif
 
     <!--
         ============  popular locations   ============

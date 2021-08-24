@@ -133,9 +133,14 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-6">
-                                                <a href="{{ route('admin.seeker.payment', request()->route('id')) }}"
-                                                   class="btn btn-info">Cancel</a>
-                                                {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
+                                                <a href="{{ route('admin.seeker.payment', request()->route('id'))}}">
+                                                    <button type="button" class="btn btn-warning mr-1">
+                                                        <i class="ft-x"></i> Cancel
+                                                    </button>
+                                                </a>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="la la-check-square-o"></i> Save
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

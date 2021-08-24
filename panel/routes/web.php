@@ -953,24 +953,27 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
     Route::post('web/ads_position/{id}/update',['middleware' => 'acl:edit_ads_position', 'as' => 'web.ads_position.update', 'uses' => 'AdsController@updateAdsPosition']);
 
     //web about us
-    Route::get('web/about-us', ['middleware' => 'acl:list_box', 'as' => 'web.about.us', 'uses' => 'AboutUsController@getIndex']);
-    Route::post('web/about-us/store', ['middleware' => 'acl:new_page', 'as' => 'web.about.us.store', 'uses' => 'AboutUsController@postStore']);
+    Route::get('about-us', ['middleware' => 'acl:list_box', 'as' => 'web.about.us', 'uses' => 'AboutUsController@getIndex']);
+    Route::post('about-us/store', ['middleware' => 'acl:new_page', 'as' => 'web.about.us.store', 'uses' => 'AboutUsController@postStore']);
 
     //testimonial
-    Route::get('web/testimonial', ['middleware' => 'acl:list_box', 'as' => 'web.testimonial', 'uses' => 'TestimonialController@getIndex']);
-    Route::get('web/testimonial/create', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.create', 'uses' => 'TestimonialController@getCreate']);
-    Route::post('web/testimonial/store', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.store', 'uses' => 'TestimonialController@postStore']);
-    Route::get('web/testimonial/{id}/edit', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.edit', 'uses' => 'TestimonialController@getEdit']);
-    Route::post('web/testimonial/{id}/update', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.update', 'uses' => 'TestimonialController@postUpdate']);
-    Route::get('web/testimonial/{id}/delete', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.delete', 'uses' => 'TestimonialController@getDelete']);
+    Route::get('testimonial', ['middleware' => 'acl:list_box', 'as' => 'web.testimonial', 'uses' => 'TestimonialController@getIndex']);
+    Route::get('testimonial/create', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.create', 'uses' => 'TestimonialController@getCreate']);
+    Route::post('testimonial/store', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.store', 'uses' => 'TestimonialController@postStore']);
+    Route::get('testimonial/{id}/edit', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.edit', 'uses' => 'TestimonialController@getEdit']);
+    Route::post('testimonial/{id}/update', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.update', 'uses' => 'TestimonialController@postUpdate']);
+    Route::get('testimonial/{id}/delete', ['middleware' => 'acl:new_page', 'as' => 'web.testimonial.delete', 'uses' => 'TestimonialController@getDelete']);
 
     //team members
-    Route::get('web/team_members', ['middleware' => 'acl:list_box', 'as' => 'web.team_members', 'uses' => 'TeamMemberController@getIndex']);
-    Route::get('web/team_members/create', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.create', 'uses' => 'TeamMemberController@getCreate']);
-    Route::post('web/team_members/store', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.store', 'uses' => 'TeamMemberController@postStore']);
-    Route::get('web/team_members/{id}/edit', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.edit', 'uses' => 'TeamMemberController@getEdit']);
-    Route::post('web/team_members/{id}/update', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.update', 'uses' => 'TeamMemberController@postUpdate']);
-    Route::get('web/team_members/{id}/delete', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.delete', 'uses' => 'TeamMemberController@getDelete']);
+    Route::get('team_members', ['middleware' => 'acl:list_box', 'as' => 'web.team_members', 'uses' => 'TeamMemberController@getIndex']);
+    Route::get('team_members/create', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.create', 'uses' => 'TeamMemberController@getCreate']);
+    Route::post('team_members/store', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.store', 'uses' => 'TeamMemberController@postStore']);
+    Route::get('team_members/{id}/edit', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.edit', 'uses' => 'TeamMemberController@getEdit']);
+    Route::post('team_members/{id}/update', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.update', 'uses' => 'TeamMemberController@postUpdate']);
+    Route::get('team_members/{id}/delete', ['middleware' => 'acl:new_page', 'as' => 'web.team_members.delete', 'uses' => 'TeamMemberController@getDelete']);
+
+    //contact message
+    Route::get('contact-message', ['middleware' => 'acl:contact_message', 'as' => 'web.contact_message', 'uses' => 'ContactFormController@getIndex']);
 
 
 });
