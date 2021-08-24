@@ -32,7 +32,7 @@
             <div class="banner-form">
                 <form action="#" method="post">
                     <div class="form-wrap">
-                        <div class="select-city" data-toggle="modal" data-target="#exampleModal">
+                        <div class="select-city" style="padding-bottom: 4px" data-toggle="modal" data-target="#exampleModal">
                             <h4>Select location / City</h4>
                         </div>
                         <div class="city-location">
@@ -396,9 +396,13 @@
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">
-                    <div class="product-ads">
-                        <a href="#"><img src="assets/img/ads/4.jpg" class="w-100" alt="image"></a>
-                    </div>
+                    @if(isset($data['rightAd']) && isset($data['rightAd']->images[0]))
+                        <div class="product-ads">
+                            <a href="{{ $data['rightAd']->images[0]->URL ?? 'javascript:void(0)' }}" target="_blank"><img
+                                    src="{{ $panel_path . $data['rightAd']->images[0]->IMAGE_PATH }}" class="w-100"
+                                    alt="image"></a>
+                        </div>
+                    @endif
                 </div>
             </div><!-- row -->
         </div><!-- container -->
@@ -418,33 +422,38 @@
                             </div>
                             <div class="row">
                                 @foreach($data['similarListings'] as $property)
-                                <div class="col-lg-6 mb-3">
-                                    <!-- product -->
-                                    <div class="sale-wrapper">
-                                        <div class="sale-product">
-                                            <div class="row no-gutters position-relative">
-                                                <div class="col-5">
-                                                    <div class="category-bx">
-                                                        <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
-                                                                                    class="img-fluid" alt="image"></a>
+                                    <div class="col-lg-6 mb-3">
+                                        <!-- product -->
+                                        <div class="sale-wrapper">
+                                            <div class="sale-product">
+                                                <div class="row no-gutters position-relative">
+                                                    <div class="col-5">
+                                                        <div class="category-bx">
+                                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
+                                                                    src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
+                                                                    class="img-fluid" alt="image"></a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-7 position-static pl-3">
-                                                    <div class="category-price">
-                                                        <h3>TK {{ number_format($property->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h3>
-                                                    </div>
-                                                    <div class="category-title">
-                                                        <h5 class="mt-0"><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
-                                                    </div>
-                                                    <div class="category-address">
-                                                        <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                            , {{ $property->CITY_NAME }}</a>
+                                                    <div class="col-7 position-static pl-3">
+                                                        <div class="category-price">
+                                                            <h3>
+                                                                TK {{ number_format($property->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h3>
+                                                        </div>
+                                                        <div class="category-title">
+                                                            <h5 class="mt-0"><a
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="category-address">
+                                                            <a href="#"><i
+                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
+                                                                , {{ $property->CITY_NAME }}</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endforeach
                             </div>
                         @endif
@@ -454,19 +463,19 @@
                     <div class="recommended-cta">
 
                         <div class="secure-cat">
-                            <img src="assets/img/icon/13.png" alt="image">
+                            <img src="{{ asset('assets/img/icon/13.png') }}" alt="image">
                             <h3>Secure Trading</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
                         </div>
 
                         <div class="support-cat">
-                            <img src="assets/img/icon/14.png" alt="image">
+                            <img src="{{ asset('assets/img/icon/14.png') }}" alt="image">
                             <h3>24/7 Support</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
                         </div>
 
                         <div class="trading-cat">
-                            <img src="assets/img/icon/15.png" alt="image">
+                            <img src="{{ asset('assets/img/icon/15.png') }}" alt="image">
                             <h3>Easy Trading</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
                         </div>
