@@ -276,7 +276,7 @@ class ProductAbstract implements ProductInterface
 //            for features
             $features = ListingAdditionalInfo::where('F_LISTING_NO', $request->id)->first();
             $features->F_LISTING_NO = $list->PK_NO;
-            $features->FACING = $request->facing;
+            $features->F_FACING_NO = $request->facing;
             $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
             $features->DESCRIPTION = $request->description;
             $features->LOCATION_MAP = $request->map_url;

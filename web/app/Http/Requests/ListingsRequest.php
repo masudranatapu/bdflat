@@ -36,7 +36,7 @@ class ListingsRequest extends FormRequest
             'contact_person'    => 'required|max:45',
             'mobile'            => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
             'floor'             => 'nullable|integer',
-            'facing'            => 'nullable|integer',
+            'facing'            => 'required|integer',
             'description'       => 'max:4000',
             'image'             => 'mimes:jpeg,jpg,png,gif',
         ];

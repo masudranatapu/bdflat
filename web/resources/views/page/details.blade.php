@@ -1,11 +1,16 @@
 @extends('layouts.app')
 @push('custom_css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+    <style>
+        .reply:hover {
+            color: #fff;
+        }
+    </style>
 @endpush
 @php
     $panel_path = env('PANEL_PATH');
@@ -332,7 +337,7 @@
                                 <div class="single-title">
                                     <h1>{{ $listing->TITLE }}</h1>
                                     <p><span>Offered by: <a href="#">{{ $listing->owner->NAME ?? '' }}</a></span></p>
-                                    <p><span>Ad ID: <a href="#">251716765</a></span>
+                                    <p><span>Ad ID: <a href="#">{{ $listing->CODE ?? ''  }}</a></span>
                                     </p></div>
                                 <div class="single-pro-ads">
                                     <h4>
@@ -351,8 +356,7 @@
                                     <p>Facing:<a href="#">{{ $listing->additionalInfo->FACING ?? '' }}</a></p>
                                     <p>Features:
                                         @foreach($features as $key => $feature)
-                                            <a href="{{ $feature->URL_SLUG }}">{{ $feature->TITLE }}</a>
-                                            @if($key < count($features) - 1), @endif
+                                            <a href="{{ $feature->URL_SLUG }}">{{ $feature->TITLE }}@if($key < count($features) - 1), @endif</a>
                                         @endforeach
                                     </p>
                                 </div>
@@ -363,7 +367,7 @@
                                    <span class="hide_text">Show Number</span>
                                    <span class="Show_num d-none">{{ $listing->MOBILE1 }}</span>
                                 </span>
-                                    <a href="#"><i class="fa fa-envelope"></i>Reply by email</a>
+                                    <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a>
                                 </div>
                                 <div class="share-product">
                                     <h3>Share this ad</h3>
