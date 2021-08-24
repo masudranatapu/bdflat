@@ -21,7 +21,7 @@ class ProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'property_for'      => 'required',
@@ -34,14 +34,14 @@ class ProductRequest extends FormRequest
             'contact_person'    => 'required|max:45',
             'mobile'            => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:15',
             'floor'             => 'nullable|integer',
-            'facing'            => 'nullable|integer',
+            'facing'            => 'required|integer',
             'description'       => 'max:4000',
             'image'             => 'mimes:jpeg,jpg,png,gif',
             'status'            => 'required'
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'property_for.required'     => 'Advertisement type is required!',
