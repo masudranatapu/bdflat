@@ -10,7 +10,7 @@
         .reply:hover {
             color: #fff;
         }
-        .img-fluid, .img-thumbnail{height: 140px;}
+        
     </style>
 @endpush
 @php
@@ -304,7 +304,7 @@
                         <!-- product -->
                         @if(isset($data['listings']) && count($data['listings']))
                             @foreach($data['listings'] as $listing)
-                                <div class="verified-product {{ $listing->IS_TOP ? 'top_product' : '' }} mb-1">
+                                <div class="verified-product {{ $listing->IS_TOP ? 'top_product' : '' }} mb-3">
                                     <div class="verified-wrap">
                                         <div class="row no-gutters position-relative">
                                             <div class="col-4 col-md-3">
