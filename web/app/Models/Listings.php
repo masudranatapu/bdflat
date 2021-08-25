@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Models\Area;
 use App\Models\City;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\RepoResponse;
 use App\Models\PropertyCondition;
@@ -139,7 +141,7 @@ class Listings extends Model
         }
 
         return Listings::with(['getDefaultThumb', 'getListingVariant'])
-//            ->where('STATUS', '=', 10)
+            //            ->where('STATUS', '=', 10)
             ->where('PROPERTY_FOR', '=', $for)
             ->take($limit)
             ->get();
@@ -149,7 +151,7 @@ class Listings extends Model
     {
         $limit = WebSetting::where('PK_NO', 1)->first('SIMILAR_PROPERTY_LIMIT')->SIMILAR_PROPERTY_LIMIT;
         return Listings::with(['getDefaultThumb', 'getListingVariant'])
-//            ->where('STATUS', '=', 10)
+            //            ->where('STATUS', '=', 10)
             ->where('PK_NO', '!=', $id)
             ->where('PROPERTY_FOR', '=', $for)
             ->take($limit)
@@ -171,6 +173,52 @@ class Listings extends Model
     public function getListingFeatures($features)
     {
         return ListingFeatures::whereIn('PK_NO', json_decode($features))->get();
+    }
+
+    public function getProperties(Request $request): LengthAwarePaginator
+    {
+        $listings = Listings::with(['getDefaultThumb', 'getListingVariant'])
+            ->select('PRD_LISTINGS.PK_NO', 'PRD_LISTINGS.PROPERTY_TYPE', 'PRD_LISTINGS.CODE', 'PRD_LISTINGS.PROPERTY_FOR', 'PRD_LISTINGS.ADDRESS', 'PRD_LISTINGS.PROPERTY_CONDITION', 'PRD_LISTINGS.TITLE', 'PRD_LISTINGS.CITY_NAME', 'PRD_LISTINGS.AREA_NAME', 'V.TOTAL_PRICE', 'PRD_LISTINGS.USER_TYPE', 'PRD_LISTINGS.IS_VERIFIED', 'PRD_LISTINGS.IS_TOP', 'PRD_LISTINGS.URL_SLUG')
+            ->leftJoin('PRD_LISTING_VARIANTS AS V', function ($join) {
+                $join->on('V.F_LISTING_NO', '=', 'PRD_LISTINGS.PK_NO');
+                $join->on('V.IS_DEFAULT', '=', DB::raw(1));
+            });
+
+        $sortBy = $request->query('sb');
+        $category = $request->query('cat');
+        $condition = $request->query('condition');
+        $priceMin = $request->query('p_min');
+        $priceMax = $request->query('p_max');
+        $postedBy = $request->query('by');
+
+        if ($sortBy == 'hl') {
+            $listings->orderByDesc('V.TOTAL_PRICE');
+        }
+        if ($category) {
+//            dd($category);
+            $listings->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO', $category);
+        }
+        if ($condition) {
+            $condition = explode(',', $condition);
+            $listings->whereIn('PRD_LISTINGS.F_PROPERTY_CONDITION', $condition);
+        }
+        if ($priceMin) {
+            $listings->where('V.TOTAL_PRICE', '>=', $priceMin);
+        }
+        if ($priceMax) {
+            $listings->where('V.TOTAL_PRICE', '<=', $priceMax);
+        }
+//        if ($postedBy) {
+//            $owner = [
+//                'reseller' => 2,
+//                ''
+//            ];
+//            $postedBy = explode(',', $postedBy);
+//            $listings->whereIn('PRD_LISTINGS.USER_TYPE', $postedBy);
+//        }
+
+        $listings->orderByDesc('PRD_LISTINGS.IS_TOP')->orderByDesc('PRD_LISTINGS.IS_FEATURE');
+        return $listings->paginate(12);
     }
 
     public function store($request): object
@@ -222,7 +270,7 @@ class Listings extends Model
             $list->CREATED_BY = Auth::user()->PK_NO;
             $list->save();
 
-//           for store listing variants
+            //           for store listing variants
             $property_size = $request->size;
             foreach ($property_size as $key => $item) {
 
@@ -254,7 +302,7 @@ class Listings extends Model
                 ListingVariants::insert($data);
             }
 
-//            for image upload
+            //            for image upload
             if ($request->hasfile('images')) {
                 foreach ($request->file('images') as $key => $image) {
                     $name = uniqid() . '.' . $image->getClientOriginalExtension();
@@ -298,7 +346,7 @@ class Listings extends Model
                 }
             }
 
-//            for features
+            //            for features
             $features = new ListingAdditionalInfo();
             $features->F_LISTING_NO = $list->PK_NO;
             $features->F_FACING_NO = $request->facing;
@@ -311,7 +359,7 @@ class Listings extends Model
             $features->save();
 
         } catch (\Exception $e) {
-//             dd($e);
+            //             dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your listings not added successfully !', 'listings.create');
         }
@@ -344,7 +392,7 @@ class Listings extends Model
             $list->MODIFIED_AT = Carbon::now();
             $list->update();
 
-//            for store listing variants
+            //            for store listing variants
 
             $property_size = $request->size;
             ListingVariants::where('F_LISTING_NO', $id)->delete();
@@ -359,11 +407,11 @@ class Listings extends Model
                 ListingVariants::insert($data);
             }
 
-//            for image upload
+            //            for image upload
             if ($request->hasfile('images')) {
                 foreach ($request->file('images') as $key => $image) {
-//                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
-//                    $image->move(public_path() . '/uploads/listings/'.$id.'/', $name);
+                    //                    $name = uniqid() . '.' . $image->getClientOriginalExtension();
+                    //                    $image->move(public_path() . '/uploads/listings/'.$id.'/', $name);
 
                     $name = uniqid() . '.' . $image->getClientOriginalExtension();
                     $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
@@ -389,11 +437,11 @@ class Listings extends Model
                     $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
                     $thumb_img->save($destinationPath . '/' . $name);
 
-//                    if ($key == 0) {
-//                        $is_default = 1;
-//                    } else {
-//                        $is_default = 0;
-//                    }
+                    //                    if ($key == 0) {
+                    //                        $is_default = 1;
+                    //                    } else {
+                    //                        $is_default = 0;
+                    //                    }
 
                     ListingImages::create([
                         'F_LISTING_NO' => $list->PK_NO,
@@ -401,12 +449,12 @@ class Listings extends Model
                         'IMAGE' => $name,
                         'THUMB_PATH' => '/uploads/listings/' . $list->PK_NO . '/thumb/' . $name2,
                         'THUMB' => $name2,
-//                        'IS_DEFAULT'    => $is_default,
+                        //                        'IS_DEFAULT'    => $is_default,
                     ]);
                 }
             }
 
-//            for features
+            //            for features
             $features = ListingAdditionalInfo::where('F_LISTING_NO', $request->id)->first();
             $features->F_LISTING_NO = $list->PK_NO;
             $features->F_FACING_NO = $request->facing;
@@ -419,7 +467,7 @@ class Listings extends Model
             $features->update();
         } catch (\Exception $e) {
             DB::rollback();
-//            dd($e);
+            //            dd($e);
             return $this->formatResponse(false, 'Your listings not updated !', 'listings.create');
         }
         DB::commit();
@@ -435,23 +483,23 @@ class Listings extends Model
             $listing->STATUS = 4;
             $listing->save();
 
-//            ListingVariants::where('F_LISTING_NO',$id)->delete();
+            //            ListingVariants::where('F_LISTING_NO',$id)->delete();
 
-//            $images = ListingImages::where('F_LISTING_NO', $id)->get();
-//            foreach ($images as $item) {
-//                if (\File::exists(public_path($item->IMAGE_PATH))) {
-//                    \File::delete(public_path($item->IMAGE_PATH));
-//                }
-//                if (\File::exists(public_path($item->THUMB_PATH))) {
-//                    \File::delete(public_path($item->THUMB_PATH));
-//                }
-//            }
-//            ListingImages::where('F_LISTING_NO', $id)->delete();
-//
-//            ListingAdditionalInfo::where('F_LISTING_NO', $id)->delete();
+            //            $images = ListingImages::where('F_LISTING_NO', $id)->get();
+            //            foreach ($images as $item) {
+            //                if (\File::exists(public_path($item->IMAGE_PATH))) {
+            //                    \File::delete(public_path($item->IMAGE_PATH));
+            //                }
+            //                if (\File::exists(public_path($item->THUMB_PATH))) {
+            //                    \File::delete(public_path($item->THUMB_PATH));
+            //                }
+            //            }
+            //            ListingImages::where('F_LISTING_NO', $id)->delete();
+            //
+            //            ListingAdditionalInfo::where('F_LISTING_NO', $id)->delete();
 
         } catch (\Exception $e) {
-//             dd($e);
+            //             dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your listings not updated successfully !', 'listings.create');
         }
