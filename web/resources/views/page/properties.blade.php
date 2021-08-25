@@ -10,7 +10,7 @@
         .reply:hover {
             color: #fff;
         }
-        
+
     </style>
 @endpush
 @php
@@ -161,7 +161,7 @@
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                                              data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <div class="categories-condition">
@@ -194,7 +194,7 @@
                                             </button>
                                         </h2>
                                     </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                    <div id="collapseThree" class="collapse show" aria-labelledby="headingThree"
                                          data-parent="#accordionExample">
                                         <div class="card-body price-body">
                                             <div class="categories-price">
@@ -237,7 +237,7 @@
                                             </button>
                                         </h2>
                                     </div>
-                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                                    <div id="collapseFour" class="collapse show" aria-labelledby="headingFour"
                                          data-parent="#accordionExample" style="">
                                         <div class="card-body">
                                             <div class="categories-posted">
@@ -340,8 +340,7 @@
                                                 </div>
                                                 <div class="verified-address">
                                                     <a href="#"><i
-                                                            class="fa fa-map-marker"></i>{{ $listing->AREA_NAME }}
-                                                        , {{ $listing->CITY_NAME }}</a>
+                                                            class="fa fa-map-marker"></i>{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}</a>
                                                 </div>
                                                 @if($listing->IS_TOP)
                                                     <div class="top_pro">

@@ -98,8 +98,7 @@
                                     </div>
                                     <div class="featured-footer">
                                         <div class="address">
-                                            <a href="#"><i class="fa fa-map-marker"></i>{{ $listing->AREA_NAME }}
-                                                , {{ $listing->CITY_NAME }}</a>
+                                            <a href="#"><i class="fa fa-map-marker"></i>{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}</a>
                                         </div>
                                     </div>
                                 </div>
