@@ -10,6 +10,7 @@
         .reply:hover {
             color: #fff;
         }
+        .img-fluid, .img-thumbnail{height: 140px;}
     </style>
 @endpush
 @php
@@ -305,10 +306,10 @@
                         <!-- product -->
                         @if(isset($data['listings']) && count($data['listings']))
                             @foreach($data['listings'] as $listing)
-                                <div class="verified-product {{ $listing->IS_TOP ? 'top_product' : '' }} mb-3">
+                                <div class="verified-product {{ $listing->IS_TOP ? 'top_product' : '' }} mb-1">
                                     <div class="verified-wrap">
                                         <div class="row no-gutters position-relative">
-                                            <div class="col-3 col-md-2">
+                                            <div class="col-4 col-md-3">
                                                 <div class="verified-bx">
                                                     <a href="{{ route('web.property.details', $listing->URL_SLUG) }}"><img
                                                             src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}"
@@ -328,7 +329,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                            <div class="col-8 col-md-10 position-static pl-4">
+                                            <div class="col-8 col-md-9 position-static">
                                                 <div class="verified-price">
                                                     <h3>
                                                         TK {{ number_format($listing->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h3>

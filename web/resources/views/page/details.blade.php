@@ -10,6 +10,10 @@
         .reply:hover {
             color: #fff;
         }
+        .img-fluid, .img-thumbnail {
+        max-width: 100%;
+        height: 100px;
+        }
     </style>
 @endpush
 @php

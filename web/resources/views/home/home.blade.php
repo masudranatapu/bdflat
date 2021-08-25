@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @push('custom_css')
+<style type="text/css">
+    .owl-carousel .owl-item img{width: 100%; height: 120px;}
+</style>
 @endpush
 @php
     $panel_path = env('PANEL_PATH');
