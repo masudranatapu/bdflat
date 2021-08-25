@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\OwnerInfo;
 use App\Traits\RepoResponse;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,12 +22,13 @@ class User extends Authenticatable
     {
         return $this->PASSWORD;
     }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['NAME', 'EMAIL', 'PASSWORD','USER_TYPE','PROFILE_PIC','PROFILE_PIC_URL','MOBILE_NO','CONTACT_PER_NAME','DESIGNATION','ADDRESS'];
+    protected $fillable = ['NAME', 'EMAIL', 'PASSWORD', 'USER_TYPE', 'PROFILE_PIC', 'PROFILE_PIC_URL', 'MOBILE_NO', 'CONTACT_PER_NAME', 'DESIGNATION', 'ADDRESS'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -49,8 +51,14 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ProductRequirements', 'CREATED_BY', 'PK_NO');
     }
 
+    public function info(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne('App\Models\OwnerInfo', 'F_USER_NO', 'PK_NO');
+    }
 
-    public function paymentHistory($request){
+
+    public function paymentHistory($request)
+    {
 
 
     }
@@ -59,30 +67,40 @@ class User extends Authenticatable
     {
         DB::beginTransaction();
         try {
-//            $list                           = User::where('PK_NO',Auth::user()->PK_NO)->first();
-            $list                           = Auth::user();
-            $list->NAME                     = $request->name;
-//            $list->EMAIL                    = $request->email;
-            $list->MOBILE_NO                = $request->mobile;
+            $list = Auth::user();
+            $list->NAME = $request->name;
+            $list->MOBILE_NO = $request->mobile;
             $list->AUTO_PAYMENT_RENEW = $request->payment_auto_renew;
 
             if ($request->hasfile('image')) {
-                if(\File::exists(public_path($list->PROFILE_PIC_URL))){
+                if (\File::exists(public_path($list->PROFILE_PIC_URL))) {
                     \File::delete(public_path($list->PROFILE_PIC_URL));
                 }
                 $image = $request->file('image');
                 $name = uniqid() . '.' . $image->getClientOriginalExtension();
-                $path = '/uploads/user/'.Auth::user()->PK_NO.'/'.$name;
-                $image->move(public_path('/uploads/user/'.Auth::user()->PK_NO), $name);
+                $path = '/uploads/user/' . Auth::user()->PK_NO . '/' . $name;
+                $image->move(public_path('/uploads/user/' . Auth::user()->PK_NO), $name);
 
-                $list->PROFILE_PIC              = $name;
-                $list->PROFILE_PIC_URL          = $path;
+                $list->PROFILE_PIC = $name;
+                $list->PROFILE_PIC_URL = $path;
+            }
+
+            if (in_array($list->USER_TYPE, [2, 3, 4, 5])) {
+                $info = OwnerInfo::where('F_USER_NO', $list->getAuthIdentifier())->first();
+                if (!$info) {
+                    $info = new OwnerInfo();
+                    $info->F_USER_NO = $list->getAuthIdentifier();
+                }
+                $info->SHOP_OPEN_TIME = $request->open_time;
+                $info->SHOP_CLOSE_TIME = $request->close_time;
+                $info->WORKING_DAYS = json_encode($request->working_days);
+                $info->save();
             }
 
             $list->update();
 
-        }catch (\Exception $e){
-//                dd($e);
+        } catch (\Exception $e) {
+            //                dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your Profile is not updated !', 'profile.edit');
         }
@@ -94,18 +112,17 @@ class User extends Authenticatable
     {
         DB::beginTransaction();
         try {
-            $list                           = User::where('PK_NO',Auth::user()->PK_NO)->first();
-            $list->PASSWORD                 = Hash::make($request->password);
+            $list = User::where('PK_NO', Auth::user()->PK_NO)->first();
+            $list->PASSWORD = Hash::make($request->password);
             $list->update();
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             return $this->formatResponse(false, 'Password is not updated successfully !', 'profile.edit');
         }
         DB::commit();
         return $this->formatResponse(true, 'Password has been updated successfully !', 'profile.edit');
     }
-
 
 
 }

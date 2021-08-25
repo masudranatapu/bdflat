@@ -49,7 +49,7 @@ class UserController extends Controller
         $user_id = Auth::user()->PK_NO;
         $user_type = Auth::user()->USER_TYPE;
         $data = array();
-        $data['user_data'] = User::where('PK_NO', $user_id)->first();
+        $data['user_data'] = User::with(['info'])->where('PK_NO', $user_id)->first();
 
         //$data['city_combo'] = $this->city->getCityCombo();
         return view('common.edit_profile', compact('data'));

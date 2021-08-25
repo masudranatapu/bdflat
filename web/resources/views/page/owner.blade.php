@@ -9,7 +9,7 @@
 @endpush
 @php
     $panel_path = env('PANEL_PATH');
-$owner = $data['owner'] ?? [];
+    $owner = $data['owner'] ?? [];
 @endphp
 @section('content')
     <div class="member-shop-sec mt-3 mb-2">
@@ -40,19 +40,25 @@ $owner = $data['owner'] ?? [];
                     <div class="company-info">
                         <ul>
                             <li>
-                                <i class="fa fa-facebook"></i>
-                                Open Now <br>
-                                Open today: 8:00 am - 11:59 pm
+                                <i class="fa fa-check"></i>
+                                {{ $data['open'] ? 'Open now' : 'Closed' }} <br>
+                                @if($data['open'])
+                                    Open today: {{ \Carbon\Carbon::createFromFormat('H:i', $owner->info->SHOP_OPEN_TIME ?? '12:00')->format('g:i a') }} - {{ \Carbon\Carbon::createFromFormat('H:i', $owner->info->SHOP_CLOSE_TIME ?? '23:00')->format('g:i a') }}
+                                @else
+                                    &nbsp;
+                                @endif
                             </li>
-                            <li class="mb-2">
+                            <li>
                                 <i class="fa fa-map-marker"></i>
-                                {{ $owner->ADDRESS }}
+                                Address <br>
+                                {{ $owner->ADDRESS ?? ' ' }}
                             </li>
                             <li>
                                 <i class="fa fa-phone"></i>
+                                Call us <br>
                                 {{ $owner->MOBILE_NO }}
                             </li>
-                            <li class="mt">
+                            <li class="">
                                 <i class="fa fa-envelope"></i>
                                 Email Us <br>
                                 {{ $owner->EMAIL }}
