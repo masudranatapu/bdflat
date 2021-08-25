@@ -2,14 +2,32 @@
 @section('my-account','active')
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
     <style>
-        .profile_photo{width: 35px;height: 35px; position: absolute;top: 8px;border-radius: 5px;object-fit: cover;margin-left: 5px;}
+        .profile_photo {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 8px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-left: 5px;
+        }
     </style>
 @endpush
 
 <?php
 $user_data = $data['user_data'] ?? [];
+$days = [
+    0 => 'Sun',
+    1 => 'Mon',
+    2 => 'Tue',
+    3 => 'Wed',
+    4 => 'Thu',
+    5 => 'Fri',
+    6 => 'Sat'
+];
 ?>
 
 @section('content')
@@ -78,21 +96,57 @@ $user_data = $data['user_data'] ?? [];
                                 </td>
                                 <td style="position: relative">
                                     <a target="_blank" href="{{asset($user_data->PROFILE_PIC_URL)}}">
-                                    <img class="profile_photo" width="50" src="{{asset($user_data->PROFILE_PIC_URL)}}" alt="{{ $user_data->NAME ?? '' }}"></a>
+                                        <img class="profile_photo" width="50"
+                                             src="{{asset($user_data->PROFILE_PIC_URL)}}"
+                                             alt="{{ $user_data->NAME ?? '' }}"></a>
                                 </td>
                             </tr>
                             @if(in_array($user_data->USER_TYPE, [2, 3, 4, 5]))
-                            <tr>
-                                <td class="label">Property Payment Auto Renew :</td>
-                                <td>
-                                    <div class="form-group mb-0 {!! $errors->has('payment_auto_renew') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::select('payment_auto_renew', [1 => 'Active', 0 => 'Inactive'], old('payment_auto_renew') ?? $user_data->AUTO_PAYMENT_RENEW, [ 'class' => 'form-control', 'style' => 'padding: .5rem 1rem;height:unset', 'data-validation-required-message' => 'This field is required']) !!}
-                                            {!! $errors->first('payment_auto_renew', '<label class="help-block text-danger">:message</label>') !!}
+                                <tr>
+                                    <td class="label">Property Payment Auto Renew :</td>
+                                    <td>
+                                        <div
+                                            class="form-group mb-2 {!! $errors->has('payment_auto_renew') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                {!! Form::select('payment_auto_renew', [1 => 'Active', 0 => 'Inactive'], old('payment_auto_renew') ?? $user_data->AUTO_PAYMENT_RENEW, [ 'class' => 'form-control', 'style' => 'padding: .5rem 1rem;height:unset', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('payment_auto_renew', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Open Time: </td>
+                                    <td>
+                                        <div class="form-group mb-2">
+                                            <div class="controls">
+                                                {!! Form::time('open_time', old('open_time', $user_data->info->SHOP_OPEN_TIME ?? ''), ['class' => 'form-control', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('open_time', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Closing Time: </td>
+                                    <td>
+                                        <div class="form-group mb-2">
+                                            <div class="controls">
+                                                {!! Form::time('close_time', old('close_time', $user_data->info->SHOP_CLOSE_TIME ?? ''), ['class' => 'form-control', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('close_time', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Closing Time: </td>
+                                    <td>
+                                        <div class="form-group mb-0">
+                                            <div class="controls">
+                                                {!! Form::select('working_days[]', $days ?? [], old('working_days', json_decode($user_data->info->WORKING_DAYS ?? '') ?? ''), ['id' => 'working_days', 'class' => 'form-control select2', 'style' => 'height: calc(2.25rem)', 'multiple', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! $errors->first('working_days', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             @endif
                             <tr>
                                 <td></td>
@@ -134,6 +188,7 @@ $user_data = $data['user_data'] ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+    <script src="{{ asset('assets/js/forms/select/form-select2.min.js') }}"></script>
     <script>
     </script>
 @endpush

@@ -11,6 +11,7 @@ use App\Models\PropertyCondition;
 use App\Models\PropertyType;
 use App\Models\Slider;
 use App\Models\WebAds;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -77,8 +78,20 @@ class HomeController extends Controller
 
     public function owner($slug)
     {
+        $days = [
+            0 => 'Sun',
+            1 => 'Mon',
+            2 => 'Tue',
+            3 => 'Wed',
+            4 => 'Thu',
+            5 => 'Fri',
+            6 => 'Sat'
+        ];
         $data['owner'] = $this->owner->getOwner($slug);
-//        ddd($data);
+        $data['open'] = in_array(Carbon::now()->dayOfWeek, $days);
+        $start = Carbon::createFromFormat('H:i', $data['owner']->info->SHOP_OPEN_TIME ?? '12:00');
+        $end = Carbon::createFromFormat('H:i', $data['owner']->info->SHOP_CLOSE_TIME ?? '12:00');
+        $data['open'] &= Carbon::now()->between($start, $end, true);
         return view('page.owner', compact('data'));
     }
 

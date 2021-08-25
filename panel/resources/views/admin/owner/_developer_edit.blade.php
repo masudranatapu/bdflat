@@ -144,6 +144,33 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
+            {!! Form::label('working_days', 'Working Days *', ['class' => 'label-title'], false) !!}
+            <div class="controls">
+                {!! Form::select('working_days[]', $days ?? [], old('working_days', json_decode($owner->info->WORKING_DAYS ?? '')), ['multiple', 'class' => 'form-control select2', 'id' => 'working_days', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! $errors->first('working_days', '<label class="help-block text-danger">:message</label>') !!}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('open_time', 'Open Time *', ['class' => 'label-title'], false) !!}
+            <div class="controls">
+                {!! Form::time('open_time', old('open_time', $owner->info->SHOP_OPEN_TIME ?? ''), [ 'class' => 'form-control', 'id' => 'open_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! $errors->first('open_time', '<label class="help-block text-danger">:message</label>') !!}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('close_time', 'Close Time *', ['class' => 'label-title'], false) !!}
+            <div class="controls">
+                {!! Form::time('close_time', old('close_time', $owner->info->SHOP_CLOSE_TIME ?? ''), [ 'class' => 'form-control', 'id' => 'close_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! $errors->first('close_time', '<label class="help-block text-danger">:message</label>') !!}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
             {!! Form::label('auto_payment_renew', 'Auto Payment Renew *', ['class' => 'label-title'], false) !!}
             <div class="controls">
                 {!! Form::select('auto_payment_renew', [1 => 'Active', 0 => 'Inactive'], old('auto_payment_renew', $owner->AUTO_PAYMENT_RENEW), ['class' => 'form-control', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
