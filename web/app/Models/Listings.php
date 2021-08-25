@@ -193,6 +193,8 @@ class Listings extends Model
 
         if ($sortBy == 'hl') {
             $listings->orderByDesc('V.TOTAL_PRICE');
+        } else if($sortBy == 'lh') {
+            $listings->orderBy('V.TOTAL_PRICE');
         }
         if ($category) {
 //            dd($category);
@@ -208,14 +210,10 @@ class Listings extends Model
         if ($priceMax) {
             $listings->where('V.TOTAL_PRICE', '<=', $priceMax);
         }
-//        if ($postedBy) {
-//            $owner = [
-//                'reseller' => 2,
-//                ''
-//            ];
-//            $postedBy = explode(',', $postedBy);
-//            $listings->whereIn('PRD_LISTINGS.USER_TYPE', $postedBy);
-//        }
+        if ($postedBy) {
+            $postedBy = explode(',', $postedBy);
+            $listings->whereIn('PRD_LISTINGS.USER_TYPE', $postedBy);
+        }
 
         $listings->orderByDesc('PRD_LISTINGS.IS_TOP')->orderByDesc('PRD_LISTINGS.IS_FEATURE');
         return $listings->paginate(12);
