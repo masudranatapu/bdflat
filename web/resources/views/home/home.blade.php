@@ -80,7 +80,7 @@
                     @if($data['leftAd'] && isset($data['leftAd']->images[0]))
                         <div class="advertisement">
                             <a href="{{ $data['leftAd']->images[0]->URL ?? 'javascript:void(0)' }}" target="_blank"><img
-                                    src="{{ $panel_path . ($data['leftAd']->images ? $data['leftAd']->images[0]->IMAGE_PATH : '') }}"
+                                    src="{{ $panel_path . ($data['leftAd']->images ? $data['leftAd']->images[0]->THUMB_PATH : '') }}"
                                     alt="Images"
                                     class="img-fluid"></a>
                         </div>
@@ -120,7 +120,7 @@
                         <div class="advertisement">
                             <a href="{{ $data['rightAd']->images[0]->URL ?? 'javascript:void(0)' }}"
                                target="_blank"><img
-                                    src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->IMAGE_PATH : '') }}"
+                                    src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->THUMB_PATH : '') }}"
                                     alt="Images"
                                     class="img-fluid"></a>
                         </div>
@@ -140,7 +140,7 @@
             <div class="container text-center">
                 <div class="ads">
                     <a href="{{ $data['bottomAd']->images[0]->URL ?? 'javascript:void(0)' }}" target="_blank"><img
-                            src="{{ $panel_path . ($data['bottomAd']->images ? $data['bottomAd']->images[0]->IMAGE_PATH : '') }}"
+                            src="{{ $panel_path . ($data['bottomAd']->images ? $data['bottomAd']->images[0]->THUMB_PATH : '') }}"
                             class="img-fluid" alt="image"></a>
                 </div>
             </div><!-- container -->
@@ -212,7 +212,7 @@
                         <div class="ads">
                             <a href="{{ $data['bottomFeatureAdLeft']->images[0]->URL ?? 'javascript:void(0)' }}"
                                target="_blank"><img
-                                    src="{{ $panel_path . ($data['bottomFeatureAdLeft']->images[0]->IMAGE_PATH ?? '') }}"
+                                    src="{{ $panel_path . ($data['bottomFeatureAdLeft']->images[0]->THUMB_PATH ?? '') }}"
                                     class="img-fluid"
                                     alt="image"></a>
                         </div>
@@ -223,7 +223,7 @@
                         <div class="ads">
                             <a href="{{ $data['bottomFeatureAdCenter']->images[0]->URL ?? 'javascript:void(0)' }}"
                                target="_blank"><img
-                                    src="{{ $panel_path . ($data['bottomFeatureAdCenter']->images[0]->IMAGE_PATH ?? '') }}"
+                                    src="{{ $panel_path . ($data['bottomFeatureAdCenter']->images[0]->THUMB_PATH ?? '') }}"
                                     class="img-fluid"
                                     alt="image"></a>
                         </div>
@@ -234,7 +234,7 @@
                         <div class="ads">
                             <a href="{{ $data['bottomFeatureAdRight']->images[0]->URL ?? 'javascript:void(0)' }}"
                                target="_blank"><img
-                                    src="{{ $panel_path . ($data['bottomFeatureAdRight']->images[0]->IMAGE_PATH ?? '') }}"
+                                    src="{{ $panel_path . ($data['bottomFeatureAdRight']->images[0]->THUMB_PATH ?? '') }}"
                                     class="img-fluid"
                                     alt="image"></a>
                         </div>
@@ -304,7 +304,7 @@
                 <div class="ads">
                     <a href="{{ $data['verifiedBottomAd']->images[0]->URL ?? 'javascript:void(0)' }}"
                        target="_blank"><img
-                            src="{{ $panel_path . ($data['verifiedBottomAd']->images ? $data['verifiedBottomAd']->images[0]->IMAGE_PATH : '') }}"
+                            src="{{ $panel_path . ($data['verifiedBottomAd']->images ? $data['verifiedBottomAd']->images[0]->THUMB_PATH : '') }}"
                             class="img-fluid" alt="image"></a>
                 </div>
             </div><!-- container -->
@@ -338,7 +338,7 @@
                                                     <div class="col-5">
                                                         <div class="category-bx">
                                                             <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                    src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
+                                                                    src="{{asset($property->getDefaultThumb->THUMB_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
                                                     </div>
@@ -349,7 +349,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ \Illuminate\Support\Str::limit($property->TITLE, 50, '...') }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
@@ -385,7 +385,7 @@
                                                     <div class="col-5">
                                                         <div class="category-bx">
                                                             <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                    src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
+                                                                    src="{{asset($property->getDefaultThumb->THUMB_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
                                                     </div>
@@ -433,7 +433,7 @@
                                                     <div class="col-5">
                                                         <div class="category-bx">
                                                             <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                    src="{{asset($property->getDefaultThumb->IMAGE_PATH ?? '')}}"
+                                                                    src="{{asset($property->getDefaultThumb->THUMB_PATH ?? '')}}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
                                                     </div>

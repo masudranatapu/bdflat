@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('custom_css')
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
@@ -51,18 +51,16 @@
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCategory">
-                                <option>Select Category</option>
-                                <option>Fashion &amp; Beauty</option>
-                                <option>Cars &amp; Vehicles</option>
-                                <option>Electronices &amp; Gedgets</option>
-                                <option>Real Estate</option>
-                                <option>Sports &amp; Games</option>
+                                <option>Select Property Type</option>
+                                <option value="buy">Buy</option>
+                                <option value="rent">Rent</option>
+                                <option value="roommmate">Roommate</option>
                             </select>
                         </div>
                     </div>
                     <div class="search-form">
-                        <input type="text" placeholder="Type Your key word" name="search" id="search" style="margin-top: -6px">
-                        <button type="submit" style="margin-top: -6px">Search</button>
+                        <input type="text" placeholder="Type Your key word" name="search" id="search">
+                        <button type="submit">Search</button>
                     </div>
                 </form>
             </div>

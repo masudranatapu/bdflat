@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @push('custom_css')
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
@@ -302,7 +300,7 @@
                                         @foreach($listing->images as $key => $image)
                                             <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
                                                 class="{{ $key == 0 ? 'active' : '' }}">
-                                                <img src="{{ asset($image->IMAGE_PATH) }}" alt="image"
+                                                <img src="{{ asset($image->THUMB_PATH) }}" alt="image"
                                                      class="img-fluid">
                                             </li>
                                         @endforeach
@@ -432,8 +430,8 @@
                                 @foreach($data['similarListings'] as $property)
                                     <div class="col-lg-6 mb-3">
                                         <!-- product -->
-                                        <div class="sale-wrapper">
-                                            <div class="sale-product">
+                                        <div class="sale-wrapper" style="height: 100%;">
+                                            <div class="sale-product" style="height: 100%;">
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
@@ -449,7 +447,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ \Illuminate\Support\Str::limit($property->TITLE, 40, '...') }}</a>
                                                             </h5>
                                                         </div>
                                                         <div class="category-address">
@@ -504,6 +502,10 @@
 @endsection
 
 @push('custom_js')
+    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/fastselect.standalone.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/hc-offcanvas-nav.js?ver=6.1.1') }}"></script>
     <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
     <script>
         $(document).on('click', '.modalcategory .nav-link', function () {
