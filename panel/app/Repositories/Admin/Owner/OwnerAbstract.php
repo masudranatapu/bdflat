@@ -79,6 +79,9 @@ class OwnerAbstract implements OwnerInterface
                 $info->META_DESCRIPTION = $request->meta_description;
                 $info->SITE_URL = $request->site_url;
                 $info->ABOUT_COMPANY = $request->about_company;
+                $info->SHOP_OPEN_TIME = $request->open_time;
+                $info->SHOP_CLOSE_TIME = $request->close_time;
+                $info->WORKING_DAYS = json_encode($request->working_days);
 
                 if ($request->hasFile('images')) {
                     $imgMap = ['LOGO', 'BANNER'];

@@ -88,7 +88,7 @@
                                                         <div class="row no-gutters position-relative">
                                                             <div class="col-3 col-md-4">
                                                                 <div class="category-bx">
-                                                                    <a href="details.html"><img
+                                                                    <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                             src="{{$property->getDefaultThumb ? asset($property->getDefaultThumb->THUMB_PATH) : ""}}"
                                                                             class="img-fluid" alt="image"></a>
                                                                 </div>

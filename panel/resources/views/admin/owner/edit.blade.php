@@ -27,6 +27,15 @@
     $user_status    = Config::get('static_array.user_status');
     $owner          = $data['owner'] ?? [];
     $tabIndex = 0;
+    $days = [
+        0 => 'Sun',
+        1 => 'Mon',
+        2 => 'Tue',
+        3 => 'Wed',
+        4 => 'Thu',
+        5 => 'Fri',
+        6 => 'Sat'
+    ];
 @endphp
 
 @section('content')
