@@ -244,22 +244,27 @@
                                             <div class="categories-posted">
                                                 <form action="#">
                                                     <label for="induvidual">
-                                                        <input type="checkbox" name="posted" value="induvidual"
-                                                               id="induvidual"> Individual
+                                                        <input type="checkbox" name="posted" value="2"
+                                                               {{ request()->query->has('by') ? (in_array(2, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               id="induvidual"> Owner
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="dealer">
-                                                        <input type="checkbox" name="posted" value="dealer" id="dealer">Dealer
+                                                        <input type="checkbox" name="posted"
+                                                               {{ request()->query->has('by') ? (in_array(3, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               value="3" id="dealer">Builder
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="reseller">
-                                                        <input type="checkbox" name="posted" value="reseller"
-                                                               id="reseller"> Reseller
+                                                        <input type="checkbox" name="posted" value="4"
+                                                               {{ request()->query->has('by') ? (in_array(4, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               id="reseller"> Agency
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="Manufacturer">
-                                                        <input type="checkbox" name="posted" value="Manufacturer"
-                                                               id="Manufacturer"> Dealer
+                                                        <input type="checkbox" name="posted" value="5"
+                                                               {{ request()->query->has('by') ? (in_array(5, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               id="Manufacturer"> Agent
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </form>
@@ -286,6 +291,7 @@
                                 <p>
                                     Sort By
                                     <select class="form-control" id="sortBy" name="sortBy">
+                                        <option value="d">Default</option>
                                         <option value="lh" {{ request()->query('sb') == 'lh' ? 'selected' : '' }}>Price:
                                             low to high
                                         </option>
