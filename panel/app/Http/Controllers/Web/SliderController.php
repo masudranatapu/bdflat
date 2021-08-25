@@ -25,7 +25,6 @@ class SliderController extends Controller
         $this->resp = $this->sliderInt->getPaginatedList($request);
 
         $data['slider'] = $this->resp->data;
-
         return view('admin.web.slider.index')->withData($data);
     }
      public function createSlider(){

@@ -497,26 +497,26 @@
        ============  featured Developers   ============
     -->
     @if(isset($data['featuredDevelopers']) && count($data['featuredDevelopers']))
-    <div class="featured-developers">
-        <!-- container -->
-        <div class="container">
-            <div class="sec-heading text-center mb-3">
-                <h3>Featured Developers</h3>
-            </div>
-            <!-- row -->
-            <div class="row text-center">
-                @foreach($data['featuredDevelopers'] as $agency)
-                    <div class="col-3 col-md-2 col-xl-1">
-                        <div class="agencies">
-                            <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
-                                    src="{{ $panel_path . $agency->info->LOGO ?? '' }}" class="img-fluid"
-                                    alt="{{ $agency->NAME }}"></a>
+        <div class="featured-developers">
+            <!-- container -->
+            <div class="container">
+                <div class="sec-heading text-center mb-3">
+                    <h3>Featured Developers</h3>
+                </div>
+                <!-- row -->
+                <div class="row text-center">
+                    @foreach($data['featuredDevelopers'] as $agency)
+                        <div class="col-3 col-md-2 col-xl-1">
+                            <div class="agencies">
+                                <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
+                                        src="{{ $panel_path . $agency->info->LOGO ?? '' }}" class="img-fluid"
+                                        alt="{{ $agency->NAME }}"></a>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div><!-- row -->
-        </div><!-- container -->
-    </div>
+                    @endforeach
+                </div><!-- row -->
+            </div><!-- container -->
+        </div>
     @endif
 
     <!--
