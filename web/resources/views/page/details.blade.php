@@ -336,7 +336,7 @@
                                 </div>
                                 <div class="single-title">
                                     <h1>{{ $listing->TITLE }}</h1>
-                                    <p><span>Offered by: <a href="#">{{ $listing->owner->NAME ?? '' }}</a></span></p>
+                                    <p><span>Offered by: <a href="{{ route('web.owner', $listing->owner->PK_NO) }}">{{ $listing->owner->NAME ?? '' }}</a></span></p>
                                     <p><span>Ad ID: <a href="#">{{ $listing->CODE ?? ''  }}</a></span>
                                     </p></div>
                                 <div class="single-pro-ads">

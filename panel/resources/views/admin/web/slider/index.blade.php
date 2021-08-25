@@ -42,7 +42,8 @@ $roles = userRolePermissionArray();
                                     <th class="text-center">SL</th>
                                     <th>TITLE</th>
                                     <th>SUB TITLE</th>
-                                    <th class="text-center">BANNER</th>
+                                    <th class="text-center">DESKTOP BANNER</th>
+                                    <th class="text-center">MOBILE BANNER</th>
                                     <th class="text-center">IS FEATURE</th>
                                     <th class="text-center">ACTION</th>
                                 </tr>
@@ -56,6 +57,8 @@ $roles = userRolePermissionArray();
                                             <td>{{ $row->TITLE }}</td>
                                             <td>{{ $row->SUBTITLE }}</td>
                                             <td class="text-center"><img src="{{ asset($row->BANNER) }}" alt=""
+                                                                         width="100px;" class="img-fluid"></td>
+                                            <td class="text-center"><img src="{{ asset($row->MOBILE_BANNER) }}" alt=""
                                                                          width="100px;" class="img-fluid"></td>
                                             <td class="text-center">
                                                 <input type="checkbox" class="is_feature" data-id="{{$row->PK_NO}}"

@@ -16,7 +16,9 @@ use App\Http\Controllers\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('web.home');
-Route::get('/details/{slug}', 'HomeController@details')->name('web.property.details');
+Route::get('/properties', 'HomeController@properties')->name('web.property');
+Route::get('/property/{slug}', 'HomeController@details')->name('web.property.details');
+Route::get('/owner/{slug}', 'HomeController@owner')->name('web.owner');
 Route::post('/newsletter', 'HomeController@storeNewsLetter')->name('newsletter.store');
 
 Route::get('/cc', function () {

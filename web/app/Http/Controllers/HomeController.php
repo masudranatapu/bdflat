@@ -7,6 +7,7 @@ use App\Models\Listings;
 use App\Models\Newsletter;
 use App\Models\Owner;
 use App\Models\PageCategory;
+use App\Models\PropertyCondition;
 use App\Models\PropertyType;
 use App\Models\Slider;
 use App\Models\WebAds;
@@ -22,6 +23,7 @@ class HomeController extends Controller
     protected $city;
     protected $pageCategory;
     protected $owner;
+    protected $propertyCondition;
 
     public function __construct(
         Slider $slider,
@@ -30,7 +32,8 @@ class HomeController extends Controller
         Listings $listings,
         City $city,
         PageCategory $pageCategory,
-        Owner $owner
+        Owner $owner,
+        PropertyCondition $propertyCondition
     )
     {
         $this->slider = $slider;
@@ -40,6 +43,7 @@ class HomeController extends Controller
         $this->city = $city;
         $this->pageCategory = $pageCategory;
         $this->owner = $owner;
+        $this->propertyCondition = $propertyCondition;
     }
 
     public function index()
@@ -69,6 +73,22 @@ class HomeController extends Controller
         $data['featuredAgencies'] = $this->owner->getFeatured(4);
 //        dd($data['verifiedProperties']);
         return view('home.home', compact('data'));
+    }
+
+    public function owner($slug)
+    {
+        $data['owner'] = $this->owner->getOwner($slug);
+//        ddd($data);
+        return view('page.owner', compact('data'));
+    }
+
+    public function properties(Request $request)
+    {
+        $data['listings'] = $this->listings->getProperties($request);
+        $data['listings']->appends($request->except('page'));
+        $data['categories'] = $this->propertyType->getPropertyTypes();
+        $data['conditions'] = $this->propertyCondition->getConditions();
+        return view('page.properties', compact('data'));
     }
 
     public function details($slug)

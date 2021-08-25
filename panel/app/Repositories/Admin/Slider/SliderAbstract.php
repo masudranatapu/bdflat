@@ -37,8 +37,11 @@ class SliderAbstract implements SliderInterface
             $slider->ORDER_BY        = Slider::max('ORDER_BY')+1;
             $slider->CREATED_ON      = date("Y-m-d h:i:s", time());
             $image                   = $this->uploadImage($request->banner);
+            $image2                  = $this->uploadImage($request->mobile_banner);
             $slider->BANNER          = '/'.$image['image_url'];
             $slider->IMAGE_NAME      = $image['image_name'];
+            $slider->MOBILE_BANNER   = '/'.$image2['image_url'];
+            $slider->MOBILE_IMAGE_NAME= $image2['image_name'];
             $slider->save();
 
         } catch (\Exception $e) {
@@ -101,10 +104,17 @@ class SliderAbstract implements SliderInterface
             $slider->IS_ACTIVE       = $request->is_active;
             $slider->MODIFIED_BY     = Auth::user()->PK_NO;
             $slider->MODIFIED_ON     = date("Y-m-d h:i:s", time());
+
             if(!empty($request->banner)){
                 $image               = $this->uploadImage($request->banner);
                 $slider->BANNER      = '/'.$image['image_url'];
                 $slider->IMAGE_NAME  = $image['image_name'];
+            }
+
+            if(!empty($request->mobile_banner)){
+                $image2                  = $this->uploadImage($request->mobile_banner);
+                $slider->MOBILE_BANNER   = '/'.$image2['image_url'];
+                $slider->MOBILE_IMAGE_NAME= $image2['image_name'];
             }
 
             $slider->update();
