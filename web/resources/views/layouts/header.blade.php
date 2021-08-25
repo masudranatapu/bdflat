@@ -120,7 +120,7 @@
                         <a class="nav-link" href="categories.html">Roommate</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="categories.html">Properties</a>
+                        <a class="nav-link" href="{{ route('web.property') }}">Properties</a>
                     </li>
                     <li class="nav-menu nav-item">
                       @guest

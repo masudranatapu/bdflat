@@ -6123,7 +6123,7 @@ textarea#msg {
     font-family: 'Montserrat-Medium';
 }
 
-.sortby select#sortby {
+.sortby select#sortBy {
     border-radius: 0px;
     border: 1px solid #dfdfdf;
     outline: none;
