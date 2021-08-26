@@ -92,7 +92,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            {!! Form::label('images','Banner (300x300) <span>*</span>', ['class' => 'label-title'], false) !!}
+            {!! Form::label('images','Banner (1100x350) <span>*</span>', ['class' => 'label-title'], false) !!}
             <div class="controls">
                 @if($owner->info && $owner->info->BANNER)
                     <img src="{{ asset($owner->info->BANNER) }}" alt="" style="max-width: 200px;max-height: 120px">
@@ -155,7 +155,7 @@
         <div class="form-group">
             {!! Form::label('open_time', 'Open Time *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::time('open_time', old('open_time', $owner->info->SHOP_OPEN_TIME ?? ''), [ 'class' => 'form-control', 'id' => 'open_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::text('open_time', old('open_time', $owner->info->SHOP_OPEN_TIME ?? ''), [ 'class' => 'form-control time', 'id' => 'open_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('open_time', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
@@ -164,7 +164,7 @@
         <div class="form-group">
             {!! Form::label('close_time', 'Close Time *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::time('close_time', old('close_time', $owner->info->SHOP_CLOSE_TIME ?? ''), [ 'class' => 'form-control', 'id' => 'close_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::text('close_time', old('close_time', $owner->info->SHOP_CLOSE_TIME ?? ''), [ 'class' => 'form-control time', 'id' => 'close_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('close_time', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>

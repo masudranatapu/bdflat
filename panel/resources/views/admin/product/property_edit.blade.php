@@ -515,7 +515,7 @@
                                                     <div
                                                         class="form-group {!! $errors->has('contact_person_2') ? 'error' : '' !!}">
                                                         <div class="controls">
-                                                            {!! Form::text('contact_person_2', old('contact_person_2', $product->CONTACT_PERSON2), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Contact person name','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                                            {!! Form::text('contact_person_2', old('contact_person_2', $product->CONTACT_PERSON2), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Contact person name', 'tabIndex' => ++$tabIndex]) !!}
                                                             {!! $errors->first('contact_person_2', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
 
@@ -526,7 +526,7 @@
                                                     <div
                                                         class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
                                                         <div class="controls">
-                                                            {!! Form::number('mobile_2', old('mobile_2', $product->MOBILE2), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Contact person mobile number','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                                            {!! Form::number('mobile_2', old('mobile_2', $product->MOBILE2), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Contact person mobile number', 'tabIndex' => ++$tabIndex]) !!}
                                                             {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
                                                         </div>
                                                     </div>
