@@ -101,6 +101,8 @@ class HomeController extends Controller
         $data['listings']->appends($request->except('page'));
         $data['categories'] = $this->propertyType->getPropertyTypes();
         $data['conditions'] = $this->propertyCondition->getConditions();
+        $data['bottomAd'] = $this->ads->getRandomAd(301);
+        $data['rightAd'] = $this->ads->getRandomAd(300);
         return view('page.properties', compact('data'));
     }
 

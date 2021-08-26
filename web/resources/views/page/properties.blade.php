@@ -202,7 +202,9 @@
                                                     <div class="row">
                                                         <div class="col-5">
                                                             <div class="range-form ml-1">
-                                                                <input type="number" name="p_min" value="{{ request()->query('p_min') }}" class="form-control"
+                                                                <input type="number" name="p_min"
+                                                                       value="{{ request()->query('p_min') }}"
+                                                                       class="form-control"
                                                                        placeholder="Min">
                                                             </div>
                                                         </div>
@@ -213,7 +215,9 @@
                                                         </div>
                                                         <div class="col-5">
                                                             <div class="range-form mr-1">
-                                                                <input type="number" name="p_max" value="{{ request()->query('p_max') }}" class="form-control"
+                                                                <input type="number" name="p_max"
+                                                                       value="{{ request()->query('p_max') }}"
+                                                                       class="form-control"
                                                                        placeholder="Max">
                                                             </div>
                                                         </div>
@@ -340,7 +344,8 @@
                                                 </div>
                                                 <div class="verified-address">
                                                     <a href="#"><i
-                                                            class="fa fa-map-marker"></i>{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}</a>
+                                                            class="fa fa-map-marker"></i>{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}
+                                                    </a>
                                                 </div>
                                                 @if($listing->IS_TOP)
                                                     <div class="top_pro">
@@ -351,15 +356,21 @@
                                         </div>
                                     </div>
                                 </div>
-                        @endforeach
-                    @endif
+                            @endforeach
+                        @endif
 
                     <!-- ads -->
-                        <div class="advertisement mb-3">
-                            <a href="#"><img src="assets/img/ads/2.jpg" alt="Images" class="img-fluid"></a>
-                        </div>
+                        @if(isset($data['bottomAd']) && isset($data['bottomAd']->images[0]))
+                            <div class="advertisement mb-3">
+                                <a href="{{ $data['bottomAd']->images[0]->URL ?? 'javascript:void(0)' }}">
+                                    <img
+                                        src="{{ $panel_path . ($data['bottomAd']->images ? $data['bottomAd']->images[0]->IMAGE_PATH : '') }}"
+                                        alt="" class="img-fluid">
+                                </a>
+                            </div>
+                    @endif
 
-                        <!-- pagination -->
+                    <!-- pagination -->
                         <div class="pagination-wrap mt-4">
                             {{ $data['listings']->links('layouts.pagination') }}
                         </div>
@@ -367,11 +378,15 @@
                     </div>
                 </div>
 
-                <div class="d-none d-lg-block col-lg-2 mt-4">
-                    <div class="advertisement">
-                        <a href="#"><img src="assets/img/ads/1.jpg" alt="Images" class="img-fluid"></a>
+                @if(isset($data['rightAd']) && isset($data['rightAd']->images[0]))
+                    <div class="d-none d-lg-block col-lg-2 mt-4">
+                        <div class="advertisement">
+                            <a href="{{ $data['rightAd']->images[0]->URL ?? 'javascript:void(0)' }}">
+                                <img src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->IMAGE_PATH : '') }}" alt="Images" class="img-fluid">
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
             <!-- row -->
         </div><!-- container -->
