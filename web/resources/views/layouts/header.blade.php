@@ -111,7 +111,7 @@
                         <a class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="categories.html">Buy</a>
+                        <a class="nav-link" href="categories.html">Sale</a>
                     </li>
                     <li class="nav-menu nav-item">
                         <a class="nav-link" href="categories.html">Rent</a>

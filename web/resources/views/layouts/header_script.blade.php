@@ -1,18 +1,43 @@
-<!doctype html>
-<html class="no-js" lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>BDFlats | Welcome to BDFlats</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="">
-  <meta property="og:type"  content="">
-  <meta property="og:url"   content="">
-  <meta property="og:image" content="">
-  <!--
-     ============ fav icon ============
-  -->
-  <link rel="icon" href="{{ asset('assets/img/favicon.png') }}">
+<?php 
+  $title = 'BDFlats | Welcome to BDFlats !';
+  $meta_description = 'BDFlats';
+?>
+<head prefix="og: http://ogp.me/ns#">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<link rel="icon" type="image/png"  href="{{ asset('assets/img/favicon/favicon.png') }}">
+<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/img/favicon/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/img/favicon/android-icon-192x192.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/favicon/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon/favicon-16x16.png') }}">
+<meta name="theme-color" content="#ffffff">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $meta_description }}" />
+<meta property="og:title" content="SAMAKAL | GET THE LATEST ONLINE BANGLA NEWS !" />
+<meta property="og:description" content="The Daily Samakal Brings The Latest News & Breaking News, Headlines From Bangladesh and Around The World." />
+<meta name="twitter:title" content="SAMAKAL | GET THE LATEST ONLINE BANGLA NEWS !" />
+<meta name="twitter:description" content="The Daily Samakal Brings The Latest News & Breaking News, Headlines From Bangladesh and Around The World." />
+<meta property="og:image" content="https://samakal.com/assets/images/default_news.jpg" />
+<meta name="twitter:image" content="https://samakal.com/assets/images/default_news.jpg" />
+<meta name="keywords" content="Samakal, somokal, shomokal, samakal bangla, samakal online, daily samakal, daily somokal, daily shomokal, dainik samakal, dainik shomokal, bangla news, bangladesh newspapers, bengali news paper, bd newspaper, bengali news, bangla paper, bangladeshi news paper, online bangla newspaper, current News, online paper, bangla khobor, Bangladesh latest news, সমকাল, সমকাল বাংলা, সমকাল অনলাইন, দৈনিক সমকাল, অনলাইন নিউজ পেপার, আজকের নিউজ পেপার, বাংলাদেশী অনলাইন নিউজ পেপার, সকল অনলাইন পত্রিকা, অনলাইন পত্রিকার তালিকা, দৈনিক সংবাদপত্র, জাতীয় পত্রিকা, সকল অনলাইন পত্রিকা, অনলাইন নিউজ পেপার, সকল পত্রিকা, লাইভ স্কোর" />
+<meta name="robots" content="index,follow">
+<meta name="Developed By" content="BDFlats" />
+<meta name="Developer" content="Md.Maidul Islam, Md. Rony" />
+<meta property="fb:pages" content="351757248257846" />
+<meta property="fb:app_id" content="276108213069474" />
+<meta property="og:image:width" content="700" />
+<meta property="og:image:height" content="400" />
+<meta property="og:site_name" content="SAMAKAL" />
+<meta property="og:url" content="https://samakal.com" />
+<meta property="og:type" content="WEBSITE" />
+<meta name="twitter:card" value="summary_large_image" />
+<meta name="twitter:site" content="@samakaltw" />
+<meta name="twitter:creator" content="@samakaltw" />
+<meta name="twitter:url" content="https://samakal.com" />
+<link rel="canonical" href="https://samakal.com" />
+
+
   <!--
     ============ css files ============
   -->
