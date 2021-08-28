@@ -199,7 +199,7 @@ class Listings extends Model
         } else if ($sortBy == 'lh') {
             $listings->orderBy('V.TOTAL_PRICE');
         }
-        if ($verified) {
+        if ($verified == 'verified_properties') {
             $listings->where('PRD_LISTING.IS_VERIFIED', '=', 1);
         }
         if ($category) {
