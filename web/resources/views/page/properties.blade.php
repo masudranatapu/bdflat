@@ -27,7 +27,7 @@
                     <li><a href="{{ route('web.home') }}">Home <i class="fa fa-angle-double-right"></i></a></li>
                     <li>Electronics &amp; Gedget</li>
                 </ul>
-                <h1>Mobile Phones</h1>
+
             </div>
         </div><!-- container -->
     </div>
@@ -37,24 +37,25 @@
         <div class="container">
             <div class="banner-form">
                 <form action="#" method="post">
-                    {{-- <div class="form-wrap">
+                    <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCity">
                                 <option>Select Location</option>
-                                <option>United Kingdom</option>
-                                <option>United States</option>
-                                <option>China</option>
-                                <option>Russia</option>
+                                <option>Dhaka</option>
+                                <option>Comila</option>
+
                             </select>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCategory">
-                                <option>All Property Type</option>
-                                <option value="buy">Sale</option>
-                                <option value="rent">Rent</option>
-                                <option value="roommmate">Roommate</option>
+                                <option>Select Category</option>
+                                @if(isset($data['categories']) && count($data['categories']))
+                                @foreach($data['categories'] as $category)
+                                <option value="buy">{{ $category->PROPERTY_TYPE }}</option>
+                                @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -118,22 +119,60 @@
                     <div class="categorie-wrapper">
                         <div class="categorie-wrap">
                             <div class="accordion" id="accordionExample">
-                                <!-- all categories -->
-                                    <div class="card">
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                             data-parent="#accordionExample" style="">
-                                            <div class="card-body">
-                                                <div class="categories-list">
-                                                    <select  class="form-control">
-                                                        <option value="all_properties">Properties</option>
-                                                        <option value="verified_properties">Verified Properties</option>
-                                                    </select>
-                                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingFilter">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-block text-left collapsed" type="button"
+                                                    data-toggle="collapse" data-target="#collapseFilter"
+                                                    aria-expanded="false" aria-controls="collapseFilter">Filter By
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFilter" class="collapse show" aria-labelledby="headingFilter"
+                                         data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="categories-condition">
+                                                <form method="get" action="" id="conditionForm">
+                                                    <div class="form-group">
+                                                        <label for="verified_property">
+                                                            <input class="condition" type="checkbox" name="condition" value="verified_property" id="verified_property">
+                                                            Verified Property
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-
+                                <div class="card">
+                                    <div class="card-header" id="headingAdType">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-block text-left collapsed" type="button"
+                                                    data-toggle="collapse" data-target="#collapseAdType"
+                                                    aria-expanded="false" aria-controls="collapseAdType">Ad Type
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseAdType" class="collapse show" aria-labelledby="headingAdType"
+                                         data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="categories-condition">
+                                                <form method="get" action="" id="conditionForm">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option value="">All Property</option>
+                                                            <option value="">Sale</option>
+                                                            <option value="">Rent</option>
+                                                            <option value="">Roommate</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- all categories -->
                                 @if(isset($data['categories']) && count($data['categories']))
                                     <div class="card">
@@ -166,6 +205,29 @@
                                         </div>
                                     </div>
                                 @endif
+
+                                <div class="card">
+                                    <div class="card-header" id="headingLoaction">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-block text-left collapsed" type="button"
+                                                    data-toggle="collapse" data-target="#collapseLocation"
+                                                    aria-expanded="false" aria-controls="collapseLocation">Location
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseLocation" class="collapse show" aria-labelledby="headingLoaction"
+                                         data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="categories-condition">
+                                                <form method="get" action="" id="conditionForm">
+                                                    <div class="form-group">
+                                                        <a href="#">All Bangladesh</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             <!-- condition -->
                                 @if(isset($data['conditions']) && count($data['conditions']))
                                     <div class="card">

@@ -45,103 +45,6 @@ class ProductAbstract implements ProductInterface
     }
 
 
-    public function postStore($request)
-    {
-
-        $brand_name         = null;
-        $model_name         = null;
-        $default_vat_amount = null;
-        $brand = DB::table('PRD_BRAND')->where('PK_NO',$request->brand)->first();
-        $model = DB::table('PRD_MODEL')->where('PK_NO',$request->prod_model)->first();
-        $vat_class = DB::table('ACC_VAT_CLASS')->where('PK_NO',$request->vat_class)->first();
-
-        if ($brand){ $brand_name = $brand->NAME; }
-        if ($model){ $model_name = $model->NAME; }
-        if ($vat_class){ $default_vat_amount = $vat_class->RATE; }
-
-        DB::beginTransaction();
-        try {
-            $prod                                       = new Product();
-            $prod->F_PRD_CATEGORY_ID                    = $request->category;
-            $prod->F_PRD_SUB_CATEGORY_ID                = $request->sub_category;
-            $prod->DEFAULT_NAME                         = $request->name;
-            $prod->DEFAULT_CUSTOMS_NAME                 = $request->customs_name;
-            $prod->DEFAULT_HS_CODE                      = $request->hs_code;
-            $prod->F_BRAND                              = $request->brand;
-            $prod->BRAND_NAME                           = $brand_name;
-            $prod->F_MODEL                              = $request->prod_model;
-            $prod->MODEL_NAME                           = $model_name;
-            $prod->DEFAULT_PRICE                        = $request->def_price;
-            $prod->DEFAULT_INSTALLMENT_PRICE            = $request->def_price_ins;
-            $prod->IS_BARCODE_BY_MFG                    = $request->is_barcode_by_mfg ? 1 : 0;
-            $prod->DEFAULT_NARRATION                    = $request->def_narration;
-            $prod->F_DEFAULT_VAT_CLASS                  = $request->vat_class;
-            $prod->DEFAULT_VAT_AMOUNT_PERCENT           = $default_vat_amount;
-            $prod->DEFAULT_AIR_FREIGHT_CHARGE           = $request->def_air_freight;
-            $prod->DEFAULT_SEA_FREIGHT_CHARGE           = $request->def_sea_freight;
-            $prod->DEFAULT_PREFERRED_SHIPPING_METHOD    = $request->def_shipping_method;
-            $prod->DEFAULT_LOCAL_POSTAGE                = $request->def_local_postage;
-            $prod->DEFAULT_INTERDISTRICT_POSTAGE        = $request->def_int_postage;
-            $prod->PRIMARY_IMG_RELATIVE_PATH            = null;
-            $str = strtolower($request->name);
-            $prod->URL_SLUG                             = Str::slug($str);
-            $prod->NEW_ARRIVAL                          = $request->new_arrival;
-            $prod->IS_FEATURE                           = $request->is_feature;
-            $prod->MAX_ORDER                            = $request->max_order;
-            $prod->META_TITLE                           = $request->meta_title;
-            $prod->META_KEYWARDS                        = $request->meta_keywards;
-            $prod->META_DESCRIPTION                     = $request->meta_description;
-
-
-            $prod->save();
-
-            if ($request->file('images')) {
-                $i = 0;
-                foreach($request->file('images') as $key => $image)
-                    {
-                        $file_name = 'prod_'. date('dmY'). '_' .uniqid(). '.' . $image->getClientOriginalExtension();
-
-                        $img_lib                    = new ProdImgLib();
-                        $img_lib->F_PRD_MASTER_NO   = $prod->PK_NO;
-                        $img_lib->IS_MASTER         = 0;
-                        $img_lib->F_FILE_TYPE       = 1;
-                        $img_lib->FILE_EXT          = $image->getClientOriginalExtension();
-                        $img_lib->RELATIVE_PATH     = '/media/images/products/'.$prod->PK_NO.'/'.$file_name;
-                        $img_lib->SERIAL_NO         = $i;
-
-                        if($i == 0){
-                            $def_relative_path      = '/media/images/products/'.$prod->PK_NO.'/'.$file_name;
-                            $img_lib->IS_MASTER     = 1;
-                        }
-                        $img_lib->save();
-
-                        $image->move(public_path().'/media/images/products/'.$prod->PK_NO.'/', $file_name);
-                        $i++;
-
-                    }
-
-                    $update_prod = Product::find($prod->PK_NO);
-                    $update_prod->PRIMARY_IMG_RELATIVE_PATH = $def_relative_path ?? null;
-                    $update_prod->update();
-
-            }
-
-
-
-        } catch (\Exception $e) {
-
-            DB::rollback();
-            return $this->formatResponse(false, 'Unable to create product !', 'admin.product.list');
-        }
-
-        DB::commit();
-
-        return $this->formatResponse(true, 'Product has been created successfully !', 'admin.product.create',$prod->PK_NO);
-    }
-
-
-
-
     public function postUpdate($request, int $id)
     {
         DB::beginTransaction();
@@ -286,7 +189,7 @@ class ProductAbstract implements ProductInterface
             $features->update();
         } catch (\Exception $e) {
             DB::rollback();
-//            dd($e);
+           dd($e);
             return $this->formatResponse(false, 'Listings not updated !', 'admin.product.list');
         }
         DB::commit();
