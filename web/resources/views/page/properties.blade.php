@@ -124,9 +124,9 @@
                                              data-parent="#accordionExample" style="">
                                             <div class="card-body">
                                                 <div class="categories-list">
-                                                    <select  class="form-control">
-                                                        <option value="all_properties">Properties</option>
-                                                        <option value="verified_properties">Verified Properties</option>
+                                                    <select  class="form-control" id="verified_prop">
+                                                        <option value="all_properties" {{ request()->query('verified') == 'all_properties' ? 'selected' : '' }}>Properties</option>
+                                                        <option value="verified_properties" {{ request()->query('verified') == 'verified_properties' ? 'selected' : '' }}>Verified Properties</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -420,7 +420,8 @@
                 p_max: '',
                 category: '{{ request()->query('cat') }}',
                 postedBy: '',
-                sortBy: ''
+                sortBy: '',
+                verified: '',
             };
 
             let condition = $('.condition');
@@ -428,6 +429,7 @@
             let priceMax = $('input[name=p_max]');
             let category = $('.category');
             let sortBy = $('#sortBy');
+            let verified = $('#verified_prop');
             let postedBy = $('input[name=posted]');
 
             $('#priceFilter').click(function (e) {
@@ -445,12 +447,15 @@
                 filter();
             });
 
+            verified.change(function () {
+                filter();
+            });
+
             condition.click(function () {
                 filter();
             });
 
             postedBy.click(function () {
-
                 filter();
             });
 
@@ -470,14 +475,14 @@
                     data.postedBy = r.substring(0, r.length - 1);
 
                     data.sortBy = sortBy.val();
+                    data.verified = verified.val();
 
                     data.p_min = priceMin.val();
                     data.p_max = priceMax.val();
 
                     let url = '{{ route('web.property') }}?condition=' + data.condition
                         + '&p_min=' + data.p_min + '&p_max=' + data.p_max +
-                        '&cat=' + data.category + '&by=' + data.postedBy + '&sb=' + data.sortBy;
-                    console.log(url)
+                        '&cat=' + data.category + '&by=' + data.postedBy + '&sb=' + data.sortBy + '&verified=' + data.verified;
                     window.location = url;
                 }, 500);
             }

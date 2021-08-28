@@ -192,11 +192,15 @@ class Listings extends Model
         $priceMin = $request->query('p_min');
         $priceMax = $request->query('p_max');
         $postedBy = $request->query('by');
+        $verified = $request->query('verified');
 
         if ($sortBy == 'hl') {
             $listings->orderByDesc('V.TOTAL_PRICE');
         } else if ($sortBy == 'lh') {
             $listings->orderBy('V.TOTAL_PRICE');
+        }
+        if ($verified) {
+            $listings->where('PRD_LISTING.IS_VERIFIED', '=', 1);
         }
         if ($category) {
             //            dd($category);
