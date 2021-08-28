@@ -127,14 +127,6 @@ class ProductController extends BaseController
     }
 
 
-    public function getCreate()
-    {
-        $data[] = '';
-        $data['vat_class_combo'] = $this->vatClass->getVatClassCombo();
-        $data['category_combo'] = $this->category->getCategorCombo();
-        $data['brand_combo'] = $this->brand->getBrandCombo();
-        return view('admin.product.create')->withData($data);
-    }
 
     public function getProdModel($brand_id)
     {
@@ -150,17 +142,6 @@ class ProductController extends BaseController
     }
 
 
-    public function postStore(ProductRequest $request)
-    {
-        $this->resp = $this->productInt->postStore($request);
-        if ($this->resp->status == true) {
-            $pk_no = $this->resp->data;
-            return redirect()->route('admin.product.edit', ['id' => $pk_no, 'type' => 'variant', 'tab' => 2])->with($this->resp->redirect_class, $this->resp->msg);
-        } else {
-            return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
-        }
-
-    }
 
     public function postStoreProductVariant(ProductVariantRequest $request)
     {
