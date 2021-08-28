@@ -12,8 +12,8 @@ return [
         10 => 'Published',
         20 => 'Unpublished',
         30 => 'Rejected',
-        40 => 'Expaired',
-        50 => 'deleted',
+        40 => 'Expired',
+        50 => 'Deleted',
     ],
 
     'payment_status' => [

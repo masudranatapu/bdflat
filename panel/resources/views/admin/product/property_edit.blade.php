@@ -362,7 +362,7 @@
                                                 <div class="form-group {!! $errors->has('floor') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {{ Form::label('facing','Facing',['class' => 'label-title '],false) }}
-                                                        {!! Form::select('facing',$property_facing,$property_additional_info->FACING,array('class'=>'form-control facing','placeholder'=>'Select Facing', 'tabIndex' => ++$tabIndex)) !!}
+                                                        {!! Form::select('facing',$property_facing,$property_additional_info->F_FACING_NO,array('class'=>'form-control facing','placeholder'=>'Select Facing', 'tabIndex' => ++$tabIndex)) !!}
                                                         {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
