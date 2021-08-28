@@ -37,7 +37,7 @@
         <div class="container">
             <div class="banner-form">
                 <form action="#" method="post">
-                    <div class="form-wrap">
+                    {{-- <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCity">
                                 <option>Select Location</option>
@@ -47,12 +47,12 @@
                                 <option>Russia</option>
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCategory">
-                                <option>Select Property Type</option>
-                                <option value="buy">Buy</option>
+                                <option>All Property Type</option>
+                                <option value="buy">Sale</option>
                                 <option value="rent">Rent</option>
                                 <option value="roommmate">Roommate</option>
                             </select>
@@ -118,6 +118,22 @@
                     <div class="categorie-wrapper">
                         <div class="categorie-wrap">
                             <div class="accordion" id="accordionExample">
+                                <!-- all categories -->
+                                    <div class="card">
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                             data-parent="#accordionExample" style="">
+                                            <div class="card-body">
+                                                <div class="categories-list">
+                                                    <select  class="form-control">
+                                                        <option value="all_properties">Properties</option>
+                                                        <option value="verified_properties">Verified Properties</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 <!-- all categories -->
                                 @if(isset($data['categories']) && count($data['categories']))
                                     <div class="card">
