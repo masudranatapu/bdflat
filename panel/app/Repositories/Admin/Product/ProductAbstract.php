@@ -173,7 +173,7 @@ class ProductAbstract implements ProductInterface
                 $property_price = 0 ;
                 if($request->property_for == 'roommate'){
                     $property_price = $price->ROOMMAT_PRICE;
-                }elseif($request->property_for == 'sell'){
+                }elseif($request->property_for == 'sale'){
                     $property_price = $price->SELL_PRICE;
                 }elseif($request->property_for == 'rent'){
                     $property_price = $price->RENT_PRICE;

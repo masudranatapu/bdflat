@@ -130,7 +130,7 @@ class Listings extends Model
     {
         $limit = WebSetting::where('PK_NO', 1)->first(['SALE_PROPERTY_LIMIT', 'RENT_PROPERTY_LIMIT', 'ROOMMATE_PROPERTY_LIMIT']);
         switch ($for) {
-            case 'sell':
+            case 'sale':
                 $limit = $limit->SALTE_PROPERTY_LIMIT;
                 break;
             case 'rent':
@@ -540,7 +540,7 @@ class Listings extends Model
             $listing = $this->getListing($id);
             $type = $listing->PROPERTY_FOR;
             $price = 0;
-            if ($type == 'sell') {
+            if ($type == 'sale') {
                 $price = $listing->listingType->SELL_PRICE ?? 0;
             } else if ($type == 'rent') {
                 $price = $listing->listingType->RENT_PRICE ?? 0;

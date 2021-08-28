@@ -59,7 +59,7 @@
     $property_price = 0;
     if($product->PROPERTY_FOR == 'roommate'){
         $property_price = $product->ROOMMAT_PRICE;
-    }elseif($product->PROPERTY_FOR == 'sell'){
+    }elseif($product->PROPERTY_FOR == 'sale'){
     $property_price = $product->SELL_PRICE;
     }elseif($product->PROPERTY_FOR == 'rent'){
         $property_price = $product->RENT_PRICE;
@@ -160,8 +160,8 @@
                                                     <div class="controls">
                                                         <label class="label-title">Advertisement Type
                                                             <span>*</span></label>
-                                                        {!! Form::radio('property_for','sell',$product->PROPERTY_FOR=='sell'?true:false,[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
-                                                        {{ Form::label('sell','Sell') }}
+                                                        {!! Form::radio('property_for','sale',$product->PROPERTY_FOR=='sale'?true:false,[ 'id' => 'sale','data-validation-required-message' => 'This field is required']) !!}
+                                                        {{ Form::label('sale','Sell') }}
 
                                                         {!! Form::radio('property_for','rent',$product->PROPERTY_FOR=='rent'?true:false,[ 'id' => 'rent']) !!}
                                                         {{ Form::label('rent','Rent') }}
