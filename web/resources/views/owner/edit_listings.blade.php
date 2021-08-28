@@ -81,8 +81,8 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                         <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                             <h5>Advertisement Type:&nbsp; </h5>
                             <div class="controls">
-                                {!! Form::radio('property_for','sell', $row->PROPERTY_FOR=='sell'?true:false,[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
-                                {{ Form::label('sell','Sell') }}
+                                {!! Form::radio('property_for','sale', $row->PROPERTY_FOR=='sale'?true:false,[ 'id' => 'sale','data-validation-required-message' => 'This field is required']) !!}
+                                {{ Form::label('sale','Sale') }}
 
                                 {!! Form::radio('property_for','rent', $row->PROPERTY_FOR=='rent'?true:false,[ 'id' => 'rent']) !!}
                                 {{ Form::label('rent','Rent') }}
