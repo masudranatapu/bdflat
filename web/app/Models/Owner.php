@@ -35,6 +35,7 @@ class Owner extends Model
     {
         return Owner::with(['info', 'listings' => function ($query) {
             $query->orderByDesc('PK_NO');
+            $query->where('STATUS', '=', 10);
             $query->take(8);
         }])
 //            ->where('URL_SLUG', '=', $slug) // Maybe later
