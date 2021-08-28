@@ -141,7 +141,7 @@ class Listings extends Model
         }
 
         return Listings::with(['getDefaultThumb', 'getListingVariant'])
-            //            ->where('STATUS', '=', 10)
+            ->where('STATUS', '=', 10)
             ->where('PROPERTY_FOR', '=', $for)
             ->take($limit)
             ->get();
@@ -151,7 +151,7 @@ class Listings extends Model
     {
         $limit = WebSetting::where('PK_NO', 1)->first('SIMILAR_PROPERTY_LIMIT')->SIMILAR_PROPERTY_LIMIT;
         return Listings::with(['getDefaultThumb', 'getListingVariant'])
-            //            ->where('STATUS', '=', 10)
+            ->where('STATUS', '=', 10)
             ->where('PK_NO', '!=', $id)
             ->where('PROPERTY_FOR', '=', $for)
             ->take($limit)
@@ -162,6 +162,7 @@ class Listings extends Model
     public function getListingDetails($url_slug)
     {
         $listing = Listings::with(['images', 'getListingVariant', 'additionalInfo', 'owner'])
+            ->where('STATUS', '=', 10)
             ->where('URL_SLUG', '=', $url_slug)
             ->first();
         if (!$listing) {
@@ -178,6 +179,7 @@ class Listings extends Model
     public function getProperties(Request $request): LengthAwarePaginator
     {
         $listings = Listings::with(['getDefaultThumb', 'getListingVariant'])
+            ->where('PRD_LISTINGS.STATUS', '=', 10)
             ->select('PRD_LISTINGS.PK_NO', 'PRD_LISTINGS.PROPERTY_TYPE', 'PRD_LISTINGS.CODE', 'PRD_LISTINGS.PROPERTY_FOR', 'PRD_LISTINGS.ADDRESS', 'PRD_LISTINGS.PROPERTY_CONDITION', 'PRD_LISTINGS.TITLE', 'PRD_LISTINGS.CITY_NAME', 'PRD_LISTINGS.AREA_NAME', 'V.TOTAL_PRICE', 'PRD_LISTINGS.USER_TYPE', 'PRD_LISTINGS.IS_VERIFIED', 'PRD_LISTINGS.IS_TOP', 'PRD_LISTINGS.URL_SLUG')
             ->leftJoin('PRD_LISTING_VARIANTS AS V', function ($join) {
                 $join->on('V.F_LISTING_NO', '=', 'PRD_LISTINGS.PK_NO');
@@ -190,14 +192,18 @@ class Listings extends Model
         $priceMin = $request->query('p_min');
         $priceMax = $request->query('p_max');
         $postedBy = $request->query('by');
+        $verified = $request->query('verified');
 
         if ($sortBy == 'hl') {
             $listings->orderByDesc('V.TOTAL_PRICE');
-        } else if($sortBy == 'lh') {
+        } else if ($sortBy == 'lh') {
             $listings->orderBy('V.TOTAL_PRICE');
         }
+        if ($verified == 'verified_properties') {
+            $listings->where('PRD_LISTING.IS_VERIFIED', '=', 1);
+        }
         if ($category) {
-//            dd($category);
+            //            dd($category);
             $listings->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO', $category);
         }
         if ($condition) {
