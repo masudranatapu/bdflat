@@ -106,6 +106,8 @@ class ProductAbstract implements ProductInterface
             } else if ($list->PAYMENT_STATUS == 1 || $list->getUser->USER_TYPE == 5) {
                 $list->STATUS = $request->status;
                 $list->PAYMENT_STATUS = 1;
+            } else {
+                return $this->formatResponse(false, 'Payment required !', 'admin.product.list');
             }
 
             $list->update();
@@ -119,6 +121,7 @@ class ProductAbstract implements ProductInterface
                     'BEDROOM' => $request->bedroom[$key],
                     'BATHROOM' => $request->bathroom[$key],
                     'TOTAL_PRICE' => $request->price[$key],
+                    'IS_DEFAULT' => $key == 0,
                 );
                 ListingVariants::insert($data);
             }

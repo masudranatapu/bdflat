@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\City;
 use App\Models\Listings;
 use App\Models\Newsletter;
@@ -103,6 +104,11 @@ class HomeController extends Controller
         $data['cities'] =   $this->city->getCities()->pluck('CITY_NAME', 'PK_NO');
         $data['bottomAd'] = $this->ads->getRandomAd(301);
         $data['rightAd'] = $this->ads->getRandomAd(300);
+
+        if ($request->route('city') && $request->route('city') !== 'all') {
+            $data['areas'] = Area::where('CITY_NAME', $request->route('city'))->get(['PK_NO', 'AREA_NAME']);
+        }
+
         return view('page.properties', compact('data'));
     }
 

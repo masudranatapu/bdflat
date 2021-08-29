@@ -137,7 +137,8 @@
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
                                                         <label for="verified_property">
-                                                            <input class="condition" type="checkbox" {{ request()->query('verified') == 1 ? 'checked' : '' }} name="verified"
+                                                            <input class="condition" type="checkbox"
+                                                                   {{ request()->query('verified') == 1 ? 'checked' : '' }} name="verified"
                                                                    value="1" id="verified_property">
                                                             Verified Property
                                                             <span class="checkmark"></span>
@@ -234,6 +235,16 @@
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
                                                         <a href="#">All Bangladesh</a>
+                                                        @if(isset($data['areas']))
+                                                            <p class="ml-2 font-weight-bold">{{ request()->route('city') }}</p>
+                                                            <ul class="ml-4">
+                                                                @foreach($data['areas'] as $area)
+                                                                    <li>
+                                                                        <a href="#">{{ $area->AREA_NAME }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
                                                     </div>
                                                 </form>
                                             </div>
@@ -519,8 +530,8 @@
 
             selectCategory.change(function () {
                 {{--window.location = '{{ route('web.property') }}' + (propertyType.val() === '' ? '/all' : '/' + propertyType.val()) + '/'--}}
-                {{--    + selectCategory.val();--}}
-                data.category = selectCategory.val();
+                    {{--    + selectCategory.val();--}}
+                    data.category = selectCategory.val();
                 filter();
             });
 
@@ -531,7 +542,7 @@
 
             propertyType.change(function () {
                 {{--window.location = '{{ route('web.property') }}' + (propertyType.val() === '' ? '/all' : '/' + propertyType.val());--}}
-                data.type = propertyType.val();
+                    data.type = propertyType.val();
                 filter();
             });
 
@@ -595,10 +606,10 @@
                     url += (data.type !== '' ? '/' + data.type : '/all');
                     url += (data.category !== '' ? '/' + data.category : '/all');
                     url += '/' + data.city;
-                } else if(data.category !== '') {
+                } else if (data.category !== '') {
                     url += (data.type !== '' ? '/' + data.type : '/all');
                     url += '/' + data.category;
-                } else if(data.type !== '') {
+                } else if (data.type !== '') {
                     url += '/' + data.type;
                 }
 
