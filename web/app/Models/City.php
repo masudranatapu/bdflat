@@ -17,4 +17,9 @@ class City extends Model
             ->where('IS_POPULATED', 1)
             ->get(['PK_NO', 'URL_SLUG', 'CITY_NAME', 'TOTAL_LISTING']);
     }
+
+    public function getCities()
+    {
+        return City::all();
+    }
 }

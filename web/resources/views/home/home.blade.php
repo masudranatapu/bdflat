@@ -265,7 +265,7 @@
                                     <div class="row no-gutters position-relative">
                                         <div class="col-4 col-md-5">
                                             <div class="verified-bx">
-                                                <a href="details.html">
+                                                <a href="{{ route('web.property.details', $property->URL_SLUG) }}">
                                                     <img src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
                                                          class="img-fluid" alt="image">
                                                 </a>
@@ -277,7 +277,7 @@
                                                     TK {{ number_format($property->getListingVariant->TOTAL_PRICE, 2) }}</h3>
                                             </div>
                                             <div class="verified-title">
-                                                <h5 class="mt-0"><a href="details.html">{{ $property->TITLE }}</a></h5>
+                                                <h5 class="mt-0"><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
                                                 <h6>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</h6>
                                             </div>
                                             <div class="verified-address">

@@ -95,6 +95,11 @@ class Listings extends Model
         return $this->hasOne('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO')->where('PRD_LISTING_VARIANTS.IS_DEFAULT', 1);
     }
 
+    public function viewCount()
+    {
+        return $this->hasMany('App\Models\ListingView', 'F_PRD_LISTING_NO', 'PK_NO');
+    }
+
     public function getListingVariants()
     {
         return $this->hasMany('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO');
@@ -173,10 +178,10 @@ class Listings extends Model
 
     public function getListingFeatures($features)
     {
-        return ListingFeatures::whereIn('PK_NO', json_decode($features))->get();
+        return ListingFeatures::whereIn('PK_NO', json_decode($features) ?? [])->get();
     }
 
-    public function getProperties(Request $request): LengthAwarePaginator
+    public function getProperties(Request $request, $type = null, $cat = null, $city = null): LengthAwarePaginator
     {
         $listings = Listings::with(['getDefaultThumb', 'getListingVariant'])
             ->where('PRD_LISTINGS.STATUS', '=', 10)
@@ -186,25 +191,40 @@ class Listings extends Model
                 $join->on('V.IS_DEFAULT', '=', DB::raw(1));
             });
 
-        $sortBy = $request->query('sb');
-        $category = $request->query('cat');
+        if ($type && in_array($type, ['sale', 'rent', 'roommate'])) {
+            $listings->where('PROPERTY_FOR', '=', $type);
+        }
+
+        if ($cat) {
+            $categories = PropertyType::where('IS_ACTIVE', 1)
+                ->orderByDesc('ORDER_ID')
+                ->pluck('PK_NO', 'PROPERTY_TYPE');
+            if (isset($categories[$cat])) {
+                $listings->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO', $categories[$cat]);
+            }
+        }
+
+        if ($city) {
+            $cities = City::pluck('PK_NO', 'CITY_NAME');
+            if (isset($cities[$city])) {
+                $listings->where('F_CITY_NO', '=', $cities[$city]);
+            }
+        }
+
+        $sortBy = $request->query('sort_by');
         $condition = $request->query('condition');
-        $priceMin = $request->query('p_min');
-        $priceMax = $request->query('p_max');
-        $postedBy = $request->query('by');
+        $priceMin = $request->query('min_price');
+        $priceMax = $request->query('max_price');
+        $postedBy = $request->query('posted_by');
         $verified = $request->query('verified');
 
-        if ($sortBy == 'hl') {
+        if ($sortBy == 'desc') {
             $listings->orderByDesc('V.TOTAL_PRICE');
-        } else if ($sortBy == 'lh') {
+        } else if ($sortBy == 'asc') {
             $listings->orderBy('V.TOTAL_PRICE');
         }
-        if ($verified == 'verified_properties') {
-            $listings->where('PRD_LISTING.IS_VERIFIED', '=', 1);
-        }
-        if ($category) {
-            //            dd($category);
-            $listings->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO', $category);
+        if ($verified == 1) {
+            $listings->where('PRD_LISTINGS.IS_VERIFIED', '=', 1);
         }
         if ($condition) {
             $condition = explode(',', $condition);

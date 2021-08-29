@@ -40,21 +40,23 @@
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCity">
-                                <option>Select Location</option>
-                                <option>Dhaka</option>
-                                <option>Comila</option>
-
+                                <option value="all">Select Location</option>
+                                @foreach($data['cities'] as $city)
+                                    <option
+                                        value="{{ $city }}" {{ $city == request()->route('city') ? 'selected' : '' }}>{{ $city }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCategory">
-                                <option>Select Category</option>
+                                <option value="all">Select Category</option>
                                 @if(isset($data['categories']) && count($data['categories']))
-                                @foreach($data['categories'] as $category)
-                                <option value="buy">{{ $category->PROPERTY_TYPE }}</option>
-                                @endforeach
+                                    @foreach($data['categories'] as $category)
+                                        <option
+                                            value="{{ $category->PROPERTY_TYPE }}" {{ $category->PROPERTY_TYPE == request()->route('cat') ? 'selected' : '' }}>{{ $category->PROPERTY_TYPE }}</option>
+                                    @endforeach
                                 @endif
                             </select>
                         </div>
@@ -135,7 +137,9 @@
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
                                                         <label for="verified_property">
-                                                            <input class="condition" type="checkbox" name="condition" value="verified_property" id="verified_property">
+                                                            <input class="condition" type="checkbox"
+                                                                   {{ request()->query('verified') == 1 ? 'checked' : '' }} name="verified"
+                                                                   value="1" id="verified_property">
                                                             Verified Property
                                                             <span class="checkmark"></span>
                                                         </label>
@@ -161,11 +165,20 @@
                                             <div class="categories-condition">
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
-                                                        <select class="form-control">
+                                                        <select class="form-control" id="propertyType">
                                                             <option value="">All Property</option>
-                                                            <option value="">Sale</option>
-                                                            <option value="">Rent</option>
-                                                            <option value="">Roommate</option>
+                                                            <option
+                                                                value="sale" {{ request()->route('type') == 'sale' ? 'selected' : '' }}>
+                                                                Sale
+                                                            </option>
+                                                            <option
+                                                                value="rent" {{ request()->route('type') == 'rent' ? 'selected' : '' }}>
+                                                                Rent
+                                                            </option>
+                                                            <option
+                                                                value="roommate" {{ request()->route('type') == 'roommate' ? 'selected' : '' }}>
+                                                                Roommate
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </form>
@@ -195,7 +208,7 @@
                                                                 <img src="{{ $panel_path . $category->ICON_PATH }}"
                                                                      alt="" class="img-fluid">
                                                                 <a href="?cat={{ $category->URL_SLUG }}"
-                                                                   data-value="{{ $category->PK_NO }}"
+                                                                   data-value="{{ $category->PROPERTY_TYPE }}"
                                                                    class="category">{{ $category->PROPERTY_TYPE }}</a>
                                                             </li>
                                                         @endforeach
@@ -222,13 +235,23 @@
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
                                                         <a href="#">All Bangladesh</a>
+                                                        @if(isset($data['areas']))
+                                                            <p class="ml-2 font-weight-bold">{{ request()->route('city') }}</p>
+                                                            <ul class="ml-4">
+                                                                @foreach($data['areas'] as $area)
+                                                                    <li>
+                                                                        <a href="#">{{ $area->AREA_NAME }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <!-- condition -->
+                                <!-- condition -->
                                 @if(isset($data['conditions']) && count($data['conditions']))
                                     <div class="card">
                                         <div class="card-header" id="headingTwo">
@@ -281,7 +304,7 @@
                                                         <div class="col-5">
                                                             <div class="range-form ml-1">
                                                                 <input type="number" name="p_min"
-                                                                       value="{{ request()->query('p_min') }}"
+                                                                       value="{{ request()->query('min_price') }}"
                                                                        class="form-control"
                                                                        placeholder="Min">
                                                             </div>
@@ -294,7 +317,7 @@
                                                         <div class="col-5">
                                                             <div class="range-form mr-1">
                                                                 <input type="number" name="p_max"
-                                                                       value="{{ request()->query('p_max') }}"
+                                                                       value="{{ request()->query('max_price') }}"
                                                                        class="form-control"
                                                                        placeholder="Max">
                                                             </div>
@@ -326,25 +349,25 @@
                                                 <form action="#">
                                                     <label for="induvidual">
                                                         <input type="checkbox" name="posted" value="2"
-                                                               {{ request()->query->has('by') ? (in_array(2, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               {{ request()->query->has('posted_by') ? (in_array(2, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
                                                                id="induvidual"> Owner
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="dealer">
                                                         <input type="checkbox" name="posted"
-                                                               {{ request()->query->has('by') ? (in_array(3, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               {{ request()->query->has('posted_by') ? (in_array(3, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
                                                                value="3" id="dealer">Builder
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="reseller">
                                                         <input type="checkbox" name="posted" value="4"
-                                                               {{ request()->query->has('by') ? (in_array(4, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               {{ request()->query->has('posted_by') ? (in_array(4, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
                                                                id="reseller"> Agency
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="Manufacturer">
                                                         <input type="checkbox" name="posted" value="5"
-                                                               {{ request()->query->has('by') ? (in_array(5, explode(',', request()->query('by'))) ? 'checked ' : '') : '' }}
+                                                               {{ request()->query->has('posted_by') ? (in_array(5, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
                                                                id="Manufacturer"> Agent
                                                         <span class="checkmark"></span>
                                                     </label>
@@ -372,11 +395,15 @@
                                 <p>
                                     Sort By
                                     <select class="form-control" id="sortBy" name="sortBy">
-                                        <option value="d">Default</option>
-                                        <option value="lh" {{ request()->query('sb') == 'lh' ? 'selected' : '' }}>Price:
+                                        <option value="">Default</option>
+                                        <option
+                                            value="asc" {{ request()->query('sort_by') == 'asc' ? 'selected' : '' }}>
+                                            Price:
                                             low to high
                                         </option>
-                                        <option value="hl" {{ request()->query('sb') == 'hl' ? 'selected' : '' }}>Price:
+                                        <option
+                                            value="desc" {{ request()->query('sort_by') == 'desc' ? 'selected' : '' }}>
+                                            Price:
                                             high to low
                                         </option>
                                     </select>
@@ -460,7 +487,9 @@
                     <div class="d-none d-lg-block col-lg-2 mt-4">
                         <div class="advertisement">
                             <a href="{{ $data['rightAd']->images[0]->URL ?? 'javascript:void(0)' }}">
-                                <img src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->IMAGE_PATH : '') }}" alt="Images" class="img-fluid">
+                                <img
+                                    src="{{ $panel_path . ($data['rightAd']->images ? $data['rightAd']->images[0]->IMAGE_PATH : '') }}"
+                                    alt="Images" class="img-fluid">
                             </a>
                         </div>
                     </div>
@@ -480,9 +509,11 @@
                 condition: '',
                 p_min: '',
                 p_max: '',
-                category: '{{ request()->query('cat') }}',
-                postedBy: '',
-                sortBy: '',
+                type: '{{ request()->route('type') ?? '' }}',
+                city: '{{ request()->route('city') ?? '' }}',
+                category: '{{ request()->route('cat') ?? '' }}',
+                posted_by: '',
+                sort_by: '',
                 verified: '',
             };
 
@@ -491,8 +522,29 @@
             let priceMax = $('input[name=p_max]');
             let category = $('.category');
             let sortBy = $('#sortBy');
-            let verified = $('#verified_prop');
+            let verified = $('#verified_property');
             let postedBy = $('input[name=posted]');
+            let propertyType = $('#propertyType');
+            let selectCategory = $('#selectCategory');
+            let selectCity = $('#selectCity');
+
+            selectCategory.change(function () {
+                {{--window.location = '{{ route('web.property') }}' + (propertyType.val() === '' ? '/all' : '/' + propertyType.val()) + '/'--}}
+                    {{--    + selectCategory.val();--}}
+                    data.category = selectCategory.val();
+                filter();
+            });
+
+            selectCity.change(function () {
+                data.city = selectCity.val();
+                filter();
+            });
+
+            propertyType.change(function () {
+                {{--window.location = '{{ route('web.property') }}' + (propertyType.val() === '' ? '/all' : '/' + propertyType.val());--}}
+                    data.type = propertyType.val();
+                filter();
+            });
 
             $('#priceFilter').click(function (e) {
                 e.preventDefault();
@@ -518,6 +570,7 @@
             });
 
             postedBy.click(function () {
+                // console.log($(this).val())
                 filter();
             });
 
@@ -534,19 +587,59 @@
                     $('input[name=posted]:checkbox:checked').each(function (i) {
                         r += $(this).val() + ',';
                     });
-                    data.postedBy = r.substring(0, r.length - 1);
+                    data.posted_by = r.substring(0, r.length - 1);
 
-                    data.sortBy = sortBy.val();
-                    data.verified = verified.val();
+                    data.sort_by = sortBy.val();
+                    data.verified = verified.is(':checked') ? 1 : 0;
+                    data.type = propertyType.val();
 
                     data.p_min = priceMin.val();
                     data.p_max = priceMax.val();
 
-                    let url = '{{ route('web.property') }}?condition=' + data.condition
-                        + '&p_min=' + data.p_min + '&p_max=' + data.p_max +
-                        '&cat=' + data.category + '&by=' + data.postedBy + '&sb=' + data.sortBy + '&verified=' + data.verified;
-                    window.location = url;
+                    window.location = getUrl();
                 }, 500);
+            }
+
+            function getUrl() {
+                let url = '{{ route('web.property') }}';
+                if (data.city !== '') {
+                    url += (data.type !== '' ? '/' + data.type : '/all');
+                    url += (data.category !== '' ? '/' + data.category : '/all');
+                    url += '/' + data.city;
+                } else if (data.category !== '') {
+                    url += (data.type !== '' ? '/' + data.type : '/all');
+                    url += '/' + data.category;
+                } else if (data.type !== '') {
+                    url += '/' + data.type;
+                }
+
+                let useAnd = false;
+                if (data.condition !== '') {
+                    url += '?condition=' + data.condition;
+                    useAnd = true;
+                }
+
+                if (data.p_min !== '') {
+                    url += (useAnd ? '&' : '?') + 'min_price=' + data.p_min;
+                }
+
+                if (data.p_max !== '') {
+                    url += (useAnd ? '&' : '?') + 'max_price=' + data.p_max;
+                }
+
+                if (data.verified !== '') {
+                    url += (useAnd ? '&' : '?') + 'verified=' + data.verified;
+                }
+
+                if (data.posted_by !== '') {
+                    url += (useAnd ? '&' : '?') + 'posted_by=' + data.posted_by;
+                }
+
+                if (data.sort_by !== '') {
+                    url += (useAnd ? '&' : '?') + 'sort_by=' + data.sort_by;
+                }
+
+                return url;
             }
         })
     </script>
