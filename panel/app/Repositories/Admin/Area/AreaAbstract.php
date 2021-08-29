@@ -18,7 +18,39 @@ class AreaAbstract implements AreaInterface
 
     public function getAreas($limit = 2000): object
     {
-        $areas = Area::orderBy('ORDER_ID', 'DESC')->paginate($limit);
+        $areas = [];
+        $area = Area::orderBy('ORDER_ID', 'DESC')->where('IS_PARENT',1)->get();
+
+        if($area){
+            $i = 0;
+            foreach ($area as $value) {
+                $areas[$i]['PK_NO'] = $value->PK_NO;
+                $areas[$i]['ORDER_ID'] = $value->ORDER_ID;
+                $areas[$i]['AREA_NAME'] = $value->AREA_NAME;
+                $areas[$i]['CITY_NAME'] = $value->CITY_NAME;
+                $areas[$i]['LAT'] = $value->LAT;
+                $areas[$i]['LON'] = $value->LON;
+                $areas[$i]['SUB_AREA_NAME'] = null;
+                $sub_area = Area::orderBy('ORDER_ID', 'DESC')->where('IS_PARENT',0)->where('F_PARENT_AREA_NO',$value->PK_NO)->get();
+                if($sub_area && count($sub_area) > 0 ){
+                    foreach ($sub_area as $value1) {
+                        $i++;
+                        $areas[$i]['PK_NO'] = $value1->PK_NO;
+                        $areas[$i]['ORDER_ID'] = $value1->ORDER_ID;
+                        $areas[$i]['AREA_NAME'] = null;
+                        $areas[$i]['CITY_NAME'] = $value1->CITY_NAME;
+                        $areas[$i]['LAT'] = $value1->LAT;
+                        $areas[$i]['LON'] = $value1->LON;
+                        $areas[$i]['SUB_AREA_NAME'] = $value1->AREA_NAME;
+
+                    }
+                }
+
+                $i++;
+             }
+        }
+
+
         return $this->formatResponse(true, '', 'admin.area.list', $areas);
     }
 

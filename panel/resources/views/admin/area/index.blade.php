@@ -55,12 +55,13 @@
                             <div class="card-body card-dashboard">
                                 <div class="table-responsive">
                                     <table
-                                        class="table table-striped table-bordered text-center alt-pagination"
+                                        class="table table-striped table-bordered alt-pagination"
                                         id="indextable">
                                         <thead>
                                         <tr>
                                             <th class="text-center" style="width: 50px;">SL.</th>
                                             <th class="" style="min-width: 100px;">Area Name</th>
+                                            <th class="" style="min-width: 100px;">Sub Area Name</th>
                                             <th class="" style="min-width: 100px;">City Name</th>
                                             <th>Latitude</th>
                                             <th>Longitude</th>
@@ -74,16 +75,15 @@
                                                 <tr>
                                                     <td class="text-center"
                                                         style="width: 50px;">{{ $key + 1 }}</td>
-                                                    <td class="" style="">{{ $area->AREA_NAME }}</td>
-                                                    <td class="" style="">{{ $area->CITY_NAME }}</td>
-                                                    <td>{{ $area->LAT ?? 'N/A' }}</td>
-                                                    <td>{{ $area->LON ?? 'N/A' }}</td>
-                                                    <td class="" style="">{{ $area->ORDER_ID }}</td>
+                                                    <td class="" style="">{{ $area['AREA_NAME'] }}</td>
+                                                    <td class="" style="">{{ $area['SUB_AREA_NAME'] }}</td>
+                                                    <td class="" style="">{{ $area['CITY_NAME'] }}</td>
+                                                    <td>{{ $area['LAT'] ?? 'N/A' }}</td>
+                                                    <td>{{ $area['LON'] ?? 'N/A' }}</td>
+                                                    <td class="" style="">{{ $area['ORDER_ID'] }}</td>
                                                     <td class="text-center" style="width: 200px;">
                                                         @if(hasAccessAbility('edit_property_condition', $roles))
-                                                            <a href="{{ route('admin.area.edit', [$area->PK_NO]) }}"
-                                                               title="EDIT" class="btn btn-xs btn-info  mb-1"><i
-                                                                    class="la la-edit"></i></a>
+                                                            <a href="{{ route('admin.area.edit', $area['PK_NO'] ) }}" title="EDIT" class="btn btn-xs btn-info  mb-1"><i class="la la-edit"></i></a>
                                                         @endif
                                                     </td>
                                                 </tr>

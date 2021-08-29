@@ -65,6 +65,15 @@ $status = [
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            {!! Form::label('parent_area', 'Parent Area', ['class' => 'label-title']) !!}
+                                            <div class="controls">
+                                                {!! Form::select('parent_area', [], old('parent_area'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Select parent area']) !!}
+                                                {!! $errors->first('parent_area', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                             {!! Form::label('area_name', 'Area Name *', ['class' => 'label-title']) !!}
                                             <div class="controls">
                                                 {!! Form::text('area_name', old('area_name'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Area Name']) !!}
