@@ -108,16 +108,16 @@
                          </form>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
+                        <a class="nav-link active" href="{{ route('web.home') }}">Home</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="categories.html">Sale</a>
+                        <a class="nav-link" href="{{ route('web.property', ['type' => 'sale']) }}">Sale</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="categories.html">Rent</a>
+                        <a class="nav-link" href="{{ route('web.property', ['type' => 'rent']) }}">Rent</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="categories.html">Roommate</a>
+                        <a class="nav-link" href="{{ route('web.property', ['type' => 'roommate']) }}">Roommate</a>
                     </li>
                     <li class="nav-menu nav-item">
                         <a class="nav-link" href="{{ route('web.property') }}">Properties</a>

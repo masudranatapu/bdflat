@@ -72,7 +72,6 @@ class HomeController extends Controller
         $data['hasRoommatePageCategories'] = $this->isAvailable($data['roommatePageCategories']);
         $data['featuredDevelopers'] = $this->owner->getFeatured(3);
         $data['featuredAgencies'] = $this->owner->getFeatured(4);
-//        dd($data['verifiedProperties']);
         return view('home.home', compact('data'));
     }
 
@@ -95,12 +94,13 @@ class HomeController extends Controller
         return view('page.owner', compact('data'));
     }
 
-    public function properties(Request $request)
+    public function properties(Request $request, $type = null, $cat = null, $city = null)
     {
-        $data['listings'] = $this->listings->getProperties($request);
+        $data['listings'] = $this->listings->getProperties($request, $type, $cat, $city);
         $data['listings']->appends($request->except('page'));
         $data['categories'] = $this->propertyType->getPropertyTypes();
         $data['conditions'] = $this->propertyCondition->getConditions();
+        $data['cities'] =   $this->city->getCities()->pluck('CITY_NAME', 'PK_NO');
         $data['bottomAd'] = $this->ads->getRandomAd(301);
         $data['rightAd'] = $this->ads->getRandomAd(300);
         return view('page.properties', compact('data'));
@@ -112,6 +112,21 @@ class HomeController extends Controller
         $data['features'] = $this->listings->getListingFeatures($data['listing']->additionalInfo->F_FEATURE_NOS);
         $data['similarListings'] = $this->listings->getSimilarListings($data['listing']->PROPERTY_FOR, $data['listing']->PK_NO);
         $data['rightAd'] = $this->ads->getRandomAd(200);
+
+        $viewCount = $data['listing']->viewCount()
+            ->whereDate('DATE', '=', DB::raw('CURRENT_DATE()'))
+            ->first();
+        if (!$viewCount) {
+            $data['listing']->viewCount()->create([
+                'DATE' => date('Y-m-d'),
+                'COUNTER' => 1
+            ]);
+        } else {
+            $viewCount->update([
+                'COUNTER' => $viewCount->COUNTER + 1,
+            ]);
+        }
+
         return view('page.details', compact('data'));
     }
 
