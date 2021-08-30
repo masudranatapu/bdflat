@@ -4,7 +4,7 @@
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
-
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/select2.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
@@ -112,7 +112,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('city', $cities ,$row->F_CITY_NO,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('city', $cities ,$row->F_CITY_NO,array('id' => 'city', 'class'=>'select2 form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -125,8 +125,19 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('area', $area,$row->F_AREA_NO,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('area', $area,$row->F_AREA_NO,array('id' => 'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                {!! Form::label('sub_area','Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('sub_area', [], null,array('id' => 'sub_area','class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -271,7 +282,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('facing') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('facing', $property_facing,$row2->FACING,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
+                                            {!! Form::select('facing', $property_facing,$row2->F_FACING_NO,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
                                             {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -438,6 +449,19 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 </div>
                             </div>
 
+                            <div class="advertisment-title">
+                                <h3>Payment Auto Renew</h3>
+                            </div>
+                            <div class="listing-list mb-3 {!! $errors->has('payment_auto_renew') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::radio('payment_auto_renew', 1, $row->PAYMENT_AUTO_RENEW == 1,[ 'id' => 'payment_auto_renew1','data-validation-required-message' => 'This field is required']) !!}
+                                    {{ Form::label('payment_auto_renew1', 'Active') }}
+                                    {!! Form::radio('payment_auto_renew', 0, $row->PAYMENT_AUTO_RENEW == 0,[ 'id' => 'payment_auto_renew2','data-validation-required-message' => 'This field is required']) !!}
+                                    {{ Form::label('payment_auto_renew2', 'Inactive') }}
+                                    {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+
                             <!--  listing  type -->
                             <div class="advertisment-title">
                                 <h3>Listing Type</h3>
@@ -469,6 +493,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+    <script src="{{asset('assets/js/forms/select/form-select2.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
@@ -494,6 +519,25 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
         });
 
         var basepath = $('#base_url').val();
+
+        $(document).on('change', '#area', function () {
+            let id = $(this).val();
+            $('#sub_area').empty();
+            $('#sub_area').append(new Option('Select Area', 0));
+
+            $.ajax({
+                type: 'get',
+                url: '{{ route('get.area') }}?area=' + id,
+                async: true,
+                dataType: 'json',
+                success: function (res) {
+                    $.each(res.data, function (key, value) {
+                        let option = new Option(value, key);
+                        $('#sub_area').append(option);
+                    })
+                }
+            });
+        });
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();

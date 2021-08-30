@@ -83,7 +83,7 @@ $days = [
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label">Photo:</td>
+                                <td class="label">Photo (300x300):</td>
                                 <td>
                                     <div class="form-group {!! $errors->has('image') ? 'error' : '' !!}">
                                         <div class="controls">

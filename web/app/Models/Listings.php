@@ -272,12 +272,17 @@ class Listings extends Model
                 $slug = $slug . '-' . $sku;
             }
 
+            $area = $request->area;
+            if ($request->sub_area && $request->sub_area > 0) {
+                $area = $request->sub_area;
+            }
+
             $list = new Listings();
             $list->F_USER_NO = Auth::id();
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->property_type;
             $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $request->area;
+            $list->F_AREA_NO = $area;
             $list->ADDRESS = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
             $list->TITLE = $request->property_title;
@@ -394,13 +399,18 @@ class Listings extends Model
 
     public function postUpdate($request, $id): object
     {
+        $area = $request->area;
+        if ($request->sub_area && $request->sub_area > 0) {
+            $area = $request->sub_area;
+        }
         DB::beginTransaction();
         try {
             $list = $this->getListing($id);
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->property_type;
+            $list->PAYMENT_AUTO_RENEW = $request->payment_auto_renew;
             $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $request->area;
+            $list->F_AREA_NO = $area;
             $list->ADDRESS = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
             $list->TITLE = $request->property_title;

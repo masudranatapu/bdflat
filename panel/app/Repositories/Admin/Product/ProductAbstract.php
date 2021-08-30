@@ -51,11 +51,16 @@ class ProductAbstract implements ProductInterface
     {
         DB::beginTransaction();
         try {
+            $area = $request->area;
+            if ($request->sub_area && $request->sub_area > 0) {
+                $area = $request->sub_area;
+            }
+
             $list = Product::with(['listingSEO', 'getUser'])->find($id);
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->propertyType;
             $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $request->area;
+            $list->F_AREA_NO = $area;
             $list->ADDRESS = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
             $list->TITLE = $request->ad_title;

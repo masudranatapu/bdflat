@@ -197,7 +197,7 @@
                                                 <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {!! Form::label('city','City <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                        {!! Form::select('city', $cities,$product->F_CITY_NO,['class'=>'form-control city','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select City', 'tabIndex' => ++$tabIndex]) !!}
+                                                        {!! Form::select('city', $cities,$product->F_CITY_NO,['id' => 'city', 'class'=>'select2 form-control city','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select City', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
@@ -207,8 +207,18 @@
                                                 <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                                     <div class="controls">
                                                         {!! Form::label('area','Area (Based on City) <span>*</span>', ['class' => 'label-title'], false) !!}
-                                                        {!! Form::select('area', $area, $product->F_AREA_NO, ['class'=>'form-control area','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Area', 'tabIndex' => ++$tabIndex]) !!}
+                                                        {!! Form::select('area', $area, $product->F_AREA_NO, ['id' => 'area', 'class'=>'select2 form-control area','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Area', 'tabIndex' => ++$tabIndex]) !!}
                                                         {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Area (Based on area) -->
+                                            <div class="col-md-6">
+                                                <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
+                                                    <div class="controls">
+                                                        {!! Form::label('sub_area','Area (Based on City) <span>*</span>', ['class' => 'label-title'], false) !!}
+                                                        {!! Form::select('sub_area', [], null, ['sub_area', 'class'=>'select2 form-control sub_area','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select Area', 'tabIndex' => ++$tabIndex]) !!}
+                                                        {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -701,6 +711,29 @@
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
 
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            let city = $('#area');
+            let area = $('#sub_area');
+
+            city.change(function () {
+                updateArea();
+            });
+
+            function updateArea() {
+                $.ajax('{{ route('admin.area.get') }}?area=' + city.val())
+                    .done(function (res) {
+                        area.html('');
+                        area.append(new Option('Select area', 0));
+                        for (const a in res.data) {
+                            let option = new Option(res.data[a], a, parseInt(a) === parseInt({{ $product->F_AREA_NO }}));
+                            area.append(option);
+                        }
+                    })
+            }
+            updateArea();
+        })
+    </script>
     <script>
 
         $('#imageFile').imageUploader();

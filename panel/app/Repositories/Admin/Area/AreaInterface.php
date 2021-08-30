@@ -15,4 +15,6 @@ interface AreaInterface
     public function postUpdate($request, int $id);
 
     public function getCityAreas(int $id);
+
+    public function getSubArea(int $id);
 }

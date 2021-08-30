@@ -123,4 +123,9 @@ class AreaAbstract implements AreaInterface
     {
         return City::with(['areas'])->find($id);
     }
+
+    public function getSubArea(int $id)
+    {
+        return Area::where('F_PARENT_AREA_NO', $id)->get();
+    }
 }

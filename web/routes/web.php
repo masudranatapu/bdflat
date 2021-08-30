@@ -62,6 +62,8 @@ Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {
     Route::get('/agency-buy-leads', 'AgencyController@getBuyLeads')->name('agency-buy-leads');
     Route::get('/agency-payments', 'AgencyController@getPayments')->name('agency-payments');
 
+    Route::get('/get-area', 'AgencyController@getArea')->name('get.area');
+
     Route::get('agency-listings/create', 'ListingController@create')->name('agency.listings.create');
     Route::post('agency-listings/store', 'ListingController@store')->name('agency.listings.store');
     Route::get('agency-listings/{id}/edit', 'ListingController@edit')->name('agency.listings.edit');
@@ -130,7 +132,6 @@ Route::get('/my-account', 'UserController@getMyAccount')->name('my-account');
 Route::get('/profile/edit', 'UserController@getEditProfile')->name('profile.edit');
 Route::post('/profile/store_or_update', 'UserController@updateProfile')->name('profile.store_or_update');
 Route::post('/profile/password_update', 'UserController@updatePass')->name('profile.password_update');
-
 
 Auth::routes();
 

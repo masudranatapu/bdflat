@@ -65,6 +65,14 @@ class AreaController extends Controller
                 $status = true;
             }
         }
+
+        if ($request->query->get('area')) {
+            $area = $this->area->getSubArea($request->query->get('area'));
+            if ($area) {
+                $data = $area->pluck('AREA_NAME', 'PK_NO');
+                $status = true;
+            }
+        }
         return Response::json([
             'status' => $status,
             'data' => $data

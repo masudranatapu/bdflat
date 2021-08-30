@@ -132,6 +132,17 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                     </div>
                                 </div>
                             </div>
+                            <div class="row form-group">
+                                {!! Form::label('sub_area','Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('sub_area', $area,$row->F_AREA_NO,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!--  address  -->
                             <div class="row form-group">
@@ -272,7 +283,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('facing') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('facing', $property_facing,$row2->FACING,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
+                                            {!! Form::select('facing', $property_facing,$row2->F_FACING_NO,array('class'=>'form-control', 'placeholder'=>'Select facing')) !!}
                                             {!! $errors->first('facing', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -439,6 +450,19 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 </div>
                             </div>
 
+                            <div class="advertisment-title">
+                                <h3>Payment Auto Renew</h3>
+                            </div>
+                            <div class="listing-list mb-3 {!! $errors->has('payment_auto_renew') ? 'error' : '' !!}">
+                                <div class="controls">
+                                        {!! Form::radio('payment_auto_renew', 1, $row->PAYMENT_AUTO_RENEW == 1,[ 'id' => 'payment_auto_renew1','data-validation-required-message' => 'This field is required']) !!}
+                                        {{ Form::label('payment_auto_renew1', 'Active') }}
+                                        {!! Form::radio('payment_auto_renew', 0, $row->PAYMENT_AUTO_RENEW == 0,[ 'id' => 'payment_auto_renew2','data-validation-required-message' => 'This field is required']) !!}
+                                        {{ Form::label('payment_auto_renew2', 'Inactive') }}
+                                    {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+
                             <!--  listing  type -->
                             <div class="advertisment-title">
                                 <h3>Listing Type</h3>
@@ -495,6 +519,25 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
         });
 
         var basepath = $('#base_url').val();
+
+        $(document).on('change', '#area', function () {
+            let id = $(this).val();
+            $('#sub_area').empty();
+            $('#sub_area').append(new Option('Select Area', 0));
+
+            $.ajax({
+                type: 'get',
+                url: '{{ route('get.area') }}?area=' + id,
+                async: true,
+                dataType: 'json',
+                success: function (res) {
+                    $.each(res.data, function (key, value) {
+                        let option = new Option(value, key);
+                        $('#sub_area').append(option);
+                    })
+                }
+            });
+        });
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();

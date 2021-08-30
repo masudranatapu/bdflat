@@ -108,7 +108,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            {!! Form::label('images','User Image <span>*</span>', ['class' => 'label-title'], false) !!}
+            {!! Form::label('images','User Image (300x300) <span>*</span>', ['class' => 'label-title'], false) !!}
             <div class="controls">
                 @if($owner->PROFILE_PIC_URL)
                     <img src="{{ asset($owner->PROFILE_PIC_URL) }}" alt="" style="max-width: 200px;max-height: 120px">
