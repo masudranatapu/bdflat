@@ -148,6 +148,13 @@
                                                         <label class="custom-control-label" for="customSwitch2">Need
                                                             payment to view</label>
                                                     </div>
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" name="auto_payment_renew"
+                                                               {{ $product->PAYMENT_AUTO_RENEW ? 'checked' : '' }} tabindex="{{ ++$tabIndex}}"
+                                                               class="custom-control-input"
+                                                               id="customSwitch3">
+                                                        <label class="custom-control-label" for="customSwitch3">Payment Auto Renew</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

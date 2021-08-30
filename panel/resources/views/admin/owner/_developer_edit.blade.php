@@ -173,7 +173,7 @@
         <div class="form-group">
             {!! Form::label('auto_payment_renew', 'Auto Payment Renew *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::select('auto_payment_renew', [1 => 'Active', 0 => 'Inactive'], old('auto_payment_renew', $owner->AUTO_PAYMENT_RENEW), ['class' => 'form-control', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::select('auto_payment_renew', [1 => 'Active', 0 => 'Inactive'], old('auto_payment_renew', $owner->PAYMENT_AUTO_RENEW), ['class' => 'form-control', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
                 {!! $errors->first('auto_payment_renew', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>

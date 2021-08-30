@@ -42,20 +42,31 @@ class OwnerAbstract implements OwnerInterface
         return $this->formatResponse(true, '', '', $owner);
     }
 
-    public function postUpdate($request, $id)
+    public function postUpdate($request, $id): object
     {
         $status = false;
         $msg = 'User not updated!';
 
         DB::beginTransaction();
         try {
-            $user = Owner::with('info')->find($id);
+            $user = Owner::with(['info'])->find($id);
 
             if ($user->USER_TYPE == 2) {
                 $user->NAME = $request->name;
                 $user->EMAIL = $request->email;
                 $user->MOBILE_NO = $request->mobile_no;
                 $user->LISTING_LIMIT = $request->listing_limit;
+
+                $info = $user->info;
+                if (!$info) {
+                    $info = new OwnerInfo();
+                    $info->F_USER_NO = $user->PK_NO;
+                }
+
+                $info->SHOP_OPEN_TIME = $request->open_time;
+                $info->SHOP_CLOSE_TIME = $request->close_time;
+                $info->WORKING_DAYS = json_encode($request->working_days);
+                $info->save();
 
                 if ($request->hasFile('images')) {
                     $user->PROFILE_PIC_URL = $this->uploadImage($request->file('images')[0], $user->PK_NO);
@@ -96,9 +107,15 @@ class OwnerAbstract implements OwnerInterface
                 $info->save();
             }
 
-            $user->AUTO_PAYMENT_RENEW = $request->auto_payment_renew;
+            $user->PAYMENT_AUTO_RENEW = $request->auto_payment_renew;
             $user->IS_FEATURE = $request->feature;
             $user->USER_TYPE = $request->user_type;
+
+            if ($request->auto_payment_renew == 1) {
+                $user->properties()->update([
+                    'PAYMENT_AUTO_RENEW' => 1
+                ]);
+            }
 
             if($user->USER_TYPE != $request->user_type){
                 Product::where('F_USER_NO',$id)->update(['USER_TYPE' => $request->user_type]);
@@ -108,7 +125,6 @@ class OwnerAbstract implements OwnerInterface
             $msg = 'User updated successfully!';
         } catch (\Exception $e) {
             DB::rollBack();
-            return $this->formatResponse(false, $msg, 'admin.owner.list');
         }
         DB::commit();
         return $this->formatResponse($status, $msg, 'admin.owner.list');
