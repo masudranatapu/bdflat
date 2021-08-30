@@ -65,6 +65,15 @@ $status = [
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            {!! Form::label('parent_area', 'Parent Area', ['class' => 'label-title']) !!}
+                                            <div class="controls">
+                                                {!! Form::select('parent_area', [], old('parent_area'), ['id' => 'area', 'class' => 'select2 form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Select parent area']) !!}
+                                                {!! $errors->first('parent_area', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                             {!! Form::label('area_name', 'Area Name *', ['class' => 'label-title']) !!}
                                             <div class="controls">
                                                 {!! Form::text('area_name', old('area_name', $data['area']->AREA_NAME), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Area Name']) !!}
@@ -125,6 +134,28 @@ $status = [
 
     <!--script only for brand page-->
     <script type="text/javascript" src="{{ asset('app-assets/pages/category.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            let city = $('#city');
+            let area = $('#area');
 
+            city.change(function () {
+                updateArea();
+            });
 
-@endpush('custom_js')
+            function updateArea() {
+                $.ajax('{{ route('admin.area.get') }}?city=' + city.val())
+                    .done(function (res) {
+                        area.html('');
+                        area.append(new Option('Select area', 0));
+                        for (const a in res.data) {
+                            let option = new Option(res.data[a], a, parseInt(a) === parseInt({{ $data['area']->F_PARENT_AREA_NO }}), parseInt(a) === parseInt({{ $data['area']->F_PARENT_AREA_NO }}));
+                            area.append(option);
+                        }
+                    })
+            }
+            updateArea();
+        })
+    </script>
+
+@endpush

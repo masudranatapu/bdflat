@@ -549,6 +549,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     Route::get('property/area', ['middleware' => 'acl:view_area', 'as' => 'admin.area.list', 'uses' => 'AreaController@getIndex']);
     Route::get('property/area/new', ['middleware' => 'acl:add_area', 'as' => 'admin.area.new', 'uses' => 'AreaController@getCreate']);
+    Route::get('property/area/get', ['middleware' => 'acl:add_area', 'as' => 'admin.area.get', 'uses' => 'AreaController@getArea']);
     Route::post('property/area/store', ['middleware' => 'acl:add_area', 'as' => 'admin.area.store', 'uses' => 'AreaController@postStore']);
     Route::get('property/area/{id}/edit', ['middleware' => 'acl:edit_area', 'as' => 'admin.area.edit', 'uses' => 'AreaController@getEdit']);
     Route::post('property/area/{id}/update', ['middleware' => 'acl:edit_area', 'as' => 'admin.area.update', 'uses' => 'AreaController@postUpdate']);

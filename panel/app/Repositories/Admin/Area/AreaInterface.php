@@ -13,4 +13,6 @@ interface AreaInterface
     public function postStore($request);
 
     public function postUpdate($request, int $id);
+
+    public function getCityAreas(int $id);
 }

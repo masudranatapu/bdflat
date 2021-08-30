@@ -58,7 +58,7 @@ $status = [
                                         <div class="form-group">
                                             {!! Form::label('city', 'City *', ['class' => 'label-title']) !!}
                                             <div class="controls">
-                                                {!! Form::select('city', $data['cities'] ?? [], old('city'), ['id' => 'city', 'class' => 'form-control select2', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'City']) !!}
+                                                {!! Form::select('city', $data['cities'] ?? [], old('city'), ['id' => 'city', 'class' => 'form-control select2', 'data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -67,7 +67,7 @@ $status = [
                                         <div class="form-group">
                                             {!! Form::label('parent_area', 'Parent Area', ['class' => 'label-title']) !!}
                                             <div class="controls">
-                                                {!! Form::select('parent_area', [], old('parent_area'), ['class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Select parent area']) !!}
+                                                {!! Form::select('parent_area', [], old('parent_area'), ['id' => 'area', 'class' => 'select2 form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Select parent area']) !!}
                                                 {!! $errors->first('parent_area', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -134,6 +134,28 @@ $status = [
 
     <!--script only for brand page-->
     <script type="text/javascript" src="{{ asset('app-assets/pages/category.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            let city = $('#city');
+            let area = $('#area');
 
+            city.change(function () {
+                updateArea();
+            });
 
-@endpush('custom_js')
+            function updateArea() {
+                $.ajax('{{ route('admin.area.get') }}?city=' + city.val())
+                    .done(function (res) {
+                        area.html('');
+                        area.append(new Option('Select area', 0));
+                        for (const a in res.data) {
+                            let option = new Option(res.data[a], a);
+                            area.append(option);
+                        }
+                    })
+            }
+            updateArea();
+        })
+    </script>
+
+@endpush

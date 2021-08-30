@@ -5,6 +5,7 @@ namespace App\Repositories\Admin\Area;
 
 
 use App\Models\Area;
+use App\Models\City;
 use App\Traits\RepoResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -70,6 +71,8 @@ class AreaAbstract implements AreaInterface
             $city = new Area();
             $city->AREA_NAME = $request->area_name;
             $city->URL_SLUG = Str::slug($request->area_name);
+            $city->F_PARENT_AREA_NO = $request->parent_area > 0 ? $request->parent_area : null;
+            $city->IS_PARENT = $request->parent_area == 0;
             $city->ORDER_ID = $request->order;
             $city->F_CITY_NO = $request->city;
             $city->LAT = $request->latitude;
@@ -87,7 +90,7 @@ class AreaAbstract implements AreaInterface
         return $this->formatResponse($this->status, $this->msg, 'admin.area.list');
     }
 
-    public function postUpdate($request, int $id)
+    public function postUpdate($request, int $id): object
     {
         $this->status = false;
         $this->msg = 'Area could not be updated!';
@@ -97,6 +100,8 @@ class AreaAbstract implements AreaInterface
             $city = Area::find($id);
             $city->AREA_NAME = $request->area_name;
             $city->URL_SLUG = Str::slug($request->area_name);
+            $city->F_PARENT_AREA_NO = $request->parent_area > 0 ? $request->parent_area : null;
+            $city->IS_PARENT = $request->parent_area == 0;
             $city->ORDER_ID = $request->order;
             $city->F_CITY_NO = $request->city;
             $city->LAT = $request->latitude;
@@ -112,5 +117,10 @@ class AreaAbstract implements AreaInterface
 
         DB::commit();
         return $this->formatResponse($this->status, $this->msg, 'admin.area.list');
+    }
+
+    public function getCityAreas(int $id)
+    {
+        return City::with(['areas'])->find($id);
     }
 }

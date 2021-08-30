@@ -8,6 +8,7 @@ use App\Repositories\Admin\Area\AreaInterface;
 use App\Repositories\Admin\City\CityInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class AreaController extends Controller
 {
@@ -50,5 +51,23 @@ class AreaController extends Controller
     {
         $this->resp = $this->area->postUpdate($request, $id);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
+    }
+
+    public function getArea(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $status = false;
+        $data = [];
+
+        if ($request->query->get('city')) {
+            $city = $this->area->getCityAreas($request->query->get('city'));
+            if ($city && $city->areas) {
+                $data = $city->areas->pluck('AREA_NAME', 'PK_NO');
+                $status = true;
+            }
+        }
+        return Response::json([
+            'status' => $status,
+            'data' => $data
+        ]);
     }
 }

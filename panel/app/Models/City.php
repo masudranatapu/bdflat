@@ -14,4 +14,9 @@ class City extends Model
     {
         return City::pluck('CITY_NAME', 'PK_NO');
     }
+
+    public function areas(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\Area', 'F_CITY_NO', 'PK_NO');
+    }
 }
