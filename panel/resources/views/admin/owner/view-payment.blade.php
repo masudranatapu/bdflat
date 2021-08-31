@@ -42,16 +42,26 @@
                                 <div class="col-12">
                                     <h3>Transaction</h3>
                                     <p><strong class="font-weight-bold">Payment Date: </strong>{{ $data['payment']->TRANSACTION_DATE }}</p>
-                                    <p><strong class="font-weight-bold">Payment Type: </strong>{{ $data['payment']->payment->PAYMENT_TYPE == 1 ? 'Customer Payment' : 'Bonus Payment by BDFLAT' }}</p>
+
+                                    <p><strong class="font-weight-bold">Payment Type: </strong>
+                                        @if( $data['payment']->TRANSACTION_TYPE == '1')
+                                        {{ $data['payment']->payment->PAYMENT_TYPE == 1 ? 'Customer Payment' : 'Bonus Payment by BDFLAT' }}
+                                        @elseif( $data['payment']->TRANSACTION_TYPE == '2')
+                                        Listing Payment
+                                        @endif
+                                    </p>
                                     <p><strong class="font-weight-bold">Customer Name: </strong>{{ $data['payment']->customer->NAME }}</p>
+                                    @if( $data['payment']->TRANSACTION_TYPE == '1')
                                     <p><strong class="font-weight-bold">Bank Name: </strong>{{ $data['payment']->payment->PAYMENT_BANK_NAME }}</p>
+
                                     <p><strong class="font-weight-bold">Account Name: </strong>{{ $data['payment']->payment->PAYMENT_ACCOUNT_NAME }}</p>
                                     <p><strong class="font-weight-bold">Account No.: </strong>{{ $data['payment']->payment->PAYMENT_BANK_ACC_NO }}</p>
                                     <p><strong class="font-weight-bold">Slip Number: </strong>{{ $data['payment']->payment->SLIP_NUMBER }}</p>
                                     <p><strong class="font-weight-bold">Attachment: </strong>@if($data['payment']->payment->ATTACHMENT_PATH)<a href="{{ asset($data['payment']->payment->ATTACHMENT_PATH) }}" target="_blank">Click to View</a>@else N/A @endif</p>
                                     <p><strong class="font-weight-bold">Note: </strong>{{ $data['payment']->payment->PAYMENT_NOTE ?? 'N/A' }}</p>
-                                    <p><strong class="font-weight-bold">Amount: </strong>{{ number_format($data['payment']->AMOUNT, 2) }}</p>
                                     <p><strong class="font-weight-bold">Payment Status: </strong>{{ $data['payment']->payment->PAYMENT_CONFIRMED_STATUS == 1 ? 'Confirmed' : 'Pending' }}</p>
+                                    @endif
+                                    <p><strong class="font-weight-bold">Amount: </strong>{{ number_format($data['payment']->AMOUNT, 2) }}</p>
                                 </div>
                                 <div class="col-12">
                                     <a href="{{ route('admin.owner.payment', $data['payment']->F_CUSTOMER_NO) }}" class="btn btn-info">Back</a>

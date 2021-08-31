@@ -64,6 +64,7 @@
     }elseif($product->PROPERTY_FOR == 'rent'){
         $property_price = $product->RENT_PRICE;
     }
+    $WEB_PATH = env('WEB_PATH');
 
 
 @endphp
@@ -490,9 +491,7 @@
                                                                        data-id="{{$item->PK_NO}}">
                                                                         ✕
                                                                     </a>
-                                                                    <img class="show_img"
-                                                                         src="{{asset('/')}}{{$item->IMAGE_PATH}}"
-                                                                         alt="">
+                                                                    <img class="show_img" src="{{$WEB_PATH.$item->IMAGE_PATH}}" alt="">
                                                                 </div>
                                                             @endforeach
                                                         </div>
@@ -574,9 +573,7 @@
                                                     @if($product->listingSEO && $product->listingSEO->OG_IMAGE_PATH)
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <img
-                                                                    src="{{ asset($product->listingSEO->OG_IMAGE_PATH) }}"
-                                                                    alt="" style="max-height: 150px;max-width: 200px">
+                                                                <img src="{{ $WEB_PATH .$product->listingSEO->OG_IMAGE_PATH }}" alt="" style="max-height: 150px;max-width: 200px">
                                                             </div>
                                                         </div>
                                                     @endif
@@ -598,8 +595,19 @@
                                                 <div class="form-group listingType">
                                                     <div class="controls">
                                                         @foreach($property_listing_types as $key => $item)
-                                                            {!! Form::radio('listing_type',$key, $product->F_LISTING_TYPE==$key?true:false,[ 'id' => 'listing_type'.$key,'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
-                                                            {{ Form::label('listing_type'.$key,$item) }}
+                                                            @php
+                                                            $price = 0.00;
+                                                            if($product->PROPERTY_FOR == 'sale'){
+                                                                $price = number_format($item->SELL_PRICE,2);
+                                                            }elseif($product->PROPERTY_FOR == 'rent'){
+                                                                $price = number_format($item->RENT_PRICE,2);
+                                                            }elseif($product->PROPERTY_FOR == 'roommate'){
+                                                                $price = number_format($item->ROOMMAT_PRICE,2);
+                                                            }
+                                                            @endphp
+
+                                                            {!! Form::radio('listing_type',$item->PK_NO, $product->F_LISTING_TYPE==$item->PK_NO?true:false,[ 'id' => 'listing_type'.$item->PK_NO,'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                                            {{ Form::label('listing_type'.$item->PK_NO,$item->NAME.' (BDT '.$price.'/'.$item->DURATION.' Day)') }}
                                                         @endforeach
                                                         {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
                                                     </div>

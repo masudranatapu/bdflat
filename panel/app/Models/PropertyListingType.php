@@ -11,6 +11,6 @@ class PropertyListingType extends Model
 
     public function getPropertyListingType()
     {
-        return $data = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        return $data = PropertyListingType::select('PRD_LISTING_TYPE.PK_NO','PRD_LISTING_TYPE.NAME','PRD_LISTING_TYPE.DURATION','SS_LISTING_PRICE.SELL_PRICE','SS_LISTING_PRICE.RENT_PRICE','SS_LISTING_PRICE.ROOMMAT_PRICE')->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO','PRD_LISTING_TYPE.PK_NO')->where('PRD_LISTING_TYPE.IS_ACTIVE', 1)->get();
     }
 }

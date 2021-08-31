@@ -78,17 +78,25 @@
                                                             <span>{{ $row->CODE }}</span>
                                                         </td>
                                                         <td>
+                                                            @if( $row->TRANSACTION_TYPE == '1')
                                                             <span>{{ $row->payment->PAYMENT_TYPE == 2 ? 'Bonus Payment' : 'Customer Payment' }}</span>
+                                                            @elseif( $row->TRANSACTION_TYPE == '2')
+                                                            <span> Listing Payment </span>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <span>{{ $row->TRANSACTION_DATE }}</span>
                                                         </td>
                                                         <td>
+                                                            @if( $row->TRANSACTION_TYPE == '1')
                                                             <span>{{ $row->payment->SLIP_NUMBER }}</span>
+                                                            @endif
                                                         </td>
 
                                                         <td>
+                                                            @if( $row->TRANSACTION_TYPE == '1')
                                                             <span>{{ $row->payment->PAYMENT_NOTE }}</span>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             <span>{{ number_format($row->AMOUNT, 2) }}</span>
