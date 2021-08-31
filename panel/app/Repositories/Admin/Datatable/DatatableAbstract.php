@@ -188,8 +188,16 @@ class DatatableAbstract implements DatatableInterface
                     ->first('CODE')->CODE;
             })
             ->addColumn('user_name', function ($dataSet) {
-                return DB::table('WEB_USER')->where('PK_NO', '=', $dataSet->F_USER_NO)
-                    ->first('NAME')->NAME;
+                $user_name = '';
+                $roles = userRolePermissionArray();
+                $user = DB::table('WEB_USER')->where('PK_NO', '=', $dataSet->F_USER_NO)->first('NAME');
+                if (hasAccessAbility('view_owner', $roles)) {
+                    $user_name = '<a href="'.route('admin.owner.view', [$dataSet->F_USER_NO]).'">'.$user->NAME.'</a>';
+                }else{
+                    $user_name = '<a href="javascript:void(0)">'.$user->NAME.'</a>';
+                }
+
+                return $user_name;
             })
             ->addColumn('payment_status', function ($dataSet) {
                 $status = [
@@ -231,7 +239,7 @@ class DatatableAbstract implements DatatableInterface
                 }
                 return $activity . $edit . $view;
             })
-            ->rawColumns(['action', 'status', 'mobile'])
+            ->rawColumns(['action', 'status', 'mobile','user_name'])
             ->make(true);
     }
 

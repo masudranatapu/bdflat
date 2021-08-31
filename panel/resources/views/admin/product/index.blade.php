@@ -111,7 +111,7 @@
                                             <th class="text-center">SL</th>
                                             <th class="text-center">User ID</th>
                                             <th class="text-center">User Type</th>
-                                            <th class="text-center">User Name</th>
+                                            <th>User Name</th>
                                             <th class="text-center">Property ID</th>
                                             <th>Property For</th>
                                             <th>Title</th>
@@ -214,7 +214,7 @@
                             data: 'user_name',
                             name: 'user_name',
                             searchable: true,
-                            className: 'text-center'
+                            className: 'text-left'
                         },
                         {
                             data: 'CODE',

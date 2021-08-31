@@ -166,6 +166,7 @@ class ProductController extends BaseController
         $data['listing_feature'] = $this->listing_feature->getListingFeature();
         $data['near_by'] = $this->near_by->getNearBy();
         $data['property_listing_type'] = $this->property_listing_type->getPropertyListingType();
+        // dd($data['property_listing_type']);
         $data['property_listing_images'] = $this->property_listing_images->getListingImages($id);
 
         if (!$this->resp->status) {
