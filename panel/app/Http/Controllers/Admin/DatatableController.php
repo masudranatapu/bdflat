@@ -9,9 +9,11 @@ use App\Repositories\Admin\Datatable\DatatableInterface;
 class DatatableController extends BaseController
 {
     protected $datatable;
+    protected $resp;
 
     public function __construct(DatatableInterface $datatable)
     {
+        parent::__construct();
         $this->datatable = $datatable;
     }
 

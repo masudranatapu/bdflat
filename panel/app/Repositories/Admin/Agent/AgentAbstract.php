@@ -1,14 +1,11 @@
 <?php
 namespace App\Repositories\Admin\Agent;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\Auth;
 use App\Models\Agent;
-use App\Models\UserGroup;
 use App\Traits\RepoResponse;
-use App\Models\AccountSource;
 use App\Models\AuthUserGroup;
-use App\Models\AdminUser as User;
 use Illuminate\Support\Facades\Hash;
 
 class AgentAbstract implements AgentInterface
@@ -22,11 +19,16 @@ class AgentAbstract implements AgentInterface
         $this->agent = $agent;
     }
 
-    public function getPaginatedList($request, int $per_page = 5)
+    public function getPaginatedList($request, int $per_page = 5): object
     {
-        $data = $this->agent->where('IS_ACTIVE',1)->orderBy('NAME', 'ASC')->get();
-        //dd($data);
+        $data = $this->agent->orderBy('NAME', 'ASC')->get();
         return $this->formatResponse(true, '', 'admin.agent.index', $data);
+    }
+
+    public function getAgent(int $id): object
+    {
+        $agent = Agent::with(['info'])->find($id);
+        return $this->formatResponse(true, '', '', $agent);
     }
 
     public function postStore($request)
@@ -81,35 +83,26 @@ class AgentAbstract implements AgentInterface
         return $this->formatResponse(true, 'Agent has been created successfully !', 'admin.agent.list');
     }
 
-    public function postUpdate($request, $PK_NO)
+    public function postUpdate($request, $id): object
     {
         DB::beginTransaction();
-
         try {
-            $agent                  = Agent::where('PK_NO', $PK_NO)->first();
-            $auths                  = Auth::where('F_AGENT_NO',$PK_NO)->first();
-
+            $agent                  = Agent::find($id);
             $agent->NAME            = $request->name;
             $agent->MOBILE_NO       = $request->phone;
-            $agent->ALTERNATE_NO    = $request->alt_phone;
             $agent->EMAIL           = $request->email;
-            $agent->FB_ID           = $request->fb_id;
-            $agent->IG_ID           = $request->ig_id;
-            $agent->UKSHOP_ID       = $request->uk_id;
-            $auths->EMAIL           = $request->email;
+            $agent->STATUS           = $request->status;
 
             if (isset($request->uk_pass) && !empty($request->uk_pass)) {
-                $agent->UKSHOP_PASS = bcrypt($request->uk_pass);
-                $auths->PASSWORD    = bcrypt($request->uk_pass);
+                $agent->PASSWORD = Hash::make($request->pass);
             }
             $agent->save();
-            $auths->save();
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->formatResponse(false, $e->getMessage(), 'admin.agent.list');
+            return $this->formatResponse(false, $e->getMessage(), 'admin.agents.list');
         }
         DB::commit();
-        return $this->formatResponse(true, 'Agent Information has been Updated successfully', 'admin.agent.list');
+        return $this->formatResponse(true, 'Agent Information has been updated successfully', 'admin.agents.list');
     }
 
     public function delete($PK_NO)
