@@ -90,7 +90,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('city', $cities ,null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('city', $cities ,null,array('id' => 'city', 'class'=>'select2 form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -103,8 +103,19 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('area', [],null,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('area', [],null,array('id' => 'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                {!! Form::label('sub_area','Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -433,6 +444,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+    <script src="{{asset('assets/js/forms/select/form-select2.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
@@ -455,7 +467,28 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
         });
 
         var basepath = $('#base_url').val();
-        console.log(basepath);
+
+        $(document).on('change', '#area', function () {
+            let id = $(this).val();
+            $('#sub_area').empty();
+            $('#sub_area').append(new Option('Select Area', 0));
+
+            $.ajax({
+                type: 'get',
+                url: '{{ route('get.area') }}?area=' + id,
+                async: true,
+                dataType: 'json',
+                success: function (res) {
+                    $.each(res.data, function (key, value) {
+                        let option = new Option(value, key);
+                        $('#sub_area').append(option);
+                    })
+                },
+                complete: function (data) {
+                    $("body").css("cursor", "default");
+                }
+            });
+        });
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();

@@ -494,6 +494,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+    <script src="{{asset('assets/js/forms/select/form-select2.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>

@@ -4,12 +4,14 @@
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
 
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+        rel="stylesheet">
 
     <style>
         .del_btn {
@@ -20,6 +22,7 @@
             right: -8px;
             top: 8px;
         }
+
         .row.form-group {
             align-items: baseline;
         }
@@ -56,7 +59,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                     {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     {!! Form::hidden('p_type',null,['id' => 'p_type']) !!}
                     <div class="advertisment-wrap">
-                        <div class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
+                        <div
+                            class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                             <h5>Advertisement Type:&nbsp; </h5>
                             <div class="controls">
                                 {!! Form::radio('property_for','sale', old('property_for'),[ 'id' => 'sale','data-validation-required-message' => 'This field is required']) !!}
@@ -91,7 +95,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('city', $cities ,null,array('class'=>'form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('city', $cities ,null,array('id' => 'city', 'class'=>'select2 form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -104,8 +108,19 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('area', [],null,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('area', [],null,array('id' => 'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
                                             {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                {!! Form::label('sub_area','Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -153,7 +168,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <!--  Property Size & Price  -->
                             <div class="advertisment-title">
                                 <h3>Property Size & Price
-                                    <button type="button" class="btn btn-xs btn-danger" id="add_btn">+ Add new size</button>
+                                    <button type="button" class="btn btn-xs btn-danger" id="add_btn">+ Add new size
+                                    </button>
                                 </h3>
                             </div>
 
@@ -163,7 +179,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                         <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::number('size[]', old('size[]'), ['id'=>'size', 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
-                                                <span class="size_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
+                                                <span class="size_placeholder advertis-label"
+                                                      style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -172,7 +189,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                         <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
-                                                <span class="bedroom_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
+                                                <span class="bedroom_placeholder advertis-label"
+                                                      style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -181,7 +199,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                         <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
-                                                <span class="bathroom_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
+                                                <span class="bathroom_placeholder advertis-label"
+                                                      style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -190,7 +209,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                         <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
-                                                <span class="price_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
+                                                <span class="price_placeholder advertis-label"
+                                                      style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -284,7 +304,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <div class="row form-group">
                                 <div class="col-lg-12">
                                     @foreach($listing_features as $key => $listing_feature)
-                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
+                                        <div
+                                            class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input']) !!}
                                                 {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}
@@ -301,7 +322,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <div class="row form-group">
                                 <div class="col-lg-12">
                                     @foreach($nearby as $key => $item)
-                                        <div class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
+                                        <div
+                                            class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key]) !!}
                                                 {{ Form::label('nearby'.$key,$item) }}
@@ -332,7 +354,8 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <div class="advertisment-title">
                                 <h3>Image & Videos</h3>
                             </div>
-                            <div class="row form-group {!! $errors->has('image') ? 'error' : '' !!}" style="align-items: center">
+                            <div class="row form-group {!! $errors->has('image') ? 'error' : '' !!}"
+                                 style="align-items: center">
                                 {{ Form::label(null,'Image',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="controls">
@@ -434,6 +457,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
+    <script src="{{asset('assets/js/forms/select/form-select2.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{asset('/assets/css/image_upload/image-uploader.min.js')}}"></script>
@@ -456,7 +480,28 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
         });
 
         var basepath = $('#base_url').val();
-        console.log(basepath);
+
+        $(document).on('change', '#area', function () {
+            let id = $(this).val();
+            $('#sub_area').empty();
+            $('#sub_area').append(new Option('Select Area', 0));
+
+            $.ajax({
+                type: 'get',
+                url: '{{ route('get.area') }}?area=' + id,
+                async: true,
+                dataType: 'json',
+                success: function (res) {
+                    $.each(res.data, function (key, value) {
+                        let option = new Option(value, key);
+                        $('#sub_area').append(option);
+                    })
+                },
+                complete: function (data) {
+                    $("body").css("cursor", "default");
+                }
+            });
+        });
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();
@@ -473,6 +518,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                     $("body").css("cursor", "progress");
                 },
                 success: function (response) {
+                    $('#area').append(new Option('Select Area', 0));
                     $.each(response.area, function (key, value) {
                         var option = new Option(value, key);
                         $("#area").append(option);
@@ -487,12 +533,12 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 
         $(document).on('click', '#add_btn', function () {
             var property_type = $('#property_type').val();
-            if(property_type == ''){
+            if (property_type == '') {
                 alert('Please select property type at first');
-            }else{
+            } else {
                 $.ajax({
                     type: 'get',
-                    data:{property_type:property_type},
+                    data: {property_type: property_type},
                     url: basepath + '/ajax-add-listing-variant',
                     async: true,
                     dataType: 'json',
@@ -549,27 +595,27 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                 url: basepath + "/ajax-get-property-type/" + $(this).val(),
                 type: 'GET',
                 success: function (data) {
-                    if (data == 'A'){
+                    if (data == 'A') {
                         $("#p_type").val(data);
-                        $(".bathroom_div").css('display','block');
-                        $(".bedroom_div").css('display','block');
-                        $(".floor_div").css('display','flex');
-                        $(".floor_available_div").css('display','flex');
-                        $("#size").attr('placeholder','Size In sft');
-                    }else if (data == 'B'){
+                        $(".bathroom_div").css('display', 'block');
+                        $(".bedroom_div").css('display', 'block');
+                        $(".floor_div").css('display', 'flex');
+                        $(".floor_available_div").css('display', 'flex');
+                        $("#size").attr('placeholder', 'Size In sft');
+                    } else if (data == 'B') {
                         $("#p_type").val(data);
-                        $(".bathroom_div").css('display','none');
-                        $(".bedroom_div").css('display','none');
-                        $(".floor_div").css('display','flex');
-                        $(".floor_available_div").css('display','flex');
-                        $("#size").attr('placeholder','Size In sft');
-                    }else if(data == 'C'){
+                        $(".bathroom_div").css('display', 'none');
+                        $(".bedroom_div").css('display', 'none');
+                        $(".floor_div").css('display', 'flex');
+                        $(".floor_available_div").css('display', 'flex');
+                        $("#size").attr('placeholder', 'Size In sft');
+                    } else if (data == 'C') {
                         $("#p_type").val(data);
-                        $(".bathroom_div").css('display','none');
-                        $(".bedroom_div").css('display','none');
-                        $(".floor_div").css('display','none');
-                        $(".floor_available_div").css('display','none');
-                        $("#size").attr('placeholder','Size In Katha');
+                        $(".bathroom_div").css('display', 'none');
+                        $(".bedroom_div").css('display', 'none');
+                        $(".floor_div").css('display', 'none');
+                        $(".floor_available_div").css('display', 'none');
+                        $("#size").attr('placeholder', 'Size In Katha');
                     }
                 }
             });

@@ -118,8 +118,6 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
     Route::get('listings/{id}/pay', 'ListingController@pay')->name('listings.pay');
     Route::post('listings/{id}/pay', 'ListingController@payStore')->name('listings.pay');
 
-
-
     Route::get('ajax-listings-delete_img/{id}', 'ListingController@deleteListingImage')->name('listings.delete_img');
     Route::get('ajax-get-property-type/{id}', 'ListingController@getPropertyType')->name('get.property_type');
     Route::get('ajax-get-available-floor', 'ListingController@getAvailableFloor')->name('get.available.floor');

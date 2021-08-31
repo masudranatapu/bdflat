@@ -119,7 +119,7 @@ $days = [
                                     <td>
                                         <div class="form-group mb-2">
                                             <div class="controls">
-                                                {!! Form::time('open_time', old('open_time', $user_data->info->SHOP_OPEN_TIME ?? ''), ['class' => 'form-control', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::text('open_time', old('open_time', $user_data->info->SHOP_OPEN_TIME ?? ''), ['class' => 'form-control time', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('open_time', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -130,7 +130,7 @@ $days = [
                                     <td>
                                         <div class="form-group mb-2">
                                             <div class="controls">
-                                                {!! Form::time('close_time', old('close_time', $user_data->info->SHOP_CLOSE_TIME ?? ''), ['class' => 'form-control', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::text('close_time', old('close_time', $user_data->info->SHOP_CLOSE_TIME ?? ''), ['class' => 'form-control time', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
                                                 {!! $errors->first('close_time', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -188,7 +188,12 @@ $days = [
 @push('custom_js')
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
-    <script src="{{ asset('assets/js/forms/select/form-select2.min.js') }}"></script>
+    <script src="{{asset('/assets/js/forms/select/form-select2.min.js')}}"></script>
+    <script src="{{ asset('assets/js/forms/datepicker/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/js/forms/datepicker/bootstrap-datetimepicker.min.js') }}"></script>
     <script>
+        $('.time').datetimepicker({
+            format: 'hh:mm'
+        })
     </script>
 @endpush
