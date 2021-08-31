@@ -29,7 +29,7 @@ class AgentRequest extends FormRequest
             'name' => 'required',
             'phone' => 'required',
             'email' => "required|unique:SLS_AGENTS,EMAIL,{$id},PK_NO",
-            'images.*' => 'sometimes|image|dimensions:height=300,width:300'
+            'images.*' => 'sometimes|image'
         ];
     }
 
