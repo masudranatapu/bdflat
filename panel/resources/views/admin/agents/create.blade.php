@@ -127,6 +127,17 @@
 
                     <div class="row">
                         <div class="col-md-6">
+                            <div class="form-group {!! $errors->has('is_feature') ? 'error' : '' !!}">
+                                <label>Is Feature<span class="text-danger">*</span></label>
+                                <div class="controls">
+                                    {!! Form::select('is_feature',['1'=>'Feature','0'=>'General'], old('is_feature'),[ 'class' => 'form-control mb-1', 'tabIndex' => ++$tabIndex ]) !!}
+                                    {!! $errors->first('is_feature', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group {!! $errors->has('status') ? 'status' : '' !!}">
                                 <label>Status<span class="text-danger">*</span></label>
                                 <div class="controls">

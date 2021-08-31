@@ -16,7 +16,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
     <style>
         .show_img {
             height: 82px;
@@ -104,29 +105,29 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="row">--}}
-{{--                                <div class="col-md-12">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        {!! Form::label('open_time', 'Open Time *', ['class' => 'label-title'], false) !!}--}}
-{{--                                        <div class="controls">--}}
-{{--                                            {!! Form::text('open_time', old('open_time', $agent->info->SHOP_OPEN_TIME ?? ''), [ 'class' => 'form-control time', 'id' => 'open_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}--}}
-{{--                                            {!! $errors->first('open_time', '<label class="help-block text-danger">:message</label>') !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="row">--}}
+                            {{--                                <div class="col-md-12">--}}
+                            {{--                                    <div class="form-group">--}}
+                            {{--                                        {!! Form::label('open_time', 'Open Time *', ['class' => 'label-title'], false) !!}--}}
+                            {{--                                        <div class="controls">--}}
+                            {{--                                            {!! Form::text('open_time', old('open_time', $agent->info->SHOP_OPEN_TIME ?? ''), [ 'class' => 'form-control time', 'id' => 'open_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}--}}
+                            {{--                                            {!! $errors->first('open_time', '<label class="help-block text-danger">:message</label>') !!}--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
 
-{{--                            <div class="row">--}}
-{{--                                <div class="col-md-12">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        {!! Form::label('close_time', 'Close Time *', ['class' => 'label-title'], false) !!}--}}
-{{--                                        <div class="controls">--}}
-{{--                                            {!! Form::text('close_time', old('close_time', $agent->info->SHOP_OPEN_TIME ?? ''), [ 'class' => 'form-control time', 'id' => 'close_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}--}}
-{{--                                            {!! $errors->first('close_time', '<label class="help-block text-danger">:message</label>') !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="row">--}}
+                            {{--                                <div class="col-md-12">--}}
+                            {{--                                    <div class="form-group">--}}
+                            {{--                                        {!! Form::label('close_time', 'Close Time *', ['class' => 'label-title'], false) !!}--}}
+                            {{--                                        <div class="controls">--}}
+                            {{--                                            {!! Form::text('close_time', old('close_time', $agent->info->SHOP_OPEN_TIME ?? ''), [ 'class' => 'form-control time', 'id' => 'close_time', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}--}}
+                            {{--                                            {!! $errors->first('close_time', '<label class="help-block text-danger">:message</label>') !!}--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -149,10 +150,26 @@
                                                     </div>
                                                 @endforeach
                                             </div>--}}
+                                            @if($agent->PROFILE_PIC_URL)
+                                                <img style="max-width: 150px" src="{{ asset($agent->PROFILE_PIC_URL ?? '') }}" alt="">
+                                            @endif
                                             <div class="controls">
                                                 <div id="imageFile" style="padding-top: .5rem;"></div>
                                             </div>
                                             {!! $errors->first('images.0', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group {!! $errors->has('is_feature') ? 'error' : '' !!}">
+                                        <label>Is Feature<span class="text-danger">*</span></label>
+                                        <div class="controls">
+                                            {!! Form::select('is_feature',['1'=>'Feature','0'=>'General'], old('is_feature', $agent->IS_FEATURE),[ 'class' => 'form-control mb-1', 'tabIndex' => ++$tabIndex ]) !!}
+                                            {!! $errors->first('is_feature', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
