@@ -215,7 +215,7 @@
                 {!! Form::hidden('user_id', $data->PK_NO ?? null) !!}
 
                 <div class="form-body">
-                    <h2 class="mb-2">Buyer Information</h2>
+                    <h2 class="mb-2">Seeker Information</h2>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">

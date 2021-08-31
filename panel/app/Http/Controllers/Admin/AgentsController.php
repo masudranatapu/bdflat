@@ -31,9 +31,7 @@ class AgentsController extends BaseController
     }
 
     public function postStore(AgentRequest $request) {
-
         $this->resp = $this->agent->postStore($request);
-
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
