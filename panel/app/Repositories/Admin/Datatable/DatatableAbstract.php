@@ -128,20 +128,21 @@ class DatatableAbstract implements DatatableInterface
             ->get();
         return Datatables::of($dataSet)
             ->addColumn('status', function ($dataSet) {
-                if ($dataSet->STATUS == 1) {
-                    $status = '<span class="t-pub">Active</span>';
-                } else {
-                    $status = '<span class="t-del">Inactive</span>';
-                }
-                return $status;
+                $status = [
+                    0 => 'Pending',
+                    1 => 'Active',
+                    2 => 'Inactive',
+                    3 => 'Deleted'
+                ];
+                return $status[$dataSet->STATUS] ?? '';
             })
             ->addColumn('action', function ($dataSet) {
                 $roles = userRolePermissionArray();
                 $edit = $payment = '';
-                if (hasAccessAbility('edit_owner', $roles)) {
+                if (hasAccessAbility('edit_agents', $roles)) {
                     $edit = ' <a href="' . route("admin.agents.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Edit">Edit</a>';
                 }
-                if (hasAccessAbility('view_owner_payment', $roles)) {
+                if (hasAccessAbility('view_agent_earnings', $roles)) {
                     $payment = ' <a href="' . route("admin.agent_earnings", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="View Earnings">Earnings</a>';
                 }
                 return $edit . $payment;

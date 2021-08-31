@@ -94,11 +94,6 @@
         $('#logoFile').imageUploader();
 
         $('.time').datetimepicker({
-            icons:
-                {
-                    next: 'fa fa-angle-right',
-                    previous: 'fa fa-angle-left'
-                },
             format: 'hh:mm'
         });
     </script>

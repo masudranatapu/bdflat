@@ -52,7 +52,7 @@
                                                     <span>Agent Name</span>
                                                 </td>
                                                 <td>
-                                                    <span>Rubina Akter</span>
+                                                    <span>{{ $data['agent']->NAME ?? '' }}</span>
                                                 </td>
                                             </tr>
 
@@ -61,7 +61,7 @@
                                                     <span>Mobile</span>
                                                 </td>
                                                 <td>
-                                                    <span>0123456789</span>
+                                                    <span>{{ $data['agent']->MOBILE_NO ?? '' }}</span>
                                                 </td>
                                             </tr>
 
@@ -70,7 +70,7 @@
                                                     <span>Email</span>
                                                 </td>
                                                 <td>
-                                                    <span>email@gmail.com</span>
+                                                    <span>{{ $data['agent']->EMAIL ?? '' }}</span>
                                                 </td>
                                             </tr>
 
@@ -88,7 +88,7 @@
                                                     <span>Created Date</span>
                                                 </td>
                                                 <td>
-                                                    <span>Oct 12, 2021</span>
+                                                    <span>{{ date('d M, Y h:i a', strtotime($data['agent']->CREATED_AT ?? 0)) }}</span>
                                                 </td>
                                             </tr>
 

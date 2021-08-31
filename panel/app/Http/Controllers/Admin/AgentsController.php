@@ -12,36 +12,37 @@ use App\Repositories\Admin\Agent\AgentInterface;
 class AgentsController extends BaseController
 {
     protected $agent;
+    protected $resp;
 
-    public function __construct(AgentInterface $agent, Agent $agentmodel)
+    public function __construct(AgentInterface $agent)
     {
-        $this->agent        = $agent;
-        $this->agentmodel   = $agentmodel;
+        parent::__construct();
+        $this->agent = $agent;
     }
 
     public function getIndex(Request $request)
     {
-        /*$this->resp = $this->agent->getPaginatedList($request, 20);
-        return view('admin.agent.index')->withRows($this->resp->data);*/
         return view('admin.agents.index');
     }
 
-    public function getCreate() {
+    public function getCreate()
+    {
         return view('admin.agents.create');
     }
 
-    public function postStore(AgentRequest $request) {
+    public function postStore(AgentRequest $request)
+    {
         $this->resp = $this->agent->postStore($request);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getEdit($id)
     {
-        $agent    = Agent::find($id);
-        $payment_method = PaymentMethod::orderBy('NAME')->pluck('NAME','PK_NO');
+        $agent = Agent::find($id);
+        $payment_method = PaymentMethod::orderBy('NAME')->pluck('NAME', 'PK_NO');
 
         if (!$agent) {
-            return redirect()->route('admin.agent.list');
+            return redirect()->route('admin.agents.list');
         }
         return view('admin.agents.edit')->withAgent($agent)->withPayment($payment_method);
     }
@@ -60,14 +61,15 @@ class AgentsController extends BaseController
 
     public function getEarnings($id)
     {
-        return view('admin.agents.earnings');
+        $data['agent'] = $this->agent->getAgent($id)->data;
+        return view('admin.agents.earnings', compact('data'));
     }
 
     public function getWithdrawCredit()
     {
         $data = [];
-        $data['payment_method'] = PaymentMethod::where('IS_ACTIVE',1)->pluck('NAME','PK_NO');
-        return view('admin.agents.withdraw',compact('data'));
+        $data['payment_method'] = PaymentMethod::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        return view('admin.agents.withdraw', compact('data'));
     }
 
 
