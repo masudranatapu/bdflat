@@ -297,8 +297,7 @@
                                                 <h6>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</h6>
                                             </div>
                                             <div class="verified-address">
-                                                <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                    , {{ $property->CITY_NAME }}</a>
+                                                <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                             </div>
                                         </div>
                                     </div>
