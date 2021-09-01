@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover {
-            color: #fff;
-        }
-
+        .reply:hover {color: #fff;}
     </style>
 @endpush
 @php
     $panel_path = env('PANEL_PATH');
     $listing = $data['listing'] ?? [];
     $features = $data['features'] ?? [];
+
+    $type   = request()->segment(2) ?? '';
+    $cat    = request()->segment(3) ?? '';
+    $dhaka  = request()->segment(4) ?? '';
+
 @endphp
 @section('content')
     <div class="page-heading d-none d-md-block">
@@ -36,7 +38,7 @@
         <!-- container -->
         <div class="container">
             <div class="banner-form">
-                <form action="{{ route('web.property', ['type' => 'sale', 'cat' => 'flat', 'city' => 'dhaka']) }}" method="get">
+                <form action="{{ route('web.property', ['type' => $type, 'cat' => $cat, 'city' => $dhaka]) }}" method="get">
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCity">

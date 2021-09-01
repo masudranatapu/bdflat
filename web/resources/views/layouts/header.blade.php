@@ -1,3 +1,19 @@
+<?php
+$active_menu = 'home';
+if(request()->get('verified') == '1'){
+    $active_menu = 'verified_property';
+}
+if(request()->segment(2) == 'rent'){
+    $active_menu = 'rent';
+}
+if(request()->segment(2) == 'sale'){
+    $active_menu = 'sale';
+}
+if(request()->segment(2) == 'roommate'){
+    $active_menu = 'roommate';
+}
+
+?>
 <!--
    ============  mobile menu  ============
 -->
@@ -108,19 +124,19 @@
                          </form>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link active" href="{{ route('web.home') }}">Home</a>
+                        <a class="nav-link {{ $active_menu == 'home' ? 'active' : ''  }}" href="{{ route('web.home') }}">Home</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="{{ route('web.property', ['type' => 'sale']) }}">Sale</a>
+                        <a class="nav-link {{ $active_menu == 'sale' ? 'active' : ''  }}" href="{{ route('web.property', ['type' => 'sale']) }}">Sale</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="{{ route('web.property', ['type' => 'rent']) }}">Rent</a>
+                        <a class="nav-link {{ $active_menu == 'rent' ? 'active' : ''  }}" href="{{ route('web.property', ['type' => 'rent']) }}">Rent</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="{{ route('web.property', ['type' => 'roommate']) }}">Roommate</a>
+                        <a class="nav-link {{ $active_menu == 'roommate' ? 'active' : ''  }}" href="{{ route('web.property', ['type' => 'roommate']) }}">Roommate</a>
                     </li>
                     <li class="nav-menu nav-item">
-                        <a class="nav-link" href="{{ route('web.property') }}">Properties</a>
+                        <a class="nav-link {{ $active_menu == 'verified_property' ? 'active' : ''  }}" href="{{ route('web.property') }}?verified=1">Verified properties</a>
                     </li>
                     <li class="nav-menu nav-item">
                       @guest

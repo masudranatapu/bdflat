@@ -418,7 +418,7 @@ li.nav-menu.nav-item a {
     -ms-transition: all 0.3s;
     -o-transition: all 0.3s;
 }
-
+li.nav-menu.nav-item a.nav-link.active{color:#d8232a !important; }
 li.nav-menu.nav-item a:hover {
     color: #d8232a !important;
 }
