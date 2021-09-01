@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
         .reply:hover {color: #fff;}
+        .fix_box{max-height: 200px; overflow-y: scroll;}
     </style>
 @endpush
 @php
@@ -64,7 +65,7 @@
                         </div>
                     </div>
                     <div class="search-form">
-                        <input type="text" placeholder="Type Your key word" name="search" id="search">
+                        <input type="text" placeholder="Type Your key word" name="search" id="search" value="{{ request()->get('search') }}">
                         <button type="submit">Search</button>
                     </div>
                 </form>
@@ -168,19 +169,9 @@
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
                                                         <select class="form-control" id="propertyType">
-                                                            <option value="">All Property</option>
-                                                            <option
-                                                                value="sale" {{ request()->route('type') == 'sale' ? 'selected' : '' }}>
-                                                                Sale
-                                                            </option>
-                                                            <option
-                                                                value="rent" {{ request()->route('type') == 'rent' ? 'selected' : '' }}>
-                                                                Rent
-                                                            </option>
-                                                            <option
-                                                                value="roommate" {{ request()->route('type') == 'roommate' ? 'selected' : '' }}>
-                                                                Roommate
-                                                            </option>
+                                                            <option value="sale" {{ request()->route('type') == 'sale' ? 'selected' : '' }}>Sale</option>
+                                                            <option value="rent" {{ request()->route('type') == 'rent' ? 'selected' : '' }}>Rent</option>
+                                                            <option value="roommate" {{ request()->route('type') == 'roommate' ? 'selected' : '' }}>Roommate</option>
                                                         </select>
                                                     </div>
                                                 </form>
@@ -232,7 +223,7 @@
                                     </div>
                                     <div id="collapseLocation" class="collapse show" aria-labelledby="headingLoaction"
                                          data-parent="#accordionExample">
-                                        <div class="card-body">
+                                        <div class="card-body fix_box">
                                             <div class="categories-condition">
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
@@ -394,20 +385,12 @@
                                 @endif
                             </div>
                             <div class="sortby d-none d-md-block">
-                                <p>
-                                    Sort By
+                                <p>Sort By
                                     <select class="form-control" id="sortBy" name="sortBy">
                                         <option value="">Default</option>
-                                        <option
-                                            value="asc" {{ request()->query('sort_by') == 'asc' ? 'selected' : '' }}>
-                                            Price:
-                                            low to high
-                                        </option>
-                                        <option
-                                            value="desc" {{ request()->query('sort_by') == 'desc' ? 'selected' : '' }}>
-                                            Price:
-                                            high to low
-                                        </option>
+                                        <option value="asc" {{ request()->query('sort_by') == 'asc' ? 'selected' : '' }}>Price: low to high</option>
+                                        <option value="desc" {{ request()->query('sort_by') == 'desc' ? 'selected' : '' }}>
+                                            Price: high to low </option>
                                     </select>
                                 </p>
                             </div>
