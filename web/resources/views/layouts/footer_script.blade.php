@@ -1,11 +1,11 @@
  <!--
      ============ js files ============
   -->
-  <script src="{{ asset('assets/jquery-3.5.1.min.js') }}"></script>
+  <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
   <script src="{{asset('/assets/js/vendor/modernizr-3.11.2.min.js?v=0') }}"></script>
   <script src="{{asset('/assets/js/bootstrap.bundle.js?v=0') }}"></script>
-  <script src="{{ asset('assets/popper.min.js') }}"></script>
-  <script src="{{ asset('assets/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+  <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
   <!-- <script src="{{asset('/assets/js/fastselect.standalone.js?v=0') }}"></script> -->
 {{--  <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>--}}
   <script src="{{ asset('/assets/js/toastr.min.js') }}"></script>

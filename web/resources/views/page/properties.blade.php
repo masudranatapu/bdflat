@@ -36,7 +36,7 @@
         <!-- container -->
         <div class="container">
             <div class="banner-form">
-                <form action="#" method="post">
+                <form action="{{ route('web.property', ['type' => 'sale', 'cat' => 'flat', 'city' => 'dhaka']) }}" method="get">
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCity">
@@ -422,7 +422,7 @@
                                                             src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}"
                                                             class="img-fluid" alt="image"></a>
                                                 </div>
-                                                @if($listing->IS_FEATURE)
+                                                @if($listing->F_LISTING_TYPE == 2 || $listing->F_LISTING_TYPE == 4)
                                                     <div class="featured">
                                                         <div class="feature-text">
                                                             <span>Featured</span>
