@@ -7,8 +7,46 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover {color: #fff;}
-        .fix_box{max-height: 200px; overflow-y: scroll;}
+        .reply:hover {
+            color: #fff;
+        }
+
+        .fix_box {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+        .verified-title h5{
+            max-height: 40px;
+            overflow: hidden;
+        }
+        .verified-title h6{
+            padding-top: 10px;
+        }
+        @media (max-width: 576px) {
+            .verified-title h5{
+                max-height: 30px;
+            }
+        }
+
+        .fix_box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        /* Track */
+        .fix_box::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        .fix_box::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        .fix_box::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 @endpush
 @php
@@ -46,7 +84,8 @@
                                 <option value="all">Select Location</option>
                                 @foreach($data['cities'] as $city)
                                     <option
-                                        value="{{ $city }}" {{ $city == request()->route('city') ? 'selected' : '' }}>{{ $city }}</option>
+                                        value="{{ $city }}" {{ $city == request()->route('city') ? 'selected' : '' }}>{{ $city }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -58,7 +97,9 @@
                                 @if(isset($data['categories']) && count($data['categories']))
                                     @foreach($data['categories'] as $category)
                                         <option
-                                            value="{{ $category->PROPERTY_TYPE }}" {{ $category->PROPERTY_TYPE == request()->route('cat') ? 'selected' : '' }}>{{ $category->PROPERTY_TYPE }}</option>
+                                            value="{{ $category->PROPERTY_TYPE }}" {{ $category->PROPERTY_TYPE == request()->route('cat') ? 'selected' : '' }}>{{
+                                            $category->PROPERTY_TYPE }}
+                                        </option>
                                     @endforeach
                                 @endif
                             </select>
@@ -390,7 +431,8 @@
                                         <option value="">Default</option>
                                         <option value="asc" {{ request()->query('sort_by') == 'asc' ? 'selected' : '' }}>Price: low to high</option>
                                         <option value="desc" {{ request()->query('sort_by') == 'desc' ? 'selected' : '' }}>
-                                            Price: high to low </option>
+                                            Price: high to low
+                                        </option>
                                     </select>
                                 </p>
                             </div>

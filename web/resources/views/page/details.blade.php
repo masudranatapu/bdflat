@@ -343,8 +343,7 @@
                                     </p></div>
                                 <div class="single-pro-ads">
                                     <h4>
-                                        <a href="#"><i class="fa fa-map-marker"></i> {{ $listing->AREA_NAME ?? '' }}
-                                            , {{ $listing->CITY_NAME }}</a>
+                                        <a href="#"><i class="fa fa-map-marker"></i> {{ $listing->AREA_NAME ?? '' }}, {{ $listing->CITY_NAME }}</a>
                                         <i class="fa fa-suitcase"></i><a
                                             href="#"><strong>({{ ucwords($listing->PROPERTY_FOR ?? '') }})</strong></a>
                                     </h4>
@@ -452,8 +451,7 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                                , {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>

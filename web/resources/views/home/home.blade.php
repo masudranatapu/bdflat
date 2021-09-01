@@ -201,8 +201,7 @@
                                     </div>
                                     <div class="featured-footer">
                                         <div class="address">
-                                            <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                , {{ $property->CITY_NAME }}</a>
+                                            <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -369,8 +368,7 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                                , {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -416,8 +414,7 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                                , {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -464,8 +461,7 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                                , {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
