@@ -349,7 +349,7 @@ class Listings extends Model
 
                     $thumb_img->backup();
 
-                    $thumb_img->resize(172, 115, function ($constraint) {
+                    $thumb_img->resize(226, 151, function ($constraint) {
                     });
                     $thumb_img->save($destinationPath2 . '/' . $name2);
 
@@ -462,7 +462,7 @@ class Listings extends Model
 
                     $thumb_img->backup();
 
-                    $thumb_img->resize(172, 115, function ($constraint) {
+                    $thumb_img->resize(226, 151, function ($constraint) {
                     });
                     $thumb_img->save($destinationPath2 . '/' . $name2);
 
