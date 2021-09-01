@@ -7,7 +7,16 @@
         }
 
         .verified-title h5{
-
+            max-height: 40px;
+            overflow: hidden;
+        }
+        .verified-title h6{
+            padding-top: 10px;
+        }
+        @media (max-width: 576px) {
+            .verified-title h5{
+                max-height: 30px;
+            }
         }
     </style>
 @endpush
