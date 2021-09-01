@@ -37,6 +37,7 @@ class DatatableController extends BaseController
 
     public function getProperty(Request $request)
     {
+
         $this->resp = $this->datatable->getProperty($request);
         return $this->resp;
     }

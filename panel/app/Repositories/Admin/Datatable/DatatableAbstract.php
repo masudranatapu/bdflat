@@ -153,30 +153,27 @@ class DatatableAbstract implements DatatableInterface
 
     public function getProperty($request)
     {
-//        DB::enableQueryLog();
         $dataSet = DB::table('PRD_LISTINGS as p')
             ->orderBy('PK_NO', 'DESC');
-        if ($request->get('user_type')) {
-            $dataSet->where('USER_TYPE', $request->get('user_type'));
+        if ($request->user_type != '' ) {
+            $dataSet->where('p.USER_TYPE', $request->user_type);
         }
-        if ($request->get('property_for')) {
-            $dataSet->where('PROPERTY_FOR', $request->get('property_for'));
+        if ($request->property_for != '') {
+            $dataSet->where('p.PROPERTY_FOR', $request->property_for);
         }
-        if ($request->get('listing_type')) {
-            $dataSet->where('F_LISTING_TYPE', $request->get('listing_type'));
+        if ($request->listing_type != '') {
+            $dataSet->where('p.F_LISTING_TYPE', $request->listing_type);
         }
-        if ($request->get('payment_status')) {
-            $dataSet->where('PAYMENT_STATUS', $request->get('payment_status'));
-        }
-        if ($request->get('property_status')) {
-            $dataSet->where('STATUS', $request->get('property_status'));
+        if ($request->payment_status != '') {
+            $dataSet->where('p.PAYMENT_STATUS', $request->payment_status);
         }
 
-        // if ($request->get('payment_status')) {
-        //     $dataSet->where('PAYMENT_STATUS', $request->get('payment_status'));
-        // }
+        if ($request->property_status != '' ) {
+            $dataSet->where('p.STATUS', $request->property_status);
+        }
+
         $dataSet = $dataSet->get();
-//        dd(DB::getQueryLog());
+
 
         return Datatables::of($dataSet)
             ->addColumn('status', function ($dataSet) {

@@ -67,7 +67,6 @@ class Listings extends Model
         'MODIFIED_BY',
         'TOTAL_FLOORS',
         'FLOORS_AVAIABLE',
-        'IS_FEATURE',
     ];
 
     public function getDefaultThumb()
@@ -116,7 +115,7 @@ class Listings extends Model
         $limit = WebSetting::where('PK_NO', 1)->first('FEATURE_PROPERTY_LIMIT')->FEATURE_PROPERTY_LIMIT;
         return Listings::with(['getDefaultThumb', 'getListingVariant'])
             ->where('STATUS', '=', 10)
-            ->where('IS_FEATURE', '=', 1)
+            ->whereIn('F_LISTING_TYPE', [2,4])
             ->take($limit)
             ->get();
     }
@@ -241,7 +240,7 @@ class Listings extends Model
             $listings->whereIn('PRD_LISTINGS.USER_TYPE', $postedBy);
         }
 
-        $listings->orderByDesc('PRD_LISTINGS.IS_TOP')->orderByDesc('PRD_LISTINGS.IS_FEATURE');
+        $listings->orderByDesc('PRD_LISTINGS.IS_TOP')->orderByDesc('PRD_LISTINGS.F_LISTING_TYPE');
         return $listings->paginate(12);
     }
 
