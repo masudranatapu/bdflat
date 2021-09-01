@@ -1,8 +1,15 @@
 @extends('layouts.app')
 @push('custom_css')
-<style type="text/css">
-    .owl-carousel .owl-item img{width: 100%; height: 120px;}
-</style>
+    <style type="text/css">
+        .owl-carousel .owl-item img {
+            width: 100%;
+            height: 120px;
+        }
+
+        .verified-title h5{
+
+        }
+    </style>
 @endpush
 @php
     $panel_path = env('PANEL_PATH');
@@ -349,7 +356,8 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ \Illuminate\Support\Str::limit($property->TITLE, 50, '...') }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ \Illuminate\Support\Str::limit($property->TITLE, 50, '...') }}</a>
+                                                            </h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
