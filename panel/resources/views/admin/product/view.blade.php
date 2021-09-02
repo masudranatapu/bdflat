@@ -193,7 +193,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <p><span class="font-weight-bold">Listing Type</span>: {{ $property_listing_types[$product->F_LISTING_TYPE] }}</p>
+                                    <p><span class="font-weight-bold">Listing Type</span>: {{ $property_listing_types[$product->F_LISTING_TYPE]->NAME }}</p>
                                     <p><span class="font-weight-bold">Publishing Status</span>: {{ $property_status[$product->STATUS] }}</p>
                                     <p><span class="font-weight-bold">Payment Status</span>: {{ $product->PAYMENT_STATUS ? 'Paid' : 'Due' }}</p>
                                     <p><span class="font-weight-bold">Verified by BDF</span>: {{ $product->IS_VERIFIED ? 'Yes' : 'No' }}</p>
