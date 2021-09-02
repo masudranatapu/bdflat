@@ -79,14 +79,15 @@
                                     <div class="property-heading">
                                         <h3>New Property <span class="float-right"><a href="#">See All</a></span></h3>
                                     </div>
-                                    <div class="row">
+
                                         @foreach($data['properties'] as $property)
-                                            <div class="col-lg-6 mb-3">
+                                        <div class="row">
+                                            <div class="col-12 mb-1">
                                                 <!-- product -->
                                                 <div class="sale-wrapper">
                                                     <div class="sale-product">
                                                         <div class="row no-gutters position-relative">
-                                                            <div class="col-3 col-md-4">
+                                                            <div class="col-3">
                                                                 <div class="category-bx">
                                                                     <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                             src="{{$property->getDefaultThumb ? asset($property->getDefaultThumb->THUMB_PATH) : ""}}"
@@ -98,7 +99,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-9 col-md-8 position-static pl-3">
+                                                            <div class="col-9 position-static pl-3">
                                                                 <div class="category-price">
                                                                     <h3>TK 50.00</h3>
                                                                 </div>
@@ -131,8 +132,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                         @endforeach
-                                    </div>
+
                                 </div>
                             </div>
                         @endif

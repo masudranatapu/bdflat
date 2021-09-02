@@ -16,158 +16,32 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
-    <style>
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 46px;
-            height: 28px;
-        }
+<style>
+.switch{position:relative;display:inline-block;width:46px;height:28px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}
+.slider:before{position:absolute;content:"";height:22px;width:22px;left:2px;bottom:3px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#4fd460}input:focus+.slider{box-shadow:0 0 1px #4fd460}input:checked+.slider:before{-webkit-transform:translateX(20px);-ms-transform:translateX(26px)}
+.slider.round{border-radius:24px}
+.slider.round:before{border-radius:50%}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{padding:0 0!important;left:-6px!important}
+.select2-container--default .select2-selection--multiple .select2-selection__choice{margin-bottom:3px!important}
+.select2-container .select2-selection--multiple .select2-selection__rendered{margin-bottom:0!important}
+.bedroom-select input[type=checkbox]{display:none}
+.bedroom-select label{font-size:14px;color:#555;position:relative;padding:0 17px 0 23px;cursor:pointer}
+.bedroom-select .checkmark{display:inline-block;width:15px;height:15px;background:#fff;border:2px solid #d9d7d7;position:absolute;left:0;top:0;border-radius:2px;transition:all .1s}
+.bedroom-select input:checked+.checkmark:after{content:"";position:absolute;height:7px;width:14px;border-left:3px solid #666ee8;border-bottom:3px solid #666ee8;top:-1px;left:1px;transform:rotate(-45deg)}
+.email-alert input[type=radio]{display:none}
+.email-alert input[type=radio]+label{font-size:14px;padding:0 17px 0 18px;position:relative;cursor:pointer}
+.email-alert input[type=radio]+label:after,.email-alert input[type=radio]+label:before{position:absolute;top:0;left:0;content:"";width:14px;height:14px;border-radius:50%;display:inline-block;background-color:transparent}
+.email-alert input[type=radio]+label:before{border:2px solid #666ee8}
+.email-alert input[type=radio]:checked+label:after{border:5px solid #666ee8}
+</style>
 
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 2px;
-            bottom: 3px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        input:checked + .slider {
-            background-color: #4FD460;
-        }
-
-        input:focus + .slider {
-            box-shadow: 0 0 1px #4FD460;
-        }
-
-        input:checked + .slider:before {
-            -webkit-transform: translateX(20px);
-            -ms-transform: translateX(26px);
-            /* transform: translateX(26px); */
-        }
-
-        /* Rounded sliders */
-        .slider.round {
-            border-radius: 24px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-            padding: 0px 0px !important;
-            left: -6px !important;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
-            margin-bottom: 3px !important;
-        }
-
-        .select2-container .select2-selection--multiple .select2-selection__rendered {
-            margin-bottom: 0 !important;
-        }
-
-        .bedroom-select input[type="checkbox"] {
-            display: none;
-        }
-
-        .bedroom-select label {
-            font-size: 14px;
-            color: #555;
-            position: relative;
-            padding: 0 17px 0px 23px;
-            cursor: pointer;
-        }
-
-
-        .bedroom-select .checkmark {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background: #ffffff;
-            border: 2px solid #d9d7d7;
-            position: absolute;
-            left: 0;
-            top: 0;
-            border-radius: 2px;
-            transition: all 0.1s;
-        }
-
-        .bedroom-select input:checked + .checkmark:after {
-            content: "";
-            position: absolute;
-            height: 7px;
-            width: 14px;
-            border-left: 3px solid #666ee8;
-            border-bottom: 3px solid #666ee8;
-            top: -1px;
-            left: 1px;
-            transform: rotate(-45deg);
-        }
-
-        .email-alert input[type="radio"] {
-            display: none;
-        }
-
-        .email-alert input[type="radio"] + label {
-            font-size: 14px;
-            padding: 0 17px 0px 18px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .email-alert input[type="radio"] + label:before,
-        .email-alert input[type="radio"] + label:after {
-            position: absolute;
-            top: 0;
-            left: 0;
-            content: "";
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            display: inline-block;
-            background-color: transparent;
-        }
-
-        .email-alert input[type="radio"] + label:before {
-            border: 2px solid #666ee8;
-        }
-
-        .email-alert input[type="radio"]:checked + label:after {
-            border: 5px solid #666ee8;
-        }
-    </style>
 @endpush
 
 @push('custom_js')
-
-    <!-- BEGIN: Data Table-->
     <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
     <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
-    <!-- END: Data Table-->
 
 @endpush
 
@@ -402,7 +276,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>Property Size:</label>
+                                <label>Property Size (Sqft):</label>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -427,7 +301,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>Property Budget:</label>
+                                <label>Property Budget (BDT):</label>
                             </div>
                         </div>
                         <div class="col-md-3">
