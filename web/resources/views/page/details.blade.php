@@ -5,14 +5,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover {
-            color: #fff;
-        }
-
-        .img-fluid, .img-thumbnail {
-            max-width: 100%;
-            height: 100px;
-        }
+        .reply:hover {color: #fff;}
+        .img-fluid, .img-thumbnail {max-width: 100%;}
     </style>
 @endpush
 @php
