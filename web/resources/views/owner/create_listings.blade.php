@@ -26,6 +26,68 @@
         .row.form-group {
             align-items: baseline;
         }
+        .select2-container--default .select2-selection--single .select2-selection__arrow{
+            top: 6px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 42px;
+            border-radius: 4px;
+            border: 1px solid #DDD;
+            font-size: 13px;
+            font-family: 'Montserrat-Medium';
+            outline: none;
+            box-shadow: none;
+            padding: 5px 8px;
+        }
+
+        .select2-container--default .select2-selection--multiple{
+            height: 42px;
+            border-radius: 4px;
+            border: 1px solid #DDD;
+            font-size: 13px;
+            font-family: 'Montserrat-Medium';
+            outline: none;
+            box-shadow: none;
+            padding: 5px 8px;
+        }
+        .select2-container--default .select2-search--inline .select2-search__field{
+            font-size: 13px;
+            font-family: 'Montserrat-Medium';
+            margin-top: 7px;
+        }
+
+        .select2-results__option{
+            font-size: 13px;
+            font-family: 'Montserrat-Medium';
+        }
+
+        .select2-selection__arrow {
+            height: 26px;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            width: 20px;
+        }
+
+        .select2-selection__arrow b{
+            border-color: #888 transparent transparent transparent;
+            border-style: solid;
+            border-width: 5px 4px 0 4px;
+            height: 0;
+            left: 50%;
+            margin-left: -11px;
+            margin-top: 5px;
+            position: absolute;
+            top: 50%;
+            width: 0;
+        }
+        .advertisment-form .form-control{
+            -webkit-appearance: none;
+            padding-left: 15px;
+        }
+
+
     </style>
 @endpush
 <?php
@@ -83,6 +145,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     <div class="form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::select('property_type', $property_types,null,['class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                            <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
                                             {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -96,6 +159,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                         <div class="controls">
                                             {!! Form::select('city', $cities ,null,array('id' => 'city', 'class'=>'select2 form-control', 'placeholder'=>'Select City','data-validation-required-message' => 'This field is required')) !!}
+
                                             {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -115,7 +179,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 </div>
                             </div>
                             <div class="row form-group">
-                                {!! Form::label('sub_area','Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                {!! Form::label('sub_area','Sub Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
                                         <div class="controls">

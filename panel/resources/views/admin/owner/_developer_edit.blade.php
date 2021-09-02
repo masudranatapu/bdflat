@@ -71,12 +71,15 @@
         </div>
     </div>
     <div class="col-md-12 mb-1">
-        {!! Form::label('about_company', 'About Company *', ['class' => 'label-title'], false) !!}
-        <div class="controls">
-            {!! Form::textarea('about_company', old('about_company', $owner->info->ABOUT_COMPANY ?? ''), ['class' => 'form-control', 'placeholder' => 'About Company', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
-            {!! $errors->first('about_company', '<label class="help-block text-danger">:message</label>') !!}
+        <div class="form-group">
+            {!! Form::label('about_company', 'About Company *', ['class' => 'label-title'], false) !!}
+            <div class="controls">
+                {!! Form::textarea('about_company', old('about_company', $owner->info->ABOUT_COMPANY ?? ''), ['class' => 'form-control', 'placeholder' => 'About Company', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'The About Company field is required']) !!}
+                {!! $errors->first('about_company', '<label class="help-block text-danger">:message</label>') !!}
+            </div>
         </div>
     </div>
+
     <div class="col-md-4">
         <div class="form-group">
             {!! Form::label('images','Logo (300x300) <span>*</span>', ['class' => 'label-title'], false) !!}
@@ -119,7 +122,7 @@
         <div class="form-group">
             {!! Form::label('site_url', 'Site URL *', ['class' => 'label-title'], false) !!}
             <div class="controls">
-                {!! Form::tel('site_url', old('site_url', $owner->info->SITE_URL ?? ''), ['class' => 'form-control', 'placeholder' => 'Site URL', 'tabIndex' => ++$tabIndex, 'data-validation-required-message' => 'This field is required']) !!}
+                {!! Form::tel('site_url', old('site_url', $owner->info->SITE_URL ?? ''), ['class' => 'form-control', 'placeholder' => 'Site URL', 'tabIndex' => ++$tabIndex]) !!}
                 {!! $errors->first('site_url', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>

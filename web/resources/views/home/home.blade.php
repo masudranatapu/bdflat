@@ -6,15 +6,17 @@
             height: 120px;
         }
 
-        .verified-title h5{
+        .verified-title h5 {
             max-height: 40px;
             overflow: hidden;
         }
-        .verified-title h6{
+
+        .verified-title h6 {
             padding-top: 10px;
         }
+
         @media (max-width: 576px) {
-            .verified-title h5{
+            .verified-title h5 {
                 max-height: 30px;
             }
         }
@@ -186,7 +188,7 @@
                         <div class="item">
                             <div class="featured-wrap">
                                 <div class="featured-bx">
-                                    <a href="details.html"><img
+                                    <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                             src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
                                             class="img-fluid"
                                             alt="{{ $property->TITLE }}"></a>
@@ -196,7 +198,7 @@
                                         <h3>TK {{ number_format($property->getListingVariant->TOTAL_PRICE) }}</h3>
                                     </div>
                                     <div class="featured-info">
-                                        <h2><a href="details.html">{{ $property->TITLE }}</a></h2>
+                                        <h2><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h2>
                                         <span>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</span>
                                     </div>
                                     <div class="featured-footer">
