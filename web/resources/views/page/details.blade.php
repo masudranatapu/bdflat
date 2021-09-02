@@ -8,9 +8,10 @@
         .reply:hover {
             color: #fff;
         }
+
         .img-fluid, .img-thumbnail {
-        max-width: 100%;
-        height: 100px;
+            max-width: 100%;
+            height: 100px;
         }
     </style>
 @endpush
@@ -427,26 +428,26 @@
                             </div>
                             <div class="row">
                                 @foreach($data['similarListings'] as $property)
-                                    <div class="col-lg-6 mb-3">
+                                    <div class="col-lg-12 mb-3">
                                         <!-- product -->
                                         <div class="sale-wrapper" style="height: 100%;">
                                             <div class="sale-product" style="height: 100%;">
                                                 <div class="row no-gutters position-relative">
-                                                    <div class="col-5">
+                                                    <div class="col-3">
                                                         <div class="category-bx">
                                                             <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
                                                                     src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-7 position-static pl-3">
+                                                    <div class="col-9 position-static">
                                                         <div class="category-price">
                                                             <h3>
                                                                 TK {{ number_format($property->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h3>
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ \Illuminate\Support\Str::limit($property->TITLE, 40, '...') }}</a>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a>
                                                             </h5>
                                                         </div>
                                                         <div class="category-address">

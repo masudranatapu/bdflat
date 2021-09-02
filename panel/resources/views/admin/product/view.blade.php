@@ -121,7 +121,7 @@
                                     @if($product->FLOORS_AVAIABLE)
                                     <p><span class="font-weight-bold">Floor(s) Available: </span>{{ implode('th Floor, ', json_decode($product->FLOORS_AVAIABLE)) }} th Floor</p>
                                     @endif
-                                    <p><span class="font-weight-bold">Facing: </span>{{ $property_facing[$property_additional_info->FACING] }}</p>
+                                    <p><span class="font-weight-bold">Facing: </span>{{ $property_additional_info->FACING }}</p>
                                     <p><span class="font-weight-bold">Handover Date: </span>{{ date('d-m-Y', strtotime($property_additional_info->HANDOVER_DATE)) }}</p>
                                     <p><span class="font-weight-bold">Description: </span></p>
                                     {!! $property_additional_info->DESCRIPTION !!}
