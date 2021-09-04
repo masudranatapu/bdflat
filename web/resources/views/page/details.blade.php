@@ -5,8 +5,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover {color: #fff;}
-        .img-fluid, .img-thumbnail {max-width: 100%;}
+        .reply:hover {
+            color: #fff;
+        }
+
+        .img-fluid, .img-thumbnail {
+            max-width: 100%;
+        }
     </style>
 @endpush
 @php
@@ -358,22 +363,33 @@
                                 </div>
                                 <div class="contect-with">
                                     <h3>Contact With</h3>
-                                    <span class="show-number mb-2 mr-3">
-                                   <i class="fa fa-phone"></i>
-                                   <span class="hide_text">Show Number</span>
-                                   <span class="Show_num d-none">{{ $listing->MOBILE1 }}</span>
-                                </span>
+                                    <span class="{{--show-number--}} mb-2 mr-3" @if(!Auth::check()) data-toggle="modal" data-target="#loginRegModal" @endif>
+                                        <i class="fa fa-phone"></i>
+                                        @if(Auth::check())
+                                            <span class="Show_num">{{ $listing->MOBILE1 }}</span>
+                                        @else
+                                            <span class="hide_text">Show Number</span>
+                                        @endif
+                                    </span>
                                     <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a>
                                 </div>
                                 <div class="share-product">
                                     <h3>Share this ad</h3>
                                     <ul>
-                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" class="fb"><i class="fa fa-facebook-square"></i></a></li>
-                                        <li><a target="_blank" href="https://twitter.com/intent/tweet?url={{url()->current()}}" class="tw"><i class="fa fa-twitter-square"></i></a></li>
-                                        <li><a target="_blank" href="https://plus.google.com/share?url={{url()->current()}}" class="ggle"><i class="fa fa-google-plus-square"></i></a></li>
-                                        <li><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url()->current()}}" class="lin"><i class="fa fa-linkedin-square"></i></a></li>
-                                        <li><a target="_blank" href="https://www.pinterest.com/pin/create/bookmarklet/?media=http%3A%2F%2Fgdurl.com%2Fa653&url={{url()->current()}}" class="pin"><i class="fa fa-pinterest-square"></i></a></li>
-                                        <li><a target="_blank" href="http://www.tumblr.com/share/link?name={!! $listing->additionalInfo->DESCRIPTION ?? '' !!} {{url()->current()}}&url={{url()->current()}}" class="tum"><i class="fa fa-tumblr-square"></i></a></li>
+                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" class="fb"><i
+                                                    class="fa fa-facebook-square"></i></a></li>
+                                        <li><a target="_blank" href="https://twitter.com/intent/tweet?url={{url()->current()}}" class="tw"><i
+                                                    class="fa fa-twitter-square"></i></a></li>
+                                        <li><a target="_blank" href="https://plus.google.com/share?url={{url()->current()}}" class="ggle"><i
+                                                    class="fa fa-google-plus-square"></i></a></li>
+                                        <li><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url()->current()}}" class="lin"><i
+                                                    class="fa fa-linkedin-square"></i></a></li>
+                                        <li><a target="_blank"
+                                               href="https://www.pinterest.com/pin/create/bookmarklet/?media=http%3A%2F%2Fgdurl.com%2Fa653&url={{url()->current()}}"
+                                               class="pin"><i class="fa fa-pinterest-square"></i></a></li>
+                                        <li><a target="_blank"
+                                               href="http://www.tumblr.com/share/link?name={!! $listing->additionalInfo->DESCRIPTION ?? '' !!} {{url()->current()}}&url={{url()->current()}}"
+                                               class="tum"><i class="fa fa-tumblr-square"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -492,6 +508,125 @@
     </div>
 
     @include('layouts.post-ad')
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginRegModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loginRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="login-wrap text-center" id="loginModal">
+                        <h1>Sign In & Access Your Account</h1>
+                        {!! Form::open([ 'route' => 'login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        @csrf
+                        <div class="row">
+                            <div class="col-12 form-group text-left login-email {!! $errors->has('email') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group text-left login-password {!! $errors->has('password') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
+                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group text-center">
+                                <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
+                        <div class="forget-pass">
+                            @if (Route::has('password.request'))
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
+                            @endif
+                        </div>
+                        <div class="create-account">
+                            <h3>New to BDF.com?</h3>
+                            <h5>Create your FREE Account</h5>
+                            <a href="#" id="regModalBtn">Create Account</a>
+                        </div>
+                    </div>
+
+
+                    <div class="sign-wrap d-none" id="regModal">
+                        <h1>Create Your BDFlats.com Account</h1>
+                        {!! Form::open([ 'route' => 'register', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        <div class="account-info">
+                            <h5>I am:</h5>
+                            <input type="radio" name="usertype" value="1" id="seeker" checked> <label for="seeker">Seeker</label>
+                            <input type="radio" name="usertype" value="2" id="owner"> <label for="owner">Owner</label>
+                            <input type="radio" name="usertype" value="3" id="builder"> <label for="builder">Builder</label>
+                            <input type="radio" name="usertype" value="4" id="agency"> <label for="agency">Agency</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name','minlength' => '2', 'data-validation-minlength-message' => 'Minimum 2 characters', 'maxlength' => '50',  'data-validation-maxlength-message' => 'Maximum 50 characters', 'autocomplete' => 'off', 'tabindex' => 1, 'title' => 'Your name', 'id' => 'regi-name']) !!}
+                                    {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group d-none regi-contact_name {!! $errors->has('contact_name') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::text('contact_name', old('contact_name'), [ 'class' => 'form-control','placeholder' => 'Contact person name', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Contact person name' ]) !!}
+                                    {!! $errors->first('contact_name', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group d-none regi-designation {!! $errors->has('designation') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::text('designation', old('designation'), [ 'class' => 'form-control', 'placeholder' => 'Designation', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Designation' ]) !!}
+                                    {!! $errors->first('designation', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group d-none regi-office_address {!! $errors->has('office_address') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::text('office_address', old('office_address'), [ 'class' => 'form-control', 'placeholder' => 'Office address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Office address' ]) !!}
+                                    {!! $errors->first('office_address', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::text('mobile', old('mobile'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
+                                    {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
+                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group text-center pb-4">
+                                <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
+
+                        <div class="login-account text-center">
+                            <h3>Have an Account on BDF.com?</h3>
+                            <h5>Login in your account.</h5>
+                            <a href="javascript:void(0)" id="loginModalBtn">Login Now</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('custom_js')
@@ -502,10 +637,20 @@
     <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
 
     <script>
+        $('#regModalBtn').on('click', function () {
+            $('#loginModal').removeClass('d-block');
+            $('#loginModal').addClass('d-none');
+            $('#regModal').removeClass('d-none');
+            $('#regModal').addClass('d-block');
+        });
 
-    </script>
+        $('#loginModalBtn').on('click', function () {
+            $('#loginModal').removeClass('d-none');
+            $('#loginModal').addClass('d-block');
+            $('#regModal').removeClass('d-block');
+            $('#regModal').addClass('d-none');
+        });
 
-    <script>
         $(document).on('click', '.modalcategory .nav-link', function () {
             $('.modalcategory').hide();
             $('.modalsubcategory').show();

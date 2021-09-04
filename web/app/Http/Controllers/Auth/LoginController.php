@@ -26,6 +26,15 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->back();
+    }
 
     protected $redirectTo = '/';
 
