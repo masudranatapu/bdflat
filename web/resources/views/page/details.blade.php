@@ -368,12 +368,12 @@
                                 <div class="share-product">
                                     <h3>Share this ad</h3>
                                     <ul>
-                                        <li><a href="#" class="fb"><i class="fa fa-facebook-square"></i></a></li>
-                                        <li><a href="#" class="tw"><i class="fa fa-twitter-square"></i></a></li>
-                                        <li><a href="#" class="ggle"><i class="fa fa-google-plus-square"></i></a></li>
-                                        <li><a href="#" class="lin"><i class="fa fa-linkedin-square"></i></a></li>
-                                        <li><a href="#" class="pin"><i class="fa fa-pinterest-square"></i></a></li>
-                                        <li><a href="#" class="tum"><i class="fa fa-tumblr-square"></i></a></li>
+                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" class="fb"><i class="fa fa-facebook-square"></i></a></li>
+                                        <li><a target="_blank" href="https://twitter.com/intent/tweet?url={{url()->current()}}" class="tw"><i class="fa fa-twitter-square"></i></a></li>
+                                        <li><a target="_blank" href="https://plus.google.com/share?url={{url()->current()}}" class="ggle"><i class="fa fa-google-plus-square"></i></a></li>
+                                        <li><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url()->current()}}" class="lin"><i class="fa fa-linkedin-square"></i></a></li>
+                                        <li><a target="_blank" href="https://www.pinterest.com/pin/create/bookmarklet/?media=http%3A%2F%2Fgdurl.com%2Fa653&url={{url()->current()}}" class="pin"><i class="fa fa-pinterest-square"></i></a></li>
+                                        <li><a target="_blank" href="http://www.tumblr.com/share/link?name={!! $listing->additionalInfo->DESCRIPTION ?? '' !!} {{url()->current()}}&url={{url()->current()}}" class="tum"><i class="fa fa-tumblr-square"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -500,6 +500,11 @@
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/hc-offcanvas-nav.js?ver=6.1.1') }}"></script>
     <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+
+    <script>
+
+    </script>
+
     <script>
         $(document).on('click', '.modalcategory .nav-link', function () {
             $('.modalcategory').hide();
