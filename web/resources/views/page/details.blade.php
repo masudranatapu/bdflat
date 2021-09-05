@@ -521,19 +521,25 @@
                 <div class="modal-body">
                     <div class="login-wrap text-center" id="loginModal">
                         <h1>Sign In & Access Your Account</h1>
-                        {!! Form::open([ 'route' => 'login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open(['method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         @csrf
                         <div class="row">
                             <div class="col-12 form-group text-left login-email {!! $errors->has('email') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::email('email', old('email'), ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                    {{--                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="emailError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 form-group text-left login-password {!! $errors->has('password') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
-                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::password('password', ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
+                                    {{--                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="passwordError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
 
@@ -559,7 +565,7 @@
 
                     <div class="sign-wrap d-none" id="regModal">
                         <h1>Create Your BDFlats.com Account</h1>
-                        {!! Form::open([ 'route' => 'register', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open([ /*'route' => 'register', */'id'=>'reg_user', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         <div class="account-info">
                             <h5>I am:</h5>
                             <input type="radio" name="usertype" value="1" id="seeker" checked> <label for="seeker">Seeker</label>
@@ -570,20 +576,29 @@
                         <div class="row">
                             <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name','minlength' => '2', 'data-validation-minlength-message' => 'Minimum 2 characters', 'maxlength' => '50',  'data-validation-maxlength-message' => 'Maximum 50 characters', 'autocomplete' => 'off', 'tabindex' => 1, 'title' => 'Your name', 'id' => 'regi-name']) !!}
-                                    {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name','minlength' => '2', 'data-validation-minlength-message' => 'Minimum 2 characters', 'maxlength' => '50',  'data-validation-maxlength-message' => 'Maximum 50 characters', 'autocomplete' => 'off', 'tabindex' => 1, 'title' => 'Your name', 'id' => 'nameInput']) !!}
+                                    {{--                                    {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="nameError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 form-group d-none regi-contact_name {!! $errors->has('contact_name') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('contact_name', old('contact_name'), [ 'class' => 'form-control','placeholder' => 'Contact person name', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Contact person name' ]) !!}
-                                    {!! $errors->first('contact_name', '<label class="help-block text-danger">:message</label>') !!}
+                                    {{--                                    {!! $errors->first('contact_name', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="contact_nameError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 form-group d-none regi-designation {!! $errors->has('designation') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('designation', old('designation'), [ 'class' => 'form-control', 'placeholder' => 'Designation', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Designation' ]) !!}
-                                    {!! $errors->first('designation', '<label class="help-block text-danger">:message</label>') !!}
+                                    {{--                                    {!! $errors->first('designation', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="designationError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 form-group d-none regi-office_address {!! $errors->has('office_address') ? 'error' : '' !!}">
@@ -594,20 +609,29 @@
                             </div>
                             <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::email('email', old('email'), ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                    {{--                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="emailError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('mobile', old('mobile'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
-                                    {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::text('mobile', old('mobile'), ['id'=>'mobileInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
+                                    {{--                                    {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="mobileError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
-                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::password('password', ['id'=>'passwordInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
+                                    {{--                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}--}}
+                                    <span class="invalid-feedback" role="alert" id="passwordError">
+                                        <strong></strong>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-12 form-group text-center pb-4">
@@ -635,6 +659,64 @@
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/hc-offcanvas-nav.js?ver=6.1.1') }}"></script>
     <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $('#login_user').submit(function (e) {
+            e.preventDefault();
+            let formData = $(this).serializeArray();
+            $(".invalid-feedback").children("strong").text("");
+            $("#registerForm input").removeClass("is-invalid");
+            $.ajax({
+                method: "POST",
+                headers: {
+                    Accept: "application/json"
+                },
+                url: "{{ route('login') }}",
+                data: formData,
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: (response) => {
+                    if (response.status === 422) {
+                        let errors = response.responseJSON.errors;
+                        Object.keys(errors).forEach(function (key) {
+                            $("#" + key + "Input").addClass("is-invalid");
+                            $("#" + key + "Error").children("strong").text(errors[key][0]);
+                        });
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            })
+        });
+
+        $('#reg_user').submit(function (e) {
+            e.preventDefault();
+            let formData = $(this).serializeArray();
+            $(".invalid-feedback").children("strong").text("");
+            $("#registerForm input").removeClass("is-invalid");
+            $.ajax({
+                method: "POST",
+                headers: {
+                    Accept: "application/json"
+                },
+                url: "{{ route('register') }}",
+                data: formData,
+                {{--success: () => window.location.assign("{{ route('home') }}"),--}}
+                error: (response) => {
+                    if (response.status === 422) {
+                        let errors = response.responseJSON.errors;
+                        Object.keys(errors).forEach(function (key) {
+                            $("#" + key + "Input").addClass("is-invalid");
+                            $("#" + key + "Error").children("strong").text(errors[key][0]);
+                        });
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            })
+        });
+    </script>
 
     <script>
         $('#regModalBtn').on('click', function () {
