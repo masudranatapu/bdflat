@@ -10,34 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
     rel="stylesheet">
     <style>
-        .show_img {
-            height: 82px;
-            width: 82px;
-            object-fit: cover;
-        }
-
-        .del_img {
-            background: #bbbbbb;
-            padding: 2px 7px;
-            border-radius: 77px;
-            font-weight: bold;
-            color: black;
-            position: absolute;
-            top: 5px;
-            right: 20px;
-        }
-
-        .del_btn {
-            border-radius: 75%;
-            height: 26px;
-            width: 26px;
-            position: absolute;
-            right: -8px;
-            top: 8px;
-        }
-        .row.form-group {
-            align-items: baseline;
-        }
+      .show_img{height:82px;width:82px;object-fit:cover}.del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}.del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}.row.form-group{align-items:baseline}
     </style>
 @endpush
 
@@ -45,6 +18,7 @@
 $property_types = $data['property_type'] ?? [];
 $cities = $data['city'] ?? [];
 $area = $data['area'] ?? [];
+$subarea = $data['subarea'] ?? [];
 $property_conditions = $data['property_condition'] ?? [];
 $property_facing = $data['property_facing'] ?? [];
 $property_listing_types = $data['property_listing_type'] ?? [];
@@ -132,11 +106,11 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 </div>
                             </div>
                             <div class="row form-group">
-                                {!! Form::label('sub_area','Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                {!! Form::label('sub_area','Sub Area(based on area) :', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('sub_area', [], null,array('id' => 'sub_area','class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('sub_area', $subarea, $row->F_SUBAREA_NO,array('id' => 'sub_area','class'=>'select2 form-control', 'placeholder'=>'Select Subarea')) !!}
                                             {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -522,12 +496,16 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
 
         $(document).on('change', '#area', function () {
             let id = $(this).val();
+            getSubArea(id);
+        });
+
+        function getSubArea(areaId) {
             $('#sub_area').empty();
             $('#sub_area').append(new Option('Select Area', 0));
 
             $.ajax({
                 type: 'get',
-                url: '{{ route('get.area') }}?area=' + id,
+                url: '{{ route('get.area') }}?area=' + areaId,
                 async: true,
                 dataType: 'json',
                 success: function (res) {
@@ -537,7 +515,7 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                     })
                 }
             });
-        });
+        }
 
         $(document).on('change', '#city', function () {
             var id = $(this).val();
@@ -561,6 +539,8 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                 },
                 complete: function (data) {
                     $("body").css("cursor", "default");
+                    let areaId = $("#area").val();
+                    getSubArea(areaId);
 
                 }
             });

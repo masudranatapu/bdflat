@@ -5,13 +5,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover {
-            color: #fff;
-        }
-
-        .img-fluid, .img-thumbnail {
-            max-width: 100%;
-        }
+        .reply:hover {color: #fff;}
+        .img-fluid, .img-thumbnail {max-width: 100%;}
     </style>
 @endpush
 @php
@@ -21,269 +16,16 @@
 @endphp
 @section('content')
     <div class="page-heading">
-        <!-- container -->
         <div class="container">
             <div class="page-name">
                 <ul>
                     <li><a href="{{ route('web.home') }}">Home <i class="fa fa-angle-double-right"></i></a></li>
-                    <li><a href="{{ route('web.home') }}">Electronices &amp; Gedget <i
-                                class="fa fa-angle-double-right"></i></a></li>
+                    <li><a href="{{ route('web.home') }}">Electronices &amp; Gedget <i class="fa fa-angle-double-right"></i></a></li>
                     <li>Mobile Phone</li>
                 </ul>
             </div>
         </div><!-- container -->
     </div>
-    <div class="banner-form-sec d-none d-md-block">
-        <!-- container -->
-        <div class="container">
-            <div class="banner-form">
-                <form action="#" method="post">
-                    <div class="form-wrap">
-                        <div class="select-city" style="padding-bottom: 4px" data-toggle="modal" data-target="#exampleModal">
-                            <h4>Select location / City</h4>
-                        </div>
-                        <div class="city-location">
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                 aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">
-                                                Select City or Division | <a href="#">All of Bangladesh</a>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="nav modalcategory flex-column nav-pills"
-                                                         id="v-pills-tab" role="tablist" aria-orientation="vertical">
-
-                                                        <div class="city_title">
-                                                            <h3><i class="fa fa-tags"></i>Cities</h3>
-                                                        </div>
-                                                        <a class="nav-link" id="v-pills-dhaka-tab" data-toggle="pill"
-                                                           href="#v-pills-dhaka" role="tab"
-                                                           aria-controls="v-pills-dhaka" aria-selected="true">Dhaka <i
-                                                                class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-chattogram-tab"
-                                                           data-toggle="pill" href="#v-pills-chattogram" role="tab"
-                                                           aria-controls="v-pills-chattogram" aria-selected="false">Chattogram<i
-                                                                class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-sylhet-tab" data-toggle="pill"
-                                                           href="#v-pills-sylhet" role="tab"
-                                                           aria-controls="v-pills-sylhet" aria-selected="false">Sylhet<i
-                                                                class="fa fa-angle-right float-right"></i></a>
-
-                                                        <a class="nav-link" id="v-pills-khulna-tab" data-toggle="pill"
-                                                           href="#v-pills-khulna" role="tab"
-                                                           aria-controls="v-pills-khulna" aria-selected="false">Khulna<i
-                                                                class="fa fa-angle-right float-right"></i></a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12">
-                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">
-                                                        <div class="backcategory">
-                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>
-                                                        </div>
-                                                        <div class="tab-pane fade show" id="v-pills-dhaka"
-                                                             role="tabpanel" aria-labelledby="v-pills-dhaka-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Dhaka</h3>
-
-                                                                    <div
-                                                                        class="fstElement fstMultipleMode fstNoneSelected">
-                                                                        <div class="fstControls"><input
-                                                                                class="fstQueryInput fstQueryInputExpanded"
-                                                                                style="" placeholder="Select Area">
-                                                                        </div>
-                                                                        <select class="multipleSelect form-control"
-                                                                                multiple="" name="area">
-                                                                            <option value="Afghanistan">Mohammadpur
-                                                                            </option>
-                                                                            <option value="Albania">Mogbazar</option>
-                                                                            <option value="Algeria">Banglamotor</option>
-                                                                            <option value="Andorra">Uttara</option>
-                                                                            <option value="Belize">Elephant Road
-                                                                            </option>
-                                                                            <option value="Egypt">Savar</option>
-                                                                        </select></div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-chattogram"
-                                                             role="tabpanel" aria-labelledby="v-pills-chattogram-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Chattogram</h3>
-                                                                    <form class="attireCodeToggleBlock" action="">
-                                                                        <div
-                                                                            class="fstElement fstMultipleMode fstNoneSelected">
-                                                                            <div class="fstControls"><input
-                                                                                    class="fstQueryInput fstQueryInputExpanded"
-                                                                                    style="" placeholder="Select Area">
-                                                                            </div>
-                                                                            <select class="multipleSelect form-control"
-                                                                                    multiple="" name="area">
-                                                                                <option value="Afghanistan">
-                                                                                    Mohammadpur
-                                                                                </option>
-                                                                                <option value="Albania">Mogbazar
-                                                                                </option>
-                                                                                <option value="Algeria">Banglamotor
-                                                                                </option>
-                                                                                <option value="Andorra">Uttara</option>
-                                                                                <option value="Belize">Elephant Road
-                                                                                </option>
-                                                                                <option value="Egypt">Savar</option>
-                                                                            </select></div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-sylhet" role="tabpanel"
-                                                             aria-labelledby="v-pills-sylhet-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Sylhet</h3>
-                                                                    <form class="attireCodeToggleBlock" action="">
-                                                                        <div
-                                                                            class="fstElement fstMultipleMode fstNoneSelected">
-                                                                            <div class="fstControls"><input
-                                                                                    class="fstQueryInput fstQueryInputExpanded"
-                                                                                    style="" placeholder="Select Area">
-                                                                            </div>
-                                                                            <select class="multipleSelect form-control"
-                                                                                    multiple="" name="area">
-                                                                                <option value="Afghanistan">
-                                                                                    Mohammadpur
-                                                                                </option>
-                                                                                <option value="Albania">Mogbazar
-                                                                                </option>
-                                                                                <option value="Algeria">Banglamotor
-                                                                                </option>
-                                                                                <option value="Andorra">Uttara</option>
-                                                                                <option value="Belize">Elephant Road
-                                                                                </option>
-                                                                                <option value="Egypt">Savar</option>
-                                                                            </select></div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tab-pane fade" id="v-pills-khulna" role="tabpanel"
-                                                             aria-labelledby="v-pills-khulna-tab">
-                                                            <div class="city-wrap">
-                                                                <div class="city-list">
-                                                                    <h3><i class="fa fa-map-marker"></i>Khulna</h3>
-                                                                    <form class="attireCodeToggleBlock" action="">
-                                                                        <div
-                                                                            class="fstElement fstMultipleMode fstNoneSelected">
-                                                                            <div class="fstControls"><input
-                                                                                    class="fstQueryInput fstQueryInputExpanded"
-                                                                                    style="" placeholder="Select Area">
-                                                                            </div>
-                                                                            <select class="multipleSelect form-control"
-                                                                                    multiple="" name="area">
-                                                                                <option value="Afghanistan">
-                                                                                    Mohammadpur
-                                                                                </option>
-                                                                                <option value="Albania">Mogbazar
-                                                                                </option>
-                                                                                <option value="Algeria">Banglamotor
-                                                                                </option>
-                                                                                <option value="Andorra">Uttara</option>
-                                                                                <option value="Belize">Elephant Road
-                                                                                </option>
-                                                                                <option value="Egypt">Savar</option>
-                                                                            </select></div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="form-wrap">
-                    <!-- property types -->
-                    <div class="property-select">
-                        <h4 data-toggle="modal" data-target="#staticBackdrop">Property Types </h4>
-                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false"
-                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label for="all">
-                                            <input type="checkbox" name="all" value="all" id="all">All
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="flats">
-                                            <input type="checkbox" name="flats" value="flats" id="flats">Flats
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="land">
-                                            <input type="checkbox" name="land" value="land" id="land">Land
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="room">
-                                            <input type="checkbox" name="room" value="room" id="room">Room
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="office">
-                                            <input type="checkbox" name="office" value="office" id="office">Office
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="industrial">
-                                            <input type="checkbox" name="industrial" value="industrial" id="industrial">Industrial
-                                            Space
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="house">
-                                            <input type="checkbox" name="house" value="house" id="house">House
-                                            <span class="checkmark"></span>
-                                        </label>
-
-                                        <!-- property-btn -->
-                                        <div class="property-ctn text-center">
-                                            <button data-dismiss="modal" aria-label="Close">Continue</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="search-form">
-                    <input type="text" placeholder="Type Your key word" name="search" id="search">
-                    <button type="submit">Search</button>
-                </div>
-
-            </div>
-        </div><!-- container -->
-    </div>
-
     <div class="single-product-sec">
         <!-- container -->
         <div class="container">
@@ -340,14 +82,11 @@
                                     <h1>{{ $listing->TITLE }}</h1>
                                     <p><span>Offered by: <a href="{{ route('web.owner', $listing->owner->PK_NO) }}">{{ $listing->owner->NAME ?? '' }}</a></span></p>
                                     <p><span>Ad ID: <a href="#">{{ $listing->CODE ?? ''  }}</a></span>
-                                    </p></div>
-                                <div class="single-pro-ads">
-                                    <h4>
-                                        <a href="#"><i class="fa fa-map-marker"></i> {{ $listing->AREA_NAME ?? '' }}, {{ $listing->CITY_NAME }}</a>
-                                        <i class="fa fa-suitcase"></i><a
-                                            href="#"><strong>({{ ucwords($listing->PROPERTY_FOR ?? '') }})</strong></a>
-                                    </h4>
+                                    </p>
+                                    <p><i class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{ $listing->SUBAREA_NAME }}, @endif {{ $listing->AREA_NAME ?? '' }}, {{ $listing->CITY_NAME }}</p>
+                                    <p><i class="fa fa-suitcase"></i> ({{ ucwords($listing->PROPERTY_FOR ?? '') }})</p>
                                 </div>
+
                                 <div class="short-info">
                                     <h3>Short Info</h3>
                                     <p>Condition:<a href="#">{{ $listing->PROPERTY_CONDITION ?? '' }}</a></p>
@@ -363,14 +102,25 @@
                                 </div>
                                 <div class="contect-with">
                                     <h3>Contact With</h3>
-                                    <span class="{{--show-number--}} mb-2 mr-3" @if(!Auth::check()) data-toggle="modal" data-target="#loginRegModal" @endif>
-                                        <i class="fa fa-phone"></i>
-                                        @if(Auth::check())
-                                            <span class="Show_num">{{ $listing->MOBILE1 }}</span>
-                                        @else
-                                            <span class="hide_text">Show Number</span>
-                                        @endif
-                                    </span>
+                                    @if($listing->CI_PAYMENT == 1)
+                                        <span class="mb-2 mr-3" @if(!Auth::check()) data-toggle="modal" data-target="#loginRegModal" @endif>
+                                            <i class="fa fa-phone"></i>
+                                            @if(Auth::check())
+                                                @if(Auth::user()->USER_TYPE == 1)
+                                                    <span class="Show_num">{{ $listing->MOBILE1 }}</span>
+                                                @else
+                                                    <span class="hide_text" onclick="alert('Only seeker can see the number!')">Show Number</span>
+                                                @endif
+
+                                            @else
+                                                <span class="hide_text">Show Number</span>
+                                            @endif
+                                        </span>
+                                    @else
+                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>
+                                        @if($listing->MOBILE2)<span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>@endif
+                                    @endif
+
                                     <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a>
                                 </div>
                                 <div class="share-product">

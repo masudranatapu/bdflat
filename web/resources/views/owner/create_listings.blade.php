@@ -9,84 +9,10 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link
-        href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap" rel="stylesheet">
 
     <style>
-        .del_btn {
-            border-radius: 75%;
-            height: 26px;
-            width: 26px;
-            position: absolute;
-            right: -8px;
-            top: 8px;
-        }
-
-        .row.form-group {
-            align-items: baseline;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__arrow{
-            top: 6px;
-        }
-
-        .select2-container--default .select2-selection--single {
-            height: 42px;
-            border-radius: 4px;
-            border: 1px solid #DDD;
-            font-size: 13px;
-            font-family: 'Montserrat-Medium';
-            outline: none;
-            box-shadow: none;
-            padding: 5px 8px;
-        }
-
-        .select2-container--default .select2-selection--multiple{
-            height: 42px;
-            border-radius: 4px;
-            border: 1px solid #DDD;
-            font-size: 13px;
-            font-family: 'Montserrat-Medium';
-            outline: none;
-            box-shadow: none;
-            padding: 5px 8px;
-        }
-        .select2-container--default .select2-search--inline .select2-search__field{
-            font-size: 13px;
-            font-family: 'Montserrat-Medium';
-            margin-top: 7px;
-        }
-
-        .select2-results__option{
-            font-size: 13px;
-            font-family: 'Montserrat-Medium';
-        }
-
-        .select2-selection__arrow {
-            height: 26px;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            width: 20px;
-        }
-
-        .select2-selection__arrow b{
-            border-color: #888 transparent transparent transparent;
-            border-style: solid;
-            border-width: 5px 4px 0 4px;
-            height: 0;
-            left: 50%;
-            margin-left: -11px;
-            margin-top: 5px;
-            position: absolute;
-            top: 50%;
-            width: 0;
-        }
-        .advertisment-form .form-control{
-            -webkit-appearance: none;
-            padding-left: 15px;
-        }
-
+.del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}.row.form-group{align-items:baseline}.select2-container--default .select2-selection--single .select2-selection__arrow{top:6px}.select2-container--default .select2-selection--single{height:42px;border-radius:4px;border:1px solid #ddd;font-size:13px;font-family:Montserrat-Medium;outline:0;box-shadow:none;padding:5px 8px}.select2-container--default .select2-selection--multiple{height:42px;border-radius:4px;border:1px solid #ddd;font-size:13px;font-family:Montserrat-Medium;outline:0;box-shadow:none;padding:5px 8px}.select2-container--default .select2-search--inline .select2-search__field{font-size:13px;font-family:Montserrat-Medium;margin-top:7px}.select2-results__option{font-size:13px;font-family:Montserrat-Medium}.select2-selection__arrow{height:26px;position:absolute;top:1px;right:1px;width:20px}.select2-selection__arrow b{border-color:#888 transparent transparent transparent;border-style:solid;border-width:5px 4px 0 4px;height:0;left:50%;margin-left:-11px;margin-top:5px;position:absolute;top:50%;width:0}.advertisment-form .form-control{-webkit-appearance:none;padding-left:15px}
 
     </style>
 @endpush
@@ -179,11 +105,11 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 </div>
                             </div>
                             <div class="row form-group">
-                                {!! Form::label('sub_area','Sub Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                {!! Form::label('sub_area','Sub Area(based on area) :', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control', 'placeholder'=>'Select subarea')) !!}
                                             {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

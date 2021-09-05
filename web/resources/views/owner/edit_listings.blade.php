@@ -110,11 +110,11 @@ $near = json_decode($data['row2']->F_NEARBY_NOS) ?? [];
                                 </div>
                             </div>
                             <div class="row form-group">
-                                {!! Form::label('sub_area','Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                {!! Form::label('sub_area','Area(based on area) :', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('sub_area', $sub_area,$row->F_SUBAREA_NO,array('class'=>'form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('sub_area', $sub_area,$row->F_SUBAREA_NO,array('class'=>'form-control', 'placeholder'=>'Select subarea')) !!}
                                             {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

@@ -166,6 +166,8 @@ class Listings extends Model
     public function getListingDetails($url_slug)
     {
         $listing = Listings::with(['images', 'getListingVariant', 'additionalInfo', 'owner'])
+            ->select('PRD_LISTINGS.*',DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'))
+            ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
             ->where('STATUS', '=', 10)
             ->where('URL_SLUG', '=', $url_slug)
             ->first();
@@ -394,10 +396,7 @@ class Listings extends Model
 
     public function postUpdate($request, $id): object
     {
-        $area = $request->area;
-        if ($request->sub_area && $request->sub_area > 0) {
-            $area = $request->sub_area;
-        }
+
         DB::beginTransaction();
         try {
             $list = $this->getListing($id);
@@ -405,7 +404,8 @@ class Listings extends Model
             $list->F_PROPERTY_TYPE_NO = $request->property_type;
             $list->PAYMENT_AUTO_RENEW = $request->payment_auto_renew;
             $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $area;
+            $list->F_AREA_NO = $request->area;;
+            $list->F_SUBAREA_NO = $request->sub_area;;
             $list->ADDRESS = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
             $list->TITLE = $request->property_title;
