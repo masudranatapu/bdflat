@@ -210,6 +210,7 @@
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
                                                         <select class="form-control" id="propertyType">
+                                                            <option value="">All</option>
                                                             <option value="sale" {{ request()->route('type') == 'sale' ? 'selected' : '' }}>Sale</option>
                                                             <option value="rent" {{ request()->route('type') == 'rent' ? 'selected' : '' }}>Rent</option>
                                                             <option value="roommate" {{ request()->route('type') == 'roommate' ? 'selected' : '' }}>Roommate</option>

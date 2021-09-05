@@ -87,6 +87,7 @@ class ListingController extends Controller
         $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
         $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
         $data['area'] = Area::where('F_CITY_NO', $data['row']->F_CITY_NO)->pluck('AREA_NAME', 'PK_NO');
+        $data['subarea'] = Area::where('F_PARENT_AREA_NO', $data['row']->F_AREA_NO)->pluck('AREA_NAME', 'PK_NO');
         $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
         $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
         $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');

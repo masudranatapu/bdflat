@@ -1,25 +1,10 @@
 @extends('layouts.app')
 @push('custom_css')
     <style type="text/css">
-        .owl-carousel .owl-item img {
-            width: 100%;
-            height: 120px;
-        }
-
-        .verified-title h5 {
-            max-height: 40px;
-            overflow: hidden;
-        }
-
-        .verified-title h6 {
-            padding-top: 10px;
-        }
-
-        @media (max-width: 576px) {
-            .verified-title h5 {
-                max-height: 30px;
-            }
-        }
+        .owl-carousel .owl-item img{width:100%}
+        .verified-title h5{max-height:40px;overflow:hidden}
+        .verified-title h6{padding-top:10px}
+        @media (max-width:576px){.verified-title h5{max-height:30px}}
     </style>
 @endpush
 @php
@@ -116,7 +101,7 @@
                                         <div class="col-6 col-sm-3">
                                             <!-- category-item -->
                                             <li class="category-item">
-                                                <a href="#{{ $category->URL_SLUG }}">
+                                                <a href="{{ route('web.property', ['type' => 'all', 'cat' => $category->URL_SLUG]) }}">
                                                     <div class="category-icon"><img
                                                             src="{{ $panel_path . $category->ICON_PATH }}"
                                                             alt="" class="img-fluid"></div>
@@ -188,10 +173,9 @@
                         <div class="item">
                             <div class="featured-wrap">
                                 <div class="featured-bx">
-                                    <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                            src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
-                                            class="img-fluid"
-                                            alt="{{ $property->TITLE }}"></a>
+                                    <a href="{{ route('web.property.details', $property->URL_SLUG) }}">
+                                        <img src="{{ asset($property->getDefaultThumb->IMAGE_PATH ?? '') }}" class="img-fluid" alt="{{ $property->TITLE }}">
+                                    </a>
                                 </div>
                                 <div class="featured-content">
                                     <div class="featured-price">

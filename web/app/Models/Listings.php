@@ -271,17 +271,13 @@ class Listings extends Model
                 $slug = $slug . '-' . $sku;
             }
 
-            $area = $request->area;
-            if ($request->sub_area && $request->sub_area > 0) {
-                $area = $request->sub_area;
-            }
-
             $list = new Listings();
             $list->F_USER_NO = Auth::id();
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->property_type;
             $list->F_CITY_NO = $request->city;
-            $list->F_AREA_NO = $area;
+            $list->F_AREA_NO = $request->area;
+            $list->F_SUBAREA_NO = $request->sub_area;
             $list->ADDRESS = $request->address;
             $list->F_PROPERTY_CONDITION = $request->condition;
             $list->TITLE = $request->property_title;
