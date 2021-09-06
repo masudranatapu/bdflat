@@ -103,19 +103,25 @@
                                 <div class="contect-with">
                                     <h3>Contact With</h3>
                                     @if($listing->CI_PAYMENT == 1)
-                                        <span class="mb-2 mr-3" @if(!Auth::check()) data-toggle="modal" data-target="#loginRegModal" @endif>
-                                            <i class="fa fa-phone"></i>
-                                            @if(Auth::check())
-                                                @if(Auth::user()->USER_TYPE == 1)
-                                                    <span class="Show_num">{{ $listing->MOBILE1 }}</span>
+
+                                        @if(Auth::check())
+                                            @if(Auth::user()->USER_TYPE == 1)
+                                                @if($listing->PURCHASE_DATE)
+                                                    <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>
+                                                    @if($listing->MOBILE2)
+                                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE2 }}</span></span>
+                                                    @endif
                                                 @else
-                                                    <span class="hide_text" onclick="alert('Only seeker can see the number!')">Show Number</span>
+                                                <span class="mb-2 mr-3" data-toggle="modal" data-target="#paymentModal" ><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
+
                                                 @endif
 
                                             @else
-                                                <span class="hide_text">Show Number</span>
+                                                <span class="mb-2 mr-3" onclick="alert('Only seeker can see the number!')"><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
                                             @endif
-                                        </span>
+                                        @else
+                                        <span class="mb-2 mr-3" @if(!Auth::check()) data-toggle="modal" data-target="#loginRegModal" @endif ><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
+                                        @endif
                                     @else
                                         <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>
                                         @if($listing->MOBILE2)<span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>@endif
@@ -277,7 +283,7 @@
                             <div class="col-12 form-group text-left login-email {!! $errors->has('email') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::email('email', old('email'), ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                    {{--                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}--}}
+
                                     <span class="invalid-feedback" role="alert" id="emailError">
                                         <strong></strong>
                                     </span>
@@ -286,7 +292,7 @@
                             <div class="col-12 form-group text-left login-password {!! $errors->has('password') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::password('password', ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
-                                    {{--                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}--}}
+
                                     <span class="invalid-feedback" role="alert" id="passwordError">
                                         <strong></strong>
                                     </span>
@@ -315,7 +321,7 @@
 
                     <div class="sign-wrap d-none" id="regModal">
                         <h1>Create Your BDFlats.com Account</h1>
-                        {!! Form::open([ /*'route' => 'register', */'id'=>'reg_user', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open(['id'=>'reg_user', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         <div class="account-info">
                             <h5>I am:</h5>
                             <input type="radio" name="usertype" value="1" id="seeker" checked> <label for="seeker">Seeker</label>
@@ -327,7 +333,7 @@
                             <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name','minlength' => '2', 'data-validation-minlength-message' => 'Minimum 2 characters', 'maxlength' => '50',  'data-validation-maxlength-message' => 'Maximum 50 characters', 'autocomplete' => 'off', 'tabindex' => 1, 'title' => 'Your name', 'id' => 'nameInput']) !!}
-                                    {{--                                    {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}--}}
+
                                     <span class="invalid-feedback" role="alert" id="nameError">
                                         <strong></strong>
                                     </span>
@@ -336,7 +342,7 @@
                             <div class="col-12 form-group d-none regi-contact_name {!! $errors->has('contact_name') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('contact_name', old('contact_name'), [ 'class' => 'form-control','placeholder' => 'Contact person name', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Contact person name' ]) !!}
-                                    {{--                                    {!! $errors->first('contact_name', '<label class="help-block text-danger">:message</label>') !!}--}}
+
                                     <span class="invalid-feedback" role="alert" id="contact_nameError">
                                         <strong></strong>
                                     </span>
@@ -345,7 +351,7 @@
                             <div class="col-12 form-group d-none regi-designation {!! $errors->has('designation') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('designation', old('designation'), [ 'class' => 'form-control', 'placeholder' => 'Designation', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Designation' ]) !!}
-                                    {{--                                    {!! $errors->first('designation', '<label class="help-block text-danger">:message</label>') !!}--}}
+
                                     <span class="invalid-feedback" role="alert" id="designationError">
                                         <strong></strong>
                                     </span>
@@ -360,7 +366,7 @@
                             <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::email('email', old('email'), ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                    {{--                                    {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}--}}
+
                                     <span class="invalid-feedback" role="alert" id="emailError">
                                         <strong></strong>
                                     </span>
@@ -369,7 +375,7 @@
                             <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('mobile', old('mobile'), ['id'=>'mobileInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
-                                    {{--                                    {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}--}}
+
                                     <span class="invalid-feedback" role="alert" id="mobileError">
                                         <strong></strong>
                                     </span>
@@ -378,7 +384,6 @@
                             <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::password('password', ['id'=>'passwordInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
-                                    {{--                                    {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}--}}
                                     <span class="invalid-feedback" role="alert" id="passwordError">
                                         <strong></strong>
                                     </span>
@@ -401,6 +406,53 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="login-wrap text-center">
+                        {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        @csrf
+                        <div class="row">
+                            @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
+                            <div class="col-12">
+                                <p>Sorry ! you do not have sufficiant balance to buy this lead.</p>
+                                <p>Your current balance</p>
+                                <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                            </div>
+                            <div class="col-12 form-group text-center">
+                                <button type="submit" class="btn btn-success">{{ __('Recharge Now') }}</button>
+                            </div>
+                            @else
+                            <div class="col-12">
+                                <p>This property has been verified by bdflat.com</p>
+                                <p>If you want ot view the contact details including mobile number & address</p>
+                                <p>Please Pay</p>
+                                <strong>{{ number_format($listing->PRICE,2) }}</strong>
+                                <p>Your current balance</p>
+                                <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                            </div>
+
+                            <div class="col-12 form-group text-center">
+                                <button type="submit" class="btn btn-success">{{ __('Pay Now') }}</button>
+                            </div>
+
+                            @endif
+
+
+                        </div>
+                        {!! Form::close() !!}
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('custom_js')
