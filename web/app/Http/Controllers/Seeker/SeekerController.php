@@ -9,6 +9,7 @@ use App\Http\Requests\updatePasswordRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\CustomerPayment;
 use App\Models\CustomerRefund;
+use App\Models\ListingLeadPayment;
 use App\Models\Listings;
 use Illuminate\Http\Request;
 use App\User;
@@ -21,13 +22,15 @@ class SeekerController extends Controller
     protected $userModel;
     protected $customerRefundModel;
     protected $payment;
+    protected $leadPayment;
 
-    public function __construct(User $user, CustomerRefund $customerRefund, CustomerPayment $payment)
+    public function __construct(User $user, CustomerRefund $customerRefund, CustomerPayment $payment, ListingLeadPayment $leadPayment)
     {
         $this->middleware('auth');
         $this->userModel = $user;
         $this->customerRefundModel = $customerRefund;
         $this->payment = $payment;
+        $this->leadPayment = $leadPayment;
     }
 
     public function getMyAccount(Request $request)
@@ -100,8 +103,8 @@ class SeekerController extends Controller
     public function getContactedProperties(Request $request)
     {
         $data = array();
-        $data['rows'] = Listings::select('PK_NO', 'TITLE', 'CITY_NAME', 'AREA_NAME', 'IS_FEATURE')->get();
-        //    dd($data['rows'][0]);
+        $data['rows'] = Listings::with('getDefaultThumb')->select('PK_NO', 'TITLE', 'CITY_NAME', 'AREA_NAME')->get();
+//            dd($data['rows']);
         return view('seeker.contacted_properties', compact('data'));
     }
 
@@ -156,6 +159,15 @@ class SeekerController extends Controller
             ';
         }
         return response()->json($output);
+    }
+
+    public function leadPay($id)
+    {
+        $this->resp = $this->leadPayment->leadPay($id);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
     }
 
 

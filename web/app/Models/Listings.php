@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\City;
+use App\Models\PropertyCondition;
 use Carbon\Carbon;
 use App\Models\Area;
-use App\Models\City;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Traits\RepoResponse;
-use App\Models\PropertyCondition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -266,6 +266,19 @@ class Listings extends Model
         return $listings->paginate(12);
     }
 
+    public function getCreate($request): object
+    {
+        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+        $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
+        $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
+        $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['floor_list'] = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        return $this->formatResponse(true, '', '', $data);
+    }
+
     public function store($request): object
     {
         if (Auth::user()->TOTAL_LISTING >= Auth::user()->LISTING_LIMIT) {
@@ -416,7 +429,6 @@ class Listings extends Model
 
     public function postUpdate($request, $id): object
     {
-
         DB::beginTransaction();
         try {
             $list = $this->getListing($id);
@@ -522,6 +534,25 @@ class Listings extends Model
         DB::commit();
 
         return $this->formatResponse(true, 'Your listings updated successfully !', 'owner-listings');
+    }
+
+    public function getEdit($id): object
+    {
+        $data['row'] = Listings::find($id);
+        $data['row2'] = ListingAdditionalInfo::where('F_LISTING_NO', $id)->first();
+        $data['row3'] = ListingVariants::where('F_LISTING_NO', $id)->get();
+        $data['row4'] = ListingImages::where('F_LISTING_NO', $id)->get();
+        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+        $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
+        $data['area'] = Area::where('F_CITY_NO', $data['row']->F_CITY_NO)->pluck('AREA_NAME', 'PK_NO');
+        $data['subarea'] = Area::where('F_PARENT_AREA_NO', $data['row']->F_AREA_NO)->pluck('AREA_NAME', 'PK_NO');
+        $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
+        $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['floor_list'] = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        return $this->formatResponse(true, '', '', $data);
     }
 
     public function postDelete($id): object
