@@ -2,6 +2,13 @@
 	.nav-account {
     	right: 194px;
 	}
+    #header .container-fluid{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .nav-btn{
+        right: 30px;
+    }
 }
 
 @media screen and (max-width:1230px){
