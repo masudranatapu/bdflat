@@ -172,8 +172,11 @@ class Listings extends Model
         ->select('PRD_LISTINGS.*',DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'), 'ACC_LISTING_LEAD_PAYMENTS.PURCHASE_DATE')
         ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
         ->leftJoin('ACC_LISTING_LEAD_PAYMENTS', function($join) use($user_id){
-            $join->where('PRD_LISTINGS.PK_NO', '=', 'ACC_LISTING_LEAD_PAYMENTS.F_LISTING_NO')
-                 ->where('ACC_LISTING_LEAD_PAYMENTS.F_USER_NO',$user_id);
+            $join->on('PRD_LISTINGS.PK_NO', '=', 'ACC_LISTING_LEAD_PAYMENTS.F_LISTING_NO');
+            $join->where('ACC_LISTING_LEAD_PAYMENTS.F_USER_NO', $user_id);
+
+
+
         })
         ->where('STATUS', '=', 10)
         ->where('URL_SLUG', '=', $url_slug)
