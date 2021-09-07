@@ -101,6 +101,7 @@ Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
     Route::post('/refund-request/store', 'SeekerController@customerRefundStore')->name('refund-request.store');
     Route::get('/payment-history', 'SeekerController@paymentHistory')->name('payment-history');
     Route::get('ajax-get-variants/{id}', 'SeekerController@getVariants')->name('get-variants');
+    Route::post('/lead-pay/{id}', 'SeekerController@leadPay')->name('lead.pay');
 
 });
 

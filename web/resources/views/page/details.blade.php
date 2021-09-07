@@ -297,11 +297,6 @@
 
     @include('layouts.post-ad')
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginRegModal">
-        Launch demo modal
-    </button>
-
     <!-- Modal -->
     <div class="modal fade" id="loginRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true">
@@ -454,42 +449,41 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="login-wrap text-center">
-                        @auth
-                            {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
-                            @csrf
-                            <div class="row">
-                                @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
-                                    <div class="col-12">
-                                        <p>Sorry ! you do not have sufficiant balance to buy this lead.</p>
-                                        <p>Your current balance</p>
-                                        <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
-                                    </div>
-                                    <div class="col-12 form-group text-center">
-                                        <button type="submit" class="btn btn-success">{{ __('Recharge Now') }}</button>
-                                    </div>
-                                @else
-                                    <div class="col-12">
-                                        <p>This property has been verified by bdflat.com</p>
-                                        <p>If you want ot view the contact details including mobile number & address</p>
-                                        <p>Please Pay</p>
-                                        <strong>{{ number_format($listing->PRICE,2) }}</strong>
-                                        <p>Your current balance</p>
-                                        <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
-                                    </div>
+                        {!! Form::open([ 'route' => ['lead.pay',$listing->PK_NO], 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        <div class="row">
+                            @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
+                                <div class="col-12">
+                                    <p style="font-size: 20px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">Sorry ! you do not have sufficiant
+                                        balance to buy this lead.</p>
+                                    <p>Your current balance</p>
+                                    <strong
+                                        style="font-size: 28px;color: #3986FA;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                                </div>
+                                <div class="col-12 form-group text-center">
+                                    <a href="{{route('recharge-balance')}}" class="btn btn-success">{{ __('Recharge Now') }}</a>
+                                </div>
+                            @else
+                                <div class="col-12">
+                                    <p style="font-size: 20px;font-weight: bold;margin-bottom: 12px !important;">This property has been verified by bdflat.com</p>
+                                    <p style="color: #6ABD50;font-weight: bold; margin-bottom: 25px !important;">If you want ot view the contact details including mobile
+                                        number & address</p>
+                                    <p>Please Pay:</p>
+                                    <strong
+                                        style="font-size: 28px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format($listing->PRICE,2) }}</strong>
+                                    <p>Your current balance</p>
+                                    <strong
+                                        style="font-size: 28px;color: #6ABD50;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                                </div>
 
-                                    <div class="col-12 form-group text-center">
-                                        <button type="submit" class="btn btn-success">{{ __('Pay Now') }}</button>
-                                    </div>
+                                <div class="col-12 form-group text-center">
+                                    <button style="width: 120px" type="submit" class="btn btn-success">{{ __('Pay Now') }}</button>
+                                </div>
 
-                                @endif
+                            @endif
 
-
-                            </div>
-                            {!! Form::close() !!}
-                        @endauth
+                        </div>
+                        {!! Form::close() !!}
                     </div>
-
-
                 </div>
             </div>
         </div>
