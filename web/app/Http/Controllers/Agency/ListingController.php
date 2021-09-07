@@ -36,15 +36,8 @@ class ListingController extends Controller
 
     public function create(Request $request)
     {
-        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
-        $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
-        $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
-        $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
-        $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['floor_list'] = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
-        return view('agency.create_listings', compact('data'));
+        $data = $this->listings->getCreate($request)->data;
+        return view('listing.create_listings', compact('data'));
     }
 
 
@@ -77,27 +70,13 @@ class ListingController extends Controller
 
     public function edit($id)
     {
-        $data['row']    = Listings::find($id);
-        $data['row2']   = ListingAdditionalInfo::where('F_LISTING_NO', $id)->first();
-        $data['row3']   = ListingVariants::where('F_LISTING_NO', $id)->get();
-        $data['row4']   = ListingImages::where('F_LISTING_NO', $id)->get();
-        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
-        $data['city']   = City::pluck('CITY_NAME', 'PK_NO');
-        $data['area']   = Area::where('F_CITY_NO', $data['row']->F_CITY_NO)->pluck('AREA_NAME', 'PK_NO');
-        $data['subarea'] = Area::where('F_PARENT_AREA_NO', $data['row']->F_AREA_NO)->pluck('AREA_NAME', 'PK_NO');
-        $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
-        $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
-        $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['floor_list'] = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
-
-        return view('agency.edit_listings', compact('data'));
+        $data = $this->listings->getEdit($id)->data;
+        return view('listing.edit_listings', compact('data'));
     }
 
     public function addListingVariant(Request $request)
     {
-        $data['html'] = view('agency._add_listing_variant', compact('request'))->render();
+        $data['html'] = view('listing._add_listing_variant', compact('request'))->render();
         return response()->json($data);
     }
 

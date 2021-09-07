@@ -5,8 +5,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover {color: #fff;}
-        .img-fluid, .img-thumbnail {max-width: 100%;}
+        .reply:hover {
+            color: #fff;
+        }
+
+        .img-fluid, .img-thumbnail {
+            max-width: 100%;
+        }
     </style>
 @endpush
 @php
@@ -20,7 +25,8 @@
             <div class="page-name">
                 <ul>
                     <li><a href="{{ route('web.home') }}">Home <i class="fa fa-angle-double-right"></i></a></li>
-                    <li><a href="{{ route('web.home') }}">Electronices &amp; Gedget <i class="fa fa-angle-double-right"></i></a></li>
+                    <li><a href="{{ route('web.home') }}">Electronices &amp; Gedget <i
+                                class="fa fa-angle-double-right"></i></a></li>
                     <li>Mobile Phone</li>
                 </ul>
             </div>
@@ -80,10 +86,14 @@
                                 </div>
                                 <div class="single-title">
                                     <h1>{{ $listing->TITLE }}</h1>
-                                    <p><span>Offered by: <a href="{{ route('web.owner', $listing->owner->PK_NO) }}">{{ $listing->owner->NAME ?? '' }}</a></span></p>
+                                    <p><span>Offered by: <a
+                                                href="{{ route('web.owner', $listing->owner->PK_NO) }}">{{ $listing->owner->NAME ?? '' }}</a></span>
+                                    </p>
                                     <p><span>Ad ID: <a href="#">{{ $listing->CODE ?? ''  }}</a></span>
                                     </p>
-                                    <p><i class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{ $listing->SUBAREA_NAME }}, @endif {{ $listing->AREA_NAME ?? '' }}, {{ $listing->CITY_NAME }}</p>
+                                    <p>
+                                        <i class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{ $listing->SUBAREA_NAME }}
+                                        , @endif {{ $listing->AREA_NAME ?? '' }}, {{ $listing->CITY_NAME }}</p>
                                     <p><i class="fa fa-suitcase"></i> ({{ ucwords($listing->PROPERTY_FOR ?? '') }})</p>
                                 </div>
 
@@ -96,7 +106,8 @@
                                     <p>Facing:<a href="#">{{ $listing->additionalInfo->FACING ?? '' }}</a></p>
                                     <p>Features:
                                         @foreach($features as $key => $feature)
-                                            <a href="{{ $feature->URL_SLUG }}">{{ $feature->TITLE }}@if($key < count($features) - 1), @endif</a>
+                                            <a href="{{ $feature->URL_SLUG }}">{{ $feature->TITLE }}@if($key < count($features) - 1)
+                                                    , @endif</a>
                                         @endforeach
                                     </p>
                                 </div>
@@ -107,24 +118,35 @@
                                         @if(Auth::check())
                                             @if(Auth::user()->USER_TYPE == 1)
                                                 @if($listing->PURCHASE_DATE)
-                                                    <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>
+                                                    <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
+                                                            class="Show_num">{{ $listing->MOBILE1 }}</span></span>
                                                     @if($listing->MOBILE2)
-                                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE2 }}</span></span>
+                                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
+                                                                class="Show_num">{{ $listing->MOBILE2 }}</span></span>
                                                     @endif
                                                 @else
-                                                <span class="mb-2 mr-3" data-toggle="modal" data-target="#paymentModal" ><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
+                                                    <span class="mb-2 mr-3" data-toggle="modal"
+                                                          data-target="#paymentModal"><i class="fa fa-phone"></i><span
+                                                            class="hide_text">Show Number</span></span>
 
                                                 @endif
 
                                             @else
-                                                <span class="mb-2 mr-3" onclick="alert('Only seeker can see the number!')"><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
+                                                <span class="mb-2 mr-3"
+                                                      onclick="alert('Only seeker can see the number!')"><i
+                                                        class="fa fa-phone"></i><span
+                                                        class="hide_text">Show Number</span></span>
                                             @endif
                                         @else
-                                        <span class="mb-2 mr-3" @if(!Auth::check()) data-toggle="modal" data-target="#loginRegModal" @endif ><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
+                                            <span class="mb-2 mr-3" @if(!Auth::check()) data-toggle="modal"
+                                                  data-target="#loginRegModal" @endif ><i class="fa fa-phone"></i><span
+                                                    class="hide_text">Show Number</span></span>
                                         @endif
                                     @else
-                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>
-                                        @if($listing->MOBILE2)<span class="mb-2 mr-3"><i class="fa fa-phone"></i><span class="Show_num">{{ $listing->MOBILE1 }}</span></span>@endif
+                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
+                                                class="Show_num">{{ $listing->MOBILE1 }}</span></span>
+                                        @if($listing->MOBILE2)<span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
+                                                class="Show_num">{{ $listing->MOBILE1 }}</span></span>@endif
                                     @endif
 
                                     <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a>
@@ -132,13 +154,21 @@
                                 <div class="share-product">
                                     <h3>Share this ad</h3>
                                     <ul>
-                                        <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" class="fb"><i
+                                        <li><a target="_blank"
+                                               href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}"
+                                               class="fb"><i
                                                     class="fa fa-facebook-square"></i></a></li>
-                                        <li><a target="_blank" href="https://twitter.com/intent/tweet?url={{url()->current()}}" class="tw"><i
+                                        <li><a target="_blank"
+                                               href="https://twitter.com/intent/tweet?url={{url()->current()}}"
+                                               class="tw"><i
                                                     class="fa fa-twitter-square"></i></a></li>
-                                        <li><a target="_blank" href="https://plus.google.com/share?url={{url()->current()}}" class="ggle"><i
+                                        <li><a target="_blank"
+                                               href="https://plus.google.com/share?url={{url()->current()}}"
+                                               class="ggle"><i
                                                     class="fa fa-google-plus-square"></i></a></li>
-                                        <li><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url()->current()}}" class="lin"><i
+                                        <li><a target="_blank"
+                                               href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url()->current()}}"
+                                               class="lin"><i
                                                     class="fa fa-linkedin-square"></i></a></li>
                                         <li><a target="_blank"
                                                href="https://www.pinterest.com/pin/create/bookmarklet/?media=http%3A%2F%2Fgdurl.com%2Fa653&url={{url()->current()}}"
@@ -170,7 +200,8 @@
                 <div class="col-md-4 mb-5">
                     @if(isset($data['rightAd']) && isset($data['rightAd']->images[0]))
                         <div class="product-ads">
-                            <a href="{{ $data['rightAd']->images[0]->URL ?? 'javascript:void(0)' }}" target="_blank"><img
+                            <a href="{{ $data['rightAd']->images[0]->URL ?? 'javascript:void(0)' }}"
+                               target="_blank"><img
                                     src="{{ $panel_path . $data['rightAd']->images[0]->IMAGE_PATH }}" class="w-100"
                                     alt="image"></a>
                         </div>
@@ -218,7 +249,8 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
+                                                                , {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -271,7 +303,8 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="loginRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="loginRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -280,7 +313,8 @@
                         {!! Form::open(['method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         @csrf
                         <div class="row">
-                            <div class="col-12 form-group text-left login-email {!! $errors->has('email') ? 'error' : '' !!}">
+                            <div
+                                class="col-12 form-group text-left login-email {!! $errors->has('email') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::email('email', old('email'), ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
 
@@ -289,7 +323,8 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-12 form-group text-left login-password {!! $errors->has('password') ? 'error' : '' !!}">
+                            <div
+                                class="col-12 form-group text-left login-password {!! $errors->has('password') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::password('password', ['id'=>'emailInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
 
@@ -326,8 +361,10 @@
                             <h5>I am:</h5>
                             <input type="radio" name="usertype" value="1" id="seeker" checked> <label for="seeker">Seeker</label>
                             <input type="radio" name="usertype" value="2" id="owner"> <label for="owner">Owner</label>
-                            <input type="radio" name="usertype" value="3" id="builder"> <label for="builder">Builder</label>
-                            <input type="radio" name="usertype" value="4" id="agency"> <label for="agency">Agency</label>
+                            <input type="radio" name="usertype" value="3" id="builder"> <label
+                                for="builder">Builder</label>
+                            <input type="radio" name="usertype" value="4" id="agency"> <label
+                                for="agency">Agency</label>
                         </div>
                         <div class="row">
                             <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
@@ -339,7 +376,8 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-12 form-group d-none regi-contact_name {!! $errors->has('contact_name') ? 'error' : '' !!}">
+                            <div
+                                class="col-12 form-group d-none regi-contact_name {!! $errors->has('contact_name') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('contact_name', old('contact_name'), [ 'class' => 'form-control','placeholder' => 'Contact person name', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Contact person name' ]) !!}
 
@@ -348,7 +386,8 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-12 form-group d-none regi-designation {!! $errors->has('designation') ? 'error' : '' !!}">
+                            <div
+                                class="col-12 form-group d-none regi-designation {!! $errors->has('designation') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('designation', old('designation'), [ 'class' => 'form-control', 'placeholder' => 'Designation', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Designation' ]) !!}
 
@@ -357,7 +396,8 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-12 form-group d-none regi-office_address {!! $errors->has('office_address') ? 'error' : '' !!}">
+                            <div
+                                class="col-12 form-group d-none regi-office_address {!! $errors->has('office_address') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::text('office_address', old('office_address'), [ 'class' => 'form-control', 'placeholder' => 'Office address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Office address' ]) !!}
                                     {!! $errors->first('office_address', '<label class="help-block text-danger">:message</label>') !!}
@@ -381,7 +421,8 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
+                            <div
+                                class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                 <div class="controls">
                                     {!! Form::password('password', ['id'=>'passwordInput', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
                                     <span class="invalid-feedback" role="alert" id="passwordError">
@@ -407,45 +448,46 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalTitle" aria-hidden="true">
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalTitle"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="login-wrap text-center">
-                        {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
-                        @csrf
-                        <div class="row">
-                            @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
-                            <div class="col-12">
-                                <p>Sorry ! you do not have sufficiant balance to buy this lead.</p>
-                                <p>Your current balance</p>
-                                <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                        @auth
+                            {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                            @csrf
+                            <div class="row">
+                                @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
+                                    <div class="col-12">
+                                        <p>Sorry ! you do not have sufficiant balance to buy this lead.</p>
+                                        <p>Your current balance</p>
+                                        <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                                    </div>
+                                    <div class="col-12 form-group text-center">
+                                        <button type="submit" class="btn btn-success">{{ __('Recharge Now') }}</button>
+                                    </div>
+                                @else
+                                    <div class="col-12">
+                                        <p>This property has been verified by bdflat.com</p>
+                                        <p>If you want ot view the contact details including mobile number & address</p>
+                                        <p>Please Pay</p>
+                                        <strong>{{ number_format($listing->PRICE,2) }}</strong>
+                                        <p>Your current balance</p>
+                                        <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                                    </div>
+
+                                    <div class="col-12 form-group text-center">
+                                        <button type="submit" class="btn btn-success">{{ __('Pay Now') }}</button>
+                                    </div>
+
+                                @endif
+
+
                             </div>
-                            <div class="col-12 form-group text-center">
-                                <button type="submit" class="btn btn-success">{{ __('Recharge Now') }}</button>
-                            </div>
-                            @else
-                            <div class="col-12">
-                                <p>This property has been verified by bdflat.com</p>
-                                <p>If you want ot view the contact details including mobile number & address</p>
-                                <p>Please Pay</p>
-                                <strong>{{ number_format($listing->PRICE,2) }}</strong>
-                                <p>Your current balance</p>
-                                <strong>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
-                            </div>
-
-                            <div class="col-12 form-group text-center">
-                                <button type="submit" class="btn btn-success">{{ __('Pay Now') }}</button>
-                            </div>
-
-                            @endif
-
-
-                        </div>
-                        {!! Form::close() !!}
-
+                            {!! Form::close() !!}
+                        @endauth
                     </div>
-
 
 
                 </div>
