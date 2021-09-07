@@ -37,7 +37,7 @@ class ListingController extends Controller
 
     public function create(Request $request)
     {
-        $data = $this->listings->getCreate($request);
+        $data = $this->listings->getCreate($request)->data;
         return view('listing.create_listings', compact('data'));
     }
 
@@ -71,7 +71,7 @@ class ListingController extends Controller
 
     public function edit($id)
     {
-        $data = $this->listings->getEdit($id);
+        $data = $this->listings->getEdit($id)->data;
         return view('listing.edit_listings', compact('data'));
     }
 

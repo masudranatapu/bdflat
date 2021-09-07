@@ -59,7 +59,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                 <div class="col-sm-12 col-md-9">
                     {{ $errors }}
                     @if(Auth::user()->USER_TYPE == 2)
-                        {!! Form::open([ 'route' => 'owner.listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     @elseif(Auth::user()->USER_TYPE == 3)
                         {!! Form::open([ 'route' => 'developer.listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     @elseif(Auth::user()->USER_TYPE == 4)
@@ -419,7 +419,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('contact_person_2') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('contact_person_2', old('contact_person_2'), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::text('contact_person_2', old('contact_person_2'), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user']) !!}
                                             {!! $errors->first('contact_person_2', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -430,7 +430,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::number('mobile_2', old('mobile_2'), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Property Owner Number','data-validation-required-message' => 'This field is required']) !!}
+                                            {!! Form::number('mobile_2', old('mobile_2'), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Property Owner Number']) !!}
                                             {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

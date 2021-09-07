@@ -36,7 +36,7 @@ $product_lists = $data['rows'] ?? [];
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-4">
                                                     <div class="property-bx">
-                                                        <a href="#"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
+                                                        <a href="#"><img src="{{ asset($item->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">

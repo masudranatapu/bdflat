@@ -70,7 +70,7 @@ class ListingController extends Controller
 
     public function edit($id)
     {
-        $data = $this->listings->getEdit($id);
+        $data = $this->listings->getEdit($id)->data;
         return view('listing.edit_listings', compact('data'));
     }
 

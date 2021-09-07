@@ -100,8 +100,8 @@ class SeekerController extends Controller
     public function getContactedProperties(Request $request)
     {
         $data = array();
-        $data['rows'] = Listings::select('PK_NO', 'TITLE', 'CITY_NAME', 'AREA_NAME', 'IS_FEATURE')->get();
-        //    dd($data['rows'][0]);
+        $data['rows'] = Listings::with('getDefaultThumb')->select('PK_NO', 'TITLE', 'CITY_NAME', 'AREA_NAME')->get();
+//            dd($data['rows']);
         return view('seeker.contacted_properties', compact('data'));
     }
 
