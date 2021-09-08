@@ -5,11 +5,11 @@
 @section('owner-listings','active')
 
 @push('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/validation/form-validation.css')}}">
     <link rel="stylesheet" type="text/css"
-          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
-
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/image_upload/image-uploader.min.css')}}">
+          href="{{asset('assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/image_upload/image-uploader.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link
         href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
