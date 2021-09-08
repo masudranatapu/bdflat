@@ -14,6 +14,7 @@
 <script src="{{ asset('/assets/js/plugins.js?v=0') }}"></script>
 <script src="{{ asset('/assets/js/main.js?v=0') }}"></script>
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+{!! Toastr::message() !!}
 <script>
     (function($) {
         //  sidebar menu
@@ -28,4 +29,5 @@
 
     })(jQuery);
 </script>
-{!! Toastr::message() !!}
+
+

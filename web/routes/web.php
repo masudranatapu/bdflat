@@ -15,13 +15,13 @@
 use App\Http\Controllers\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'HomeController@index')->name('web.home');
-Route::get('/ads/{type?}/{cat?}/{city?}', 'HomeController@properties')->name('web.property');
-Route::get('/ad/{slug}', 'HomeController@details')->name('web.property.details');
-Route::get('/owner/{slug}', 'HomeController@owner')->name('web.owner');
-Route::post('/newsletter', 'HomeController@storeNewsLetter')->name('newsletter.store');
+Route::get('', 'HomeController@index')->name('web.home');
+Route::get('ads/{type?}/{cat?}/{city?}', 'HomeController@properties')->name('web.property');
+Route::get('ad/{slug}', 'HomeController@details')->name('web.property.details');
+Route::get('owner/{slug}', 'HomeController@owner')->name('web.owner');
+Route::post('newsletter', 'HomeController@storeNewsLetter')->name('newsletter.store');
 
-Route::get('/cc', function () {
+Route::get('cc', function () {
     \Artisan::call('cache:clear');
     \Artisan::call('view:clear');
     \Artisan::call('route:clear');
@@ -32,20 +32,20 @@ Route::get('/cc', function () {
 });
 
 //common routes
-Route::get('/about-us', 'CommonController@getAboutUs')->name('about-us');
-Route::get('/contact-us', 'CommonController@getContactUs')->name('contact-us');
-Route::post('/contact-us', 'CommonController@storeContactUs');
-Route::get('/terms-conditions', 'CommonController@getTermsConditions')->name('terms-conditions');
-Route::get('/site-map', 'CommonController@getSiteMap')->name('site-map');
-Route::get('/privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy-policy');
-Route::get('/post-requirement', 'CommonController@getPostRequirement')->name('post-requirement');
-Route::post('/store-requirement', 'CommonController@storePostRequirement')->name('store-requirement');
+Route::get('about-us', 'CommonController@getAboutUs')->name('about-us');
+Route::get('contact-us', 'CommonController@getContactUs')->name('contact-us');
+Route::post('contact-us', 'CommonController@storeContactUs');
+Route::get('terms-conditions', 'CommonController@getTermsConditions')->name('terms-conditions');
+Route::get('site-map', 'CommonController@getSiteMap')->name('site-map');
+Route::get('privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy-policy');
+Route::get('post-requirement', 'CommonController@getPostRequirement')->name('post-requirement');
+Route::post('store-requirement', 'CommonController@storePostRequirement')->name('store-requirement');
 
 Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function () {
-    Route::get('/developer-listings', 'DeveloperController@getDevListings')->name('developer-listings');
-    Route::get('/developer-leads', 'DeveloperController@getdeveloperLeads')->name('developer-leads');
-    Route::get('/developer-buy-leads', 'DeveloperController@getdeveloperBuyLeads')->name('developer-buy-leads');
-    Route::get('/developer-payments', 'DeveloperController@getdeveloperPayments')->name('developer-payments');
+    Route::get('developer-listings', 'DeveloperController@getDevListings')->name('developer-listings');
+    Route::get('developer-leads', 'DeveloperController@getdeveloperLeads')->name('developer-leads');
+    Route::get('developer-buy-leads', 'DeveloperController@getdeveloperBuyLeads')->name('developer-buy-leads');
+    Route::get('developer-payments', 'DeveloperController@getdeveloperPayments')->name('developer-payments');
 
     Route::get('developer-listings/create', 'ListingController@create')->name('developer.listings.create');
     Route::post('developer-listings/store', 'ListingController@store')->name('developer.listings.store');
@@ -57,12 +57,12 @@ Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function ()
 });
 
 Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {
-    Route::get('/agency-listings', 'AgencyController@getListings')->name('agency-listings');
-    Route::get('/agency-leads', 'AgencyController@getLeads')->name('agency-leads');
-    Route::get('/agency-buy-leads', 'AgencyController@getBuyLeads')->name('agency-buy-leads');
-    Route::get('/agency-payments', 'AgencyController@getPayments')->name('agency-payments');
+    Route::get('agency-listings', 'AgencyController@getListings')->name('agency-listings');
+    Route::get('agency-leads', 'AgencyController@getLeads')->name('agency-leads');
+    Route::get('agency-buy-leads', 'AgencyController@getBuyLeads')->name('agency-buy-leads');
+    Route::get('agency-payments', 'AgencyController@getPayments')->name('agency-payments');
 
-    Route::get('/get-area', 'AgencyController@getArea')->name('get.area');
+    Route::get('get-area', 'AgencyController@getArea')->name('get.area');
 
     Route::get('agency-listings/create', 'ListingController@create')->name('agency.listings.create');
     Route::post('agency-listings/store', 'ListingController@store')->name('agency.listings.store');
@@ -74,12 +74,12 @@ Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
-    Route::get('/agent-listings', 'AgentController@getListings')->name('agent-listings');
-    Route::get('/agent-leads', 'AgentController@getLeads')->name('agent-leads');
-    Route::get('/agent-buy-leads', 'AgentController@getBuyLeads')->name('agent-buy-leads');
-    Route::get('/agent-payments', 'AgentController@getPayments')->name('agent-payments');
-    Route::get('/agent-earnings', 'AgentController@getEarnings')->name('agent-earnings');
-    Route::get('/agent-withdraw', 'AgentController@getWithdraw')->name('agent-withdraw');
+    Route::get('agent-listings', 'AgentController@getListings')->name('agent-listings');
+    Route::get('agent-leads', 'AgentController@getLeads')->name('agent-leads');
+    Route::get('agent-buy-leads', 'AgentController@getBuyLeads')->name('agent-buy-leads');
+    Route::get('agent-payments', 'AgentController@getPayments')->name('agent-payments');
+    Route::get('agent-earnings', 'AgentController@getEarnings')->name('agent-earnings');
+    Route::get('agent-withdraw', 'AgentController@getWithdraw')->name('agent-withdraw');
 
     Route::get('agent-listings/create', 'ListingController@create')->name('agent.listings.create');
     Route::post('agent-listings/store', 'ListingController@store')->name('agent.listings.store');
@@ -90,26 +90,26 @@ Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
-    Route::get('/property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
-    Route::post('/property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
+    Route::get('property-requirements', 'RequirementController@getMyRequirement')->name('property-requirements');
+    Route::post('property-requirements/store_or_update', 'RequirementController@storeOrUpdate')->name('property-requirements.store_or_update');
     Route::get('property-requirements/get_area/{id}', 'RequirementController@getArea')->name('property-requirements.get_area');
-    Route::get('/suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');
-    Route::get('/contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');
-    Route::get('/browsed-properties', 'SeekerController@getBrowsedProperties')->name('browsed-properties');
-    Route::get('/recharge-balance', 'SeekerController@getRechargeBalance')->name('recharge-balance');
-    Route::get('/refund-request/{id}', 'SeekerController@getRefundRequest')->name('refund-request');
-    Route::post('/refund-request/store', 'SeekerController@customerRefundStore')->name('refund-request.store');
-    Route::get('/payment-history', 'SeekerController@paymentHistory')->name('payment-history');
+    Route::get('suggested-properties', 'SeekerController@getSuggestedProperties')->name('suggested-properties');
+    Route::get('contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');
+    Route::get('browsed-properties', 'SeekerController@getBrowsedProperties')->name('browsed-properties');
+    Route::get('recharge-balance', 'SeekerController@getRechargeBalance')->name('recharge-balance');
+    Route::get('refund-request/{id}', 'SeekerController@getRefundRequest')->name('refund-request');
+    Route::post('refund-request/store', 'SeekerController@customerRefundStore')->name('refund-request.store');
+    Route::get('payment-history', 'SeekerController@paymentHistory')->name('payment-history');
     Route::get('ajax-get-variants/{id}', 'SeekerController@getVariants')->name('get-variants');
-    Route::post('/lead-pay/{id}', 'SeekerController@leadPay')->name('lead.pay');
+    Route::post('lead-pay/{id}', 'SeekerController@leadPay')->name('lead.pay');
 
 });
 
 Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
 
-    Route::get('/owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
-    Route::get('/owner-buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
-    Route::get('/owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
+    Route::get('owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
+    Route::get('owner-buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
+    Route::get('owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
 
     Route::get('listings/create', 'ListingController@create')->name('listings.create');
     Route::post('listings/store', 'ListingController@store')->name('listings.store');
@@ -127,23 +127,23 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
 });
 
 
-Route::get('/my-account', 'UserController@getMyAccount')->name('my-account');
-Route::get('/profile/edit', 'UserController@getEditProfile')->name('profile.edit');
-Route::post('/profile/store_or_update', 'UserController@updateProfile')->name('profile.store_or_update');
-Route::post('/profile/password_update', 'UserController@updatePass')->name('profile.password_update');
+Route::get('my-account', 'UserController@getMyAccount')->name('my-account');
+Route::get('profile/edit', 'UserController@getEditProfile')->name('profile.edit');
+Route::post('profile/store_or_update', 'UserController@updateProfile')->name('profile.store_or_update');
+Route::post('profile/password_update', 'UserController@updatePass')->name('profile.password_update');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
 
 // SSLCOMMERZ Start
-Route::post('/pay', [SslCommerzPaymentController::class, 'index'])->name('ssl.pay');
-//Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+Route::post('pay', [SslCommerzPaymentController::class, 'index'])->name('ssl.pay');
+//Route::post('pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
 
-Route::post('/success', [SslCommerzPaymentController::class, 'success'])->name('ssl.success');
-Route::post('/fail', [SslCommerzPaymentController::class, 'fail'])->name('ssl.fail');
-Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel'])->name('ssl.cancel');
+Route::post('success', [SslCommerzPaymentController::class, 'success'])->name('ssl.success');
+Route::post('fail', [SslCommerzPaymentController::class, 'fail'])->name('ssl.fail');
+Route::post('cancel', [SslCommerzPaymentController::class, 'cancel'])->name('ssl.cancel');
 
-//Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn'])->name('ssl.ipn');
+//Route::post('ipn', [SslCommerzPaymentController::class, 'ipn'])->name('ssl.ipn');
 //SSLCOMMERZ END

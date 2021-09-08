@@ -17,32 +17,16 @@ class ListingLeadPayment extends Model
     const CREATED_AT = 'CREATE_AT';
     const UPDATED_AT = 'MODIFIED_AT';
 
-    /*protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->CREATED_BY = Auth::id();
-        });
-
-        static::updating(function ($model) {
-            $model->MODIFIED_BY = Auth::id();
-        });
-    }*/
-
     public function leadPay($id): object
     {
-        $price = Listings::with(['images', 'getListingVariant', 'additionalInfo', 'owner'])
-            ->select('PRD_LISTINGS.URL_SLUG',DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'))
+        $price = Listings::select('PRD_LISTINGS.URL_SLUG',DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'))
             ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
-            ->where('STATUS', '=', 10)
             ->where('PRD_LISTINGS.PK_NO', '=', $id)
             ->first();
 
         DB::beginTransaction();
         try {
             $payment = new ListingLeadPayment();
-
             $payment->F_LISTING_NO = $id;
             $payment->F_USER_NO = Auth::id();
             $payment->AMOUNT = $price->PRICE;
@@ -50,15 +34,14 @@ class ListingLeadPayment extends Model
             $payment->CREATED_BY = Auth::id();
             $payment->MODIFIED_BY = Auth::id();
             $payment->save();
-
             $msg = 'Payment successful !';
 
-        } catch (\Exception $e) {
-            dd($e);
-            DB::rollBack();
+        }catch (\Exception $e){
+            DB::rollback();
+            return $this->formatResponse(false, 'Payment not successful !', 'home');
         }
-
         DB::commit();
-        return $this->formatResponse(true, $msg, 'ad');
+        return $this->formatResponse(true, 'Payment successful !', 'home');
+
     }
 }

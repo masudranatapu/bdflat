@@ -187,9 +187,39 @@ class Listings extends Model
         ->first();
     }
 
-        if (!$listing) {
-            abort(404);
+    if (!$listing) {
+        abort(404);
+    }
+    if(Auth::check()){
+        $today = date('Y-m-d');
+        // dd($today);
+        $user_id = Auth::id();
+        $check_old = BrowsedProperty::where('F_USER_NO',$user_id)->where('F_LISTING_NO',$listing->PK_NO)->orderBy('PK_NO', 'DESC')->first();
+        if($check_old){
+            $last_date = date('Y-m-d', strtotime($check_old->LAST_BROWES_TIME));
+            if($last_date == $today){
+                BrowsedProperty::where('PK_NO',$check_old->PK_NO) ->increment('COUNTER', 1);
+            }else{
+                $bp = new BrowsedProperty();
+                $bp->F_USER_NO = $user_id;
+                $bp->F_LISTING_NO = $listing->PK_NO;
+                $bp->COUNTER = 1;
+                $bp->LAST_BROWES_TIME = date('Y-m-d H:i:s');
+                $bp->save();
+            }
+
+        }else{
+            $bp = new BrowsedProperty();
+            $bp->F_USER_NO = $user_id;
+            $bp->F_LISTING_NO = $listing->PK_NO;
+            $bp->COUNTER = 1;
+            $bp->LAST_BROWES_TIME = date('Y-m-d H:i:s');
+            $bp->save();
         }
+
+
+    }
+
         return $listing;
     }
 

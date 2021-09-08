@@ -33,13 +33,12 @@
                                 <!-- product -->
                                 @if(isset($data['browsedProperties']) && count($data['browsedProperties']))
                                     @foreach($data['browsedProperties'] as $property)
+
                                         <div class="property-product mb-4">
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-4">
                                                     <div class="property-bx">
-                                                        <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                src="{{ defaultThumb($property->getDefaultThumb->THUMB_PATH ?? null) }}"
-                                                                class="w-100" alt="image"></a>
+                                                        <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img src="{{ defaultThumb($property->getDefaultThumb->THUMB_PATH ?? null) }}" class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">
