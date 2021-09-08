@@ -477,7 +477,7 @@
                                                 </div>
                                                 <div class="verified-address">
                                                     <a href="#"><i
-                                                            class="fa fa-map-marker"></i>{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}
+                                                            class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{$listing->SUBAREA_NAME}}, @endif{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}
                                                     </a>
                                                 </div>
                                                 @if($listing->IS_TOP)
