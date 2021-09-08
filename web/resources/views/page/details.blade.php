@@ -92,8 +92,8 @@
                                     <p><span>Ad ID: <a href="#">{{ $listing->CODE ?? ''  }}</a></span>
                                     </p>
                                     <p>
-                                        <i class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{ $listing->SUBAREA_NAME }}
-                                        , @endif {{ $listing->AREA_NAME ?? '' }}, {{ $listing->CITY_NAME }}</p>
+                                        <i class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{ $listing->SUBAREA_NAME }}, @endif {{ $listing->AREA_NAME ?? '' }}
+                                        , {{ $listing->CITY_NAME }}</p>
                                     <p><i class="fa fa-suitcase"></i> ({{ ucwords($listing->PROPERTY_FOR ?? '') }})</p>
                                 </div>
 
@@ -118,11 +118,15 @@
                                         @if(Auth::check())
                                             @if(Auth::user()->USER_TYPE == 1)
                                                 @if($listing->PURCHASE_DATE)
-                                                    <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                            class="Show_num">{{ $listing->MOBILE1 }}</span></span>
+                                                    <span class="mb-2 mr-3">
+                                                        <i class="fa fa-phone"></i>
+                                                            <a class="Show_num" href="tel:{{ $listing->MOBILE1 }}">{{ $listing->MOBILE1 }}</a>
+                                                    </span>
                                                     @if($listing->MOBILE2)
-                                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                                class="Show_num">{{ $listing->MOBILE2 }}</span></span>
+                                                        <span class="mb-2 mr-3">
+                                                            <i class="fa fa-phone"></i>
+                                                                <a class="Show_num" href="tel:{{ $listing->MOBILE2 }}">{{ $listing->MOBILE2 }}</a>
+                                                        </span>
                                                     @endif
                                                 @else
                                                     <span class="mb-2 mr-3" data-toggle="modal"
@@ -143,10 +147,16 @@
                                                     class="hide_text">Show Number</span></span>
                                         @endif
                                     @else
-                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                class="Show_num">{{ $listing->MOBILE1 }}</span></span>
-                                        @if($listing->MOBILE2)<span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                class="Show_num">{{ $listing->MOBILE1 }}</span></span>@endif
+                                        <span class="mb-2 mr-3">
+                                            <i class="fa fa-phone"></i>
+                                                <a class="Show_num" href="tel:{{ $listing->MOBILE1 }}">{{ $listing->MOBILE1 }}</a>
+                                        </span>
+                                        @if($listing->MOBILE2)
+                                            <span class="mb-2 mr-3">
+                                                <i class="fa fa-phone"></i>
+                                                    <a class="Show_num" href="tel:{{ $listing->MOBILE2 }}">{{ $listing->MOBILE2 }}</a>
+                                            </span>
+                                        @endif
                                     @endif
 
                                     <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a>
@@ -248,9 +258,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="category-address">
-                                                            <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                                , {{ $property->CITY_NAME }}</a>
+                                                            <a href="#"><i class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
