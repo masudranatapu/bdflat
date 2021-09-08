@@ -15,7 +15,9 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/custom/css/custom.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
-<style>
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
+    <style>
 .switch{position:relative;display:inline-block;width:46px;height:28px}
 .switch input{opacity:0;width:0;height:0}
 .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}
@@ -37,6 +39,11 @@
 .row {
     align-items: baseline;
 }
+.show_img{height:82px;width:82px;object-fit:cover}
+.del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}.del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}
+.select2{width:100%!important}
+a.ui-state-default{background-color:red!important}
+.ctm{min-width: 140px; display: inline-block;}
 </style>
 
 @endpush
@@ -429,7 +436,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('time') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::text('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control datetimepicker',  'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('time', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -825,10 +832,21 @@
 @push('custom_js')
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js')}}"></script>
+    <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
+    <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
     <script>
         //ck editor
         CKEDITOR.replace('requirement_details');
+
+        $('#time').datetimepicker({
+            icons:
+                {
+                    next: 'fa fa-angle-right',
+                    previous: 'fa fa-angle-left'
+                },
+            format: 'hh:mm'
+        });
     </script>
     <script>
         $('.select2').select2();
