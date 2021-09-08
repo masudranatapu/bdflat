@@ -223,7 +223,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-6">
                             <p><span class="font-weight-bold">Name: </span>{{ $data->NAME ?? 'N/A' }}</p>
                             <p><span class="font-weight-bold">Email: </span>{{ $data->EMAIL ?? 'N/A' }}</p>
                             <p><span class="font-weight-bold">Address: </span>{{ $data->ADDRESS ?? 'N/A' }}</p>
@@ -234,7 +234,7 @@
                     <div class="row">
                         <div class="col-12">
                             <h2 class="mb-2 mt-2">Property Requirements</h2>
-                            <p><span class="font-weight-bold">City/Division: </span>{{ $cities[$row->F_CITY_NO] ?? 'N/A' }}</p>
+                            <p><span class="font-weight-bold">City/Division: </span>{{ $cities[$row->F_CITY_NO ?? 0] ?? 'N/A' }}</p>
                             <p><span class="font-weight-bold">Area: </span></p>
                             <ul>
                                 @foreach($cities as $key => $city)
@@ -244,7 +244,7 @@
                         </div>
                         <div class="col-12">
                             <p><span class="font-weight-bold">Property Looking For: </span>{{ ucwords($row->PROPERTY_FOR ?? '') }}</p>
-                            <p><span class="font-weight-bold">Property Type: </span>{{ $property_types[$row->F_PROPERTY_TYPE_NO] ?? 'N/A' }}</p>
+                            <p><span class="font-weight-bold">Property Type: </span>{{ $property_types[$row->F_PROPERTY_TYPE_NO ?? 0] ?? 'N/A' }}</p>
                             <p><span class="font-weight-bold">Property Size: </span>Min: {{ $row->MIN_SIZE ?? 'N/A' }} Max: {{ $row->MAX_SIZE ?? 'N/A' }}</p>
                             <p><span class="font-weight-bold">Property Budget: </span>Min: {{ $row->MIN_BUDGET ?? 'N/A' }} Max: {{ $row->MAX_BUDGET ?? 'N/A' }}</p>
                             <p><span class="font-weight-bold">Bedroom: </span></p>
@@ -255,23 +255,25 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <p><span class="font-weight-bold">Bedroom: </span></p>
-                        <ul>
-                            @foreach($prop_cond as $cond)
-                                <li>{{ ucwords($cond) }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="col-12">
-                        <p><span class="font-weight-bold">Requirement Details: </span></p>
-                        "{!! $row->REQUIREMENT_DETAILS !!}"
-                    </div>
-                    <div class="col-12">
-                        <p><span class="font-weight-bold">Preferred Time to Contact: </span>{{ $row->PREP_CONT_TIME }}</p>
-                        <p><span class="font-weight-bold">Email Alert: </span>{{ ucwords($row->EMAIL_ALERT) }}</p>
-                        <p><span class="font-weight-bold">Verification Status: </span>{{ $row->IS_VERIFIED == 1 ? 'Valid' : ($row->IS_VERIFIED == 2 ? 'Invalid' : 'Pending') }}</p>
-                        <p><span class="font-weight-bold">Account Status: </span>{{ $user_status[$data->STATUS] ?? 'N/A' }}</p>
+                    <div class="row">
+                        <div class="col-12">
+                            <p><span class="font-weight-bold">Bathroom: </span></p>
+                            <ul>
+                                @foreach($prop_cond as $cond)
+                                    <li>{{ ucwords($cond) }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="col-12">
+                            <p><span class="font-weight-bold">Requirement Details: </span></p>
+                            "{!! $row->REQUIREMENT_DETAILS ?? '' !!}"
+                        </div>
+                        <div class="col-12">
+                            <p><span class="font-weight-bold">Preferred Time to Contact: </span>{{ $row->PREP_CONT_TIME ?? 'N/A' }}</p>
+                            <p><span class="font-weight-bold">Email Alert: </span>{{ ucwords($row->EMAIL_ALERT ?? 'N/A') }}</p>
+                            <p><span class="font-weight-bold">Verification Status: </span>{{ $row && $row->IS_VERIFIED == 1 ? 'Valid' : ($row && $row->IS_VERIFIED == 2 ? 'Invalid' : 'Pending') }}</p>
+                            <p><span class="font-weight-bold">Account Status: </span>{{ $user_status[$data->STATUS] ?? 'N/A' }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -314,10 +314,13 @@
     @include('layouts.post-ad')
 
     <!-- Modal -->
-    <div class="modal fade" id="loginRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <div class="modal fade" id="loginRegModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+                    <button type="button" style="position:absolute;right:18px;top:5px;font-size:40px;z-index: 1;" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 <div class="modal-body">
                     <div class="login-wrap text-center" id="loginModal">
                         <h1>Sign In & Access Your Account</h1>

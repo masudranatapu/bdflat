@@ -42,7 +42,7 @@ class SeekerController extends BaseController
         $data = $this->resp->data;
         $city = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
         $row = ProductRequirements::where('CREATED_BY', $id)->orderByDesc('PK_NO')->first();
-        $areas = Area::whereIn('PK_NO', json_decode($row->F_AREAS))->pluck('AREA_NAME', 'PK_NO');
+        $areas = Area::whereIn('PK_NO', json_decode($row->F_AREAS ?? "[]"))->pluck('AREA_NAME', 'PK_NO');
         $property_types = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
         return view('admin.seeker.view', compact('data', 'city', 'areas', 'row', 'property_types'));
     }
