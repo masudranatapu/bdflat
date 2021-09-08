@@ -2,9 +2,13 @@
 
 namespace App;
 
+use App\Models\BrowsedProperty;
+use App\Models\Listings;
 use App\Models\OwnerInfo;
 use App\Traits\RepoResponse;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +50,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function requirements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function requirements(): HasMany
     {
         return $this->hasMany('App\Models\ProductRequirements', 'CREATED_BY', 'PK_NO');
     }
@@ -56,6 +60,25 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\OwnerInfo', 'F_USER_NO', 'PK_NO');
     }
 
+    public function browsedProperty(): HasMany
+    {
+        return $this->hasMany('App\Models\BrowsedProperty', 'F_USER_NO', 'PK_NO');
+    }
+
+    public function browsedProperties(): HasManyThrough
+    {
+        return $this->hasManyThrough(Listings::class, BrowsedProperty::class, 'F_USER_NO', 'PK_NO', 'PK_NO', 'F_LISTING_NO');
+    }
+
+    public function contactedProperty(): HasMany
+    {
+        return $this->hasMany('App\Models\ListingLeadPayment', 'F_USER_NO', 'PK_NO');
+    }
+
+    public function contactedProperties(): HasManyThrough
+    {
+        return $this->hasManyThrough('App\Models\Listings', 'App\Models\ListingLeadPayment', 'F_USER_NO', 'PK_NO', 'PK_NO', 'F_LISTING_NO');
+    }
 
     public function paymentHistory($request)
     {

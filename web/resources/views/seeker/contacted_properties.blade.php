@@ -27,7 +27,7 @@ $product_lists = $data['rows'] ?? [];
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="my-dashboard.html"><i class="fa fa-long-arrow-left"></i>Contacted Properties</a></h3>
+                                    <h3><a href="{{ route('contacted-properties') }}"><i class="fa fa-long-arrow-left"></i>Contacted Properties</a></h3>
                                 </div>
                                 <!-- product -->
                                 @if(isset($product_lists) && count($product_lists) > 0 )
@@ -36,14 +36,14 @@ $product_lists = $data['rows'] ?? [];
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-4">
                                                     <div class="property-bx">
-                                                        <a href="#"><img src="{{ asset($item->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
+                                                        <a href="{{ route('web.property.details', $item->URL_SLUG) }}"><img src="{{ defaultThumb($item->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">
-                                                    <h3>TK {{$item->getListingVariant->TOTAL_PRICE ?? 0}} <span class="float-right claim"><a
+                                                    <h3>TK {{ number_format($item->getListingVariant->TOTAL_PRICE ?? 0, 2) }} <span class="float-right claim"><a
                                                                 href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a> <i
                                                                 class="fa fa-exclamation-triangle"></i></span></h3>
-                                                    <h5 class="mt-0"><a href="#">{{$item->TITLE}}</a></h5>
+                                                    <h5 class="mt-0"><a href="{{ route('web.property.details', $item->URL_SLUG) }}">{{$item->TITLE}}</a></h5>
                                                     <h6>{{--{{$item->getListingVariant->BEDROOM}} Bed, {{$item->getListingVariant->BATHROOM}} Bath--}} <a
                                                             href="javascript:void(0)" data-id="{{$item->PK_NO}}" class="moreVariantBtn">More</a>
                                                     </h6>

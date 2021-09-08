@@ -7,6 +7,7 @@ use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
 use App\Http\Requests\UserRequest;
+use App\Models\BrowsedProperty;
 use App\Models\CustomerPayment;
 use App\Models\CustomerRefund;
 use App\Models\ListingLeadPayment;
@@ -14,7 +15,6 @@ use App\Models\Listings;
 use Illuminate\Http\Request;
 use App\User;
 use Toastr;
-use App\Product;
 use Illuminate\Support\Facades\Auth;
 
 class SeekerController extends Controller
@@ -103,15 +103,21 @@ class SeekerController extends Controller
     public function getContactedProperties(Request $request)
     {
         $data = array();
-        $data['rows'] = Listings::with('getDefaultThumb')->select('PK_NO', 'TITLE', 'CITY_NAME', 'AREA_NAME')->get();
-//            dd($data['rows']);
+        $data['rows'] = Auth::user()->contactedProperties()
+            ->with(['getDefaultThumb', 'getListingVariant'])
+            ->get();
+//        ddd($data['rows']);
         return view('seeker.contacted_properties', compact('data'));
     }
 
     public function getBrowsedProperties(Request $request)
     {
-        $data = array();
-        //$data['city_combo'] = $this->city->getCityCombo();
+        $data['browsedProperties'] = Auth::user()->browsedProperties()
+            ->with(['getDefaultThumb', 'getListingVariant'])
+            ->distinct()
+            ->orderByDesc('PRD_BROWSING_HISTORY.LAST_BROWES_TIME')
+            ->get();
+        //        ddd($data);
         return view('seeker.browsed_properties', compact('data'));
     }
 
