@@ -14,8 +14,7 @@
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/custom/css/custom.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css') }}">
 <style>
 .switch{position:relative;display:inline-block;width:46px;height:28px}
 .switch input{opacity:0;width:0;height:0}
@@ -35,6 +34,9 @@
 .email-alert input[type=radio]+label:after,.email-alert input[type=radio]+label:before{position:absolute;top:0;left:0;content:"";width:14px;height:14px;border-radius:50%;display:inline-block;background-color:transparent}
 .email-alert input[type=radio]+label:before{border:2px solid #666ee8}
 .email-alert input[type=radio]:checked+label:after{border:5px solid #666ee8}
+.row {
+    align-items: baseline;
+}
 </style>
 
 @endpush
@@ -180,7 +182,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('city', $cities, $row->F_CITY_NO ?? null,['class'=>'form-control','id'=>'cities', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::select('city', $cities, $row->F_CITY_NO ?? null,['class'=>'form-control select2','id'=>'cities', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -427,7 +429,7 @@
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('time') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::time('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::text('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('time', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -596,14 +598,14 @@
                         <div class="col-md-6">
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('property_for','sell', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
-                                    {{ Form::label('sell','Individual') }}
+                                    {!! Form::radio('property_for','individual', old('property_for'),[ 'id' => 'individual','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {{ Form::label('individual','Individual') }}
                                     &emsp;
-                                    {!! Form::radio('property_for','rent', old('property_for'),[ 'id' => 'rent', 'tabIndex' => ++$tabIndex]) !!}
-                                    {{ Form::label('rent','Developer') }}
+                                    {!! Form::radio('property_for','developer', old('property_for'),[ 'id' => 'developer', 'tabIndex' => ++$tabIndex]) !!}
+                                    {{ Form::label('developer','Developer') }}
                                     &emsp;
-                                    {!! Form::radio('property_for','roommate', old('property_for'),[ 'id' => 'roommate', 'tabIndex' => ++$tabIndex]) !!}
-                                    {{ Form::label('roommate','Agency') }}
+                                    {!! Form::radio('property_for','agency', old('property_for'),[ 'id' => 'agency', 'tabIndex' => ++$tabIndex]) !!}
+                                    {{ Form::label('agency','Agency') }}
 
                                     {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
@@ -821,7 +823,8 @@
 
 
 @push('custom_js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
     <script>
         //ck editor
