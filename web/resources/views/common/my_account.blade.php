@@ -41,36 +41,36 @@
                             </div>
                         </div>
                         @if(Auth::user()->USER_TYPE == 3)
-                        <div class="user-wrapper">
-                            <div class="user-nav">
-                                <div class="row text-center">
-                                    <div class="col-4 mb-2">
-                                        <div class="user-box">
-                                            <a href="#">
-                                                <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/>
-                                                My Properties
-                                            </a>
+                            <div class="user-wrapper">
+                                <div class="user-nav">
+                                    <div class="row text-center">
+                                        <div class="col-4 mb-2">
+                                            <div class="user-box">
+                                                <a href="#">
+                                                    <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/>
+                                                    My Properties
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-4 mb-2">
-                                        <div class="user-box box2">
-                                            <a href="#">
-                                                <span>{{ Auth::user()->TOTAL_LEAD }}</span><br/>
-                                                Leads
-                                            </a>
+                                        <div class="col-4 mb-2">
+                                            <div class="user-box box2">
+                                                <a href="#">
+                                                    <span>{{ Auth::user()->TOTAL_LEAD }}</span><br/>
+                                                    Leads
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="user-box box3">
-                                            <a href="#">
-                                                <span>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</span><br/>
-                                                Balance
-                                            </a>
+                                        <div class="col-4">
+                                            <div class="user-box box3">
+                                                <a href="#">
+                                                    <span>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</span><br/>
+                                                    Balance
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
 
                         @if(isset($data['properties']) && count($data['properties']))
@@ -80,7 +80,7 @@
                                         <h3>New Property <span class="float-right"><a href="#">See All</a></span></h3>
                                     </div>
 
-                                        @foreach($data['properties'] as $property)
+                                    @foreach($data['properties'] as $property)
                                         <div class="row">
                                             <div class="col-12 mb-1">
                                                 <!-- product -->
@@ -133,7 +133,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @endforeach
+                                    @endforeach
 
                                 </div>
                             </div>

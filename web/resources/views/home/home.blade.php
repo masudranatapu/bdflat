@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="featured-footer">
                                         <div class="address">
-                                            <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                            <a href="#"><i class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -282,7 +282,7 @@
                                                 <h6>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</h6>
                                             </div>
                                             <div class="verified-address">
-                                                <a href="#"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                <a href="#"><i class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -354,7 +354,7 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -400,7 +400,7 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -447,7 +447,7 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>

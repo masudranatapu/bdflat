@@ -93,7 +93,8 @@
                                     </p>
                                     <p>
                                         <i class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{ $listing->SUBAREA_NAME }}
-                                        , @endif {{ $listing->AREA_NAME ?? '' }}, {{ $listing->CITY_NAME }}</p>
+                                        , @endif {{ $listing->AREA_NAME ?? '' }}
+                                        , {{ $listing->CITY_NAME }}</p>
                                     <p><i class="fa fa-suitcase"></i> ({{ ucwords($listing->PROPERTY_FOR ?? '') }})</p>
                                 </div>
 
@@ -118,11 +119,17 @@
                                         @if(Auth::check())
                                             @if(Auth::user()->USER_TYPE == 1)
                                                 @if($listing->PURCHASE_DATE)
-                                                    <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                            class="Show_num">{{ $listing->MOBILE1 }}</span></span>
+                                                    <span class="mb-2 mr-3">
+                                                        <i class="fa fa-phone"></i>
+                                                            <a class="Show_num"
+                                                               href="tel:{{ $listing->MOBILE1 }}">{{ $listing->MOBILE1 }}</a>
+                                                    </span>
                                                     @if($listing->MOBILE2)
-                                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                                class="Show_num">{{ $listing->MOBILE2 }}</span></span>
+                                                        <span class="mb-2 mr-3">
+                                                            <i class="fa fa-phone"></i>
+                                                                <a class="Show_num"
+                                                                   href="tel:{{ $listing->MOBILE2 }}">{{ $listing->MOBILE2 }}</a>
+                                                        </span>
                                                     @endif
                                                 @else
                                                     <span class="mb-2 mr-3" data-toggle="modal"
@@ -143,10 +150,18 @@
                                                     class="hide_text">Show Number</span></span>
                                         @endif
                                     @else
-                                        <span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                class="Show_num">{{ $listing->MOBILE1 }}</span></span>
-                                        @if($listing->MOBILE2)<span class="mb-2 mr-3"><i class="fa fa-phone"></i><span
-                                                class="Show_num">{{ $listing->MOBILE1 }}</span></span>@endif
+                                        <span class="mb-2 mr-3">
+                                            <i class="fa fa-phone"></i>
+                                                <a class="Show_num"
+                                                   href="tel:{{ $listing->MOBILE1 }}">{{ $listing->MOBILE1 }}</a>
+                                        </span>
+                                        @if($listing->MOBILE2)
+                                            <span class="mb-2 mr-3">
+                                                <i class="fa fa-phone"></i>
+                                                    <a class="Show_num"
+                                                       href="tel:{{ $listing->MOBILE2 }}">{{ $listing->MOBILE2 }}</a>
+                                            </span>
+                                        @endif
                                     @endif
 
                                     <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a>
@@ -249,7 +264,8 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
+                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}
+                                                                , @endif{{ $property->AREA_NAME }}
                                                                 , {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
@@ -449,40 +465,46 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="login-wrap text-center">
-                        {!! Form::open([ 'route' => ['lead.pay',$listing->PK_NO], 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
-                        <div class="row">
-                            @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
-                                <div class="col-12">
-                                    <p style="font-size: 20px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">Sorry ! you do not have sufficiant
-                                        balance to buy this lead.</p>
-                                    <p>Your current balance</p>
-                                    <strong
-                                        style="font-size: 28px;color: #3986FA;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
-                                </div>
-                                <div class="col-12 form-group text-center">
-                                    <a href="{{route('recharge-balance')}}" class="btn btn-success">{{ __('Recharge Now') }}</a>
-                                </div>
-                            @else
-                                <div class="col-12">
-                                    <p style="font-size: 20px;font-weight: bold;margin-bottom: 12px !important;">This property has been verified by bdflat.com</p>
-                                    <p style="color: #6ABD50;font-weight: bold; margin-bottom: 25px !important;">If you want ot view the contact details including mobile
-                                        number & address</p>
-                                    <p>Please Pay:</p>
-                                    <strong
-                                        style="font-size: 28px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format($listing->PRICE,2) }}</strong>
-                                    <p>Your current balance</p>
-                                    <strong
-                                        style="font-size: 28px;color: #6ABD50;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
-                                </div>
+                        @auth
+                            {!! Form::open([ 'route' => ['lead.pay',$listing->PK_NO], 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                            <div class="row">
+                                @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
+                                    <div class="col-12">
+                                        <p style="font-size: 20px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">
+                                            Sorry ! you do not have sufficiant
+                                            balance to buy this lead.</p>
+                                        <p>Your current balance</p>
+                                        <strong
+                                            style="font-size: 28px;color: #3986FA;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                                    </div>
+                                    <div class="col-12 form-group text-center">
+                                        <a href="{{route('recharge-balance')}}"
+                                           class="btn btn-success">{{ __('Recharge Now') }}</a>
+                                    </div>
+                                @else
+                                    <div class="col-12">
+                                        <p style="font-size: 20px;font-weight: bold;margin-bottom: 12px !important;">
+                                            This property has been verified by bdflat.com</p>
+                                        <p style="color: #6ABD50;font-weight: bold; margin-bottom: 25px !important;">If
+                                            you want ot view the contact details including mobile
+                                            number & address</p>
+                                        <p>Please Pay:</p>
+                                        <strong
+                                            style="font-size: 28px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format($listing->PRICE,2) }}</strong>
+                                        <p>Your current balance</p>
+                                        <strong
+                                            style="font-size: 28px;color: #6ABD50;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
+                                    </div>
 
-                                <div class="col-12 form-group text-center">
-                                    <button style="width: 120px" type="submit" class="btn btn-success">{{ __('Pay Now') }}</button>
-                                </div>
+                                    <div class="col-12 form-group text-center">
+                                        <button style="width: 120px" type="submit"
+                                                class="btn btn-success">{{ __('Pay Now') }}</button>
+                                    </div>
 
-                            @endif
-
-                        </div>
-                        {!! Form::close() !!}
+                                @endif
+                            </div>
+                            {!! Form::close() !!}
+                        @endauth
                     </div>
                 </div>
             </div>
