@@ -161,13 +161,26 @@ class Listings extends Model
     public function getSimilarListings($for, $id)
     {
         $limit = WebSetting::where('PK_NO', 1)->first('SIMILAR_PROPERTY_LIMIT')->SIMILAR_PROPERTY_LIMIT;
-        return Listings::with(['getDefaultThumb', 'getListingVariant'])
+        $listings = Listings::with(['getDefaultThumb', 'getListingVariant'])
             ->where('STATUS', '=', 10)
             ->where('PK_NO', '!=', $id)
             ->where('PROPERTY_FOR', '=', $for)
             ->take($limit)
             ->orderByDesc('PK_NO')
             ->get();
+
+        if ($listings->count() < $limit) {
+            $type = $this->getListing($id);
+            $same_type = Listings::with(['getDefaultThumb', 'getListingVariant'])
+                ->where('F_PROPERTY_TYPE_NO', '=', $type->F_PROPERTY_TYPE_NO)
+                ->orderByDesc('PK_NO')
+                ->whereNotIn('PK_NO', $listings->pluck('PK_NO'))
+                ->take($limit - $listings->count())
+                ->get();
+            $listings = $listings->merge($same_type);
+        }
+
+        return $listings;
     }
 
     public function getListingDetails($url_slug)
