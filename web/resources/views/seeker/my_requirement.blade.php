@@ -4,6 +4,16 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
     <link rel="stylesheet" type="text/css"
           href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
+    <style>
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            float: right;
+            margin-left: 0;
+            padding-right: 3px;
+            border-right: none;
+            margin-top: 3px;
+        }
+    </style>
 @endpush
 
 <?php
@@ -22,10 +32,10 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
 } else {
     $prop_cond = [];
 }
-if(isset($row->F_AREAS) && $row->F_AREAS != ''){   
+if(isset($row->F_AREAS) && $row->F_AREAS != ''){
 $old_areas = json_decode($row->F_AREAS);
 }else{
-   $old_areas = []; 
+   $old_areas = [];
 }
 
 ?>
@@ -117,7 +127,7 @@ $old_areas = json_decode($row->F_AREAS);
                             {{ Form::label('city', 'Select location:', ['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8" style="margin-left: -5px">
                                 <div class="controls">
-                                    {!! Form::select('city', $cities, null, ['class' => 'form-control', 'id' => 'cities', 'data-validation-required-message' => 'Location is required']) !!}
+                                    {!! Form::select('city', $cities, null, ['class' => 'select2 form-control', 'id' => 'cities', 'data-validation-required-message' => 'Location is required']) !!}
                                     {!! $errors->first('f_city_id', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -304,7 +314,7 @@ $old_areas = json_decode($row->F_AREAS);
                             <div class="col-md-8">
                                 <div class="size-form {!! $errors->has('time') ? 'error' : '' !!}">
                                     <div class="controls">
-                                        {!! Form::time('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required']) !!}
+                                        {!! Form::text('time', !empty($row)?$row->PREP_CONT_TIME:old('time'), ['id'=>'time', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required']) !!}
                                         {!! $errors->first('time', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
@@ -419,8 +429,13 @@ $old_areas = json_decode($row->F_AREAS);
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
+    <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script>
         //ck editor
+        $('#time').datetimepicker({
+            format: 'hh:mm'
+        })
         CKEDITOR.replace('requirement_details');
     </script>
     <script>

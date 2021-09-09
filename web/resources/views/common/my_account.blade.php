@@ -101,11 +101,12 @@
                                                             </div>
                                                             <div class="col-9 position-static pl-3">
                                                                 <div class="category-price">
-                                                                    <h3>TK 50.00</h3>
+                                                                    <h3>
+                                                                        TK {{ number_format($property->getDefaultVariant->TOTAL_PRICE ?? 0, 2) }}</h3>
                                                                 </div>
                                                                 <div class="category-title">
                                                                     <h5 class="mt-0">
-                                                                        <a href="details.html">{{ $property->TITLE }}</a>
+                                                                        <a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a>
                                                                     </h5>
                                                                 </div>
                                                                 <div class="category-address">
@@ -116,12 +117,40 @@
                                                                 </div>
                                                                 <div class="owner-info">
                                                                     <ul>
-                                                                        <li><i class="fa fa-edit"></i><a
-                                                                                href="{{ route('listings.edit', $property->PK_NO) }}">Edit</a>
-                                                                        </li>
-                                                                        <li><i class="fa fa-times"></i><a
-                                                                                href="{{ route('listings.delete', $property->PK_NO) }}">Delete</a>
-                                                                        </li>
+                                                                        @if(Auth::user()->USER_TYPE == 2)
+                                                                            <li><i class="fa fa-edit"></i><a
+                                                                                    href="{{ route('listings.edit', $property->PK_NO) }}">Edit</a>
+                                                                            </li>
+                                                                        @elseif(Auth::user()->USER_TYPE == 3)
+                                                                            <li><i class="fa fa-edit"></i><a
+                                                                                    href="{{ route('developer.listings.edit', $property->PK_NO) }}">Edit</a>
+                                                                            </li>
+                                                                        @elseif(Auth::user()->USER_TYPE == 4)
+                                                                            <li><i class="fa fa-edit"></i><a
+                                                                                    href="{{ route('agency.listings.edit', $property->PK_NO) }}">Edit</a>
+                                                                            </li>
+                                                                        @elseif(Auth::user()->USER_TYPE == 5)
+                                                                            <li><i class="fa fa-edit"></i><a
+                                                                                    href="{{ route('agent.listings.edit', $property->PK_NO) }}">Edit</a>
+                                                                            </li>
+                                                                        @endif
+                                                                        @if(Auth::user()->USER_TYPE == 2)
+                                                                            <li><i class="fa fa-times"></i><a
+                                                                                    href="{{ route('listings.delete', $property->PK_NO) }}">Delete</a>
+                                                                            </li>
+                                                                        @elseif(Auth::user()->USER_TYPE == 3)
+                                                                            <li><i class="fa fa-times"></i><a
+                                                                                    href="{{ route('developer.listings.delete', $property->PK_NO) }}">Delete</a>
+                                                                            </li>
+                                                                        @elseif(Auth::user()->USER_TYPE == 4)
+                                                                            <li><i class="fa fa-times"></i><a
+                                                                                    href="{{ route('agency.listings.delete', $property->PK_NO) }}">Delete</a>
+                                                                            </li>
+                                                                        @elseif(Auth::user()->USER_TYPE == 5)
+                                                                            <li><i class="fa fa-times"></i><a
+                                                                                    href="{{ route('agent.listings.delete', $property->PK_NO) }}">Delete</a>
+                                                                            </li>
+                                                                        @endif
                                                                         <li class="float-right"><i
                                                                                 class="fa fa-check"></i>
                                                                         </li>
