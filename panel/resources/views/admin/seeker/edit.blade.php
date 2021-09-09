@@ -442,6 +442,21 @@ a.ui-state-default{background-color:red!important}
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Sharing Permission (Max):</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="controls">
+                                    {!! Form::number('max_sharing_permission', !empty($row)?$row->MAX_SHARING_PERMISSION:old('max_sharing_permission'), ['id'=>'max_sharing_permission', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required', 'placeholder' => 'Max Sharing Permission', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! $errors->first('max_sharing_permission', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     {{--<div class="row">
                         <div class="col-md-2">

@@ -104,6 +104,13 @@ class Listings extends Model
         return $this->hasMany('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO');
     }
 
+    // Variants except default
+    public function variants(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO')
+            ->where('IS_DEFAULT', '=', 0);
+    }
+
     public function listingType(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne('App\Models\ListingType', 'PK_NO', 'F_LISTING_TYPE')
@@ -115,7 +122,7 @@ class Listings extends Model
         $limit = WebSetting::where('PK_NO', 1)->first('FEATURE_PROPERTY_LIMIT')->FEATURE_PROPERTY_LIMIT;
         return Listings::with(['getDefaultThumb', 'getListingVariant'])
             ->where('STATUS', '=', 10)
-            ->whereIn('F_LISTING_TYPE', [2,4])
+            ->whereIn('F_LISTING_TYPE', [2, 4])
             ->take($limit)
             ->get();
     }
@@ -166,40 +173,49 @@ class Listings extends Model
     public function getListingDetails($url_slug)
     {
 
-    if(Auth::check() && Auth::user()->USER_TYPE == 1 ){
-        $user_id = Auth::id();
-        $listing = Listings::with(['images', 'getListingVariant', 'additionalInfo', 'owner'])
-        ->select('PRD_LISTINGS.*',DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'), 'ACC_LISTING_LEAD_PAYMENTS.PURCHASE_DATE')
-        ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
-        ->leftJoin('ACC_LISTING_LEAD_PAYMENTS', function($join) use($user_id){
-            $join->on('PRD_LISTINGS.PK_NO', '=', 'ACC_LISTING_LEAD_PAYMENTS.F_LISTING_NO');
-            $join->where('ACC_LISTING_LEAD_PAYMENTS.F_USER_NO', $user_id);
-        })
-        ->where('STATUS', '=', 10)
-        ->where('URL_SLUG', '=', $url_slug)
-        ->first();
-    }else{
-        $listing = Listings::with(['images', 'getListingVariant', 'additionalInfo', 'owner'])
-        ->select('PRD_LISTINGS.*',DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'))
-        ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
-        ->where('STATUS', '=', 10)
-        ->where('URL_SLUG', '=', $url_slug)
-        ->first();
-    }
+        if (Auth::check() && Auth::user()->USER_TYPE == 1) {
+            $user_id = Auth::id();
+            $listing = Listings::with(['images', 'getListingVariant', 'variants', 'additionalInfo', 'owner'])
+                ->select('PRD_LISTINGS.*', DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'), 'ACC_LISTING_LEAD_PAYMENTS.PURCHASE_DATE')
+                ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
+                ->leftJoin('ACC_LISTING_LEAD_PAYMENTS', function ($join) use ($user_id) {
+                    $join->on('PRD_LISTINGS.PK_NO', '=', 'ACC_LISTING_LEAD_PAYMENTS.F_LISTING_NO');
+                    $join->where('ACC_LISTING_LEAD_PAYMENTS.F_USER_NO', $user_id);
+                })
+                ->where('STATUS', '=', 10)
+                ->where('URL_SLUG', '=', $url_slug)
+                ->first();
+        } else {
+            $listing = Listings::with(['images', 'getListingVariant', 'variants', 'additionalInfo', 'owner'])
+                ->select('PRD_LISTINGS.*', DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'))
+                ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
+                ->where('STATUS', '=', 10)
+                ->where('URL_SLUG', '=', $url_slug)
+                ->first();
+        }
 
-    if (!$listing) {
-        abort(404);
-    }
-    if(Auth::check()){
-        $today = date('Y-m-d');
-        // dd($today);
-        $user_id = Auth::id();
-        $check_old = BrowsedProperty::where('F_USER_NO',$user_id)->where('F_LISTING_NO',$listing->PK_NO)->orderBy('PK_NO', 'DESC')->first();
-        if($check_old){
-            $last_date = date('Y-m-d', strtotime($check_old->LAST_BROWES_TIME));
-            if($last_date == $today){
-                BrowsedProperty::where('PK_NO',$check_old->PK_NO) ->increment('COUNTER', 1);
-            }else{
+        if (!$listing) {
+            abort(404);
+        }
+        if (Auth::check()) {
+            $today = date('Y-m-d');
+            // dd($today);
+            $user_id = Auth::id();
+            $check_old = BrowsedProperty::where('F_USER_NO', $user_id)->where('F_LISTING_NO', $listing->PK_NO)->orderBy('PK_NO', 'DESC')->first();
+            if ($check_old) {
+                $last_date = date('Y-m-d', strtotime($check_old->LAST_BROWES_TIME));
+                if ($last_date == $today) {
+                    BrowsedProperty::where('PK_NO', $check_old->PK_NO)->increment('COUNTER', 1);
+                } else {
+                    $bp = new BrowsedProperty();
+                    $bp->F_USER_NO = $user_id;
+                    $bp->F_LISTING_NO = $listing->PK_NO;
+                    $bp->COUNTER = 1;
+                    $bp->LAST_BROWES_TIME = date('Y-m-d H:i:s');
+                    $bp->save();
+                }
+
+            } else {
                 $bp = new BrowsedProperty();
                 $bp->F_USER_NO = $user_id;
                 $bp->F_LISTING_NO = $listing->PK_NO;
@@ -208,17 +224,8 @@ class Listings extends Model
                 $bp->save();
             }
 
-        }else{
-            $bp = new BrowsedProperty();
-            $bp->F_USER_NO = $user_id;
-            $bp->F_LISTING_NO = $listing->PK_NO;
-            $bp->COUNTER = 1;
-            $bp->LAST_BROWES_TIME = date('Y-m-d H:i:s');
-            $bp->save();
+
         }
-
-
-    }
 
         return $listing;
     }

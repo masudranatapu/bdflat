@@ -78,6 +78,7 @@ class CustomerAbstract implements CustomerInterface
             $list->PROPERTY_CONDITION = json_encode($request->condition);
             $list->REQUIREMENT_DETAILS = $request->requirement_details;
             $list->PREP_CONT_TIME = $request->time;
+            $list->MAX_SHARING_PERMISSION = $request->max_sharing_permission;
             $list->EMAIL_ALERT = $request->alert;
             $list->IS_VERIFIED = $request->v_status;
             $list->MODIFYED_BY = Auth::id();

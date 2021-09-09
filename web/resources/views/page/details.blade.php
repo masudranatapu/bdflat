@@ -111,6 +111,13 @@
                                                     , @endif</a>
                                         @endforeach
                                     </p>
+                                    @if(isset($listing->variants) && count($listing->variants))
+                                        <p>
+                                            <a href="javascript:void(0)" data-toggle="modal"
+                                               class="text-danger"
+                                               data-target="#extra_variants">More</a>
+                                        </p>
+                                    @endif
                                 </div>
                                 <div class="contect-with">
                                     <h3>Contact With</h3>
@@ -314,13 +321,15 @@
     @include('layouts.post-ad')
 
     <!-- Modal -->
-    <div class="modal fade" id="loginRegModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <div class="modal fade" id="loginRegModal" data-backdrop="static" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                    <button type="button" style="position:absolute;right:18px;top:5px;font-size:40px;z-index: 1;" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <button type="button" style="position:absolute;right:18px;top:5px;font-size:40px;z-index: 1;"
+                        class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <div class="modal-body">
                     <div class="login-wrap text-center" id="loginModal">
                         <h1>Sign In & Access Your Account</h1>
@@ -513,6 +522,49 @@
             </div>
         </div>
     </div>
+
+    @if(isset($listing->variants) && count($listing->variants))
+        <div class="modal fade" id="extra_variants" tabindex="-1" aria-labelledby="extra_variantsLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="extra_variantsLabel">More Variants</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                     aria-orientation="vertical">
+                                    <table class="table text-center table-striped"
+                                           style="font-family: 'Montserrat-Medium';font-size: 14px">
+                                        <thead>
+                                        <tr>
+                                            <th>BED</th>
+                                            <th>BATH</th>
+                                            <th>PRICE</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($listing->variants as $variant)
+                                            <td>{{ $variant->BEDROOM }}</td>
+                                            <td>{{ $variant->BATHROOM }}</td>
+                                            <td>{{ number_format($variant->TOTAL_PRICE, 2) }}</td>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 @endsection
 
