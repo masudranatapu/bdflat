@@ -63,6 +63,7 @@ class CustomerAbstract implements CustomerInterface
                 $list = ProductRequirements::where('PK_NO', $request->pk_no)->first();
             } else {
                 $list = new ProductRequirements();
+                $list->CREATED_BY = Auth::id();
             }
 
             $list->PROPERTY_FOR = $request->itemCon;
@@ -79,8 +80,8 @@ class CustomerAbstract implements CustomerInterface
             $list->PREP_CONT_TIME = $request->time;
             $list->EMAIL_ALERT = $request->alert;
             $list->IS_VERIFIED = $request->v_status;
-            $list->CREATED_BY = $request->user_id;
-            $list->MODIFYED_BY = $request->user_id;
+            $list->MODIFYED_BY = Auth::id();
+            $list->F_USER_NO = $request->user_id;
 
             if ($request->v_status == 1) {
                 $list->F_VERIFIED_BY = Auth::id();
@@ -89,7 +90,6 @@ class CustomerAbstract implements CustomerInterface
 
             $list->save();
 
-
             $user = Customer::where('PK_NO', $request->user_id)->first();
             $user->NAME = $request->name;
             $user->EMAIL = $request->email;
@@ -97,7 +97,6 @@ class CustomerAbstract implements CustomerInterface
             $user->MOBILE_NO = $request->mobile;
             $user->STATUS = $request->acc_status;
             $user->update();
-
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);

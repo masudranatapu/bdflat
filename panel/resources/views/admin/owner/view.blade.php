@@ -22,6 +22,15 @@ $roles = userRolePermissionArray();
 $user_type = Config::get('static_array.user_type');
 $user_status = Config::get('static_array.user_status');
 $owner = $data['owner'] ?? [];
+$days = [
+    0 => 'Sun',
+    1 => 'Mon',
+    2 => 'Tue',
+    3 => 'Wed',
+    4 => 'Thu',
+    5 => 'Fri',
+    6 => 'Sat'
+];
 ?>
 
 @section('content')
@@ -38,62 +47,170 @@ $owner = $data['owner'] ?? [];
                                         <p><span
                                                 class="font-weight-bold">User Type: </span>{{ $user_type[$owner->USER_TYPE] }}
                                         </p>
+                                        <p>
+                                            <span class="font-weight-bold">User Status: </span>
+                                            {{ $user_status[$owner->STATUS] ?? 'N/A' }}
+                                        </p>
+                                        <p>
+                                            <span class="font-weight-bold">Can Login: </span>
+                                            {{ $owner->CAN_LOGIN == 1 ? 'Yes' : 'No' }}
+                                        </p>
                                         <p><span
                                                 class="font-weight-bold">Listing Limit: </span>{{ $owner->LISTING_LIMIT }}
+                                        </p>
+                                        <p><span
+                                                class="font-weight-bold">Total Listing: </span>{{ $owner->TOTAL_LISTING }}
                                         </p>
                                         <p><span class="font-weight-bold">Name: </span>{{ $owner->NAME }}</p>
-                                        <p><span class="font-weight-bold">Email: </span>{{ $owner->EMAIL }}</p>
-                                        <p><span class="font-weight-bold">Mobile: </span>{{ $owner->MOBILE_NO }}</p>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <p><span class="font-weight-bold">User Image:</span></p>
-                                                <img src="{{ asset($owner->PROFILE_PIC_URL ?? '') }}" alt=""
-                                                     style="width: 100%">
+                                        <p>
+                                            <span class="font-weight-bold">Email: </span>
+                                            {{ $owner->EMAIL }}
+                                            ({{ $owner->IS_EMAIL_VERIFIED == 1 ? 'Verified' : 'Not Verified' }})</p>
+                                        <p>
+                                            <span class="font-weight-bold">Mobile: </span>
+                                            {{ $owner->MOBILE_NO }}
+                                            ({{ $owner->IS_MOBILE_VERIFIED == 1 ? 'Verified' : 'Not Verified' }})
+                                        </p>
+                                        <p><span
+                                                class="font-weight-bold">Payment Auto Renew: </span>{{ $owner->PAYMENT_AUTO_RENEW == 1 ? 'Yes' : 'No' }}
+                                        </p>
+                                        <p><span
+                                                class="font-weight-bold">Open Time: </span>{{ $owner->info->SHOP_OPEN_TIME ?? 'N/A' }}
+                                        </p>
+                                        <p><span
+                                                class="font-weight-bold">Close Time: </span>{{ $owner->info->SHOP_CLOSE_TIME ?? 'N/A' }}
+                                        </p>
+                                        <p><span
+                                                class="font-weight-bold">Working Days: </span>
+                                        @if($owner->info && $owner->info->WORKING_DAYS)
+                                            <ul>
+                                                @foreach(json_decode($owner->info->WORKING_DAYS) as $day)
+                                                    <li>{{ $days[$day] ?? '' }}</li>
+                                                @endforeach
+                                            </ul>
+                                            @endif
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Feature Type: </span>{{ $owner->IS_FEATURE == 1 ? 'Feature' : 'General' }}
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p><span class="font-weight-bold">User Image:</span></p>
+                                                    <img src="{{ asset($owner->PROFILE_PIC_URL ?? '') }}" alt=""
+                                                         style="width: 100%">
+                                                </div>
                                             </div>
-                                        </div>
-                                    @else
-                                        <p><span
-                                                class="font-weight-bold">User Type: </span>{{ $user_type[$owner->USER_TYPE] }}
-                                        </p>
-                                        <p><span
-                                                class="font-weight-bold">Listing Limit: </span>{{ $owner->LISTING_LIMIT }}
-                                        </p>
-                                        <p><span class="font-weight-bold">Company Name: </span>{{ $owner->NAME }}</p>
-                                        <p><span
-                                                class="font-weight-bold">Contact Person Name: </span>{{ $owner->CONTACT_PER_NAME }}
-                                        </p>
-                                        <p><span class="font-weight-bold">Designation: </span>{{ $owner->DESIGNATION }}
-                                        </p>
-                                        <p><span class="font-weight-bold">Office Address: </span>{{ $owner->ADDRESS }}
-                                        </p>
-                                        <p><span class="font-weight-bold">Email: </span>{{ $owner->EMAIL }}</p>
-                                        <p><span class="font-weight-bold">Mobile: </span>{{ $owner->MOBILE_NO }}</p>
-                                        <p><span
-                                                class="font-weight-bold">About Company: </span>{{ $owner->info->ABOUT_COMPANY ?? 'N/A' }}
-                                        </p>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <p><span class="font-weight-bold">Logo:</span></p>
-                                                <img src="{{ asset($owner->info->LOGO ?? '') }}" alt=""
-                                                     style="width: 100%">
+                                            <p><span class="font-weight-bold">Address: </span>{{ $owner->ADDRESS }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Actual Topup: </span>{{ number_format($owner->ACTUAL_TOPUP, 2) }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Pending Topup: </span>{{ number_format($owner->PENDING_TOPUP, 2) }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Unused Topup: </span>{{ number_format($owner->UNUSED_TOPUP, 2) }}
+                                            </p>
+                                        @else
+                                            <p><span
+                                                    class="font-weight-bold">User Type: </span>{{ $user_type[$owner->USER_TYPE] }}
+                                            </p>
+                                            <p>
+                                                <span class="font-weight-bold">User Status: </span>
+                                                {{ $user_status[$owner->STATUS] ?? 'N/A' }}
+                                            </p>
+                                            <p>
+                                                <span class="font-weight-bold">Can Login: </span>
+                                                {{ $owner->CAN_LOGIN == 1 ? 'Yes' : 'No' }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Listing Limit: </span>{{ $owner->LISTING_LIMIT }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Total Listing: </span>{{ $owner->TOTAL_LISTING }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Company Name: </span>{{ $owner->NAME }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Contact Person Name: </span>{{ $owner->CONTACT_PER_NAME }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Designation: </span>{{ $owner->DESIGNATION }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Office Address: </span>{{ $owner->ADDRESS }}
+                                            </p>
+                                            <p>
+                                                <span class="font-weight-bold">Email: </span>
+                                                {{ $owner->EMAIL }}
+                                                ({{ $owner->IS_EMAIL_VERIFIED == 1 ? 'Verified' : 'Not Verified' }}
+                                                )</p>
+                                            <p>
+                                                <span class="font-weight-bold">Mobile: </span>
+                                                {{ $owner->MOBILE_NO }}
+                                                ({{ $owner->IS_MOBILE_VERIFIED == 1 ? 'Verified' : 'Not Verified' }}
+                                                )
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">About Company: </span>{{ $owner->info->ABOUT_COMPANY ?? 'N/A' }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Contact Person Name: </span>{{ $owner->CONTACT_PER_NAME ?? 'N/A' }}
+                                            </p><p><span
+                                                    class="font-weight-bold">Payment Auto Renew: </span>{{ $owner->PAYMENT_AUTO_RENEW == 1 ? 'Yes' : 'No' }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Open Time: </span>{{ $owner->info->SHOP_OPEN_TIME ?? 'N/A' }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Close Time: </span>{{ $owner->info->SHOP_CLOSE_TIME ?? 'N/A' }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Working Days: </span>
+                                            @if($owner->info && $owner->info->WORKING_DAYS)
+                                                <ul>
+                                                    @foreach(json_decode($owner->info->WORKING_DAYS) as $day)
+                                                        <li>{{ $days[$day] ?? '' }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                @endif
+                                                </p>
+                                                <p><span
+                                                        class="font-weight-bold">Feature Type: </span>{{ $owner->IS_FEATURE == 1 ? 'Feature' : 'General' }}
+                                                </p>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p><span class="font-weight-bold">Logo:</span></p>
+                                                    <img src="{{ asset($owner->info->LOGO ?? '') }}" alt=""
+                                                         style="width: 100%">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p><span class="font-weight-bold">Banner:</span></p>
+                                                    <img src="{{ asset($owner->info->BANNER ?? '') }}" alt=""
+                                                         style="width: 100%">
+                                                </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <p><span class="font-weight-bold">Banner:</span></p>
-                                                <img src="{{ asset($owner->info->BANNER ?? '') }}" alt=""
-                                                     style="width: 100%">
-                                            </div>
-                                        </div>
-                                        <h3 class="mt-2">SEO</h3>
-                                        <p><span
-                                                class="font-weight-bold">Meta Title: </span>{{ $owner->info->META_TITLE ?? 'N/A' }}
-                                        </p>
-                                        <p><span
-                                                class="font-weight-bold">Site URL: </span>{{ $owner->info->SITE_URL ?? 'N/A' }}
-                                        </p>
-                                        <p><span
-                                                class="font-weight-bold">Meta Description: </span>{{ $owner->info->META_DESCRIPTION ?? 'N/A' }}
-                                        </p>
-                                    @endif
+                                            <p><span
+                                                    class="font-weight-bold">Actual Topup: </span>{{ number_format($owner->ACTUAL_TOPUP, 2) }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Pending Topup: </span>{{ number_format($owner->PENDING_TOPUP, 2) }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Unused Topup: </span>{{ number_format($owner->UNUSED_TOPUP, 2) }}
+                                            </p>
+                                            <h3 class="mt-2">SEO</h3>
+                                            <p><span
+                                                    class="font-weight-bold">Meta Title: </span>{{ $owner->info->META_TITLE ?? 'N/A' }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Site URL: </span>{{ $owner->info->SITE_URL ?? 'N/A' }}
+                                            </p>
+                                            <p><span
+                                                    class="font-weight-bold">Meta Description: </span>{{ $owner->info->META_DESCRIPTION ?? 'N/A' }}
+                                            </p>
+                                        @endif
                                 </div>
                                 <div class="col-12">
                                     <a href="{{ route('admin.owner.list') }}" class="btn btn-info">Back</a>
