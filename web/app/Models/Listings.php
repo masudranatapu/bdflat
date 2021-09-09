@@ -178,9 +178,32 @@ class Listings extends Model
                 ->take($limit - $listings->count())
                 ->get();
             $listings = $listings->merge($same_type);
+
+            $this->listingByArea($type->F_AREA_NO, $limit, $listings);
         }
 
+
         return $listings;
+    }
+
+    private function listingByArea($area_id, $limit, &$listing)
+    {
+        if ($listing->count() >= $limit) {
+            return;
+        }
+
+        $listings = Listings::with(['getDefaultThumb', 'getListingVariant'])
+            ->whereIn('F_AREA_NO', $area_id)
+            ->get();
+        $listing = $listing->merge($listings);
+
+        $parent = Area::where('PK_NO', $area_id)->first();
+        if (!$parent) {
+            return;
+        }
+
+        $parent = $parent->F_PARENT_AREA_NO;
+        $this->listingByArea($parent, $limit, $listing);
     }
 
     public function getListingDetails($url_slug)
