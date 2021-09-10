@@ -40,9 +40,10 @@ class DatatableAbstract implements DatatableInterface
 
             })
             ->addColumn('leadStatus', function ($dataSet) {
-                $requirement = ProductRequirements::where('F_USER_NO', $dataSet->PK_NO)->where('IS_ACTIVE', 1)->first('PK_NO');
+                $requirement = ProductRequirements::select('IS_VERIFIED')->where('F_USER_NO', $dataSet->PK_NO)->where('IS_ACTIVE', 1)->first();
                 if ($requirement) {
-                    return 1;
+                    $verify = Config::get('static_array.seeker_verification_status');
+                    return $verify[$requirement->IS_VERIFIED] ?? '';
                 }
                 return 'N/A';
             })

@@ -18,32 +18,32 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
     <style>
-.switch{position:relative;display:inline-block;width:46px;height:28px}
-.switch input{opacity:0;width:0;height:0}
-.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}
-.slider:before{position:absolute;content:"";height:22px;width:22px;left:2px;bottom:3px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#4fd460}input:focus+.slider{box-shadow:0 0 1px #4fd460}input:checked+.slider:before{-webkit-transform:translateX(20px);-ms-transform:translateX(26px)}
-.slider.round{border-radius:24px}
-.slider.round:before{border-radius:50%}
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{padding:0 0!important;left:-6px!important}
-.select2-container--default .select2-selection--multiple .select2-selection__choice{margin-bottom:3px!important}
-.select2-container .select2-selection--multiple .select2-selection__rendered{margin-bottom:0!important}
-.bedroom-select input[type=checkbox]{display:none}
-.bedroom-select label{font-size:14px;color:#555;position:relative;padding:0 17px 0 23px;cursor:pointer}
-.bedroom-select .checkmark{display:inline-block;width:15px;height:15px;background:#fff;border:2px solid #d9d7d7;position:absolute;left:0;top:0;border-radius:2px;transition:all .1s}
-.bedroom-select input:checked+.checkmark:after{content:"";position:absolute;height:7px;width:14px;border-left:3px solid #666ee8;border-bottom:3px solid #666ee8;top:-1px;left:1px;transform:rotate(-45deg)}
-.email-alert input[type=radio]{display:none}
-.email-alert input[type=radio]+label{font-size:14px;padding:0 17px 0 18px;position:relative;cursor:pointer}
-.email-alert input[type=radio]+label:after,.email-alert input[type=radio]+label:before{position:absolute;top:0;left:0;content:"";width:14px;height:14px;border-radius:50%;display:inline-block;background-color:transparent}
-.email-alert input[type=radio]+label:before{border:2px solid #666ee8}
-.email-alert input[type=radio]:checked+label:after{border:5px solid #666ee8}
-.row {
-    align-items: baseline;
-}
-.show_img{height:82px;width:82px;object-fit:cover}
-.del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}.del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}
-.select2{width:100%!important}
-a.ui-state-default{background-color:red!important}
-.ctm{min-width: 140px; display: inline-block;}
+		.switch{position:relative;display:inline-block;width:46px;height:28px}
+		.switch input{opacity:0;width:0;height:0}
+		.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}
+		.slider:before{position:absolute;content:"";height:22px;width:22px;left:2px;bottom:3px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#4fd460}input:focus+.slider{box-shadow:0 0 1px #4fd460}input:checked+.slider:before{-webkit-transform:translateX(20px);-ms-transform:translateX(26px)}
+		.slider.round{border-radius:24px}
+		.slider.round:before{border-radius:50%}
+		.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{padding:0 0!important;left:-6px!important}
+		.select2-container--default .select2-selection--multiple .select2-selection__choice{margin-bottom:3px!important}
+		.select2-container .select2-selection--multiple .select2-selection__rendered{margin-bottom:0!important}
+		.bedroom-select input[type=checkbox]{display:none}
+		.bedroom-select label{font-size:14px;color:#555;position:relative;padding:0 17px 0 23px;cursor:pointer}
+		.bedroom-select .checkmark{display:inline-block;width:15px;height:15px;background:#fff;border:2px solid #d9d7d7;position:absolute;left:0;top:0;border-radius:2px;transition:all .1s}
+		.bedroom-select input:checked+.checkmark:after{content:"";position:absolute;height:7px;width:14px;border-left:3px solid #666ee8;border-bottom:3px solid #666ee8;top:-1px;left:1px;transform:rotate(-45deg)}
+		.email-alert input[type=radio]{display:none}
+		.email-alert input[type=radio]+label{font-size:14px;padding:0 17px 0 18px;position:relative;cursor:pointer}
+		.email-alert input[type=radio]+label:after,.email-alert input[type=radio]+label:before{position:absolute;top:0;left:0;content:"";width:14px;height:14px;border-radius:50%;display:inline-block;background-color:transparent}
+		.email-alert input[type=radio]+label:before{border:2px solid #666ee8}
+		.email-alert input[type=radio]:checked+label:after{border:5px solid #666ee8}
+		.row {
+		align-items: baseline;
+		}
+		.show_img{height:82px;width:82px;object-fit:cover}
+		.del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}.del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}
+		.select2{width:100%!important}
+		a.ui-state-default{background-color:red!important}
+		.ctm{min-width: 140px; display: inline-block;}
 </style>
 
 @endpush
@@ -55,9 +55,11 @@ a.ui-state-default{background-color:red!important}
 @endpush
 
 @php
+	$property_types = $data['property_types'] ?? [];
+	$user 			= $data['user'];
     $roles          = userRolePermissionArray();
-    $cities         = $city ?? [];
-    $row            = $row ?? [];
+    $cities         = $data['city'] ?? [];
+    $row            = $data['row'] ?? [];
     $user_status    = \Config::get('static_array.user_status');
 
     if (!empty($row->BEDROOM)) {
@@ -72,6 +74,8 @@ a.ui-state-default{background-color:red!important}
         $prop_cond = [];
     }
     $tabIndex = 0;
+    $areas = $data['areas'] ?? [];
+
 @endphp
 
 
@@ -95,14 +99,14 @@ a.ui-state-default{background-color:red!important}
                 {!! Form::open([ 'route' => 'admin.seeker.update', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
 
                 {!! Form::hidden('pk_no', $row->PK_NO ?? null) !!}
-                {!! Form::hidden('user_id', $data->PK_NO ?? null) !!}
+                {!! Form::hidden('user_id', $user->PK_NO ?? null) !!}
 
                 <div class="form-body">
                     <h2 class="mb-2">Seeker Information</h2>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label>User ID: <strong>{{$data->CODE}}</strong></label>
+                                <label>User ID: <strong>{{$user->CODE}}</strong></label>
                             </div>
                         </div>
                     </div>
@@ -110,7 +114,7 @@ a.ui-state-default{background-color:red!important}
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label>Created Date: <strong>{{date('M d, Y',strtotime($data->CREATED_AT))}}</strong></label>
+                                <label>Created Date: <strong>{{date('M d, Y',strtotime($user->CREATED_AT))}}</strong></label>
                             </div>
                         </div>
                     </div>
@@ -124,7 +128,7 @@ a.ui-state-default{background-color:red!important}
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('name') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('name', $data->NAME ?? old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::text('name', $user->NAME ?? old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -140,7 +144,7 @@ a.ui-state-default{background-color:red!important}
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('email') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('email',$data->EMAIL ?? old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::text('email',$user->EMAIL ?? old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -156,7 +160,7 @@ a.ui-state-default{background-color:red!important}
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('address') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('address', $data->ADDRESS ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Address', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::text('address', $user->ADDRESS ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Address', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('address', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -172,7 +176,7 @@ a.ui-state-default{background-color:red!important}
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::text('mobile', $data->MOBILE_NO ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Mobile Number', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::text('mobile', $user->MOBILE_NO ?? old('address'), [ 'class' => 'form-control', 'placeholder' => 'Mobile Number', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -205,7 +209,7 @@ a.ui-state-default{background-color:red!important}
                         <div class="col-md-6">
                             <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('area[]', $areas ?? [], json_decode($row->F_AREAS ?? null),array('class'=>'form-control select2','id' => 'area', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required', 'multiple', 'tabIndex' => ++$tabIndex)) !!}
+                                    {!! Form::select('area[]', $areas ?? [], json_decode($row->F_AREAS ?? null),array('class'=>'form-control select2','id' => 'area','data-validation-required-message' => 'This field is required', 'multiple', 'tabIndex' => ++$tabIndex)) !!}
                                     {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -513,6 +517,9 @@ a.ui-state-default{background-color:red!important}
                                     {!! Form::radio('v_status','2', !empty($row)? $row->IS_VERIFIED==2?true:false:old('alert'),[ 'id' => 'invalid','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('invalid','Invalid') }}
 
+                                     {!! Form::radio('v_status','3', !empty($row)? $row->IS_VERIFIED==3?true:false:old('alert'),[ 'id' => 'updated','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {{ Form::label('updated','Updated by Seeker') }}
+
                                     {!! $errors->first('alert', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -584,7 +591,7 @@ a.ui-state-default{background-color:red!important}
                         <div class="col-md-3">
                             <div class="form-group {!! $errors->has('acc_status') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::select('acc_status', $user_status, $data->STATUS ?? null,['class'=>'form-control','id'=>'acc_status', 'placeholder'=>'Select','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::select('acc_status', $user_status, $user->STATUS ?? null,['class'=>'form-control','id'=>'acc_status', 'placeholder'=>'Select','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {!! $errors->first('acc_status', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>

@@ -38,7 +38,7 @@ class ProductRequirementsRequest extends FormRequest
             'requirement_details'   => 'max:1000',
             'alert'                 => 'required',
             'area'                  => 'required|array|min:1',
-            'f_city_id'             => 'required'
+            'city'                  => 'required'
         ];
 
         return $rules;
@@ -57,9 +57,9 @@ class ProductRequirementsRequest extends FormRequest
             'condition.required'        => 'Property Condition is required!',
             'time.required'             => 'Preferred time to contact is required!',
             'alert.required'            => 'Email Alert is required!',
-            'f_city_id.required'        => 'Location is required',
+            'city.required'             => 'Location is required',
             'area.required'             => 'Area is required',
-            'area.min'                  => 'Location is required'
+            'area.min'                  => 'Area is required'
         ];
     }
 

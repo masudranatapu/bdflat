@@ -45,6 +45,22 @@ return [
 		4 => 'Deleted'
     ],
 
+    'seeker_verification_status' => [
+        0 => 'pending',
+        1 => 'Valid',
+        2 => 'Invalid',
+        3 => 'Updated by user',
+    ],
+
+
+
+
+
+
+
+
+
+
     'shipping_status' => [
         00 => 'Not Shipped',
         10 => 'In Progress at Source',

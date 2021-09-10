@@ -52,7 +52,7 @@ class ProductRequirements extends Model
             $list = new ProductRequirements();
             $list->F_USER_NO            = Auth::id() ?? $request->auth_id;
             $list->PROPERTY_FOR         = $request->itemCon;
-            $list->F_CITY_NO            = $request->f_city_id;
+            $list->F_CITY_NO            = $request->city;
             $list->F_AREAS              = json_encode($request->area);
             $list->F_PROPERTY_TYPE_NO   = $request->property_type;
             $list->MIN_SIZE             = $request->minimum_size;

@@ -50,17 +50,19 @@ class SeekerController extends BaseController
     public function getEdit($id)
     {
         $this->resp = $this->customer->getEdit($id);
-        $data = $this->resp->data;
-        $city = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
-        $row = ProductRequirements::where('F_USER_NO', $id)->orderByDesc('PK_NO')->first();
-        $areas = Area::where('F_CITY_NO', 1)->pluck('AREA_NAME', 'PK_NO');
-        $property_types = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
-        return view('admin.seeker.edit', compact('data', 'city', 'areas', 'row', 'property_types'));
+        $data['user'] = $this->resp->data;
+        $data['city'] = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
+        $data['row'] = ProductRequirements::where('F_USER_NO', $id)->where('IS_ACTIVE',1)->orderByDesc('PK_NO')->first();
+        if($data['row'] && $data['row']->F_CITY_NO){            
+            $data['areas'] = Area::where('F_CITY_NO', 1)->pluck('AREA_NAME', 'PK_NO');
+        }
+        $data['property_types'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+
+        return view('admin.seeker.edit', compact('data'));
     }
 
     public function postUpdate(Request $request): RedirectResponse
     {
-//        dd($request->all());
         $this->resp = $this->customer->postUpdate($request);
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }

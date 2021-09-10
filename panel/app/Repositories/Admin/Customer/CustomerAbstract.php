@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin\Customer;
 
 use App\Models\Booking;
+use App\Models\Product;
 use App\Models\BankList;
 use App\Models\Customer;
 use App\Models\Reseller;
@@ -60,31 +61,31 @@ class CustomerAbstract implements CustomerInterface
         DB::beginTransaction();
         try {
             if ($request->pk_no) {
-                $list = ProductRequirements::where('PK_NO', $request->pk_no)->first();
+                $list = ProductRequirements::find($request->pk_no);
             } else {
                 $list = new ProductRequirements();
                 $list->CREATED_BY = Auth::id();
             }
 
-            $list->PROPERTY_FOR = $request->itemCon;
-            $list->F_CITY_NO = $request->city;
-            $list->F_AREAS = json_encode($request->area);
-            $list->F_PROPERTY_TYPE_NO = $request->property_type;
-            $list->MIN_SIZE = $request->minimum_size;
-            $list->MAX_SIZE = $request->maximum_size;
-            $list->MIN_BUDGET = $request->minimum_budget;
-            $list->MAX_BUDGET = $request->maximum_budget;
-            $list->BEDROOM = json_encode($request->rooms);
-            $list->PROPERTY_CONDITION = json_encode($request->condition);
-            $list->REQUIREMENT_DETAILS = $request->requirement_details;
-            $list->PREP_CONT_TIME = $request->time;
+            $list->PROPERTY_FOR         = $request->itemCon;
+            $list->F_CITY_NO            = $request->city;
+            $list->F_AREAS              = json_encode($request->area);
+            $list->F_PROPERTY_TYPE_NO   = $request->property_type;
+            $list->MIN_SIZE             = $request->minimum_size;
+            $list->MAX_SIZE             = $request->maximum_size;
+            $list->MIN_BUDGET           = $request->minimum_budget;
+            $list->MAX_BUDGET           = $request->maximum_budget;
+            $list->BEDROOM              = json_encode($request->rooms);
+            $list->PROPERTY_CONDITION   = json_encode($request->condition);
+            $list->REQUIREMENT_DETAILS  = $request->requirement_details;
+            $list->PREP_CONT_TIME       = $request->time;
             $list->MAX_SHARING_PERMISSION = $request->max_sharing_permission;
-            $list->EMAIL_ALERT = $request->alert;
-            $list->IS_VERIFIED = $request->v_status;
-            $list->MODIFYED_BY = Auth::id();
-            $list->F_USER_NO = $request->user_id;
+            $list->EMAIL_ALERT          = $request->alert;
+            $list->IS_VERIFIED          = $request->v_status;
+            $list->MODIFYED_BY          = Auth::id();
+            $list->F_USER_NO            = $request->user_id;
 
-            if ($request->v_status == 1) {
+            if ($request->v_status == 1 && $request->acc_status == 1) {
                 $list->F_VERIFIED_BY = Auth::id();
                 $list->VERIFIED_AT = date('Y-m-d H:i:s');
             }
@@ -92,12 +93,47 @@ class CustomerAbstract implements CustomerInterface
             $list->save();
 
             $user = Customer::where('PK_NO', $request->user_id)->first();
-            $user->NAME = $request->name;
-            $user->EMAIL = $request->email;
-            $user->ADDRESS = $request->address;
-            $user->MOBILE_NO = $request->mobile;
-            $user->STATUS = $request->acc_status;
+            $user->NAME         = $request->name;
+            $user->EMAIL        = $request->email;
+            $user->ADDRESS      = $request->address;
+            $user->MOBILE_NO    = $request->mobile;
+            $user->STATUS       = $request->acc_status;
             $user->update();
+
+            if ($request->v_status == 1 && $request->acc_status == 1) {
+                //share to developer company
+                $list = ProductRequirements::find($request->pk_no);
+                $property_for       = $list->PROPERTY_FOR;
+                $property_type      = $list->F_PROPERTY_TYPE_NO;
+                $area               = $list->F_AREA_NO;
+                $size_min           = $list->MIN_SIZE-100;
+                $size_max           = $list->MAX_SIZE+100;
+                $property_condition = json_decode($list->PROPERTY_CONDITION);
+
+                $listings =  Product::select('PRD_LISTINGS.PK_NO','PRD_LISTINGS.F_USER_NO', '.')
+                ->join('PRD_LISTING_VARIANTS', 'PRD_LISTING_VARIANTS.F_LISTING_NO', 'PRD_LISTINGS.PK_NO')
+                ->join('WEB_USER', 'WEB_USER.PK_NO', 'PRD_LISTINGS.F_USER_NO')
+                ->where('PRD_LISTINGS.STATUS',10)
+                ->where('PRD_LISTINGS.PAYMENT_STATUS',1)
+                ->where('PRD_LISTINGS.PROPERTY_FOR',$property_for)
+                ->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO',$property_type)
+                ->where('PRD_LISTINGS.F_AREA_NO',$area)
+                ->whereBetween('PRD_LISTING_VARIANTS.PROPERTY_SIZE', [$size_max, $size_min])
+                ->whereIn('PRD_LISTINGS.PROPERTY_CONDITION',$property_condition)
+                ->where('WEB_USER.STATUS',1)
+                ->groupBy('PRD_LISTINGS.PK_NO')
+                ->get();
+                if($listings && count($listings) > 0 ){
+                    DB::table('PRD_LEAD_SHARE_MAP')->where('F_REQUIREMENT_NO',$request->pk_no)->where('STATUS',0)->delete();
+                    foreach ($listings as $key => $value) {
+
+// need to work
+                    }
+                }
+                dd($property_condition);
+            }
+
+
         } catch (\Exception $e) {
             DB::rollback();
             dd($e);

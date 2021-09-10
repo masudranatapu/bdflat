@@ -1,18 +1,14 @@
 @extends('layouts.app')
 @section('property-requirements','active')
 @push('custom_css')
+
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/ghp/css/glyphicons.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
+
     <style>
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-            float: right;
-            margin-left: 0;
-            padding-right: 3px;
-            border-right: none;
-            margin-top: 3px;
-        }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {float: right;margin-left: 0;padding-right: 3px;border-right: none;margin-top: 3px;}
     </style>
 @endpush
 
@@ -59,91 +55,29 @@ $old_areas = json_decode($row->F_AREAS);
                         <div class="property-title mb-2">
                             <h3>Property Requirements</h3>
                         </div>
-                    {{ $errors }}
                     {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
-                            {!! Form::hidden('f_city_id',1,[ 'id' => 'f_city_id','data-validation-required-message' => 'This field is required']) !!}
-                            {!! Form::hidden('f_area_id',null,[ 'id' => 'f_area_id','data-validation-required-message' => 'This field is required']) !!}
-
-                    <!-- city & location -->
-                        {{--<div class="select-city" data-toggle="modal" data-target="#exampleModal">
-                            <h4>
-                                <i class="fa fa-map-marker"></i><span id="show_cityArea">Select location / City</span><br/>
-                                <i class="fa fa-angle-right float-right"></i>
-                            </h4>
-                        </div>--}}
-                        {{-- <!-- city &  locations -->
-                         <div class="city-location">
-                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                 <div class="modal-dialog">
-                                     <div class="modal-content">
-                                         <div class="modal-header">
-                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                 Select City or Division | <a href="javascript:void(0);" id="all_bd">All of Bangladesh</a>
-                                             </h5>
-                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                 <span aria-hidden="true">&times;</span>
-                                             </button>
-                                         </div>
-                                         <div class="modal-body">
-                                             <div class="row">
-                                                 <div class="col-6">
-                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                         <div class="city_title">
-                                                             <h3><i class="fa fa-tags"></i>Cities</h3>
-                                                         </div>
-                                                         <div>
-                                                             <ul>
-                                                                 @foreach($cities as $item)
-                                                                     <li>
-                                                                         <a class="nav-link city_id" href="javascript:void(0);"
-                                                                            data-id="{{$item->PK_NO}}">{{$item->CITY_NAME}}<i
-                                                                                 class="fa fa-angle-right float-right"></i></a>
-                                                                     </li>
-                                                                 @endforeach
-                                                             </ul>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-
-                                                 <div class="col-6">
-                                                     <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                         <div class="city_title" id="area_title" style="display: none">
-                                                             <h3><i class="fa fa-tags"></i>Areas</h3>
-                                                         </div>
-                                                         <ul id="show_areas">
-                                                         </ul>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>--}}
-
-
-                        <div class="row form-group {!! $errors->has('f_city_id') ? 'error' : '' !!}">
+                        <div class="row form-group {!! $errors->has('city') ? 'error' : '' !!}">
                             {{ Form::label('city', 'Select location:', ['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8" style="margin-left: -5px">
                                 <div class="controls">
-                                    {!! Form::select('city', $cities, null, ['class' => 'select2 form-control', 'id' => 'cities', 'data-validation-required-message' => 'Location is required']) !!}
-                                    {!! $errors->first('f_city_id', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::select('city', $cities, !empty($row)?$row->F_CITY_NO:old('city'), ['class' => 'select2 form-control', 'id' => 'cities', 'data-validation-required-message' => 'Location is required', 'placeholder' => 'Select city']) !!}
+                                    {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row form-group {!! $errors->has('f_area_id') ? 'error' : '' !!}">
+                        <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
                             {{ Form::label('city', 'Select area:', ['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8" style="margin-left: -5px">
                                 <div class="controls">
-                                    {!! Form::select('area[]', $data['areas'] ?? [], $old_areas, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple']) !!}
-                                    {!! $errors->first('f_area_id', '<label class="help-block text-danger">:message</label>') !!}
+                                    {!! Form::select('area[]', $data['areas'] ?? [], $old_areas, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple','placeholder' => 'Select are based on city']) !!}
+                                    {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
                         </div>
                     <!-- Looking property for -->
-                        <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
+                        <div class="row form-group {!! $errors->has('itemCon') ? 'error' : '' !!}">
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8 property-looking" style="margin-left: -6px">
                                 <div class="controls">
@@ -432,9 +366,11 @@ $old_areas = json_decode($row->F_AREAS);
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script>
+
+
         //ck editor
         $('#time').datetimepicker({
-            format: 'hh:mm'
+            format: 'hh:mm',
         })
         CKEDITOR.replace('requirement_details');
     </script>
