@@ -69,10 +69,10 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                             @if(isset($data['payments']) && count($data['payments']))
                                 @foreach($data['payments'] as $payment)
                                     <tr>
-                                        <td>{{ $payment->SLIP_NUMBER }}</td>
-                                        <td>{{ $payment->PAYMENT_NOTE }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($payment->PAYMENT_DATE)->format('d/m/Y') }}</td>
-                                        <td>{{ number_format($payment->AMOUNT, 2) }}</td>
+                                        <td>{{ $payment->CODE }}</td>
+                                        <td>{{ transaction_type($payment->TRANSACTION_TYPE) }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($payment->TRANSACTION_DATE)->format('d/m/Y') }}</td>
+                                        <td>{{ number_format(abs($payment->AMOUNT), 2) }}</td>
                                         <td>&nbsp;</td>
                                     </tr>
                                 @endforeach

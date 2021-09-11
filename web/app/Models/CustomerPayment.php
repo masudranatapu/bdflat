@@ -59,7 +59,6 @@ class CustomerPayment extends Model
             $payment = new CustomerPayment();
             $payment->F_CUSTOMER_NO = Auth::id();
             $payment->AMOUNT = $request->amount;
-            $payment->REMAINING_AMOUNT = $request->amount;
             $payment->F_ACC_PAYMENT_BANK_NO = 1; // SSL PK_NO
             $payment->PAYMENT_CONFIRMED_STATUS = 1; // NOT CONFIRMED
             $payment->PAYMENT_NOTE = $request->card_type;
@@ -71,6 +70,7 @@ class CustomerPayment extends Model
             $status = true;
             $msg = 'Payment successful !';
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
         }
 
