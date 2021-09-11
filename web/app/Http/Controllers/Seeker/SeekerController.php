@@ -160,7 +160,7 @@ class SeekerController extends Controller
                 <tr>
                   <td>' . $item->BEDROOM . ' Bed</td>
                   <td>' . $item->BATHROOM . ' Bath</td>
-                  <td>' . $item->TOTAL_PRICE . '</td>
+                  <td>' . number_format($item->TOTAL_PRICE, 2) . '</td>
                 </tr>
             ';
         }

@@ -172,13 +172,18 @@ class Listings extends Model
         if ($listings->count() < $limit) {
             $type = $this->getListing($id);
             $same_type = Listings::with(['getDefaultThumb', 'getListingVariant'])
+                ->where('STATUS', '=', 10)
                 ->where('F_PROPERTY_TYPE_NO', '=', $type->F_PROPERTY_TYPE_NO)
-                ->orderByDesc('PK_NO')
                 ->whereNotIn('PK_NO', $listings->pluck('PK_NO'))
+                ->orderByDesc('PK_NO')
                 ->take($limit - $listings->count())
                 ->get();
-            $listings = $listings->merge($same_type);
 
+            if ($same_type->count()) {
+                $listings = $listings->merge($same_type);
+            }
+
+//            dd('ok');
             $this->listingByArea($type->F_AREA_NO, $limit, $listings);
         }
 
@@ -193,9 +198,13 @@ class Listings extends Model
         }
 
         $listings = Listings::with(['getDefaultThumb', 'getListingVariant'])
-            ->whereIn('F_AREA_NO', $area_id)
+            ->where('STATUS', '=', 10)
+            ->where('F_AREA_NO', '=', $area_id)
             ->get();
-        $listing = $listing->merge($listings);
+
+        if ($listings->count()) {
+            $listing = $listing->merge($listings);
+        }
 
         $parent = Area::where('PK_NO', $area_id)->first();
         if (!$parent) {
