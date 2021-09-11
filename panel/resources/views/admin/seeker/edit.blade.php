@@ -869,6 +869,25 @@
                 },
             format: 'hh:mm'
         });
+
+        let acc_status = $('#acc_status');
+        let v_status = $('input:radio[name=v_status]');
+
+        v_status.click(function () {
+            if (parseInt($(this).val()) === 1) {
+                if (parseInt(acc_status.val()) !== 1) {
+                    $(this).prop('checked', false)
+                    alert('Account should be active!')
+                }
+            }
+        });
+
+        acc_status.change(function () {
+            console.log($(this).val())
+            if (parseInt($(this).val()) !== 1) {
+                $('input#verified').prop('checked', false)
+            }
+        })
     </script>
     <script>
         $('.select2').select2();
