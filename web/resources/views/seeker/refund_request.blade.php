@@ -37,7 +37,6 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                 <div class="col-sm-12 col-md-9">
                     <div class="refund-wrap text-center">
                         <h1>Hi, you are claiming amount for<br/> Property ID {{$product_list_details->CODE}}</h1>
-                        {{ $errors }}
                         {!! Form::open([ 'route' => 'refund-request.store', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
                         {!! Form::hidden('f_listing_no',null,['id' => 'f_listing_no']) !!}
                         {!! Form::hidden('request_amount',50,['id' => 'request_amount']) !!}
@@ -52,7 +51,6 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                                 </div>
                                 <div class="form-group {!! $errors->has('comment') ? 'error' : '' !!}">
                                     {{ Form::label('comment','Your Comments <span class="required">*</span>',['class' => 'advertis-label'],false) }}
-                                    {{--                                    <textarea class="form-control" id="comment" rows="5" placeholder="Type your comments"></textarea>--}}
                                     <div class="controls">
                                         {!! Form::textarea('comment', old('comment'), [ 'id'=>'comment','class' => 'msg-area form-control', 'placeholder' => 'Type your comments','data-validation-required-message' => 'This field is required']) !!}
                                         {!! $errors->first('comment', '<label class="help-block text-danger text-left">:message</label>') !!}
@@ -61,7 +59,7 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                             </div>
                         </div>
 
-                        <h3>Claiming Reason</h3>
+                        <h3>Claiming Amount</h3>
                         <h2>BDT 75.00</h2>
 {{--                        <a href="#">Submit</a>--}}
                         <div class="advertisment-btn mt-3">

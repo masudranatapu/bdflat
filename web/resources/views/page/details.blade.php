@@ -122,7 +122,6 @@
                                 <div class="contect-with">
                                     <h3>Contact With</h3>
                                     @if($listing->CI_PAYMENT == 1)
-
                                         @if(Auth::check())
                                             @if(Auth::user()->USER_TYPE == 1)
                                                 @if($listing->PURCHASE_DATE)

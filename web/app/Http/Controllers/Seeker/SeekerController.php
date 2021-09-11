@@ -131,7 +131,7 @@ class SeekerController extends Controller
     public function getRefundRequest(Request $request, $id)
     {
         $data = array();
-        $data['product_list_details'] = Listings::where('PK_NO', $id)->select('CODE', 'CITY_NAME', 'AREA_NAME', 'PK_NO', 'IS_FEATURE')->first();
+        $data['product_list_details'] = Listings::where('PK_NO', $id)->select('CODE', 'CITY_NAME', 'AREA_NAME', 'PK_NO')->first();
         return view('seeker.refund_request', compact('data'));
     }
 
