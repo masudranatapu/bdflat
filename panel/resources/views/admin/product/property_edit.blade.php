@@ -635,6 +635,19 @@
 
                                         <div class="row">
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {{ Form::label('max_sharing_permission','Sharing Permission (Max):',['class' => 'label-title']) }}
+                                                    <div
+                                                        class="form-group {!! $errors->has('max_sharing_permission') ? 'error' : '' !!}">
+                                                        <div class="controls">
+                                                            {!! Form::number('max_sharing_permission', old('max_sharing_permission', $product->MAX_SHARING_PERMISSION), [ 'id'=>'max_sharing_permission','class' => 'form-control','placeholder'=>'Max Sharing Permission', 'tabIndex' => ++$tabIndex]) !!}
+                                                            {!! $errors->first('max_sharing_permission', '<label class="help-block text-danger">:message</label>') !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="col-12 mt-2">
                                                 <a href="{{ route('admin.product.list')}}">
                                                     <button type="button" class="btn btn-warning mr-1">
