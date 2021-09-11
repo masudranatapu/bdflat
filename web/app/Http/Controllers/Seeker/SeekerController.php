@@ -10,6 +10,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\BrowsedProperty;
 use App\Models\CustomerPayment;
 use App\Models\CustomerRefund;
+use App\Models\CustomerTxn;
 use App\Models\ListingLeadPayment;
 use App\Models\Listings;
 use Illuminate\Http\Request;
@@ -23,14 +24,16 @@ class SeekerController extends Controller
     protected $customerRefundModel;
     protected $payment;
     protected $leadPayment;
+    protected $txn;
 
-    public function __construct(User $user, CustomerRefund $customerRefund, CustomerPayment $payment, ListingLeadPayment $leadPayment)
+    public function __construct(User $user, CustomerRefund $customerRefund, CustomerPayment $payment, ListingLeadPayment $leadPayment, CustomerTxn $txn)
     {
         $this->middleware('auth');
         $this->userModel = $user;
         $this->customerRefundModel = $customerRefund;
         $this->payment = $payment;
         $this->leadPayment = $leadPayment;
+        $this->txn = $txn;
     }
 
     public function getMyAccount(Request $request)
@@ -146,7 +149,7 @@ class SeekerController extends Controller
 
     public function paymentHistory(Request $request)
     {
-        $data['payments'] = $this->payment->getPayments(Auth::id());
+        $data['payments'] = $this->txn->getTxnHistory();
         return view('seeker.payment_history', compact('data'));
     }
 
