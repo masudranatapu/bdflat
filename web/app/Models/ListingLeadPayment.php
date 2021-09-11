@@ -34,8 +34,13 @@ class ListingLeadPayment extends Model
             $payment->CREATED_BY = Auth::id();
             $payment->MODIFIED_BY = Auth::id();
             $payment->save();
-            $msg = 'Payment successful !';
 
+            $browsed = Auth::user()->browsedProperties()->orderByDesc('PK_NO')
+                ->first();
+            if ($browsed) {
+                $browsed->IS_PAY_ATTEMPT = 1;
+                $browsed->save();
+            }
         }catch (\Exception $e){
             DB::rollback();
             return $this->formatResponse(false, 'Payment not successful !', 'home');

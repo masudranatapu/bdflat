@@ -254,7 +254,7 @@
                                                     <div class="col-3">
                                                         <div class="category-bx">
                                                             <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                    src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
+                                                                    src="{{ defaultThumb($property->getDefaultThumb->THUMB_PATH ?? '') }}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
                                                     </div>

@@ -40,6 +40,9 @@
                                 </form>
                             </div>
                         </div>
+                        @if(Auth::user()->USER_TYPE == 1)
+                            <h3>You May Like</h3>
+                        @endif
                         @if(Auth::user()->USER_TYPE == 3)
                             <div class="user-wrapper">
                                 <div class="user-nav">
