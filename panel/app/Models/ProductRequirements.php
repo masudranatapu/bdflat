@@ -15,7 +15,7 @@ class ProductRequirements extends Model
     protected $table = 'PRD_REQUIREMENTS';
     protected $primaryKey = 'PK_NO';
     const CREATED_AT = 'CREATED_AT';
-    const UPDATED_AT = 'MODIFYED_AT';
+    const UPDATED_AT = 'MODIFIED_AT';
     protected $fillable = [
         'F_CITY_NO',
         'F_AREAS',
@@ -35,8 +35,8 @@ class ProductRequirements extends Model
         'EMAIL_ALERT',
         'CREATED_AT',
         'CREATED_BY',
-        'MODIFYED_AT',
-        'MODIFYED_BY',
+        'MODIFIED_AT',
+        'MODIFIED_BY',
         'IS_VERIFIED',
         'IS_ACTIVE',
         'F_VERIFIED_BY',
@@ -52,7 +52,7 @@ class ProductRequirements extends Model
         });
 
         static::updating(function ($model) {
-            $model->MODIFYED_BY = Auth::id();
+            $model->MODIFIED_BY = Auth::id();
         });
     }
 

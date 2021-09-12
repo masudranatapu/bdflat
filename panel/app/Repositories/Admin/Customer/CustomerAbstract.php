@@ -92,7 +92,7 @@ class CustomerAbstract implements CustomerInterface
             $list->MAX_SHARING_PERMISSION = $request->max_sharing_permission;
             $list->EMAIL_ALERT          = $request->alert;
             $list->IS_VERIFIED          = $request->v_status;
-            $list->MODIFYED_BY          = Auth::id();
+            $list->MODIFIED_BY          = Auth::id();
             $list->F_USER_NO            = $request->user_id;
 
             if ($request->v_status == 1 && $request->acc_status == 1) {
@@ -120,7 +120,7 @@ class CustomerAbstract implements CustomerInterface
                 $size_max           = $list->MAX_SIZE+100;
                 $property_condition = json_decode($list->PROPERTY_CONDITION);
 
-                $listings =  Product::select('PRD_LISTINGS.PK_NO','PRD_LISTINGS.F_USER_NO', '.')
+                $listings =  Product::select('PRD_LISTINGS.PK_NO','PRD_LISTINGS.F_USER_NO')
                 ->join('PRD_LISTING_VARIANTS', 'PRD_LISTING_VARIANTS.F_LISTING_NO', 'PRD_LISTINGS.PK_NO')
                 ->join('WEB_USER', 'WEB_USER.PK_NO', 'PRD_LISTINGS.F_USER_NO')
                 ->where('PRD_LISTINGS.STATUS',10)
@@ -140,7 +140,7 @@ class CustomerAbstract implements CustomerInterface
 // need to work
                     }
                 }
-                dd($property_condition);
+//                dd($property_condition);
             }
 
 
