@@ -77,6 +77,7 @@ class CustomerAbstract implements CustomerInterface
             }
 
             $list->PROPERTY_FOR         = $request->itemCon;
+//            dd($list);
             $list->F_CITY_NO            = $request->city;
             $list->F_AREAS              = json_encode($request->area);
             $list->F_PROPERTY_TYPE_NO   = $request->property_type;
@@ -112,7 +113,7 @@ class CustomerAbstract implements CustomerInterface
 
             if ($request->v_status == 1 && $request->acc_status == 1) {
                 //share to developer company
-                $list = ProductRequirements::find($request->pk_no);
+//                $list = ProductRequirements::find($request->pk_no);
                 $property_for       = $list->PROPERTY_FOR;
                 $property_type      = $list->F_PROPERTY_TYPE_NO;
                 $area               = $list->F_AREA_NO;
