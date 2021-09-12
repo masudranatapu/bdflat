@@ -89,6 +89,7 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo->SALE_PROPERTY_LIMIT = $request->sale_property_limit;
             $webInfo->VERIFIED_PROPERTY_LIMIT = $request->verified_property_limit;
             $webInfo->SIMILAR_PROPERTY_LIMIT = $request->similar_property_limit;
+            $webInfo->LISTING_LEAD_CLAIMED_TIME = $request->listing_lead_claimed_time;
             $webInfo->META_TITLE = $request->meta_title;
             $webInfo->META_KEYWARDS = $request->meta_keywords;
             $webInfo->META_DESCRIPTION = $request->meta_description;

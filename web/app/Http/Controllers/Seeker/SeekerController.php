@@ -13,6 +13,7 @@ use App\Models\CustomerRefund;
 use App\Models\CustomerTxn;
 use App\Models\ListingLeadPayment;
 use App\Models\Listings;
+use App\Models\SuggestedProperty;
 use Illuminate\Http\Request;
 use App\User;
 use Toastr;
@@ -25,8 +26,9 @@ class SeekerController extends Controller
     protected $payment;
     protected $leadPayment;
     protected $txn;
+    protected $suggestedProperty;
 
-    public function __construct(User $user, CustomerRefund $customerRefund, CustomerPayment $payment, ListingLeadPayment $leadPayment, CustomerTxn $txn)
+    public function __construct(SuggestedProperty $suggestedProperty, User $user, CustomerRefund $customerRefund, CustomerPayment $payment, ListingLeadPayment $leadPayment, CustomerTxn $txn)
     {
         $this->middleware('auth');
         $this->userModel = $user;
@@ -34,6 +36,7 @@ class SeekerController extends Controller
         $this->payment = $payment;
         $this->leadPayment = $leadPayment;
         $this->txn = $txn;
+        $this->suggestedProperty = $suggestedProperty;
     }
 
     public function getMyAccount(Request $request)
@@ -41,7 +44,6 @@ class SeekerController extends Controller
         $data = array();
         $user_id = Auth::user()->PK_NO;
         $user_type = Auth::user()->USER_TYPE;
-
 
         if ($user_type == 1) {
             $view = 'seeker.my_account';
@@ -98,8 +100,7 @@ class SeekerController extends Controller
 
     public function getSuggestedProperties(Request $request)
     {
-        $data = array();
-        //$data['city_combo'] = $this->city->getCityCombo();
+        $data['properties'] = $this->suggestedProperty->getProperties();
         return view('seeker.suggested_properties', compact('data'));
     }
 
@@ -127,6 +128,14 @@ class SeekerController extends Controller
     public function getRechargeBalance(Request $request)
     {
         $data = array();
+        if ($request->query->get('attempt') == 1) {
+            $browsed = Auth::user()->browsedProperties()->orderByDesc('LAST_BROWES_TIME')
+                ->first();
+            if ($browsed) {
+                $browsed->IS_PAY_ATTEMPT = 1;
+                $browsed->save();
+            }
+        }
         //$data['city_combo'] = $this->city->getCityCombo();
         return view('seeker.recharge_balance', compact('data'));
     }

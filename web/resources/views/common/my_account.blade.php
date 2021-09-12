@@ -40,6 +40,38 @@
                                 </form>
                             </div>
                         </div>
+                        @if(Auth::user()->USER_TYPE == 1)
+                            <h3>You May Like</h3>
+                            <div class="mt-2">
+                                @if(isset($data['properties']) && count($data['properties']))
+                                    @foreach($data['properties'] as $property)
+                                        @php($property = $property->listing ?? [])
+                                        <div class="property-product mb-4">
+                                            <div class="row no-gutters position-relative">
+                                                <div class="col-4">
+                                                    <div class="property-bx">
+                                                        <a href="{{ route('web.property.details', $property->URL_SLUG ?? '-') }}"><img
+                                                                src="{{ defaultThumb($property->getDefaultThumb->THUMB_PATH ?? '') }}"
+                                                                class="w-100" alt="image"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 position-static">
+                                                    <h3>
+                                                        TK {{ number_format($property->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h3>
+                                                    <h5 class="mt-0"><a
+                                                            href="{{ route('web.property.details', $property->URL_SLUG ?? '-') }}">{{ $property->TITLE ?? '' }}</a>
+                                                    </h5>
+                                                    <h6>{{ $property->getListingVariant && $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed, ' : '' }}{{ $property->getListingVariant && $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</h6>
+                                                    <a href="#" class="location"><i
+                                                            class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
+                                                        , {{ $property->CITY_NAME }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                        @endif
                         @if(Auth::user()->USER_TYPE == 3)
                             <div class="user-wrapper">
                                 <div class="user-nav">
@@ -73,7 +105,7 @@
                             </div>
                         @endif
 
-                        @if(isset($data['properties']) && count($data['properties']))
+                        @if(Auth::user()->USER_TYPE != 1 && isset($data['properties']) && count($data['properties']))
                             <div class="property-wrapper">
                                 <div class="new-property">
                                     <div class="property-heading">

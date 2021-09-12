@@ -254,7 +254,7 @@
                                                     <div class="col-3">
                                                         <div class="category-bx">
                                                             <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                    src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
+                                                                    src="{{ defaultThumb($property->getDefaultThumb->THUMB_PATH ?? '') }}"
                                                                     class="img-fluid" alt="image"></a>
                                                         </div>
                                                     </div>
@@ -489,7 +489,7 @@
                                             style="font-size: 28px;color: #3986FA;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
                                     </div>
                                     <div class="col-12 form-group text-center">
-                                        <a href="{{route('recharge-balance')}}"
+                                        <a href="{{route('recharge-balance') . '?attempt=1'}}"
                                            class="btn btn-success">{{ __('Recharge Now') }}</a>
                                     </div>
                                 @else
