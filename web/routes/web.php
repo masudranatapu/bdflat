@@ -32,6 +32,8 @@ Route::get('cc', function () {
 });
 
 //common routes
+Route::get('make-suggested-property', 'CornController@makeSuggProperty')->name('make-suggested-property');
+
 Route::get('about-us', 'CommonController@getAboutUs')->name('about-us');
 Route::get('contact-us', 'CommonController@getContactUs')->name('contact-us');
 Route::post('contact-us', 'CommonController@storeContactUs');
