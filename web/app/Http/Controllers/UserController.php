@@ -6,6 +6,7 @@ use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
 use App\Http\Requests\UserRequest;
+use App\Models\BrowsedProperty;
 use App\Models\CustomerRefund;
 use App\Models\Listings;
 use Illuminate\Http\Request;
@@ -39,7 +40,16 @@ class UserController extends Controller
 
         $data['my_balance'] = 0;
         //$data['city_combo'] = $this->city->getCityCombo();
-        $data['properties'] = $this->listings->getLatest(2);
+        if ($user_type == 1) {
+            $data['properties'] = BrowsedProperty::with(['listing'])
+                ->where('IS_PAY_ATTEMPT', '=', 1)
+                ->orderByDesc('PK_NO')
+                ->take(8)
+                ->get();
+//            dd($data);
+        } else {
+            $data['properties'] = $this->listings->getLatest(2);
+        }
 //        dd($data);
         return view('common.my_account', compact('data'));
     }

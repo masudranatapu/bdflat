@@ -45,7 +45,6 @@ class SeekerController extends Controller
         $user_id = Auth::user()->PK_NO;
         $user_type = Auth::user()->USER_TYPE;
 
-
         if ($user_type == 1) {
             $view = 'seeker.my_account';
         } elseif ($user_type == 2) {
@@ -129,6 +128,14 @@ class SeekerController extends Controller
     public function getRechargeBalance(Request $request)
     {
         $data = array();
+        if ($request->query->get('attempt') == 1) {
+            $browsed = Auth::user()->browsedProperties()->orderByDesc('LAST_BROWES_TIME')
+                ->first();
+            if ($browsed) {
+                $browsed->IS_PAY_ATTEMPT = 1;
+                $browsed->save();
+            }
+        }
         //$data['city_combo'] = $this->city->getCityCombo();
         return view('seeker.recharge_balance', compact('data'));
     }

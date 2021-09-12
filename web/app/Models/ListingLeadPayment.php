@@ -26,6 +26,13 @@ class ListingLeadPayment extends Model
 
         DB::beginTransaction();
         try {
+            $browsed = Auth::user()->browsedProperties()->orderByDesc('LAST_BROWES_TIME')
+                ->first();
+            if ($browsed) {
+                $browsed->IS_PAY_ATTEMPT = 1;
+                $browsed->save();
+            }
+
             $payment = new ListingLeadPayment();
             $payment->F_LISTING_NO = $id;
             $payment->F_USER_NO = Auth::id();
@@ -35,10 +42,9 @@ class ListingLeadPayment extends Model
             $payment->MODIFIED_BY = Auth::id();
             $payment->save();
 
-            $browsed = Auth::user()->browsedProperties()->orderByDesc('PK_NO')
-                ->first();
+            // Remove attempt if paid
             if ($browsed) {
-                $browsed->IS_PAY_ATTEMPT = 1;
+                $browsed->IS_PAY_ATTEMPT = 0;
                 $browsed->save();
             }
         }catch (\Exception $e){
