@@ -4,11 +4,18 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/ghp/css/glyphicons.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('/assets/css/forms/datepicker/bootstrap-datetimepicker.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 
     <style>
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {float: right;margin-left: 0;padding-right: 3px;border-right: none;margin-top: 3px;}
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            float: right;
+            margin-left: 0;
+            padding-right: 3px;
+            border-right: none;
+            margin-top: 3px;
+        }
     </style>
 @endpush
 
@@ -24,14 +31,14 @@ if (!empty($data['row']->BEDROOM)) {
 }
 
 if (!empty($data['row']->PROPERTY_CONDITION)) {
-    $prop_cond = json_decode($data['row']->PROPERTY_CONDITION) ?? [];
+    $prop_cond = json_decode($data['row']->F_PROPERTY_CONDITION) ?? [];
 } else {
     $prop_cond = [];
 }
-if(isset($row->F_AREAS) && $row->F_AREAS != ''){
-$old_areas = json_decode($row->F_AREAS);
-}else{
-   $old_areas = [];
+if (isset($row->F_AREAS) && $row->F_AREAS != '') {
+    $old_areas = json_decode($row->F_AREAS);
+} else {
+    $old_areas = [];
 }
 
 ?>
@@ -55,7 +62,7 @@ $old_areas = json_decode($row->F_AREAS);
                         <div class="property-title mb-2">
                             <h3>Property Requirements</h3>
                         </div>
-                    {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
                         <div class="row form-group {!! $errors->has('city') ? 'error' : '' !!}">
                             {{ Form::label('city', 'Select location:', ['class' => 'col-md-4 label-title']) }}
@@ -76,7 +83,7 @@ $old_areas = json_decode($row->F_AREAS);
                                 </div>
                             </div>
                         </div>
-                    <!-- Looking property for -->
+                        <!-- Looking property for -->
                         <div class="row form-group {!! $errors->has('itemCon') ? 'error' : '' !!}">
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8 property-looking" style="margin-left: -6px">
@@ -204,28 +211,13 @@ $old_areas = json_decode($row->F_AREAS);
                             {{ Form::label(null,'Property Condition (Only Buy):',['class' => 'col-sm-4 label-title']) }}
                             <div class="col-md-8 property-checkbox {!! $errors->has('condition') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    <label for="ready">
-                                        {!! Form::checkbox('condition[]','ready', !empty($bedrooms)? in_array('ready',$prop_cond)?true:false:old('condition'),[ 'id' => 'ready' ,'class' =>'form-check-input']) !!}
-                                        Ready
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label for="semi">
-                                        {!! Form::checkbox('condition[]','semi', !empty($bedrooms)? in_array('semi',$prop_cond)?true:false:old('condition'),[ 'id' => 'semi' ,'class' =>'form-check-input']) !!}
-                                        Semi Ready
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                    <label for="ongoing">
-                                        {!! Form::checkbox('condition[]','ongoing', !empty($bedrooms)? in_array('ongoing',$prop_cond)?true:false:old('condition'),[ 'id' => 'ongoing' ,'class' =>'form-check-input']) !!}
-                                        Ongoing
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                    <label for="used">
-                                        {!! Form::checkbox('condition[]','used', !empty($bedrooms)? in_array('used',$prop_cond)?true:false:old('condition'),[ 'id' => 'used' ,'class' =>'form-check-input']) !!}
-                                        Used
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    @foreach($data['cond'] as $key => $cond)
+                                        <label for="{{ str_replace(' ', '-', strtolower($cond)) }}">
+                                            {!! Form::checkbox('condition[]', $key . ',' . $cond, !empty($bedrooms)? in_array($key, $prop_cond) : old('condition'),[ 'id' => str_replace(' ', '-', strtolower($cond)) ,'class' =>'form-check-input']) !!}
+                                            {{ $cond }}
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    @endforeach
                                     {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
@@ -274,69 +266,69 @@ $old_areas = json_decode($row->F_AREAS);
 
 
                         <div class="city-location">
-{{--                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"--}}
-{{--                                 aria-hidden="true">--}}
-{{--                                <div class="modal-dialog">--}}
-{{--                                    <div class="modal-content">--}}
-{{--                                        <div class="modal-header">--}}
-{{--                                            <h5 class="modal-title" id="exampleModalLabel">--}}
-{{--                                                Select City or Division | <a href="#">All of Bangladesh</a>--}}
-{{--                                            </h5>--}}
-{{--                                            <button type="button" class="close done_button" data-dismiss="modal" aria-label="Close">--}}
-{{--                                                <span aria-hidden="true">&times;</span>--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-body">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="col-12">--}}
-{{--                                                    <div class="nav modalcategory flex-column nav-pills"--}}
-{{--                                                         id="v-pills-tab" role="tablist" aria-orientation="vertical">--}}
+                            {{--                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"--}}
+                            {{--                                 aria-hidden="true">--}}
+                            {{--                                <div class="modal-dialog">--}}
+                            {{--                                    <div class="modal-content">--}}
+                            {{--                                        <div class="modal-header">--}}
+                            {{--                                            <h5 class="modal-title" id="exampleModalLabel">--}}
+                            {{--                                                Select City or Division | <a href="#">All of Bangladesh</a>--}}
+                            {{--                                            </h5>--}}
+                            {{--                                            <button type="button" class="close done_button" data-dismiss="modal" aria-label="Close">--}}
+                            {{--                                                <span aria-hidden="true">&times;</span>--}}
+                            {{--                                            </button>--}}
+                            {{--                                        </div>--}}
+                            {{--                                        <div class="modal-body">--}}
+                            {{--                                            <div class="row">--}}
+                            {{--                                                <div class="col-12">--}}
+                            {{--                                                    <div class="nav modalcategory flex-column nav-pills"--}}
+                            {{--                                                         id="v-pills-tab" role="tablist" aria-orientation="vertical">--}}
 
-{{--                                                        <div class="city_title">--}}
-{{--                                                            <h3><i class="fa fa-tags"></i>Cities</h3>--}}
-{{--                                                        </div>--}}
-{{--                                                        @foreach($cities as $item)--}}
-{{--                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab"--}}
-{{--                                                               data-toggle="pill" data-id="{{$item->PK_NO}}"--}}
-{{--                                                               href="#v-pills-{{$item->PK_NO}}" role="tab"--}}
-{{--                                                               aria-controls="v-pills-dhaka"--}}
-{{--                                                               aria-selected="true">{{$item->CITY_NAME}}<i--}}
-{{--                                                                    class="fa fa-angle-right float-right"></i></a>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
+                            {{--                                                        <div class="city_title">--}}
+                            {{--                                                            <h3><i class="fa fa-tags"></i>Cities</h3>--}}
+                            {{--                                                        </div>--}}
+                            {{--                                                        @foreach($cities as $item)--}}
+                            {{--                                                            <a class="nav-link city_id" id="v-pills-dhaka-tab"--}}
+                            {{--                                                               data-toggle="pill" data-id="{{$item->PK_NO}}"--}}
+                            {{--                                                               href="#v-pills-{{$item->PK_NO}}" role="tab"--}}
+                            {{--                                                               aria-controls="v-pills-dhaka"--}}
+                            {{--                                                               aria-selected="true">{{$item->CITY_NAME}}<i--}}
+                            {{--                                                                    class="fa fa-angle-right float-right"></i></a>--}}
+                            {{--                                                        @endforeach--}}
+                            {{--                                                    </div>--}}
+                            {{--                                                </div>--}}
 
-{{--                                                <div class="col-12">--}}
-{{--                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">--}}
-{{--                                                        <div class="backcategory">--}}
-{{--                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>--}}
-{{--                                                        </div>--}}
-{{--                                                        <div id="show_area">--}}
-{{--                                                            <div class="tab-pane fade show" id="v-pills-1"--}}
-{{--                                                                 role="tabpanel" aria-labelledby="v-pills-dhaka-tab">--}}
-{{--                                                                <div class="city-wrap">--}}
-{{--                                                                    <div class="city-list">--}}
-{{--                                                                        <h3><i class="fa fa-map-marker"></i><span--}}
-{{--                                                                                id="city_title"></span></h3>--}}
-{{--                                                                        <select class="select2 form-control" data-validation- multiple--}}
-{{--                                                                                name="area[]" id="area">--}}
+                            {{--                                                <div class="col-12">--}}
+                            {{--                                                    <div class="tab-content modalsubcategory" id="v-pills-tabContent">--}}
+                            {{--                                                        <div class="backcategory">--}}
+                            {{--                                                            <h4><i class="fa fa-long-arrow-left"></i>Back</h4>--}}
+                            {{--                                                        </div>--}}
+                            {{--                                                        <div id="show_area">--}}
+                            {{--                                                            <div class="tab-pane fade show" id="v-pills-1"--}}
+                            {{--                                                                 role="tabpanel" aria-labelledby="v-pills-dhaka-tab">--}}
+                            {{--                                                                <div class="city-wrap">--}}
+                            {{--                                                                    <div class="city-list">--}}
+                            {{--                                                                        <h3><i class="fa fa-map-marker"></i><span--}}
+                            {{--                                                                                id="city_title"></span></h3>--}}
+                            {{--                                                                        <select class="select2 form-control" data-validation- multiple--}}
+                            {{--                                                                                name="area[]" id="area">--}}
 
-{{--                                                                        </select>--}}
-{{--                                                                        --}}{{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-footer" style="border-top: unset">--}}
-{{--                                            <button type="button" id="done_button" class="btn btn-primary done_button" data-dismiss="modal" aria-label="Done">Done</button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{--                                                                        </select>--}}
+                            {{--                                                                        --}}{{--                                                                        {!! Form::select('area', [],null,array('id' =>'area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}--}}
+                            {{--                                                                    </div>--}}
+                            {{--                                                                </div>--}}
+                            {{--                                                            </div>--}}
+                            {{--                                                        </div>--}}
+                            {{--                                                    </div>--}}
+                            {{--                                                </div>--}}
+                            {{--                                            </div>--}}
+                            {{--                                        </div>--}}
+                            {{--                                        <div class="modal-footer" style="border-top: unset">--}}
+                            {{--                                            <button type="button" id="done_button" class="btn btn-primary done_button" data-dismiss="modal" aria-label="Done">Done</button>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
                         </div>
 
                         <div class="submit_btn">

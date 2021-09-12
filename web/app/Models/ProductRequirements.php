@@ -55,6 +55,16 @@ class ProductRequirements extends Model
                 ->where('IS_ACTIVE', 1)
                 ->first();
 
+            $rc = $request->condition;
+
+            $cond = [];
+            $condF = [];
+            foreach ($rc as $item) {
+                $item = explode(',', $item);
+                $condF[] = intval($item[0]);
+                $cond[] = $item[1];
+            }
+
             if ($list) {
                 if ($list->F_CITY_NO != $request->city) {
                     $update = false;
@@ -84,9 +94,9 @@ class ProductRequirements extends Model
                     $update = false;
                 }
 
-                $conditions = json_decode($list->PROPERTY_CONDITION);
-                $rc = $request->condition;
-                if ($update && !$this->isEqual($conditions, $rc)) {
+                $conditions = json_decode($list->F_PROPERTY_CONDITION);
+                if (!$conditions) $conditions = [];
+                if ($update && !$this->isEqual($conditions, $cond)) {
                     $update = false;
                 }
             } else {
@@ -106,7 +116,8 @@ class ProductRequirements extends Model
             $list->MIN_BUDGET = $request->minimum_budget;
             $list->MAX_BUDGET = $request->maximum_budget;
             $list->BEDROOM = json_encode($request->rooms);
-            $list->PROPERTY_CONDITION = json_encode($request->condition);
+            $list->PROPERTY_CONDITION = json_encode($cond);
+            $list->F_PROPERTY_CONDITION = json_encode($condF);
             $list->REQUIREMENT_DETAILS = $request->requirement_details;
             $list->PREP_CONT_TIME = $request->time;
             $list->EMAIL_ALERT = $request->alert;

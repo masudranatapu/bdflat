@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Area;
 use App\Models\City;
+use App\Models\PropertyCondition;
 use App\Models\User;
 use App\Models\Customer;
 use App\Models\PropertyType;
@@ -53,7 +54,10 @@ class SeekerController extends BaseController
         $data['user'] = $this->resp->data;
         $data['city'] = City::all(['CITY_NAME', 'PK_NO'])->pluck('CITY_NAME', 'PK_NO');
         $data['row'] = ProductRequirements::where('F_USER_NO', $id)->where('IS_ACTIVE',1)->orderByDesc('PK_NO')->first();
-        if($data['row'] && $data['row']->F_CITY_NO){            
+        $data['cond'] = PropertyCondition::where('IS_ACTIVE', '=', 1)
+            ->orderByDesc('ORDER_ID')
+            ->pluck('PROD_CONDITION', 'PK_NO');
+        if($data['row'] && $data['row']->F_CITY_NO){
             $data['areas'] = Area::where('F_CITY_NO', 1)->pluck('AREA_NAME', 'PK_NO');
         }
         $data['property_types'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');

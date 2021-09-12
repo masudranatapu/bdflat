@@ -7,6 +7,7 @@ use App\Http\Requests\updatePasswordRequest;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\ProductRequirements;
+use App\Models\PropertyCondition;
 use App\Models\PropertyType;
 use Illuminate\Http\Request;
 use App\User;
@@ -37,6 +38,9 @@ class RequirementController extends Controller
         $data['row'] = ProductRequirements::where('CREATED_BY',Auth::user()->PK_NO)->orderByDesc('PK_NO')->first();
 //        $data['city'] = City::select('CITY_NAME', 'PK_NO')->get(); // Previous modal version
         $data['city'] = City::orderByDesc('ORDER_ID')->pluck('CITY_NAME', 'PK_NO');
+        $data['cond'] = PropertyCondition::where('IS_ACTIVE', '=', 1)
+            ->orderByDesc('ORDER_ID')
+            ->pluck('PROD_CONDITION', 'PK_NO');
         if($data['row'] && $data['row']->F_CITY_NO ){
             $data['areas'] = Area::where('F_CITY_NO', 1)->orderByDesc('ORDER_ID')->pluck('AREA_NAME', 'PK_NO');
         }

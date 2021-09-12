@@ -68,8 +68,8 @@
         $bedrooms = [];
     }
 
-    if (!empty($row->PROPERTY_CONDITION)) {
-        $prop_cond = json_decode($row->PROPERTY_CONDITION) ?? [];
+    if (!empty($row->F_PROPERTY_CONDITION)) {
+        $prop_cond = json_decode($row->F_PROPERTY_CONDITION) ?? [];
     } else {
         $prop_cond = [];
     }
@@ -386,28 +386,13 @@
                         <div class="col-md-8">
                             <div class="form-group {!! $errors->has('apv_sale_price') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    <label for="ready">
-                                        {!! Form::checkbox('condition[]','ready', !empty($bedrooms)? in_array('ready',$prop_cond)?true:false:old('condition'),[ 'id' => 'ready' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
-                                        Ready
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label for="semi">
-                                        {!! Form::checkbox('condition[]','semi', !empty($bedrooms)? in_array('semi',$prop_cond)?true:false:old('condition'),[ 'id' => 'semi' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
-                                        Semi Ready
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                    <label for="ongoing">
-                                        {!! Form::checkbox('condition[]','ongoing', !empty($bedrooms)? in_array('ongoing',$prop_cond)?true:false:old('condition'),[ 'id' => 'ongoing' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
-                                        Ongoing
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                    <label for="used">
-                                        {!! Form::checkbox('condition[]','used', !empty($bedrooms)? in_array('used',$prop_cond)?true:false:old('condition'),[ 'id' => 'used' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
-                                        Used
-                                        <span class="checkmark"></span>
-                                    </label>
+                                    @foreach($data['cond'] as $key => $cond)
+                                        <label for="{{ str_replace(' ', '-', strtolower($cond)) }}">
+                                            {!! Form::checkbox('condition[]', $key . ',' . $cond, !empty($bedrooms)? in_array($key, $prop_cond) : old('condition'),[ 'id' => str_replace(' ', '-', strtolower($cond)) ,'class' =>'form-check-input']) !!}
+                                            {{ $cond }}
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    @endforeach
                                     {!! $errors->first('condition', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>

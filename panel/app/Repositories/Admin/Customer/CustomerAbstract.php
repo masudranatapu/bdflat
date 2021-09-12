@@ -67,6 +67,15 @@ class CustomerAbstract implements CustomerInterface
                 $list->CREATED_BY = Auth::id();
             }
 
+            $rc = $request->condition;
+            $cond = [];
+            $condF = [];
+            foreach ($rc as $item) {
+                $item = explode(',', $item);
+                $condF[] = intval($item[0]);
+                $cond[] = $item[1];
+            }
+
             $list->PROPERTY_FOR         = $request->itemCon;
             $list->F_CITY_NO            = $request->city;
             $list->F_AREAS              = json_encode($request->area);
@@ -76,7 +85,8 @@ class CustomerAbstract implements CustomerInterface
             $list->MIN_BUDGET           = $request->minimum_budget;
             $list->MAX_BUDGET           = $request->maximum_budget;
             $list->BEDROOM              = json_encode($request->rooms);
-            $list->PROPERTY_CONDITION   = json_encode($request->condition);
+            $list->PROPERTY_CONDITION   = json_encode($cond);
+            $list->F_PROPERTY_CONDITION = json_encode($condF);
             $list->REQUIREMENT_DETAILS  = $request->requirement_details;
             $list->PREP_CONT_TIME       = $request->time;
             $list->MAX_SHARING_PERMISSION = $request->max_sharing_permission;
