@@ -352,22 +352,22 @@
                                     </label>
 
                                     <label for="1bed">
-                                        {!! Form::checkbox('rooms[]','1bed', !empty($bedrooms)? in_array('1bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '1bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
+                                        {!! Form::checkbox('rooms[]','1', !empty($bedrooms)? in_array('1',$bedrooms)?true:false:old('rooms'),[ 'id' => '1bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         1
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="2bed">
-                                        {!! Form::checkbox('rooms[]','2bed', !empty($bedrooms)? in_array('2bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '2bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
+                                        {!! Form::checkbox('rooms[]','2', !empty($bedrooms)? in_array('2',$bedrooms)?true:false:old('rooms'),[ 'id' => '2bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         2
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="3bed">
-                                        {!! Form::checkbox('rooms[]','3bed', !empty($bedrooms)? in_array('3bed',$bedrooms)?true:false:old('rooms'),[ 'id' => '3bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
+                                        {!! Form::checkbox('rooms[]','3', !empty($bedrooms)? in_array('3',$bedrooms)?true:false:old('rooms'),[ 'id' => '3bed','class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         3
                                         <span class="checkmark"></span>
                                     </label>
                                     <label for="4plus">
-                                        {!! Form::checkbox('rooms[]','4plus', !empty($bedrooms)? in_array('4plus',$bedrooms)?true:false:old('rooms'),[ 'id' => '4plus' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
+                                        {!! Form::checkbox('rooms[]','4', !empty($bedrooms)? in_array('4',$bedrooms)?true:false:old('rooms'),[ 'id' => '4plus' ,'class' =>'form-check-input', 'tabIndex' => ++$tabIndex]) !!}
                                         4 +
                                         <span class="checkmark"></span>
                                     </label>
