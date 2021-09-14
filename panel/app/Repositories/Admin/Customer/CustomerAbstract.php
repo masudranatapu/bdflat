@@ -70,6 +70,9 @@ class CustomerAbstract implements CustomerInterface
             $rc = $request->condition;
             $cond = [];
             $condF = [];
+            if (!$rc) {
+                $rc = [];
+            }
             foreach ($rc as $item) {
                 $item = explode(',', $item);
                 $condF[] = intval($item[0]);
