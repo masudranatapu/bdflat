@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerPayment;
+use App\Models\WebSetting;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -71,7 +73,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return User
      */
     protected function create(array $data)
     {
@@ -86,6 +88,27 @@ class RegisterController extends Controller
         $user->DESIGNATION  = $data['designation'] ?? null;
         $user->ADDRESS      = $data['office_address'] ?? null;
         $user->save();
+
+        // Add Bonus
+        $bonus = WebSetting::all()->first();
+        if ($bonus) {
+            $payment = new CustomerPayment();
+            $payment->F_CUSTOMER_NO = $user->PK_NO;
+            $payment->F_ACC_PAYMENT_BANK_NO = 4;
+            $payment->PAYMENT_CONFIRMED_STATUS = 1;
+            $payment->PAYMENT_NOTE = 'Registration Bonus';
+            $payment->PAYMENT_DATE = date('Y-m-d');
+            $payment->PAYMENT_TYPE = 2;
+
+            if ($user->USER_TYPE == 1 && $bonus->SEEKER_BONUS_BALANCE > 0) {
+                $payment->AMOUNT = $bonus->SEEKER_BONUS_BALANCE;
+                $payment->save();
+            } elseif ($user->USER_TYPE != 1 && $bonus->OWNER_BONUS_BALANCE > 0) {
+                $payment->AMOUNT = $bonus->OWNER_BONUS_BALANCE;
+                $payment->save();
+            }
+        }
+
         return $user;
 
 

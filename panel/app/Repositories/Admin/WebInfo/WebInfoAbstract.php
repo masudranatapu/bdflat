@@ -48,7 +48,6 @@ class WebInfoAbstract implements WebInfoInterface
 
     public function postStore($request): object
     {
-        $userId = Auth::id();
         DB::beginTransaction();
         try {
             $webInfo = WebInfo::find(1);
@@ -90,6 +89,8 @@ class WebInfoAbstract implements WebInfoInterface
             $webInfo->VERIFIED_PROPERTY_LIMIT = $request->verified_property_limit;
             $webInfo->SIMILAR_PROPERTY_LIMIT = $request->similar_property_limit;
             $webInfo->LISTING_LEAD_CLAIMED_TIME = $request->listing_lead_claimed_time;
+            $webInfo->SEEKER_BONUS_BALANCE = $request->seeker_bonus_amount;
+            $webInfo->OWNER_BONUS_BALANCE = $request->owner_bonus_amount;
             $webInfo->META_TITLE = $request->meta_title;
             $webInfo->META_KEYWARDS = $request->meta_keywords;
             $webInfo->META_DESCRIPTION = $request->meta_description;
@@ -108,7 +109,7 @@ class WebInfoAbstract implements WebInfoInterface
         } catch (\Exception $e) {
             DB::rollback();
 //            dd($e);
-            return $this->formatResponse(false, $e, 'admin.general.info');
+            return $this->formatResponse(false, $e->getMessage(), 'admin.general.info');
         }
         DB::commit();
         return $this->formatResponse(true, 'Web info has been updated successfully !', 'admin.general.info');

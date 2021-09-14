@@ -229,6 +229,27 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
+                                    <h2>Registration Bonus Amount</h2>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('seeker_bonus_amount', 'Seeker Bonus Amount <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::number('seeker_bonus_amount', old('seeker_bonus_amount', $webInfo->SEEKER_BONUS_BALANCE ?? ''), ['id' => 'seeker_bonus_amount', 'class' => 'form-control', 'placeholder' => 'Initial Bonus Balance For Seeker']) !!}
+                                            {!! $errors->first('seeker_bonus_amount', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('owner_bonus_amount', 'Owner/Builder/Agency Bonus Amount <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::number('owner_bonus_amount', old('owner_bonus_amount', $webInfo->OWNER_BONUS_BALANCE ?? ''), ['id' => 'owner_bonus_amount', 'class' => 'form-control', 'placeholder' => 'Initial Bonus Balance For Owner/Builder/Agency']) !!}
+                                            {!! $errors->first('owner_bonus_amount', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
                                     <h2>Social Media Links</h2>
                                 </div>
                                 <div class="col-md-6">

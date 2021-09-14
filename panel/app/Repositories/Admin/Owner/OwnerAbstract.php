@@ -211,7 +211,7 @@ class OwnerAbstract implements OwnerInterface
         return $this->formatResponse($status, $msg, 'admin.owner.payment');
     }
 
-    public function postRecharge($request, int $id)
+    public function postRecharge($request, int $id): object
     {
         $status = false;
         $msg = 'Recharge not successful!';
