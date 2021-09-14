@@ -369,10 +369,10 @@ class Listings extends Model
             if ($request->p_type == 'A') {
                 $floors = $request->floor;
                 $floor_available = json_encode($request->floor_available);
-            } elseif ($request->p_type == 'B') {
+            } else if ($request->p_type == 'B') {
                 $floors = $request->floor;
                 $floor_available = json_encode($request->floor_available);
-            } elseif ($request->p_type == 'C') {
+            } else {
                 $floors = null;
                 $floor_available = null;
             }
@@ -417,7 +417,7 @@ class Listings extends Model
                 } elseif ($request->p_type == 'B') {
                     $bedroom = 0;
                     $bathroom = 0;
-                } elseif ($request->p_type == 'C') {
+                } else {
                     $bedroom = 0;
                     $bathroom = 0;
                 }
@@ -496,7 +496,7 @@ class Listings extends Model
             $features->save();
 
         } catch (\Exception $e) {
-            //             dd($e);
+//                         dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your listings not added successfully !', 'listings.create');
         }

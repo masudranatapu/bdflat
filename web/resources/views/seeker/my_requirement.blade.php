@@ -205,7 +205,7 @@ if (isset($row->F_AREAS) && $row->F_AREAS != '') {
                                 </div>
                             </div>
                         </div>
-
+.
                         <!-- Looking property for -->
                         <div class="row form-group property-condition">
                             {{ Form::label(null,'Property Condition (Only Buy):',['class' => 'col-sm-4 label-title']) }}

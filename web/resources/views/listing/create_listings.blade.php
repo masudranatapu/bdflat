@@ -129,7 +129,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control', 'placeholder'=>'Select Area')) !!}
                                             {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
