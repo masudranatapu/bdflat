@@ -3,7 +3,7 @@ return [
 
     'property_for' => [
         'rent'      => 'Rent',
-        'sell'      => 'Sell',
+        'sale'      => 'Sale',
         'roommate'  => 'Roommate',
     ],
 

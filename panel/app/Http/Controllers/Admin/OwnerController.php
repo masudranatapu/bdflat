@@ -92,7 +92,7 @@ class OwnerController extends BaseController
     public function postRecharge(RechargeRequest $request, $id): RedirectResponse
     {
         $this->resp = $this->owner->postRecharge($request, $id);
-        return redirect()->route($this->resp->redirect_to, $id)->with($this->resp->redirect_class, $this->resp->msg);
+        return redirect()->back()->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function postPayment(Request $request, $id)

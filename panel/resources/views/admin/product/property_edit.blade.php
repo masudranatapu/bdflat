@@ -65,6 +65,7 @@
         $property_price = $product->RENT_PRICE;
     }
     $WEB_PATH = env('WEB_PATH');
+    $PANEL_PATH = env('PANEL_PATH');
 
 
 @endphp
@@ -116,14 +117,14 @@
                                                 @if($product->getUser->USER_TYPE != 5 )
                                                     <div class="form-group">
                                                         <div class="billing-amounot">
-                                                            <h5>Billin amount: {{ number_format($property_price,2) }} TK</h5>
+                                                            <h5>Billing amount: {{ number_format($property_price,2) }} TK</h5>
                                                         </div>
                                                         @if( $product->PAYMENT_STATUS == 0 )
                                                         <input type="radio" checked="" name="billing" value="pending"
                                                             id="pending" tabindex="{{ ++$tabIndex}}">
                                                         <label for="pending">Due</label>
                                                             @if($product->getUser->UNUSED_TOPUP < $property_price )
-                                                                <a href="{{ route('admin.owner.recharge',$product->F_USER_NO) }}">Balance not avaiable, Pay first</a>
+                                                                <a data-toggle="tooltip" data-placement="right" title="Click here for payment entry" href="{{ route('admin.owner.recharge',$product->F_USER_NO) }}">Balance not avaiable, Pay first</a>
                                                             @else
                                                             <input type="radio" tabindex="{{ ++$tabIndex}}" name="billing"
                                                                 value="paid" id="paid">
@@ -573,7 +574,7 @@
                                                     @if($product->listingSEO && $product->listingSEO->OG_IMAGE_PATH)
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <img src="{{ $WEB_PATH .$product->listingSEO->OG_IMAGE_PATH }}" alt="" style="max-height: 150px;max-width: 200px">
+                                                                <img src="{{ $PANEL_PATH .$product->listingSEO->OG_IMAGE_PATH }}" alt="" style="max-height: 150px;max-width: 200px">
                                                             </div>
                                                         </div>
                                                     @endif
