@@ -494,7 +494,7 @@
         <li class=" nav-item @yield('Web Settings')">
             <a href="#"><i class="la la-cogs"></i><span class="menu-title" data-i18n="@lang('left_menu.web_settings')">Web Settings</span></a>
             <ul class="menu-content">
-                <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.general.info')}}"><i></i><span data-i18n="Basic">General</span></a></li>
+                <li class="@yield('Web Info')"><a class="menu-item" href="{{route('admin.generalinfo')}}"><i></i><span data-i18n="Basic">General</span></a></li>
 
                 <li class="@yield('Contact Message')"><a class="menu-item" href="{{route('web.contact_message')}}"><i></i><span data-i18n="Contact Message">Contact Message</span></a></li>
 

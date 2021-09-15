@@ -52,7 +52,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            {!! Form::open([ 'route' => 'admin.web.info', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
+                            {!! Form::open([ 'route' => 'admin.generalinfo.update', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate']) !!}
                             <div class="row">
                                 <div class="col-md-12">
                                     <h2>General Information</h2>
@@ -97,7 +97,7 @@
                                     <div class="form-group">
                                         {!! Form::label('phone_one', 'Phone <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('phone_one', old('phone_one', $webInfo->PHONE_1 ?? ''), ['id' => 'phone_one', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Phone Number']) !!}
+                                            {!! Form::text('phone_one', old('phone_one', $webInfo->PHONE_1 ?? ''), ['id' => 'phone_one', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Phone Number']) !!}
                                             {!! $errors->first('phone_one', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                     <div class="form-group">
                                         {!! Form::label('phone_two', 'Secondary Phone', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('phone_two', old('phone_two', $webInfo->PHONE_2 ?? ''), ['id' => 'phone_two', 'class' => 'form-control', 'placeholder' => 'Phone Number']) !!}
+                                            {!! Form::text('phone_two', old('phone_two', $webInfo->PHONE_2 ?? ''), ['id' => 'phone_two', 'class' => 'form-control', 'placeholder' => 'Phone Number']) !!}
                                             {!! $errors->first('phone_two', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -151,7 +151,7 @@
                                     <div class="form-group">
                                         {!! Form::label('hq_address', 'HQ Address <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('hq_address', old('hq_address', $webInfo->HQ_ADDRESS ?? ''), ['id' => 'hq_address', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'HQ Address']) !!}
+                                            {!! Form::text('hq_address', old('hq_address', $webInfo->HQ_ADDRESS ?? ''), ['id' => 'hq_address', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'HQ Address']) !!}
                                             {!! $errors->first('hq_address', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -160,7 +160,7 @@
                                     <div class="form-group">
                                         {!! Form::label('copyright_text', 'Copyright Text <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('copyright_text', old('copyright_text', $webInfo->COPYRIGHT_TEXT ?? ''), ['id' => 'copyright_text', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Copyright Text']) !!}
+                                            {!! Form::text('copyright_text', old('copyright_text', $webInfo->COPYRIGHT_TEXT ?? ''), ['id' => 'copyright_text', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Copyright Text']) !!}
                                             {!! $errors->first('copyright_text', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -169,7 +169,7 @@
                                     <div class="form-group">
                                         {!! Form::label('feature_property_limit', 'Feature Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('feature_property_limit', old('feature_property_limit', $webInfo->FEATURE_PROPERTY_LIMIT ?? ''), ['id' => 'feature_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Feature Property Limit']) !!}
+                                            {!! Form::text('feature_property_limit', old('feature_property_limit', $webInfo->FEATURE_PROPERTY_LIMIT ?? ''), ['id' => 'feature_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Feature Property Limit']) !!}
                                             {!! $errors->first('feature_property_limit', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                     <div class="form-group">
                                         {!! Form::label('verified_property_limit', 'Verified Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('verified_property_limit', old('verified_property_limit', $webInfo->VERIFIED_PROPERTY_LIMIT ?? ''), ['id' => 'verified_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Verified Property Limit']) !!}
+                                            {!! Form::text('verified_property_limit', old('verified_property_limit', $webInfo->VERIFIED_PROPERTY_LIMIT ?? ''), ['id' => 'verified_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Verified Property Limit']) !!}
                                             {!! $errors->first('verified_property_limit', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@
                                     <div class="form-group">
                                         {!! Form::label('sale_property_limit', 'Sale Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('sale_property_limit', old('sale_property_limit', $webInfo->SALE_PROPERTY_LIMIT ?? ''), ['id' => 'sale_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Sale Property Limit']) !!}
+                                            {!! Form::text('sale_property_limit', old('sale_property_limit', $webInfo->SALE_PROPERTY_LIMIT ?? ''), ['id' => 'sale_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Sale Property Limit']) !!}
                                             {!! $errors->first('sale_property_limit', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -196,7 +196,7 @@
                                     <div class="form-group">
                                         {!! Form::label('rent_property_limit', 'Rent Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('rent_property_limit', old('rent_property_limit', $webInfo->RENT_PROPERTY_LIMIT ?? ''), ['id' => 'rent_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Rent Property Limit']) !!}
+                                            {!! Form::text('rent_property_limit', old('rent_property_limit', $webInfo->RENT_PROPERTY_LIMIT ?? ''), ['id' => 'rent_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Rent Property Limit']) !!}
                                             {!! $errors->first('rent_property_limit', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@
                                     <div class="form-group">
                                         {!! Form::label('roommate_property_limit', 'Roommate Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('roommate_property_limit', old('roommate_property_limit', $webInfo->ROOMMATE_PROPERTY_LIMIT ?? ''), ['id' => 'roommate_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Roommate Property Limit']) !!}
+                                            {!! Form::text('roommate_property_limit', old('roommate_property_limit', $webInfo->ROOMMATE_PROPERTY_LIMIT ?? ''), ['id' => 'roommate_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Roommate Property Limit']) !!}
                                             {!! $errors->first('roommate_property_limit', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -214,7 +214,7 @@
                                     <div class="form-group">
                                         {!! Form::label('similar_property_limit', 'Similar Property Limit <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('similar_property_limit', old('similar_property_limit', $webInfo->SIMILAR_PROPERTY_LIMIT ?? ''), ['id' => 'similar_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Similar Property Limit']) !!}
+                                            {!! Form::text('similar_property_limit', old('similar_property_limit', $webInfo->SIMILAR_PROPERTY_LIMIT ?? ''), ['id' => 'similar_property_limit', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Similar Property Limit']) !!}
                                             {!! $errors->first('similar_property_limit', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -223,8 +223,17 @@
                                     <div class="form-group">
                                         {!! Form::label('listing_lead_claimed_time', 'Listing Lead Claimed Time <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
-                                            {!! Form::tel('listing_lead_claimed_time', old('listing_lead_claimed_time', $webInfo->LISTING_LEAD_CLAIMED_TIME ?? ''), ['id' => 'listing_lead_claimed_time', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Listing Lead Claimed Time']) !!}
+                                            {!! Form::text('listing_lead_claimed_time', old('listing_lead_claimed_time', $webInfo->LISTING_LEAD_CLAIMED_TIME ?? ''), ['id' => 'listing_lead_claimed_time', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Listing Lead Claimed Time']) !!}
                                             {!! $errors->first('listing_lead_claimed_time', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('default_ci_price', 'Contact View Deafult Price <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        <div class="controls">
+                                            {!! Form::text('default_ci_price', old('default_ci_price', $webInfo->DEFAULT_CI_PRICE ?? ''), ['id' => 'default_ci_price', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Listing Lead Claimed Time']) !!}
+                                            {!! $errors->first('default_ci_price', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -486,7 +495,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-actions text-center mt-3">
-                                    <a href="{{route('admin.general.info')}}" class="btn btn-warning mr-1">
+                                    <a href="{{route('admin.generalinfo')}}" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i>@lang('form.btn_cancle')</a>
                                     <button type="submit" class="btn btn-primary"><i class="la la-check-square-o"></i>@lang('form.btn_save')</button>
                                     </div>

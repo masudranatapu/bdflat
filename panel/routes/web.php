@@ -497,8 +497,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('address-type/{id}/delete', ['middleware' => 'acl:delete_address_type', 'as' => 'admin.address_type.delete', 'uses' => 'AddressController@getDelete']);
 
     //GENERAL INFO OF BDFLATS
-    Route::get('general/info', ['middleware' => 'acl:view_general_info', 'as' => 'admin.general.info', 'uses' => 'WebInfoController@getCreate']);
-    Route::post('webinfo/store', ['middleware' => 'acl:new_webinfo', 'as' => 'admin.web.info', 'uses' => 'WebInfoController@postStore']);
+    Route::get('generalinfo', ['middleware' => 'acl:view_general_info', 'as' => 'admin.generalinfo', 'uses' => 'WebInfoController@getCreate']);
+    Route::post('generalinfo/store', ['middleware' => 'acl:new_general_info', 'as' => 'admin.generalinfo.update', 'uses' => 'WebInfoController@postStore']);
 
 
     //PROPERTY CATEGORY

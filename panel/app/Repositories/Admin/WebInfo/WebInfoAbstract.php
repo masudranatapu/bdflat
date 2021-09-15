@@ -56,44 +56,45 @@ class WebInfoAbstract implements WebInfoInterface
                 $webInfo->PK_NO = 1;
             }
 
-            $webInfo->TITLE = $request->title;
-            $webInfo->DESCRIPTION = $request->description;
-            $webInfo->PHONE_1 = $request->phone_one;
-            $webInfo->PHONE_2 = $request->phone_two;
-            $webInfo->EMAIL_1 = $request->email_one;
-            $webInfo->EMAIL_2 = $request->email_two;
-            $webInfo->HQ_ADDRESS = $request->hq_address;
-            $webInfo->URL = $request->url;
-            $webInfo->FACEBOOK_URL = $request->facebook_url;
-            $webInfo->TWITTER_URL = $request->twitter_url;
-            $webInfo->INSTAGRAM_URL = $request->instagram_url;
-            $webInfo->YOUTUBE_URL = $request->youtube_url;
-            $webInfo->PINTEREST_URL = $request->pinterest_url;
-            $webInfo->WHATS_APP = $request->whatsapp;
-            $webInfo->FB_APP_ID = $request->facebook_app_id;
-            $webInfo->FACEBOOK_SECRET_ID = $request->facebook_secret_id;
-            $webInfo->GOOGLE_APP_ID = $request->google_app_id;
-            $webInfo->GOOGLE_CLIENT_ID = $request->google_client_id;
-            $webInfo->GOOGLE_CLIENT_SECRET = $request->google_client_secret;
-            $webInfo->ANDROID_APP_LINK = $request->android_app_link;
-            $webInfo->ANDROID_APP_VERSION = $request->android_app_version;
-            $webInfo->ANALYTIC_ID = $request->analytic_id;
-            $webInfo->LANGUAGE_ID = $request->language_id;
-            $webInfo->IPHONE_APP_LINK = $request->ios_app_link;
-            $webInfo->IPHONE_APP_VERSION = $request->ios_app_version;
-            $webInfo->COPYRIGHT_TEXT = $request->copyright_text;
-            $webInfo->FEATURE_PROPERTY_LIMIT = $request->feature_property_limit;
-            $webInfo->ROOMMATE_PROPERTY_LIMIT = $request->roommate_property_limit;
-            $webInfo->RENT_PROPERTY_LIMIT = $request->rent_property_limit;
-            $webInfo->SALE_PROPERTY_LIMIT = $request->sale_property_limit;
-            $webInfo->VERIFIED_PROPERTY_LIMIT = $request->verified_property_limit;
-            $webInfo->SIMILAR_PROPERTY_LIMIT = $request->similar_property_limit;
-            $webInfo->LISTING_LEAD_CLAIMED_TIME = $request->listing_lead_claimed_time;
-            $webInfo->SEEKER_BONUS_BALANCE = $request->seeker_bonus_amount;
-            $webInfo->OWNER_BONUS_BALANCE = $request->owner_bonus_amount;
-            $webInfo->META_TITLE = $request->meta_title;
-            $webInfo->META_KEYWARDS = $request->meta_keywords;
-            $webInfo->META_DESCRIPTION = $request->meta_description;
+            $webInfo->TITLE                         = $request->title;
+            $webInfo->DESCRIPTION                   = $request->description;
+            $webInfo->PHONE_1                       = $request->phone_one;
+            $webInfo->PHONE_2                       = $request->phone_two;
+            $webInfo->EMAIL_1                       = $request->email_one;
+            $webInfo->EMAIL_2                       = $request->email_two;
+            $webInfo->HQ_ADDRESS                    = $request->hq_address;
+            $webInfo->URL                           = $request->url;
+            $webInfo->FACEBOOK_URL                  = $request->facebook_url;
+            $webInfo->TWITTER_URL                   = $request->twitter_url;
+            $webInfo->INSTAGRAM_URL                 = $request->instagram_url;
+            $webInfo->YOUTUBE_URL                   = $request->youtube_url;
+            $webInfo->PINTEREST_URL                 = $request->pinterest_url;
+            $webInfo->WHATS_APP                     = $request->whatsapp;
+            $webInfo->FB_APP_ID                     = $request->facebook_app_id;
+            $webInfo->FACEBOOK_SECRET_ID            = $request->facebook_secret_id;
+            $webInfo->GOOGLE_APP_ID                 = $request->google_app_id;
+            $webInfo->GOOGLE_CLIENT_ID              = $request->google_client_id;
+            $webInfo->GOOGLE_CLIENT_SECRET          = $request->google_client_secret;
+            $webInfo->ANDROID_APP_LINK              = $request->android_app_link;
+            $webInfo->ANDROID_APP_VERSION           = $request->android_app_version;
+            $webInfo->ANALYTIC_ID                   = $request->analytic_id;
+            $webInfo->LANGUAGE_ID                   = $request->language_id;
+            $webInfo->IPHONE_APP_LINK               = $request->ios_app_link;
+            $webInfo->IPHONE_APP_VERSION            = $request->ios_app_version;
+            $webInfo->COPYRIGHT_TEXT                = $request->copyright_text;
+            $webInfo->FEATURE_PROPERTY_LIMIT        = $request->feature_property_limit;
+            $webInfo->ROOMMATE_PROPERTY_LIMIT       = $request->roommate_property_limit;
+            $webInfo->RENT_PROPERTY_LIMIT           = $request->rent_property_limit;
+            $webInfo->SALE_PROPERTY_LIMIT           = $request->sale_property_limit;
+            $webInfo->VERIFIED_PROPERTY_LIMIT       = $request->verified_property_limit;
+            $webInfo->SIMILAR_PROPERTY_LIMIT        = $request->similar_property_limit;
+            $webInfo->LISTING_LEAD_CLAIMED_TIME     = $request->listing_lead_claimed_time;
+            $webInfo->SEEKER_BONUS_BALANCE          = $request->seeker_bonus_amount;
+            $webInfo->OWNER_BONUS_BALANCE           = $request->owner_bonus_amount;
+            $webInfo->META_TITLE                    = $request->meta_title;
+            $webInfo->META_KEYWARDS                 = $request->meta_keywords;
+            $webInfo->META_DESCRIPTION              = $request->meta_description;
+            $webInfo->DEFAULT_CI_PRICE              = $request->default_ci_price;
 
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $key => $image) {
@@ -109,10 +110,10 @@ class WebInfoAbstract implements WebInfoInterface
         } catch (\Exception $e) {
             DB::rollback();
 //            dd($e);
-            return $this->formatResponse(false, $e->getMessage(), 'admin.general.info');
+            return $this->formatResponse(false, $e->getMessage(), 'admin.generalinfo');
         }
         DB::commit();
-        return $this->formatResponse(true, 'Web info has been updated successfully !', 'admin.general.info');
+        return $this->formatResponse(true, 'Web info has been updated successfully !', 'admin.generalinfo');
     }
 
     public function uploadImage($image): string
@@ -161,10 +162,10 @@ class WebInfoAbstract implements WebInfoInterface
         } catch (\Exception $e) {
             dd($e);
             DB::rollback();
-            return $this->formatResponse(false, $e, 'admin.general.info');
+            return $this->formatResponse(false, $e, 'admin.generalinfo');
         }
         DB::commit();
-        return $this->formatResponse(true, 'Web info has been updated successfully !', 'admin.general.info');
+        return $this->formatResponse(true, 'Web info has been updated successfully !', 'admin.generalinfo');
     }
 
     public function delete($id)
