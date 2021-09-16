@@ -174,7 +174,7 @@
                             <div class="featured-wrap">
                                 <div class="featured-bx">
                                     <a href="{{ route('web.property.details', $property->URL_SLUG) }}">
-                                        <img src="{{ asset($property->getDefaultThumb->IMAGE_PATH ?? '') }}" class="img-fluid" alt="{{ $property->TITLE }}">
+                                        <img src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}" class="img-fluid" alt="{{ $property->TITLE }}">
                                     </a>
                                 </div>
                                 <div class="featured-content">
