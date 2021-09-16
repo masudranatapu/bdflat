@@ -446,6 +446,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Lead Price:</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="controls">
+                                    {!! Form::number('lead_price', !empty($row)?$row->SEEKER_LEAD_PRICE :old('lead_price'), ['id'=>'lead_price', 'class' => 'form-control',  'data-validation-required-message' => 'This field is required', 'placeholder' => 'Max Sharing Permission', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! $errors->first('lead_price', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     {{--<div class="row">
                         <div class="col-md-2">

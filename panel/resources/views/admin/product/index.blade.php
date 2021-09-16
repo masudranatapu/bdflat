@@ -119,7 +119,7 @@
                                             <th>Create Date</th>
                                             <th>Status</th>
                                             <th>Listing Type</th>
-                                            <th>Payment Status</th>
+                                            <th>Pay Status</th>
                                             <th style="width: 135px;">Action</th>
                                         </tr>
                                         </thead>

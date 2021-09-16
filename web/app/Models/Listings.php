@@ -404,7 +404,8 @@ class Listings extends Model
             $list->TOTAL_FLOORS = $floors;
             $list->FLOORS_AVAIABLE = $floor_available;
             $list->CREATED_AT = Carbon::now();
-            $list->CREATED_BY = Auth::user()->PK_NO;
+            $list->CREATED_BY = Auth::id();
+            $list->CI_PAYMENT = WebSetting::all()->first()->DEFAULT_CI_PRICE;
             $list->save();
 
             //           for store listing variants

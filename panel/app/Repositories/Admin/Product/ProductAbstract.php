@@ -77,6 +77,7 @@ class ProductAbstract implements ProductInterface
             $list->URL_SLUG_LOCKED = 1;
             $list->IS_VERIFIED = $request->is_verified ? 1 : 0;
             $list->CI_PAYMENT = $request->ci_payment ? 1 : 0;
+            $list->CI_PRICE = $request->contact_view_price;
             $list->PAYMENT_AUTO_RENEW = $request->auto_payment_renew ? 1 : 0;
             $list->MAX_SHARING_PERMISSION = $request->max_sharing_permission;
             if ($request->billing == 'paid') {

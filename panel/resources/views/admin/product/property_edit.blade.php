@@ -649,6 +649,19 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {{ Form::label('contact_view_price','Contact View Price:',['class' => 'label-title']) }}
+                                                    <div
+                                                        class="form-group {!! $errors->has('contact_view_price') ? 'error' : '' !!}">
+                                                        <div class="controls">
+                                                            {!! Form::number('contact_view_price', old('contact_view_price', $product->CI_PRICE), [ 'id'=>'contact_view_price','class' => 'form-control','placeholder'=>'Contact view price', 'tabIndex' => ++$tabIndex]) !!}
+                                                            {!! $errors->first('contact_view_price', '<label class="help-block text-danger">:message</label>') !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="col-12 mt-2">
                                                 <a href="{{ route('admin.product.list')}}">
                                                     <button type="button" class="btn btn-warning mr-1">
