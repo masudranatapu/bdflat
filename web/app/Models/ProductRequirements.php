@@ -106,23 +106,23 @@ class ProductRequirements extends Model
             if (!$update) {
                 $list = new ProductRequirements();
             }
-            $list->F_USER_NO = Auth::id() ?? $request->auth_id;
-            $list->PROPERTY_FOR = $request->itemCon;
-            $list->F_CITY_NO = $request->city;
-            $list->F_AREAS = json_encode($request->area);
-            $list->F_PROPERTY_TYPE_NO = $request->property_type;
-            $list->MIN_SIZE = $request->minimum_size;
-            $list->MAX_SIZE = $request->maximum_size;
-            $list->MIN_BUDGET = $request->minimum_budget;
-            $list->MAX_BUDGET = $request->maximum_budget;
-            $list->BEDROOM = json_encode($request->rooms);
-            $list->PROPERTY_CONDITION = json_encode($cond);
-            $list->F_PROPERTY_CONDITION = json_encode($condF);
-            $list->REQUIREMENT_DETAILS = $request->requirement_details;
-            $list->PREP_CONT_TIME = $request->time;
-            $list->EMAIL_ALERT = $request->alert;
-            $list->CREATED_BY = Auth::id() ?? $request->auth_id;
-            $list->MODIFYED_BY = Auth::id() ?? $request->auth_id;
+            $list->F_USER_NO                = Auth::id() ?? $request->auth_id;
+            $list->PROPERTY_FOR             = $request->itemCon;
+            $list->F_CITY_NO                = $request->city;
+            $list->F_AREAS                  = json_encode($request->area);
+            $list->F_PROPERTY_TYPE_NO       = $request->property_type;
+            $list->MIN_SIZE                 = $request->minimum_size;
+            $list->MAX_SIZE                 = $request->maximum_size;
+            $list->MIN_BUDGET               = $request->minimum_budget;
+            $list->MAX_BUDGET               = $request->maximum_budget;
+            $list->BEDROOM                  = json_encode($request->rooms);
+            $list->PROPERTY_CONDITION       = json_encode($cond);
+            $list->F_PROPERTY_CONDITION     = json_encode($condF);
+            $list->REQUIREMENT_DETAILS      = $request->requirement_details;
+            $list->PREP_CONT_TIME           = $request->time;
+            $list->EMAIL_ALERT              = $request->alert;
+            $list->CREATED_BY               = Auth::id() ?? $request->auth_id;
+            $list->MODIFYED_BY              = Auth::id() ?? $request->auth_id;
             $list->IS_ACTIVE = 1;
             $list->save();
 

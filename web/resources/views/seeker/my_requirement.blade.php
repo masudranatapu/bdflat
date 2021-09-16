@@ -88,7 +88,7 @@ if (isset($row->F_AREAS) && $row->F_AREAS != '') {
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8 property-looking" style="margin-left: -6px">
                                 <div class="controls">
-                                    {!! Form::radio('itemCon','buy', !empty($row)?$row->PROPERTY_FOR=='buy'?true:false:old('itemCon'),[ 'id' => 'buy','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::radio('itemCon','sale', !empty($row)?$row->PROPERTY_FOR=='sale'?true:false:old('itemCon'),[ 'id' => 'buy','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('buy','Buy') }}
                                     {!! Form::radio('itemCon','rent', !empty($row)?$row->PROPERTY_FOR=='rent'?true:false:old('itemCon'),[ 'id' => 'rent','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('rent','Rent') }}

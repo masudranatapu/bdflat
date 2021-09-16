@@ -225,7 +225,7 @@
                         <div class="col-md-6">
                             <div class="form-group {!! $errors->has('itemCon') ? 'error' : '' !!}">
                                 <div class="controls">
-                                    {!! Form::radio('itemCon','buy', !empty($row)?$row->PROPERTY_FOR=='buy'?true:false:old('itemCon'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
+                                    {!! Form::radio('itemCon','sale', !empty($row)?$row->PROPERTY_FOR=='sale'?true:false:old('itemCon'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                     {{ Form::label('sell','Buy') }}
                                     &emsp;
                                     {!! Form::radio('itemCon','rent', !empty($row)?$row->PROPERTY_FOR=='rent'?true:false:old('itemCon'),[ 'id' => 'roommate', 'tabIndex' => ++$tabIndex]) !!}
