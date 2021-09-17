@@ -122,6 +122,11 @@ class Listings extends Model
             ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', '=', 'PRD_LISTING_TYPE.PK_NO');
     }
 
+    public function seoInfo(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne('App\Models\ListingSEO', 'F_LISTING_NO', 'PK_NO');
+    }
+
     public function getFeatureListings()
     {
         $limit = WebSetting::where('PK_NO', 1)->first('FEATURE_PROPERTY_LIMIT')->FEATURE_PROPERTY_LIMIT;

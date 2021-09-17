@@ -1,6 +1,8 @@
 <?php
   $title = 'BDFlats | Welcome to BDFlats !';
   $meta_description = 'BDFlats';
+
+  $meta = meta_info($data['seo'] ?? null);
 ?>
 <head prefix="og: http://ogp.me/ns#">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,29 +15,29 @@
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon/favicon-16x16.png') }}">
 <meta name="theme-color" content="#ffffff">
 <title>{{ $title }}</title>
-<meta name="description" content="{{ $meta_description }}" />
-<meta property="og:title" content="SAMAKAL | GET THE LATEST ONLINE BANGLA NEWS !" />
-<meta property="og:description" content="The Daily Samakal Brings The Latest News & Breaking News, Headlines From Bangladesh and Around The World." />
-<meta name="twitter:title" content="SAMAKAL | GET THE LATEST ONLINE BANGLA NEWS !" />
-<meta name="twitter:description" content="The Daily Samakal Brings The Latest News & Breaking News, Headlines From Bangladesh and Around The World." />
-<meta property="og:image" content="https://samakal.com/assets/images/default_news.jpg" />
-<meta name="twitter:image" content="https://samakal.com/assets/images/default_news.jpg" />
-<meta name="keywords" content="Samakal, somokal, shomokal, samakal bangla, samakal online, daily samakal, daily somokal, daily shomokal, dainik samakal, dainik shomokal, bangla news, bangladesh newspapers, bengali news paper, bd newspaper, bengali news, bangla paper, bangladeshi news paper, online bangla newspaper, current News, online paper, bangla khobor, Bangladesh latest news, সমকাল, সমকাল বাংলা, সমকাল অনলাইন, দৈনিক সমকাল, অনলাইন নিউজ পেপার, আজকের নিউজ পেপার, বাংলাদেশী অনলাইন নিউজ পেপার, সকল অনলাইন পত্রিকা, অনলাইন পত্রিকার তালিকা, দৈনিক সংবাদপত্র, জাতীয় পত্রিকা, সকল অনলাইন পত্রিকা, অনলাইন নিউজ পেপার, সকল পত্রিকা, লাইভ স্কোর" />
+<meta name="description" content="{{ $meta['description'] ?? '' }}" />
+<meta property="og:title" content="{{ $meta['title'] ?? '' }}" />
+<meta property="og:description" content="{{ $meta['description'] ?? '' }}" />
+<meta name="twitter:title" content="{{ $meta['title'] ?? '' }}" />
+<meta name="twitter:description" content="{{ $meta['description'] ?? '' }}" />
+<meta property="og:image" content="{{ asset($meta['og_image'] ?? '') }}" />
+<meta name="twitter:image" content="{{ asset($meta['og_image'] ?? '') }}" />
+<meta name="keywords" content="{{ $meta['keywords'] ?? '' }}" />
 <meta name="robots" content="index,follow">
 <meta name="Developed By" content="BDFlats" />
-<meta name="Developer" content="Md.Maidul Islam, Md. Rony" />
+<meta name="Developer" content="Md. Maidul Islam, Md. Rony" />
 <meta property="fb:pages" content="351757248257846" />
 <meta property="fb:app_id" content="276108213069474" />
 <meta property="og:image:width" content="700" />
 <meta property="og:image:height" content="400" />
-<meta property="og:site_name" content="SAMAKAL" />
-<meta property="og:url" content="https://samakal.com" />
+<meta property="og:site_name" content="BDFLATS" />
+<meta property="og:url" content="{{ url()->current() }}" />
 <meta property="og:type" content="WEBSITE" />
-<meta name="twitter:card" value="summary_large_image" />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@samakaltw" />
 <meta name="twitter:creator" content="@samakaltw" />
-<meta name="twitter:url" content="https://samakal.com" />
-<link rel="canonical" href="https://samakal.com" />
+<meta name="twitter:url" content="{{ url('/') }}" />
+<link rel="canonical" href="{{ url('/') }}" />
 
 
   <!--

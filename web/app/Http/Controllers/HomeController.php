@@ -134,6 +134,14 @@ class HomeController extends Controller
             ]);
         }
 
+        $SEO = $data['listing']->seoInfo;
+//        dd($SEO);
+        $data['seo'] = [
+            'title' => $SEO->META_TITLE,
+            'description' => $SEO->META_DESCRIPTION,
+            'og_image' => $SEO->OG_IMAGE_PATH,
+        ];
+
         return view('page.details', compact('data'));
     }
 
