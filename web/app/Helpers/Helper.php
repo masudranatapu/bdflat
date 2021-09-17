@@ -46,10 +46,11 @@ if (!function_exists('meta_info')) {
     function meta_info($data = null): array
     {
         $web = WebSetting::all()->first();
+//        dd($web);
         return [
             'title' => ($data && isset($data['title'])) ? $data['title'] : ($web->META_TITLE ?: $web->TITLE),
             'description' => ($data && isset($data['description'])) ? $data['description'] : ($web->META_TITLE ?: $web->DESCRIPTION),
-            'keywords' => ($data && isset($data['keywords'])) ? $data['keywords'] : ($web->META_KEYWORDS ?? ''),
+            'keywords' => ($data && isset($data['keywords'])) ? $data['keywords'] : ($web->META_KEYWARDS ?? ''),
             'og_image' => ($data && isset($data['og_image'])) ? $data['og_image'] : ($web->OG_IMAGE ?: $web->META_IMAGE),
         ];
     }

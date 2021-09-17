@@ -31,13 +31,13 @@
 <meta property="og:image:width" content="700" />
 <meta property="og:image:height" content="400" />
 <meta property="og:site_name" content="BDFLATS" />
-<meta property="og:url" content="https://samakal.com" />
+<meta property="og:url" content="{{ url()->current() }}" />
 <meta property="og:type" content="WEBSITE" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@samakaltw" />
 <meta name="twitter:creator" content="@samakaltw" />
-<meta name="twitter:url" content="{{ config('app.url') }}" />
-<link rel="canonical" href="https://samakal.com" />
+<meta name="twitter:url" content="{{ url('/') }}" />
+<link rel="canonical" href="{{ url('/') }}" />
 
 
   <!--
