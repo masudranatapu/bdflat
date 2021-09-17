@@ -25,3 +25,16 @@ if (!function_exists('transaction_type')) {
         return $msg;
     }
 }
+
+
+if (!function_exists('posted_by')) {
+    function posted_by($user_id): string
+    {
+        if (request()->query->has('posted_by')) {
+            $pst = request()->query('posted_by');
+            $pst = explode(',', $pst);
+            return in_array($user_id, $pst);
+        }
+        return false;
+    }
+}

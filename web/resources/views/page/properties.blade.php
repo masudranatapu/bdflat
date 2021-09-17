@@ -344,25 +344,25 @@
                                                 <form action="#">
                                                     <label for="induvidual">
                                                         <input type="checkbox" name="posted" value="2"
-                                                               {{ request()->query->has('posted_by') ? (in_array(2, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
+                                                               {{ posted_by(2) ? 'checked ' : '' }}
                                                                id="induvidual"> Owner
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="dealer">
                                                         <input type="checkbox" name="posted"
-                                                               {{ request()->query->has('posted_by') ? (in_array(3, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
+                                                               {{ posted_by(3) ? 'checked ' : '' }}
                                                                value="3" id="dealer">Builder
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="reseller">
                                                         <input type="checkbox" name="posted" value="4"
-                                                               {{ request()->query->has('posted_by') ? (in_array(4, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
+                                                               {{ posted_by(4) ? 'checked ' : '' }}
                                                                id="reseller"> Agency
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label for="Manufacturer">
                                                         <input type="checkbox" name="posted" value="5"
-                                                               {{ request()->query->has('posted_by') ? (in_array(5, explode(',', request()->query('posted_by'))) ? 'checked ' : '') : '' }}
+                                                               {{ posted_by(5) ? 'checked ' : '' }}
                                                                id="Manufacturer"> Agent
                                                         <span class="checkmark"></span>
                                                     </label>
@@ -609,18 +609,22 @@
 
                 if (data.p_min !== '') {
                     url += (useAnd ? '&' : '?') + 'min_price=' + data.p_min;
+                    useAnd = true;
                 }
 
                 if (data.p_max !== '') {
                     url += (useAnd ? '&' : '?') + 'max_price=' + data.p_max;
+                    useAnd = true;
                 }
 
                 if (data.verified !== '') {
                     url += (useAnd ? '&' : '?') + 'verified=' + data.verified;
+                    useAnd = true;
                 }
 
                 if (data.posted_by !== '') {
                     url += (useAnd ? '&' : '?') + 'posted_by=' + data.posted_by;
+                    useAnd = true;
                 }
 
                 if (data.sort_by !== '') {
