@@ -73,7 +73,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             class="advertis-seller d-lg-flex form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
                             <h5>Advertisement Type:&nbsp; </h5>
                             <div class="controls">
-                                {!! Form::radio('property_for','sell', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
+                                {!! Form::radio('property_for','sale', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required']) !!}
                                 {{ Form::label('sell','Sell') }}
 
                                 {!! Form::radio('property_for','rent', old('property_for'),[ 'id' => 'rent']) !!}
