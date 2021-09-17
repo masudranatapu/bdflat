@@ -774,6 +774,7 @@ li.category-item span.category-quantity {
 
 .featured-content {
     padding: 13px 20px;
+    height: 175px;
 }
 
 .featured-price h3 {
@@ -787,6 +788,8 @@ li.category-item span.category-quantity {
     font-size: 16px;
     margin: 0;
     padding-bottom: 6px;
+    max-height: 60px;
+    overflow: hidden;
 }
 
 .featured-info h2 a {
