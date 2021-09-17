@@ -280,6 +280,7 @@
                                                             <div class="col-6 col-md-3">
                                                                 <div
                                                                     class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
+                                                                    <label>Size(Sqft)</label>
                                                                     <div class="controls">
                                                                         {!! Form::number('size[]', $item->PROPERTY_SIZE, [ 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex]) !!}
                                                                         {!! $errors->first('size', '<label class="help-block text-danger">:message</label>') !!}
@@ -288,8 +289,8 @@
                                                             </div>
 
                                                             <div class="col-6 col-md-3 bedroom_div">
-                                                                <div
-                                                                    class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                                                <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                                                    <label>Bedroom</label>
                                                                     <div class="controls">
                                                                         {!! Form::select('bedroom[]', $bed_room ?? [], $item->BEDROOM, array('class'=>'form-control', 'placeholder'=>'Bedroom', 'tabIndex' => ++$tabIndex)) !!}
                                                                         {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
@@ -298,8 +299,8 @@
                                                             </div>
 
                                                             <div class="col-6 col-md-3 bathroom_div">
-                                                                <div
-                                                                    class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                                                <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                                                    <label>Bathroom</label>
                                                                     <div class="controls">
                                                                         {!! Form::select('bathroom[]', $bath_room ?? [], $item->BATHROOM, array('class'=>'form-control', 'placeholder'=>'Bathroom', 'tabIndex' => ++$tabIndex)) !!}
                                                                         {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
@@ -308,8 +309,8 @@
                                                             </div>
 
                                                             <div class="col-6 col-md-3">
-                                                                <div
-                                                                    class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                                                <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+                                                                    <label>Total price</label>
                                                                     <div class="controls">
                                                                         {!! Form::number('price[]', $item->TOTAL_PRICE, ['class' => 'form-control',  'placeholder' => 'Price', 'tabIndex' => ++$tabIndex,'data-validation-required-message' => 'This field is required']) !!}
                                                                         {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
@@ -660,7 +661,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if($product->USER_TYPE != 5)
+                                            @if($product->USER_TYPE == 5)
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     {{ Form::label('agent_commission_amt','Agent Commission Amount:',['class' => 'label-title']) }}

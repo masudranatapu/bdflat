@@ -74,6 +74,11 @@ class Listings extends Model
         return $this->hasOne('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO')->where('IS_DEFAULT', 1);
     }
 
+      public function getDefaultVariant()
+    {
+        return $this->hasOne('App\Models\ListingVariants', 'F_LISTING_NO', 'PK_NO')->where('IS_DEFAULT', 1);
+    }
+
     public function images()
     {
         return $this->hasMany('App\Models\ListingImages', 'F_LISTING_NO', 'PK_NO');
@@ -668,7 +673,7 @@ class Listings extends Model
 
     public function getLatest(int $limit)
     {
-        return Listings::with(['getDefaultThumb', 'listingType'])
+        return Listings::with(['getDefaultThumb', 'listingType', 'getDefaultVariant'])
             ->where('F_USER_NO', '=', Auth::id())
             ->where('STATUS', '!=', 4)
             ->latest()
