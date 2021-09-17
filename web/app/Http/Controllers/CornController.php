@@ -25,7 +25,8 @@ class CornController extends Controller
         ->where('PRD_LISTINGS.PAYMENT_STATUS',1)
         ->where('WEB_USER.STATUS',1)
         ->orderBy('PRD_LISTINGS.MODIFIED_AT', 'DESC')
-        ->limit(200)->get();
+        ->limit(2000)
+        ->get();
 
 
         if($lists && count($lists) > 0 ){
@@ -35,13 +36,14 @@ class CornController extends Controller
                 $seekers = DB::table('PRD_REQUIREMENTS')
                 ->select('PRD_REQUIREMENTS.PK_NO','PRD_REQUIREMENTS.F_USER_NO','PRD_REQUIREMENTS.F_AREAS','PRD_REQUIREMENTS.F_PROPERTY_TYPE_NO','PRD_REQUIREMENTS.PROPERTY_FOR', 'PRD_REQUIREMENTS.MIN_SIZE','PRD_REQUIREMENTS.MAX_SIZE', 'PRD_REQUIREMENTS.MIN_BUDGET','PRD_REQUIREMENTS.MAX_BUDGET', 'PRD_REQUIREMENTS.BEDROOM','PRD_REQUIREMENTS.PROPERTY_CONDITION', 'PRD_REQUIREMENTS.F_CITY_NO', 'PRD_REQUIREMENTS.F_PROPERTY_CONDITION')
                 ->where('PRD_REQUIREMENTS.IS_ACTIVE',1)
-                ->where('PRD_REQUIREMENTS.IS_ACTIVE',1)
-                // ->where('PRD_REQUIREMENTS.F_PROPERTY_TYPE_NO', $list->F_PROPERTY_TYPE_NO)
-                // ->where('PRD_REQUIREMENTS.PROPERTY_FOR', $list->PROPERTY_FOR)
+                ->where('PRD_REQUIREMENTS.IS_VERIFIED',1)
+                ->where('PRD_REQUIREMENTS.F_PROPERTY_TYPE_NO', $list->F_PROPERTY_TYPE_NO)
+                ->where('PRD_REQUIREMENTS.PROPERTY_FOR', $list->PROPERTY_FOR)
                 ->where('PRD_REQUIREMENTS.F_CITY_NO', $list->F_CITY_NO)
                 ->orderBy('PRD_REQUIREMENTS.MODIFIED_AT', 'DESC')
                 ->limit($limit)
                 ->get();
+
                 if($seekers && count($seekers) > 0 ){
                     foreach ($seekers as $key1 => $list1) {
                         $total_val = 80;
@@ -90,14 +92,48 @@ class CornController extends Controller
 
                         }
 
-                        if($list->MAX_SHARING_PERMISSION < $i ){break;}
+                       if($list->MAX_SHARING_PERMISSION < $i ){break;}
                     }
                 }
 
             }
         }
 
-        dd($lists);
+
+        $temp = DB::table('PRD_SUGGESTED_PROPERTY_TEMP')->orderBy('TOTAL_VAL', 'DESC')->get();
+        if($temp){
+            foreach ($temp as $key2 => $value2) {
+                $check =  DB::table('PRD_SUGGESTED_PROPERTY')->where('F_LISTING_NO',$value2->F_LISTING_NO)->where('F_USER_NO',$value2->F_USER_NO)->first();
+                if($check == null){
+                    $order_id =  DB::table('PRD_SUGGESTED_PROPERTY')->where('F_LISTING_NO', $value2->F_LISTING_NO)->where('F_USER_NO',$value2->F_USER_NO)->max('ORDER_ID');
+
+                    $listing =  DB::table('PRD_LISTINGS as a')->select('a.PROPERTY_FOR','a.PROPERTY_TYPE','a.F_AREA_NO','b.PROPERTY_SIZE','b.BEDROOM','b.BATHROOM','b.TOTAL_PRICE')->leftJoin('PRD_LISTING_VARIANTS as b', 'b.F_LISTING_NO', 'a.PK_NO')->where('a.PK_NO',$value2->F_LISTING_NO)->first();
+
+                    DB::table('PRD_SUGGESTED_PROPERTY')->insert([
+                    'F_LISTING_NO'  => $value2->F_LISTING_NO,
+                    'F_COMPANY_NO'  => $value2->F_COMPANY_NO,
+                    'F_USER_NO'     => $value2->F_USER_NO,
+                    'CREATED_AT'    => date('Y-m-d H::s'),
+                    'CREATED_BY'    => $auth_id ,
+                    'PROPERTY_FOR'  => $listing->PROPERTY_FOR,
+                    'PROPERTY_TYPE' => $listing->PROPERTY_TYPE,
+                    'AREA'          => $listing->F_AREA_NO,
+                    'SIZE'          => $listing->PROPERTY_SIZE,
+                    'BEDROOM'       => $listing->BEDROOM,
+                    'BATHROOM'      => $listing->BATHROOM,
+                    'TOTAL_PRICE'   => $listing->TOTAL_PRICE,
+                    'PROPERTY_CONDITION' => 20,
+                    'ORDER_ID'      => $order_id+1,
+                ]);
+                }
+
+
+            }
+        }
+
+        DB::table('PRD_SUGGESTED_PROPERTY_TEMP')->delete();
+
+        dd($temp);
 
     }
 

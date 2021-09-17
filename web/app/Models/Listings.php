@@ -538,18 +538,29 @@ class Listings extends Model
 
             //            for store listing variants
 
+
+
             $property_size = $request->size;
             ListingVariants::where('F_LISTING_NO', $id)->delete();
             foreach ($property_size as $key => $item) {
+                if ($key == 0) {
+                    $is_default = 1;
+                } else {
+                    $is_default = 0;
+                }
+
                 $data = array(
-                    'F_LISTING_NO' => $list->PK_NO,
+                    'F_LISTING_NO'  => $id,
                     'PROPERTY_SIZE' => $request->size[$key],
-                    'BEDROOM' => $request->bedroom[$key],
-                    'BATHROOM' => $request->bathroom[$key],
-                    'TOTAL_PRICE' => $request->price[$key],
+                    'BEDROOM'       => $request->bedroom[$key],
+                    'BATHROOM'      => $request->bathroom[$key],
+                    'TOTAL_PRICE'   => $request->price[$key],
+                    'IS_DEFAULT'    => $is_default,
                 );
                 ListingVariants::insert($data);
             }
+
+            $check_def_img = ListingImages::where('F_LISTING_NO', $id)->where('IS_DEFAULT',1)->first();
 
             //            for image upload
             if ($request->hasfile('images')) {
@@ -561,8 +572,8 @@ class Listings extends Model
                     $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
                     $waterMarkUrl = public_path('assets/img/logo.png');
 
-                    $destinationPath = public_path('/uploads/listings/' . $list->PK_NO . '/');
-                    $destinationPath2 = public_path('/uploads/listings/' . $list->PK_NO . '/thumb');
+                    $destinationPath = public_path('/uploads/listings/' . $id . '/');
+                    $destinationPath2 = public_path('/uploads/listings/' . $id . '/thumb');
 
                     if (!file_exists($destinationPath2)) {
                         mkdir($destinationPath2, 0755, true);
@@ -581,37 +592,42 @@ class Listings extends Model
                     $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
                     $thumb_img->save($destinationPath . '/' . $name);
 
-                    //                    if ($key == 0) {
-                    //                        $is_default = 1;
-                    //                    } else {
-                    //                        $is_default = 0;
-                    //                    }
+                    if($check_def_img == null ){
+                        $is_default = 1;
+
+                    }else{
+                        if ($key == 0) {
+                            $is_default = 1;
+                        } else {
+                            $is_default = 0;
+                        }
+                    }
+
 
                     ListingImages::create([
-                        'F_LISTING_NO' => $list->PK_NO,
+                        'F_LISTING_NO' => $id,
                         'IMAGE_PATH' => '/uploads/listings/' . $id . '/' . $name,
                         'IMAGE' => $name,
-                        'THUMB_PATH' => '/uploads/listings/' . $list->PK_NO . '/thumb/' . $name2,
+                        'THUMB_PATH' => '/uploads/listings/' . $id . '/thumb/' . $name2,
                         'THUMB' => $name2,
-                        //                        'IS_DEFAULT'    => $is_default,
+                        'IS_DEFAULT'    => $is_default,
                     ]);
                 }
             }
 
-            //            for features
-            $features = ListingAdditionalInfo::where('F_LISTING_NO', $request->id)->first();
-            $features->F_LISTING_NO = $list->PK_NO;
-            $features->F_FACING_NO = $request->facing;
+            // for features
+            $features = ListingAdditionalInfo::where('F_LISTING_NO', $id)->first();
+            $features->F_FACING_NO   = $request->facing;
             $features->HANDOVER_DATE = Carbon::parse($request->handover_date)->format('Y-m-d H:i:s');
-            $features->DESCRIPTION = $request->description;
-            $features->LOCATION_MAP = $request->map_url;
-            $features->VIDEO_CODE = $request->videoURL;
+            $features->DESCRIPTION   = $request->description;
+            $features->LOCATION_MAP  = $request->map_url;
+            $features->VIDEO_CODE    = $request->videoURL;
             $features->F_FEATURE_NOS = json_encode($request->features);
-            $features->F_NEARBY_NOS = json_encode($request->nearby);
+            $features->F_NEARBY_NOS  = json_encode($request->nearby);
             $features->update();
         } catch (\Exception $e) {
             DB::rollback();
-            //            dd($e);
+            //  dd($e);
             return $this->formatResponse(false, 'Your listings not updated !', 'listings.create');
         }
         DB::commit();
