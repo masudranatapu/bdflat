@@ -5982,7 +5982,7 @@ textarea#msg {
     top: 1px;
     right: 12px;
     font-size: 29px;
-    color: #0000000;
+    color: #000000;
     text-align: center;
 }
 
@@ -5992,9 +5992,11 @@ textarea#msg {
 }
 
 .categories-list ul li {
-    padding: 0px 0px 20px 0px;
+    padding: 8px 8px 8px 5px;
     vertical-align: middle;
+    margin: 5px 0px;
 }
+.categories-list ul li.active{background-color: #f3e7e7;}
 
 .categories-list ul li img {
     width: 23px;
@@ -6011,6 +6013,7 @@ textarea#msg {
     -moz-transition: all 0.4s;
     -ms-transition: all 0.4s;
     -o-transition: all 0.4s;
+    display: block;
 }
 
 .categories-list ul li a:hover {

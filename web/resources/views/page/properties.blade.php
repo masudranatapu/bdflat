@@ -7,46 +7,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover {
-            color: #fff;
-        }
-
-        .fix_box {
-            max-height: 200px;
-            overflow-y: scroll;
-        }
-
-        .verified-title h5{
-            max-height: 40px;
-            overflow: hidden;
-        }
-        .verified-title h6{
-            padding-top: 10px;
-        }
-        @media (max-width: 576px) {
-            .verified-title h5{
-                max-height: 30px;
-            }
-        }
-
-        .fix_box::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        /* Track */
-        .fix_box::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        /* Handle */
-        .fix_box::-webkit-scrollbar-thumb {
-            background: #888;
-        }
-
-        /* Handle on hover */
-        .fix_box::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
+        .reply:hover{color:#fff}.fix_box{max-height:200px;overflow-y:scroll}.verified-title h5{max-height:40px;overflow:hidden}.verified-title h6{padding-top:10px}@media (max-width:576px){.verified-title h5{max-height:30px}}.fix_box::-webkit-scrollbar{width:6px}.fix_box::-webkit-scrollbar-track{background:#f1f1f1}.fix_box::-webkit-scrollbar-thumb{background:#888}.fix_box::-webkit-scrollbar-thumb:hover{background:#555}
     </style>
 @endpush
 @php
@@ -182,7 +143,7 @@
                                                     <div class="form-group">
                                                         <label for="verified_property">
                                                             <input class="condition" type="checkbox"
-                                                                   {{ request()->query('verified') == 1 ? 'checked' : '' }} name="verified"
+                                                                   {{ request()->query('verified') == '1' ? 'checked' : '' }} name="verified"
                                                                    value="1" id="verified_property">
                                                             Verified Property
                                                             <span class="checkmark"></span>
@@ -239,12 +200,11 @@
                                                 <div class="categories-list">
                                                     <ul>
                                                         @foreach($data['categories'] as $category)
-                                                            <li>
-                                                                <img src="{{ $panel_path . $category->ICON_PATH }}"
-                                                                     alt="" class="img-fluid">
+                                                            <li class="{{ $category->URL_SLUG == $cat ? 'active' : '' }}">
                                                                 <a href="?cat={{ $category->URL_SLUG }}"
-                                                                   data-value="{{ $category->PROPERTY_TYPE }}"
-                                                                   class="category">{{ $category->PROPERTY_TYPE }}</a>
+                                                                   data-value="{{ $category->URL_SLUG }}"
+                                                                   class="category"><img src="{{ $panel_path . $category->ICON_PATH }}"
+                                                                   alt="" class="img-fluid"> {{ $category->PROPERTY_TYPE }}</a>
                                                             </li>
                                                         @endforeach
                                                     </ul>

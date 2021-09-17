@@ -297,7 +297,7 @@ class Listings extends Model
         if ($cat) {
             $categories = PropertyType::where('IS_ACTIVE', 1)
                 ->orderByDesc('ORDER_ID')
-                ->pluck('PK_NO', 'PROPERTY_TYPE');
+                ->pluck('PK_NO', 'URL_SLUG');
             if (isset($categories[$cat])) {
                 $listings->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO', $categories[$cat]);
             }
