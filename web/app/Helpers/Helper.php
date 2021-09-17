@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\WebSetting;
+
 if (!function_exists('defaultThumb')) {
     function defaultThumb($path): string
     {
@@ -28,7 +31,7 @@ if (!function_exists('transaction_type')) {
 
 
 if (!function_exists('posted_by')) {
-    function posted_by($user_id): string
+    function posted_by($user_id): bool
     {
         if (request()->query->has('posted_by')) {
             $pst = request()->query('posted_by');
@@ -36,5 +39,18 @@ if (!function_exists('posted_by')) {
             return in_array($user_id, $pst);
         }
         return false;
+    }
+}
+
+if (!function_exists('meta_info')) {
+    function meta_info($data = null): array
+    {
+        $web = WebSetting::all()->first();
+        return [
+            'title' => ($data && isset($data['title'])) ? $data['title'] : ($web->META_TITLE ?: $web->TITLE),
+            'description' => ($data && isset($data['description'])) ? $data['description'] : ($web->META_TITLE ?: $web->DESCRIPTION),
+            'keywords' => ($data && isset($data['keywords'])) ? $data['keywords'] : ($web->META_KEYWORDS ?? ''),
+            'og_image' => ($data && isset($data['og_image'])) ? $data['og_image'] : ($web->OG_IMAGE ?: $web->META_IMAGE),
+        ];
     }
 }
