@@ -187,6 +187,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="row no-gutters form-group size_child">
                                     <div class="col-6 col-md-3 size_div">
                                         <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Size (Sqft)</span>
                                             <div class="controls">
                                                 {!! Form::number('size[]', old('size[]'), ['id'=>'size', 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
                                                 <span class="size_placeholder advertis-label"
@@ -197,6 +198,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     </div>
                                     <div class="col-6 col-md-3 bedroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Bedroom</span>
                                             <div class="controls">
                                                 {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
                                                 <span class="bedroom_placeholder advertis-label"
@@ -207,6 +209,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     </div>
                                     <div class="col-6 col-md-3 bathroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Bathroom</span>
                                             <div class="controls">
                                                 {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
                                                 <span class="bathroom_placeholder advertis-label"
@@ -217,6 +220,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     </div>
                                     <div class="col-6 col-md-3 price_div">
                                         <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Total price</span>
                                             <div class="controls">
                                                 {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
                                                 <span class="price_placeholder advertis-label"

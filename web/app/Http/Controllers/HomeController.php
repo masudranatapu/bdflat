@@ -62,11 +62,11 @@ class HomeController extends Controller
         $data['featuredProperties'] = $this->listings->getFeatureListings();
         $data['verifiedProperties'] = $this->listings->getVerifiedListings();
         $data['verifiedBottomAd'] = $this->ads->getRandomAd(106);
-        $data['sellProperties'] = $this->listings->getListings('sell');
+        $data['sellProperties'] = $this->listings->getListings('sale');
         $data['rentProperties'] = $this->listings->getListings('rent');
         $data['roommateProperties'] = $this->listings->getListings('roommate');
         $data['popularCities'] = $this->city->getPopularCities();
-        $data['sellPageCategories'] = $this->pageCategory->getPageCategories('sell');
+        $data['sellPageCategories'] = $this->pageCategory->getPageCategories('sale');
         $data['hasSellPageCategories'] = $this->isAvailable($data['sellPageCategories']);
         $data['rentPageCategories'] = $this->pageCategory->getPageCategories('rent');
         $data['hasRentPageCategories'] = $this->isAvailable($data['rentPageCategories']);
