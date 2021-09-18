@@ -479,7 +479,7 @@
                         @auth
                             {!! Form::open([ 'route' => ['lead.pay',$listing->PK_NO], 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             <div class="row">
-                                @if(Auth::user()->UNUSED_TOPUP < $listing->PRICE )
+                                @if(Auth::user()->UNUSED_TOPUP < $listing->CI_PRICE )
                                     <div class="col-12">
                                         <p style="font-size: 20px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">
                                             Sorry ! you do not have sufficiant
@@ -501,7 +501,7 @@
                                             number & address</p>
                                         <p>Please Pay:</p>
                                         <strong
-                                            style="font-size: 28px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format($listing->PRICE,2) }}</strong>
+                                            style="font-size: 28px;color: #FF3521;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format($listing->CI_PRICE,2) }}</strong>
                                         <p>Your current balance</p>
                                         <strong
                                             style="font-size: 28px;color: #6ABD50;display: inline-block;margin-bottom: 25px !important;">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</strong>
