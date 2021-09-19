@@ -18,6 +18,7 @@
 
 @php
     $roles = userRolePermissionArray();
+    $property_for_combo = Config::get('static_array.property_for');
 
 @endphp
 
@@ -30,6 +31,58 @@
                     <div class="card card-sm card-success">
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
+                                <form action="" class="my-2">
+                                    <div class="row mb-1">
+
+                                        <div class="col">
+                                            <div class="form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::select('property_for', $property_for_combo, request()->query->get('property_for'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property for', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{--<div class="col">
+                                            <div class="form-group {!! $errors->has('listing_type') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::select('listing_type', $listing_type_combo, request()->query->get('listing_type'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select listing type', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div
+                                                class="form-group {!! $errors->has('payment_status') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::select('payment_status', $payment_status_combo, request()->query->get('payment_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select payment status', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('payment_status', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div
+                                                class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::select('property_status', $property_status_combo, request()->query->get('property_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+
+                                        </div>--}}
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <input type="submit" class="btn btn-info btn-sm px-2" value="Search"
+                                                   style="border-radius: 0px">
+                                            <a class="btn btn-sm btn-primary text-white"
+                                               href="{{ route('admin.product.list') }}" title="ADD NEW LISTING"
+                                               style="color: #FC611F;margin-left: 10px;">Reset</a>
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="table-responsive ">
                                     <table class="table table-striped table-bordered table-sm" id="dtable">
                                         <thead>
@@ -64,8 +117,8 @@
 
 @push('custom_js')
 
-<script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
-<script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
+    <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
+    <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 
@@ -106,7 +159,7 @@
                     autoWidth: false,
                     iDisplayStart: value,
                     ajax: {
-                        url: get_url+'/seeker_list',
+                        url: get_url + '/seeker_list',
                         type: 'POST',
                         data: function (d) {
                             d._token = "{{ csrf_token() }}";

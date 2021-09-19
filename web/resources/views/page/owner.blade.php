@@ -17,11 +17,11 @@
         <div class="container">
             <div class="shop-banner">
                 <div class="shop-bx">
-                    <img src="{{ $panel_path . ($owner->info->BANNER ?? '') }}" class="w-100" alt="banner">
+                    <img src="{{ $owner->info->BANNER ? $panel_path . $owner->info->BANNER : asset('assets/img/default_banner.jpg') }}" class="w-100" alt="banner">
                 </div>
                 <div class="company-profile d-flex justify-content-between">
                     <div class="company-logo">
-                        <img src="{{ $panel_path . ($owner->info->LOGO ?? '') }}" alt="logo">
+                        <img src="{{ $owner->info->LOGO ? $panel_path . $owner->info->LOGO : asset('assets/img/default_img.png') }}" alt="logo">
                     </div>
                     <div class="company-name">
                         <h4>{{ $owner->NAME }}</h4>
