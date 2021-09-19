@@ -38,17 +38,17 @@
                                                 <div class="col-4">
                                                     <div class="property-bx">
                                                         <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                src="{{ defaultThumb($property->getDefaultThumb->THUMB_PATH ?? '') }}"
+                                                                src="{{ defaultThumb($property->THUMB_PATH ?? '') }}"
                                                                 class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">
                                                     <h3>
-                                                        TK {{ number_format($property->getListingVariant->TOTAL_PRICE ?? 0, 2) }}</h3>
+                                                        TK {{ number_format($property->TOTAL_PRICE ?? 0, 2) }}</h3>
                                                     <h5 class="mt-0"><a
                                                             href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE ?? '' }}</a>
                                                     </h5>
-                                                    <h6>{{ $property->getListingVariant && $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed, ' : '' }}{{ $property->getListingVariant && $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</h6>
+                                                    <h6>{{ $property->BEDROOM . ' Bed '  }}{{$property->BATHROOM. ' Bath' }}</h6>
                                                     <a href="#" class="location"><i
                                                             class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
                                                         , {{ $property->CITY_NAME }}</a>

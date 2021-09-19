@@ -100,7 +100,7 @@ class SeekerController extends Controller
 
     public function getSuggestedProperties(Request $request)
     {
-        $data['properties'] = $this->suggestedProperty->getProperties();
+        $data['properties'] = $this->suggestedProperty->getProperties($request);
         return view('seeker.suggested_properties', compact('data'));
     }
 

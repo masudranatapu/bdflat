@@ -97,7 +97,7 @@ class CustomerAbstract implements CustomerInterface
             $list->IS_VERIFIED          = $request->v_status;
             $list->MODIFIED_BY          = Auth::id();
             $list->F_USER_NO            = $request->user_id;
-            $list->SEEKER_LEAD_PRICE    = $request->lead_price;
+            $list->LEAD_PRICE    = $request->lead_price;
 
             if ($request->v_status == 1 && $request->acc_status == 1) {
                 $list->F_VERIFIED_BY    = Auth::id();

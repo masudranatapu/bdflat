@@ -24,9 +24,11 @@ class CornController extends Controller
         ->where('PRD_LISTINGS.STATUS',10)
         ->where('PRD_LISTINGS.PAYMENT_STATUS',1)
         ->where('WEB_USER.STATUS',1)
-        ->orderBy('PRD_LISTINGS.MODIFIED_AT', 'DESC')
+        ->orderBy('PRD_LISTINGS.PK_NO', 'ASC')
+        // ->orderBy('PRD_LISTINGS.MODIFIED_AT', 'DESC')
         ->limit(2000)
         ->get();
+
 
 
         if($lists && count($lists) > 0 ){
@@ -44,8 +46,11 @@ class CornController extends Controller
                 ->limit($limit)
                 ->get();
 
+
+
                 if($seekers && count($seekers) > 0 ){
                     foreach ($seekers as $key1 => $list1) {
+
                         $total_val = 80;
                         $req_max_size   = $list1->MAX_SIZE + 50;
                         $req_min_size   = $list1->MIN_SIZE - 50;
@@ -55,7 +60,8 @@ class CornController extends Controller
                         $ares    = json_decode($list1->F_AREAS);
                         $conds   = json_decode($list1->F_PROPERTY_CONDITION);
 
-                        if(in_array($list->F_AREA_NO, $ares) && in_array($list->F_AREA_NO, $conds)){
+                        if(in_array($list->F_AREA_NO, $ares) && in_array($list->F_PROPERTY_CONDITION, $conds)){
+
                             $insertData = [
                                 'F_LISTING_NO'  => $list->PK_NO,
                                 'F_COMPANY_NO'  => $list->F_USER_NO,
