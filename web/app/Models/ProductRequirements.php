@@ -122,7 +122,7 @@ class ProductRequirements extends Model
             $list->PREP_CONT_TIME           = $request->time;
             $list->EMAIL_ALERT              = $request->alert;
             $list->CREATED_BY               = Auth::id() ?? $request->auth_id;
-            $list->MODIFYED_BY              = Auth::id() ?? $request->auth_id;
+            $list->MODIFIED_BY              = Auth::id() ?? $request->auth_id;
             $list->IS_ACTIVE = 1;
             $list->save();
 
