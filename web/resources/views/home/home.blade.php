@@ -510,7 +510,7 @@
                         <div class="col-3 col-md-2 col-xl-1">
                             <div class="agencies">
                                 <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
-                                        src="{{ $panel_path . $agency->info->LOGO ?? '' }}" class="img-fluid"
+                                        src="{{ $agency->info->LOGO ? $panel_path . $agency->info->LOGO : asset('assets/img/default_img.png') }}" class="img-fluid"
                                         alt="{{ $agency->NAME }}"></a>
                             </div>
                         </div>
@@ -536,7 +536,7 @@
                         <div class="col-3 col-md-2 col-xl-1">
                             <div class="agencies">
                                 <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
-                                        src="{{ $panel_path . $agency->info->LOGO ?? '' }}" class="img-fluid"
+                                        src="{{$agency->info->LOGO ? $panel_path . $agency->info->LOGO : asset('assets/img/default_img.png') }}" class="img-fluid"
                                         alt="{{ $agency->NAME }}"></a>
                             </div>
                         </div>
