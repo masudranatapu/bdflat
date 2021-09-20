@@ -38,7 +38,7 @@
     <div class="dashboard-nav">
         <ul>
             <li><a href="{{route('my-account')}}" class="@yield('my-account')">My Account</a></li>
-            <li><a href="{{route('buy-leads')}}" class="@yield('buy-leads')">Buy Leads</a></li>
+            <li><a href="{{route('buy-leads')}}" class="@yield('buy-leads')">Suggested Leads</a></li>
             <li><a href="{{ route('owner-listings') }}"  class="@yield('owner-listings')">My Properties</a></li>
             <li><a href="{{ route('owner-leads') }}" class="@yield('owner-leads')">Leads</a></li>
             <li><a href="{{route('recharge-balance')}}"  class="@yield('recharge-balance')">Recharge Balance</a></li>
@@ -64,7 +64,7 @@
             <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a></li>
             <li><a href="{{ route('developer-listings') }}"  class="@yield('developer-listings')">Properties</a></li>
             <li><a href="{{ route('developer-leads') }}" class="@yield('developer-leads')">Leads</a></li>
-            <li><a href="{{ route('developer-buy-leads') }}" class="@yield('developer-buy-leads')">Buy New Leads</a></li>
+            <li><a href="{{ route('developer-buy-leads') }}" class="@yield('developer-buy-leads')">Suggested Leads</a></li>
             <li><a href="{{ route('developer-payments') }}" class="@yield('developer-payments')">Payments</a></li>
         </ul>
         <div class="logout-btn mt-3">
@@ -86,7 +86,7 @@
             <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a></li>
             <li><a href="{{ route('agency-listings') }}"  class="@yield('agency-listings')">Properties</a></li>
             <li><a href="{{ route('agency-leads') }}" class="@yield('agency-leads')">Leads</a></li>
-            <li><a href="{{ route('agency-buy-leads') }}" class="@yield('agency-buy-leads')">Buy New Leads</a></li>
+            <li><a href="{{ route('agency-buy-leads') }}" class="@yield('agency-buy-leads')">Suggested Leads</a></li>
             <li><a href="{{ route('agency-payments') }}" class="@yield('agency-payments')">Payments</a></li>
         </ul>
         <div class="logout-btn mt-3">
@@ -108,7 +108,7 @@
             <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a></li>
             <li><a href="{{ route('agent-listings') }}"  class="@yield('agent-listings')">Properties</a></li>
             <li><a href="{{ route('agent-leads') }}" class="@yield('agent-leads')">Leads</a></li>
-            <li><a href="{{ route('agent-buy-leads') }}" class="@yield('agent-buy-leads')">Buy New Leads</a></li>
+            <li><a href="{{ route('agent-buy-leads') }}" class="@yield('agent-buy-leads')">Suggested Leads</a></li>
             <li><a href="{{ route('agent-payments') }}" class="@yield('agent-payments')">Payments</a></li>
             <li><a href="{{ route('agent-earnings') }}" class="@yield('agent-earnings')">Earnings</a></li>
         </ul>

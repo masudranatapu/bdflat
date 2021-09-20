@@ -37,12 +37,9 @@ $listings = $data['listing'] ?? [];
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-3">
                                                     <div class="property-bx">
-                                                        <a href="#"><img
-                                                                src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}"
-                                                                class="w-100"
-                                                                alt="image"></a>
+                                                        <a href="@if($listing->STATUS == 10 ) {{ route('web.property.details',$listing->URL_SLUG) }} @else javascript:void(0) @endif"><img src="{{ asset($listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="{{$listing->TITLE}}"></a>
                                                     </div>
-                                                    @if($listing->IS_FEATURE==1)
+                                                    @if($listing->F_LISTING_TYPE == 2 || $listing->F_LISTING_TYPE == 4)
                                                         <div class="featured">
                                                             <div class="feature-text">
                                                                 <span>Featured</span>
@@ -51,24 +48,23 @@ $listings = $data['listing'] ?? [];
                                                     @endif
                                                 </div>
                                                 <div class="col-9 position-static">
-                                                    <h5 class="mt-0"><a href="details.html">{{$listing->TITLE}}</a></h5>
-                                                    <a href="#" class="location"><i
-                                                            class="fa fa-map-marker"></i>{{$listing->AREA_NAME}}
+                                                    <h5 class="mt-0"><a href="@if($listing->STATUS == 10 ) {{ route('web.property.details',$listing->URL_SLUG) }} @else javascript:void(0) @endif" title="{{$listing->TITLE}}">{{$listing->TITLE}}</a></h5>
+                                                    <a href="javascript:void(0)" class="location"><i class="fa fa-map-marker"></i>{{$listing->AREA_NAME}}
                                                         , {{$listing->CITY_NAME}}</a>
                                                     <div class="owner-info">
                                                         <ul>
-                                                            <li><i class="fa fa-edit"></i><a
-                                                                    href="{{route('listings.edit',$listing->PK_NO)}}">Edit</a>
-                                                            </li>
-                                                            <li><i class="fa fa-times"></i><a
-                                                                    href="{{route('listings.delete',$listing->PK_NO)}}"
-                                                                    onclick="return confirm('Are You Sure To Delete This?')">Delete</a>
-                                                            </li>
+                                                            <li><i class="fa fa-edit"></i><a href="{{route('listings.edit',$listing->PK_NO)}}">Edit</a></li>
+                                                            <li><i class="fa fa-times"></i><a href="{{route('listings.delete',$listing->PK_NO)}}" onclick="return confirm('Are You Sure To Delete This?')">Delete</a></li>
+                                                            @if($listing->PAYMENT_STATUS == 0 )
                                                             <li>
                                                                 <i class="fa fa-money"></i>
                                                                 <a href="{{route('listings.pay',$listing->PK_NO)}}">Pay Now</a>
                                                             </li>
-                                                            <li class="float-right"><i class="fa fa-check"></i></li>
+                                                            @endif
+                                                            @if($listing->STATUS == 10 )
+                                                                <li class="float-right"><i class="fa fa-check"></i></li>
+                                                            @endif
+
                                                         </ul>
                                                     </div>
                                                 </div>
