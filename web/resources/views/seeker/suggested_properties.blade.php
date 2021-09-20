@@ -38,13 +38,17 @@
                                                 <div class="col-4">
                                                     <div class="property-bx">
                                                         <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                src="{{ defaultThumb($property->THUMB_PATH ?? '') }}"
+                                                                src="{{ defaultThumb($property->IMAGE_PATH ?? '') }}"
                                                                 class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">
                                                     <h3>
-                                                        TK {{ number_format($property->TOTAL_PRICE ?? 0, 2) }}</h3>
+                                                        TK {{ number_format($property->TOTAL_PRICE ?? 0, 2) }}
+                                                        @if($property->IS_VERIFIED == 1)
+                                                            <span class="float-right">Verified <i class="fa fa-check-square"></i></span>
+                                                        @endif
+                                                    </h3>
                                                     <h5 class="mt-0"><a
                                                             href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE ?? '' }}</a>
                                                     </h5>
@@ -56,6 +60,7 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                    {{$data['properties']->links()}}
                                 @endif
                             </div>
                         </div>

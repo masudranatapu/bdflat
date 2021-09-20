@@ -105,6 +105,7 @@ class ProductRequirements extends Model
 
             if (!$update) {
                 $list = new ProductRequirements();
+                $is_verified = 3;
             }
             $list->F_USER_NO                = Auth::id() ?? $request->auth_id;
             $list->PROPERTY_FOR             = $request->itemCon;
@@ -123,6 +124,7 @@ class ProductRequirements extends Model
             $list->EMAIL_ALERT              = $request->alert;
             $list->CREATED_BY               = Auth::id() ?? $request->auth_id;
             $list->MODIFIED_BY              = Auth::id() ?? $request->auth_id;
+            $list->IS_VERIFIED              = $is_verified ?? 0;
             $list->IS_ACTIVE = 1;
             $list->save();
 
