@@ -111,6 +111,7 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
 
     Route::get('owner-listings', 'OwnerController@getMyListings')->name('owner-listings');
     Route::get('owner-buy-leads', 'OwnerController@getOwnerBuyLeads')->name('buy-leads');
+    Route::get('owner-buy-leads/{id}/details', 'OwnerController@getOwnerBuyLeadsDetails')->name('buy-leads-details');
     Route::get('owner-leads', 'OwnerController@getOwnerLeads')->name('owner-leads');
 
     Route::get('listings/create', 'ListingController@create')->name('listings.create');

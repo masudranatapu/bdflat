@@ -42,6 +42,11 @@ class ProductRequirements extends Model
         'VERIFIED_AT',
     ];
 
+    public function getUser()
+    {
+        return $this->belongsTo('App\Models\Owner', 'F_USER_NO', 'PK_NO')->where('STATUS', 1);
+    }
+
     public function storeOrUpdate($request): object
     {
         DB::beginTransaction();
