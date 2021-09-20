@@ -49,8 +49,9 @@ $listings = $data['listing'] ?? [];
                                                 </div>
                                                 <div class="col-9 position-static">
                                                     <h5 class="mt-0"><a href="@if($listing->STATUS == 10 ) {{ route('web.property.details',$listing->URL_SLUG) }} @else javascript:void(0) @endif" title="{{$listing->TITLE}}">{{$listing->TITLE}}</a></h5>
-                                                    <a href="javascript:void(0)" class="location"><i class="fa fa-map-marker"></i>{{$listing->AREA_NAME}}
-                                                        , {{$listing->CITY_NAME}}</a>
+                                                    <a href="javascript:void(0)" class="location">
+                                                        <i class="fa fa-map-marker"></i>{{ $listing->SUBAREA_NAME ? $listing->SUBAREA_NAME.', ' : '' }} {{$listing->AREA_NAME}}, {{$listing->CITY_NAME}}</a>
+                                                        <p>For <span style="text-transform: capitalize">{{$listing->PROPERTY_FOR}}</span></p>
                                                     <div class="owner-info">
                                                         <ul>
                                                             <li><i class="fa fa-edit"></i><a href="{{route('listings.edit',$listing->PK_NO)}}">Edit</a></li>
@@ -64,7 +65,6 @@ $listings = $data['listing'] ?? [];
                                                             @if($listing->STATUS == 10 )
                                                                 <li class="float-right"><i class="fa fa-check"></i></li>
                                                             @endif
-
                                                         </ul>
                                                     </div>
                                                 </div>

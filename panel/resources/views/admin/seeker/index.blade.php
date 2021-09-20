@@ -19,9 +19,11 @@
 @php
     $roles = userRolePermissionArray();
     $property_for_combo = Config::get('static_array.property_for');
+    $lead_status_combo = Config::get('static_array.seeker_verification_status');
+    $city_combo = $data['city'] ?? [];
+    $area_combo = $data['area'] ?? [];
 
 @endphp
-
 
 @section('content')
     <div class="content-body min-height">
@@ -43,35 +45,35 @@
                                             </div>
                                         </div>
 
-                                        {{--<div class="col">
-                                            <div class="form-group {!! $errors->has('listing_type') ? 'error' : '' !!}">
+                                        <div class="col">
+                                            <div class="form-group {!! $errors->has('lead_status') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('listing_type', $listing_type_combo, request()->query->get('listing_type'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select listing type', 'tabindex' => 6]) !!}
-                                                    {!! $errors->first('listing_type', '<label class="help-block text-danger">:message</label>') !!}
+                                                    {!! Form::select('lead_status', $lead_status_combo ?? [], request()->query->get('lead_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select lead status', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('lead_status', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col">
                                             <div
-                                                class="form-group {!! $errors->has('payment_status') ? 'error' : '' !!}">
+                                                class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('payment_status', $payment_status_combo, request()->query->get('payment_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select payment status', 'tabindex' => 6]) !!}
-                                                    {!! $errors->first('payment_status', '<label class="help-block text-danger">:message</label>') !!}
+                                                    {!! Form::select('city', $city_combo, request()->query->get('city'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select city', 'tabindex' => 6, 'id' => 'city']) !!}
+                                                    {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col">
                                             <div
-                                                class="form-group {!! $errors->has('property_status') ? 'error' : '' !!}">
+                                                class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                                 <div class="controls">
-                                                    {!! Form::select('property_status', $property_status_combo, request()->query->get('property_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property status', 'tabindex' => 6]) !!}
-                                                    {!! $errors->first('property_status', '<label class="help-block text-danger">:message</label>') !!}
+                                                    {!! Form::select('area', $area_combo, request()->query->get('area'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select area', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
 
-                                        </div>--}}
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col">
@@ -130,6 +132,26 @@
         });
 
         var get_url = $('#base_url').val();
+        $(document).on('click', '#city', function(e){
+            var city = $(this).val();
+            if(city != ''){
+                let url = get_url;
+                $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                data: {'pickup_array' : 1},
+                success: function(data) {
+                if(data == 1){
+                location.reload();
+                }else{
+                toastr.info('Please try again','Info');
+                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {}
+                });
+            }
+        })
 
 
         $(document).ready(function () {
