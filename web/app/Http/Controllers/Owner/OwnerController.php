@@ -44,6 +44,13 @@ class OwnerController extends Controller
         return view('owner.buy_leads', compact('data'));
     }
 
+    public function getOwnerBuyLeadsDetails($id)
+    {
+        $data = array();
+        $data['listing_details'] = $this->leadShare->getSuggestedLeadDetails($id);
+        return view('owner.buy_leads_details', compact('data'));
+    }
+
     public function getMyListings(Request $request)
     {
         $data = array();
