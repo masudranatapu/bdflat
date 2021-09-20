@@ -27,7 +27,32 @@ class DatatableAbstract implements DatatableInterface
 
     public function getSeeker($request)
     {
-        $dataSet = DB::table("WEB_USER as c")->where('STATUS', '!=', 3)->where('USER_TYPE', 1)->orderBy('PK_NO', 'DESC')->get();
+        $dataSet = DB::table("WEB_USER as c")->select('c.*')
+        ->leftJoin('PRD_REQUIREMENTS as b', function($join){
+            $join->on('c.PK_NO', '=', 'b.F_USER_NO');
+            $join->on('b.IS_ACTIVE','=',DB::raw("'1'"));
+        })->where('c.STATUS', '!=', 3)->where('c.USER_TYPE', 1);
+
+        if($request->property_for != ''){
+            $dataSet->where('b.PROPERTY_FOR', $request->property_for);
+        }
+        if($request->property_type != ''){
+            $dataSet->where('b.F_PROPERTY_TYPE_NO', $request->property_type);
+        }
+
+        if($request->lead_status != ''){
+            $dataSet->where('b.IS_VERIFIED', $request->lead_status);
+        }
+
+        if($request->city != ''){
+            $dataSet->where('b.F_CITY_NO', $request->city);
+        }
+        if($request->area != ''){
+            $dataSet->whereJsonContains('b.F_AREAS', $request->area);
+        }
+
+        $dataSet = $dataSet->orderBy('c.PK_NO', 'DESC')->get();
+
         return Datatables::of($dataSet)
             ->addColumn('status', function ($dataSet) {
                 $status = '';
@@ -47,6 +72,23 @@ class DatatableAbstract implements DatatableInterface
                 }
                 return 'N/A';
             })
+            ->addColumn('leadInfo', function ($dataSet) {
+                $info = '';
+                $requirement = ProductRequirements::where('F_USER_NO', $dataSet->PK_NO)->where('IS_ACTIVE', 1)->first();
+                if ($requirement) {
+
+                    $area_no = json_decode($requirement->F_AREAS);
+                    $areas = DB::table('SS_AREA')->whereIn('PK_NO',$area_no)->pluck('AREA_NAME')->implode(', ');
+
+                    $info .= '<div>For : '.$requirement->PROPERTY_FOR.'</div>';
+                    $info .= '<div>City : '.$requirement->CITY_NAME.'</div>';
+                    $info .= '<div>Area : '.$areas.'</div>';
+                    $info .= '<div>Type : '.$requirement->PROPERTY_TYPE.'</div>';
+                    return $info;
+
+                }
+                return 'N/A';
+            })
             ->addColumn('action', function ($dataSet) {
                 $roles = userRolePermissionArray();
                 $edit = $view = $payment = '';
@@ -62,7 +104,7 @@ class DatatableAbstract implements DatatableInterface
                 return $view . $edit . $payment;
 
             })
-            ->rawColumns(['action', 'status'])
+            ->rawColumns(['action', 'status','leadInfo'])
             ->make(true);
 
     }

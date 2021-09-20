@@ -17,11 +17,12 @@
 @endsection
 
 @php
-    $roles = userRolePermissionArray();
+    $roles              = userRolePermissionArray();
     $property_for_combo = Config::get('static_array.property_for');
-    $lead_status_combo = Config::get('static_array.seeker_verification_status');
-    $city_combo = $data['city'] ?? [];
-    $area_combo = $data['area'] ?? [];
+    $lead_status_combo  = Config::get('static_array.seeker_verification_status');
+    $city_combo         = $data['city'] ?? [];
+    $area_combo         = $data['area'] ?? [];
+    $property_type_combo = $data['property_type'] ?? [];
 
 @endphp
 
@@ -38,6 +39,7 @@
 
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('property_for') ? 'error' : '' !!}">
+                                                {!! Form::label('property_for', 'Property for') !!}
                                                 <div class="controls">
                                                     {!! Form::select('property_for', $property_for_combo, request()->query->get('property_for'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property for', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
@@ -47,6 +49,7 @@
 
                                         <div class="col">
                                             <div class="form-group {!! $errors->has('lead_status') ? 'error' : '' !!}">
+                                                {!! Form::label('lead_status', 'Lead status') !!}
                                                 <div class="controls">
                                                     {!! Form::select('lead_status', $lead_status_combo ?? [], request()->query->get('lead_status'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select lead status', 'tabindex' => 6]) !!}
                                                     {!! $errors->first('lead_status', '<label class="help-block text-danger">:message</label>') !!}
@@ -55,35 +58,38 @@
                                         </div>
 
                                         <div class="col">
-                                            <div
-                                                class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
+                                            <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
+                                                {!! Form::label('city', 'City') !!}
                                                 <div class="controls">
                                                     {!! Form::select('city', $city_combo, request()->query->get('city'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select city', 'tabindex' => 6, 'id' => 'city']) !!}
                                                     {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col">
-                                            <div
-                                                class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
+                                            <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
+                                                {!! Form::label('area', 'Area') !!}
                                                 <div class="controls">
-                                                    {!! Form::select('area', $area_combo, request()->query->get('area'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select area', 'tabindex' => 6]) !!}
+                                                    {!! Form::select('area', $area_combo, request()->query->get('area'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select area', 'tabindex' => 6, 'id' => 'area']) !!}
                                                     {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </div>
-                                    <div class="form-row">
                                         <div class="col">
-                                            <input type="submit" class="btn btn-info btn-sm px-2" value="Search"
-                                                   style="border-radius: 0px">
-                                            <a class="btn btn-sm btn-primary text-white"
-                                               href="{{ route('admin.product.list') }}" title="ADD NEW LISTING"
-                                               style="color: #FC611F;margin-left: 10px;">Reset</a>
+                                            <div class="form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
+                                                {!! Form::label('property_type', 'Property type') !!}
+                                                <div class="controls">
+                                                    {!! Form::select('property_type', $property_type_combo, request()->query->get('property_type'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select property type', 'tabindex' => 6, 'id' => 'property_type']) !!}
+                                                    {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <input type="submit" class="btn btn-info btn-sm px-2" value="Search" style="border-radius: 0px">
+                                            <a class="btn btn-sm btn-primary text-white" href="{{ route('admin.seeker.list') }}" style="color: #FC611F;margin-left: 10px;">Reset</a>
                                         </div>
                                     </div>
+
                                 </form>
                                 <div class="table-responsive ">
                                     <table class="table table-striped table-bordered table-sm" id="dtable">
@@ -97,6 +103,7 @@
                                             <th>Balance (BDT)</th>
                                             <th>Create Date</th>
                                             <th>Lead Status</th>
+                                            <th>Lead Info</th>
                                             <th>Account Status</th>
                                             <th style="width: 17%" class="text-center">Action</th>
                                         </tr>
@@ -133,24 +140,34 @@
 
         var get_url = $('#base_url').val();
         $(document).on('click', '#city', function(e){
-            var city = $(this).val();
-            if(city != ''){
-                let url = get_url;
-                $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'JSON',
-                data: {'pickup_array' : 1},
-                success: function(data) {
-                if(data == 1){
-                location.reload();
-                }else{
-                toastr.info('Please try again','Info');
-                }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {}
-                });
+            let id = $(this).val();
+            if (id == '') {
+                return false;
             }
+            $("#area").empty();
+           // $("#area").html('<optin value="">Select area</option>');
+            $.ajax({
+                type: 'get',
+                url: get_url + '/ajax-get-area/' + id,
+                async: true,
+                dataType: 'json',
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                },
+                success: function (response) {
+                    var option1 = new Option('Select area', '');
+                    $("#area").append(option1);
+
+                    $.each(response.area, function (key, value) {
+                        var option = new Option(value, key);
+                        $("#area").append(option);
+                    });
+                },
+                complete: function (data) {
+                    $("body").css("cursor", "default");
+
+                }
+            });
         })
 
 
@@ -185,6 +202,11 @@
                         type: 'POST',
                         data: function (d) {
                             d._token = "{{ csrf_token() }}";
+                            d.property_for = {!! request()->query('property_for') ? '"' . request()->query('property_for') . '"' : 'null' !!};
+                            d.lead_status = {{ request()->query('lead_status') ?? 'null' }};
+                            d.city = {{ request()->query('city') ?? 'null' }};
+                            d.area = {{ request()->query('area') ?? 'null' }};
+                            d.property_type = {{ request()->query('property_type') ?? 'null' }};
                         }
                     },
                     columns: [
@@ -243,6 +265,13 @@
                             name: 'leadStatus',
                             searchable: false,
                             className: 'text-center'
+
+                        },
+                        {
+                            data: 'leadInfo',
+                            name: 'leadInfo',
+                            searchable: false,
+                            className: 'text-left'
 
                         },
                         {

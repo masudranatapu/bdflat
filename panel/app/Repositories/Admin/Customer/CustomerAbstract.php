@@ -119,12 +119,13 @@ class CustomerAbstract implements CustomerInterface
                 $req = ProductRequirements::find($list->PK_NO);
                 $property_for       = $req->PROPERTY_FOR;
                 $property_type      = $req->F_PROPERTY_TYPE_NO;
-                $size_min           = $req->MIN_SIZE-100;
-                $size_max           = $req->MAX_SIZE+100;
-                $property_condition = json_decode($req->PROPERTY_CONDITION);
+                $size_min           = $req->MIN_SIZE-1000;
+                $size_max           = $req->MAX_SIZE+1000;
+                $property_condition = json_decode($req->F_PROPERTY_CONDITION);
                 $area_nos = json_decode($req->F_AREAS);
 
-                $listings =  Product::select('PRD_LISTINGS.PK_NO','PRD_LISTINGS.F_USER_NO')
+
+                $listings =  Product::select('PRD_LISTINGS.PK_NO','PRD_LISTINGS.F_USER_NO','PRD_LISTING_VARIANTS.PROPERTY_SIZE')
                 ->join('PRD_LISTING_VARIANTS', 'PRD_LISTING_VARIANTS.F_LISTING_NO', 'PRD_LISTINGS.PK_NO')
                 ->join('WEB_USER', 'WEB_USER.PK_NO', 'PRD_LISTINGS.F_USER_NO')
                 ->where('PRD_LISTINGS.STATUS',10)
@@ -132,22 +133,25 @@ class CustomerAbstract implements CustomerInterface
                 ->where('PRD_LISTINGS.PROPERTY_FOR',$property_for)
                 ->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO',$property_type)
                 ->whereIn('PRD_LISTINGS.F_AREA_NO',$area_nos)
-                ->whereBetween('PRD_LISTING_VARIANTS.PROPERTY_SIZE', [$size_max, $size_min])
-                ->whereIn('PRD_LISTINGS.PROPERTY_CONDITION',$property_condition)
-                ->where('WEB_USER.STATUS',1)
+                ->whereBetween('PRD_LISTING_VARIANTS.PROPERTY_SIZE', [$size_min,$size_max]);
+                if($property_condition){
+                    $listings->whereIn('PRD_LISTINGS.F_PROPERTY_CONDITION',$property_condition);
+                }
+                $listings = $listings->where('WEB_USER.STATUS',1)
                 ->groupBy('PRD_LISTINGS.PK_NO')
                 ->orderBy('PRD_LISTINGS.MODIFIED_AT', 'DESC')
                 ->get();
                 if($listings && count($listings) > 0 ){
                     $max_share = 0;
                     foreach ($listings as $key => $value) {
-                        DB::table('PRD_LEAD_SHARE_MAP')->where('F_USER_NO',$list->F_USER_NO)->where('F_COMPANY_NO',$value->F_USER_NO)->where('STATUS',0)->delete();
+                        DB::table('PRD_LEAD_SHARE_MAP')->where('F_USER_NO',$list->F_USER_NO)->where('F_COMPANY_NO',$value->F_USER_NO)->where('STATUS',0)->where('LEAD_TYPE',0)->delete();
                         $check_old = DB::table('PRD_LEAD_SHARE_MAP')->where('F_USER_NO',$list->F_USER_NO)->where('F_COMPANY_NO',$value->F_USER_NO)->first();
                         if($check_old == null){
                             $order_id = 1+$key;
                             $max_share++;
                             DB::table('PRD_LEAD_SHARE_MAP')->insert([
-                                'F_REQUIREMENT_NO'  => $list->PK_NO,
+                                'F_REQUIREMENT_NO'  => $req->PK_NO,
+                                'F_USER_NO'         => $req->F_USER_NO,
                                 'CREATED_AT'        => date('Y-m-d H:i:s'),
                                 'CREATED_BY'        => Auth::id(),
                                 'F_COMPANY_NO'      => $value->F_USER_NO,

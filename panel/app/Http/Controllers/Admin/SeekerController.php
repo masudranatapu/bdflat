@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\PropertyCondition;
@@ -31,16 +32,20 @@ class SeekerController extends BaseController
 
     public function getIndex(Request $request)
     {
+
+
         $data = [];
         // $this->resp = $this->customer->getPaginatedList($request);
         // $data['rows'] = $this->resp->data;
         $data['city'] = City::where('IS_ACTIVE',1)->pluck('CITY_NAME','PK_NO');
-        if($request->city){
+        if($request->city != '' ){
             $data['area'] = Area::where('IS_ACTIVE',1)
             ->where('F_CITY_NO',$request->city)
-            ->where('F_PARENT_AREA_NO',0)
+            ->whereNull('F_PARENT_AREA_NO')
             ->pluck('AREA_NAME','PK_NO');
         }
+
+        $data['property_type'] = PropertyType::where('IS_ACTIVE',1)->pluck('PROPERTY_TYPE', 'PK_NO');
         return view('admin.seeker.index', compact('data'));
     }
 

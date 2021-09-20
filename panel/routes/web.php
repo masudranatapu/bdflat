@@ -421,6 +421,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('seeker/get_area/{id}', ['middleware' => 'acl:view_seeker_payment', 'as' => 'admin.seeker.get_area', 'uses' => 'SeekerController@getArea']);
     Route::post('seeker_list', ['middleware' => 'acl:view_seeker', 'as' => 'ajax.seeker.list', 'uses' => 'DataTableController@getSeeker']);
     Route::get('payment-account', ['middleware' => 'acl:view_payment_account', 'as' => 'ajax.payment-account.list', 'uses' => 'SeekerController@paymentAccount']);
+
 /*
 
     Route::get('customer/new', ['middleware' => 'acl:new_customer', 'as' => 'admin.customer.create', 'uses' => 'CustomerController@getCreate']);
