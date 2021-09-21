@@ -5,6 +5,7 @@
 @endpush
 <?php
 $listings = $data['listing'] ?? [];
+$status = Config::get('static_array.property_status');
 ?>
 
 @section('content')
@@ -57,9 +58,9 @@ $listings = $data['listing'] ?? [];
                                                 <td>{{$listing->TITLE}}</td>
                                                 <td>{{$listing->AREA_NAME}}, {{$listing->CITY_NAME}}</td>
                                                 <td>{{$listing->PROPERTY_FOR}}</td>
-                                                <td title="{{ $listing->LISTING_TYPE }}">{{$listing->SHORT_NAME}}</td>
+                                                <td title="{{ $listing->LISTING_TYPE }}">{{$listing->PROPERTY_TYPE}}</td>
                                                 <td>{{date('M m, Y', strtotime($listing->MODIFIED_AT))}}</td>
-                                                <td>Pending</td>
+                                                <td>{{ $status[$listing->STATUS] ?? '' }}</td>
                                                 <td width="20%">
                                                     <a href="{{ route('developer.listings.edit', $listing->PK_NO) }}" class="text-info">Edit</a> |
                                                     <a href="{{ route('developer.listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')" class="text-danger">Delete</a> |
@@ -76,7 +77,7 @@ $listings = $data['listing'] ?? [];
                                     @endif
                                     </tbody>
                                 </table>
-
+                                {{$listings->links()}}
                             </div>
                         </div>
                     </div>

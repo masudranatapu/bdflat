@@ -1,5 +1,15 @@
 <?php
 return [
+
+    'property_status' => [
+        0 => 'Pending',
+        10 => 'Published',
+        20 => 'Unpublished',
+        30 => 'Rejected',
+        40 => 'Expired',
+        50 => 'Deleted',
+    ],
+
     // 'property_condition' => [
     //     'ready'         => 'Ready',
     //     'semi-ready'    => 'Semi Ready',

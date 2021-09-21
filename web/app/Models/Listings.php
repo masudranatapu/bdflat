@@ -696,8 +696,7 @@ class Listings extends Model
             ->where('F_USER_NO', '=', Auth::id())
             ->where('STATUS', '!=', 4)
             ->latest()
-            ->take($limit)
-            ->get();
+            ->paginate(1);
     }
 
     public function getListing($id)
