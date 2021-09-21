@@ -50,9 +50,9 @@
                                         <h3 class="mb-1">Requirement Details</h3>
                                         <p>Looking property for: <strong>{{$data['listing_details']->getRequirements->PROPERTY_FOR}}</strong></p>
                                         <p>Property Type: &emsp;<strong>{{$data['listing_details']->getRequirements->PROPERTY_TYPE}}</strong></p>
-                                        <p>Preferred Location: &emsp;<strong>{{$data['listing_details']->getRequirements->AREA_NAMES}}</strong></p>
+                                        <p>Preferred Location: &emsp;<strong>{{json_decode($data['listing_details']->getRequirements->AREA_NAMES)}}</strong></p>
                                         <p>Property Size: &emsp;<strong>{{$data['listing_details']->getRequirements->MIN_SIZE}} - {{$data['listing_details']->getRequirements->MAX_SIZE}} sft</strong></p>
-                                        <p>Condition: &emsp;<strong>{{$data['listing_details']->getRequirements->PROPERTY_CONDITION }}</strong></p>
+                                        <p>Condition: &emsp;<strong>{{json_encode($data['listing_details']->getRequirements->PROPERTY_CONDITION) }}</strong></p>
                                         <p>Requirement Details: &emsp;
                                             <strong>
                                                 {!! $data['listing_details']->getRequirements->REQUIREMENT_DETAILS !!}
