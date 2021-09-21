@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
     <input type="hidden" name="base_url" id="base_url" value="{{url('/')}}">
     @include('admin.layout.includes.css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('/custom/css/custom_2.css') }}">
 </head>
 <!-- END: Head-->
 <body class="vertical-layout vertical-menu-modern 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
