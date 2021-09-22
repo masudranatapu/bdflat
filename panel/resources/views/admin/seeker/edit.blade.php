@@ -36,9 +36,7 @@
 		.email-alert input[type=radio]+label:after,.email-alert input[type=radio]+label:before{position:absolute;top:0;left:0;content:"";width:14px;height:14px;border-radius:50%;display:inline-block;background-color:transparent}
 		.email-alert input[type=radio]+label:before{border:2px solid #666ee8}
 		.email-alert input[type=radio]:checked+label:after{border:5px solid #666ee8}
-		.row {
-		align-items: baseline;
-		}
+		/* .row {align-items: baseline;} */
 		.show_img{height:82px;width:82px;object-fit:cover}
 		.del_img{background:#bbb;padding:2px 7px;border-radius:77px;font-weight:700;color:#000;position:absolute;top:5px;right:20px}.del_btn{border-radius:75%;height:26px;width:26px;position:absolute;right:-8px;top:8px}
 		.select2{width:100%!important}

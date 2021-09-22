@@ -26,7 +26,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/custom/css/custom.css') }}">
 <!-- END: Page CSS-->
 {{-- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> --}}
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> --}}
+<script src="{{ asset('app-assets/jquery-3.2.1.min.js') }}"></script>
 <!-- BEGIN: Custom CSS-->
 {{--    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">--}}
 <!-- END: Custom CSS-->

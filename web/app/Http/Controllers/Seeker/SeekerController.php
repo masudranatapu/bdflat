@@ -17,6 +17,7 @@ use App\Models\SuggestedProperty;
 use Illuminate\Http\Request;
 use App\User;
 use Toastr;
+use DB;
 use Illuminate\Support\Facades\Auth;
 
 class SeekerController extends Controller
@@ -128,13 +129,13 @@ class SeekerController extends Controller
 
     public function getRechargeBalance(Request $request)
     {
+        $user_id = Auth::id();
         $data = array();
         if ($request->query->get('attempt') == 1) {
-            $browsed = Auth::user()->browsedProperties()->orderByDesc('LAST_BROWES_TIME')
-                ->first();
+            $browsed = BrowsedProperty::where('F_USER_NO', $user_id)->orderByDesc('LAST_BROWES_TIME')->first();
             if ($browsed) {
                 $browsed->IS_PAY_ATTEMPT = 1;
-                $browsed->save();
+                $browsed->update();
             }
         }
         //$data['city_combo'] = $this->city->getCityCombo();

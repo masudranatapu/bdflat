@@ -49,6 +49,7 @@ class ProductAbstract implements ProductInterface
 
     public function postUpdate($request, int $id): object
     {
+        dd($request->all());
         DB::beginTransaction();
         try {
             $area = $request->area;
@@ -193,7 +194,7 @@ class ProductAbstract implements ProductInterface
                 }
             }
 
-            //            for features
+            //  for features
             $features = ListingAdditionalInfo::where('F_LISTING_NO', $request->id)->first();
             $features->F_LISTING_NO = $list->PK_NO;
             $features->F_FACING_NO = $request->facing;
@@ -214,12 +215,15 @@ class ProductAbstract implements ProductInterface
 
     }
 
+
+    /*
     private function removeFile($path)
     {
         if (file_exists(public_path($path))) {
             unlink(public_path($path));
         }
     }
+    */
 
     public function getShow(int $id): object
     {
@@ -245,7 +249,6 @@ class ProductAbstract implements ProductInterface
 
         } catch (\Exception $e) {
             DB::rollback();
-
             return $this->formatResponse(false, 'Unable to delete product !', 'admin.product.list');
         }
 
@@ -255,6 +258,7 @@ class ProductAbstract implements ProductInterface
     }
 
 
+    /*
     public function getProductSearchList($request)
     {
 
@@ -622,6 +626,8 @@ class ProductAbstract implements ProductInterface
 
         return $this->formatResponse(true, 'Successfully delete product !', 'admin.product.list');
     }
+
+    */
 
 
 }

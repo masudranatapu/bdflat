@@ -12,7 +12,7 @@ class Area extends Model
 
     public function getArea($id)
     {
-        return Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
+        return Area::where('F_CITY_NO', $id)->whereNull('F_PARENT_AREA_NO')->pluck('AREA_NAME', 'PK_NO');
     }
 
 

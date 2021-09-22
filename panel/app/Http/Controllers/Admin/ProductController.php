@@ -305,7 +305,7 @@ class ProductController extends BaseController
 
     public function getArea($id)
     {
-        $data['area'] = Area::where('F_CITY_NO', $id)->orderBy('AREA_NAME', 'ASC')->pluck('AREA_NAME', 'PK_NO');
+        $data['area'] = Area::where('F_CITY_NO', $id)->whereNull('F_PARENT_AREA_NO')->orderBy('AREA_NAME', 'ASC')->pluck('AREA_NAME', 'PK_NO');
         return response()->json($data);
     }
 
