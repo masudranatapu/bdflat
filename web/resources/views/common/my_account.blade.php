@@ -41,9 +41,42 @@
                             </div>
                         </div>
                         @if(Auth::user()->USER_TYPE == 1)
-                            <h3>You May Like</h3>
-                            <div class="mt-2">
-                                @if(isset($data['properties']) && count($data['properties']))
+                            <div class="user-wrapper">
+                                <div class="user-nav">
+                                    <div class="row text-center">
+                                        <div class="col-4 mb-2">
+                                            <div class="user-box">
+                                                <a href="#">
+                                                    <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/>
+                                                    My Properties
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            <div class="user-box box2">
+                                                <a href="#">
+                                                    <span>{{ Auth::user()->TOTAL_LEAD }}</span><br/>
+                                                    Leads
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="user-box box3">
+                                                <a href="#">
+                                                    <span>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</span><br/>
+                                                    Balance
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if(isset($data['properties']) && count($data['properties']))
+                                <div class="property-heading">
+                                    <h3>You May Like</h3>
+                                </div>
+                                <div class="mt-2">
                                     @foreach($data['properties'] as $property)
                                         @php($property = $property->listing ?? [])
                                         <div class="property-product mb-4">
@@ -69,8 +102,42 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                @endif
-                            </div>
+                                </div>
+                            @elseif(isset($data['suggestedProperty']) && count($data['suggestedProperty']))
+                                <div class="property-heading">
+                                    <h3>Suggested Properties</h3>
+                                </div>
+                                <div class="mt-2">
+                                    @foreach($data['suggestedProperty'] as $property)
+                                        <div class="property-product mb-4">
+                                            <div class="row no-gutters position-relative">
+                                                <div class="col-4">
+                                                    <div class="property-bx">
+                                                        <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
+                                                                src="{{ defaultThumb($property->IMAGE_PATH ?? '') }}"
+                                                                class="w-100" alt="image"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-8 position-static">
+                                                    <h3>
+                                                        TK {{ number_format($property->TOTAL_PRICE ?? 0, 2) }}
+                                                        @if($property->IS_VERIFIED == 1)
+                                                            <span class="float-right">Verified <i class="fa fa-check-square"></i></span>
+                                                        @endif
+                                                    </h3>
+                                                    <h5 class="mt-0"><a
+                                                            href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE ?? '' }}</a>
+                                                    </h5>
+                                                    <h6>{{ $property->BEDROOM . ' Bed '  }}{{$property->BATHROOM. ' Bath' }}</h6>
+                                                    <a href="#" class="location"><i
+                                                            class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
+                                                        , {{ $property->CITY_NAME }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         @endif
                         @if(Auth::user()->USER_TYPE == 3)
                             <div class="user-wrapper">

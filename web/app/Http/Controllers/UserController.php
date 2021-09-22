@@ -9,11 +9,13 @@ use App\Http\Requests\UserRequest;
 use App\Models\BrowsedProperty;
 use App\Models\CustomerRefund;
 use App\Models\Listings;
+use App\Models\SuggestedProperty;
 use Illuminate\Http\Request;
 use App\User;
 use Toastr;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class UserController extends Controller
 {
@@ -43,9 +45,30 @@ class UserController extends Controller
         if ($user_type == 1) {
             $data['properties'] = BrowsedProperty::with(['listing'])
                 ->where('IS_PAY_ATTEMPT', '=', 1)
-                ->orderByDesc('PK_NO')
+                ->where('F_USER_NO', '=', $user_id)
+                ->orderByDesc('LAST_BROWES_TIME')
                 ->take(8)
                 ->get();
+
+            $data['suggestedProperty'] = SuggestedProperty::select('PRD_LISTINGS.PK_NO', 'PRD_LISTINGS.URL_SLUG','PRD_LISTINGS.TITLE', 'PRD_LISTINGS.IS_VERIFIED','PRD_LISTINGS.IS_TOP','PRD_LISTINGS.CI_PRICE','PRD_LISTINGS.AREA_NAME','PRD_LISTINGS.CITY_NAME','PRD_LISTING_IMAGES.IMAGE_PATH','PRD_LISTING_VARIANTS.PROPERTY_SIZE','PRD_LISTING_VARIANTS.BEDROOM','PRD_LISTING_VARIANTS.TOTAL_PRICE','PRD_LISTING_VARIANTS.BATHROOM')
+                    ->leftJoin('PRD_LISTINGS', 'PRD_LISTINGS.PK_NO', 'PRD_SUGGESTED_PROPERTY.F_LISTING_NO')
+                    ->leftJoin('PRD_LISTING_IMAGES', function($join)
+                    {
+                        $join->on('PRD_LISTINGS.PK_NO', '=', 'PRD_LISTING_IMAGES.F_LISTING_NO');
+                        $join->on('PRD_LISTING_IMAGES.IS_DEFAULT','=',DB::raw("'1'"));
+
+                    })
+                    ->leftJoin('PRD_LISTING_VARIANTS', function($join)
+                    {
+                        $join->on('PRD_LISTINGS.PK_NO', '=', 'PRD_LISTING_VARIANTS.F_LISTING_NO');
+                        $join->on('PRD_LISTING_VARIANTS.IS_DEFAULT','=',DB::raw("'1'"));
+
+                    })
+
+                    ->where('PRD_SUGGESTED_PROPERTY.F_USER_NO', '=', $user_id)
+                    ->orderByDesc('ORDER_ID')
+                    ->limit(5)
+                    ->get();
 //            dd($data);
         } else {
             $data['properties'] = $this->listings->getLatest(2);
