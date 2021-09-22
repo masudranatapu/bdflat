@@ -26,8 +26,8 @@ class ListingLeadPayment extends Model
 
         DB::beginTransaction();
         try {
-            $browsed = Auth::user()->browsedProperties()->orderByDesc('LAST_BROWES_TIME')
-                ->first();
+            $browsed = DB::table('PRD_BROWSING_HISTORY')->where('F_USER_NO', Auth::user()->id)->orderByDesc('LAST_BROWES_TIME')->first();
+
             if ($browsed) {
                 $browsed->IS_PAY_ATTEMPT = 1;
                 $browsed->save();
@@ -49,6 +49,7 @@ class ListingLeadPayment extends Model
             }
         }catch (\Exception $e){
             DB::rollback();
+            dd($e);
             return $this->formatResponse(false, 'Payment not successful !', 'home');
         }
         DB::commit();

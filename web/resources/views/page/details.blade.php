@@ -101,7 +101,7 @@
                                 <div class="short-info">
                                     <h3>Short Info</h3>
                                     <p>Condition:<a href="#">{{ $listing->PROPERTY_CONDITION ?? '' }}</a></p>
-                                    <p>Size:<a href="#">{{ $listing->getListingVariant->PROPERTY_SIZE ?? '' }}</a></p>
+                                    <p>Size (Sqft):<a href="#">{{ $listing->getListingVariant->PROPERTY_SIZE ?? '' }}</a></p>
                                     <p>Bedroom:<a href="#">{{ $listing->getListingVariant->BEDROOM ?? '' }}</a></p>
                                     <p>Bathroom:<a href="#">{{ $listing->getListingVariant->BATHROOM ?? '' }}</a></p>
                                     <p>Facing:<a href="#">{{ $listing->additionalInfo->FACING ?? '' }}</a></p>
@@ -124,31 +124,39 @@
                                     @if($listing->CI_PAYMENT == 1)
                                         @if(Auth::check())
                                             @if(Auth::user()->USER_TYPE == 1)
-                                                @if($listing->PURCHASE_DATE)
+                                                @if($listing->CI_PRICE > 0 )
+                                                    @if($listing->PURCHASE_DATE)
+                                                        <span class="mb-2 mr-3">
+                                                            <i class="fa fa-phone"></i>
+                                                                <a class="Show_num"
+                                                                href="tel:{{ $listing->MOBILE1 }}">{{ $listing->MOBILE1 }}</a>
+                                                        </span>
+                                                        @if($listing->MOBILE2)
+                                                            <span class="mb-2 mr-3">
+                                                                <i class="fa fa-phone"></i>
+                                                                    <a class="Show_num"
+                                                                    href="tel:{{ $listing->MOBILE2 }}">{{ $listing->MOBILE2 }}</a>
+                                                            </span>
+                                                        @endif
+                                                    @else
+                                                        <span class="mb-2 mr-3" data-toggle="modal" data-target="#paymentModal"><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
+
+                                                    @endif
+                                                @else
                                                     <span class="mb-2 mr-3">
                                                         <i class="fa fa-phone"></i>
-                                                            <a class="Show_num"
-                                                               href="tel:{{ $listing->MOBILE1 }}">{{ $listing->MOBILE1 }}</a>
+                                                            <a class="Show_num" href="tel:{{ $listing->MOBILE1 }}">{{ $listing->MOBILE1 }}</a>
                                                     </span>
                                                     @if($listing->MOBILE2)
                                                         <span class="mb-2 mr-3">
                                                             <i class="fa fa-phone"></i>
-                                                                <a class="Show_num"
-                                                                   href="tel:{{ $listing->MOBILE2 }}">{{ $listing->MOBILE2 }}</a>
+                                                                <a class="Show_num" href="tel:{{ $listing->MOBILE2 }}">{{ $listing->MOBILE2 }}</a>
                                                         </span>
                                                     @endif
-                                                @else
-                                                    <span class="mb-2 mr-3" data-toggle="modal"
-                                                          data-target="#paymentModal"><i class="fa fa-phone"></i><span
-                                                            class="hide_text">Show Number</span></span>
-
                                                 @endif
 
                                             @else
-                                                <span class="mb-2 mr-3"
-                                                      onclick="alert('Only seeker can see the number!')"><i
-                                                        class="fa fa-phone"></i><span
-                                                        class="hide_text">Show Number</span></span>
+                                                <span class="mb-2 mr-3" onclick="alert('Only seeker can see the number!')"><i class="fa fa-phone"></i><span class="hide_text">Show Number</span></span>
                                             @endif
                                         @else
                                             <span class="mb-2 mr-3" @if(!Auth::check()) data-toggle="modal"
@@ -170,7 +178,7 @@
                                         @endif
                                     @endif
 
-                                    <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a>
+                                    {{-- <a href="#" class="reply"><i class="fa fa-envelope"></i>Reply by email</a> --}}
                                 </div>
                                 <div class="share-product">
                                     <h3>Share this ad</h3>
