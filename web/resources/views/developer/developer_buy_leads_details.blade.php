@@ -33,16 +33,8 @@
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('buy-leads') }}"><i class="fa fa-long-arrow-left"></i>Buy Leads</a> <a href="{{ route('owner-leads') }}"
-                                                                                                                                 class="link"
-                                                                                                                                 style="float: right">Leads</a></h3>
+                                    <h3><a href="{{ route('developer-buy-leads') }}"><i class="fa fa-long-arrow-left"></i>Buy Leads</a> </h3>
                                 </div>
-                                @php
-                                    $area= [];
-                                    foreach(json_decode($data['listing_details']->getRequirements->F_AREAS) as $i){
-                                        $area[] = \App\Models\Area::where('PK_NO',$i)->first()->AREA_NAME;
-                                    }
-                                @endphp
 
                                 <div class="row no-gutters position-relative buy_leads_div">
                                     <div class="col-12 mb-3">
@@ -51,16 +43,22 @@
                                         <p>Lead Type: &emsp;<strong>Matching</strong></p>
                                         <p>Lead Id: &emsp;<strong>100002</strong></p>
                                     </div>
-
+                                    @php
+                                        $area= [];
+                                        foreach(json_decode($data['listing_details']->getRequirements->F_AREAS) as $i){
+                                            $area[] = \App\Models\Area::where('PK_NO',$i)->first()->AREA_NAME;
+                                        }
+                                    @endphp
                                     <div class="col-12 mb-3">
                                         <h3 class="mb-1">Requirement Details</h3>
                                         <p>Looking property for: <strong>{{$data['listing_details']->getRequirements->PROPERTY_FOR}}</strong></p>
                                         <p>Property Type: &emsp;<strong>{{$data['listing_details']->getRequirements->PROPERTY_TYPE}}</strong></p>
-                                        <p>Preferred Location: &emsp;<strong>{{implode(', ',$area)}}</strong></p>
+                                        <p>Preferred Location: &emsp;<strong>{{implode(', ',$area)}}
+                                            </strong></p>
                                         <p>Property Size: &emsp;<strong>{{$data['listing_details']->getRequirements->MIN_SIZE}} - {{$data['listing_details']->getRequirements->MAX_SIZE}} sft</strong></p>
                                         <p>Condition: &emsp;<strong>
                                                 @php
-                                                    $c =[];
+                                                $c =[];
                                                 @endphp
                                                 @foreach (json_decode($data['listing_details']->getRequirements->PROPERTY_CONDITION) as $cond) @php  $c[] = $cond @endphp @endforeach {{implode(', ',$c)}}
                                             </strong></p>

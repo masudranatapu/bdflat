@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function ()
     Route::get('developer-listings', 'DeveloperController@getDevListings')->name('developer-listings');
     Route::get('developer-leads', 'DeveloperController@getdeveloperLeads')->name('developer-leads');
     Route::get('developer-buy-leads', 'DeveloperController@getdeveloperBuyLeads')->name('developer-buy-leads');
+    Route::get('developer-buy-leads/{id}/details', 'DeveloperController@getdeveloperBuyLeadsDetails')->name('developer-buy-leads-details');
     Route::get('developer-payments', 'DeveloperController@getdeveloperPayments')->name('developer-payments');
 
     Route::get('developer-listings/create', 'ListingController@create')->name('developer.listings.create');

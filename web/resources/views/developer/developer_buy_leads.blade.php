@@ -44,18 +44,38 @@ $listings = $data['listing'] ?? [];
                                     </thead>
 
                                     <tbody>
-                                    <tr>
-                                        <td>10001</td>
-                                        <td>Seeker Name</td>
-                                        <td>Apartment</td>
-                                        <td>Buy</td>
-                                        <td>Area, City</td>
-                                        <td>100%</td>
-                                        <td width="25%">
-                                            <a href="#" class="text-info">Details</a>|
-                                            <a href="#" class="text-info">Buy Now</a>
-                                        </td>
-                                    </tr>
+                                    @if($data['listing']->count()>0)
+                                        @foreach($data['listing'] as $item)
+                                            @php
+                                                $area= [];
+                                                foreach(json_decode($item->getRequirements->F_AREAS) as $i){
+                                                    $area[] = \App\Models\Area::where('PK_NO',$i)->first()->AREA_NAME;
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td>{{$item->getRequirements->getUser->CODE}}</td>
+                                                <td>{{$item->getRequirements->getUser->NAME}}</td>
+                                                <td>{{$item->getRequirements->PROPERTY_TYPE}}</td>
+                                                <td>{{$item->getRequirements->PROPERTY_FOR}}</td>
+                                                <td>{{implode(', ',$area)}}</td>
+                                                <td>
+                                                    @if($item->LEAD_TYPE == 0)
+                                                        <span class="text-success">100% Matched</span>
+                                                    @else
+                                                        <span class="text-danger">Force Lead</span>
+                                                    @endif
+                                                </td>
+                                                <td width="25%">
+                                                    <a href="{{route('developer-buy-leads-details',$item->PK_NO)}}" class="text-info">Details</a> |
+                                                    <a href="#" class="text-info">Buy Now</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="7" class="text-danger text-center font-weight-bold">No Data Found!</td>
+                                        </tr>
+                                    @endif
                                     </tbody>
                                 </table>
 

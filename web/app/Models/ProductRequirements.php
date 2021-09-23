@@ -66,7 +66,9 @@ class ProductRequirements extends Model
             $condF = [];
             foreach ($rc as $item) {
                 $item = explode(',', $item);
-                $condF[] = intval($item[0]);
+//                $condF[] = intval($item[0]);
+                $condF[] = "$item[0]";
+
                 $cond[] = $item[1];
             }
 
