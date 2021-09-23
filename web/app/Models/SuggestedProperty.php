@@ -63,6 +63,7 @@ class SuggestedProperty extends Model
 
          })
 
+        ->where('PRD_SUGGESTED_PROPERTY.STATUS', '=', 0)
         ->where('PRD_SUGGESTED_PROPERTY.F_USER_NO', '=', $userID)
         ->orderByDesc('ORDER_ID')
         ->paginate(10);

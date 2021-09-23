@@ -47,13 +47,13 @@
                                                             <span class="float-right">Verified <i class="fa fa-check-square"></i></span>
                                                         @endif
                                                     </h3>
-                                                    <h5 class="mt-0"><a
-                                                            href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE ?? '' }}</a>
-                                                    </h5>
+
+                                                    <h5 class="mt-0"><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE ?? '' }}</a></h5>
+
                                                     <h6>{{ $property->BEDROOM . ' Bed '  }}{{$property->BATHROOM. ' Bath' }}</h6>
-                                                    <a href="#" class="location"><i
-                                                            class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}
-                                                        , {{ $property->CITY_NAME }}</a>
+
+                                                    <a href="#" class="location"><i class="fa fa-map-marker"></i>{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+
                                                 </div>
                                             </div>
                                         </div>

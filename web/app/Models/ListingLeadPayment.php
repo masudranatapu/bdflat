@@ -42,6 +42,11 @@ class ListingLeadPayment extends Model
             $payment->MODIFIED_BY = Auth::id();
             $payment->save();
 
+            $check_sugg = SuggestedProperty::where('F_LISTING_NO',$id)->where('F_USER_NO', Auth::id())->first();
+            if($check_sugg){
+                SuggestedProperty::where('F_LISTING_NO',$id)->where('F_USER_NO',Auth::id())->update(['STATUS' => 1]);
+            }
+
             // Remove attempt if paid
             if ($browsed) {
                 $browsed->IS_PAY_ATTEMPT = 0;
