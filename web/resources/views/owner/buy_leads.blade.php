@@ -38,7 +38,11 @@
                                                 </div>
                                                 <div class="col-9 position-static">
                                                     <div class="leads-info">
-                                                        <h5 class="mt-0">{{$item->getRequirements->getUser->NAME}} <span class="float-right">100%<br/>Mached</span></h5>
+                                                        <h5 class="mt-0">{{$item->getRequirements->getUser->NAME}} @if($item->LEAD_TYPE == 0)
+                                                                <span class="float-right">100%<br/>Matched</span>
+                                                            @else
+                                                                <span class="float-right text-danger">Force <br> Lead</span>
+                                                            @endif</h5>
                                                         <h4><span>LID {{$item->getRequirements->getUser->CODE}}</span></h4>
                                                         <h6>{{date('d M, Y',strtotime($item->CREATED_AT))}} <span><a href="{{route('buy-leads-details',$item->PK_NO)}}" class="float-right"><i class="fa fa-eye"></i>Details</a></span></h6>
                                                     </div>
