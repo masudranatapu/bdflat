@@ -21,8 +21,7 @@ class TransactionController extends BaseController
         $date_from = $request->query->get('from_date');
         $date_to = $request->query->get('to_date');
         $type = $request->query->get('transaction_type');
-        $data['transactions'] = $this->paymentCustomer->getTransactions($date_from, $date_to, $type);
-//        dd($data);
+        $data['rows'] = $this->paymentCustomer->getTransactions($date_from, $date_to, $type);
         return view('admin.transaction.index', compact('data'));
     }
 

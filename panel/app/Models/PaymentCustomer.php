@@ -70,32 +70,22 @@ class PaymentCustomer extends Model
         return $data;
     }
 
-    public function getTransactions($date_from = null, $date_to = null, $type = 'all', $limit = 2000)
+    public function getTransactions($date_from = null, $date_to = null, $type = 'all')
     {
-        $transactions = PaymentCustomer::with(['customer' => function ($query) {
-            $query->select('CODE');
-        }])->take($limit);
-        if ($date_from) {
-            $transactions->whereDate('PAYMENT_DATE', '>=', date('Y-m-d', strtotime($date_from)));
-        }
-        if ($date_to) {
-            $transactions->whereDate('PAYMENT_DATE', '<=', date('Y-m-d', strtotime($date_to)));
-        }
-//        switch ($type) {
-//            case 'listing_ad':
-//                break;
-//            case 'lead_purchase':
-//                break;
-//            case 'contact_view':
-//                break;
-//            case 'recharge':
-//                break;
-//            case 'commission':
-//                break;
-//            case 'refund':
-//                break;
-//            default:
-//        }
-        return $transactions->get();
+        $data = DB::table('ACC_CUSTOMER_TRANSACTION')
+        ->select('ACC_CUSTOMER_TRANSACTION.CODE','WEB_USER.CODE AS CUSTOMER_NO','ACC_CUSTOMER_TRANSACTION.TRANSACTION_DATE','ACC_CUSTOMER_TRANSACTION.TRANSACTION_TYPE','ACC_CUSTOMER_TRANSACTION.AMOUNT','ACC_CUSTOMER_TRANSACTION.IN_OUT')
+        ->leftJoin('WEB_USER','WEB_USER.PK_NO','ACC_CUSTOMER_TRANSACTION.F_CUSTOMER_NO');
+
+        // $transactions = PaymentCustomer::with(['customer' => function ($query) {
+        //     $query->select('CODE');
+        // }])->take($limit);
+        // if ($date_from) {
+        //     $transactions->whereDate('PAYMENT_DATE', '>=', date('Y-m-d', strtotime($date_from)));
+        // }
+        // if ($date_to) {
+        //     $transactions->whereDate('PAYMENT_DATE', '<=', date('Y-m-d', strtotime($date_to)));
+        // }
+
+        return $data->orderBy('ACC_CUSTOMER_TRANSACTION.PK_NO','DESC')->get();
     }
 }

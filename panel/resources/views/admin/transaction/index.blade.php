@@ -26,7 +26,8 @@
 @endpush
 
 @php
-    $roles = userRolePermissionArray()
+    $roles = userRolePermissionArray();
+    $transaction_type = Config::get('static_array.transaction_type');
 @endphp
 
 @section('content')
@@ -116,6 +117,7 @@
                                     <table class="table table-striped table-bordered text-center">
                                         <thead>
                                         <tr>
+                                            <th>SL</th>
                                             <th>User ID</th>
                                             <th>TID</th>
                                             <th>Date</th>
@@ -126,15 +128,16 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @if(isset($data['transactions']) && count($data['transactions']))
-                                            @foreach($data['transactions'] as $transaction)
+                                        @if(isset($data['rows']) && count($data['rows']))
+                                            @foreach($data['rows'] as $key =>  $row)
                                                 <tr>
-                                                    <td>{{ $transaction->CUSTOMER_NO }}</td>
-                                                    <td>{{ $transaction->SLIP_NUMBER }}</td>
-                                                    <td>{{ date('M d, Y', strtotime($transaction->PAYMENT_DATE)) }}</td>
-                                                    <td></td>
-                                                    <td>{{ $transaction->PAYMENT_NOTE }}</td>
-                                                    <td>{{ number_format($transaction->AMOUNT, 2) }}</td>
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td>{{ $row->CUSTOMER_NO }}</td>
+                                                    <td>{{ $row->CODE }}</td>
+                                                    <td>{{ date('M d, Y', strtotime($row->TRANSACTION_DATE)) }}</td>
+                                                    <td>{{ $transaction_type[$row->TRANSACTION_TYPE] ?? '' }}</td>
+                                                    <td>{{ $row->PAYMENT_NOTE ?? '' }}</td>
+                                                    <td>{{ number_format($row->AMOUNT, 2) }}</td>
                                                     <td>
                                                         <a href="#">Edit</a> |
                                                         <a href="#">Delete</a>
