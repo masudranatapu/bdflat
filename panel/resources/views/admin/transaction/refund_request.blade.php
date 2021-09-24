@@ -75,6 +75,7 @@
                                     <table class="table table-striped table-bordered text-center">
                                         <thead>
                                         <tr>
+                                            <th>SL</th>
                                             <th>USER ID</th>
                                             <th>Refund ID</th>
                                             <th>PID/LID</th>
@@ -89,8 +90,11 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                            @if(isset($data['rows']) && count($data['rows']) > 0 )
+                                            @foreach($data['rows'] as $key => $item)
                                         <tr>
-                                            <td>10001</td>
+                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $item->USER_CODE }}</td>
                                             <td>10001</td>
                                             <td>PID 10001</td>
                                             <td>Oct 12, 2020</td>
@@ -106,6 +110,12 @@
                                                 <a href="#">Delete</a>
                                             </td>
                                         </tr>
+                                        @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="12">Data not found</td>
+                                        </tr>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>

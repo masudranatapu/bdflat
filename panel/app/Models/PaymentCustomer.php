@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class PaymentCustomer extends Model
 {
@@ -58,6 +59,15 @@ class PaymentCustomer extends Model
 
     public function allOrderPayments() {
         return $this->hasMany('App\Models\OrderPayment', 'F_ACC_CUSTOMER_PAYMENT_NO', 'PK_NO');
+    }
+
+    public function getRefundRequest($request){
+        $data = DB::table('ACC_LISTING_LEAD_PAYMENTS')
+        ->select('WEB_USER.CODE as USER_CODE',)
+        ->leftJoin('WEB_USER','WEB_USER.PK_NO','ACC_LISTING_LEAD_PAYMENTS.F_USER_NO')
+        ->whereIn('ACC_LISTING_LEAD_PAYMENTS.IS_CLAIM', [1,2,3])->paginate(10);
+
+        return $data;
     }
 
     public function getTransactions($date_from = null, $date_to = null, $type = 'all', $limit = 2000)
