@@ -14,7 +14,7 @@
 
 <?php
 $product_list_details = $data['product_list_details'] ?? [];
-$claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
+$refund_reason = $data['refund_reason'] ?? [];
 ?>
 
 @section('content')
@@ -38,14 +38,14 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                     <div class="refund-wrap text-center">
                         <h1>Hi, you are claiming amount for<br/> Property ID {{$product_list_details->CODE}}</h1>
                         {!! Form::open([ 'route' => 'refund-request.store', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
-                        {!! Form::hidden('f_listing_no',null,['id' => 'f_listing_no']) !!}
-                        {!! Form::hidden('request_amount',50,['id' => 'request_amount']) !!}
+                        {!! Form::hidden('f_listing_no',$product_list_details->PK_NO,['id' => 'f_listing_no']) !!}
+                        {!! Form::hidden('request_amount',$data['lead_payment']->AMOUNT,['id' => 'request_amount']) !!}
                         <div class="row d-flex justify-content-center">
                             <div class="col-sm-7 col-md-6">
                                 <div class="form-group {!! $errors->has('claiming') ? 'error' : '' !!}">
                                     <div class="controls">
                                         {!! Form::label('claiming','Claiming Reason <span class="required">*</span>:', ['class' => 'advertis-label'], false) !!}
-                                        {!! Form::select('claiming', $claiming_reasons, old('claiming'), array('class'=>'form-control', 'placeholder'=>'Select Reason','data-validation-required-message' => 'This field is required')) !!}
+                                        {!! Form::select('claiming', $refund_reason, old('claiming'), array('class'=>'form-control', 'placeholder'=>'Select Reason','data-validation-required-message' => 'This field is required')) !!}
                                         {!! $errors->first('claiming', '<label class="help-block text-danger text-left">:message</label>') !!}
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                         </div>
 
                         <h3>Claiming Amount</h3>
-                        <h2>BDT 75.00</h2>
+                        <h2>BDT {{number_format($data['lead_payment']->AMOUNT,2)}}</h2>
 {{--                        <a href="#">Submit</a>--}}
                         <div class="advertisment-btn mt-3">
                             {!! Form::submit('submit', ['id'=>'submit']) !!}

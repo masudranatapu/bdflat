@@ -13,6 +13,7 @@ use App\Models\CustomerRefund;
 use App\Models\CustomerTxn;
 use App\Models\ListingLeadPayment;
 use App\Models\Listings;
+use App\Models\RefundRequest;
 use App\Models\SuggestedProperty;
 use Illuminate\Http\Request;
 use App\User;
@@ -102,6 +103,7 @@ class SeekerController extends Controller
     public function getSuggestedProperties(Request $request)
     {
         $data['properties'] = $this->suggestedProperty->getProperties($request);
+//        dd($data['properties']);
         return view('seeker.suggested_properties', compact('data'));
     }
 
@@ -111,7 +113,7 @@ class SeekerController extends Controller
         $data['rows'] = Auth::user()->contactedProperties()
             ->with(['getDefaultThumb', 'getListingVariant'])
             ->get();
-//        ddd($data['rows']);
+//        dd($data['rows']);
         return view('seeker.contacted_properties', compact('data'));
     }
 
@@ -145,11 +147,15 @@ class SeekerController extends Controller
     {
         $data = array();
         $data['product_list_details'] = Listings::where('PK_NO', $id)->select('CODE', 'CITY_NAME', 'AREA_NAME', 'PK_NO')->first();
+        $data['lead_payment'] = ListingLeadPayment::where('F_LISTING_NO',$id)->where('F_USER_NO',Auth::user()->PK_NO)->first();
+        $data['refund_reason'] = RefundRequest::where('IS_ACTIVE',1)->orderBy('ORDER_ID','asc')->pluck('TITLE','PK_NO');
+//        dd($data['refund_reason']);
         return view('seeker.refund_request', compact('data'));
     }
 
     public function customerRefundStore(CustomerRefundRequest $request)
     {
+//        dd($request->all());
         $this->resp = $this->customerRefundModel->store($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;

@@ -32,15 +32,26 @@ $product_lists = $data['rows'] ?? [];
                                 <!-- product -->
                                 @if(isset($product_lists) && count($product_lists) > 0 )
                                     @foreach($product_lists as $item)
+                                        @php
+                                            $listing_lead_payment = \App\Models\ListingLeadPayment::where('F_USER_NO',Auth::user()->PK_NO)->first();
+                                            $lead_claimed_time = $listing_lead_payment->CREATE_AT->addHours(\App\Models\WebSetting::where('PK_NO',1)->first()->LISTING_LEAD_CLAIMED_TIME);
+                                        @endphp
                                         <div class="property-product mb-4">
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-4">
                                                     <div class="property-bx">
-                                                        <a href="{{ route('web.property.details', $item->URL_SLUG) }}"><img src="{{ defaultThumb($item->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
+                                                        <a href="{{ route('web.property.details', $item->URL_SLUG) }}"><img
+                                                                src="{{ defaultThumb($item->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">
-                                                    <h3>TK {{ number_format($item->getListingVariant->TOTAL_PRICE ?? 0, 2) }} <span class="float-right claim"><a href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a> <i class="fa fa-exclamation-triangle"></i></span></h3>
+                                                    <h3>TK {{ number_format($item->getListingVariant->TOTAL_PRICE ?? 0, 2) }}
+                                                        @if(\Illuminate\Support\Carbon::now() <= $lead_claimed_time)
+                                                            <span class="float-right claim"><a href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a>
+                                                            <i class="fa fa-exclamation-triangle"></i>
+                                                            </span>
+                                                        @endif
+                                                    </h3>
                                                     <h5 class="mt-0"><a href="{{ route('web.property.details', $item->URL_SLUG) }}">{{$item->TITLE}}</a></h5>
                                                     <h6>{{$item->getListingVariant->BEDROOM}} Bed, {{$item->getListingVariant->BATHROOM}} Bath
                                                         @if($item->getListingVariants->count() > 1 )
