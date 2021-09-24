@@ -221,7 +221,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        {!! Form::label('listing_lead_claimed_time', 'Listing Lead Claimed Time <span>*</span>', ['class' => 'label-title'], false) !!}
+                                        {!! Form::label('listing_lead_claimed_time', 'Listing Lead Claimed Time (Hours) <span>*</span>', ['class' => 'label-title'], false) !!}
                                         <div class="controls">
                                             {!! Form::text('listing_lead_claimed_time', old('listing_lead_claimed_time', $webInfo->LISTING_LEAD_CLAIMED_TIME ?? ''), ['id' => 'listing_lead_claimed_time', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Listing Lead Claimed Time']) !!}
                                             {!! $errors->first('listing_lead_claimed_time', '<label class="help-block text-danger">:message</label>') !!}
