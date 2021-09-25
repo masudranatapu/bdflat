@@ -16,6 +16,13 @@ return [
     //     'ongoing'       => 'Ongoing',
     //     'used'          => 'Used'
     // ],
+
+    'payment_methods' => [
+        1 => 'Bkash',
+        2 => 'Rocket',
+    ],
+
+
     'bed_room' => [
         '1'    => '1 Bed',
         '2'    => '2 Bed',
