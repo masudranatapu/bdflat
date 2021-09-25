@@ -4,7 +4,7 @@
 @endpush
 
 <?php
-$product_lists = $data['rows'] ?? [];
+$products = $data['rows'] ?? [];
 ?>
 
 @section('content')
@@ -30,35 +30,52 @@ $product_lists = $data['rows'] ?? [];
                                     <h3><a href="{{ route('contacted-properties') }}"><i class="fa fa-long-arrow-left"></i>Contacted Properties</a></h3>
                                 </div>
                                 <!-- product -->
-                                @if(isset($product_lists) && count($product_lists) > 0 )
-                                    @foreach($product_lists as $item)
-                                        @php
-                                            $listing_lead_payment = \App\Models\ListingLeadPayment::where('F_USER_NO',Auth::user()->PK_NO)->first();
-                                            $lead_claimed_time = $listing_lead_payment->CREATE_AT->addHours(\App\Models\WebSetting::where('PK_NO',1)->first()->LISTING_LEAD_CLAIMED_TIME);
-                                        @endphp
+                                @if(isset($products) && count($products) > 0 )
+                                    @foreach($products as $item)
                                         <div class="property-product mb-4">
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-4">
                                                     <div class="property-bx">
-                                                        <a href="{{ route('web.property.details', $item->URL_SLUG) }}"><img
-                                                                src="{{ defaultThumb($item->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
+                                                        <a href="{{ route('web.property.details', $item->listing->URL_SLUG) }}"><img src="{{ defaultThumb($item->listing->getDefaultThumb->THUMB_PATH ?? '') }}" class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-8 position-static">
-                                                    <h3>TK {{ number_format($item->getListingVariant->TOTAL_PRICE ?? 0, 2) }}
-                                                        @if(\Illuminate\Support\Carbon::now() <= $lead_claimed_time)
-                                                            <span class="float-right claim"><a href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a>
-                                                            <i class="fa fa-exclamation-triangle"></i>
-                                                            </span>
+                                                    <h3>TK {{ number_format($item->listing->getListingVariant->TOTAL_PRICE ?? 0, 2) }}
+                                                        @if($item->IS_CLAIM == 0)
+                                                        @php
+                                                            $claim_hour = $data['claim_hour'];
+                                                            $claim_sc = $claim_hour*3600;
+                                                            $cur_time = strtotime(date('Y-m-d H:i:s'));
+                                                            $purchase_time = strtotime($item->CREATE_AT);
+                                                            $exp_time = $purchase_time+$claim_sc;
+                                                            date('Y-m-d H:i:s', strtotime('6 hour'));
+
+                                                        @endphp
+                                                            @if($cur_time < $purchase_time)
+                                                            <span class="float-right claim"><a href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a><i class="fa fa-exclamation-triangle"></i></span>
+                                                            @endif
+
                                                         @endif
+
+
+
+
+                                                        @if($item->IS_CLAIM == 1)
+                                                        <span class="float-right claim"><a href="javascript:void(0)">Claimed </a><i class="fa fa-exclamation-triangle"></i></span>
+                                                        @endif
+
+                                                        @if($item->IS_CLAIM == 2)
+                                                        <span class="float-right claim"><a href="javascript:void(0)">Denied </a><i class="fa fa-exclamation-triangle"></i></span>
+                                                        @endif
+
                                                     </h3>
-                                                    <h5 class="mt-0"><a href="{{ route('web.property.details', $item->URL_SLUG) }}">{{$item->TITLE}}</a></h5>
-                                                    <h6>{{$item->getListingVariant->BEDROOM}} Bed, {{$item->getListingVariant->BATHROOM}} Bath
-                                                        @if($item->getListingVariants->count() > 1 )
+                                                    <h5 class="mt-0"><a href="{{ route('web.property.details', $item->listing->URL_SLUG) }}">{{$item->listing->TITLE}}</a></h5>
+                                                    <h6>{{$item->listing->getListingVariant->BEDROOM}} Bed, {{$item->listing->getListingVariant->BATHROOM}} Bath
+                                                        @if($item->listing->getListingVariants->count() > 1 )
                                                             <a href="javascript:void(0)" data-id="{{$item->PK_NO}}" class="moreVariantBtn">More </a>
                                                         @endif
                                                     </h6>
-                                                    <a href="#" class="location"><i class="fa fa-map-marker"></i>{{$item->AREA_NAME}}, {{$item->CITY_NAME}}</a>
+                                                    <a href="#" class="location"><i class="fa fa-map-marker"></i>{{$item->listing->AREA_NAME}}, {{$item->listing->CITY_NAME}}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -66,38 +83,9 @@ $product_lists = $data['rows'] ?? [];
                                 @endif
                             </div>
 
-
-                            <div class="city-location">
-                                <div class="modal fade" id="extra_variants" tabindex="-1" aria-labelledby="extra_variantsLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="extra_variantsLabel">More Variants</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                            <table class="table text-center table-striped" style="font-family: 'Montserrat-Medium';font-size: 14px">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>BED</th>
-                                                                    <th>BATH</th>
-                                                                    <th>PRICE</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody id="show_variant"></tbody>
-                                                            </table>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    {{ $products->links() }}
                                 </div>
                             </div>
 
@@ -107,6 +95,40 @@ $product_lists = $data['rows'] ?? [];
 
             </div><!-- row -->
         </div><!-- container -->
+    </div>
+
+
+    <div class="city-location">
+        <div class="modal fade" id="extra_variants" tabindex="-1" aria-labelledby="extra_variantsLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="extra_variantsLabel">More Variants</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="nav modalcategory flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <table class="table text-center table-striped" style="font-family: 'Montserrat-Medium';font-size: 14px">
+                                        <thead>
+                                        <tr>
+                                            <th>BED</th>
+                                            <th>BATH</th>
+                                            <th>PRICE</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="show_variant"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

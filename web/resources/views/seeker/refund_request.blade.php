@@ -13,17 +13,14 @@
 @endpush
 
 <?php
-$product_list_details = $data['product_list_details'] ?? [];
-$refund_reason = $data['refund_reason'] ?? [];
+
+    $row = $data['row'] ?? [];
+    $refund_reason = $data['reasons'] ?? [];
+
 ?>
 
 @section('content')
-    <!--
-     ============   dashboard   ============
- -->
-    <!--
-         ============   dashboard   ============
-     -->
+
     <div class="dashboard-sec">
         <!-- container -->
         <div class="container">
@@ -36,17 +33,16 @@ $refund_reason = $data['refund_reason'] ?? [];
 
                 <div class="col-sm-12 col-md-9">
                     <div class="refund-wrap text-center">
-                        <h1>Hi, you are claiming amount for<br/> Property ID {{$product_list_details->CODE}}</h1>
+                        <h1>Hi, you are claiming amount for<br/> Property ID {{$row->listing->CODE}}</h1>
                         {!! Form::open([ 'route' => 'refund-request.store', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
-                        {!! Form::hidden('f_listing_no',$product_list_details->PK_NO,['id' => 'f_listing_no']) !!}
-                        {!! Form::hidden('request_amount',$data['lead_payment']->AMOUNT,['id' => 'request_amount']) !!}
+                        {!! Form::hidden('pk_no',$row->PK_NO,[]) !!}
                         <div class="row d-flex justify-content-center">
                             <div class="col-sm-7 col-md-6">
-                                <div class="form-group {!! $errors->has('claiming') ? 'error' : '' !!}">
+                                <div class="form-group {!! $errors->has('refund_reason') ? 'error' : '' !!}">
                                     <div class="controls">
-                                        {!! Form::label('claiming','Claiming Reason <span class="required">*</span>:', ['class' => 'advertis-label'], false) !!}
-                                        {!! Form::select('claiming', $refund_reason, old('claiming'), array('class'=>'form-control', 'placeholder'=>'Select Reason','data-validation-required-message' => 'This field is required')) !!}
-                                        {!! $errors->first('claiming', '<label class="help-block text-danger text-left">:message</label>') !!}
+                                        {!! Form::label('refund_reason','Claiming Reason <span class="required">*</span>:', ['class' => 'advertis-label'], false) !!}
+                                        {!! Form::select('refund_reason', $refund_reason, old('refund_reason'), array('class'=>'form-control', 'placeholder'=>'Select Reason','data-validation-required-message' => 'This field is required')) !!}
+                                        {!! $errors->first('refund_reason', '<label class="help-block text-danger text-left">:message</label>') !!}
                                     </div>
                                 </div>
                                 <div class="form-group {!! $errors->has('comment') ? 'error' : '' !!}">
@@ -60,8 +56,7 @@ $refund_reason = $data['refund_reason'] ?? [];
                         </div>
 
                         <h3>Claiming Amount</h3>
-                        <h2>BDT {{number_format($data['lead_payment']->AMOUNT,2)}}</h2>
-{{--                        <a href="#">Submit</a>--}}
+                        <h2>BDT {{number_format($row->AMOUNT,2)}}</h2>
                         <div class="advertisment-btn mt-3">
                             {!! Form::submit('submit', ['id'=>'submit']) !!}
                         </div>

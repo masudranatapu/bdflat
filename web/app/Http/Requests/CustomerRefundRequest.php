@@ -26,7 +26,7 @@ class CustomerRefundRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'claiming'              => 'required',
+            'refund_reason'              => 'required',
             'comment'               => 'required|max:200',
         ];
 
@@ -36,7 +36,7 @@ class CustomerRefundRequest extends FormRequest
     public function messages()
     {
         return [
-            'claiming.required'     => 'Claiming Reason is required!',
+            'refund_reason.required' => 'Claiming Reason is required!',
             'comment.required'      => 'Comment is required!',
         ];
     }

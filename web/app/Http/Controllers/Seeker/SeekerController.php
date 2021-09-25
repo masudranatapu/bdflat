@@ -109,11 +109,10 @@ class SeekerController extends Controller
 
     public function getContactedProperties(Request $request)
     {
-        $data = array();
-        $data['rows'] = Auth::user()->contactedProperties()
-            ->with(['getDefaultThumb', 'getListingVariant'])
-            ->get();
-//        dd($data['rows']);
+        $data           = array();
+        $data['rows']   = $this->leadPayment->getContactedProperties($request);
+        $claim_hour = DB::table('WEB_SETTINGS')->select('LISTING_LEAD_CLAIMED_TIME')->first();
+        $data['claim_hour'] = $claim_hour->LISTING_LEAD_CLAIMED_TIME ?? 0;
         return view('seeker.contacted_properties', compact('data'));
     }
 
@@ -146,16 +145,13 @@ class SeekerController extends Controller
     public function getRefundRequest(Request $request, $id)
     {
         $data = array();
-        $data['product_list_details'] = Listings::where('PK_NO', $id)->select('CODE', 'CITY_NAME', 'AREA_NAME', 'PK_NO')->first();
-        $data['lead_payment'] = ListingLeadPayment::where('F_LISTING_NO',$id)->where('F_USER_NO',Auth::user()->PK_NO)->first();
-        $data['refund_reason'] = RefundRequest::where('IS_ACTIVE',1)->orderBy('ORDER_ID','asc')->pluck('TITLE','PK_NO');
-//        dd($data['refund_reason']);
+        $data['row'] = ListingLeadPayment::where('PK_NO',$id)->where('F_USER_NO',Auth::id())->first();
+        $data['reasons'] = RefundRequest::where('IS_ACTIVE',1)->orderBy('ORDER_ID','DESC')->pluck('TITLE','PK_NO');
         return view('seeker.refund_request', compact('data'));
     }
 
     public function customerRefundStore(CustomerRefundRequest $request)
     {
-//        dd($request->all());
         $this->resp = $this->customerRefundModel->store($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;

@@ -19,13 +19,11 @@ class ListingLeadPayment extends Model
 
     public function leadPay($id): object
     {
-        $price = Listings::select('PRD_LISTINGS.URL_SLUG',DB::raw('(CASE WHEN PRD_LISTINGS.PROPERTY_FOR = "sale" THEN SS_LISTING_PRICE.SELL_PRICE WHEN PRD_LISTINGS.PROPERTY_FOR = "rent" THEN SS_LISTING_PRICE.RENT_PRICE  WHEN PRD_LISTINGS.PROPERTY_FOR = "roommate" THEN SS_LISTING_PRICE.ROOMMAT_PRICE ELSE 0 END) AS PRICE'))
-            ->leftJoin('SS_LISTING_PRICE', 'SS_LISTING_PRICE.F_LISTING_TYPE_NO', 'PRD_LISTINGS.F_LISTING_TYPE')
-            ->where('PRD_LISTINGS.PK_NO', '=', $id)
-            ->first();
+
 
         DB::beginTransaction();
         try {
+            $listing = Listings::find($id);
             $browsed = DB::table('PRD_BROWSING_HISTORY')->where('F_USER_NO', Auth::user()->id)->orderByDesc('LAST_BROWES_TIME')->first();
 
             if ($browsed) {
@@ -34,13 +32,36 @@ class ListingLeadPayment extends Model
             }
 
             $payment = new ListingLeadPayment();
-            $payment->F_LISTING_NO = $id;
-            $payment->F_USER_NO = Auth::id();
-            $payment->AMOUNT = $price->PRICE;
+            $payment->F_LISTING_NO  = $id;
+            $payment->F_USER_NO     = Auth::id();
+            $payment->AMOUNT        = $listing->CI_PRICE;
             $payment->PURCHASE_DATE = date('Y-m-d H:i:s');
-            $payment->CREATED_BY = Auth::id();
-            $payment->MODIFIED_BY = Auth::id();
+            $payment->CREATED_BY    = Auth::id();
+            $payment->MODIFIED_BY   = Auth::id();
             $payment->save();
+
+            $check = DB::table('PRD_SUGGESTED_PROPERTY')->where('F_LISTING_NO',$id)->where('F_USER_NO',Auth::id())->first();
+            if($check){
+                DB::table('PRD_SUGGESTED_PROPERTY')->where('F_LISTING_NO',$id)->where('F_USER_NO',Auth::id())->update(['STATUS' => 1]);
+            }else{
+                DB::table('PRD_SUGGESTED_PROPERTY')->insert([
+                        'F_LISTING_NO'  => $id,
+                        'F_COMPANY_NO'  => $listing->F_USER_NO,
+                        'F_USER_NO'     => Auth::id(),
+                        'CREATED_AT'    => date('Y-m-d H:i:s'),
+                        'CREATED_BY'    => Auth::id(),
+                        'PROPERTY_FOR'  => $listing->PROPERTY_FOR,
+                        'PROPERTY_TYPE' => $listing->PROPERTY_TYPE,
+                        'AREA'          => $listing->F_AREA_NO,
+                        'SIZE'          => '',
+                        'BEDROOM'       => '',
+                        'BATHROOM'      => '',
+                        'TOTAL_PRICE'   => '',
+                        'PROPERTY_CONDITION' => '',
+                        'STATUS'        => 1,
+                        'ORDER_ID'      => 1
+                ]);
+            }
 
             $check_sugg = SuggestedProperty::where('F_LISTING_NO',$id)->where('F_USER_NO', Auth::id())->first();
             if($check_sugg){
@@ -61,4 +82,16 @@ class ListingLeadPayment extends Model
         return $this->formatResponse(true, 'Payment successful !', 'home');
 
     }
+
+    public function listing() {
+        return $this->belongsTo('App\Models\Listings', 'F_LISTING_NO');
+      }
+
+    public function getContactedProperties($request){
+        $user_id = Auth::id();
+        $data = ListingLeadPayment::select('ACC_LISTING_LEAD_PAYMENTS.PK_NO','ACC_LISTING_LEAD_PAYMENTS.F_LISTING_NO','ACC_LISTING_LEAD_PAYMENTS.AMOUNT as PAID_AMOUNT','ACC_LISTING_LEAD_PAYMENTS.PURCHASE_DATE', 'ACC_LISTING_LEAD_PAYMENTS.CREATE_AT', 'ACC_LISTING_LEAD_PAYMENTS.IS_CLAIM')->where('ACC_LISTING_LEAD_PAYMENTS.F_USER_NO', $user_id)->paginate(20);
+        return $data;
+
+    }
+
 }
