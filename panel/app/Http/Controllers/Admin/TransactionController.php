@@ -52,6 +52,23 @@ class TransactionController extends BaseController
         return view('admin.transaction.refund_request', compact('data'));
     }
 
+    public function editRefundRequest($id)
+    {
+        $data['refund'] = $this->paymentCustomer->getRefund($id);
+//        dd($data);
+        return view('admin.transaction.edit_refund_request', compact('data'));
+    }
+
+    public function updateRefundRequest(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|min:1|max:3'
+        ]);
+
+        $this->resp = $this->paymentCustomer->updateRefund($request, $id);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);;
+    }
+
     public function getRechargeRequest()
     {
         return view('admin.transaction.recharge_request');
