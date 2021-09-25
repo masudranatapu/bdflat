@@ -72,5 +72,11 @@ return [
         '4'    => '4 Bath',
     ],
 
+    'refund_status' => [
+        1 => 'Pending',
+        2 => 'Approved',
+        3 => 'Denied'
+    ],
+
 ]
 ?>

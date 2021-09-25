@@ -14,24 +14,7 @@ class CustomerRefund extends Model
     protected $table        = 'ACC_CUSTOMER_REFUND';
     protected $primaryKey   = 'PK_NO';
     public $timestamps = false;
-    protected $fillable     = [
-        'F_USER_NO',
-        'F_REQUEST_REASON_NO',
-        'REQUEST_REASON',
-        'REQUEST_AT',
-        'COMMENT',
-        'REQUEST_AMOUNT',
-        'F_LISTING_NO',
-        'STATUS',
-        'APPROVED_AT',
-        'APPROVED_BY',
-        'APPROVED_AMOUNT',
-        'CREATED_AT',
-        'CREATED_BY',
-        'MODIFIED_AT',
-        'MODIFIED_BY',
-        'IS_DELETE',
-    ];
+    protected $fillable     = ['F_USER_NO','F_REQUEST_REASON_NO','REQUEST_REASON'];
 
     public function store($request)
     {
@@ -47,8 +30,9 @@ class CustomerRefund extends Model
                 $list->REQUEST_AT                       = Carbon::now();
                 $list->REQUEST_AMOUNT                   = $row->AMOUNT;
                 $list->COMMENT                          = $request->comment;
-                $list->F_LISTING_NO                     = $row->F_LISTING_NO;
+                $list->F_LISTING_LEAD_PAYMENT_NO	    = $row->PK_NO;
                 $list->STATUS                           = 1;
+                $list->REFUND_TYPE                      = 1;
                 $list->CREATED_AT                       = Carbon::now();
                 $list->save();
 

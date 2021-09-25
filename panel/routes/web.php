@@ -168,8 +168,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('transaction/{id}/edit', ['middleware' => 'acl:edit_transaction', 'as' => 'admin.transaction.edit', 'uses' => 'TransactionController@getEdit']);
     Route::post('transaction/{id}/update', ['middleware' => 'acl:edit_transaction', 'as' => 'admin.transaction.update', 'uses' => 'TransactionController@postUpdate']);
     Route::get('refund-request', ['middleware' => 'acl:view_refund_request', 'as' => 'admin.refund_request', 'uses' => 'TransactionController@getRefundRequest']);
+    Route::get('refund-request/{id}/edit', ['middleware' => 'acl:edit_refund_request', 'as' => 'admin.refund_request.edit', 'uses' => 'TransactionController@editRefundRequest']);
     Route::get('recharge-request', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.recharge_request', 'uses' => 'TransactionController@getRechargeRequest']);
-    Route::get('recharge-request', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.recharge_request', 'uses' => 'TransactionController@getRechargeRequest']);
+    // Route::get('recharge-request', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.recharge_request', 'uses' => 'TransactionController@getRechargeRequest']);
     Route::get('agent-commission', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.agent_commission', 'uses' => 'TransactionController@getAgentCommission']);
 
 

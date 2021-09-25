@@ -62,10 +62,11 @@ class PaymentCustomer extends Model
     }
 
     public function getRefundRequest($request){
-        $data = DB::table('ACC_LISTING_LEAD_PAYMENTS')
-        ->select('WEB_USER.CODE as USER_CODE',)
-        ->leftJoin('WEB_USER','WEB_USER.PK_NO','ACC_LISTING_LEAD_PAYMENTS.F_USER_NO')
-        ->whereIn('ACC_LISTING_LEAD_PAYMENTS.IS_CLAIM', [1,2,3])->paginate(10);
+        $data = DB::table('ACC_CUSTOMER_REFUND')
+        ->select('ACC_CUSTOMER_REFUND.*', 'WEB_USER.CODE as USER_CODE', 'WEB_USER.NAME as USER_NAME', 'WEB_USER.MOBILE_NO as USER_MOBILE_NO','ACC_CUSTOMER_TRANSACTION.CODE as TID')
+        ->leftJoin('WEB_USER','WEB_USER.PK_NO','ACC_CUSTOMER_REFUND.F_USER_NO')
+        ->leftJoin('ACC_CUSTOMER_TRANSACTION','ACC_CUSTOMER_TRANSACTION.F_LISTING_LEAD_PAYMENT_NO','ACC_CUSTOMER_REFUND.F_LISTING_LEAD_PAYMENT_NO')
+        ->paginate(10);
 
         return $data;
     }

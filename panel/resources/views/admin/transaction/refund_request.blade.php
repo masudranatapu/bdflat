@@ -25,7 +25,8 @@
 @endpush
 
 @php
-    $roles = userRolePermissionArray()
+    $roles = userRolePermissionArray();
+    $refund_status = Config('static_array.refund_status');
 @endphp
 
 @section('content')
@@ -79,7 +80,7 @@
                                             <th>USER ID</th>
                                             <th>Refund ID</th>
                                             <th>PID/LID</th>
-                                            <th>Date</th>
+                                            <th>Request At</th>
                                             <th>Property owner/seeker Name</th>
                                             <th>Property owner/seeker No.</th>
                                             <th>Reason</th>
@@ -95,19 +96,19 @@
                                         <tr>
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $item->USER_CODE }}</td>
-                                            <td>10001</td>
-                                            <td>PID 10001</td>
-                                            <td>Oct 12, 2020</td>
-                                            <td>Owner name</td>
-                                            <td>Mobile NO</td>
-                                            <td>selected reason</td>
-                                            <td>comment</td>
-                                            <td>100</td>
-                                            <td class="text-success">Approved</td>
+                                            <td>{{ $item->CODE }}</td>
+                                            <td>PID {{ $item->TID }}</td>
+                                            <td>{{ date('Y-m-d h:i A', strtotime($item->REQUEST_AT)) }}</td>
+                                            <td>{{ $item->USER_NAME }}</td>
+                                            <td>{{ $item->USER_MOBILE_NO }}</td>
+                                            <td>{{ $item->REQUEST_REASON }}</td>
+                                            <td>{{ $item->COMMENT }}</td>
+                                            <td>{{ number_format($item->REQUEST_AMOUNT,2) }}</td>
+                                            <td class="text-success">{{ $refund_status[$item->STATUS] }}</td>
                                             <td>
-                                                <a href="#">Action</a> |
-                                                <a href="#">Edit Property</a> |
-                                                <a href="#">Delete</a>
+                                                @if(hasAccessAbility('edit_refund_request', $roles))
+                                                <a href="{{ route('admin.refund_request.edit',['id' => $item->PK_NO ]) }}">Edit</a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
