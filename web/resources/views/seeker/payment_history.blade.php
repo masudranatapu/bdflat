@@ -46,7 +46,7 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                                 </div>
                                 <div class="col-4">
                                     <div class="rec-balance">
-                                        <a href="{{ route('recharge-balance') }}" class="btn btn-success">Recharge
+                                        <a href="{{ route('recharge-request') }}" class="btn btn-success">Recharge
                                             Balance</a>
                                     </div>
                                 </div>

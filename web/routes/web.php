@@ -100,6 +100,8 @@ Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
     Route::get('contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');
     Route::get('browsed-properties', 'SeekerController@getBrowsedProperties')->name('browsed-properties');
     Route::get('recharge-balance', 'SeekerController@getRechargeBalance')->name('recharge-balance');
+    Route::get('recharge-request', 'SeekerController@getRechargeRequest')->name('recharge-request');
+    Route::post('recharge-request', 'SeekerController@postRechargeRequest');
     Route::get('refund-request/{id}', 'SeekerController@getRefundRequest')->name('refund-request');
     Route::post('refund-request/store', 'SeekerController@customerRefundStore')->name('refund-request.store');
     Route::get('payment-history', 'SeekerController@paymentHistory')->name('payment-history');

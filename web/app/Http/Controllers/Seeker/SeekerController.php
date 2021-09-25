@@ -13,6 +13,9 @@ use App\Models\CustomerRefund;
 use App\Models\CustomerTxn;
 use App\Models\ListingLeadPayment;
 use App\Models\Listings;
+use App\Models\MobileNumber;
+use App\Models\PaymentMethod;
+use App\Models\RechargeRequest;
 use App\Models\RefundRequest;
 use App\Models\SuggestedProperty;
 use Illuminate\Http\Request;
@@ -29,8 +32,9 @@ class SeekerController extends Controller
     protected $leadPayment;
     protected $txn;
     protected $suggestedProperty;
+    protected $rechargeRequest;
 
-    public function __construct(SuggestedProperty $suggestedProperty, User $user, CustomerRefund $customerRefund, CustomerPayment $payment, ListingLeadPayment $leadPayment, CustomerTxn $txn)
+    public function __construct(RechargeRequest $rechargeRequest,SuggestedProperty $suggestedProperty, User $user, CustomerRefund $customerRefund, CustomerPayment $payment, ListingLeadPayment $leadPayment, CustomerTxn $txn)
     {
         $this->middleware('auth');
         $this->userModel = $user;
@@ -39,6 +43,7 @@ class SeekerController extends Controller
         $this->leadPayment = $leadPayment;
         $this->txn = $txn;
         $this->suggestedProperty = $suggestedProperty;
+        $this->rechargeRequest = $rechargeRequest;
     }
 
     public function getMyAccount(Request $request)
@@ -140,6 +145,23 @@ class SeekerController extends Controller
         }
         //$data['city_combo'] = $this->city->getCityCombo();
         return view('seeker.recharge_balance', compact('data'));
+    }
+
+    public function getRechargeRequest(Request $request)
+    {
+        $data = array();
+        $data['bkash'] = MobileNumber::where('F_PAYMENT_METHOD_NO',2)->pluck('MOBILE_NO','PK_NO');
+        $data['rocket'] = MobileNumber::where('F_PAYMENT_METHOD_NO',3)->pluck('MOBILE_NO','PK_NO');
+        //dd($data);
+        return view('seeker.confirm_payment', compact('data'));
+    }
+    public function postRechargeRequest(Request $request)
+    {
+        $this->resp = $this->rechargeRequest->postRechargeRequest($request);
+        $msg = $this->resp->msg;
+        $msg_title = $this->resp->msg_title;
+        Toastr::success($msg, $msg_title, ["positionClass" => "toast-top-right"]);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getRefundRequest(Request $request, $id)
