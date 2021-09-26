@@ -26,9 +26,10 @@
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('developer-leads') }}"><i class="fa fa-long-arrow-left"></i>Leads</a> <a href="{{ route('buy-leads') }}"
-                                                                                                                                   class="link" style="float: right">Buy
-                                            Leads</a></h3>
+                                    <h3>
+                                        <a href="{{ route('developer-leads') }}"><i class="fa fa-long-arrow-left"></i>Leads</a>
+                                        <a href="{{ route('buy-leads') }}"class="link" style="float: right">Buy Leads</a>
+                                    </h3>
                                 </div>
 
                                 <table class="table table-striped text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
@@ -39,7 +40,7 @@
                                         <th>Name</th>
                                         <th>Received Date</th>
                                         <th>Lead Type</th>
-                                        <th>Status</th>
+                                        {{-- <th>Status</th> --}}
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -60,7 +61,7 @@
                                                         <span class="text-danger">Force Lead</span>
                                                     @endif
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     @if($item->STATUS == 0)
                                                         <span class="text-danger">Pending</span>
                                                     @elseif($item->STATUS == 1)
@@ -68,7 +69,7 @@
                                                     @elseif($item->STATUS == 2)
                                                         <span class="text-danger">Denied By  Developer</span>
                                                     @endif
-                                                </td>
+                                                </td> --}}
                                                 <td width="20%">
                                                     <a href="{{route('developer-leads-details',$item->PK_NO)}}" class="text-info">Details</a>
                                                 </td>
@@ -83,7 +84,7 @@
                                     @endif
                                     </tbody>
                                 </table>
-
+{{ $listings->links() }}
                             </div>
                         </div>
                     </div>

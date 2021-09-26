@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class LeadShare extends Model
@@ -17,8 +17,9 @@ class LeadShare extends Model
     }
 
     public function getSuggestedLead($request){
+        $user_id = Auth::id();
         return LeadShare::with(['getRequirements'])
-            ->latest()
+            ->where('F_COMPANY_NO', $user_id)
             ->paginate(10);
     }
 
