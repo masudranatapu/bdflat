@@ -120,4 +120,14 @@ class PaymentCustomer extends Model
 
         return $data->orderBy('ACC_CUSTOMER_TRANSACTION.PK_NO', 'DESC')->get();
     }
+
+    public function getRechargeRequest($request){
+        $data =  DB::table('ACC_RECHARGE_REQUEST')->get();
+        return $data;
+    }
+
+
+
+
+
 }

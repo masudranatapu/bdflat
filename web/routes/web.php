@@ -46,6 +46,7 @@ Route::post('store-requirement', 'CommonController@storePostRequirement')->name(
 Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function () {
     Route::get('developer-listings', 'DeveloperController@getDevListings')->name('developer-listings');
     Route::get('developer-leads', 'DeveloperController@getdeveloperLeads')->name('developer-leads');
+    Route::get('developer-leads/{id}/details', 'DeveloperController@getdeveloperLeadsDetails')->name('developer-leads-details');
     Route::get('developer-buy-leads', 'DeveloperController@getdeveloperBuyLeads')->name('developer-buy-leads');
     Route::get('developer-buy-leads/{id}/details', 'DeveloperController@getdeveloperBuyLeadsDetails')->name('developer-buy-leads-details');
     Route::get('developer-payments', 'DeveloperController@getdeveloperPayments')->name('developer-payments');
@@ -100,6 +101,8 @@ Route::group(['namespace' => 'Seeker', 'middleware' => ['auth']], function () {
     Route::get('contacted-properties', 'SeekerController@getContactedProperties')->name('contacted-properties');
     Route::get('browsed-properties', 'SeekerController@getBrowsedProperties')->name('browsed-properties');
     Route::get('recharge-balance', 'SeekerController@getRechargeBalance')->name('recharge-balance');
+    Route::get('recharge-request', 'SeekerController@getRechargeRequest')->name('recharge-request');
+    Route::post('recharge-request', 'SeekerController@postRechargeRequest');
     Route::get('refund-request/{id}', 'SeekerController@getRefundRequest')->name('refund-request');
     Route::post('refund-request/store', 'SeekerController@customerRefundStore')->name('refund-request.store');
     Route::get('payment-history', 'SeekerController@paymentHistory')->name('payment-history');

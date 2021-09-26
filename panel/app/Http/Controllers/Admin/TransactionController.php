@@ -48,7 +48,6 @@ class TransactionController extends BaseController
     public function getRefundRequest(Request $request)
     {
         $data['rows'] = $this->paymentCustomer->getRefundRequest($request);
-        // dd($data['rows']);
         return view('admin.transaction.refund_request', compact('data'));
     }
 
@@ -69,9 +68,11 @@ class TransactionController extends BaseController
         return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);;
     }
 
-    public function getRechargeRequest()
+    public function getRechargeRequest(Request $request)
+
     {
-        return view('admin.transaction.recharge_request');
+        $data['rows'] = $this->paymentCustomer->getRechargeRequest($request);
+        return view('admin.transaction.recharge_request', compact('data'));
     }
 
     public function getAgentCommission()
