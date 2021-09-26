@@ -29,6 +29,7 @@
                          <table class="table table-striped text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
                              <thead>
                              <tr>
+                                 <th>SL</th>
                                  <th>LID</th>
                                  <th>Name</th>
                                  <th>Received Date</th>
@@ -42,6 +43,7 @@
 {{--                             @if($listings->count()>0)--}}
 {{--                                 @foreach($listings as $listing)--}}
                                      <tr>
+                                         <td>1</td>
                                          <td>10001</td>
                                          <td>Seeker Name</td>
                                          <td>May 29, 2021</td>
