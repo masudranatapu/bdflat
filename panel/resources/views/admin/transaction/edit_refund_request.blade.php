@@ -64,7 +64,7 @@
                                             <div class="form-group">
                                                 <label for="status"><strong>Note</strong></label>
                                                 <div class="controls">
-                                                    {!! Form::textarea('note', $data['refund']->NOTE, ['class'=>'form-control mb-1', 'tabindex' => 2]) !!}
+                                                    {!! Form::textarea('note', $data['refund']->ADMIN_NOTE, ['class'=>'form-control mb-1', 'tabindex' => 2]) !!}
                                                     {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}
                                                 </div>
                                             </div>

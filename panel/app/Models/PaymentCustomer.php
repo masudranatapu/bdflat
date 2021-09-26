@@ -91,7 +91,13 @@ class PaymentCustomer extends Model
             $refund = $this->getRefund($id);
 
             $refund->STATUS = $request->status;
-//            $refund->NOTE = $request->note;
+            $refund->ADMIN_NOTE = $request->note;
+
+            if ($request->status == 2) {
+                $refund->APPROVED_AT = date('Y-m-d H:i:s');
+                $refund->APPROVED_BY = Auth::id();
+            }
+
             $refund->save();
         } catch (\Exception $e) {
             DB::rollBack();
