@@ -46,6 +46,7 @@ Route::post('store-requirement', 'CommonController@storePostRequirement')->name(
 Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function () {
     Route::get('developer-listings', 'DeveloperController@getDevListings')->name('developer-listings');
     Route::get('developer-leads', 'DeveloperController@getdeveloperLeads')->name('developer-leads');
+    Route::get('developer-leads/{id}/details', 'DeveloperController@getdeveloperLeadsDetails')->name('developer-leads-details');
     Route::get('developer-buy-leads', 'DeveloperController@getdeveloperBuyLeads')->name('developer-buy-leads');
     Route::get('developer-buy-leads/{id}/details', 'DeveloperController@getdeveloperBuyLeadsDetails')->name('developer-buy-leads-details');
     Route::get('developer-payments', 'DeveloperController@getdeveloperPayments')->name('developer-payments');

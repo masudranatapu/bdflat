@@ -36,14 +36,21 @@ class DeveloperController extends Controller
     public function getdeveloperLeads(Request $request)
     {
         $data = array();
+        $data['listing'] = $this->leadShare->getSuggestedLead($request);
         return view('developer.developer_leads', compact('data'));
+    }
+
+    public function getdeveloperLeadsDetails($id)
+    {
+        $data = array();
+        $data['listing_details'] = $this->leadShare->getSuggestedLeadDetails($id);
+        return view('developer.developer_leads_details', compact('data'));
     }
 
     public function getdeveloperBuyLeads(Request $request)
     {
         $data = array();
         $data['listing'] = $this->leadShare->getSuggestedLead($request);
-//        dd($data['listing']);
         return view('developer.developer_buy_leads', compact('data'));
     }
 
@@ -53,6 +60,7 @@ class DeveloperController extends Controller
         $data['listing_details'] = $this->leadShare->getSuggestedLeadDetails($id);
         return view('developer.developer_buy_leads_details', compact('data'));
     }
+
 
     public function getdeveloperPayments(Request $request)
     {
