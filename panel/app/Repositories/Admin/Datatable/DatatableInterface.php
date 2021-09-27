@@ -11,6 +11,8 @@ interface DatatableInterface
     public function getAgents($request);
 
     public function getProperty($request);
+
+    public function getRefundRequest($request);
     /*
     public function getDatatableCustomer();
     public function getDatatableReseller();

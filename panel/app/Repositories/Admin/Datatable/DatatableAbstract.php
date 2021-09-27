@@ -283,6 +283,41 @@ class DatatableAbstract implements DatatableInterface
             ->make(true);
     }
 
+    public function getRefundRequest($request)
+    {
+        $status = $request->filter;
+        $dataSet = DB::table('ACC_CUSTOMER_REFUND')
+            ->select('ACC_CUSTOMER_REFUND.*', 'WEB_USER.CODE as USER_CODE', 'WEB_USER.NAME as USER_NAME', 'WEB_USER.MOBILE_NO as USER_MOBILE_NO', 'ACC_CUSTOMER_TRANSACTION.CODE as TID')
+            ->leftJoin('WEB_USER', 'WEB_USER.PK_NO', 'ACC_CUSTOMER_REFUND.F_USER_NO')
+            ->leftJoin('ACC_CUSTOMER_TRANSACTION', 'ACC_CUSTOMER_TRANSACTION.F_LISTING_LEAD_PAYMENT_NO', 'ACC_CUSTOMER_REFUND.F_LISTING_LEAD_PAYMENT_NO');
+        if ($status) {
+            $dataSet = $dataSet->where('ACC_CUSTOMER_REFUND.STATUS', '=', $status);
+        }
+        $dataSet = $dataSet->get();
+
+        return Datatables::of($dataSet)
+            ->addColumn('status', function ($dataSet) {
+                if ($dataSet->STATUS == 1) {
+                    $status = '<span class="text-warning">Pending</span>';
+                } else if ($dataSet->STATUS == 2) {
+                    $status = '<span class="text-success">Approved</span>';
+                } else {
+                    $status = '<span class="text-danger">Denied</span>';
+                }
+                return $status;
+            })
+            ->addColumn('action', function ($dataSet) {
+                $roles = userRolePermissionArray();
+                $edit = '';
+                if (hasAccessAbility('edit_refund_request', $roles)) {
+                    $edit = ' <a href="' . route("admin.refund_request.edit", ['id' => $dataSet->PK_NO]) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Edit">Edit</a>';
+                }
+                return $edit;
+            })
+            ->rawColumns(['action', 'status'])
+            ->make(true);
+    }
+
 
     /*
    public function getDatatableCustomer()
