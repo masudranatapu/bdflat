@@ -51,7 +51,7 @@
                                         @foreach($listings as $item)
                                             <tr>
                                                 <td>{{$i++}}</td>
-                                                <td>{{$item->getRequirements->getUser->CODE}}</td>
+                                                <td>{{$item->CODE}}</td>
                                                 <td>{{$item->getRequirements->getUser->NAME}}</td>
                                                 <td>{{date('d M, Y',strtotime($item->CREATED_AT))}}</td>
                                                 <td>
