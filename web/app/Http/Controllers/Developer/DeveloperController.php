@@ -71,7 +71,6 @@ class DeveloperController extends Controller
     public function getdeveloperPayments(Request $request)
     {
         $data['payments'] = $this->payment->getPayments(Auth::id());
-        dd($data['payments']);
         return view('developer.developer_payments', compact('data'));
     }
 
