@@ -105,7 +105,12 @@
                 <div class="modal-body">
                     <div class="login-wrap text-center">
                         @auth
-                            {!! Form::open([ 'route' => ['lead.pay',$data['listing_details']->PK_NO], 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                            {!! Form::open([ 'route' => ['developer.lead.pay',$data['listing_details']->PK_NO], 'method' => 'post', 'id'=>'login_user', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+
+                            {!! Form::hidden('f_lead_share_no',$data['listing_details']->PK_NO) !!}
+                            {!! Form::hidden('f_requirement_no',$data['listing_details']->F_REQUIREMENT_NO) !!}
+                            {!! Form::hidden('price',$data['listing_details']->getRequirements->LEAD_PRICE) !!}
+
                             <div class="row">
                                 @if(Auth::user()->UNUSED_TOPUP < $data['listing_details']->getRequirements->LEAD_PRICE )
                                     <div class="col-12">
