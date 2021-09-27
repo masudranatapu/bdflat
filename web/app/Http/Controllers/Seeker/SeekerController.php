@@ -127,8 +127,8 @@ class SeekerController extends Controller
             ->with(['getDefaultThumb', 'getListingVariant'])
             ->distinct()
             ->orderByDesc('PRD_BROWSING_HISTORY.LAST_BROWES_TIME')
-            ->get();
-        //        ddd($data);
+            ->paginate(10);
+//                dd($data);
         return view('seeker.browsed_properties', compact('data'));
     }
 

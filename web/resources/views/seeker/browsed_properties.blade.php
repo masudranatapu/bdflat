@@ -53,6 +53,7 @@
                                     @endforeach
                                 @endif
                             </div>
+                            {{$data['browsedProperties']->links()}}
                         </div>
                     </div>
                 </div>

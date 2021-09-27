@@ -28,7 +28,7 @@
                                 <div class="property-heading">
                                     <h3>
                                         <a href="{{ route('developer-leads') }}"><i class="fa fa-long-arrow-left"></i>Leads</a>
-                                        <a href="{{ route('buy-leads') }}"class="link" style="float: right">Buy Leads</a>
+                                        <a href="{{ route('buy-leads') }}" class="link" style="float: right">Buy Leads</a>
                                     </h3>
                                 </div>
 
@@ -76,15 +76,13 @@
                                             </tr>
                                         @endforeach
                                     @else
-                                        <div class="row no-gutters">
-                                            <div class="col-12">
-                                                <h6 class="font-weight-bold text-danger text-center">No Data Found!</h6>
-                                            </div>
-                                        </div>
+                                        <tr>
+                                            <td colspan="7" class="font-weight-bold text-danger text-center">No Data Found!</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                 </table>
-{{ $listings->links() }}
+                                {{ $listings->links() }}
                             </div>
                         </div>
                     </div>
