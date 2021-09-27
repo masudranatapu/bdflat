@@ -135,7 +135,7 @@ class PaymentCustomer extends Model
     public function getRechargeRequest($id)
     {
         return RechargeRequest::query()
-            ->select('ACC_RECHARGE_REQUEST.*', 'C.NAME AS C_NAME', 'C.CODE AS C_CODE', 'C.MOBILE_NO AS C_MOBILE_NO')
+            ->select('ACC_RECHARGE_REQUEST.*', 'C.NAME AS C_NAME', 'C.CODE AS C_CODE', 'C.MOBILE_NO AS C_MOBILE_NO', 'C.USER_TYPE')
             ->leftJoin('WEB_USER AS C', 'C.PK_NO', '=', 'ACC_RECHARGE_REQUEST.F_CUSTOMER_NO')
             ->where('ACC_RECHARGE_REQUEST.PK_NO', '=', $id)
             ->first();

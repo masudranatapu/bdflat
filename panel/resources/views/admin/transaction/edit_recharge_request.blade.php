@@ -38,8 +38,8 @@
                             <div class="row  mb-2">
                                 <div class="col-12">
                                     <p><strong>User ID: </strong>{{ $data['recharge']->C_CODE }}</p>
-                                    <p><strong>Property Owner/Seeker Name: </strong>{{ $data['recharge']->C_NAME }}</p>
-                                    <p><strong>Property Owner/Seeker Mobile: </strong>{{ $data['recharge']->C_MOBILE_NO }}</p>
+                                    <p><strong>Property {{ $data['recharge']->USER_TYPE == 1 ? 'Seeker' : 'Owner' }} Name: </strong>{{ $data['recharge']->C_NAME }}</p>
+                                    <p><strong>Property {{ $data['recharge']->USER_TYPE == 1 ? 'Seeker' : 'Owner' }} Mobile: </strong>{{ $data['recharge']->C_MOBILE_NO }}</p>
                                     <p><strong>Payment Date: </strong>{{ date('M d, Y', strtotime($data['recharge']->PAYMENT_DATE)) }}</p>
                                     <p><strong>Payment Note: </strong>{{ $data['recharge']->PAYMENT_NOTE }}</p>
                                     <p><strong>Amount: </strong>BDT {{ number_format($data['recharge']->AMOUNT, 2) }}</p>
