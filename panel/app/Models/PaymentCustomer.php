@@ -89,6 +89,9 @@ class PaymentCustomer extends Model
         DB::beginTransaction();
         try {
             $refund = $this->getRefund($id);
+            if ($refund->STATUS == 2) {
+                throw new \Exception('Can not change');
+            }
 
             $refund->STATUS = $request->status;
             $refund->ADMIN_NOTE = $request->note;
@@ -146,6 +149,10 @@ class PaymentCustomer extends Model
         DB::beginTransaction();
         try {
             $recharge = $this->getRechargeRequest($id);
+            if ($recharge->STATUS == 1) {
+                throw new \Exception('Can not change');
+            }
+
             $recharge->STATUS = $request->status;
             $recharge->save();
         } catch (\Exception $e) {
