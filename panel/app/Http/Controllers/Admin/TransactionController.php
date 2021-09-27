@@ -65,14 +65,30 @@ class TransactionController extends BaseController
         ]);
 
         $this->resp = $this->paymentCustomer->updateRefund($request, $id);
-        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);;
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getRechargeRequest(Request $request)
 
     {
-        $data['rows'] = $this->paymentCustomer->getRechargeRequest($request);
+        $data['rows'] = $this->paymentCustomer->getRechargeRequests($request);
         return view('admin.transaction.recharge_request', compact('data'));
+    }
+
+    public function editRechargeRequest($id)
+    {
+        $data['recharge'] = $this->paymentCustomer->getRechargeRequest($id);
+        return view('admin.transaction.edit_recharge_request', compact('data'));
+    }
+
+    public function updateRechargeRequest(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|min:1|max:3'
+        ]);
+
+        $this->resp = $this->paymentCustomer->updateRechargeRequest($request, $id);
+        return redirect()->route($this->resp->redirect_to)->with($this->resp->redirect_class, $this->resp->msg);
     }
 
     public function getAgentCommission()

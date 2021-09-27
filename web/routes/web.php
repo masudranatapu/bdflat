@@ -51,6 +51,7 @@ Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function ()
     Route::get('developer-buy-leads', 'DeveloperController@getdeveloperBuyLeads')->name('developer-buy-leads');
     Route::get('developer-buy-leads/{id}/details', 'DeveloperController@getdeveloperBuyLeadsDetails')->name('developer-buy-leads-details');
     Route::get('developer-payments', 'DeveloperController@getdeveloperPayments')->name('developer-payments');
+    Route::post('developer-lead-pay/{id}', 'DeveloperController@developerLeadPay')->name('developer.lead.pay');
 
     Route::get('developer-listings/create', 'ListingController@create')->name('developer.listings.create');
     Route::post('developer-listings/store', 'ListingController@store')->name('developer.listings.store');
@@ -59,6 +60,7 @@ Route::group(['namespace' => 'Developer', 'middleware' => ['auth']], function ()
     Route::get('developer-listings/{id}/delete', 'ListingController@delete')->name('developer.listings.delete');
     Route::get('developer-listings/{id}/pay', 'ListingController@pay')->name('developer.listings.pay');
     Route::post('developer-listings/{id}/pay', 'ListingController@payStore')->name('developer.listings.pay');
+
 });
 
 Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {

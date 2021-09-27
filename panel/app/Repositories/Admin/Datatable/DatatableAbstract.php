@@ -318,6 +318,42 @@ class DatatableAbstract implements DatatableInterface
             ->make(true);
     }
 
+    public function getRechargeRequest($request)
+    {
+        $status = $request->filter;
+        $dataSet = DB::table('ACC_RECHARGE_REQUEST')
+            ->select('ACC_RECHARGE_REQUEST.*', 'C.NAME AS C_NAME', 'C.CODE AS C_CODE', 'C.MOBILE_NO AS C_MOBILE_NO')
+            ->leftJoin('WEB_USER AS C', 'C.PK_NO', '=', 'ACC_RECHARGE_REQUEST.F_CUSTOMER_NO')
+            ->orderByDesc('ACC_RECHARGE_REQUEST.PK_NO');
+        if ($status) {
+            if ($status == 3) $status = 0;
+            $dataSet = $dataSet->where('ACC_RECHARGE_REQUEST.STATUS', '=', $status);
+        }
+        $dataSet = $dataSet->get();
+
+        return Datatables::of($dataSet)
+            ->addColumn('status', function ($dataSet) {
+                if ($dataSet->STATUS == 0) {
+                    $status = '<span class="text-warning">Pending</span>';
+                } else if ($dataSet->STATUS == 1) {
+                    $status = '<span class="text-success">Approved</span>';
+                } else {
+                    $status = '<span class="text-danger">Denied</span>';
+                }
+                return $status;
+            })
+            ->addColumn('action', function ($dataSet) {
+                $roles = userRolePermissionArray();
+                $edit = '';
+                if (hasAccessAbility('edit_refund_request', $roles)) {
+                    $edit = ' <a href="' . route('admin.recharge_request.edit', $dataSet->PK_NO) . '" class="btn btn-xs btn-success mb-05 mr-05" title="Edit">Edit</a>';
+                }
+                return $edit;
+            })
+            ->rawColumns(['action', 'status'])
+            ->make(true);
+    }
+
 
     /*
    public function getDatatableCustomer()

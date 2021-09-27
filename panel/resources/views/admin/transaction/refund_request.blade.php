@@ -57,14 +57,6 @@
                                             {{ Form::label('rejected','Rejected') }}
                                         </div>
                                     </div>
-                                    <div class="row form-group" style="align-items: center">
-                                        <div class="col-md-6">
-                                            {!! Form::text('search', null, ['class' => 'form-control', 'style' => 'border-radius: 40px !important', 'placeholder' => 'Search by User ID']) !!}
-                                        </div>
-                                        <div class="col-md-6">
-                                            {!! Form::submit('Search', ['class' => 'btn btn-success']) !!}
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <table class="table table-striped table-bordered text-center" id="dtable">
@@ -120,7 +112,7 @@
 
 
         $(document).ready(function () {
-            let value = getCookie('owner_list');
+            let value = getCookie('refund_request_list');
 
             if (value !== null) {
                 let value = (value - 1) * 25;
