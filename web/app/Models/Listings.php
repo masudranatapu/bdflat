@@ -394,6 +394,7 @@ class Listings extends Model
 
             $list = new Listings();
             $list->F_USER_NO = Auth::id();
+            $list->USER_TYPE = Auth::user()->USER_TYPE;
             $list->PROPERTY_FOR = $request->property_for;
             $list->F_PROPERTY_TYPE_NO = $request->property_type;
             $list->F_CITY_NO = $request->city;
@@ -696,7 +697,7 @@ class Listings extends Model
             ->where('F_USER_NO', '=', Auth::id())
             ->where('STATUS', '!=', 4)
             ->latest()
-            ->paginate(1);
+            ->paginate($limit);
     }
 
     public function getListing($id)

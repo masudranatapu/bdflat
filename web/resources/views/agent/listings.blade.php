@@ -72,7 +72,9 @@ $listings = $data['listings'] ?? [];
                                     @endif
                                     </tbody>
                                 </table>
-
+                                <div class="text-center">
+                                    {{ $listings->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
