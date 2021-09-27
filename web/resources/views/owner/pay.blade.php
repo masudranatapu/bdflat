@@ -7,7 +7,7 @@
 <?php
 $type = $data['listing']->PROPERTY_FOR ?? null;
 $price = 0;
-if ($type == 'sell') {
+if ($type == 'sale') {
     $price = $data['listing']->listingType->SELL_PRICE ?? 0;
 } else if ($type == 'rent') {
     $price = $data['listing']->listingType->RENT_PRICE ?? 0;
@@ -34,8 +34,7 @@ if ($type == 'sell') {
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('owner-listings') }}"><i class="fa fa-long-arrow-left"></i>My
-                                            Properties</a></h3>
+                                    <h3><a href="{{ route('owner-listings') }}"><i class="fa fa-long-arrow-left"></i>My Properties</a></h3>
                                 </div>
 
                                 <div class="row">

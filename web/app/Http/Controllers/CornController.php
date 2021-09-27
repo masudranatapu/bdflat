@@ -144,6 +144,25 @@ class CornController extends Controller
     }
 
 
+    public function makeExpairedProperty(){
+
+        $curr_date = date('Y-m-d');
+
+        $data = DB::table('PRD_LISTINGS')->select('PK_NO','EXPAIRED_AT')
+        ->whereIn('USER_TYPE', [2,3,4])
+        ->where('EXPAIRED_AT','<', $curr_date)
+        ->where('STATUS',10)
+        ->where('PAYMENT_STATUS',1)
+        ->get();
+        if($data){
+            foreach ($data as $key => $value) {
+               DB::table('PRD_LISTINGS')->where('PK_NO', $value->PK_NO)->update(['STATUS' => 40, 'PAYMENT_STATUS' => 0]);
+            }
+        }
+        dd($data);
+    }
+
+
 
 }
 
