@@ -26,7 +26,8 @@ $status = Config::get('static_array.property_status');
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('developer-listings') }}"><i class="fa fa-long-arrow-left"></i>My Properties ( {{ Auth::user()->TOTAL_LISTING }} / {{ Auth::user()->LISTING_LIMIT }} )</a>
+                                    <h3><a href="{{ route('developer-listings') }}"><i class="fa fa-long-arrow-left"></i>My Properties ( {{ Auth::user()->TOTAL_LISTING }}
+                                            / {{ Auth::user()->LISTING_LIMIT }} )</a>
                                         @if(Auth::user()->TOTAL_LISTING < Auth::user()->LISTING_LIMIT)
                                             <a href="{{ route('developer.listings.create') }}" style="float: right;">Add new</a>
                                         @endif
@@ -63,8 +64,12 @@ $status = Config::get('static_array.property_status');
                                                 <td>{{ $status[$listing->STATUS] ?? '' }}</td>
                                                 <td width="20%">
                                                     <a href="{{ route('developer.listings.edit', $listing->PK_NO) }}" class="text-info">Edit</a> |
-                                                    <a href="{{ route('developer.listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')" class="text-danger">Delete</a> |
-                                                    <a href="{{ route('developer.listings.pay', $listing->PK_NO) }}" class="text-success">Pay</a>
+                                                    <a href="{{ route('developer.listings.delete', $listing->PK_NO) }}" onclick="return confirm('Are you sure?')"
+                                                       class="text-danger">Delete</a>
+                                                    @if($listing->PAYMENT_STATUS == 0)
+                                                        |
+                                                        <a href="{{ route('developer.listings.pay', $listing->PK_NO) }}" class="text-success">Pay</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

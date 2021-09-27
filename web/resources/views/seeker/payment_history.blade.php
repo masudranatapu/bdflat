@@ -83,6 +83,7 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                             @endif
                             </tbody>
                         </table>
+                        {{$data['payments']->links()}}
                     </div>
                 </div>
             </div>
