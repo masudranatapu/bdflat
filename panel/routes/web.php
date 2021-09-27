@@ -173,6 +173,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('refund_request', ['middleware' => 'acl:view_refund_request', 'as' => 'ajax.refund-request.list', 'uses' => 'DataTableController@getRefundRequest']);
 
     Route::get('recharge-request', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.recharge_request', 'uses' => 'TransactionController@getRechargeRequest']);
+    Route::get('recharge-request/{id}/edit', ['middleware' => 'acl:edit_recharge_request', 'as' => 'admin.recharge_request.edit', 'uses' => 'TransactionController@editRechargeRequest']);
+    Route::post('recharge-request/{id}/update', ['middleware' => 'acl:edit_recharge_request', 'as' => 'admin.recharge_request.update', 'uses' => 'TransactionController@updateRechargeRequest']);
+    Route::post('recharge_request', ['middleware' => 'acl:view_recharge_request', 'as' => 'ajax.recharge-request.list', 'uses' => 'DataTableController@getRechargeRequest']);
+
     // Route::get('recharge-request', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.recharge_request', 'uses' => 'TransactionController@getRechargeRequest']);
     Route::get('agent-commission', ['middleware' => 'acl:view_recharge_request', 'as' => 'admin.agent_commission', 'uses' => 'TransactionController@getAgentCommission']);
 

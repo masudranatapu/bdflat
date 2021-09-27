@@ -47,6 +47,12 @@ class DatatableController extends BaseController
         return $this->resp;
     }
 
+    public function getRechargeRequest(Request $request)
+    {
+        $this->resp = $this->datatable->getRechargeRequest($request);
+        return $this->resp;
+    }
+
 
     /*
 
