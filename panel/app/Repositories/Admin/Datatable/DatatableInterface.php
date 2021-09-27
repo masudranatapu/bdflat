@@ -13,6 +13,8 @@ interface DatatableInterface
     public function getProperty($request);
 
     public function getRefundRequest($request);
+
+    public function getRechargeRequest($request);
     /*
     public function getDatatableCustomer();
     public function getDatatableReseller();

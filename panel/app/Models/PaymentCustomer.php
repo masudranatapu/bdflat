@@ -101,7 +101,7 @@ class PaymentCustomer extends Model
             $refund->save();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+//            dd($e);
         }
 
         DB::commit();
@@ -127,13 +127,35 @@ class PaymentCustomer extends Model
         return $data->orderBy('ACC_CUSTOMER_TRANSACTION.PK_NO', 'DESC')->get();
     }
 
-    public function getRechargeRequest($request){
+    public function getRechargeRequests($request){
         $data =  DB::table('ACC_RECHARGE_REQUEST')->get();
         return $data;
     }
 
+    public function getRechargeRequest($id)
+    {
+        return RechargeRequest::query()
+            ->select('ACC_RECHARGE_REQUEST.*', 'C.NAME AS C_NAME', 'C.CODE AS C_CODE', 'C.MOBILE_NO AS C_MOBILE_NO')
+            ->leftJoin('WEB_USER AS C', 'C.PK_NO', '=', 'ACC_RECHARGE_REQUEST.F_CUSTOMER_NO')
+            ->where('ACC_RECHARGE_REQUEST.PK_NO', '=', $id)
+            ->first();
+    }
 
+    public function updateRechargeRequest($request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $recharge = $this->getRechargeRequest($id);
+            $recharge->STATUS = $request->status;
+            $recharge->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+//            dd($e);
+        }
 
+        DB::commit();
+        return $this->formatResponse(true, 'Refund request updated', 'admin.recharge_request');
+    }
 
 
 }
