@@ -13,7 +13,9 @@
 
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/custom/css/custom.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-tooltip.css')}}">
 @endpush
 
 @push('custom_js')
@@ -22,6 +24,8 @@
     <script src="{{asset('/app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
     <script src="{{asset('/app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
     <!-- END: Data Table-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+
 @endpush
 
 @php
@@ -40,16 +44,16 @@
                                 <div class="col-12">
                                     <div class="d-block mb-1">
                                         <div class="controls">
-                                            {!! Form::radio('type','all', old('type', true) == 'all',[ 'id' => 'all']) !!}
+                                            {!! Form::radio('type','all', !request()->query('filter'),[ 'id' => 'all', 'class' => 'type']) !!}
                                             {{ Form::label('all','All') }}
                                             &emsp;
-                                            {!! Form::radio('type','pending', old('type') == 'pending',[ 'id' => 'pending']) !!}
+                                            {!! Form::radio('type','1', request()->query('filter') == '1',[ 'id' => 'pending', 'class' => 'type']) !!}
                                             {{ Form::label('pending','Pending') }}
                                             &emsp;
-                                            {!! Form::radio('type','approved', old('type') == 'approved',[ 'id' => 'approved']) !!}
+                                            {!! Form::radio('type','2', request()->query('filter') == '2',[ 'id' => 'approved', 'class' => 'type']) !!}
                                             {{ Form::label('approved','Approved') }}
                                             &emsp;
-                                            {!! Form::radio('type','rejected', old('type') == 'rejected',[ 'id' => 'rejected']) !!}
+                                            {!! Form::radio('type','3', request()->query('filter') == '3',[ 'id' => 'rejected', 'class' => 'type']) !!}
                                             {{ Form::label('rejected','Rejected') }}
                                         </div>
                                     </div>
@@ -63,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <table class="table table-striped table-bordered text-center">
+                                    <table class="table table-striped table-bordered text-center" id="dtable">
                                         <thead>
                                         <tr>
                                             <th>SL</th>
@@ -81,32 +85,6 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            @if(isset($data['rows']) && count($data['rows']) > 0 )
-                                            @foreach($data['rows'] as $key => $item)
-                                        <tr>
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $item->USER_CODE }}</td>
-                                            <td>{{ $item->CODE }}</td>
-                                            <td>PID {{ $item->TID }}</td>
-                                            <td>{{ date('Y-m-d h:i A', strtotime($item->REQUEST_AT)) }}</td>
-                                            <td>{{ $item->USER_NAME }}</td>
-                                            <td>{{ $item->USER_MOBILE_NO }}</td>
-                                            <td>{{ $item->REQUEST_REASON }}</td>
-                                            <td>{{ $item->COMMENT }}</td>
-                                            <td>{{ number_format($item->REQUEST_AMOUNT,2) }}</td>
-                                            <td class="text-success">{{ $refund_status[$item->STATUS] }}</td>
-                                            <td>
-                                                @if(hasAccessAbility('edit_refund_request', $roles))
-                                                <a href="{{ route('admin.refund_request.edit',['id' => $item->PK_NO ]) }}">Edit</a>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        @else
-                                        <tr>
-                                            <td colspan="12">Data not found</td>
-                                        </tr>
-                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -118,3 +96,170 @@
         </div>
     </div>
 @endsection
+
+
+@push('custom_js')
+    <script type="text/javascript">
+        $('.type').click(function () {
+            let type = $(this).val();
+            let url = '{{ route('admin.refund_request') }}'
+
+            if (type !== 'all') {
+                url += '?filter=' + type;
+            }
+            window.location = url;
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let get_url = $('#base_url').val();
+
+
+        $(document).ready(function () {
+            let value = getCookie('owner_list');
+
+            if (value !== null) {
+                let value = (value - 1) * 25;
+                // table.fnPageChange(value,true);
+            } else {
+                let value = 0;
+            }
+            let table = callDatatable(value);
+
+        });
+
+        function callDatatable(value) {
+            let table =
+                $('#dtable').dataTable({
+                    processing: false,
+                    serverSide: true,
+                    paging: true,
+                    pageLength: 25,
+                    lengthChange: true,
+                    searching: true,
+                    ordering: true,
+                    info: true,
+                    autoWidth: false,
+                    iDisplayStart: value,
+                    ajax: {
+                        url: '{{ route('ajax.refund-request.list') }}',
+                        type: 'POST',
+                        data: function (d) {
+                            d._token = "{{ csrf_token() }}";
+                            d.filter = {{ request()->query('filter') ?? 'null' }};
+                        }
+                    },
+                    columns: [
+                        {
+                            data: 'PK_NO',
+                            name: 'PK_NO',
+                            searchable: false,
+                            sortable: false,
+                            className: 'text-center',
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        },
+
+                        {
+                            data: 'USER_CODE',
+                            name: 'USER_CODE',
+                            className: 'text-center',
+                            searchable: true
+                        },
+                        {
+                            data: 'CODE',
+                            name: 'CODE',
+                            searchable: true
+                        },
+                        {
+                            data: 'TID',
+                            name: 'TID',
+                            searchable: true,
+                            render: function (data) {
+                                return 'PID ' + data;
+                            }
+                        },
+                        {
+                            data: 'REQUEST_AT',
+                            name: 'REQUEST_AT',
+                            searchable: true,
+                        },
+                        {
+                            data: 'USER_NAME',
+                            name: 'USER_NAME',
+                            searchable: true,
+                        },
+                        {
+                            data: 'USER_MOBILE_NO',
+                            name: 'USER_MOBILE_NO',
+                            searchable: true,
+                        },
+                        {
+                            data: 'REQUEST_REASON',
+                            name: 'REQUEST_REASON',
+                            searchable: true
+                        },
+
+                        {
+                            data: 'COMMENT',
+                            name: 'COMMENT',
+                            searchable: false,
+                        },
+
+                        {
+                            data: 'REQUEST_AMOUNT',
+                            name: 'REQUEST_AMOUNT',
+                            className: 'text-center',
+                            searchable: true
+                        },
+                        {
+                            data: 'status',
+                            name: 'status',
+                            searchable: true,
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            className: 'text-center',
+                            searchable: false
+                        },
+
+                    ]
+                });
+            return table;
+        }
+
+        let formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'BDT'
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.page-link', function () {
+            let pageNum = $(this).text();
+            setCookie('owner_list', pageNum);
+        });
+
+        function setCookie(owner_list, pageNum) {
+            let today = new Date();
+            let name = owner_list;
+            let elementValue = pageNum;
+            let expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+
+            document.cookie = name + "=" + elementValue + "; path=/; expires=" + expiry.toGMTString();
+        }
+
+        function getCookie(name) {
+            let re = new RegExp(name + "=([^;]+)");
+            let value = re.exec(document.cookie);
+            return (value != null) ? unescape(value[1]) : null;
+        }
+    </script>
+@endpush
