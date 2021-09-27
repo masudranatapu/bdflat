@@ -6,13 +6,14 @@
 <?php
 $type = $data['listing']->PROPERTY_FOR ?? null;
 $price = 0;
-if ($type == 'sell') {
+if ($type == 'sale') {
     $price = $data['listing']->listingType->SELL_PRICE ?? 0;
 } else if ($type == 'rent') {
     $price = $data['listing']->listingType->RENT_PRICE ?? 0;
 } else if ($type == 'roommate') {
     $price = $data['listing']->listingType->ROOMMATE_PRICE ?? 0;
 }
+
 ?>
 
 @section('content')
