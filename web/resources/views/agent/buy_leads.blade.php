@@ -3,9 +3,6 @@
 @push('custom_css')
 
 @endpush
-<?php
-$listings = $data['listing'] ?? [];
-?>
 
 @section('content')
     <!--
@@ -21,44 +18,41 @@ $listings = $data['listing'] ?? [];
                 </div>
                 <div class="col-sm-12 col-md-9">
                     <div class="account-details">
+
                         <!-- properties -->
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('agent-listings') }}"><i class="fa fa-long-arrow-left"></i>My Properties</a> <a
-                                            href="{{ route('agent.listings.create') }}" style="float: right;">Add new</a></h3>
+                                    <h3>
+                                        <a href="{{ route('agent-buy-leads') }}"><i class="fa fa-long-arrow-left"></i>Buy Leads</a>
+                                        <a href="{{ route('agent-leads') }}" class="link" style="float: right">Leads</a>
+                                    </h3>
                                 </div>
-
-                                <!-- product -->
-                                <table class="table table-striped text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
-                                    <thead>
-                                    <tr>
-                                        <th>PID</th>
-                                        <th>Name</th>
-                                        <th>Property Type</th>
-                                        <th>Looking For</th>
-                                        <th>Location</th>
-                                        <th>Matched</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <tr>
-                                        <td>10001</td>
-                                        <td>Seeker Name</td>
-                                        <td>Apartment</td>
-                                        <td>Buy</td>
-                                        <td>Area, City</td>
-                                        <td>100%</td>
-                                        <td width="25%">
-                                            <a href="#" class="text-info">Details</a>|
-                                            <a href="#" class="text-info">Buy Now</a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
+                                @if($data['listing']->count()>0)
+                                    @foreach($data['listing'] as $item)
+                                        <div class="leads-wrapper mb-2">
+                                            <div class="row no-gutters position-relative">
+                                                <div class="col-3">
+                                                    <div class="leads-bx text-center">
+                                                        <a href="{{route('buy-leads-details',$item->PK_NO)}}"><img src="{{ $item->getRequirements->getUser->PROFILE_PIC_URL ? asset($item->getRequirements->getUser->PROFILE_PIC_URL) : asset('assets/img/default_avatar.jpg') }}" alt="image"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-9 position-static">
+                                                    <div class="leads-info">
+                                                        <h5 class="mt-0">{{$item->getRequirements->getUser->NAME}} @if($item->LEAD_TYPE == 0)
+                                                                <span class="float-right">100%<br/>Matched</span>
+                                                            @else
+                                                                <span class="float-right text-danger">Force <br> Lead</span>
+                                                            @endif</h5>
+                                                        <h4><span>LID {{$item->getRequirements->getUser->CODE}}</span></h4>
+                                                        <h6>{{date('d M, Y',strtotime($item->CREATED_AT))}} <span><a href="{{route('buy-leads-details',$item->PK_NO)}}" class="float-right"><i class="fa fa-eye"></i>Details</a></span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                {{$data['listing']->links()}}
                             </div>
                         </div>
                     </div>

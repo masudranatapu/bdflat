@@ -23,9 +23,10 @@
                         <div class="property-wrapper">
                             <div class="new-property">
                                 <div class="property-heading">
-                                    <h3><a href="{{ route('buy-leads') }}"><i class="fa fa-long-arrow-left"></i>Buy Leads</a> <a href="{{ route('owner-leads') }}"
-                                                                                                                                 class="link"
-                                                                                                                                 style="float: right">Leads</a></h3>
+                                    <h3>
+                                        <a href="{{ route('buy-leads') }}"><i class="fa fa-long-arrow-left"></i>Buy Leads</a>
+                                        <a href="{{ route('owner-leads') }}" class="link" style="float: right">Leads</a>
+                                    </h3>
                                 </div>
                                 @if($data['listing']->count()>0)
                                     @foreach($data['listing'] as $item)
