@@ -34,7 +34,9 @@
                                             <div class="row no-gutters position-relative">
                                                 <div class="col-3">
                                                     <div class="leads-bx text-center">
-                                                        <a href="{{route('buy-leads-details',$item->PK_NO)}}"><img src="{{ $item->getRequirements->getUser->PROFILE_PIC_URL ? asset($item->getRequirements->getUser->PROFILE_PIC_URL) : asset('assets/img/default_avatar.jpg') }}" alt="image"></a>
+                                                        <a href="{{route('buy-leads-details',$item->PK_NO)}}"><img
+                                                                src="{{ $item->getRequirements->getUser->PROFILE_PIC_URL ? asset($item->getRequirements->getUser->PROFILE_PIC_URL) : asset('assets/img/default_avatar.jpg') }}"
+                                                                alt="image"></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-9 position-static">
@@ -45,7 +47,9 @@
                                                                 <span class="float-right text-danger">Force <br> Lead</span>
                                                             @endif</h5>
                                                         <h4><span>LID {{$item->getRequirements->getUser->CODE}}</span></h4>
-                                                        <h6>{{date('d M, Y',strtotime($item->CREATED_AT))}} <span><a href="{{route('buy-leads-details',$item->PK_NO)}}" class="float-right"><i class="fa fa-eye"></i>Details</a></span></h6>
+                                                        <h6>{{date('d M, Y',strtotime($item->CREATED_AT))}} <span><a href="{{route('buy-leads-details',$item->PK_NO)}}"
+                                                                                                                     class="float-right"><i class="fa fa-eye"></i>Details</a></span>
+                                                        </h6>
                                                     </div>
                                                 </div>
                                             </div>

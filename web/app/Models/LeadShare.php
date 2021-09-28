@@ -20,10 +20,19 @@ class LeadShare extends Model
         $user_id = Auth::id();
         return LeadShare::with(['getRequirements'])
             ->where('F_COMPANY_NO', $user_id)
+            ->where('STATUS', 0)
             ->paginate(10);
     }
 
-    public function getSuggestedLeadDetails($id){
+    public function getLeads($request){
+        $user_id = Auth::id();
+        return LeadShare::with(['getRequirements'])
+            ->where('F_COMPANY_NO', $user_id)
+            ->where('STATUS', 1)
+            ->paginate(10);
+    }
+
+    public function getLeadDetails($id){
         return LeadShare::with(['getRequirements'])
             ->where('PK_NO',$id)
             ->latest()

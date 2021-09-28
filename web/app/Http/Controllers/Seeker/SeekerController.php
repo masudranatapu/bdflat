@@ -184,6 +184,7 @@ class SeekerController extends Controller
     public function paymentHistory(Request $request)
     {
         $data['payments'] = $this->txn->getTxnHistory();
+//        dd($data);
         return view('seeker.payment_history', compact('data'));
     }
 
