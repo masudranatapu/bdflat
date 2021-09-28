@@ -150,10 +150,10 @@ class SeekerController extends Controller
     public function getRechargeRequest(Request $request)
     {
         $data = array();
-        $data['bkash'] = MobileNumber::where('F_PAYMENT_METHOD_NO',2)->pluck('MOBILE_NO','PK_NO');
-        $data['rocket'] = MobileNumber::where('F_PAYMENT_METHOD_NO',3)->pluck('MOBILE_NO','PK_NO');
+        $data['bkash'] = DB::table('ACC_PAYMENT_BANK_ACC')->where('F_PAYMENT_METHOD_NO',2)->pluck('BANK_ACC_NO','PK_NO');
+        $data['rocket'] = DB::table('ACC_PAYMENT_BANK_ACC')->where('F_PAYMENT_METHOD_NO',3)->pluck('BANK_ACC_NO','PK_NO');
         //dd($data);
-        return view('seeker.confirm_payment', compact('data'));
+        return view('seeker.recharge_request', compact('data'));
     }
     public function postRechargeRequest(Request $request)
     {

@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group {!! $errors->has('status') ? 'error' : '' !!}">
-                                        <label>Payment Method<span class="text-danger">*</span></label>
+                                        <label>Status<span class="text-danger">*</span></label>
                                         <div class="controls">
                                             {!! Form::select('status', $data['status'] ?? [], old('status'), [ 'class' => 'form-control mb-1', 'placeholder' => 'Select Status', 'data-validation-required-message' => 'This field is required', 'tabIndex' => ++$tabIndex ]) !!}
                                             {!! $errors->first('status', '<label class="help-block text-danger">:message</label>') !!}

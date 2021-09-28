@@ -148,16 +148,17 @@ class PaymentCustomer extends Model
     {
         DB::beginTransaction();
         try {
-            $recharge = $this->getRechargeRequest($id);
+            $recharge = DB::table('ACC_RECHARGE_REQUEST')->where('PK_NO',$id)->first();
             if ($recharge->STATUS == 1) {
                 throw new \Exception('Can not change');
             }
 
             $recharge->STATUS = $request->status;
             $recharge->save();
+            DB::table('ACC_CUSTOMER_PAYMENTS')->insert(['F_CUSTOMER_NO' => , 'AMOUNT' => , ]);
+
         } catch (\Exception $e) {
             DB::rollBack();
-//            dd($e);
         }
 
         DB::commit();

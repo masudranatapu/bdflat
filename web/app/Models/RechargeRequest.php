@@ -23,8 +23,7 @@ class RechargeRequest extends Model
             $list->F_CUSTOMER_NO            = Auth::user()->id;
             $list->AMOUNT                   = $request->amount;
             $list->F_ACC_PAYMENT_METHOD_NO  = $request->payment_method;
-            $list->F_MOBILE_NO              = $request->mobile_no;
-            $list->F_MOBILE_NO              = $request->mobile_no;
+            $list->F_PAYMENT_BANK_ACC       = $request->mobile_no;
             $list->PAYMENT_NOTE             = $request->note;
             $list->SLIP_NUMBER              = $request->txn_id;
             $list->STATUS                   = 0;

@@ -48,31 +48,33 @@
                         <h2 class="text-center">Recharge Request</h2>
                         {!! Form::open([ 'route' => 'recharge-request', 'id' => 'paymentForm', 'method' => 'post', 'class' => 'form-horizontal','files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                         <div class="row d-flex ">
-                            <div class="col-sm-6">
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <label for="amount">Select Payment Method <span class="text-danger">*</span></label>
+                                    <label for="amount">Payment Method <span class="text-danger">*</span></label>
                                     <div class="controls">
-                                        {!! Form::select('payment_method', $payment_method,null,['class'=>'form-control','id'=>'payment_method', 'placeholder'=>'Select Payment Method','data-validation-required-message' => 'This field is required']) !!}
+                                        {!! Form::select('payment_method', $payment_method,1,['class'=>'form-control','id'=>'payment_method', 'data-validation-required-message' => 'This field is required']) !!}
                                         {!! $errors->first('payment_method', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
-
-                                <div class="form-group" id="bkash" style="display: none">
-                                    <label for="amount">Select Mobile Number <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group" id="bkash">
+                                    <label for="amount">Mobile Number <span class="text-danger">*</span></label>
                                     <div class="controls">
-                                        {!! Form::select('mobile_no',$bkash,null,['class'=>'form-control','id'=>'mobile_no', 'placeholder'=>'Select Mobile Number','data-validation-required-message' => 'This field is required']) !!}
+                                        {!! Form::select('mobile_no',$bkash,null,['class'=>'form-control','id'=>'bkash_no', 'placeholder'=>'Select Mobile Number','data-validation-required-message' => 'This field is required']) !!}
                                         {!! $errors->first('mobile_no', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
-
                                 <div class="form-group" id="rocket" style="display: none">
-                                    <label for="amount">Select Mobile Number <span class="text-danger">*</span></label>
+                                    <label for="amount">Mobile Number <span class="text-danger">*</span></label>
                                     <div class="controls">
-                                        {!! Form::select('mobile_no',$rocket,null,['class'=>'form-control','id'=>'mobile_no', 'placeholder'=>'Select Mobile Number','data-validation-required-message' => 'This field is required']) !!}
+                                        {!! Form::select('mobile_no',$rocket,null,['class'=>'form-control','id'=>'rocket_no', 'placeholder'=>'Select Mobile Number', 'data-validation-required-message' => 'This field is required']) !!}
                                         {!! $errors->first('mobile_no', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
+                            </div>
 
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="recharged_mobile_no">Recharge From Mobile Number <span class="text-danger">*</span></label>
                                     <div class="controls">
@@ -80,7 +82,8 @@
                                         {!! $errors->first('recharged_mobile_no', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="recharge_date">Recharge Date <span class="text-danger">*</span></label>
                                     <div class="controls">
@@ -88,7 +91,8 @@
                                         {!! $errors->first('recharge_date', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="amount">Amount <span class="text-danger">*</span></label>
                                     <div class="controls">
@@ -96,7 +100,8 @@
                                         {!! $errors->first('amount', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="txn_id">Transaction Id <span class="text-danger">*</span></label>
                                     <div class="controls">
@@ -104,15 +109,17 @@
                                         {!! $errors->first('txn_id', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <label for="note">Note</label>
+                                    <label for="note">Note (optional)</label>
                                     <div class="controls">
                                         {!! Form::textarea('note', old('note'), [ 'id'=>'note','class' => 'msg-area form-control', 'placeholder' => 'Type here']) !!}
                                         {!! $errors->first('note', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="">Image (optional)</label>
                                     <label class="upload-image" for="upload-image-one">
@@ -120,7 +127,10 @@
                                         {!! $errors->first('image', '<label class="help-block text-danger">:message</label>') !!}
                                     </label>
                                 </div>
-
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <input type="submit" name="submit" value="Continue">
                                 </div>
@@ -156,10 +166,16 @@
             if ($(this).val() == 1){
                 $('#rocket').slideUp().css('display','none');
                 $('#bkash').slideDown().css('display','block');
+                $("#rocket_no").jqBootstrapValidation("destroy");
+                $("#bkash_no").jqBootstrapValidation();
             }else {
+
                 $('#bkash').slideUp().css('display','none');
                 $('#rocket').slideDown().css('display','block');
+                $("#bkash_no").jqBootstrapValidation("destroy");
+                $("#rocket_no").jqBootstrapValidation();
             }
+
         });
     </script>
 @endpush
