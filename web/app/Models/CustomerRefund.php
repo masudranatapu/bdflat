@@ -31,6 +31,7 @@ class CustomerRefund extends Model
                 $list->REQUEST_AMOUNT                   = $row->AMOUNT;
                 $list->COMMENT                          = $request->comment;
                 $list->F_LISTING_LEAD_PAYMENT_NO	    = $row->PK_NO;
+                $list->F_LISTING_NO	                    = $row->F_LISTING_NO;
                 $list->STATUS                           = 1;
                 $list->REFUND_TYPE                      = 1;
                 $list->CREATED_AT                       = Carbon::now();

@@ -100,11 +100,11 @@ class PaymentCustomer extends Model
                 $refund->APPROVED_AT = date('Y-m-d H:i:s');
                 $refund->APPROVED_BY = Auth::id();
             }
-
             $refund->save();
+            DB::table('ACC_LISTING_LEAD_PAYMENTS')->where('PK_NO', $refund->F_LISTING_LEAD_PAYMENT_NO)->delete();
+
         } catch (\Exception $e) {
             DB::rollBack();
-//            dd($e);
         }
 
         DB::commit();
