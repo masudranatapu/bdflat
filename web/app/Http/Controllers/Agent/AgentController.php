@@ -5,19 +5,22 @@ namespace App\Http\Controllers\Agent;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerPayment;
 use App\Models\Listings;
+use App\Models\LeadShare;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AgentController extends Controller
 {
     protected $listings;
+    protected $leadShare;
     protected $payment;
 
-    public function __construct(Listings $listings, CustomerPayment $payment)
+    public function __construct(Listings $listings, CustomerPayment $payment, LeadShare $leadShare)
     {
         $this->middleware('auth');
         $this->listings = $listings;
         $this->payment = $payment;
+        $this->leadShare = $leadShare;
     }
 
     public function getListings()
@@ -34,8 +37,14 @@ class AgentController extends Controller
 
     public function getBuyLeads(Request $request)
     {
-        $data = [];
+        $data['listing'] = $this->leadShare->getSuggestedLead($request);
         return view('agent.buy_leads', compact('data'));
+    }
+
+    public function getBuyLeadsDetails($id)
+    {
+        $data['listing_details'] = $this->leadShare->getSuggestedLeadDetails($id);
+        return view('agent.buy_leads_details', compact('data'));
     }
 
     public function getPayments(Request $request)
