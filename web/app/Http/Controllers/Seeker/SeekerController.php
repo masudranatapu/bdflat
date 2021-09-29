@@ -129,7 +129,7 @@ class SeekerController extends Controller
             ->distinct()
             ->orderByDesc('PRD_BROWSING_HISTORY.LAST_BROWES_TIME')
             ->paginate(10);
-//                dd($data);
+
         return view('seeker.browsed_properties', compact('data'));
     }
 

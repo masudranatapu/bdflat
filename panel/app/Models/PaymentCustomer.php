@@ -146,19 +146,26 @@ class PaymentCustomer extends Model
 
     public function updateRechargeRequest($request, $id)
     {
+
         DB::beginTransaction();
         try {
-            $recharge = DB::table('ACC_RECHARGE_REQUEST')->where('PK_NO',$id)->first();
+            $recharge = RechargeRequest::find($id);
             if ($recharge->STATUS == 1) {
                 throw new \Exception('Can not change');
             }
 
             $recharge->STATUS = $request->status;
-            $recharge->save();
-            DB::table('ACC_CUSTOMER_PAYMENTS')->insert(['F_CUSTOMER_NO' => , 'AMOUNT' => , ]);
+            $recharge->update();
+
+            if($request->status == 1){   
+                      
+                DB::table('ACC_CUSTOMER_PAYMENTS')->insert(['F_CUSTOMER_NO' => $recharge->F_CUSTOMER_NO , 'AMOUNT' => $recharge->AMOUNT, 'F_ACC_PAYMENT_BANK_NO' => $recharge->F_PAYMENT_BANK_ACC, 'PAYMENT_NOTE' => $recharge->PAYMENT_NOTE, 'SLIP_NUMBER' => $recharge->SLIP_NUMBER, 'PAYMENT_DATE' => $recharge->PAYMENT_DATE, 'IS_ACTIVE' => 1, 'F_SS_CREATED_BY' => Auth::id(),'SS_CREATED_ON' => date('Y-m-d H:i:s'), 'PAYMENT_TYPE' => 1 ]);
+
+            }
 
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e);
         }
 
         DB::commit();
