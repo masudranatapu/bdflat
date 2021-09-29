@@ -8,6 +8,7 @@ use App\Http\Requests\contactRequest;
 use App\Models\AccLeadPayment;
 use App\Models\ContactForm;
 use App\Models\CustomerPayment;
+use App\Models\CustomerTxn;
 use App\Models\LeadShare;
 use App\Models\Listings;
 use Illuminate\Http\Request;
@@ -21,14 +22,16 @@ class DeveloperController extends Controller
     protected $payment;
     protected $leadShare;
     protected $devLeadPayment;
+    protected $txn;
 
-    public function __construct(Listings $listings, CustomerPayment $payment,LeadShare $leadShare, AccLeadPayment $devLeadPayment)
+    public function __construct(CustomerTxn $txn, Listings $listings, CustomerPayment $payment,LeadShare $leadShare, AccLeadPayment $devLeadPayment)
     {
         $this->middleware('auth');
-        $this->payment      = $payment;
-        $this->listings     = $listings;
-        $this->leadShare    = $leadShare;
-        $this->devLeadPayment    = $devLeadPayment;
+        $this->payment              = $payment;
+        $this->listings             = $listings;
+        $this->leadShare            = $leadShare;
+        $this->devLeadPayment       = $devLeadPayment;
+        $this->txn                  = $txn;
     }
 
     public function getDevListings(Request $request)
@@ -70,7 +73,8 @@ class DeveloperController extends Controller
 
     public function getdeveloperPayments(Request $request)
     {
-        $data['payments'] = $this->payment->getPayments(Auth::id());
+//        $data['payments'] = $this->payment->getPayments(Auth::id());
+        $data['payments'] = $this->txn->getTxnHistory(Auth::id());
         return view('developer.developer_payments', compact('data'));
     }
 

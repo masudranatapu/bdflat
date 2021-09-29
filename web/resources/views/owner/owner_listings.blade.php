@@ -79,6 +79,7 @@ $listings = $data['listing'] ?? [];
                                     </div>
                                 @endif
                             </div>
+                            {{$listings->links()}}
                         </div>
                     </div>
                 </div>

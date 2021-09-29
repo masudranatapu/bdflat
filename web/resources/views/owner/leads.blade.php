@@ -5,120 +5,60 @@
 @endpush
 
 @section('content')
-<!--
+    <!--
      ============   dashboard   ============
  -->
-<div class="dashboard-sec">
-  <!-- container -->
-  <div class="container">
-      <!-- row -->
-      <div class="row">
-          <div class="col-md-3 mb-5 d-none d-md-block">
-            @include('common._left_menu')
-          </div>
-          <div class="col-sm-12 col-md-9">
-            <div class="account-details">
+    <div class="dashboard-sec">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-3 mb-5 d-none d-md-block">
+                    @include('common._left_menu')
+                </div>
+                <div class="col-sm-12 col-md-9">
+                    <div class="account-details">
 
-                 <!-- properties -->
-                 <div class="property-wrapper">
-                     <div class="new-property">
-                          <div class="property-heading">
-                             <h3><a href="{{ route('owner-leads') }}"><i class="fa fa-long-arrow-left"></i>Leads</a> <a href="{{ route('buy-leads') }}" class="link" style="float: right">Buy Leads</a></h3>
-                         </div>
-                         <!-- leads -->
-                         <div class="leads-wrapper mb-2">
-                              <div class="row no-gutters position-relative">
-                                   <div class="col-3">
-                                       <div class="leads-bx text-center">
-                                           <a href="details.html"><img src="{{ asset('assets/img/seeker/1.jpg') }}" alt="image"></a>
-                                       </div>
-                                   </div>
-                                   <div class="col-9 position-static">
-                                       <div class="leads-info">
-                                           <h5 class="mt-0">Seeker Name</h5>
-                                           <h4>Area Lead <span>LID 01299233</span></h4>
-                                           <h6>January 10, 2021</h6>
-                                       </div>
-                                   </div>
-                               </div>
-                         </div>
-
-                         <!-- leads -->
-                          <div class="leads-wrapper mb-2">
-                              <div class="row no-gutters position-relative">
-                                   <div class="col-3">
-                                       <div class="leads-bx text-center">
-                                           <a href="details.html"><img src="{{ asset('assets/img/seeker/1.jpg') }}" alt="image"></a>
-                                       </div>
-                                   </div>
-                                   <div class="col-9 position-static">
-                                       <div class="leads-info">
-                                           <h5 class="mt-0">Seeker Name</h5>
-                                           <h4>Area Lead <span>LID 01299233</span></h4>
-                                           <h6>January 10, 2021 <span class="claim"><a href="#" class="float-right">Claim Refund <i class="fa fa-exclamation-triangle"></i></a></span></h6>
-                                       </div>
-                                   </div>
-                               </div>
-                         </div>
-                         <!-- leads -->
-                          <div class="leads-wrapper mb-2">
-                              <div class="row no-gutters position-relative">
-                                   <div class="col-3">
-                                       <div class="leads-bx text-center">
-                                           <a href="details.html"><img src="{{ asset('assets/img/seeker/1.jpg') }}" alt="image"></a>
-                                       </div>
-                                   </div>
-                                   <div class="col-9 position-static">
-                                       <div class="leads-info">
-                                           <h5 class="mt-0">Seeker Name</h5>
-                                           <h4>Area Lead <span>LID 01299233</span></h4>
-                                           <h6>January 10, 2021 <span class="claim"><a href="#" class="float-right">Claim Refund <i class="fa fa-exclamation-triangle"></i></a></span></h6>
-                                       </div>
-                                   </div>
-                               </div>
-                         </div>
-                         <!-- leads -->
-                          <div class="leads-wrapper mb-2">
-                              <div class="row no-gutters position-relative">
-                                   <div class="col-3">
-                                       <div class="leads-bx text-center">
-                                           <a href="details.html"><img src="{{ asset('assets/img/seeker/1.jpg') }}" alt="image"></a>
-                                       </div>
-                                   </div>
-                                   <div class="col-9 position-static">
-                                       <div class="leads-info">
-                                           <h5 class="mt-0">Seeker Name</h5>
-                                           <h4>Area Lead <span>LID 01299233</span></h4>
-                                           <h6>January 10, 2021 <span class="claim"><a href="#" class="float-right">Claim Refund <i class="fa fa-exclamation-triangle"></i></a></span></h6>
-                                       </div>
-                                   </div>
-                               </div>
-                         </div>
-                         <!-- leads -->
-                          <div class="leads-wrapper mb-2">
-                              <div class="row no-gutters position-relative">
-                                   <div class="col-3">
-                                       <div class="leads-bx text-center">
-                                           <a href="details.html"><img src="{{ asset('assets/img/seeker/1.jpg') }}" alt="image"></a>
-                                       </div>
-                                   </div>
-                                   <div class="col-9 position-static">
-                                       <div class="leads-info">
-                                           <h5 class="mt-0">Seeker Name</h5>
-                                           <h4>Area Lead <span>LID 01299233</span></h4>
-                                           <h6>January 10, 2021 <span class="claim"><a href="#" class="float-right">Claim Refund <i class="fa fa-exclamation-triangle"></i></a></span></h6>
-                                       </div>
-                                   </div>
-                               </div>
-                         </div>
-
-                     </div>
-                 </div>
-            </div>
-       </div>
-      </div><!-- row -->
-  </div><!-- container -->
-</div>
+                        <!-- properties -->
+                        <div class="property-wrapper">
+                            <div class="new-property">
+                                <div class="property-heading">
+                                    <h3><a href="{{ route('owner-leads') }}"><i class="fa fa-long-arrow-left"></i>Leads</a> <a href="{{ route('buy-leads') }}"
+                                                                                                                               class="link" style="float: right">Buy
+                                            Leads</a></h3>
+                                </div>
+                            @if($data['listing']->count()>0)
+                                @foreach($data['listing'] as $item)
+                                    <!-- leads -->
+                                        <div class="leads-wrapper mb-2">
+                                            <div class="row no-gutters position-relative">
+                                                <div class="col-3">
+                                                    <div class="leads-bx text-center">
+                                                        <a href="{{route('buy-leads-details',$item->PK_NO)}}">
+                                                            <img src="{{ $item->getRequirements->getUser->PROFILE_PIC_URL ? asset($item->getRequirements->getUser->PROFILE_PIC_URL) : asset('assets/img/default_avatar.jpg') }}" alt="image">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-9 position-static">
+                                                    <div class="leads-info">
+                                                        <h5 class="mt-0">{{$item->getRequirements->getUser->NAME}}</h5>
+                                                        <h4><span>LID {{$item->getRequirements->getUser->CODE}}</span></h4>
+                                                        <h6>{{date('d M, Y',strtotime($item->CREATED_AT))}} <span class="claim"><a href="{{route('buy-leads-details',$item->PK_NO)}}" class="float-right">Claim Refund <i
+                                                                        class="fa fa-exclamation-triangle"></i></a></span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                {{$data['listing']->links()}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- row -->
+        </div><!-- container -->
+    </div>
 
 
 @endsection
