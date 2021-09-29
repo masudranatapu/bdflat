@@ -29,7 +29,7 @@
             color: #000;
             position: absolute;
             top: 5px;
-            right: 20px
+            right: 47px
         }
 
         .del_btn {

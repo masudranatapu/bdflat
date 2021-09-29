@@ -145,14 +145,14 @@
                                     <div class="row text-center">
                                         <div class="col-4 mb-2">
                                             <div class="user-box">
-                                                <a href="#">
+                                                <a href="{{route('developer-listings')}}">
                                                     <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/> My Properties
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="col-4 mb-2">
                                             <div class="user-box box2">
-                                                <a href="#">
+                                                <a href="{{route('developer-leads')}}">
                                                     <span>{{ Auth::user()->TOTAL_LEAD }}</span><br/>
                                                     Leads
                                                 </a>
@@ -160,7 +160,7 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="user-box box3">
-                                                <a href="#">
+                                                <a href="javascript:void(0)">
                                                     <span>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</span><br/>
                                                     Balance
                                                 </a>
@@ -175,7 +175,7 @@
                             <div class="property-wrapper">
                                 <div class="new-property">
                                     <div class="property-heading">
-                                        <h3>New Property <span class="float-right"><a href="#">See All</a></span></h3>
+                                        <h3>New Property <span class="float-right"><a href="{{route('developer-listings')}}">See All</a></span></h3>
                                     </div>
 
                                     @foreach($data['properties'] as $property)
