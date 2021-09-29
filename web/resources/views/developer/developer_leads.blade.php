@@ -28,7 +28,7 @@
                                 <div class="property-heading">
                                     <h3>
                                         <a href="{{ route('developer-leads') }}"><i class="fa fa-long-arrow-left"></i>Leads</a>
-                                        <a href="{{ route('buy-leads') }}" class="link" style="float: right">Buy Leads</a>
+                                        <a href="javascript:void(0);" class="link" style="float: right">Buy Leads</a>
                                     </h3>
                                 </div>
 
