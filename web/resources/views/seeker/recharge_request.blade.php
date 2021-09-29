@@ -61,15 +61,15 @@
                                 <div class="form-group" id="bkash">
                                     <label for="amount">Mobile Number <span class="text-danger">*</span></label>
                                     <div class="controls">
-                                        {!! Form::select('mobile_no',$bkash,null,['class'=>'form-control','id'=>'bkash_no', 'placeholder'=>'Select Mobile Number','data-validation-required-message' => 'This field is required']) !!}
-                                        {!! $errors->first('mobile_no', '<label class="help-block text-danger">:message</label>') !!}
+                                        {!! Form::select('bkash_no',$bkash,null,['class'=>'form-control','id'=>'bkash_no', 'data-validation-required-message' => 'This field is required']) !!}
+                                        {!! $errors->first('bkash_no', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
                                 <div class="form-group" id="rocket" style="display: none">
                                     <label for="amount">Mobile Number <span class="text-danger">*</span></label>
                                     <div class="controls">
-                                        {!! Form::select('mobile_no',$rocket,null,['class'=>'form-control','id'=>'rocket_no', 'placeholder'=>'Select Mobile Number', 'data-validation-required-message' => 'This field is required']) !!}
-                                        {!! $errors->first('mobile_no', '<label class="help-block text-danger">:message</label>') !!}
+                                        {!! Form::select('rocket_no',$rocket,null,['class'=>'form-control','id'=>'rocket_no',  'data-validation-required-message' => 'This field is required']) !!}
+                                        {!! $errors->first('rocket_no', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <label for="recharge_date">Recharge Date <span class="text-danger">*</span></label>
                                     <div class="controls">
-                                        {!! Form::text('recharge_date', old('recharge_date'), [ 'class' => 'form-control datetimepicker', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Recharged Date']) !!}
+                                        {!! Form::text('recharge_date', old('recharge_date'), [ 'class' => 'form-control datetimepicker', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Recharged Date', 'onkeydown' => 'return false']) !!}
                                         {!! $errors->first('recharge_date', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
@@ -153,6 +153,7 @@
     <script src="{{asset('/assets/js/forms/datepicker/moment.min.js')}}"></script>
     <script src="{{asset('/assets/js/forms/datepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <script>
+
         $('.datetimepicker').datetimepicker({
             icons:
                 {
@@ -166,14 +167,12 @@
             if ($(this).val() == 1){
                 $('#rocket').slideUp().css('display','none');
                 $('#bkash').slideDown().css('display','block');
-                $("#rocket_no").jqBootstrapValidation("destroy");
-                $("#bkash_no").jqBootstrapValidation();
+
             }else {
 
                 $('#bkash').slideUp().css('display','none');
                 $('#rocket').slideDown().css('display','block');
-                $("#bkash_no").jqBootstrapValidation("destroy");
-                $("#rocket_no").jqBootstrapValidation();
+
             }
 
         });

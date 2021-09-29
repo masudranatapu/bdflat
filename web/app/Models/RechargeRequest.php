@@ -17,6 +17,7 @@ class RechargeRequest extends Model
 
     public function postRechargeRequest($request)
     {
+        dd($request->all());
         DB::beginTransaction();
         try {
             $list = new RechargeRequest();

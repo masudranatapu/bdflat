@@ -114,7 +114,7 @@
                                                 <div class="col-4">
                                                     <div class="property-bx">
                                                         <a href="{{ route('web.property.details', $property->URL_SLUG) }}"><img
-                                                                src="{{ defaultThumb($property->IMAGE_PATH ?? '') }}"
+                                                                src="{{ defaultThumb($property->THUMB_PATH ?? '') }}"
                                                                 class="w-100" alt="image"></a>
                                                     </div>
                                                 </div>
@@ -146,8 +146,7 @@
                                         <div class="col-4 mb-2">
                                             <div class="user-box">
                                                 <a href="#">
-                                                    <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/>
-                                                    My Properties
+                                                    <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/> My Properties
                                                 </a>
                                             </div>
                                         </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 28, 2021 at 08:20 PM
+-- Generation Time: Sep 29, 2021 at 04:15 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.4.9
 
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `ACC_CUSTOMER_TRANSACTION` (
   `F_CUSTOMER_PAYMENT_NO` int(11) DEFAULT NULL,
   `F_LISTING_PAYMENT_NO` int(11) DEFAULT NULL,
   `F_LISTING_LEAD_PAYMENT_NO` int(11) DEFAULT NULL,
-  `F_LISTING_NO_FOR_COMM` int(11) NOT NULL COMMENT 'LISTING FOR COMMISIION',
+  `F_LISTING_NO_FOR_COMM` int(11) DEFAULT NULL COMMENT 'LISTING FOR COMMISIION',
   `F_LEAD_PAYMENT_NO` int(11) DEFAULT NULL,
   `AMOUNT` float DEFAULT '0',
   `TRANSACTION_DATE` date DEFAULT NULL,
@@ -310,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `ACC_CUSTOMER_TRANSACTION` (
   `F_SS_MODIFIED_BY` int(4) DEFAULT NULL,
   `SS_MODIFIED_ON` datetime DEFAULT NULL,
   PRIMARY KEY (`PK_NO`)
-) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `ACC_CUSTOMER_TRANSACTION`
@@ -468,7 +468,7 @@ INSERT INTO `ACC_CUSTOMER_TRANSACTION` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `F_CUS
 (170, 1149, 96, 79, NULL, NULL, 0, NULL, 100, '2021-09-22', 1, 1, NULL, '2021-09-22 21:53:56', NULL, '2021-09-22 21:53:56'),
 (171, 1150, 96, NULL, NULL, 8, 0, NULL, -50, '2021-09-22', 3, 2, 96, '2021-09-22 22:22:07', 96, '2021-09-22 22:22:07'),
 (172, 1151, 14, 80, NULL, NULL, 0, NULL, 500, '2021-09-23', 1, 1, 14, '2021-09-23 22:35:22', NULL, '2021-09-23 22:35:22'),
-(173, 1152, 14, NULL, NULL, 9, 0, NULL, -30, '2021-09-23', 3, 2, 14, '2021-09-23 22:35:49', 14, '2021-09-23 22:35:49');
+(175, 1152, 14, NULL, NULL, 12, NULL, NULL, -15, '2021-09-29', 3, 2, 14, '2021-09-29 20:57:00', 14, '2021-09-29 20:57:00');
 
 --
 -- Triggers `ACC_CUSTOMER_TRANSACTION`
@@ -560,16 +560,15 @@ CREATE TABLE IF NOT EXISTS `ACC_LISTING_LEAD_PAYMENTS` (
   `MODIFIED_BY` int(11) DEFAULT NULL,
   `IS_CLAIM` int(1) NOT NULL DEFAULT '0' COMMENT '0=NO, 1=claimed,2=denaied,3=claim approved',
   PRIMARY KEY (`PK_NO`),
-  UNIQUE KEY `U_LISTING_NO_USER_NO` (`PK_NO`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `U_LISTING_NO_USER_NO` (`F_LISTING_NO`,`F_USER_NO`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ACC_LISTING_LEAD_PAYMENTS`
 --
 
 INSERT INTO `ACC_LISTING_LEAD_PAYMENTS` (`PK_NO`, `F_LISTING_NO`, `F_USER_NO`, `AMOUNT`, `PURCHASE_DATE`, `CREATE_AT`, `MODIFIED_AT`, `CREATED_BY`, `MODIFIED_BY`, `IS_CLAIM`) VALUES
-(8, 6, 96, 50, '2021-09-22', '2021-09-22 22:22:07', '2021-09-22 22:22:07', 96, 96, 0),
-(9, 106, 14, 30, '2021-09-23', '2021-09-23 22:35:49', '2021-09-24 19:55:04', 14, 14, 1);
+(12, 102, 14, 15, '2021-09-29', '2021-09-29 20:57:00', '2021-09-29 20:57:00', 14, 14, 0);
 
 --
 -- Triggers `ACC_LISTING_LEAD_PAYMENTS`
@@ -587,7 +586,7 @@ DECLARE VAR_AGENT_COMMISSION_AMT FLOAT DEFAULT 0;
 DELETE FROM ACC_CUSTOMER_TRANSACTION WHERE F_LISTING_LEAD_PAYMENT_NO = OLD.PK_NO AND TRANSACTION_TYPE = 3;
 
 
-SELECT F_USER_NO USER_TYPE, AGENT_COMMISSION_AMT INTO VAR_OWNER_NO, VAR_USER_TYPE, VAR_AGENT_COMMISSION_AMT 
+SELECT F_USER_NO, USER_TYPE, AGENT_COMMISSION_AMT INTO VAR_OWNER_NO, VAR_USER_TYPE, VAR_AGENT_COMMISSION_AMT 
 FROM PRD_LISTINGS WHERE PK_NO = OLD.F_LISTING_NO;
 
 
@@ -628,7 +627,7 @@ SELECT IFNULL(SUM(AMOUNT),0) INTO VAR_AMOUNT FROM ACC_CUSTOMER_TRANSACTION WHERE
 
 UPDATE WEB_USER SET UNUSED_TOPUP = VAR_AMOUNT WHERE PK_NO = NEW.F_USER_NO;
 
-SELECT F_USER_NO USER_TYPE, AGENT_COMMISSION_AMT INTO VAR_OWNER_NO, VAR_USER_TYPE, VAR_AGENT_COMMISSION_AMT 
+SELECT F_USER_NO, USER_TYPE, AGENT_COMMISSION_AMT INTO VAR_OWNER_NO, VAR_USER_TYPE, VAR_AGENT_COMMISSION_AMT 
 FROM PRD_LISTINGS WHERE PK_NO = NEW.F_LISTING_NO;
 
 IF VAR_USER_TYPE = 5 AND VAR_AGENT_COMMISSION_AMT > 0 THEN  
@@ -915,7 +914,15 @@ CREATE TABLE IF NOT EXISTS `ACC_RECHARGE_REQUEST` (
   `SS_MODIFIED_ON` datetime DEFAULT NULL,
   PRIMARY KEY (`PK_NO`),
   UNIQUE KEY `U_ACC_CUSTOMER_PAYMENTS` (`SLIP_NUMBER`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `ACC_RECHARGE_REQUEST`
+--
+
+INSERT INTO `ACC_RECHARGE_REQUEST` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `CUSTOMER_NO`, `CUSTOMER_NAME`, `AMOUNT`, `F_ACC_PAYMENT_METHOD_NO`, `F_PAYMENT_BANK_ACC`, `STATUS`, `ATTACHMENT_PATH`, `PAYMENT_NOTE`, `SLIP_NUMBER`, `PAYMENT_DATE`, `IS_ACTIVE`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
+(2, 102, NULL, 0, '0', NULL, 1, NULL, 0, NULL, NULL, NULL, '2021-09-29', 1, NULL, '2021-09-29 21:19:22', NULL, NULL),
+(3, 102, NULL, 0, '0', NULL, 1, NULL, 0, NULL, NULL, NULL, '2021-09-29', 1, NULL, '2021-09-29 21:19:27', NULL, NULL);
 
 --
 -- Triggers `ACC_RECHARGE_REQUEST`
@@ -1051,37 +1058,18 @@ CREATE TABLE IF NOT EXISTS `PRD_BROWSING_HISTORY` (
   `LAST_BROWES_TIME` datetime DEFAULT NULL,
   `IS_PAY_ATTEMPT` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`PK_NO`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `PRD_BROWSING_HISTORY`
 --
 
 INSERT INTO `PRD_BROWSING_HISTORY` (`PK_NO`, `F_USER_NO`, `F_LISTING_NO`, `COUNTER`, `LAST_BROWES_TIME`, `IS_PAY_ATTEMPT`) VALUES
-(1, 15, 5, 1, '2021-09-17 22:08:46', 0),
-(2, 17, 14, 1, '2021-09-18 22:04:01', 0),
-(3, 17, 58, 1, '2021-09-18 22:06:50', 0),
-(4, 15, 5, 1, '2021-09-18 22:36:31', 0),
-(5, 14, 58, 1, '2021-09-18 23:40:40', 0),
-(6, 14, 5, 1, '2021-09-18 23:43:19', 0),
-(7, 15, 6, 1, '2021-09-18 23:44:55', 0),
-(8, 15, 58, 2, '2021-09-18 23:48:42', 0),
-(9, 15, 58, 1, '2021-09-19 00:01:25', 0),
-(10, 15, 5, 1, '2021-09-19 00:35:03', 0),
-(11, 17, 14, 1, '2021-09-19 01:24:56', 0),
-(12, 37, 56, 1, '2021-09-20 00:47:34', 0),
-(13, 13, 15, 1, '2021-09-20 20:55:10', 0),
-(14, 13, 16, 1, '2021-09-20 21:07:46', 0),
-(15, 13, 16, 1, '2021-09-21 00:05:37', 0),
-(16, 95, 5, 1, '2021-09-22 21:18:22', 0),
-(17, 96, 6, 9, '2021-09-22 21:56:29', 0),
-(18, 14, 106, 6, '2021-09-23 01:46:05', 1),
-(19, 14, 58, 1, '2021-09-23 23:59:40', 0),
-(20, 14, 8, 1, '2021-09-23 23:59:46', 0),
-(21, 14, 9, 1, '2021-09-23 23:59:58', 0),
-(22, 14, 5, 3, '2021-09-24 00:00:05', 0),
-(23, 14, 106, 1, '2021-09-24 23:07:16', 0),
-(24, 17, 14, 1, '2021-09-28 02:03:36', 0);
+(25, 14, 5, 1, '2021-09-29 19:15:38', 0),
+(26, 14, 105, 1, '2021-09-29 19:15:48', 0),
+(27, 14, 103, 2, '2021-09-29 19:15:52', 0),
+(28, 14, 102, 6, '2021-09-29 20:42:37', 0),
+(29, 14, 106, 1, '2021-09-29 20:42:43', 0);
 
 -- --------------------------------------------------------
 
@@ -1207,7 +1195,7 @@ CREATE TABLE IF NOT EXISTS `PRD_LISTINGS` (
   `PREP_TENANT` varchar(50) DEFAULT NULL,
   `AVAILABLE_FROM` date DEFAULT NULL,
   `GENDER` varchar(20) DEFAULT NULL,
-  `IS_VERIFIED` tinyint(1) NOT NULL DEFAULT '0',
+  `IS_VERIFIED` int(1) NOT NULL DEFAULT '0',
   `VERIFIED_BY` int(2) DEFAULT NULL,
   `VERIFIED_AT` datetime DEFAULT NULL,
   `CREATED_AT` datetime DEFAULT NULL,
@@ -1228,7 +1216,7 @@ CREATE TABLE IF NOT EXISTS `PRD_LISTINGS` (
   PRIMARY KEY (`PK_NO`),
   UNIQUE KEY `U_CODE` (`CODE`),
   UNIQUE KEY `U_URL_SLUG` (`URL_SLUG`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `PRD_LISTINGS`
@@ -1331,7 +1319,7 @@ INSERT INTO `PRD_LISTINGS` (`PK_NO`, `CODE`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO
 (99, 1094, 'sale', 3, 'Shop', 'Uttara', 'Ready', 1, 2, '228 sqft, Ready Showroom/Shop/Restaurant for Sale at Uttara', '228-sqft-ready-showroomshoprestaurant-for-sale-at-uttara', 1, 1, 'Dhaka', 9, 'Uttara', 0, NULL, 64, 2, 'Aziz Rahman', NULL, '01315632000', NULL, 3, 'General Listing with daily auto update f', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:00:38', 64, '2021-09-16 01:16:14', 1, 1, 'null', '2021-10-16', 10, 1, 1, 0, 0, 1, 32, 0),
 (100, 1095, 'sale', 2, 'Office', 'Tongi', 'Ready', 1, 2, '33000 sqft, Under Construction Office Space for Sale at Tongi, Ashulia', '33000-sqft-under-construction-office-space-for-sale-at-tongi-ashulia', 1, 5, 'Gazipur', 38, 'Tongi', 0, NULL, 64, 2, 'Tech Business Solution', NULL, '01969456000', NULL, 4, 'Feature Listing with daily auto update f', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:02:22', 64, '2021-09-16 01:15:34', 1, 1, 'null', '2021-10-16', 10, 1, 1, 0, 0, 1, 0, 0),
 (101, 1096, 'sale', 3, 'Shop', 'Uttara', 'Ready', 1, 2, '150 sqft, Ready Showroom/Shop/Restaurant for Sale at Uttara', '150-sqft-ready-showroomshoprestaurant-for-sale-at-uttara', 1, 1, 'Dhaka', 9, 'Uttara', 0, NULL, 64, 2, 'Syed Mohammed Meharab Ahsan', NULL, '01689519000', NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:04:29', 64, '2021-09-16 01:14:58', 1, 1, 'null', '2021-10-16', 10, 1, 1, 0, 0, 1, 63, 0),
-(102, 1097, 'sale', 3, 'Shop', 'Banasree', 'Ready', 1, 2, '1800 sqft, Ready Showroom/Shop/Restaurant for Sale at Banasree', '1800-sqft-ready-showroomshoprestaurant-for-sale-at-banasree', 1, 1, 'Dhaka', 7, ' Banasree', 0, NULL, 64, 2, 'Arshinagar Construction Ltd.', NULL, '01610350000', NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:06:28', 64, '2021-09-16 01:13:06', 1, 3, '[\"2\"]', '2021-10-16', 10, 1, 1, 0, 0, 1, 96, 0),
+(102, 1097, 'sale', 1, 'Apartment', 'Banani', 'Ready', 1, 2, '1800 sqft, Ready Showroom/Shop/Restaurant for Sale at Banasree', '1800-sqft-ready-showroomshoprestaurant-for-sale-at-banasree', 1, 1, 'Dhaka', 2, 'Banani', 0, NULL, 64, 2, 'Arshinagar Construction Ltd.', NULL, '01610350000', NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:06:28', 64, '2021-09-29 20:42:14', 2, 3, '[\"2\"]', '2021-10-16', 10, 1, 1, 15, 0, 1, 96, 0),
 (103, 1098, 'sale', 3, 'Shop', 'Shantinagar', 'Ready', 1, 2, '125 sqft, Ready Shop for Sale at Shantinagar', '125-sqft-ready-shop-for-sale-at-shantinagar', 1, 1, 'Dhaka', 41, 'Shantinagar', 0, NULL, 64, 2, 'Shaikat Khan', NULL, '01683458000', NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:08:59', 64, '2021-09-16 01:11:59', 1, 4, '[\"2\"]', '2021-10-16', 10, 1, 1, 0, 0, 1, 5, 0),
 (104, 1099, 'sale', 3, 'Shop', 'Shantinagar', 'Ready', 1, 1, '88 sqft, Ready Shop for Sale at Shantinagar', '88-sqft-ready-shop-for-sale-at-shantinagar', 1, 1, 'Dhaka', 41, 'Shantinagar', 0, NULL, 64, 2, 'AR diamond', NULL, '01797270000', NULL, 2, 'Feature Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:10:27', 64, '2021-09-16 01:09:26', 1, 4, '[\"2\"]', '2021-10-16', 10, 1, 1, 0, 0, 1, 0, 0),
 (105, 1100, 'sale', 3, 'Shop', 'Karwan Bazaar', 'Ready', 1, 1, '4500 sqft, Ready Showroom/Shop/Restaurant for Sale at Kawran Bazar', '4500-sqft-ready-showroomshoprestaurant-for-sale-at-kawran-bazar', 1, 1, 'Dhaka', 33, 'Karwan Bazaar', 0, NULL, 65, 2, 'RUMANA PROPERTIES LTD', NULL, '0179209000', NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:13:03', 65, '2021-09-18 23:35:28', 1, 6, '[\"2\"]', '2021-10-16', 10, 1, 1, 0, 0, 1, 12, 0),
@@ -2062,7 +2050,7 @@ CREATE TABLE IF NOT EXISTS `PRD_LISTING_VARIANTS` (
   `TOTAL_PRICE` float NOT NULL DEFAULT '0',
   `IS_DEFAULT` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`PK_NO`)
-) ENGINE=InnoDB AUTO_INCREMENT=307 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `PRD_LISTING_VARIANTS`
@@ -2078,7 +2066,6 @@ INSERT INTO `PRD_LISTING_VARIANTS` (`PK_NO`, `F_LISTING_NO`, `PROPERTY_SIZE`, `B
 (181, 105, '4500', NULL, NULL, 33800000, 1),
 (182, 104, '88', NULL, NULL, 4200000, 1),
 (183, 103, '125', NULL, NULL, 4563000, 1),
-(184, 102, '1800', NULL, NULL, 1, 1),
 (185, 101, '150', NULL, NULL, 1, 1),
 (186, 100, '33000', NULL, NULL, 610500000, 1),
 (187, 99, '228', NULL, NULL, 185000, 1),
@@ -2187,7 +2174,8 @@ INSERT INTO `PRD_LISTING_VARIANTS` (`PK_NO`, `F_LISTING_NO`, `PROPERTY_SIZE`, `B
 (303, 113, '3800', 0, 0, 450, 1),
 (304, 114, '1250', 0, 0, 32000, 1),
 (305, 115, '730', 0, 0, 50000, 1),
-(306, 116, '1000', 0, 0, 55000, 1);
+(306, 116, '1000', 0, 0, 55000, 1),
+(309, 102, '1800', NULL, NULL, 100000, 1);
 
 -- --------------------------------------------------------
 
@@ -2202,7 +2190,7 @@ CREATE TABLE IF NOT EXISTS `PRD_LISTING_VIEW` (
   `DATE` date DEFAULT NULL,
   `COUNTER` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`PK_NO`)
-) ENGINE=MyISAM AUTO_INCREMENT=186 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=191 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `PRD_LISTING_VIEW`
@@ -2393,7 +2381,12 @@ INSERT INTO `PRD_LISTING_VIEW` (`PK_NO`, `F_PRD_LISTING_NO`, `DATE`, `COUNTER`) 
 (182, 5, '2021-09-24', 3),
 (183, 106, '2021-09-24', 1),
 (184, 5, '2021-09-25', 1),
-(185, 14, '2021-09-28', 1);
+(185, 14, '2021-09-28', 1),
+(186, 5, '2021-09-29', 1),
+(187, 105, '2021-09-29', 1),
+(188, 103, '2021-09-29', 2),
+(189, 102, '2021-09-29', 6),
+(190, 106, '2021-09-29', 1);
 
 -- --------------------------------------------------------
 
@@ -2508,7 +2501,7 @@ CREATE TABLE IF NOT EXISTS `PRD_PROPERTY_TYPE` (
 --
 
 INSERT INTO `PRD_PROPERTY_TYPE` (`PK_NO`, `PROPERTY_TYPE`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`, `TYPE`, `META_TITLE`, `META_DESC`, `BODY_DESC`, `CATEGORY_URL`, `IMG_PATH`, `ICON_PATH`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_BY`, `MODIFIED_AT`, `TOTAL_LISTING`) VALUES
-(1, 'Apartment', 'apartment', 1, 1, 'A', 'Apartment', 'Apartment', NULL, NULL, NULL, '/media/images/property-category/img_21082021_6121388ceb546.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:31:56', 41),
+(1, 'Apartment', 'apartment', 1, 1, 'A', 'Apartment', 'Apartment', NULL, NULL, NULL, '/media/images/property-category/img_21082021_6121388ceb546.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:31:56', 42),
 (2, 'Office', 'office', 1, 2, 'B', 'Office', 'Office', NULL, NULL, NULL, '/media/images/property-category/img_21082021_6121389b5438e.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:32:11', 11),
 (3, 'Shop', 'shop', 1, 3, 'B', 'Shop', 'Shop', NULL, NULL, NULL, '/media/images/property-category/img_21082021_6121387ee018b.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:31:42', 12),
 (4, 'Warehouse', 'warehouse', 1, 4, 'B', 'Warehouse', 'Warehouse', NULL, NULL, NULL, '/media/images/property-category/img_21082021_612138b6b1f2f.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:32:38', 0),
@@ -2600,7 +2593,7 @@ INSERT INTO `PRD_REQUIREMENTS` (`PK_NO`, `F_USER_NO`, `F_CITY_NO`, `CITY_NAME`, 
 (48, 75, 1, 'Dhaka', '[\"7\"]', NULL, 'rent', 1, 'Apartment', 350, 500, 18000, 30000, '[\"3\"]', '[4,1]', '[\"Used\",\"Ready\"]', '<p>Apartment</p>', '12:49:00', 'weekly', '2021-09-15 00:49:56', 2, '2021-09-15 00:49:56', 2, 1, 1, 2, '2021-09-15 00:49:56', 8, 10),
 (49, 34, 1, 'Dhaka', '[\"7\"]', NULL, 'sale', 1, 'Apartment', 1600, 1700, 3700, 4000, '[\"3\"]', '[3]', '[\"Ongoing\"]', '<p>test</p>', '10:21:00', 'daily', NULL, 34, '2021-09-19 22:26:46', 2, 1, 1, 2, '2021-09-19 22:26:46', 10, 10),
 (50, 14, 1, 'Dhaka', '[\"2\",\"3\"]', NULL, 'sale', 1, 'Apartment', 1000, 1500, 1000000, 2000000, '[\"3\"]', '[3,1]', '[\"Ongoing\",\"Ready\"]', '<p>test</p>', '02:40:00', 'weekly', NULL, 14, NULL, 14, 3, 0, NULL, NULL, 0, 10),
-(51, 14, 1, 'Dhaka', '[\"2\",\"3\"]', NULL, 'sale', 1, 'Apartment', 1000, 1500, 1000000, 2000000, '[\"any\"]', '[3,1]', '[\"Ongoing\",\"Ready\"]', '<p>test</p>', '02:40:00', 'weekly', NULL, 14, '2021-09-23 01:22:26', 2, 1, 1, 2, '2021-09-23 01:22:26', 10, 10);
+(51, 14, 1, 'Dhaka', '[\"2\",\"3\"]', NULL, 'sale', 1, 'Apartment', 1000, 1500, 1000, 2000000, '[\"any\"]', '[3,1]', '[\"Ongoing\",\"Ready\"]', '<p>test</p>', '02:40:00', 'weekly', NULL, 14, '2021-09-23 01:22:26', 2, 1, 1, 2, '2021-09-23 01:22:26', 10, 10);
 
 --
 -- Triggers `PRD_REQUIREMENTS`
@@ -2676,21 +2669,23 @@ CREATE TABLE IF NOT EXISTS `PRD_SUGGESTED_PROPERTY` (
   `STATUS` int(2) NOT NULL DEFAULT '0' COMMENT '0=PENDING, 1=PURCHASED,2=DENYED BY BUILDER',
   `ORDER_ID` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`PK_NO`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `PRD_SUGGESTED_PROPERTY`
 --
 
 INSERT INTO `PRD_SUGGESTED_PROPERTY` (`PK_NO`, `F_LISTING_NO`, `F_COMPANY_NO`, `F_USER_NO`, `CREATED_AT`, `CREATED_BY`, `MODIFYED_AT`, `MODIFYED_BY`, `PROPERTY_FOR`, `PROPERTY_TYPE`, `AREA`, `SIZE`, `BEDROOM`, `BATHROOM`, `TOTAL_PRICE`, `PROPERTY_CONDITION`, `STATUS`, `ORDER_ID`) VALUES
-(14, 12, 16, 80, '2021-09-17 22:28:00', 15, NULL, NULL, 'rent', 'Apartment', 1, '500', '1', '1', 6500, '20', 0, 1),
-(15, 56, 37, 80, '2021-09-17 22:28:00', 15, NULL, NULL, 'rent', 'Apartment', 1, '1300', '3', '3', 20000, '20', 0, 1),
-(16, 5, 15, 34, '2021-09-19 22:30:00', 34, NULL, NULL, 'sale', 'Apartment', 7, '1690', '3', '3', 3700, '20', 0, 1),
-(17, 106, 65, 14, '2021-09-23 01:47:00', 14, NULL, NULL, 'sale', 'Apartment', 2, '1350', '3', '3', 4725000, '20', 0, 1),
-(18, 106, 65, 42, '2021-09-23 01:47:00', 14, NULL, NULL, 'sale', 'Apartment', 2, '1350', '3', '3', 4725000, '20', 0, 1),
-(19, 11, 16, 80, '2021-09-23 01:47:00', 14, NULL, NULL, 'rent', 'Apartment', 12, '400', '2', '1', 30000, '20', 0, 1),
-(20, 57, 38, 80, '2021-09-23 01:47:00', 14, NULL, NULL, 'rent', 'Apartment', 12, '22550', '4', '3', 27000, '20', 0, 1),
-(21, 60, 45, 80, '2021-09-23 01:47:00', 14, NULL, NULL, 'rent', 'Apartment', 12, '100000', NULL, NULL, 2200000, '20', 0, 1);
+(22, 5, 15, 34, '2021-09-29 19:09:00', 14, NULL, NULL, 'sale', 'Apartment', 7, '1690', '3', '3', 3700, '20', 0, 1),
+(23, 106, 65, 14, '2021-09-29 19:09:00', 14, NULL, NULL, 'sale', 'Apartment', 2, '1350', '3', '3', 4725000, '20', 0, 1),
+(24, 106, 65, 42, '2021-09-29 19:09:00', 14, NULL, NULL, 'sale', 'Apartment', 2, '1350', '3', '3', 4725000, '20', 0, 1),
+(25, 11, 16, 80, '2021-09-29 19:09:00', 14, NULL, NULL, 'rent', 'Apartment', 12, '400', '2', '1', 30000, '20', 0, 1),
+(26, 12, 16, 80, '2021-09-29 19:09:00', 14, NULL, NULL, 'rent', 'Apartment', 1, '500', '1', '1', 6500, '20', 0, 1),
+(27, 56, 37, 80, '2021-09-29 19:09:00', 14, NULL, NULL, 'rent', 'Apartment', 1, '1300', '3', '3', 20000, '20', 0, 1),
+(28, 57, 38, 80, '2021-09-29 19:09:00', 14, NULL, NULL, 'rent', 'Apartment', 12, '22550', '4', '3', 27000, '20', 0, 1),
+(29, 60, 45, 80, '2021-09-29 19:09:00', 14, NULL, NULL, 'rent', 'Apartment', 12, '100000', NULL, NULL, 2200000, '20', 0, 1),
+(30, 102, 64, 14, '2021-09-29 20:44:00', 14, '2021-09-29 20:57:00', NULL, 'sale', 'Apartment', 2, '1800', NULL, NULL, 1, '20', 1, 1),
+(31, 102, 64, 42, '2021-09-29 20:44:00', 14, NULL, NULL, 'sale', 'Apartment', 2, '1800', NULL, NULL, 1, '20', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2718,7 +2713,7 @@ CREATE TABLE IF NOT EXISTS `PRD_SUGGESTED_PROPERTY_TEMP` (
   `PROPERTY_CONDITION` int(2) NOT NULL DEFAULT '0' COMMENT 'max 10',
   `TOTAL_VAL` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`PK_NO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -4453,7 +4448,7 @@ CREATE TABLE IF NOT EXISTS `WEB_USER` (
 
 INSERT INTO `WEB_USER` (`PK_NO`, `CODE`, `NAME`, `DESIGNATION`, `EMAIL`, `MOBILE_NO`, `PASSWORD`, `GENDER`, `DOB`, `FACEBOOK_ID`, `GOOGLE_ID`, `PROFILE_PIC`, `PROFILE_PIC_URL`, `ACTIVATION_CODE`, `ACTIVATION_CODE_EXPIRE`, `IS_FIRST_LOGIN`, `USER_TYPE`, `CAN_LOGIN`, `REMEMBER_TOKEN`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `IS_EMAIL_VERIFIED`, `IS_MOBILE_VERIFIED`, `EMAIL_VERIFY_CODE`, `EMAIL_VERIFY_EXPIRE`, `MOBILE_VERITY_CODE`, `MOBILE_VERIFY_EXPIRE`, `CONTACT_PER_NAME`, `ADDRESS`, `ACTUAL_TOPUP`, `PENDING_TOPUP`, `USED_TOPUP`, `UNUSED_TOPUP`, `TOTAL_LISTING`, `LISTING_LIMIT`, `TOTAL_LEAD`, `IS_FEATURE`, `PAYMENT_AUTO_RENEW`) VALUES
 (13, 1000, 'maidul1', NULL, 'owner@gmail.com', '123456', '$2y$10$WAp/98uhcPn2e06RQCf3KuCX9wFSwds/Oz/yJklaiStsYB5R882b.', 1, NULL, NULL, NULL, '60b13784f3288.jpg', '/uploads/user/13/60b13784f3288.jpg', NULL, NULL, 1, 2, 1, NULL, 1, 0, 0, '2021-04-11 20:33:09', '2021-07-28 18:01:15', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 2000, 0, 0, 1830, 4, 5, 0, 0, 1),
-(14, 1001, 'Maidul Islam Babu', NULL, 'seeker@gmail.com', '01681944126', '$2y$10$uDfNvGFGnLQoltKrDaAuk.bipD33SYs.AWxvL3D2UyeahDBGwaCvy', 1, NULL, NULL, NULL, '60b11641916e1.jpg', '/uploads/user/14/60b11641916e1.jpg', NULL, NULL, 1, 1, 1, NULL, 1, 0, 0, '2021-04-14 10:00:54', '2021-07-29 17:32:18', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 470, 0, 0, 470, 0, 5, 0, 0, 1),
+(14, 1001, 'Maidul Islam Babu', NULL, 'seeker@gmail.com', '01681944126', '$2y$10$uDfNvGFGnLQoltKrDaAuk.bipD33SYs.AWxvL3D2UyeahDBGwaCvy', 1, NULL, NULL, NULL, '60b11641916e1.jpg', '/uploads/user/14/60b11641916e1.jpg', NULL, NULL, 1, 1, 1, NULL, 1, 0, 0, '2021-04-14 10:00:54', '2021-07-29 17:32:18', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 500, 0, 0, 485, 0, 5, 0, 0, 1),
 (15, 1002, 'Maidul Islam Babu', 'Data analyst', 'developer@gmail.com', '01681944127', '$2y$10$WAp/98uhcPn2e06RQCf3KuCX9wFSwds/Oz/yJklaiStsYB5R882b.', 1, NULL, NULL, NULL, '60b11641916e1.jpg', '/uploads/user/14/60b11641916e1.jpg', NULL, NULL, 1, 3, 1, NULL, 1, 0, 2, '2021-04-14 10:00:54', '2021-09-18 23:36:06', 0, 0, NULL, NULL, NULL, NULL, 'Maidul Islam Babu', 'mirur', 2000, 0, 0, 1900, 2, 20, 0, 1, 1),
 (16, 1003, 'Monowar Hossain Khan', 'Donno', 'agency@gmail.com', '01700000006', '$2y$10$uvycUE.pzSq/WKN/cxFdWeIwDrWlji8U.Sqs3gvWvygud3QNOGN76', 1, NULL, NULL, NULL, '610aace6e3724.jpeg', '/uploads/user/16/610aace6e3724.jpeg', NULL, NULL, 1, 4, 1, NULL, 1, 0, 2, '2021-08-04 07:22:48', '2021-08-26 01:07:46', 0, 0, NULL, NULL, NULL, NULL, 'Sazol Khan', 'Tongi', 1000, 0, 0, 840, 4, 5, 0, 0, 1),
 (17, 1004, 'Sazol Khan', 'Agent', 'agent@gmail.com', '01700000000', '$2y$10$MuWw/4agzfMUrr.2sqatCu77Dxv5F57kwjkPVPKGKOupjSj3zTgwi', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 5, 1, NULL, 1, 0, 0, '2021-08-04 19:15:24', '2021-08-04 19:15:24', 0, 0, NULL, NULL, NULL, NULL, NULL, 'Janata Road', 0, 0, 0, 0, 12, 15, 0, 0, 1),

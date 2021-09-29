@@ -139,7 +139,7 @@ class CornController extends Controller
 
         DB::table('PRD_SUGGESTED_PROPERTY_TEMP')->delete();
 
-        dd($temp);
+        return 1;
 
     }
 

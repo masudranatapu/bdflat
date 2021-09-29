@@ -40,16 +40,17 @@ class ProductAbstract implements ProductInterface
     {
 
         //4=DELETED
-        $data['listings'] = $this->product->where('STATUS', '!=', 4)->orderBy('PK_NO', 'DESC')->get();
+        $data['listings'] = [];
         $data['user_type'] = DB::table('SS_USER_TYPE')->where('TYPE_NO', '!=', 1)->orderBy('PK_NO', 'ASC')->pluck('TITLE', 'PK_NO');
         $data['listing_type'] = DB::table('PRD_LISTING_TYPE')->where('IS_ACTIVE', '=', 1)->orderBy('ORDER_ID', 'ASC')->pluck('NAME', 'PK_NO');
+        $data['cities'] = DB::table('SS_CITY')->pluck('CITY_NAME', 'PK_NO');
         return $this->formatResponse(true, '', 'admin.product.list', $data);
     }
 
 
     public function postUpdate($request, int $id): object
     {
-        dd($request->all());
+      
         DB::beginTransaction();
         try {
             $area = $request->area;

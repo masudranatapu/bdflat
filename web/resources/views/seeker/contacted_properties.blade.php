@@ -44,14 +44,14 @@ $products = $data['rows'] ?? [];
                                                         @if($item->IS_CLAIM == 0)
                                                         @php
                                                             $claim_hour = $data['claim_hour'];
+
                                                             $claim_sc = $claim_hour*3600;
                                                             $cur_time = strtotime(date('Y-m-d H:i:s'));
                                                             $purchase_time = strtotime($item->CREATE_AT);
                                                             $exp_time = $purchase_time+$claim_sc;
-                                                            date('Y-m-d H:i:s', strtotime('6 hour'));
 
                                                         @endphp
-                                                            @if($cur_time < $purchase_time)
+                                                            @if($cur_time > $purchase_time)
                                                             <span class="float-right claim"><a href="{{ route('refund-request',$item->PK_NO) }}">Claim Refund</a><i class="fa fa-exclamation-triangle"></i></span>
                                                             @endif
 

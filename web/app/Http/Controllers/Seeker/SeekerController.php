@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRefundRequest;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
+use App\Http\Requests\AccRechargeRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\BrowsedProperty;
 use App\Models\CustomerPayment;
@@ -155,7 +156,7 @@ class SeekerController extends Controller
         //dd($data);
         return view('seeker.recharge_request', compact('data'));
     }
-    public function postRechargeRequest(Request $request)
+    public function postRechargeRequest(AccRechargeRequest $request)
     {
         $this->resp = $this->rechargeRequest->postRechargeRequest($request);
         $msg = $this->resp->msg;

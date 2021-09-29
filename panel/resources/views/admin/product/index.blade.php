@@ -26,6 +26,7 @@
     $rows = $data['listings'] ?? null;
     $user_type_combo = $data['user_type'] ?? [];
     $listing_type_combo = $data['listing_type'] ?? [];
+    $city_combo = $data['cities'] ?? [];
     $property_for_combo = Config::get('static_array.property_for');
     $property_status_combo = Config::get('static_array.property_status');
     $payment_status_combo = Config::get('static_array.payment_status');
@@ -92,6 +93,14 @@
                                             </div>
 
                                         </div>
+                                        <div class="col">
+                                            <div class="form-group {!! $errors->has('city') ? 'error' : '' !!}">
+                                                <div class="controls">
+                                                    {!! Form::select('city', $city_combo, request()->query->get('city'), ['class'=>'form-control mb-1 ', 'placeholder' => 'Select city', 'tabindex' => 6]) !!}
+                                                    {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col">
@@ -112,13 +121,15 @@
                                             <th class="text-center">User ID</th>
                                             <th class="text-center">User Type</th>
                                             <th>User Name</th>
-                                            <th class="text-center">Property ID</th>
-                                            <th>Property For</th>
+                                            <th class="text-center" title="Property ID">Prty ID</th>
+                                            <th title="Property For">Prty For</th>
+                                            <th>Listing Type</th>
+                                            <th>City</th>
+                                            <th>Area</th>
                                             <th>Title</th>
                                             <th>Mobile</th>
                                             <th>Create Date</th>
                                             <th>Status</th>
-                                            <th>Listing Type</th>
                                             <th>Pay Status</th>
                                             <th style="width: 135px;">Action</th>
                                         </tr>
@@ -187,6 +198,7 @@
                             d.listing_type = {{ request()->query('listing_type') ?? 'null' }};
                             d.property_status = {{ request()->query('property_status') ?? 'null' }};
                             d.payment_status = {{ request()->query('payment_status') ?? 'null' }};
+                            d.city = {{ request()->query('city') ?? 'null' }};
                         }
                     },
                     columns: [
@@ -225,7 +237,24 @@
                             data: 'PROPERTY_FOR',
                             name: 'PROPERTY_FOR',
                             searchable: true
+                        },                        
+                        {
+                            data: 'LISTING_TYPE',
+                            name: 'LISTING_TYPE',
+                            searchable: true,
+                            className: 'text-left'
+
                         },
+                         {
+                            data: 'CITY_NAME',
+                            name: 'CITY_NAME',
+                            searchable: true
+                        },
+                        {
+                            data: 'AREA_NAME',
+                            name: 'AREA_NAME',
+                            searchable: true
+                        },                       
                         {
                             data: 'TITLE',
                             name: 'TITLE',
@@ -241,20 +270,11 @@
                             name: 'CREATED_AT',
                             searchable: true,
                         },
-
                         {
                             data: 'status',
                             name: 'status',
                             searchable: false,
                             className: 'text-right',
-                        },
-
-                        {
-                            data: 'LISTING_TYPE',
-                            name: 'LISTING_TYPE',
-                            searchable: true,
-                            className: 'text-left'
-
                         },
                         {
                             data: 'payment_status',

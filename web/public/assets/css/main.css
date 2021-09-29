@@ -6785,3 +6785,10 @@ td.active.day {
 .footer-menu-mobile li{flex:1;}
 
 .form-control:disabled, .form-control[readonly] {background-color: #e8eaec;}
+.status{font-size: 14px;}
+.status.pending{color: #e99b0e;}
+.status.invalid{color: #e90e0e;}
+.status.valid{color: #30b93a;}
+.status.updatedbyuser{color: #ffeb00;}
+
+

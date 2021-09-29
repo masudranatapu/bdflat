@@ -40,6 +40,12 @@ if (isset($row->F_AREAS) && $row->F_AREAS != '') {
 } else {
     $old_areas = [];
 }
+$req_ststus = '';
+if($data['row']->IS_VERIFIED == 0){$req_ststus = 'pending';}
+elseif($data['row']->IS_VERIFIED == 1){$req_ststus = 'valid';}
+elseif($data['row']->IS_VERIFIED == 2){$req_ststus = 'invalid';}
+elseif($data['row']->IS_VERIFIED == 3){$req_ststus = 'updatedbyuser';}
+
 
 ?>
 
@@ -60,7 +66,7 @@ if (isset($row->F_AREAS) && $row->F_AREAS != '') {
                 <div class="col-sm-12 col-md-9">
                     <div class="requirement">
                         <div class="property-title mb-2">
-                            <h3>Property Requirements</h3>
+                            <h3>Property Requirements <span class="status {{ $req_ststus }}"><i class="fa fa-circle" aria-hidden="true"></i></span></h3>
                         </div>
                         {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 

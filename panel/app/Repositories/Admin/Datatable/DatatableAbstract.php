@@ -214,6 +214,9 @@ class DatatableAbstract implements DatatableInterface
         if ($request->property_status != '' ) {
             $dataSet->where('p.STATUS', $request->property_status);
         }
+        if ($request->city != '' ) {
+            $dataSet->where('p.F_CITY_NO', $request->city);
+        }
 
         $dataSet = $dataSet->get();
 
