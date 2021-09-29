@@ -11,6 +11,7 @@ use App\Models\CustomerPayment;
 use App\Models\CustomerTxn;
 use App\Models\LeadShare;
 use App\Models\Listings;
+use App\Models\RechargeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Toastr;
@@ -23,8 +24,9 @@ class DeveloperController extends Controller
     protected $leadShare;
     protected $devLeadPayment;
     protected $txn;
+    protected $recharge_request;
 
-    public function __construct(CustomerTxn $txn, Listings $listings, CustomerPayment $payment,LeadShare $leadShare, AccLeadPayment $devLeadPayment)
+    public function __construct(RechargeRequest $recharge_request,CustomerTxn $txn, Listings $listings, CustomerPayment $payment,LeadShare $leadShare, AccLeadPayment $devLeadPayment)
     {
         $this->middleware('auth');
         $this->payment              = $payment;
@@ -32,6 +34,7 @@ class DeveloperController extends Controller
         $this->leadShare            = $leadShare;
         $this->devLeadPayment       = $devLeadPayment;
         $this->txn                  = $txn;
+        $this->recharge_request     = $recharge_request;
     }
 
     public function getDevListings(Request $request)
@@ -75,6 +78,8 @@ class DeveloperController extends Controller
     {
 //        $data['payments'] = $this->payment->getPayments(Auth::id());
         $data['payments'] = $this->txn->getTxnHistory(Auth::id());
+        $data['recharge_request'] = $this->recharge_request->getRechargeReq(Auth::id());
+//        dd($data['recharge_request']);
         return view('developer.developer_payments', compact('data'));
     }
 
