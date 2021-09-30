@@ -143,11 +143,76 @@ class CornController extends Controller
 
     }
 
+    public function makeLead(){
+
+        $seeker_req = DB::table('PRD_REQUIREMENTS')->select('PRD_REQUIREMENTS.PK_NO','PRD_REQUIREMENTS.F_USER_NO', 'PRD_REQUIREMENTS.PROPERTY_FOR', 'PRD_REQUIREMENTS.F_PROPERTY_TYPE_NO','PRD_REQUIREMENTS.MIN_SIZE','PRD_REQUIREMENTS.MAX_SIZE','PRD_REQUIREMENTS.F_PROPERTY_CONDITION','PRD_REQUIREMENTS.F_AREAS', 'PRD_REQUIREMENTS.MAX_SHARING_PERMISSION')->leftJoin('WEB_USER', 'WEB_USER.PK_NO', 'PRD_REQUIREMENTS.F_USER_NO')
+        ->where('PRD_REQUIREMENTS.IS_ACTIVE',1)
+        ->where('PRD_REQUIREMENTS.IS_VERIFIED',1)
+        ->where('WEB_USER.STATUS',1)
+        ->get();
+
+        if($seeker_req){
+            foreach ($seeker_req as $k => $list) {
+
+                $property_for           = $list->PROPERTY_FOR;
+                $property_type          = $list->F_PROPERTY_TYPE_NO;
+                $size_min               = $list->MIN_SIZE-1000;
+                $size_max               = $list->MAX_SIZE+1000;
+                $property_condition     = json_decode($list->F_PROPERTY_CONDITION);
+                $area_nos               = json_decode($list->F_AREAS);
+
+                $listings =  DB::table('PRD_LISTINGS')->select('PRD_LISTINGS.PK_NO','PRD_LISTINGS.F_USER_NO','PRD_LISTING_VARIANTS.PROPERTY_SIZE')
+                ->join('PRD_LISTING_VARIANTS', 'PRD_LISTING_VARIANTS.F_LISTING_NO', 'PRD_LISTINGS.PK_NO')
+                ->join('WEB_USER', 'WEB_USER.PK_NO', 'PRD_LISTINGS.F_USER_NO')
+                ->where('PRD_LISTINGS.STATUS',10)
+                ->where('PRD_LISTINGS.PAYMENT_STATUS',1)
+                ->where('PRD_LISTINGS.PROPERTY_FOR',$property_for)
+                ->where('PRD_LISTINGS.F_PROPERTY_TYPE_NO',$property_type)
+                ->whereIn('PRD_LISTINGS.F_AREA_NO',$area_nos)
+                ->whereBetween('PRD_LISTING_VARIANTS.PROPERTY_SIZE', [$size_min,$size_max]);
+                if($property_condition){
+                    $listings->whereIn('PRD_LISTINGS.F_PROPERTY_CONDITION',$property_condition);
+                }
+                $listings = $listings->where('WEB_USER.STATUS',1)
+                ->groupBy('PRD_LISTINGS.PK_NO')
+                ->orderBy('PRD_LISTINGS.MODIFIED_AT', 'DESC')
+                ->get();
+
+                if($listings && count($listings) > 0 ){
+                    $max_share = 0;
+                    foreach ($listings as $key => $value) {
+                        DB::table('PRD_LEAD_SHARE_MAP')->where('F_USER_NO',$list->F_USER_NO)->where('F_COMPANY_NO',$value->F_USER_NO)->where('STATUS',0)->where('LEAD_TYPE',0)->delete();
+
+                        $check_old = DB::table('PRD_LEAD_SHARE_MAP')->where('F_USER_NO',$list->F_USER_NO)->where('F_COMPANY_NO',$value->F_USER_NO)->first();
+
+                        if($check_old == null){
+                            $order_id = 1+$key;
+                            $max_share++;
+                            DB::table('PRD_LEAD_SHARE_MAP')->insert([
+                                'F_REQUIREMENT_NO'  => $list->PK_NO,
+                                'F_USER_NO'         => $list->F_USER_NO,
+                                'CREATED_AT'        => date('Y-m-d H:i:s'),
+                                'CREATED_BY'        => Auth::id(),
+                                'F_COMPANY_NO'      => $value->F_USER_NO,
+                                'F_LISTING_NO'      => $value->PK_NO,
+                                'STATUS'            => 0,
+                                'ORDER_ID'          => $order_id
+                            ]);
+
+                            if($max_share > $list->MAX_SHARING_PERMISSION ){ break;}
+                        }
+
+                    }
+                }
+            }
+        }
+        return 1;
+
+    }
+
 
     public function makeExpairedProperty(){
-
         $curr_date = date('Y-m-d');
-
         $data = DB::table('PRD_LISTINGS')->select('PK_NO','EXPAIRED_AT')
         ->whereIn('USER_TYPE', [2,3,4])
         ->where('EXPAIRED_AT','<', $curr_date)

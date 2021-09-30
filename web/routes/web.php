@@ -33,6 +33,7 @@ Route::get('cc', function () {
 
 //common routes
 Route::get('make-suggested-property', 'CornController@makeSuggProperty')->name('make-suggested-property');
+Route::get('make-lead', 'CornController@makeLead')->name('make-lead');
 Route::get('expaired-property', 'CornController@makeExpairedProperty')->name('make-expaired-property');
 
 Route::get('about-us', 'CommonController@getAboutUs')->name('about-us');
