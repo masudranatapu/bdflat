@@ -1,14 +1,15 @@
 @extends('layouts.app')
-@section('buy-leads','active')
+@section('agent-leads','active')
 @push('custom_css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .buy_leads_div p{
+        .buy_leads_div p {
             font-family: 'Montserrat-Medium';
             font-size: 14px;
             text-transform: capitalize;
         }
 
-        .buy_leads_div h3{
+        .buy_leads_div h3 {
             font-family: 'Montserrat-Medium';
         }
     </style>
@@ -81,7 +82,6 @@
                                         <h3 class="mb-1">Seeker Details</h3>
                                         <p>Name: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->NAME}}</strong></p>
                                         <p>Country: &emsp;<strong>Bangladesh</strong></p>
-
                                         @if($data['is_paid'])
                                             <p>Mobile: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->MOBILE_NO}}</strong></p>
                                             <p>Email: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->EMAIL}}</strong></p>

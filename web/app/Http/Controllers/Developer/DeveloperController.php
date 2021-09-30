@@ -53,7 +53,6 @@ class DeveloperController extends Controller
 
     public function getdeveloperLeadsDetails($id)
     {
-        $data = array();
         $data['listing_details'] = $this->leadShare->getLeadDetails($id);
         $data['is_paid'] = AccLeadPayment::where('F_LEAD_SHARE_NO',$id)->first();
         return view('developer.developer_leads_details', compact('data'));
@@ -69,8 +68,9 @@ class DeveloperController extends Controller
     public function getdeveloperBuyLeadsDetails($id)
     {
         $data = array();
-        $data['listing_details'] = $this->leadShare->getSuggestedLeadDetails($id);
-        return view('developer.developer_buy_leads_details', compact('data'));
+        $data['listing_details'] = $this->leadShare->getLeadDetails($id);
+        $data['is_paid'] = AccLeadPayment::where('F_LEAD_SHARE_NO',$id)->first();
+        return view('developer.developer_leads_details', compact('data'));
     }
 
 

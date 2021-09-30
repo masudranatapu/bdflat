@@ -1,8 +1,11 @@
 @extends('layouts.app')
 @section('agent-leads','active')
 @push('custom_css')
-
 @endpush
+
+@php
+    $listings = $data['listing'] ?? [];
+@endphp
 
 @section('content')
 <!--
@@ -29,38 +32,54 @@
                          <table class="table table-striped text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
                              <thead>
                              <tr>
+                                 <th>SL</th>
                                  <th>LID</th>
                                  <th>Name</th>
                                  <th>Received Date</th>
                                  <th>Lead Type</th>
-                                 <th>Status</th>
+                                 {{-- <th>Status</th> --}}
                                  <th>Actions</th>
                              </tr>
                              </thead>
 
                              <tbody>
-{{--                             @if($listings->count()>0)--}}
-{{--                                 @foreach($listings as $listing)--}}
+                             @php($i=1)
+                             @if($listings->count()>0)
+                                 @foreach($listings as $item)
                                      <tr>
-                                         <td>10001</td>
-                                         <td>Seeker Name</td>
-                                         <td>May 29, 2021</td>
-                                         <td>Project</td>
-                                         <td>Positive</td>
+                                         <td>{{$i++}}</td>
+                                         <td>{{$item->CODE}}</td>
+                                         <td>{{$item->getRequirements->getUser->NAME}}</td>
+                                         <td>{{date('d M, Y',strtotime($item->CREATED_AT))}}</td>
+                                         <td>
+                                             @if($item->LEAD_TYPE == 0)
+                                                 <span class="text-success">100% Matched</span>
+                                             @else
+                                                 <span class="text-danger">Force Lead</span>
+                                             @endif
+                                         </td>
+                                         {{-- <td>
+                                             @if($item->STATUS == 0)
+                                                 <span class="text-danger">Pending</span>
+                                             @elseif($item->STATUS == 1)
+                                                 <span class="text-success">Purchased</span>
+                                             @elseif($item->STATUS == 2)
+                                                 <span class="text-danger">Denied By  Developer</span>
+                                             @endif
+                                         </td> --}}
                                          <td width="20%">
-                                             <a href="#" class="text-info">Details</a>
+                                             <a href="{{route('agent-lead-details',$item->PK_NO)}}" class="text-info">Details</a>
                                          </td>
                                      </tr>
-                                {{-- @endforeach
+                                 @endforeach
                              @else
-                                 <div class="row no-gutters">
-                                     <div class="col-12">
-                                         <h6 class="font-weight-bold text-danger text-center">No Data Found!</h6>
-                                     </div>
-                                 </div>
-                             @endif--}}
+                                 <tr>
+                                     <td colspan="7" class="font-weight-bold text-danger text-center">No Data Found!</td>
+                                 </tr>
+                             @endif
                              </tbody>
                          </table>
+                         {{ $listings->links() }}
 
                      </div>
                  </div>

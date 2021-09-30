@@ -82,9 +82,10 @@
                                         <h3 class="mb-1">Seeker Details</h3>
                                         <p>Name: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->NAME}}</strong></p>
                                         <p>Country: &emsp;<strong>Bangladesh</strong></p>
-                                        <p>Mobile: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->MOBILE_NO}}</strong></p>
-                                        <p>Email: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->EMAIL}}</strong></p>
+
                                         @if($data['is_paid'])
+                                            <p>Mobile: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->MOBILE_NO}}</strong></p>
+                                            <p>Email: &emsp;<strong>{{$data['listing_details']->getRequirements->getUser->EMAIL}}</strong></p>
                                         @else
                                             <p class="text-danger">Mobile number & Email Address only Could be view if you buy this
                                                 BDT {{$data['listing_details']->getRequirements->LEAD_PRICE}}</p>

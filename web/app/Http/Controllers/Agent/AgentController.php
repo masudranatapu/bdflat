@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccLeadPayment;
 use App\Models\CustomerPayment;
 use App\Models\Listings;
 use App\Models\LeadShare;
@@ -31,8 +32,15 @@ class AgentController extends Controller
 
     public function getLeads(Request $request)
     {
-        $data = [];
+        $data['listing'] = $this->leadShare->getLeads($request);
         return view('agent.leads', compact('data'));
+    }
+
+    public function getLeadDetails($id)
+    {
+        $data['listing_details'] = $this->leadShare->getLeadDetails($id);
+        $data['is_paid'] = AccLeadPayment::where('F_LEAD_SHARE_NO',$id)->first();
+        return view('agent.agent_leads_details', compact('data'));
     }
 
     public function getBuyLeads(Request $request)
@@ -43,8 +51,9 @@ class AgentController extends Controller
 
     public function getBuyLeadsDetails($id)
     {
-        $data['listing_details'] = $this->leadShare->getSuggestedLeadDetails($id);
-        return view('agent.buy_leads_details', compact('data'));
+        $data['listing_details'] = $this->leadShare->getLeadDetails($id);
+        $data['is_paid'] = AccLeadPayment::where('F_LEAD_SHARE_NO',$id)->first();
+        return view('agent.agent_leads_details', compact('data'));
     }
 
     public function getPayments(Request $request)
