@@ -47,7 +47,7 @@
                                 <div class="col-4">
                                     <div class="rec-balance">
                                         <a href="{{ route('recharge-balance') }}" class="btn btn-success">Recharge
-                                            Balance</a>
+                                            Request</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,6 +84,47 @@
                             </tbody>
                         </table>
                         {{$data['payments']->links()}}
+
+
+                        <div class="transaction-info mt-3">
+                            <h3>Recharge Request</h3>
+                        </div>
+                        <table id="transactionTable" class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th>Slip Number</th>
+                                <th>Payment Method</th>
+                                <th>Mobile No</th>
+                                <th>Payment Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(isset($data['recharge_request']) && count($data['recharge_request']))
+                                @foreach($data['recharge_request'] as $payment)
+                                    <tr>
+                                        <td>{{ $payment->SLIP_NUMBER}}</td>
+                                        <td>{{ $payment->getPaymentMethod->NAME }}</td>
+                                        <td>{{ $payment->getMobileNo->MOBILE_NO }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($payment->PAYMENT_DATE)->format('d/m/Y') }}</td>
+                                        <td>{{ number_format(abs($payment->AMOUNT), 2) }}</td>
+                                        <td>
+                                            @if($payment->STATUS == 0)
+                                                <span>Pending</span>
+                                            @elseif($payment->STATUS == 2)
+                                                <span>Denied</span>
+                                            @endif
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="text-center" colspan="6">No request yet!</td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                        {{$data['recharge_request']->links()}}
                     </div>
                 </div>
             </div>

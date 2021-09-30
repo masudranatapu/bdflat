@@ -15,9 +15,18 @@ class RechargeRequest extends Model
     protected $primaryKey   = 'PK_NO';
     public $timestamps      = false;
 
+    public function getPaymentMethod()
+    {
+        return $this->hasOne('App\Models\PaymentMethod',  'PK_NO','F_ACC_PAYMENT_METHOD_NO');
+    }
+
+    public function getMobileNo()
+    {
+        return $this->hasOne('App\Models\AccMobileNo',  'PK_NO','F_MOBILE_NO');
+    }
+
     public function postRechargeRequest($request)
     {
-
         DB::beginTransaction();
         try {
             $list = new RechargeRequest();
@@ -57,5 +66,18 @@ class RechargeRequest extends Model
         }
         DB::commit();
         return $this->formatResponse(true, 'Recharge Request Submitted Successfully !', 'payment-history');
+    }
+
+
+    public function getRechargeReq($userID = null)
+    {
+        if (!$userID) {
+            $userID = Auth::id();
+        }
+
+        return RechargeRequest::with('getPaymentMethod','getMobileNo')->where('F_CUSTOMER_NO', '=', $userID)
+            ->where('STATUS',0)
+            ->orWhere('STATUS',2)
+            ->paginate(10);
     }
 }
