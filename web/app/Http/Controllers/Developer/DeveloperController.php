@@ -47,7 +47,7 @@ class DeveloperController extends Controller
     public function getdeveloperLeads(Request $request)
     {
         $data = array();
-        $data['listing'] = $this->leadShare->getSuggestedLead($request);
+        $data['listing'] = $this->leadShare->getLeads($request);
         return view('developer.developer_leads', compact('data'));
     }
 
