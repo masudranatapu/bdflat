@@ -35,7 +35,7 @@ $status = Config::get('static_array.property_status');
                                 </div>
 
                                 <!-- product -->
-                                <table class="table table-striped text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
+                                <table class="table table-striped table-responsive text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
                                     <thead>
                                     <tr>
                                         <th>Sl.</th>

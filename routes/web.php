@@ -92,6 +92,7 @@ Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {
 Route::group(['namespace' => 'Agent', 'middleware' => ['auth']], function () {
     Route::get('agent-listings', 'AgentController@getListings')->name('agent-listings');
     Route::get('agent-leads', 'AgentController@getLeads')->name('agent-leads');
+    Route::get('agent-leads/{id}/details', 'AgentController@getLeadDetails')->name('agent-lead-details');
     Route::get('agent-buy-leads', 'AgentController@getBuyLeads')->name('agent-buy-leads');
     Route::get('agent-buy-leads/{id}/details', 'AgentController@getBuyLeadsDetails')->name('agent-buy-leads-details');
     Route::get('agent-payments', 'AgentController@getPayments')->name('agent-payments');
