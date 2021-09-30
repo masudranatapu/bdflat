@@ -54,7 +54,7 @@ class DeveloperController extends Controller
     public function getdeveloperLeadsDetails($id)
     {
         $data = array();
-        $data['listing_details'] = $this->leadShare->getSuggestedLeadDetails($id);
+        $data['listing_details'] = $this->leadShare->getLeadDetails($id);
         $data['is_paid'] = AccLeadPayment::where('F_LEAD_SHARE_NO',$id)->first();
         return view('developer.developer_leads_details', compact('data'));
     }
@@ -76,10 +76,9 @@ class DeveloperController extends Controller
 
     public function getdeveloperPayments(Request $request)
     {
-//        $data['payments'] = $this->payment->getPayments(Auth::id());
+
         $data['payments'] = $this->txn->getTxnHistory(Auth::id());
         $data['recharge_request'] = $this->recharge_request->getRechargeReq(Auth::id());
-//        dd($data['recharge_request']);
         return view('developer.developer_payments', compact('data'));
     }
 

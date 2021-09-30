@@ -39,5 +39,7 @@ class CustomerTxn extends Model
         return CustomerTxn::with(['payment'])
             ->where('F_CUSTOMER_NO', '=', $userID)
             ->paginate(10);
+
+
     }
 }

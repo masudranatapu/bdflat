@@ -84,6 +84,44 @@ $claiming_reasons = Config::get('static_array.claiming_reason') ?? [];
                             </tbody>
                         </table>
                         {{$data['payments']->links()}}
+
+                        @if(isset($data['recharge_request']) && count($data['recharge_request']) > 0 )
+                        <div>
+                         <div class="transaction-info mt-3">
+                             <h3>Recharge Request</h3>
+                         </div>
+                         <table id="transactionTable" class="table table-responsive">
+                             <thead>
+                             <tr>
+                                 <th>Slip Number</th>
+                                 <th>Payment Method</th>
+                                 <th>Mobile No</th>
+                                 <th>Payment Date</th>
+                                 <th>Amount</th>
+                                 <th>Status</th>
+                             </tr>
+                             </thead>
+                             <tbody>
+                                 @foreach($data['recharge_request'] as $payment)
+                                     <tr>
+                                         <td>{{ $payment->SLIP_NUMBER}}</td>
+                                         <td>{{ $payment->getPaymentMethod->NAME }}</td>
+                                         <td>{{ $payment->getMobileNo->MOBILE_NO ?? '' }}</td>
+                                         <td>{{ date('d M, Y', strtotime($payment->PAYMENT_DATE)) }}</td>
+                                         <td>{{ number_format(abs($payment->AMOUNT), 2) }}</td>
+                                         <td>
+                                             @if($payment->STATUS == 0)
+                                                 <span>Pending</span>
+                                             @elseif($payment->STATUS == 2)
+                                                 <span>Denied</span>
+                                             @endif
+                                     </tr>
+                                 @endforeach
+
+                             </tbody>
+                         </table>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

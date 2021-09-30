@@ -20,10 +20,7 @@ class RechargeRequest extends Model
         return $this->hasOne('App\Models\PaymentMethod',  'PK_NO','F_ACC_PAYMENT_METHOD_NO');
     }
 
-    public function getMobileNo()
-    {
-        return $this->hasOne('App\Models\AccMobileNo',  'PK_NO','F_MOBILE_NO');
-    }
+
 
     public function postRechargeRequest($request)
     {
@@ -69,15 +66,12 @@ class RechargeRequest extends Model
     }
 
 
-    public function getRechargeReq($userID = null)
+    public function getRechargeReq($userID)
     {
-        if (!$userID) {
-            $userID = Auth::id();
-        }
-
-        return RechargeRequest::with('getPaymentMethod','getMobileNo')->where('F_CUSTOMER_NO', '=', $userID)
-            ->where('STATUS',0)
-            ->orWhere('STATUS',2)
-            ->paginate(10);
+        return RechargeRequest::select('ACC_RECHARGE_REQUEST.*')
+            ->leftJoin('')
+            ->where('F_CUSTOMER_NO', '=', $userID)
+            ->whereIn('STATUS',[0,2])
+            ->get();
     }
 }

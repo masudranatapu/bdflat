@@ -86,6 +86,8 @@
                         {{$data['payments']->links()}}
 
 
+                        @if(isset($data['recharge_request']) && count($data['recharge_request']) > 0 )
+                       <div>
                         <div class="transaction-info mt-3">
                             <h3>Recharge Request</h3>
                         </div>
@@ -101,7 +103,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(isset($data['recharge_request']) && count($data['recharge_request']))
                                 @foreach($data['recharge_request'] as $payment)
                                     <tr>
                                         <td>{{ $payment->SLIP_NUMBER}}</td>
@@ -117,14 +118,12 @@
                                             @endif
                                     </tr>
                                 @endforeach
-                            @else
-                                <tr>
-                                    <td class="text-center" colspan="6">No request yet!</td>
-                                </tr>
-                            @endif
+
                             </tbody>
                         </table>
-                        {{$data['recharge_request']->links()}}
+                       </div>
+                       @endif
+
                     </div>
                 </div>
             </div>

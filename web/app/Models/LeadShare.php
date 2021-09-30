@@ -35,7 +35,12 @@ class LeadShare extends Model
     public function getLeadDetails($id){
         return LeadShare::with(['getRequirements'])
             ->where('PK_NO',$id)
-            ->latest()
+            ->where('F_COMPANY_NO',Auth::id())
             ->first();
     }
+
+
+
+
+
 }
