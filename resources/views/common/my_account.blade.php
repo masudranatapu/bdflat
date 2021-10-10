@@ -23,8 +23,7 @@
                                 <img src="{{asset('assets/img/user/1.jpg')}}" alt="image">
                             </div>
                             <div class="user-profile">
-                                <h3>{{Auth::user()->NAME}} <span
-                                        style="font-size: 12px;">({{Auth::user()->USER_TYPE}})</span></h3>
+                                <h3>{{Auth::user()->NAME}}</h3>
                                 <h5>User Id: {{Auth::user()->CODE}}</h5>
                                 <a href="{{ route('profile.edit') }}"><i class="fa fa-edit"></i>Edit Profile</a>
                             </div>

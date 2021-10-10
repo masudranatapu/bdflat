@@ -402,7 +402,7 @@ i.search_icon.fa.fa-search {
 }
 
 .dropdown-toggle::after {
-    display: none;
+    display: none !important;
 }
 
 
@@ -727,7 +727,9 @@ li.category-item span.category-quantity {
     margin-bottom: 38px;
     position: relative;
 }
-
+.sec-heading.text-center{
+    margin-bottom: 35px !important;
+}
 .sec-heading h3 {
     font-size: 20px;
     font-family: 'Montserrat-Bold';
@@ -773,8 +775,8 @@ li.category-item span.category-quantity {
 }
 
 .featured-content {
-    padding: 13px 20px;
-    height: 175px;
+    padding: 13px;
+    min-height: 175px;
 }
 
 .featured-price h3 {
@@ -885,7 +887,9 @@ li.category-item span.category-quantity {
     margin-top: 30px;
 }
 
-
+.verified-product {
+    margin-bottom: 10px;
+}
 /* ==========================================================================
      featured product
    ========================================================================== */
@@ -1011,7 +1015,7 @@ li.category-item span.category-quantity {
 }
 
 .sale-heading h3 {
-    font-size: 24px;
+    font-size: 20px;
     font-family: 'Montserrat-Bold';
     color: #555;
 }
@@ -1024,6 +1028,7 @@ li.category-item span.category-quantity {
 .sale-product {
     border: 1px solid #f1f1f1;
     background: #fff;
+    margin-bottom: 10px;
 }
 
 .category-bx {
@@ -2968,15 +2973,16 @@ ul.social li a i:hover {
 }
 
 .sitemap-list ul li a {
-    font-size: 14px;
+    font-size: 12px;
     font-family: 'Montserrat-Medium';
-    color: #333;
+    color: #3f2aff;
     display: block;
     transition: all 0.4s;
 }
 
 .sitemap-list ul li:hover a {
     color: #d8232a;
+    text-decoration: underline !important;
 }
 
 /* ==========================================================================
@@ -2994,9 +3000,11 @@ ul.social li a i:hover {
 .terms-heading h3 {
     font-size: 22px;
     font-family: 'Montserrat-Bold';
-    color: #d8232a;
+    color: #444;
 }
-
+.conditions-box ul li {
+    list-style: circle;
+}
 .conditions-box p {
     font-size: 15px;
     font-family: 'Montserrat-Medium';
@@ -5450,8 +5458,9 @@ td.label {
 .property-title h3 {
     font-size: 20px;
     font-family: 'Montserrat-Medium';
-    padding-bottom: 15px;
+    padding-bottom: 5px;
     color: #333;
+    border-bottom: 1px dashed #ddd;
 }
 
 .requirement .form-group {

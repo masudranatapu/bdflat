@@ -107,14 +107,12 @@ if(request()->segment(2) == 'roommate'){
                     <li class="dropdown-nav d-none d-lg-block nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="dropdown_open fa fa-bars"></i> <i class="dropdown_close d-none fa fa-times"></i></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Dropdown</a></li>
-                            <li><a class="dropdown-item" href="#">Dropdown</a></li>
-                            <li><a class="dropdown-item" href="#">Dropdown</a></li>
+                            <li><a class="dropdown-item" href="#">Coming Soon...</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="filter-search.html"><i class="search_icon fa fa-search"></i></a>
-                    </li>
+                    </li> -->
                     <li class="search_bar">
                          <form class="example header_search" action="#">
                             <div class="search-box">

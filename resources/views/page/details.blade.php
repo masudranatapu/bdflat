@@ -107,7 +107,7 @@
                                     <p>Facing:<a href="#">{{ $listing->additionalInfo->FACING ?? '' }}</a></p>
                                     <p>Features:
                                         @foreach($features as $key => $feature)
-                                            <a href="{{ $feature->URL_SLUG }}">{{ $feature->TITLE }}@if($key < count($features) - 1)
+                                            <a href="javascript:void(0)">{{ $feature->TITLE }}@if($key < count($features) - 1)
                                                     , @endif</a>
                                         @endforeach
                                     </p>
@@ -292,7 +292,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4 text-center mb-5">
+                <!-- <div class="col-md-4 text-center mb-5">
                     <div class="recommended-cta">
 
                         <div class="secure-cat">
@@ -319,7 +319,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
             </div><!-- row -->
         </div>
         <!-- container -->
@@ -503,7 +503,7 @@
                                 @else
                                     <div class="col-12">
                                         <p style="font-size: 20px;font-weight: bold;margin-bottom: 12px !important;">
-                                            This property has been verified by bdflat.com</p>
+                                            This property has been verified by bdflats.com</p>
                                         <p style="color: #6ABD50;font-weight: bold; margin-bottom: 25px !important;">If
                                             you want ot view the contact details including mobile
                                             number & address</p>

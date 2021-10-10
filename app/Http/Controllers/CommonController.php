@@ -76,6 +76,7 @@ class CommonController extends Controller
 
     public function storeContactUs(contactRequest $request)
     {
+        dd($request->all());
         $this->resp = $this->contact->store($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
@@ -100,7 +101,7 @@ class CommonController extends Controller
     }
 
 
-    /* public function getPrivacyPolicy(Request $request)
+     public function getPrivacyPolicy(Request $request)
      {
 
          return view('common.privacy_policy');
@@ -174,7 +175,7 @@ class CommonController extends Controller
 
          return response()->json($response);
      }
- */
+ 
 
 
     public function getDevListings(Request $request)

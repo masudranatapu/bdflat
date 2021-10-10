@@ -31,9 +31,8 @@
                         <ul>
                             <li><a href="{{route('about-us')}}">About Us</a></li>
                             <li><a href="{{route('contact-us')}}">Contact Us</a></li>
-                            <li><a href="#">Roommate</a></li>
-                            <li><a href="#">Properties</a></li>
                             <li><a href="{{route('terms-conditions')}}">Terms & Conditions</a></li>
+                            <li><a href="{{route('privacy-policy')}}">Privacy Policy</a></li>
                             <li><a href="{{route('site-map')}}">Sitemap</a></li>
                             @if(!Auth::user() || (Auth::user()->USER_TYPE == 1 && !Auth::user()->requirements()->count()))
                                 <li><a href="{{route('post-requirement')}}">Post Requirement</a></li>

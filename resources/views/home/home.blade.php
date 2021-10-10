@@ -182,7 +182,7 @@
                                         <h3>TK {{ number_format($property->getListingVariant->TOTAL_PRICE) }}</h3>
                                     </div>
                                     <div class="featured-info">
-                                        <h2><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h2>
+                                        <h2><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 40) }}</a></h2>
                                         <span>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</span>
                                     </div>
                                     <div class="featured-footer">
@@ -253,14 +253,14 @@
         <div class="verified-sec">
             <!-- container -->
             <div class="container">
-                <div class="sec-heading text-center mb-4">
+                <div class="sec-heading text-center">
                     <h3>Verified Properties</h3>
                 </div>
                 <!-- row -->
                 <div class="row">
                     <!-- verified product -->
                     @foreach($data['verifiedProperties'] as $property)
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6">
                             <div class="verified-product">
                                 <div class="verified-wrap">
                                     <div class="row no-gutters position-relative">
@@ -278,7 +278,7 @@
                                                     TK {{ number_format($property->getListingVariant->TOTAL_PRICE, 2) }}</h3>
                                             </div>
                                             <div class="verified-title">
-                                                <h5 class="mt-0"><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
+                                                <h5 class="mt-0"><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 40) }}</a></h5>
                                                 <h6>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</h6>
                                             </div>
                                             <div class="verified-address">
@@ -333,7 +333,7 @@
                                     @if($key % 3 == 0)
                                         <div class="item">
                                             @endif
-                                            <div class="sale-product mb-3">
+                                            <div class="sale-product">
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
@@ -349,7 +349,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ \Illuminate\Support\Str::limit($property->TITLE, 50, '...') }}</a>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 35, '...') }}</a>
                                                             </h5>
                                                         </div>
                                                         <div class="category-address">
@@ -380,7 +380,7 @@
                                     @if($key % 3 == 0)
                                         <div class="item">
                                             @endif
-                                            <div class="sale-product mb-3">
+                                            <div class="sale-product">
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
@@ -396,7 +396,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE,35) }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
@@ -427,7 +427,7 @@
                                     @if($key % 3 == 0)
                                         <div class="item">
                                             @endif
-                                            <div class="sale-product mb-3">
+                                            <div class="sale-product">
                                                 <div class="row no-gutters position-relative">
                                                     <div class="col-5">
                                                         <div class="category-bx">
@@ -443,7 +443,7 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ $property->TITLE }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 35) }}</a></h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i

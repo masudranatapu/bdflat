@@ -16,12 +16,18 @@
             border-right: none;
             margin-top: 3px;
         }
+        ul.color-hints li {
+            display: inline-block;
+            font-size: 12px;
+            padding-left: 3px;
+        }
     </style>
 @endpush
 
 <?php
 $property_types = $data['property_type'] ?? [];
 $row = $data['row'] ?? [];
+
 $cities = $data['city'] ?? [];
 
 if (!empty($data['row']->BEDROOM)) {
@@ -40,11 +46,15 @@ if (isset($row->F_AREAS) && $row->F_AREAS != '') {
 } else {
     $old_areas = [];
 }
+
 $req_ststus = '';
-if($data['row']->IS_VERIFIED == 0){$req_ststus = 'pending';}
-elseif($data['row']->IS_VERIFIED == 1){$req_ststus = 'valid';}
-elseif($data['row']->IS_VERIFIED == 2){$req_ststus = 'invalid';}
-elseif($data['row']->IS_VERIFIED == 3){$req_ststus = 'updatedbyuser';}
+if (isset($data['row'])) {
+    if($data['row']->IS_VERIFIED == 0){$req_ststus = 'pending';}
+    elseif($data['row']->IS_VERIFIED == 1){$req_ststus = 'valid';}
+    elseif($data['row']->IS_VERIFIED == 2){$req_ststus = 'invalid';}
+    elseif($data['row']->IS_VERIFIED == 3){$req_ststus = 'updatedbyuser';}
+}
+
 
 
 ?>
@@ -66,7 +76,16 @@ elseif($data['row']->IS_VERIFIED == 3){$req_ststus = 'updatedbyuser';}
                 <div class="col-sm-12 col-md-9">
                     <div class="requirement">
                         <div class="property-title mb-2">
-                            <h3>Property Requirements <span class="status {{ $req_ststus }}"><i class="fa fa-circle" aria-hidden="true"></i></span></h3>
+                            <h3>Property Requirements <span class="status {{ $req_ststus }}"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                                <span class="pull-right">
+                                    <ul class="color-hints">
+                                        <span class="status pending"><i class="fa fa-circle "></i></span><li>Pending</li>
+                                        <span class="status valid"><i class="fa fa-circle"></i></span><li>Valid</li>
+                                        <span class="status invalid"><i class="fa fa-circle"></i></span><li >Invalid</li>
+                                        <span class="status updatedbyuser"><i class="fa fa-circle "></i></span><li>Updated by User</li>
+                                    </ul>
+                                </span>
+                            </h3>
                         </div>
                         {!! Form::open([ 'route' => ['property-requirements.store_or_update'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
@@ -81,7 +100,7 @@ elseif($data['row']->IS_VERIFIED == 3){$req_ststus = 'updatedbyuser';}
                         </div>
 
                         <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
-                            {{ Form::label('city', 'Select area:', ['class' => 'col-md-4 label-title']) }}
+                            {{ Form::label('city', 'Select areas:', ['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8" style="margin-left: -5px">
                                 <div class="controls">
                                     {!! Form::select('area[]', $data['areas'] ?? [], $old_areas, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple','placeholder' => 'Select are based on city']) !!}

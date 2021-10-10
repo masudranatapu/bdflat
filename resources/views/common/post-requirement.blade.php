@@ -39,7 +39,6 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                         <div class="property-title mb-2">
                             <h3>Post Property Requirements</h3>
                         </div>
-                        {{ $errors }}
                         {!! Form::open([ 'route' => ['store-requirement'], 'id' => 'requirement_form', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
 
                         {!! Form::hidden('f_city_id',1,[ 'id' => 'f_city_id','data-validation-required-message' => 'This field is required']) !!}
@@ -57,7 +56,7 @@ if (!empty($data['row']->PROPERTY_CONDITION)) {
                         </div>
 
                         <div class="row form-group {!! $errors->has('f_area_id') ? 'error' : '' !!}">
-                            {{ Form::label('city', 'Select area:', ['class' => 'col-md-4 label-title']) }}
+                            {{ Form::label('city', 'Select areas:', ['class' => 'col-md-4 label-title']) }}
                             <div class="col-md-8" style="margin-left: -5px">
                                 <div class="controls">
                                     {!! Form::select('area[]', $data['areas'] ?? [], null, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple']) !!}
