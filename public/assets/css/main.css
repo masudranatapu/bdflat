@@ -207,7 +207,7 @@ h5.hotline_num {
     padding-left: 34px !important;
     padding-top: 1px !important;
 }
-
+h5.hotline_num a{ color: #d8232a !important;}
 
 h4.contact_via_title {
     background: none !important;

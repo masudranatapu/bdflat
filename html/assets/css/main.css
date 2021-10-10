@@ -92,7 +92,7 @@ ul{
 
 /* ==========================================================================
     fonts
-   ========================================================================== */ 
+   ========================================================================== */
 
 @font-face{
      font-family: "Montserrat-Bold";
@@ -273,7 +273,7 @@ a.youtube.nav-item-link i {
 
 
 /* ==========================================================================
-    header 
+    header
    ========================================================================== */
 nav.navbar.navbar-expand-lg.navbar-light {
     padding: 0;
@@ -479,8 +479,8 @@ button.navbar-toggler {
     border-radius: 0px;
 }
 
-.user-menu .toggle span, 
-.user-menu .toggle span::before, 
+.user-menu .toggle span,
+.user-menu .toggle span::before,
 .user-menu .toggle span::after {
     background: #d8232a !important;
 }
@@ -650,7 +650,7 @@ button.navbar-toggler {
 
 .category-icon {
    min-height: 37px;
-   width: 100%;  
+   width: 100%;
 }
 
 .category-icon img {
@@ -662,7 +662,7 @@ button.navbar-toggler {
   font-size: 16px;
 }
 
- 
+
 li.category-item span.category-title {
     font-size: 15px;
     font-family: 'Montserrat-Medium';
@@ -686,13 +686,13 @@ li.category-item span.category-quantity {
     -ms-transition: all 0.3s;
     -o-transition: all 0.3s;
 }
- 
- 
+
+
 .category-item:hover .category-quantity, .category-item:hover .category-title {
     color: #d8232a;
 }
 
- 
+
 .category-heading h1 {
     color: #212529;
     font-size: 22px;
@@ -1582,7 +1582,7 @@ li.search_form {
     outline: none;
     border-left: none;
 }
- 
+
 
 /* ==========================================================================
          copyright
@@ -1663,7 +1663,7 @@ div#scroll {
 
 .login-sec input#email:focus,
 .login-sec input#password:focus{
-  border:1px solid #d8232a; 
+  border:1px solid #d8232a;
 
 }
 
@@ -1872,7 +1872,7 @@ div#scroll {
 .signup-sec input#designation:focus,
 .signup-sec input#office_address:focus
 {
-  border:1px solid #d8232a; 
+  border:1px solid #d8232a;
 
 }
 
@@ -2129,7 +2129,7 @@ div#scroll {
     margin-left: 17px;
 }
 
-.single-product-slider .carousel-control-next, 
+.single-product-slider .carousel-control-next,
 .single-product-slider .carousel-control-prev {
     opacity: 1;
     width: 40px;
@@ -2140,7 +2140,7 @@ div#scroll {
     opacity:0;
 }
 
-.single-product-slider:hover .carousel-control-next, 
+.single-product-slider:hover .carousel-control-next,
 .single-product-slider:hover .carousel-control-prev{
   opacity:1;
 }
@@ -2627,7 +2627,7 @@ div#scroll {
 }
 
 /* ==========================================================================
-      contact 
+      contact
    ========================================================================== */
 
 
@@ -3437,7 +3437,7 @@ label.negotiable {
     font-size: 15px;
     position: relative;
 }
- 
+
 .additional .checkbox label input[type="checkbox"] {
   width: 0;
   height: 0;
@@ -3671,7 +3671,7 @@ button.btn.btn-primary:active {
     border-color: #d8232a !important;
 }
 
- 
+
 /* ==========================================================================
          search filter
  ========================================================================== */
@@ -3792,7 +3792,7 @@ button.btn.btn-primary:active {
 .search-type  input[type="radio"]:checked + label {
   color:#d8232a;
 }
- 
+
 .select-city {
     border-bottom: 1px solid #f4f4f4;
     padding: 6px 0px 12px 0px;
@@ -4178,7 +4178,7 @@ button.btn.btn-primary:active {
     cursor: pointer;
 }
 
- 
+
 .bedroom-select .checkmark {
     display: inline-block;
     width: 15px;
@@ -4354,7 +4354,7 @@ button.btn.btn-primary:active {
 
 .fstFocused:hover{
   background-color: #d8232a;
-  border-color: #d8232a; 
+  border-color: #d8232a;
 }
 
 .fstChoiceItem {
@@ -4478,7 +4478,7 @@ button.btn.btn-primary:active {
 .dashboard-wrapper {
     background: #fff;
     box-shadow: 0 24px 35px 11px rgba(153,153,153,0.15);
-    padding: 29px 20px; 
+    padding: 29px 20px;
     border-radius: 10px;
 }
 
@@ -5084,7 +5084,7 @@ td.label {
 }
 
 .profile-details input#photo {
-    
+
 }
 
 .profile-details input#submit {
@@ -5454,7 +5454,7 @@ td.label {
     font-family: 'Montserrat-Medium';
     color: #222222;
 }
- 
+
 .requirement select#city-division,
 .requirement select#city {
     border-radius: 2px;
@@ -5551,7 +5551,7 @@ td.label {
 }*/
 
 
- 
+
 .property-condition input[type="checkbox"] {
     display: none;
 }
@@ -5688,7 +5688,7 @@ input#time{
 
 
 /* ==========================================================================
-      refund 
+      refund
    ========================================================================== */
 
 .refund-wrap {
@@ -6163,7 +6163,7 @@ textarea#msg{
     color: #fff;
     background-color: #d8232a;
 }
- 
+
 /* ==========================================================================
        shop
    ========================================================================== */

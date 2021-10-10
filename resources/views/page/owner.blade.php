@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="featured-info">
                                         <h2>
-                                            <a href="{{ route('web.property.details', $listing->URL_SLUG) }}">{{ $listing->TITLE }}</a>
+                                            <a href="{{ route('web.property.details', $listing->URL_SLUG) }}">{{ Str::limit($listing->TITLE, 40) }}</a>
                                         </h2>
                                         <span>{{ $listing->getListingVariant && $listing->getListingVariant->BEDROOM ? $listing->getListingVariant->BEDROOM . ' Bed, ' : '' }}{{ $listing->getListingVariant && $listing->getListingVariant->BATHROOM ? $listing->getListingVariant->BATHROOM . ' Bath' : '' }}</span>
                                     </div>

@@ -1,6 +1,15 @@
 <?php
 
 use App\Models\WebSetting;
+use Illuminate\Support\Facades\DB;
+
+if (!function_exists('setting')) {
+    function setting()
+    {
+        return DB::table('WEB_SETTINGS')->first();
+    }
+}
+
 
 if (!function_exists('defaultThumb')) {
     function defaultThumb($path): string

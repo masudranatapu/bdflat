@@ -114,35 +114,11 @@
     <div class="container-fluid">
         <div class="menu-list">
             <ul class="footer-menu-mobile">
-                <li>
-                    <a href="index.html">
-                        <i class="fa fa-home"></i><br/>
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="categories.html">
-                        <i class="fa fa-building"></i><br/>
-                        Properties
-                    </a>
-                </li>
-                <li class="search_form">
-                    <div class="open_serch">
-                        <a href="search-filter.html"><i class="fa fa-search"></i></a>
-                    </div>
-                </li>
-                <li>
-                    <a href="contact.html">
-                        <i class="fa fa-address-card"></i><br/>
-                        Contact
-                    </a>
-                </li>
-                <li>
-                    <a href="seeker/my-dashboard.html">
-                        <i class="fa fa-user"></i><br/>
-                        My Profile
-                    </a>
-                </li>
+                <li><a href="{{ route('web.home') }}"><i class="fa fa-home"></i><br/>Home</a></li>
+                <li><a href="{{ route('web.property') }}?verified=1"><i class="fa fa-building"></i><br/>Properties</a></li>
+                <li class="search_form"><div class="open_serch"><a href="{{ route('web.property') }}?verified=0"><i class="fa fa-search"></i></a></div></li>
+                <li><a href="{{ route('contact-us') }}"><i class="fa fa-address-card"></i><br/>Contact</a></li>
+                <li><a href="{{ route('my-account') }}"><i class="fa fa-user"></i><br/>My Profile</a></li>
             </ul>
         </div>
     </div>

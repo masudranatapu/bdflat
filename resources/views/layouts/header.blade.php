@@ -28,48 +28,48 @@ if(request()->segment(2) == 'roommate'){
 
                   <ul class="first-nav">
                       <li class="cryptocurrency login_btn">
-                          <a href="login.html">Login or Create Account <i class="fa fa-long-arrow-right"></i></a>
+                          <a href="{{route('login')}}">Login or Create Account <i class="fa fa-long-arrow-right"></i></a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="index.html"><i class="fa fa-home"></i>Home</a>
+                          <a href="{{ route('web.home') }}"><i class="fa fa-home"></i>Home</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="ad-post-details.html"><i class="fa fa-plus"></i>Add Property</a>
+                          <a href=""{{route('listings.create') }}"><i class="fa fa-plus"></i>Add Property</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="categories.html"><i class="fa fa-building"></i>Properties for Buy</a>
+                          <a href="{{ route('web.property', ['type' => 'sale']) }}"><i class="fa fa-building"></i>Properties for Buy</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="categories.html"><i class="fa fa-hotel"></i>Properties for Rent</a>
+                          <a href="{{ route('web.property', ['type' => 'rent']) }}"><i class="fa fa-hotel"></i>Properties for Rent</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="categories.html"><i class="fa fa-users"></i>Roommate</a>
+                          <a href="{{ route('web.property', ['type' => 'roommate']) }}"><i class="fa fa-users"></i>Roommate</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="categories.html"><i class="fa fa-check-circle"></i>Verified Properties</a>
+                          <a href="{{ route('web.property') }}?verified=1"><i class="fa fa-check-circle"></i>Verified Properties</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="search-filter.html"><i class="fa fa-search"></i>Search Properties</a>
+                          <a href="{{ route('web.property') }}?verified=0"><i class="fa fa-search"></i>Search Properties</a>
                       </li>
-                      <li class="cryptocurrency">
+                      {{-- <li class="cryptocurrency">
                           <a href="#"><i class="fa fa-plus"></i>Blogs</a>
-                      </li>
+                      </li> --}}
                       <li class="cryptocurrency">
-                          <a href="about-us.html"><i class="fa fa-plus"></i>About Us</a>
+                          <a href="{{ route('about-us') }}"><i class="fa fa-plus"></i>About Us</a>
                       </li>
-                      <li class="cryptocurrency">
+                      {{-- <li class="cryptocurrency">
                           <a href="about-us.html"><i class="fa fa-plus"></i>Testimonials</a>
+                      </li> --}}
+                      <li class="cryptocurrency">
+                          <a href="{{ route('site-map') }}"><i class="fa fa-share-alt"></i>Sitemap</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href="sitemap.html"><i class="fa fa-share-alt"></i>Sitemap</a>
-                      </li>
-                      <li class="cryptocurrency">
-                          <a href="contact.html"><i class="fa fa-address-card"></i>Contact Us</a>
+                          <a href="{{ route('contact-us') }}"><i class="fa fa-address-card"></i>Contact Us</a>
                       </li>
                   </ul>
 
                   <h3 class="hotline_title">Hotline</h3>
-                  <h5 class="hotline_num">01730583483</h5>
+                  <h5 class="hotline_num"><a href="tel:{{ setting()->PHONE_1 ?? '' }}">{{ setting()->PHONE_1 ?? '' }}</a></h5>
                   <h4 class="contact_via_title">Contact with us via:</h4>
                   <ul class="contact_via">
                       <li><a href="#" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
@@ -157,7 +157,7 @@ if(request()->segment(2) == 'roommate'){
 
           <!-- post add -->
           <div class="nav-btn">
-              <a href=" @guest {{route('login') }}  @else {{route('listings.create') }} @endguest ">Post Your Ad</a>
+              <a href="{{route('listings.create') }}">Post Your Ad</a>
           </div>
     </div><!-- container-fluid  -->
 </div>

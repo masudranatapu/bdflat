@@ -57,7 +57,6 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                     @include('common._left_menu')
                 </div>
                 <div class="col-sm-12 col-md-9">
-                    {{ $errors }}
                     @if(Auth::user()->USER_TYPE == 2)
                         {!! Form::open([ 'route' => 'listings.store', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     @elseif(Auth::user()->USER_TYPE == 3)

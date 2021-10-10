@@ -79,6 +79,7 @@ if (isset($data['row'])) {
                             <h3>Property Requirements <span class="status {{ $req_ststus }}"><i class="fa fa-circle" aria-hidden="true"></i></span>
                                 <span class="pull-right">
                                     <ul class="color-hints">
+                                        <span class="status"><i class="fa fa-circle "></i></span><li>Empty</li>
                                         <span class="status pending"><i class="fa fa-circle "></i></span><li>Pending</li>
                                         <span class="status valid"><i class="fa fa-circle"></i></span><li>Valid</li>
                                         <span class="status invalid"><i class="fa fa-circle"></i></span><li >Invalid</li>
