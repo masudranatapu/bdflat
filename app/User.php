@@ -93,7 +93,7 @@ class User extends Authenticatable
             $list = Auth::user();
             $list->NAME = $request->name;
             $list->MOBILE_NO = $request->mobile;
-            $list->AUTO_PAYMENT_RENEW = $request->payment_auto_renew;
+            $list->PAYMENT_AUTO_RENEW = $request->payment_auto_renew;
 
             if ($request->hasfile('image')) {
                 if (\File::exists(public_path($list->PROFILE_PIC_URL))) {
@@ -123,7 +123,7 @@ class User extends Authenticatable
             $list->update();
 
         } catch (\Exception $e) {
-            //                dd($e);
+                        //    dd($e);
             DB::rollback();
             return $this->formatResponse(false, 'Your Profile is not updated !', 'profile.edit');
         }

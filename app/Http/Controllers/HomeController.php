@@ -107,7 +107,7 @@ class HomeController extends Controller
         $data['rightAd'] = $this->ads->getRandomAd(300);
 
         if ($request->route('city') && $request->route('city') !== 'all') {
-            $data['areas'] = Area::where('CITY_NAME', $request->route('city'))->get(['PK_NO', 'AREA_NAME']);
+            $data['areas'] = Area::where('CITY_NAME', $request->route('city'))->get(['PK_NO', 'AREA_NAME', 'URL_SLUG']);
         }
 
         return view('page.properties', compact('data'));

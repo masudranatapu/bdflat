@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-lg-4 mb-5">
                     @php
-                        $webSetting = \App\Models\WebSetting::find(1);
+                        $webSetting = setting();
                     @endphp
                     <div class="contact-info">
                         <h3>bdflats info</h3>

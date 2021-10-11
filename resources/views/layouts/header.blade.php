@@ -34,7 +34,7 @@ if(request()->segment(2) == 'roommate'){
                           <a href="{{ route('web.home') }}"><i class="fa fa-home"></i>Home</a>
                       </li>
                       <li class="cryptocurrency">
-                          <a href=""{{route('listings.create') }}"><i class="fa fa-plus"></i>Add Property</a>
+                          <a href="{{ route('listings.create') }}"><i class="fa fa-plus"></i>Add Property</a>
                       </li>
                       <li class="cryptocurrency">
                           <a href="{{ route('web.property', ['type' => 'sale']) }}"><i class="fa fa-building"></i>Properties for Buy</a>
@@ -72,11 +72,11 @@ if(request()->segment(2) == 'roommate'){
                   <h5 class="hotline_num"><a href="tel:{{ setting()->PHONE_1 ?? '' }}">{{ setting()->PHONE_1 ?? '' }}</a></h5>
                   <h4 class="contact_via_title">Contact with us via:</h4>
                   <ul class="contact_via">
-                      <li><a href="#" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                      <li><a href="#" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                      <li><a href="#" target="_blank" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
-                      <li><a href="#" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a></li>
-                      <li><a href="#" target="_blank" class="youtube"><i class="fa fa-youtube"></i></a></li>
+                      <li><a href="{{ setting()->FACEBOOK_URL ?? '' }}" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="{{ setting()->TWITTER_URL ?? '' }}" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="{{ setting()->PINTEREST_URL ?? '' }}" target="_blank" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
+                      <li><a href="{{ setting()->INSTAGRAM_URL ?? '' }}" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                      <li><a href="{{ setting()->YOUTUBE_URL ?? '' }}" target="_blank" class="youtube"><i class="fa fa-youtube"></i></a></li>
                   </ul>
 
               </nav>
@@ -114,9 +114,9 @@ if(request()->segment(2) == 'roommate'){
                         <a href="filter-search.html"><i class="search_icon fa fa-search"></i></a>
                     </li> -->
                     <li class="search_bar">
-                         <form class="example header_search" action="#">
+                         <form class="example header_search" action="{{ route('web.property') }}" method="get">
                             <div class="search-box">
-	                            <input type="text" placeholder="Search.." name="search2">
+	                            <input type="text" placeholder="Search.." name="search">
 	                            <button type="submit"><i class="fa fa-search"></i></button>
                             </div>
                          </form>

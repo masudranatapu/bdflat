@@ -78,11 +78,7 @@
     <div class="category-nav mb-4 d-block d-md-none">
         <div class="nav-header">
             <h3>
-                <a href="index.html">
-                    <i class="fa fa-long-arrow-left"></i>
-                    Flats in Dhaka <br>
-                    <span>12,345 ads</span>
-                </a>
+                <a href="{{ route('web.property') }}"><i class="fa fa-long-arrow-left"></i>FILTER</a>
             </h3>
         </div>
         <!-- container -->
@@ -231,11 +227,11 @@
                                                     <div class="form-group">
                                                         <a href="#">All Bangladesh</a>
                                                         @if(isset($data['areas']))
-                                                            <p class="ml-2 font-weight-bold">{{ request()->route('city') }}</p>
+                                                            <a href="?city={{ request()->route('city') }}" class="ml-2 font-weight-bold" style="display: block;">{{ request()->route('city') }}</a>
                                                             <ul class="ml-4">
                                                                 @foreach($data['areas'] as $area)
                                                                     <li>
-                                                                        <a href="#">{{ $area->AREA_NAME }}</a>
+                                                                        <a href="?area={{ $area->URL_SLUG }}">{{ $area->AREA_NAME }}</a>
                                                                     </li>
                                                                 @endforeach
                                                             </ul>

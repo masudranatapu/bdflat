@@ -10,6 +10,6 @@ class AboutUs extends Model
 
     public function getAbout()
     {
-        return AboutUs::where([['PK_NO',1],['IS_ACTIVE',1]])->first();
+        return AboutUs::where('IS_ACTIVE',1)->first();
     }
 }

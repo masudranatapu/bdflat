@@ -20,17 +20,19 @@
                     <div class="account-details">
                         <div class="account-user">
                             <div class="user-bx">
-                                <img src="{{asset('assets/img/user/1.jpg')}}" alt="image">
+                                @if(Auth::user()->PROFILE_PIC_URL)
+                                <img src="{{ asset(Auth::user()->PROFILE_PIC_URL) }}" alt="image">
+                                @else
+                                <img src="{{ asset('assets/img/user/1.jpg') }}" alt="image">
+                                @endif
                             </div>
                             <div class="user-profile">
-                                <h3>{{Auth::user()->NAME}}</h3>
-                                <h5>User Id: {{Auth::user()->CODE}}</h5>
+                                <h3>{{ Auth::user()->NAME }}</h3>
+                                <h5>User Id: {{ Auth::user()->CODE }}</h5>
                                 <a href="{{ route('profile.edit') }}"><i class="fa fa-edit"></i>Edit Profile</a>
                             </div>
                             <div class="user-logout">
-                                <a class="nav-link" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-		                        document.getElementById('logout-form').submit();">
+                                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -40,28 +42,32 @@
                             </div>
                         </div>
                         @if(Auth::user()->USER_TYPE == 1)
+                            @php
+                            $s_pro = \DB::table('PRD_SUGGESTED_PROPERTY')->where('STATUS',0)->where('F_USER_NO',Auth::id())->count();
+                            $c_pro = \DB::table('ACC_LISTING_LEAD_PAYMENTS')->where('F_USER_NO',Auth::id())->count();
+                            @endphp
                             <div class="user-wrapper">
                                 <div class="user-nav">
                                     <div class="row text-center">
                                         <div class="col-4 mb-2">
                                             <div class="user-box">
                                                 <a href="#">
-                                                    <span>{{ Auth::user()->TOTAL_LISTING }}</span><br/>
-                                                    My Properties
+                                                    <span>{{ $s_pro ?? 0 }}</span><br/>
+                                                    Suggested Properties
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="col-4 mb-2">
                                             <div class="user-box box2">
                                                 <a href="#">
-                                                    <span>{{ Auth::user()->TOTAL_LEAD }}</span><br/>
-                                                    Leads
+                                                    <span>{{ $c_pro ?? 0 }}</span><br/>
+                                                    Contacted Properties
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="user-box box3">
-                                                <a href="#">
+                                                <a href="{{route('payment-history')}}">
                                                     <span>{{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</span><br/>
                                                     Balance
                                                 </a>
