@@ -481,7 +481,7 @@
                     <!-- Dhaka Division -->
                     @foreach($data['popularCities'] as $city)
                         <div class="col-6 col-md-4 col-lg-3 text-center">
-                            <a href="#{{ $city->URL_SLUG }}">
+                            <a href="{{ route('web.property', ['type' => 'all', 'cat' => 'all', 'city' => $city->CITY_NAME ]) }}">
                                 <div class="location-article text-center">
                                     <h3>{{ $city->TOTAL_LISTING }}</h3>
                                     <h4><i class="fa fa-map-marker"></i>{{ $city->CITY_NAME }}</h4>

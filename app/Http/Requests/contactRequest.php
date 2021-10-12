@@ -29,7 +29,7 @@ class contactRequest extends FormRequest
             'name'                      => 'required|string|min:2|max:50',
             'email'                     => 'required|string|min:5|max:150',
             'subject'                   => 'required|string|min:3|max:180',
-//            'capt'                      => 'required',
+            'capt'                      => 'required',
             'message'                   => 'required',
         ];
 
