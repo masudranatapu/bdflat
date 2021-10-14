@@ -168,6 +168,7 @@ $data['fAreas'] = isset($data['areas']) ? $data['areas']->pluck('AREA_NAME', 'PK
         $(document).ready(function () {
             let resetForm = $('#resetForm');
             let mobileSort = $('#mobile_sort');
+            let mobileVerified = $('#mobile_verified');
 
             $('#city').change(function () {
                 let cityId = $(this).val().split('-')[1];
@@ -191,6 +192,11 @@ $data['fAreas'] = isset($data['areas']) ? $data['areas']->pluck('AREA_NAME', 'PK
             });
 
             mobileSort.change(function () {
+                mobile_filter();
+            });
+
+            mobileVerified.click(function (e) {
+                e.preventDefault();
                 mobile_filter();
             });
 
@@ -250,7 +256,6 @@ $data['fAreas'] = isset($data['areas']) ? $data['areas']->pluck('AREA_NAME', 'PK
                 }
 
                 let useAnd = false;
-                console.log($('#fareas').val())
                 if ($('#fareas').val()) {
                     if ($('#fareas').val().split('-')[1] > 0) {
                         url += '?area=' + $('#fareas').val().split('-')[1];
@@ -271,6 +276,9 @@ $data['fAreas'] = isset($data['areas']) ? $data['areas']->pluck('AREA_NAME', 'PK
                     url += (useAnd ? '&' : '?') + 'max_price=' + mMxPrice;
                     useAnd = true;
                 }
+
+                url += (useAnd ? '&' : '?') + 'verified=' + (parseInt(mobileVerified.data('verified')) === 0 ? 1 : 0);
+                useAnd = true;
 
                 if (mobileSort.val()) {
                     url += (useAnd ? '&' : '?') + 'sort_by=' + mobileSort.val();

@@ -146,7 +146,7 @@
 
                 <div class="col-4 text-center">
                     <div class="category-nav-list">
-                        <a href="#"><i class="fa fa-check-square"></i>Verified</a>
+                        <a href="#" id="mobile_verified" data-verified="{{ request()->query('verified') ?? 0 }}"><i class="fa fa-check-square {{ request()->query('verified') == 1 ? 'text-success' : '' }}"></i>Verified</a>
                     </div>
                 </div>
 
@@ -286,7 +286,7 @@
                                                             <ul class="ml-4">
                                                                 @foreach($data['areas'] as $area)
                                                                     <li>
-                                                                        <a href="?area={{ $area->URL_SLUG }}">{{ $area->AREA_NAME }}</a>
+                                                                        <a href="?area={{ $area->URL_SLUG }}" class="area-filter" data-area="{{ $area->PK_NO }}">{{ $area->AREA_NAME }}</a>
                                                                     </li>
                                                                 @endforeach
                                                             </ul>
@@ -561,6 +561,7 @@
                 posted_by: '',
                 sort_by: '',
                 verified: '',
+                area: 0
             };
 
             let condition = $('.condition');
@@ -573,6 +574,13 @@
             let propertyType = $('#propertyType');
             let selectCategory = $('#selectCategory');
             let selectCity = $('#selectCity');
+            let area = $('.area-filter');
+
+            area.click(function (e) {
+                e.preventDefault();
+                data.area = $(this).data('area');
+                filter();
+            });
 
             selectCategory.change(function () {
                 {{--window.location = '{{ route('web.property') }}' + (propertyType.val() === '' ? '/all' : '/' + propertyType.val()) + '/'--}}
@@ -660,8 +668,12 @@
                 }
 
                 let useAnd = false;
+                if (data.area > 0) {
+                    url += '?area=' + data.area;
+                }
+
                 if (data.condition !== '') {
-                    url += '?condition=' + data.condition;
+                    url += (useAnd ? '&' : '?') + 'condition=' + data.condition;
                     useAnd = true;
                 }
 
