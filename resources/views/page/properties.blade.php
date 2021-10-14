@@ -543,7 +543,7 @@
         </div><!-- container -->
     </div>
 
-    @include('layouts.mobile-filter')
+
 
 @endsection
 

@@ -10,7 +10,22 @@
     </style>
 @endpush
 @php
-$data['fAreas'] = isset($data['areas']) ? $data['areas']->pluck('AREA_NAME', 'PK_NO') : \App\Models\Area::query()->where('F_CITY_NO', '=', 1)->pluck('AREA_NAME', 'PK_NO');
+    if (!isset($type)) {
+        $type = 'all';
+    }
+    if (!isset($cat)) {
+        $cat = 'all';
+    }
+    if (!isset($data['cities'])) {
+        $data['cities'] = \App\Models\City::query()->pluck('CITY_NAME', 'PK_NO');
+    }
+    if (!isset($data['conditions'])) {
+        $data['conditions'] = \App\Models\PropertyCondition::query()
+        ->where('IS_ACTIVE', 1)
+                ->orderByDesc('ORDER_ID')
+                ->get();
+    }
+    $data['fAreas'] = isset($data['areas']) ? $data['areas']->pluck('AREA_NAME', 'PK_NO') : \App\Models\Area::query()->where('F_CITY_NO', '=', 1)->pluck('AREA_NAME', 'PK_NO');
 @endphp
 
 <div id="filterModal" class="modal fade" role="dialog" aria-label="Filter Modal">
