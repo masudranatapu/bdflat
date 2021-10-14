@@ -20,6 +20,7 @@ Route::get('ads/{type?}/{cat?}/{city?}/{area?}', 'HomeController@properties')->n
 Route::get('ad/{slug}', 'HomeController@details')->name('web.property.details');
 Route::get('owner/{slug}', 'HomeController@owner')->name('web.owner');
 Route::post('newsletter', 'HomeController@storeNewsLetter')->name('newsletter.store');
+Route::get('/api/get-area', 'HomeController@getArea')->name('api.get.area');
 
 Route::get('cc', function () {
     \Artisan::call('cache:clear');

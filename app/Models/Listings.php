@@ -285,7 +285,7 @@ class Listings extends Model
 
     public function getListingFeatures($features)
     {
-        return ListingFeatures::whereIn('PK_NO', json_decode($features) ?? [])->get();
+        return ListingFeatures::query()->whereIn('PK_NO', json_decode($features) ?? [])->get();
     }
 
     public function getProperties(Request $request, $type = null, $cat = null, $city = null): LengthAwarePaginator
@@ -303,7 +303,7 @@ class Listings extends Model
         }
 
         if ($cat) {
-            $categories = PropertyType::where('IS_ACTIVE', 1)
+            $categories = PropertyType::query()->where('IS_ACTIVE', '=', 1)
                 ->orderByDesc('ORDER_ID')
                 ->pluck('PK_NO', 'URL_SLUG');
             if (isset($categories[$cat])) {
@@ -312,7 +312,7 @@ class Listings extends Model
         }
 
         if ($city) {
-            $cities = City::pluck('PK_NO', 'CITY_NAME');
+            $cities = City::query()->pluck('PK_NO', 'CITY_NAME');
             if (isset($cities[$city])) {
                 $listings->where('F_CITY_NO', '=', $cities[$city]);
             }
@@ -324,6 +324,11 @@ class Listings extends Model
         $priceMax = $request->query('max_price');
         $postedBy = $request->query('posted_by');
         $verified = $request->query('verified');
+        $area = $request->query('area');
+
+        if ($area > 0) {
+            $listings->where('F_AREA_NO', '=', $area);
+        }
 
         if ($sortBy == 'desc') {
             $listings->orderByDesc('V.TOTAL_PRICE');

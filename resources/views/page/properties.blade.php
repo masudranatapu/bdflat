@@ -7,7 +7,45 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fastselect.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
     <style>
-        .reply:hover{color:#fff}.fix_box{max-height:200px;overflow-y:scroll}.verified-title h5{max-height:40px;overflow:hidden}.verified-title h6{padding-top:10px}@media (max-width:576px){.verified-title h5{max-height:30px}}.fix_box::-webkit-scrollbar{width:6px}.fix_box::-webkit-scrollbar-track{background:#f1f1f1}.fix_box::-webkit-scrollbar-thumb{background:#888}.fix_box::-webkit-scrollbar-thumb:hover{background:#555}
+        .reply:hover {
+            color: #fff
+        }
+
+        .fix_box {
+            max-height: 200px;
+            overflow-y: scroll
+        }
+
+        .verified-title h5 {
+            max-height: 40px;
+            overflow: hidden
+        }
+
+        .verified-title h6 {
+            padding-top: 10px
+        }
+
+        @media (max-width: 576px) {
+            .verified-title h5 {
+                max-height: 30px
+            }
+        }
+
+        .fix_box::-webkit-scrollbar {
+            width: 6px
+        }
+
+        .fix_box::-webkit-scrollbar-track {
+            background: #f1f1f1
+        }
+
+        .fix_box::-webkit-scrollbar-thumb {
+            background: #888
+        }
+
+        .fix_box::-webkit-scrollbar-thumb:hover {
+            background: #555
+        }
     </style>
 @endpush
 @php
@@ -38,7 +76,8 @@
         <!-- container -->
         <div class="container">
             <div class="banner-form">
-                <form action="{{ route('web.property', ['type' => $type, 'cat' => $cat, 'city' => $dhaka]) }}" method="get">
+                <form action="{{ route('web.property', ['type' => $type, 'cat' => $cat, 'city' => $dhaka]) }}"
+                      method="get">
                     <div class="form-wrap">
                         <div class="form-group">
                             <select class="form-control" id="selectCity">
@@ -67,7 +106,8 @@
                         </div>
                     </div>
                     <div class="search-form">
-                        <input type="text" placeholder="Type Your key word" name="search" id="search" value="{{ request()->get('search') }}">
+                        <input type="text" placeholder="Type Your key word" name="search" id="search"
+                               value="{{ request()->get('search') }}">
                         <button type="submit">Search</button>
                     </div>
                 </form>
@@ -87,17 +127,18 @@
             <div class="row">
                 <div class="col-4 text-center">
                     <div class="category-nav-list">
-                        <a href="search-filter.html"><i class="fa fa-filter"></i>Filters</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#filterModal"><i
+                                class="fa fa-filter"></i>Filters</a>
                     </div>
                 </div>
 
                 <div class="col-4 text-center">
                     <div class="category-nav-list sortby d-block d-md-none">
                         <p>
-                            <select class="form-control" id="sortby">
-                                <option>Sort</option>
-                                <option>Price: low to high</option>
-                                <option>Price: high to low</option>
+                            <select class="form-control" id="mobile_sort">
+                                <option>Default</option>
+                                <option value="asc" {{ request()->query('sort_by') == 'asc' ? 'selected' : '' }}>Price: low to high</option>
+                                <option value="desc" {{ request()->query('sort_by') == 'desc' ? 'selected' : '' }}>Price: high to low</option>
                             </select>
                         </p>
                     </div>
@@ -168,9 +209,18 @@
                                                     <div class="form-group">
                                                         <select class="form-control" id="propertyType">
                                                             <option value="">All</option>
-                                                            <option value="sale" {{ request()->route('type') == 'sale' ? 'selected' : '' }}>Sale</option>
-                                                            <option value="rent" {{ request()->route('type') == 'rent' ? 'selected' : '' }}>Rent</option>
-                                                            <option value="roommate" {{ request()->route('type') == 'roommate' ? 'selected' : '' }}>Roommate</option>
+                                                            <option
+                                                                value="sale" {{ request()->route('type') == 'sale' ? 'selected' : '' }}>
+                                                                Sale
+                                                            </option>
+                                                            <option
+                                                                value="rent" {{ request()->route('type') == 'rent' ? 'selected' : '' }}>
+                                                                Rent
+                                                            </option>
+                                                            <option
+                                                                value="roommate" {{ request()->route('type') == 'roommate' ? 'selected' : '' }}>
+                                                                Roommate
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </form>
@@ -199,8 +249,11 @@
                                                             <li class="{{ $category->URL_SLUG == $cat ? 'active' : '' }}">
                                                                 <a href="?cat={{ $category->URL_SLUG }}"
                                                                    data-value="{{ $category->URL_SLUG }}"
-                                                                   class="category"><img src="{{ $panel_path . $category->ICON_PATH }}"
-                                                                   alt="" class="img-fluid"> {{ $category->PROPERTY_TYPE }}</a>
+                                                                   class="category"><img
+                                                                        src="{{ $panel_path . $category->ICON_PATH }}"
+                                                                        alt=""
+                                                                        class="img-fluid"> {{ $category->PROPERTY_TYPE }}
+                                                                </a>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -227,7 +280,9 @@
                                                     <div class="form-group">
                                                         <a href="#">All Bangladesh</a>
                                                         @if(isset($data['areas']))
-                                                            <a href="?city={{ request()->route('city') }}" class="ml-2 font-weight-bold" style="display: block;">{{ request()->route('city') }}</a>
+                                                            <a href="?city={{ request()->route('city') }}"
+                                                               class="ml-2 font-weight-bold"
+                                                               style="display: block;">{{ request()->route('city') }}</a>
                                                             <ul class="ml-4">
                                                                 @foreach($data['areas'] as $area)
                                                                     <li>
@@ -386,8 +441,12 @@
                                 <p>Sort By
                                     <select class="form-control" id="sortBy" name="sortBy">
                                         <option value="">Default</option>
-                                        <option value="asc" {{ request()->query('sort_by') == 'asc' ? 'selected' : '' }}>Price: low to high</option>
-                                        <option value="desc" {{ request()->query('sort_by') == 'desc' ? 'selected' : '' }}>
+                                        <option
+                                            value="asc" {{ request()->query('sort_by') == 'asc' ? 'selected' : '' }}>
+                                            Price: low to high
+                                        </option>
+                                        <option
+                                            value="desc" {{ request()->query('sort_by') == 'desc' ? 'selected' : '' }}>
                                             Price: high to low
                                         </option>
                                     </select>
@@ -433,7 +492,8 @@
                                                 </div>
                                                 <div class="verified-address">
                                                     <a href="#"><i
-                                                            class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{$listing->SUBAREA_NAME}}, @endif{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}
+                                                            class="fa fa-map-marker"></i>@if($listing->SUBAREA_NAME) {{$listing->SUBAREA_NAME}}
+                                                        , @endif{{ $listing->AREA_NAME . ', ' }}{{ $listing->CITY_NAME }}
                                                     </a>
                                                 </div>
                                                 @if($listing->IS_TOP)
@@ -482,6 +542,8 @@
             <!-- row -->
         </div><!-- container -->
     </div>
+
+    @include('layouts.mobile-filter')
 
 @endsection
 
