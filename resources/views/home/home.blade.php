@@ -9,7 +9,7 @@
 @endpush
 @php
     $panel_path = env('PANEL_PATH');
-    $panel_path = 'http://localhost/test/bdflat_panel/public';
+    $panel_path = 'http://localhost/webdevs/bdflat_panel/public';
 @endphp
 @section('content')
     <!--
