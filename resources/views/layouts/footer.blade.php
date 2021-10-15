@@ -109,6 +109,7 @@
 <!--
     ============  fixed menu footer   ============
 -->
+@include('layouts.mobile-filter')
 <div class="fixed-menu">
     <!-- container-fluid -->
     <div class="container-fluid">
@@ -116,7 +117,7 @@
             <ul class="footer-menu-mobile">
                 <li><a href="{{ route('web.home') }}"><i class="fa fa-home"></i><br/>Home</a></li>
                 <li><a href="{{ route('web.property') }}?verified=1"><i class="fa fa-building"></i><br/>Properties</a></li>
-                <li class="search_form"><div class="open_serch"><a href="{{ route('web.property') }}?verified=0"><i class="fa fa-search"></i></a></div></li>
+                <li class="search_form"><div class="open_serch" data-target="#filterModal" data-toggle="modal"><a href="#"><i class="fa fa-search"></i></a></div></li>
                 <li><a href="{{ route('contact-us') }}"><i class="fa fa-address-card"></i><br/>Contact</a></li>
                 <li><a href="{{ route('my-account') }}"><i class="fa fa-user"></i><br/>My Profile</a></li>
             </ul>

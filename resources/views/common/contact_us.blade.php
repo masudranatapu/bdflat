@@ -132,7 +132,6 @@
 
         //Check to see if the user field is equal to the math total
         function check() {
-            alert(1);
             humanNumber = $('#usernumber').val();
             randomTotal = randomNum1 + randomNum2;
             if (randomTotal == humanNumber) {

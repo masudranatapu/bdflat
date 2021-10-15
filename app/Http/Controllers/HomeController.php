@@ -29,13 +29,13 @@ class HomeController extends Controller
     protected $propertyCondition;
 
     public function __construct(
-        Slider $slider,
-        PropertyType $propertyType,
-        WebAds $ads,
-        Listings $listings,
-        City $city,
-        PageCategory $pageCategory,
-        Owner $owner,
+        Slider            $slider,
+        PropertyType      $propertyType,
+        WebAds            $ads,
+        Listings          $listings,
+        City              $city,
+        PageCategory      $pageCategory,
+        Owner             $owner,
         PropertyCondition $propertyCondition
     )
     {
@@ -102,12 +102,12 @@ class HomeController extends Controller
         $data['listings']->appends($request->except('page'));
         $data['categories'] = $this->propertyType->getPropertyTypes();
         $data['conditions'] = $this->propertyCondition->getConditions();
-        $data['cities'] =   $this->city->getCities()->pluck('CITY_NAME', 'PK_NO');
+        $data['cities'] = $this->city->getCities()->pluck('CITY_NAME', 'PK_NO');
         $data['bottomAd'] = $this->ads->getRandomAd(301);
         $data['rightAd'] = $this->ads->getRandomAd(300);
 
         if ($request->route('city') && $request->route('city') !== 'all') {
-            $data['areas'] = Area::where('CITY_NAME', $request->route('city'))->get(['PK_NO', 'AREA_NAME', 'URL_SLUG']);
+            $data['areas'] = Area::query()->where('CITY_NAME', $request->route('city'))->get(['PK_NO', 'AREA_NAME', 'URL_SLUG']);
         }
 
         return view('page.properties', compact('data'));
@@ -176,5 +176,15 @@ class HomeController extends Controller
             }
         }
         return false;
+    }
+
+    public function getArea(Request $request)
+    {
+        $cityId = $request->query->get('city');
+        $areas = Area::query()->where('F_CITY_NO', '=', $cityId)->pluck('AREA_NAME', 'PK_NO');
+        return response()->json([
+            'status' => true,
+            'areas' => $areas
+        ]);
     }
 }
