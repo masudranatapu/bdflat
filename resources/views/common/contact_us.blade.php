@@ -62,7 +62,7 @@
                 <div class="col-lg-8">
                     <div class="contact-form">
                         <h3>Send Us Your Feedback</h3>
-                        {!! Form::open([ 'route' => 'contact-us', 'method' => 'post', 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open([ 'route' => 'contact-us', 'method' => 'post', 'novalidate', 'autocomplete' => 'off', 'id' => 'contactForm']) !!}
                         <div class="form-row">
                             <div class="col-sm-6 form-group {!! $errors->has('name') ? 'error' : '' !!}">
                                 <div class="controls">
@@ -96,6 +96,8 @@
                                         <span id="random1"></span>
                                         <span>&nbsp;+&nbsp;</span>
                                         <span id="random2"></span> = ?
+                                        {!! Form::hidden('num1', '', ['id' => 'num1']) !!}
+                                        {!! Form::hidden('num2', '', ['id' => 'num2']) !!}
                                         {!! Form::number('capt', old('capt'), ['id'=>'usernumber' ,'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'result...'],'oninput','checkInputValCapt(this);') !!}
                                     </p>
                                 </div>
@@ -119,28 +121,39 @@
     <script src="{{asset('/assets/js/forms/validation/jqBootstrapValidation.js')}}"></script>
     <script src="{{asset('/assets/js/forms/validation/form-validation.js')}}"></script>
     <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
     <script>
+        $(document).on('submit', '#contactForm', function (e) {
+            // e.preventDefault();
+            if (check()) {
+                return true;
+            }
+            return false;
+        });
 
         //Function for a Numbers(Replacing anything old) and emptying the input value
+        let randomNum1, randomNum2, flag, timesWrong = 0;
         function differentProblem() {
             randomNum1 = Math.floor((Math.random() * 10) + 1);
             randomNum2 = Math.floor((Math.random() * 10) + 1);
             $("#random1").empty().append(randomNum1);
             $("#random2").empty().append(randomNum2);
+            $("#num1").val(randomNum1);
+            $("#num2").val(randomNum2);
             $("#usernumber").val("");
+        }
+
+        function timesWrongPlural() {
+            return timesWrong > 1 ? 's' : '';
         }
 
         //Check to see if the user field is equal to the math total
         function check() {
-            humanNumber = $('#usernumber').val();
-            randomTotal = randomNum1 + randomNum2;
-            if (randomTotal == humanNumber) {
-                // alert("Number is right.");
-                //This would run a php script if the answer was correct...
-                //$.get("somepage.php");
-                // return false;
-
-            } else if (humanNumber == "") {
+            let humanNumber = parseInt($('#usernumber').val());
+            let randomTotal = randomNum1 + randomNum2;
+            if (randomTotal === humanNumber) {
+                return true;
+            } else if ($('#usernumber').val() === "") {
                 flag = false;
                 $(this).focus();
                 $('#usernumber').addClass('err-input');
@@ -148,8 +161,8 @@
                 return false;
             } else {
                 flag = false;
-                timesWrong = timesWrong + 1;
-                if (timesWrong => 5) {
+                timesWrong++;
+                if (timesWrong >= 5) {
                     alert("You're too stupid and shouldn't be doing this. I'm taking it away.");
                     return false;
                 } else {
@@ -160,11 +173,9 @@
             }
 
 
-            if (true == flag) {
+            if (true === flag) {
                 e.preventDefault();
             }
-
-
         }
 
         function checkInputPass(e) {
@@ -176,7 +187,7 @@
         }
 
         function checkInputVal(e) {
-            if ('' == $(e).val()) {
+            if ('' === $(e).val()) {
                 $(e).addClass('err-input');
             } else {
                 $(e).removeClass('err-input');
@@ -184,10 +195,10 @@
         }
 
         function checkInputValCapt(e) {
-            humanNumber = $(e).val();
-            randomTotal = randomNum1 + randomNum2;
+            let humanNumber = parseInt($(e).val());
+            let randomTotal = randomNum1 + randomNum2;
             $("#randtotal").val(randomTotal);
-            if (randomTotal == humanNumber) {
+            if (randomTotal === humanNumber) {
                 $(e).removeClass('err-input');
             } else {
                 $(e).addClass('err-input');

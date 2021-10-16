@@ -76,7 +76,15 @@ class CommonController extends Controller
 
     public function storeContactUs(contactRequest $request)
     {
-        dd($request->all());
+        $num1 = $request->get('num1');
+        $num2 = $request->get('num2');
+        $capt = $request->get('capt');
+
+        if ($num1 + $num2 != $capt) {
+            Toastr::success('Captcha Error!', 'Error', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
+
         $this->resp = $this->contact->store($request);
         $msg = $this->resp->msg;
         $msg_title = $this->resp->msg_title;
@@ -175,7 +183,7 @@ class CommonController extends Controller
 
          return response()->json($response);
      }
- 
+
 
 
     public function getDevListings(Request $request)

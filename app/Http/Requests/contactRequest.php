@@ -23,7 +23,7 @@ class contactRequest extends FormRequest
      * @return array
      */
 
-    public function rules()
+    public function rules(): array
     {
         $rules = [
             'name'                      => 'required|string|min:2|max:50',
@@ -36,7 +36,7 @@ class contactRequest extends FormRequest
         return $rules;
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.required'             => 'Your name is required!',
