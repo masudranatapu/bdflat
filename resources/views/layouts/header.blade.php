@@ -28,7 +28,11 @@ if(request()->segment(2) == 'roommate'){
 
                   <ul class="first-nav">
                       <li class="cryptocurrency login_btn">
+                          @guest
                           <a href="{{route('login')}}">Login or Create Account <i class="fa fa-long-arrow-right"></i></a>
+                          @else
+                          <a href="{{route('my-account')}}">My Account<i class="fa fa-long-arrow-right"></i></a>
+                          @endguest
                       </li>
                       <li class="cryptocurrency">
                           <a href="{{ route('web.home') }}"><i class="fa fa-home"></i>Home</a>
