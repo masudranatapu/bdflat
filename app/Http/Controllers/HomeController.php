@@ -52,7 +52,7 @@ class HomeController extends Controller
     public function index()
     {
         $data['sliders'] = $this->slider->getSliders();
-        $data['categories'] = $this->propertyType->getPropertyTypes();
+        // $data['categories'] = $this->propertyType->getPropertyTypes();
         $data['leftAd'] = $this->ads->getRandomAd(10);
         $data['rightAd'] = $this->ads->getRandomAd(102);
         $data['bottomAd'] = $this->ads->getRandomAd(101);

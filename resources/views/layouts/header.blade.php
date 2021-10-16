@@ -77,7 +77,6 @@ if (request()->segment(2) == 'roommate') {
                 <ul class="first-nav">
                     <li class="cryptocurrency">
                         <span><i class="fa fa-user"></i>Account</span>
-
                         @if(Auth::user()->USER_TYPE == 1)
                             <ul>
                                 <li><a href="{{route('my-account')}}" class="@yield('my-account')">My
@@ -163,7 +162,7 @@ if (request()->segment(2) == 'roommate') {
                         @endif
                     </li>
                 </ul>
-
+=
                 <h3 class="hotline_title">Hotline</h3>
                 <h5 class="hotline_num"><a href="tel:{{ setting()->PHONE_1 ?? '' }}">{{ setting()->PHONE_1 ?? '' }}</a>
                 </h5>

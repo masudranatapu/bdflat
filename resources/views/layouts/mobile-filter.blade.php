@@ -10,6 +10,8 @@
     </style>
 @endpush
 @php
+    $data['categories'] = \App\Models\PropertyType::query()->where('IS_ACTIVE', 1)->orderByDesc('ORDER_ID')->get();
+
     if (!isset($type)) {
         $type = 'all';
     }
