@@ -1,10 +1,24 @@
 @extends('layouts.app')
 @push('custom_css')
     <style type="text/css">
-        .owl-carousel .owl-item img{width:100%}
-        .verified-title h5{max-height:40px;overflow:hidden}
-        .verified-title h6{padding-top:10px}
-        @media (max-width:576px){.verified-title h5{max-height:30px}}
+        .owl-carousel .owl-item img {
+            width: 100%
+        }
+
+        .verified-title h5 {
+            max-height: 40px;
+            overflow: hidden
+        }
+
+        .verified-title h6 {
+            padding-top: 10px
+        }
+
+        @media (max-width: 576px) {
+            .verified-title h5 {
+                max-height: 30px
+            }
+        }
     </style>
 @endpush
 @php
@@ -29,12 +43,14 @@
     <!--
        ============  mobile search box  ============
      -->
-    <div class="mobile-search_bx d-block d-md-none">
+    <div class="d-block d-md-none" style="position: relative;z-index: 2;margin-top: -21px">
         <!-- container -->
         <div class="container">
-            <a href="search-filter.html">
-                <button>Search cities, localities, property name & ID <i class="fa fa-search float-right"></i></button>
-            </a>
+            <form method="get" action="{{ route('web.property') }}" class="d-flex">
+                <input type="text" name="search" class="form-control border-0" value="{{ request()->query('search') }}"
+                       placeholder="Search cities, localities, property name & ID">
+                <button type="submit" class="bg-transparent border-0"><i class="fa fa-search float-right fa-2x" style="position: absolute;right: 30px;top: 5px;color: #d83831"></i></button>
+            </form>
         </div><!-- container -->
     </div>
 
@@ -175,7 +191,8 @@
                             <div class="featured-wrap">
                                 <div class="featured-bx">
                                     <a href="{{ route('web.property.details', $property->URL_SLUG) }}">
-                                        <img src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}" class="img-fluid" alt="{{ $property->TITLE }}">
+                                        <img src="{{ asset($property->getDefaultThumb->THUMB_PATH ?? '') }}"
+                                             class="img-fluid" alt="{{ $property->TITLE }}">
                                     </a>
                                 </div>
                                 <div class="featured-content">
@@ -183,12 +200,16 @@
                                         <h3>TK {{ number_format($property->getListingVariant->TOTAL_PRICE) }}</h3>
                                     </div>
                                     <div class="featured-info">
-                                        <h2><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 40) }}</a></h2>
+                                        <h2>
+                                            <a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 40) }}</a>
+                                        </h2>
                                         <span>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</span>
                                     </div>
                                     <div class="featured-footer">
                                         <div class="address">
-                                            <a href="#"><i class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                            <a href="#"><i
+                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}
+                                                , @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -279,11 +300,15 @@
                                                     TK {{ number_format($property->getListingVariant->TOTAL_PRICE, 2) }}</h3>
                                             </div>
                                             <div class="verified-title">
-                                                <h5 class="mt-0"><a href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 40) }}</a></h5>
+                                                <h5 class="mt-0"><a
+                                                        href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 40) }}</a>
+                                                </h5>
                                                 <h6>{{ $property->getListingVariant->BEDROOM ? $property->getListingVariant->BEDROOM . ' Bed,' : '' }} {{ $property->getListingVariant->BATHROOM ? $property->getListingVariant->BATHROOM . ' Bath' : '' }}</h6>
                                             </div>
                                             <div class="verified-address">
-                                                <a href="#"><i class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                <a href="#"><i
+                                                        class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}
+                                                    , @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -355,7 +380,9 @@
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}
+                                                                , @endif{{ $property->AREA_NAME }}
+                                                                , {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -397,11 +424,14 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE,35) }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE,35) }}</a>
+                                                            </h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}
+                                                                , @endif{{ $property->AREA_NAME }}
+                                                                , {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -444,11 +474,14 @@
                                                         </div>
                                                         <div class="category-title">
                                                             <h5 class="mt-0"><a
-                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 35) }}</a></h5>
+                                                                    href="{{ route('web.property.details', $property->URL_SLUG) }}">{{ Str::limit($property->TITLE, 35) }}</a>
+                                                            </h5>
                                                         </div>
                                                         <div class="category-address">
                                                             <a href="#"><i
-                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}, @endif{{ $property->AREA_NAME }}, {{ $property->CITY_NAME }}</a>
+                                                                    class="fa fa-map-marker"></i>@if($property->SUBAREA_NAME) {{$property->SUBAREA_NAME}}
+                                                                , @endif{{ $property->AREA_NAME }}
+                                                                , {{ $property->CITY_NAME }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -511,7 +544,8 @@
                         <div class="col-3 col-md-2 col-xl-1">
                             <div class="agencies">
                                 <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
-                                        src="{{ $agency->info->LOGO ? $panel_path . $agency->info->LOGO : asset('assets/img/default_img.png') }}" class="img-fluid"
+                                        src="{{ $agency->info->LOGO ? $panel_path . $agency->info->LOGO : asset('assets/img/default_img.png') }}"
+                                        class="img-fluid"
                                         alt="{{ $agency->NAME }}"></a>
                             </div>
                         </div>
@@ -537,7 +571,8 @@
                         <div class="col-3 col-md-2 col-xl-1">
                             <div class="agencies">
                                 <a href="{{ $agency->info->SITE_URL ?? '' }}" target="_blank"><img
-                                        src="{{$agency->info->LOGO ? $panel_path . $agency->info->LOGO : asset('assets/img/default_img.png') }}" class="img-fluid"
+                                        src="{{$agency->info->LOGO ? $panel_path . $agency->info->LOGO : asset('assets/img/default_img.png') }}"
+                                        class="img-fluid"
                                         alt="{{ $agency->NAME }}"></a>
                             </div>
                         </div>

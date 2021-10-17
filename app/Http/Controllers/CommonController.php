@@ -64,6 +64,7 @@ class CommonController extends Controller
         $data['about_us'] = $this->about_us->getAbout();
         $data['team_members'] = $this->team_members->getTeamMembers();
         $data['testimonials'] = $this->testimonials->getTestimonials();
+//        dd($data);
         return view('common.about_us',compact('data'));
     }
 

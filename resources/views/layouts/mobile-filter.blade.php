@@ -183,7 +183,10 @@
         // });
 
         $('#filterDismiss').click(function () {
-            $('#filterModal').modal('hide');
+            console.log('clicked')
+            $('body').removeClass('modal-open');
+            $('body').find('.modal-backdrop').hide();
+            $('#filterModal').hide(100);
         });
 
         $(document).on('click', 'button.close', function () {

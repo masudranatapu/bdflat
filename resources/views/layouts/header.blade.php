@@ -74,6 +74,7 @@ if (request()->segment(2) == 'roommate') {
                     </li>
                 </ul>
 
+                @auth
                 <ul class="first-nav">
                     <li class="cryptocurrency">
                         <span><i class="fa fa-user"></i>Account</span>
@@ -162,7 +163,7 @@ if (request()->segment(2) == 'roommate') {
                         @endif
                     </li>
                 </ul>
-=
+                @endauth
                 <h3 class="hotline_title">Hotline</h3>
                 <h5 class="hotline_num"><a href="tel:{{ setting()->PHONE_1 ?? '' }}">{{ setting()->PHONE_1 ?? '' }}</a>
                 </h5>
@@ -221,7 +222,7 @@ if (request()->segment(2) == 'roommate') {
                     <li class="search_bar">
                         <form class="example header_search" action="{{ route('web.property') }}" method="get">
                             <div class="search-box">
-                                <input type="text" placeholder="Search.." name="search">
+                                <input type="text" placeholder="Search.." value="{{ request()->query('search') }}" name="search">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
