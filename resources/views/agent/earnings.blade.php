@@ -42,13 +42,10 @@
                                                 <td>Email</td>
                                                 <td>{{ Auth::user()->EMAIL }}</td>
                                             </tr>
-                                            <tr>
-                                                <td>Payment Method</td>
-                                                <td>bKash - 017xxxxxxxx</td>
-                                            </tr>
+
                                             <tr>
                                                 <td>Create Date</td>
-                                                <td>Oct 12, 2021</td>
+                                                <td>{{ date('M d, Y',strtotime(Auth::user()->CREATED_AT)) }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -57,15 +54,15 @@
                                         <div class="card bg-info">
                                             <div class="card-body text-center">
                                                 <h2 class="text-white">Balance</h2>
-                                                <h1 class="text-white font-weight-bold">BDT 12,000</h1>
-                                                <a href="{{ route('agent-withdraw') }}" class="my-2 btn bg-white">Withdraw Credit</a>
+                                                <h1 class="text-white font-weight-bold">BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</h1>
+                                                <a href="{{ route('agent-withdraw') }}" class="my-2 btn bg-white" @if(Auth::user()->UNUSED_TOPUP < 100 ) onclick="alert('You do not have enough balance for withdraw'); return false;" @endif >Withdraw Credit</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- product -->
-                                <h2>Earnings</h2>
+                                {{-- <h2>Earnings</h2>
                                 <table class="table table-striped text-center"
                                        style="font-family: 'Montserrat-Medium';font-size: 14px">
                                     <thead>
@@ -105,7 +102,7 @@
                                         </td>
                                     </tr>
                                     </tbody>
-                                </table>
+                                </table> --}}
 
                             </div>
                         </div>

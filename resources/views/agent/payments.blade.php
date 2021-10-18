@@ -3,22 +3,7 @@
 @push('custom_css')
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
     <style>
-        .help-block {
-            text-align: left !important;
-            display: block !important;
-            font-size: 12px !important;
-            font-family: 'Montserrat-Medium', serif !important;
-        }
-
-        .table-responsive {
-            display: inline-table !important;
-        }
-
-        @media (max-width: 768px) {
-            .table-responsive {
-                display: block !important;
-            }
-        }
+        .help-block{text-align:left!important;display:block!important;font-size:12px!important;font-family:Montserrat-Medium,serif!important}.table-responsive{display:inline-table!important}@media (max-width:768px){.table-responsive{display:block!important}}
     </style>
 @endpush
 
@@ -46,8 +31,9 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="rec-balance">
-                                        <a href="{{ route('recharge-balance') }}" class="btn btn-success">Recharge
-                                            Balance</a>
+                                        {{-- <a href="{{ route('recharge-balance') }}" class="btn btn-success">Recharge
+                                            Balance</a> --}}
+                                            <a href="{{ route('agent-withdraw') }}" class="btn btn-success" @if(Auth::user()->UNUSED_TOPUP < 100 ) onclick="alert('You do not have enough balance for withdraw'); return false;" @endif >Withdraw Credit</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,19 +48,27 @@
                                 <th>Tran. Type</th>
                                 <th>Date</th>
                                 <th>Amount</th>
+                                <th>Amount</th>
+                                <th>Amount</th>
                                 <th>Note</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if(isset($data['payments']) && count($data['payments']))
                                 @foreach($data['payments'] as $payment)
-                                    <tr>
-                                        <td>{{ $payment->SLIP_NUMBER }}</td>
-                                        <td>{{ $payment->PAYMENT_NOTE }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($payment->PAYMENT_DATE)->format('d/m/Y') }}</td>
-                                        <td>{{ number_format($payment->AMOUNT, 2) }}</td>
-                                        <td></td>
-                                    </tr>
+                                <tr>
+                                    <td>{{ $payment->SLIP_NUMBER }}</td>
+                                    <td>Lead Pay</td>
+                                    <td>{{ \Carbon\Carbon::parse($payment->PAYMENT_DATE)->format('d/m/Y') }}</td>
+                                    <td>10001</td>
+                                    <td>{{ number_format($payment->AMOUNT, 2) }}</td>
+                                    <td class="text-success">Added</td>
+                                    <td>
+                                        <a href="#" class="text-info">Edit</a>
+                                        <a href="#" class="text-danger">Delete</a>
+                                    </td>
+                                </tr>
+
                                 @endforeach
                             @else
                                 <tr>

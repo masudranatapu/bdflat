@@ -41,7 +41,7 @@ $methods = [
                                                 <h2>Withdraw Credit</h2>
                                                 <div class="my-2">
                                                     <p>Your Credit Balance</p>
-                                                    <h3>BDT 15000</h3>
+                                                    <h3>BDT {{ number_format(Auth::user()->UNUSED_TOPUP,2) }}</h3>
                                                 </div>
                                                 {!! Form::open([ 'route' => 'agent-withdraw', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                                                 <div class="form-group {!! $errors->has('amount') ? 'error' : '' !!}">

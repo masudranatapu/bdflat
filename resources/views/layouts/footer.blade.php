@@ -37,6 +37,7 @@
                             @if(!Auth::user() || (Auth::user()->USER_TYPE == 1 && !Auth::user()->requirements()->count()))
                                 <li><a href="{{route('post-requirement')}}">Post Requirement</a></li>
                             @endif
+                            <li><a href="{{ route('make-suggested-property') }}">Make suggested property</a></li>
                         </ul>
                     </div>
                 </div>
@@ -67,6 +68,12 @@
                             @if($webSetting->WHATS_APP)
                                 <li><a href="{{ $webSetting->WHATS_APP }}" target="_blank">WhatsApp</a></li>
                             @endif
+
+                            <li><a href="{{ route('make-lead') }}">Make lead</a></li>
+                            {{-- <li><a href="{{ route('make-expaired-property') }}" >Make expaired property</a></li> --}}
+
+
+
                         </ul>
                     </div>
                 </div>
