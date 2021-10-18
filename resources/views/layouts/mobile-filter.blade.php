@@ -27,6 +27,11 @@
                 ->orderByDesc('ORDER_ID')
                 ->get();
     }
+    if (!isset($data['categories'])) {
+        $data['categories'] = \App\Models\PropertyType::where('IS_ACTIVE', 1)
+            ->orderByDesc('ORDER_ID')
+            ->get();
+    }
     $data['fAreas'] = isset($data['areas']) ? $data['areas']->pluck('AREA_NAME', 'PK_NO') : \App\Models\Area::query()->where('F_CITY_NO', '=', 1)->pluck('AREA_NAME', 'PK_NO');
 @endphp
 
@@ -35,8 +40,8 @@
         <div class="search-filter-sec d-block d-md-none">
             <form action="#" id="resetForm">
                 <div class="filter-header">
-                    <h4>
-                        <a href="#" data-dismiss="modal" data-target="#filterModal">
+                    <h4 class="d-flex justify-content-between">
+                        <a href="#" id="filterDismiss">
                             <i class="fa fa-long-arrow-left"></i>
                         </a>FILTER
                         <input type="button" onclick="resetFunction();" value="Reset">
@@ -176,6 +181,13 @@
         //     $('.modalsubcategory').modal('hide');
         //     $('.modalcategory').modal('show');
         // });
+
+        $('#filterDismiss').click(function () {
+            console.log('clicked')
+            $('body').removeClass('modal-open');
+            $('body').find('.modal-backdrop').hide();
+            $('#filterModal').hide(100);
+        });
 
         $(document).on('click', 'button.close', function () {
             $($(this).data('target')).modal('toggle');

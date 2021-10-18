@@ -278,15 +278,15 @@
                                             <div class="categories-condition">
                                                 <form method="get" action="" id="conditionForm">
                                                     <div class="form-group">
-                                                        <a href="#">All Bangladesh</a>
+                                                        <a href="#" class="text-dark">All Bangladesh</a>
                                                         @if(isset($data['areas']))
                                                             <a href="?city={{ request()->route('city') }}"
-                                                               class="ml-2 font-weight-bold"
+                                                               class="ml-2 font-weight-bold text-dark"
                                                                style="display: block;">{{ request()->route('city') }}</a>
                                                             <ul class="ml-4">
                                                                 @foreach($data['areas'] as $area)
                                                                     <li>
-                                                                        <a href="?area={{ $area->URL_SLUG }}" class="area-filter" data-area="{{ $area->PK_NO }}">{{ $area->AREA_NAME }}</a>
+                                                                        <a href="?area={{ $area->URL_SLUG }}" class="area-filter text-dark" data-area="{{ $area->PK_NO }}">{{ $area->AREA_NAME }}</a>
                                                                     </li>
                                                                 @endforeach
                                                             </ul>

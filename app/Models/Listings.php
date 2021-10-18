@@ -298,6 +298,14 @@ class Listings extends Model
                 $join->on('V.IS_DEFAULT', '=', DB::raw(1));
             });
 
+        $search = $request->query->get('search');
+        if ($search) {
+            $listings->where('PRD_LISTINGS.TITLE', 'LIKE', '%' . $search . '%');
+            $listings->orWhere('PRD_LISTINGS.CITY_NAME', 'LIKE', '%' . $search . '%');
+            $listings->orWhere('PRD_LISTINGS.AREA_NAME', 'LIKE', '%' . $search . '%');
+            $listings->orWhere('PRD_LISTINGS.CODE', 'LIKE', '%' . $search . '%');
+        }
+
         if ($type && in_array($type, ['sale', 'rent', 'roommate'])) {
             $listings->where('PROPERTY_FOR', '=', $type);
         }

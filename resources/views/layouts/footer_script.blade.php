@@ -24,7 +24,7 @@
             levelSpacing: 40,
             levelTitles: false,
             levelTitleAsBack: true,
-            labelClose: false
+            labelClose: false,
         });
 
     })(jQuery);

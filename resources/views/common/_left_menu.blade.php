@@ -28,7 +28,6 @@
 </div>
 @endif
 
-
 @if(Auth::user()->USER_TYPE == 2)
 <div class="dashboard-wrapper">
     <div class="user-info text-center">
@@ -51,7 +50,6 @@
     </div>
 </div>
 @endif
-
 
 @if(Auth::user()->USER_TYPE == 3)
 <div class="dashboard-wrapper">
