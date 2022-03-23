@@ -48,8 +48,19 @@
                                 <a href="{{route('register')}}">Create Account</a>
                             </div>
                         @else
-                            {!! Form::open(['route' => 'seeker-login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'novalidate', 'autocomplete' => 'off']) !!}
-
+                            {!! Form::open(['route' => 'login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'novalidate', 'autocomplete' => 'off']) !!}
+                            <div
+                                class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}">
+                                <div class="controls">
+                                    {!! Form::tel('phone', old('phone'), [ 'id' => 'phone', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Phone number', 'autocomplete' => 'off', 'title' => 'Your phone number']) !!}
+                                    {!! $errors->first('phone', '<label class="help-block text-danger">:message</label>') !!}
+                                </div>
+                            </div>
+                            <div class="col-12 form-group">
+                                @csrf
+                                <input type="hidden" name="as" value="seeker">
+                                <input type="submit" value="Login" class="btn">
+                            </div>
                             {!! Form::close() !!}
                         @endif
 
@@ -59,3 +70,35 @@
         </div><!-- container -->
     </div>
 @endsection
+
+@push('custom_css')
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
+    />
+@endpush
+
+@push('custom_js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <script>
+        const phoneInputField = document.querySelector("#phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            initialCountry: "auto",
+            geoIpLookup: getIp,
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        function getIp(callback) {
+            fetch('https://ipinfo.io/json', {headers: {'Accept': 'application/json'}})
+                .then((resp) => resp.json())
+                .catch(() => {
+                    return {
+                        country: 'bd',
+                    };
+                })
+                .then((resp) => callback(resp.country));
+        }
+    </script>
+@endpush
