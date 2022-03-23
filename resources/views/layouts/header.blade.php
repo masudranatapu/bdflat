@@ -75,94 +75,96 @@ if (request()->segment(2) == 'roommate') {
                 </ul>
 
                 @auth
-                <ul class="first-nav">
-                    <li class="cryptocurrency">
-                        <span><i class="fa fa-user"></i>Account</span>
-                        @if(Auth::user()->USER_TYPE == 1)
-                            <ul>
-                                <li><a href="{{route('my-account')}}" class="@yield('my-account')">My
-                                        Account</a></li>
-                                <li><a href="{{route('property-requirements')}}"
-                                       class="@yield('property-requirements')">Property Requirements</a>
-                                </li>
-                                <li><a href="{{route('suggested-properties')}}"
-                                       class="@yield('suggested-properties')">Suggested Properties</a>
-                                </li>
-                                <li><a href="{{route('contacted-properties')}}"
-                                       class="@yield('contacted-properties')">Contacted Properties</a>
-                                </li>
-                                <li><a href="{{route('browsed-properties')}}"
-                                       class="@yield('browsed-properties')">Browsed Properties</a></li>
-                                <li><a href="{{route('recharge-balance')}}"
-                                       class="@yield('recharge-balance')">Recharge Balance</a></li>
-                                <li><a href="{{route('payment-history')}}"
-                                       class="@yield('payment-history')">Payment History</a></li>
-                            </ul>
-                        @endif
-                        @if(Auth::user()->USER_TYPE == 2)
-                            <ul>
-                                <li><a href="{{route('my-account')}}" class="@yield('my-account')">My
-                                        Account</a></li>
-                                <li><a href="{{route('buy-leads')}}" class="@yield('buy-leads')">Suggested
-                                        Leads</a></li>
-                                <li><a href="{{ route('owner-listings') }}"
-                                       class="@yield('owner-listings')">My Properties</a></li>
-                                <li><a href="{{ route('owner-leads') }}" class="@yield('owner-leads')">Leads</a>
-                                </li>
-                                <li><a href="{{route('recharge-balance')}}"
-                                       class="@yield('recharge-balance')">Recharge Balance</a></li>
-                                <li><a href="{{route('payment-history')}}"
-                                       class="@yield('payment-history')">Payment History</a></li>
-                            </ul>
-                        @endif
-                        @if(Auth::user()->USER_TYPE == 3)
-                            <ul>
-                                <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a>
-                                </li>
-                                <li><a href="{{ route('developer-listings') }}"
-                                       class="@yield('developer-listings')">Properties</a></li>
-                                <li><a href="{{ route('developer-leads') }}"
-                                       class="@yield('developer-leads')">Leads</a></li>
-                                <li><a href="{{ route('developer-buy-leads') }}"
-                                       class="@yield('developer-buy-leads')">Suggested Leads</a></li>
-                                <li><a href="{{route('recharge-balance')}}"
-                                       class="@yield('recharge-balance')">Recharge Balance</a></li>
-                                <li><a href="{{ route('developer-payments') }}"
-                                       class="@yield('developer-payments')">Payments</a></li>
-                            </ul>
-                        @endif
-                        @if(Auth::user()->USER_TYPE == 4)
-                            <ul>
-                                <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a>
-                                </li>
-                                <li><a href="{{ route('agency-listings') }}"
-                                       class="@yield('agency-listings')">Properties</a></li>
-                                <li><a href="{{ route('agency-leads') }}"
-                                       class="@yield('agency-leads')">Leads</a></li>
-                                <li><a href="{{ route('agency-buy-leads') }}"
-                                       class="@yield('agency-buy-leads')">Suggested Leads</a></li>
-                                <li><a href="{{route('recharge-balance')}}"
-                                       class="@yield('recharge-balance')">Recharge Balance</a></li>
-                                <li><a href="{{ route('agency-payments') }}"
-                                       class="@yield('agency-payments')">Payments</a></li>
-                            </ul>
-                        @endif
-                        @if(Auth::user()->USER_TYPE == 5)
-                            <ul>
-                                <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a></li>
-                                <li><a href="{{ route('agent-listings') }}"
-                                       class="@yield('agent-listings')">Properties</a></li>
-                                <li><a href="{{ route('agent-leads') }}" class="@yield('agent-leads')">Leads</a></li>
-                                <li><a href="{{ route('agent-buy-leads') }}" class="@yield('agent-buy-leads')">Suggested
-                                        Leads</a></li>
-                                <li><a href="{{ route('agent-payments') }}"
-                                       class="@yield('agent-payments')">Payments</a></li>
-                                <li><a href="{{ route('agent-earnings') }}"
-                                       class="@yield('agent-earnings')">Earnings</a></li>
-                            </ul>
-                        @endif
-                    </li>
-                </ul>
+                    <ul class="first-nav">
+                        <li class="cryptocurrency">
+                            <span><i class="fa fa-user"></i>Account</span>
+                            @if(Auth::user()->USER_TYPE == 1)
+                                <ul>
+                                    <li><a href="{{route('my-account')}}" class="@yield('my-account')">My
+                                            Account</a></li>
+                                    <li><a href="{{route('property-requirements')}}"
+                                           class="@yield('property-requirements')">Property Requirements</a>
+                                    </li>
+                                    <li><a href="{{route('suggested-properties')}}"
+                                           class="@yield('suggested-properties')">Suggested Properties</a>
+                                    </li>
+                                    <li><a href="{{route('contacted-properties')}}"
+                                           class="@yield('contacted-properties')">Contacted Properties</a>
+                                    </li>
+                                    <li><a href="{{route('browsed-properties')}}"
+                                           class="@yield('browsed-properties')">Browsed Properties</a></li>
+                                    <li><a href="{{route('recharge-balance')}}"
+                                           class="@yield('recharge-balance')">Recharge Balance</a></li>
+                                    <li><a href="{{route('payment-history')}}"
+                                           class="@yield('payment-history')">Payment History</a></li>
+                                </ul>
+                            @endif
+                            @if(Auth::user()->USER_TYPE == 2)
+                                <ul>
+                                    <li><a href="{{route('my-account')}}" class="@yield('my-account')">My
+                                            Account</a></li>
+                                    <li><a href="{{route('buy-leads')}}" class="@yield('buy-leads')">Suggested
+                                            Leads</a></li>
+                                    <li><a href="{{ route('owner-listings') }}"
+                                           class="@yield('owner-listings')">My Properties</a></li>
+                                    <li><a href="{{ route('owner-leads') }}" class="@yield('owner-leads')">Leads</a>
+                                    </li>
+                                    <li><a href="{{route('recharge-balance')}}"
+                                           class="@yield('recharge-balance')">Recharge Balance</a></li>
+                                    <li><a href="{{route('payment-history')}}"
+                                           class="@yield('payment-history')">Payment History</a></li>
+                                </ul>
+                            @endif
+                            @if(Auth::user()->USER_TYPE == 3)
+                                <ul>
+                                    <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a>
+                                    </li>
+                                    <li><a href="{{ route('developer-listings') }}"
+                                           class="@yield('developer-listings')">Properties</a></li>
+                                    <li><a href="{{ route('developer-leads') }}"
+                                           class="@yield('developer-leads')">Leads</a></li>
+                                    <li><a href="{{ route('developer-buy-leads') }}"
+                                           class="@yield('developer-buy-leads')">Suggested Leads</a></li>
+                                    <li><a href="{{route('recharge-balance')}}"
+                                           class="@yield('recharge-balance')">Recharge Balance</a></li>
+                                    <li><a href="{{ route('developer-payments') }}"
+                                           class="@yield('developer-payments')">Payments</a></li>
+                                </ul>
+                            @endif
+                            @if(Auth::user()->USER_TYPE == 4)
+                                <ul>
+                                    <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a>
+                                    </li>
+                                    <li><a href="{{ route('agency-listings') }}"
+                                           class="@yield('agency-listings')">Properties</a></li>
+                                    <li><a href="{{ route('agency-leads') }}"
+                                           class="@yield('agency-leads')">Leads</a></li>
+                                    <li><a href="{{ route('agency-buy-leads') }}"
+                                           class="@yield('agency-buy-leads')">Suggested Leads</a></li>
+                                    <li><a href="{{route('recharge-balance')}}"
+                                           class="@yield('recharge-balance')">Recharge Balance</a></li>
+                                    <li><a href="{{ route('agency-payments') }}"
+                                           class="@yield('agency-payments')">Payments</a></li>
+                                </ul>
+                            @endif
+                            @if(Auth::user()->USER_TYPE == 5)
+                                <ul>
+                                    <li><a href="{{route('my-account')}}" class="@yield('my-account')">Dashboard</a>
+                                    </li>
+                                    <li><a href="{{ route('agent-listings') }}"
+                                           class="@yield('agent-listings')">Properties</a></li>
+                                    <li><a href="{{ route('agent-leads') }}" class="@yield('agent-leads')">Leads</a>
+                                    </li>
+                                    <li><a href="{{ route('agent-buy-leads') }}" class="@yield('agent-buy-leads')">Suggested
+                                            Leads</a></li>
+                                    <li><a href="{{ route('agent-payments') }}"
+                                           class="@yield('agent-payments')">Payments</a></li>
+                                    <li><a href="{{ route('agent-earnings') }}"
+                                           class="@yield('agent-earnings')">Earnings</a></li>
+                                </ul>
+                            @endif
+                        </li>
+                    </ul>
                 @endauth
                 <h3 class="hotline_title">Hotline</h3>
                 <h5 class="hotline_num"><a href="tel:{{ setting()->PHONE_1 ?? '' }}">{{ setting()->PHONE_1 ?? '' }}</a>
@@ -222,7 +224,8 @@ if (request()->segment(2) == 'roommate') {
                     <li class="search_bar">
                         <form class="example header_search" action="{{ route('web.property') }}" method="get">
                             <div class="search-box">
-                                <input type="text" placeholder="Search.." value="{{ request()->query('search') }}" name="search">
+                                <input type="text" placeholder="Search.." value="{{ request()->query('search') }}"
+                                       name="search">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
@@ -247,9 +250,16 @@ if (request()->segment(2) == 'roommate') {
                         <a class="nav-link {{ $active_menu == 'verified_property' ? 'active' : ''  }}"
                            href="{{ route('web.property') }}?verified=1">Verified properties</a>
                     </li>
-                    <li class="nav-menu nav-item">
+                    <li class="nav-menu nav-item dropdown">
                         @guest
-                            <a class="nav-link" href="{{route('login') }}">Login</a>
+                            <a class="nav-link dropdown-toggle" href="{{ route('login') }}" id="navbarDropdown"
+                               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Login
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('login', ['as' => 'seeker']) }}">As Seeker</a>
+                                <a class="dropdown-item" href="{{ route('login', ['as' => 'owner']) }}">As Owner</a>
+                            </div>
                         @else
                             <a class="nav-link" href="{{route('my-account') }}">My Account</a>
                         @endguest
