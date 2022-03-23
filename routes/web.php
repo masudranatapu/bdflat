@@ -153,6 +153,7 @@ Route::post('profile/store_or_update', 'UserController@updateProfile')->name('pr
 Route::post('profile/password_update', 'UserController@updatePass')->name('profile.password_update');
 
 Auth::routes();
+Route::post('seeker-login', 'Seeker\LoginController@login')->name('seeker.login');
 
 Route::get('home', 'HomeController@index')->name('home');
 
