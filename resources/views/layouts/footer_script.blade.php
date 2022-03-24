@@ -15,6 +15,7 @@
 <script src="{{ asset('/assets/js/main.js?v=0') }}"></script>
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 {!! Toastr::message() !!}
+@yield('scripts')
 <script>
     (function($) {
         //  sidebar menu

@@ -46,6 +46,13 @@ Route::get('privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy
 Route::get('post-requirement', 'CommonController@getPostRequirement')->name('post-requirement');
 Route::post('store-requirement', 'CommonController@storePostRequirement')->name('store-requirement');
 
+Route::get('seeker_reg', 'Auth\RegisterController@seeker_register')->name('seeker_register');
+Route::post('seeker_reg', 'Seeker\LoginController@seeker_register_submit')->name('seeker_register_submit');
+Route::post('sendOtp','Seeker\LoginController@sendOTP')->name('send-otp');
+Route::post('verify-otp', 'Seeker\LoginController@verifyOTP')->name('verify-otp');
+Route::post('loginWithOtp', 'Seeker\LoginController@loginWithOtp')->name('loginWithOtp');
+// Route::post('sendOtp', 'UserController@sendOtp');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('recharge-balance', 'CommonUserController@getRechargeBalance')->name('recharge-balance');
 

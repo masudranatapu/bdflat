@@ -15,6 +15,7 @@ use Notification;
 use Auth;
 use Toastr;
 use App\Notifications\WellComeNotification;
+use Illuminate\Support\Facades\Request;
 
 class RegisterController extends Controller
 {
@@ -130,4 +131,11 @@ class RegisterController extends Controller
     //    return redirect()->route('home');
 
     }
+
+    public function seeker_register()
+    {
+        return view('auth.seeker_reg');
+    }
+
+
 }

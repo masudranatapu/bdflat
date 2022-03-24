@@ -37,6 +37,7 @@
 <meta name="twitter:site" content="@samakaltw" />
 <meta name="twitter:creator" content="@samakaltw" />
 <meta name="twitter:url" content="{{ url('/') }}" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="canonical" href="{{ url('/') }}" />
 
   <!--
