@@ -22,13 +22,6 @@
                     <div class="sign-wrap">
                         <h1>Create Your BDFlats.com Account</h1>
                         {!! Form::open([ 'route' => 'seeker_register_submit', 'method' => 'post', 'class' => 'registerForm', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
-                            {{-- <div class="account-info">
-                                <h5>I am:</h5>
-                                <input type="radio" name="usertype" value="1" id="seeker" checked> <label for="seeker">Seeker</label>
-                                <input type="radio" name="usertype" value="2" id="owner" checked> <label for="owner">Owner</label>
-                                <input type="radio" name="usertype" value="3" id="builder"> <label for="builder">Builder</label>
-                                <input type="radio" name="usertype" value="4" id="agency"> <label for="agency">Agency</label>
-                            </div> --}}
                             <div class="row">
                                 <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
                                     <div class="controls">
@@ -79,13 +72,9 @@
     </div>
 @endsection
 
+@push('custom_js')
 
-
-
-
-
-    @push('custom_js')
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 
     <script>
     $(document).ready(function() {
