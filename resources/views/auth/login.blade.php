@@ -1,17 +1,13 @@
 @extends('layouts.app')
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <!--
-     ============   login   ============
- -->
     <div class="login-sec">
-        <!-- container -->
         <div class="container">
-            <!-- row -->
             <div class="row">
                 <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                     <div class="login-wrap text-center">
                         <h1>Sign In & Access Your Account</h1>
+
                         @if(request()->query->get('as') == "owner")
                             {!! Form::open([ 'route' => 'login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             @csrf
@@ -57,9 +53,7 @@
                                     {!! $errors->first('phone', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
-                            <div
-                                id="verification_code"
-                                class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}">
+                            <div id="verification_code" class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}" >
                                 <div class="controls">
                                     {!! Form::tel('otp', old('otp'), [ 'id' => 'otp', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'OTP Code', 'autocomplete' => 'off', 'title' => 'OTP Verification']) !!}
                                     {!! $errors->first('otp', '<label class="help-block text-danger">:message</label>') !!}
@@ -68,7 +62,7 @@
                             <div class="col-12 form-group">
                                 @csrf
                                 <input type="hidden" name="as" value="seeker">
-                                <input type="submit" value="Login" class="btn">
+                                <input type="submit" value="Send OTP" class="btn">
                             </div>
 
                             <p>New user? please <a href=" {{route('seeker_register')}} ">Sign up</a></p>
@@ -101,9 +95,8 @@
                                     </div>
                                 </div>
                             </form> --}}
-                            <form method="POST" action="{{ route('loginWithOtp') }}">
+                            {{-- <form method="POST" action="{{ route('loginWithOtp') }}">
                                 @csrf
-
                                 <div class="form-group row">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Mobile No') }}</label>
 
@@ -133,12 +126,13 @@
 
                                     </div>
                                 </div>
-                            </form>
-                            <div class="form-group row send-otp">
+                            </form> --}}
+
+                            {{-- <div class="form-group row send-otp">
                                 <div class="col-md-8 offset-md-4">
                                     <button class="btn btn-success sendotp" >Send OTP</button>
                                 </div>
-                            </div>
+                            </div> --}}
                         @endif
 
                     </div>

@@ -1,8 +1,15 @@
 @extends('layouts.app')
 
 @push('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}"> --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+    <style>
+        .iti {display: block !important;}
+    </style>
 @endpush
 
 @section('content')
@@ -14,7 +21,7 @@
                 <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                     <div class="sign-wrap">
                         <h1>Create Your BDFlats.com Account</h1>
-                        {!! Form::open([ 'route' => 'seeker_register_submit', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                        {!! Form::open([ 'route' => 'seeker_register_submit', 'method' => 'post', 'class' => 'registerForm', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             {{-- <div class="account-info">
                                 <h5>I am:</h5>
                                 <input type="radio" name="usertype" value="1" id="seeker" checked> <label for="seeker">Seeker</label>
@@ -25,14 +32,8 @@
                             <div class="row">
                                 <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
                                     <div class="controls">
-                                        {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Name','minlength' => '2', 'data-validation-minlength-message' => 'Minimum 2 characters', 'maxlength' => '50',  'data-validation-maxlength-message' => 'Maximum 50 characters', 'autocomplete' => 'off', 'tabindex' => 1, 'title' => 'Your name', 'id' => 'regi-name']) !!}
+                                        {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'autocomplete' => 'off', 'tabindex' => 1, 'title' => 'Your name', 'id' => 'regi-name']) !!}
                                         {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
-                                    </div>
-                                </div>
-                                <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
-                                    <div class="controls">
-                                        {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                        {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
                                 <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
@@ -41,6 +42,14 @@
                                         {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
+
+                                <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                        {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
+                                </div>
+
                                 {{-- <div class="mb-3">
                                     <div class="col-sm-12">
                                         <div class="input-group">
@@ -77,7 +86,7 @@
                         <div class="login-account text-center">
                             <h3>Have an Account on BDF.com?</h3>
                             <h5>Login in your account.</h5>
-                            <a href="{{route('login')}}">Login Now</a>
+                            <a href="{{route('login')}}?as=seeker">Login Now</a>
                         </div>
 
                     </div>
@@ -86,15 +95,59 @@
         </div><!-- container -->
     </div>
 @endsection
-@section('scripts')
-    @push('custom_css')
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
-        />
-    @endpush
+
+
+
+
+
 
     @push('custom_js')
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+
+    $('.registerForm').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+                name: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The username is required and cannot be empty'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 30,
+                        message: 'The username must be more than 6 and less than 30 characters long'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9_]+$/,
+                        message: 'The username can only consist of alphabetical, number and underscore'
+                    }
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'The email is required and cannot be empty'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    }
+                }
+            }
+        }
+    });
+
+});
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
         var input = document.querySelector("#phone");
@@ -220,5 +273,5 @@
             });
         });
     </script>
-    @endpush
-@endsection
+ @endpush
+
