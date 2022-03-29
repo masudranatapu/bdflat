@@ -53,27 +53,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="mb-3">
-                                    <div class="col-sm-12">
-                                        <div class="input-group">
-                                            <input type="tel" name="phone" id="phone" class="form-control">
-                                            <div class="input-group-append">
-                                                <button id="add_phone" class="input-group-text btn-primary add_phone" style="display: block">Send</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="verification_status" id="verification_status" value="0">
-                                    <input type="hidden" name="vaccine_recipient_phone" id="recipient_phone" class="form-control" value="{{ old('vaccine_recipient_phone') }}" autocomplete>
-                                    <span id="otp_time_left" class="verify">@lang('web.minutes_left')</span>
-                                    <div class="col-sm-12">
-                                        <div class="input-group">
-                                            <input type="text" name="otp" id="otp" placeholder="Enter otp" class="form-control verify">
-                                            <div class="input-group-append">
-                                                <button id="verify_button" class="btn-primary verify input-group-text" style="display: block">@lang('web.verify')</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
                                 <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="password" class="control-label">Password:</label>
