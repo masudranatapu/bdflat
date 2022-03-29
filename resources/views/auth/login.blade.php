@@ -49,12 +49,14 @@
                             <div
                                 class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}">
                                 <div class="controls">
+                                    <label for="phone" class="control-label">Phone No:</label>
                                     {!! Form::tel('phone', old('phone'), [ 'id' => 'phone', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Phone number', 'autocomplete' => 'off', 'title' => 'Your phone number']) !!}
                                     {!! $errors->first('phone', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
                             <div id="verification_code" class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}" >
                                 <div class="controls">
+
                                     {!! Form::tel('otp', old('otp'), [ 'id' => 'otp', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'OTP Code', 'autocomplete' => 'off', 'title' => 'OTP Verification']) !!}
                                     {!! $errors->first('otp', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
