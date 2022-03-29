@@ -32,12 +32,14 @@
                             <div class="row">
                                 <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
                                     <div class="controls">
-                                        {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'autocomplete' => 'off', 'tabindex' => 1, 'title' => 'Your name', 'id' => 'regi-name']) !!}
+                                        <label for="name" class="control-label">Full Name:</label>
+                                        {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'autocomplete' => 'off', 'tabindex' => 1, 'placeholder' => 'Your name', 'id' => 'regi-name']) !!}
                                         {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
                                 <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
                                     <div class="controls">
+                                        <label for="phone" class="control-label">Phone No:</label>
                                         {!! Form::tel('mobile', old('mobile'), [ 'class' => 'form-control', 'id' => 'phone', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
                                         {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
@@ -45,8 +47,9 @@
 
                                 <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
                                     <div class="controls">
-                                        {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                        {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
+                                        <label for="email" class="control-label">Email Address:</label>
+                                        {!! Form::email('email', old('email'), [ 'class' => 'form-control',   'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                        {{-- {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!} --}}
                                     </div>
                                 </div>
 
@@ -73,6 +76,7 @@
                                 </div> --}}
                                 <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                     <div class="controls">
+                                        <label for="password" class="control-label">Password:</label>
                                         {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
                                         {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
