@@ -21,12 +21,12 @@
                 <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                     <div class="sign-wrap">
                         <h1>Create Your BDFlats.com Account</h1>
-                        {!! Form::open([ 'route' => 'seeker_register_submit', 'method' => 'post', 'class' => 'registerForm', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
-                            <div class="row">
+                        {!! Form::open([ 'route' => 'seeker_register_submit', 'id' => 'phone_form', 'method' => 'post', 'class' => 'registerForm', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
+                            <div class="row" id="regForm">
                                 <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="name" class="control-label">Full Name:</label>
-                                        {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'autocomplete' => 'off', 'tabindex' => 1, 'placeholder' => 'Your name', 'id' => 'regi-name']) !!}
+                                        {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'id' => 'regi-name', 'autocomplete' => 'off', 'tabindex' => 1, 'placeholder' => 'Your name']) !!}
                                         {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
@@ -35,29 +35,52 @@
                                         <label for="phone" class="control-label">Phone No:</label>
                                         {!! Form::tel('mobile', old('mobile'), [ 'class' => 'form-control', 'id' => 'phone', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
                                         {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
+                                        <span class="text-danger" id="mobileErrorMsg"></span>
                                     </div>
                                 </div>
 
                                 <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="email" class="control-label">Email Address:</label>
-                                        {!! Form::email('email', old('email'), [ 'class' => 'form-control',   'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
+                                        {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'id' => 'email',  'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
                                         {{-- {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!} --}}
+                                        <span class="text-danger" id="emailErrorMsg"></span>
                                     </div>
                                 </div>
 
                                 <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="password" class="control-label">Password:</label>
-                                        {!! Form::password('password', [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
+                                        {!! Form::password('password', [ 'class' => 'form-control', 'id' => 'password', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
                                         {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
+
                                 <div class="col-12 form-group text-center pb-4">
                                     <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}
+                        <form action="" method="post">
+                            <div class="row" id="verification_code">
+                                <div class="col-12 justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}" >
+                                    <div class="controls">
+
+                                        {!! Form::tel('otp', old('otp'), [ 'id' => 'otp', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'OTP Code', 'autocomplete' => 'off', 'title' => 'OTP Verification']) !!}
+                                        {!! $errors->first('otp', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center text-center">
+
+                                    <div class="col-6 form-group text-right pb-4">
+                                        <button type="submit" class="btn btn-primary">{{ __('Verified') }}</button>
+                                    </div>
+                                    <div class="col-6 form-group text-right pb-4">
+                                        <button type="button" class="btn btn-primary">{{ __('Resend') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
 
                         <div class="login-account text-center">
                             <h3>Have an Account on BDF.com?</h3>
@@ -134,115 +157,72 @@
         utilsScript: "../../build/js/utils.js?1638200991544" // just for formatting/placeholders etc
         });
     </script>
-
     <script>
         $(document).ready(function () {
-            let makeWait = null;
-            $('.verify').hide();
+            const verification_code = $('#verification_code');
+            verification_code.hide();
+            // verification_code.removeClass("d-flex");
+            // $('#verification_code').hide();
 
-            $('.add_phone').click(function (e) {
+            $(document).on('submit', '#phone_form', function (e) {
                 e.preventDefault();
-                let pn = $('#phone').val();
-                // if(pn.length > 10){
-                //     $('#otp_time_left').show().text('Please enter correct phone number.');
-                //     return false;
-                // }
-                // if(pn.length < 9){
-                //     $('#otp_time_left').show().text('Please enter correct phone number.');
-                //     return false;
-                // }
-                // $(".add_phone").html('<i class="fa fa-spinner" aria-hidden="true"></i>');
 
-                // $.ajaxSetup({
-                //         headers: {
-                //             'X-CSRF-TOKEN': $('input[name="_token"]').value()
-                //         }
-                // });
-                // $.ajaxSetup({
-                //     headers: {
-                //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //     }
-                // });
+                getOTP();
+            });
+
+            const phoneInputField = document.querySelector("#phone");
+            const phoneInput = window.intlTelInput(phoneInputField, {
+                initialCountry: "auto",
+                geoIpLookup: getIp,
+                utilsScript:
+                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            });
+
+            function getIp(callback) {
+                fetch('https://ipinfo.io/json', {headers: {'Accept': 'application/json'}})
+                    .then((resp) => resp.json())
+                    .catch(() => {
+                        return {
+                            country: 'bd',
+                        };
+                    })
+                    .then((resp) => callback(resp.country));
+            }
+
+            function getOTP() {
+                $.ajaxSetup({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
                 $.ajax({
-                    type: 'POST',
-                    url: '{{ route('send-otp') }}',
+                    url: '{{ route('seeker_register_submit') }}',
+                    method: 'POST',
                     data: {
-                        phone: $('#verify_phone_number').val(),
-                        _token: '{{ csrf_token() }}'
+                        _token: "{{ csrf_token() }}",
+                        name: $('#regi-name').val(),
+                        email: $('#email').val(),
+                        mobile: $('#phone').val(),
+                        password: $('#password').val(),
                     },
                     success: function (res) {
                         console.log(res);
-                        if (res.success) {
-                            $('.add').hide();
-                            $('#verify_phone_number').attr('readonly', true);
-                            $('.verify').show();
-                            $('#otp_time_left').css('color', 'black');
-                            $('#otp_time_left').text(res.msg);
-                            $(".add_phone").text('Click for resend');
-
-                            const minutes = 1000 * 60 * 5;
-                            makeWait = setTimeout(() => {
-                                $('.add').show();
-                                // $('#verify_phone_number').attr('readonly', true);
-                                $('.verify').hide();
-                            }, minutes);
+                        if (res.status === false) {
+                            toastr.error(res.message);
                         } else {
-                            $('#otp_time_left').show();
-                            $('#otp_time_left').text(res.msg);
-                            if(res.verification == 'verified'){
-                                $('#verification_status').val(1);
-                            }
-                            $('#otp_time_left').css('color', 'red');
-                            $(".add_phone").text('Send OTP');
+                            // verification_code.addClass('d-flex');
+                            verification_code.show();
+                            $('#regForm').hide();
+                            toastr.success(res.message);
                         }
                     },
                     error: function (err) {
-                        $('#otp_time_left').show();
-                        // $('#otp_time_left').text('Please enter correct phone number.');
-                        $('#otp_time_left').css('color', 'red');
+                        console.log(err);
+                        $('#emailErrorMsg').text(err.responseJSON.errors.email);
+                        $('#mobileErrorMsg').text(err.responseJSON.errors.mobile);
                     }
-                });
-            });
-            $('#verify_button').click(function (e) {
-                e.preventDefault();
-                $('#recipient_phone').hide();
-
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('verify-otp') }}",
-                    data: {
-                        otp: $('#otp').val(),
-                        phone_number: $('#verify_phone_number').val(),
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function (res) {
-                        if (res.success) {
-                            clearTimeout(makeWait);
-                            $('.input-group-prepend').hide();
-                            $('#recipient_phone').val('+60' + $('#verify_phone_number').val());
-                            $('#recipient_phone').attr('type', 'number');
-                            // $('#recipient_phone').attr('disabled', 'disabled');
-                            $('#verify_button').hide();
-                            $('#otp').hide();
-                            $('#otp_time_left').hide();
-                            $('.add_phone').text('Verified');
-                            $('#add_phone').removeClass('add_phone');
-                            $('#verification_status').val(1);
-
-                        } else {
-                            $('#otp_time_left').show();
-                            $('#otp_time_left').text('Wrong OTP given.');
-                            $('#otp_time_left').css('color', 'red');
-                        }
-                        // console.log(res);
-                    },
-                    error: function (err) {
-                        $('#otp_time_left').show();
-                        $('#otp_time_left').text('Wrong OTP given.');
-                        $('#otp_time_left').css('color', 'red');
-                    }
-                });
-            });
+                })
+            }
         });
     </script>
  @endpush

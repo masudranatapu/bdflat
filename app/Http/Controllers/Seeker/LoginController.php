@@ -216,18 +216,38 @@ class LoginController extends Controller
     {
         $data = $request->validate([
             'mobile' => 'required|unique:WEB_USER,MOBILE_NO',
+            'email' => 'nullable|unique:WEB_USER,EMAIL',
 
         ]);
         $user = new User();
-        $user->USER_TYPE    = 2;
-        $user->NAME         = $request->name;
-        $user->EMAIL        = $request->email;
-        $user->MOBILE_NO    = $request->mobile;
-        $user->PASSWORD     = Hash::make($request->password);
+        $user->USER_TYPE    = 1;
+        $user->NAME         = $request->get('name');
+        $user->EMAIL        = $request->get('email');
+        $user->MOBILE_NO    = $request->get('mobile');
+        $user->PASSWORD     = Hash::make($request->get('password'));
         $user->save();
 
         // return redirect('/login?as=seeker');
-        dd('user');
+        // dd($user);
+        $mobile = $request->get('mobile');;
+        if ($mobile) {
+            $token = rand(1000, 99999);
+            Session::put('phone_otp', $token);
+            return response()->json([
+                'status' => true,
+                'code' => $token,
+                'message' => 'OTP Sent to your phone number.'
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'code' => '',
+            'message' => 'Wrong credential.'
+        ]);
+
+
+
 
     }
 }
