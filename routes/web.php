@@ -48,6 +48,7 @@ Route::post('store-requirement', 'CommonController@storePostRequirement')->name(
 
 Route::get('seeker_reg', 'Auth\RegisterController@seeker_register')->name('seeker_register');
 Route::post('seeker_reg', 'Seeker\LoginController@seeker_register_submit')->name('seeker_register_submit');
+Route::post('regOtp', 'Seeker\LoginController@regOtp')->name('regOtp');
 Route::post('sendOtp','Seeker\LoginController@sendOTP')->name('send-otp');
 Route::post('verify-otp', 'Seeker\LoginController@verifyOTP')->name('verify-otp');
 Route::post('loginWithOtp', 'Seeker\LoginController@loginWithOtp')->name('loginWithOtp');
