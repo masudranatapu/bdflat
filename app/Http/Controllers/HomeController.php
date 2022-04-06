@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -51,6 +52,9 @@ class HomeController extends Controller
 
     public function index()
     {
+       $user_id = Session::getId();
+       dd($user_id);
+
         $data['sliders'] = $this->slider->getSliders();
         // $data['categories'] = $this->propertyType->getPropertyTypes();
         $data['leftAd'] = $this->ads->getRandomAd(10);

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
+
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -101,8 +102,8 @@ class LoginController extends Controller
                 'UPDATED_BY' => null,
             ]);
 
-            // $response = true;
-            $response = $this->sendSMS($phone, $otp);
+            $response = true;
+            // $response = $this->sendSMS($phone, $otp);
             if ($response) {
                 return response()->json([
                     'success' => true,
@@ -127,21 +128,19 @@ class LoginController extends Controller
 
         $request->validate([
             'otp' => 'required|min:4|max:4',
-            'phone_number' => 'required|min:9|max:10',
         ]);
 
-        $phone = $request->get('phone_number');
-        $user_id = Session::getId();
+        $otp = $request->get('otp');
+        dd($otp);
+        exit;
+
+        // $user_id = Session::getId();
         $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
         $todate = date('Y-m-d');
         $now = date('Y-m-d H:i:s');
 
-        $check = DB::table('OTP_VARIFICATION')
-            ->where('mobile', $phone)
-            ->where('user_id', $user_id)
-            ->where('otp_date', $todate)
-            ->where('status', 0)
-            ->where('expire_time', '>', $now)
+        $check = DB::table('web_user')
+            ->where('OTP', $otp)
             ->first();
             // echo $check->expire_time;
             // echo '<br>';
@@ -154,12 +153,12 @@ class LoginController extends Controller
                     'success'   => false,
                     'msg'       => 'This OTP is expired',
                 ]);
-            }elseif($check->otp == $request->otp){
+            }elseif($check->OTP == $otp){
 
 
-                DB::table('OTP_VARIFICATION')
-                   ->where('id', $check->id)
-                   ->update(['status' => 1]);
+                // DB::table('OTP_VARIFICATION')
+                //    ->where('id', $check->id)
+                //    ->update(['status' => 1]);
 
                return response()->json([
                    'success'   => true,
@@ -189,6 +188,7 @@ class LoginController extends Controller
         // return response()->json([
         //     'success' => false
         // ]);
+        return redirect('/login?as=seeker');
     }
 
     public function loginWithOtp(Request $request){
@@ -225,29 +225,44 @@ class LoginController extends Controller
         $user->EMAIL        = $request->get('email');
         $user->MOBILE_NO    = $request->get('mobile');
         $user->PASSWORD     = Hash::make($request->get('password'));
+        $otp = rand(1000, 99999);
+        $user->OTP = $otp;
         $user->save();
 
         // return redirect('/login?as=seeker');
-        // dd($user);
-        $mobile = $request->get('mobile');;
-        if ($mobile) {
-            $token = rand(1000, 99999);
-            Session::put('phone_otp', $token);
-            return response()->json([
-                'status' => true,
-                'code' => $token,
-                'message' => 'OTP Sent to your phone number.'
-            ]);
-        }
+        // $user_id = session::getID();
+        $user_id = Session::getId();
 
-        return response()->json([
-            'status' => false,
-            'code' => '',
-            'message' => 'Wrong credential.'
+        DB::table('OTP_VARIFICATION')->insert([
+            'MOBILE_NO' => $phone,
+            'USER_ID' => $user_id,
+            'OTP_DATE' => date('Y-m-d'),
+            'OTP' => $otp,
+            'STATUS' => 0,
+            'EXPIRE_TIME' => $expire_time,
+            'CREATED_AT' => now(),
+            'CREATED_BY' => 1,
+            'UPDATED_AT' => null,
+            'UPDATED_BY' => null,
         ]);
 
 
+        $mobile = $request->get('mobile');;
+        if ($mobile) {
+            Session::put('phone_otp', $otp);
 
-
+            return response()->json([
+                'status' => true,
+                'code' => $otp,
+                'message' => 'OTP Sent to your phone number.'
+            ]);
+        }
+        else {
+          return response()->json([
+              'status' => false,
+              'code' => '',
+              'message' => 'Wrong credential.'
+          ]);
+        }
     }
 }
