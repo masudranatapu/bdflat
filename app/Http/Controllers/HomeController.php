@@ -52,8 +52,8 @@ class HomeController extends Controller
 
     public function index()
     {
-       $user_id = Session::getId();
-       dd($user_id);
+    //    $user_id = Session::getId();
+    //    dd($user_id);
 
         $data['sliders'] = $this->slider->getSliders();
         // $data['categories'] = $this->propertyType->getPropertyTypes();
