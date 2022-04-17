@@ -225,14 +225,14 @@ class LoginController extends Controller
         $user->EMAIL        = $request->get('email');
         $user->MOBILE_NO    = $request->get('mobile');
         $user->PASSWORD     = Hash::make($request->get('password'));
-        $otp = rand(1000, 99999);
-        $user->OTP = $otp;
+
+        // $user->OTP = $otp;
         $user->save();
 
         // return redirect('/login?as=seeker');
         // $user_id = session::getID();
         $user_id = Session::getId();
-
+        $otp = rand(1000, 99999);
         DB::table('OTP_VARIFICATION')->insert([
             'MOBILE_NO' => $phone,
             'USER_ID' => $user_id,
