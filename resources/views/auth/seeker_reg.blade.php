@@ -12,15 +12,26 @@
     </style>
 @endpush
 
+
+<?php 
+$response = request()->get('response');
+$response = json_decode($response);
+// print_r($response);
+
+?>
+
 @section('content')
     <div class="signup-sec">
         <!-- container -->
         <div class="container">
             <!-- row -->
             <div class="row">
-                <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3"> 
+                    @if($response) 
+
+                    @else      
                     <div class="sign-wrap">
-                        <h1>Create Your BDFlats.com Account</h1>
+                        <h1>Your BDFlats.com Account</h1>
                         {!! Form::open([ 'route' => 'seeker_register_submit', 'id' => 'phone_form', 'method' => 'post', 'class' => 'registerForm', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             <div class="row" id="regForm">
                                 <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
@@ -39,22 +50,22 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
+                                {{-- <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="email" class="control-label">Email Address:</label>
                                         {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'id' => 'email',  'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                        {{-- {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!} --}}
+                                        {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                         <span class="text-danger" id="emailErrorMsg"></span>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
+                                {{-- <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="password" class="control-label">Password:</label>
                                         {!! Form::password('password', [ 'class' => 'form-control', 'id' => 'password', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
                                         {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 form-group text-center pb-4">
                                     <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
@@ -82,13 +93,17 @@
                             </div>
                         </form>
 
-                        <div class="login-account text-center">
+                        {{-- <div class="login-account text-center">
                             <h3>Have an Account on BDF.com?</h3>
                             <h5>Login in your account.</h5>
                             <a href="{{route('login')}}?as=seeker">Login Now</a>
-                        </div>
+                        </div> --}}
 
                     </div>
+                    @endif 
+
+
+                    
                 </div>
             </div><!-- row -->
         </div><!-- container -->
@@ -114,12 +129,12 @@
                 message: 'The username is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The username is required and cannot be empty'
+                        message: 'The username is required'
                     },
                     stringLength: {
-                        min: 6,
+                        min: 2,
                         max: 30,
-                        message: 'The username must be more than 6 and less than 30 characters long'
+                        message: 'The username must be more than 2 and less than 30 characters long'
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9_]+$/,
@@ -127,14 +142,16 @@
                     }
                 }
             },
-            email: {
+            mobile: {
                 validators: {
                     notEmpty: {
-                        message: 'The email is required and cannot be empty'
+                        message: 'The mobile is required'
                     },
-                    emailAddress: {
-                        message: 'The input is not a valid email address'
-                    }
+                    stringLength: {
+                        min: 9,
+                        max: 12,
+                        message: 'The username must be more than 9 and less than 12 digit long'
+                    },
                 }
             }
         }
@@ -164,11 +181,10 @@
             // verification_code.removeClass("d-flex");
             // $('#verification_code').hide();
 
-            $(document).on('submit', '#phone_form', function (e) {
-                e.preventDefault();
-
-                getOTP();
-            });
+            // $(document).on('submit', '#phone_form', function (e) {
+            //     e.preventDefault();
+            //    getOTP();
+            // });
 
             const phoneInputField = document.querySelector("#phone");
             const phoneInput = window.intlTelInput(phoneInputField, {
@@ -201,9 +217,9 @@
                     data: {
                         _token: "{{ csrf_token() }}",
                         name: $('#regi-name').val(),
-                        email: $('#email').val(),
+                        // email: $('#email').val(),
                         mobile: $('#phone').val(),
-                        password: $('#password').val(),
+                        // password: $('#password').val(),
                     },
                     success: function (res) {
                         console.log(res);

@@ -216,22 +216,24 @@ class LoginController extends Controller
     {
         $data = $request->validate([
             'mobile' => 'required|unique:WEB_USER,MOBILE_NO',
-            'email' => 'nullable|unique:WEB_USER,EMAIL',
-
+            'name' => 'nullable|string|min:2|max:30',
         ]);
+        
+        $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
+        $phone = $request->get('mobile');
         $user = new User();
         $user->USER_TYPE    = 1;
-        $user->NAME         = $request->get('name');
-        $user->EMAIL        = $request->get('email');
-        $user->MOBILE_NO    = $request->get('mobile');
-        $user->PASSWORD     = Hash::make($request->get('password'));
+        $user->NAME         = $phone;
+        // $user->EMAIL        = $request->get('email');
+        $user->MOBILE_NO    = $phone;
+        $user->PASSWORD     = Hash::make($phone);
         $otp = rand(1000, 99999);
-        $user->OTP = $otp;
         $user->save();
+        // $user->OTP = $otp;
+      
 
-        // return redirect('/login?as=seeker');
-        // $user_id = session::getID();
-        $user_id = Session::getId();
+        // $user_id = Session::getId();
+        $user_id = $user->PK_NO;
 
         DB::table('OTP_VARIFICATION')->insert([
             'MOBILE_NO' => $phone,
@@ -245,24 +247,25 @@ class LoginController extends Controller
             'UPDATED_AT' => null,
             'UPDATED_BY' => null,
         ]);
+        $response = true;
+        $res = [];
+        // $response = $this->sendSMS($phone, $otp);
+        if ($response) {
+            $res['success'] = true;
+            $res['otp_pin'] = $otp;
+            $res['user'] = $user;
+            $res['msg'] = 'Check your mobile for OTP';                
 
-
-        $mobile = $request->get('mobile');;
-        if ($mobile) {
-            Session::put('phone_otp', $otp);
-
-            return response()->json([
-                'status' => true,
-                'code' => $otp,
-                'message' => 'OTP Sent to your phone number.'
-            ]);
+        } else {
+            $res['success'] = false;
+            $res['otp_pin'] = $otp;
+            $res['user'] = $user;
+            $res['msg'] = 'OTP sending failed';            
         }
-        else {
-          return response()->json([
-              'status' => false,
-              'code' => '',
-              'message' => 'Wrong credential.'
-          ]);
-        }
+        $res = json_encode($res);
+
+        return redirect('/seeker_reg?response='.$res);
+
+    
     }
 }
