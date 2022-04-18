@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seeker;
 
+use Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -9,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Traits\SMSAPI;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -152,9 +152,12 @@ class LoginController extends Controller
                    ->where('USER_ID', $check->USER_ID)
                    ->update(['status' => 1]);
 
-              $user = DB::table('web_user')->where('MOBILE_NO',$MOBILE_NO)->first();
+              $user = User::where('MOBILE_NO',$MOBILE_NO)->first();
+            //   dd($user);
               if($user){
-                Auth::login($user, true);
+                Auth::login($user);
+                Session::start();
+                // auth()->login($user);
                 return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
               }
 
@@ -228,6 +231,7 @@ class LoginController extends Controller
         // $user->NAME         = $phone;
         $user->NAME         = $name;
         // $user->EMAIL        = $request->get('email');
+        $user->EMAIL        = $phone;
         $user->MOBILE_NO    = $phone;
         $user->PASSWORD     = Hash::make($phone);
         $otp = rand(1000, 9999);
