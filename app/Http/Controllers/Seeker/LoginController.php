@@ -122,7 +122,7 @@ class LoginController extends Controller
         }
 
     }
-
+//work controller
     public function verifyOTP(Request $request)
     {
 
@@ -131,52 +131,47 @@ class LoginController extends Controller
         ]);
 
         $otp = $request->get('otp');
-        dd($otp);
-        exit;
+        $MOBILE_NO = $request->get('MOBILE_NO');
 
         // $user_id = Session::getId();
+
         $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
+
         $todate = date('Y-m-d');
         $now = date('Y-m-d H:i:s');
 
-        $check = DB::table('web_user')
-            ->where('OTP', $otp)
+        $check = DB::table('otp_varification')
+            ->where('MOBILE_NO', $MOBILE_NO)
             ->first();
-            // echo $check->expire_time;
-            // echo '<br>';
-            // echo $now;
-            // die();
-
         if($check){
-            if($check->expire_time < $now){
-                return response()->json([
-                    'success'   => false,
-                    'msg'       => 'This OTP is expired',
-                ]);
-            }elseif($check->OTP == $otp){
+            if($check->EXPIRE_TIME < $now){
+                return redirect()->back()->withDanger(__('This OTP is expired.'));
+            }
+            elseif($check->OTP == $otp){
+                DB::table('OTP_VARIFICATION')
+                   ->where('USER_ID', $check->USER_ID)
+                   ->update(['status' => 1]);
 
+              $user = DB::table('web_user')->where('MOBILE_NO',$MOBILE_NO)->first();
+              if($user){
+                Auth::login($user, true);
+                return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
+              }
 
-                // DB::table('OTP_VARIFICATION')
-                //    ->where('id', $check->id)
-                //    ->update(['status' => 1]);
-
-               return response()->json([
-                   'success'   => true,
-                   'msg'       => 'OTP verification successful',
-               ]);
+               // return redirect('/login?as=seeker')->withSuccess(__('OTP verification successful.'));
 
            }else {
-               return response()->json([
-                   'success'   => false,
-                   'msg'       => 'This OTP is invalid',
-               ]);
+               // return response()->json([
+               //     'success'   => false,
+               //     'msg'       => 'This OTP is invalid',
+               // ]);
+               return redirect('/login?as=seeker')->withDanger(__('This OTP is invalid.'));
+
             }
 
         }else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'Something wrong please try again',
-            ]);
+            return redirect('/login?as=seeker')->withDanger(__('Something wrong please try again.'));
+
         }
 
         // if (Session::get('otp') && Session::get('otp') == $request->get('otp')) {
@@ -188,7 +183,7 @@ class LoginController extends Controller
         // return response()->json([
         //     'success' => false
         // ]);
-        return redirect('/login?as=seeker');
+        // return redirect('/login?as=seeker');
     }
 
     public function loginWithOtp(Request $request){
@@ -208,31 +203,41 @@ class LoginController extends Controller
         $otp = rand(1000,9999);
         // Log::info("otp = ".$otp);
         Session::put('otp', $otp);
-        $user = User::where('MOBILE_NO','=',$request->mobile)->update(['OTP' => $otp]);
+        $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
+
+        DB::table('OTP_VARIFICATION')->where('MOBILE_NO','=',$request->mobile)->update(['OTP' => $otp, 'EXPIRE_TIME' => $expire_time]);
         // send otp to mobile no using sms api
-        return response()->json([$user],200);
+        // return response()->json([$user],200);
+
+        return redirect('/seeker_reg?response='.$res)->withSuccess(__('Check your mobile for OTP.'));
     }
+
+    //work controller
     public function seeker_register_submit(Request $request)
     {
         $data = $request->validate([
             'mobile' => 'required|unique:WEB_USER,MOBILE_NO',
-            'email' => 'nullable|unique:WEB_USER,EMAIL',
-
+            'name' => 'nullable|string|min:2|max:30',
         ]);
+
+        $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
+        $name = $request->get('name');
+        $phone = $request->get('mobile');
         $user = new User();
         $user->USER_TYPE    = 1;
-        $user->NAME         = $request->get('name');
-        $user->EMAIL        = $request->get('email');
-        $user->MOBILE_NO    = $request->get('mobile');
-        $user->PASSWORD     = Hash::make($request->get('password'));
-
-        // $user->OTP = $otp;
+        // $user->NAME         = $phone;
+        $user->NAME         = $name;
+        // $user->EMAIL        = $request->get('email');
+        $user->MOBILE_NO    = $phone;
+        $user->PASSWORD     = Hash::make($phone);
+        $otp = rand(1000, 9999);
         $user->save();
+        // $user->OTP = $otp;
 
-        // return redirect('/login?as=seeker');
-        // $user_id = session::getID();
-        $user_id = Session::getId();
-        $otp = rand(1000, 99999);
+
+        // $user_id = Session::getId();
+        $user_id = $user->PK_NO;
+
         DB::table('OTP_VARIFICATION')->insert([
             'MOBILE_NO' => $phone,
             'USER_ID' => $user_id,
@@ -245,24 +250,22 @@ class LoginController extends Controller
             'UPDATED_AT' => null,
             'UPDATED_BY' => null,
         ]);
+        $response = true;
+        $res = [];
+        // $response = $this->sendSMS($phone, $otp);
+        if ($response) {
+            $res['success'] = true;
+            $res['MOBILE_NO'] = $phone;
 
-
-        $mobile = $request->get('mobile');;
-        if ($mobile) {
-            Session::put('phone_otp', $otp);
-
-            return response()->json([
-                'status' => true,
-                'code' => $otp,
-                'message' => 'OTP Sent to your phone number.'
-            ]);
+        } else {
+            $res['success'] = false;
+            $res['MOBILE_NO'] = $phone;
         }
-        else {
-          return response()->json([
-              'status' => false,
-              'code' => '',
-              'message' => 'Wrong credential.'
-          ]);
-        }
+        $res = json_encode($res);
+        return redirect('/seeker_reg?response='.$res)->withSuccess(__('Check your mobile for OTP.'));
+
+        // return redirect('/seeker_reg?response='.$res);
+
+
     }
 }

@@ -3,8 +3,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <div class="login-sec">
         <div class="container">
+
             <div class="row">
                 <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                  @if (Session::has('success'))
+                  <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <b>{{ Session::get('success') }}</b>
+                  </div>
+                  @endif
                     <div class="login-wrap text-center">
                         <h1>Sign In & Access Your Account</h1>
 

@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 @endpush
 
+
 @section('content')
     <div class="signup-sec">
         <!-- container -->
@@ -12,6 +13,7 @@
             <!-- row -->
             <div class="row">
                 <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+
                     <div class="sign-wrap">
                         <h1>Create Your BDFlats.com Account</h1>
                         {!! Form::open([ 'route' => 'register', 'method' => 'post', 'class' => 'form-horizontal', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
@@ -85,6 +87,7 @@
                         </div>
 
                     </div>
+
                 </div>
             </div><!-- row -->
         </div><!-- container -->
