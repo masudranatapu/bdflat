@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'             => 'required|min:2',
+            // 'name'             => 'required|min:2',
             'email'            => 'required',
             'mobile'           => 'required|regex:/(01)[0-9]{9}/',
             'image'            => 'nullable|file|image|mimes:jpg,png,jpeg'
@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'    => 'Name is required!',
+            // 'name.required'    => 'Name is required!',
             'email.required'   => 'Email is required!',
 //            'email.unique'     => 'Email Already Exist',
             'mobile.required'  => 'Mobile is required!',

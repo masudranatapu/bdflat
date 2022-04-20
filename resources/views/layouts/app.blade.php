@@ -30,5 +30,23 @@
         <!-- custom_script -->
         @stack('custom_js')
         <!-- end custom_script -->
+        <script type="text/javascript">
+        var timeLeft = 30;
+        var elem = document.getElementById('Timer');
+
+        var timerId = setInterval(countdown, 1000);
+
+        function countdown() {
+        if (timeLeft == -1) {
+          clearTimeout(timerId);
+          elem.style.display = 'none';
+          // doSomething();
+        } else {
+          elem.innerHTML = '(' + timeLeft + ')';
+          --timeLeft;
+        }
+        }
+        </script>
+
     </body>
 </html>

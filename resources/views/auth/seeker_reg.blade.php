@@ -40,6 +40,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                         <b>{{ Session::get('danger') }}</b>
                   </div>
                   @endif
+
                     @if($response)
                         <div class="login-wrap text-center">
                           <div class="pt-3 pb-3">
@@ -48,28 +49,35 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                           </div>
                           <form class="" action="{{ route('verify-otp') }}" method="post">
                             @csrf
-                            <input type="hidden" name="MOBILE_NO" value="{{ $MOBILE_NO }}">
+                            <input type="hidden" id="user_phone" name="MOBILE_NO" value="{{ $MOBILE_NO }}">
                             <div class="form-group">
                             <input class="form-control" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}">
                             </div>
-                            <div class="btn-group" role="group" aria-label="OTP Submit">
-                            <button type="submit" class="btn btn-danger">ENTER</button>
-                            <button type="submit" class="btn btn-info">REQUEST PIN AGAIN</button>
-                           </div>
+                            <!-- <div class="btn-group" role="group" aria-label="OTP Submit"> -->
+                            <button type="submit" class="btn btn-danger text-center" style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
+                            <!-- <button type="submit" class="btn btn-info">REQUEST PIN AGAIN</button> -->
+                           <!-- </div> -->
                           </form>
+
+                          <form class="" action="{{ route('send_otp') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="user_phone" value="{{ $MOBILE_NO }}">
+                            <button type="submit" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;">REQUEST PIN AGAIN <span id="Timer"></span> </button>
+                          </form>
+
                         </div>
                     @else
                     <div class="sign-wrap">
                         <h1>Your BDFlats.com Account</h1>
                         {!! Form::open([ 'route' => 'seeker_register_submit', 'id' => 'phone_form', 'method' => 'post', 'class' => 'registerForm', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             <div class="row" id="regForm">
-                                <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
+                                <!-- <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="name" class="control-label">Full Name:</label>
                                         {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'id' => 'regi-name', 'autocomplete' => 'off', 'tabindex' => 1, 'placeholder' => 'Your name']) !!}
                                         {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="phone" class="control-label">Phone No:</label>
@@ -79,25 +87,25 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
+                                 <!-- <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="email" class="control-label">Email Address:</label>
                                         {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'id' => 'email',  'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
                                         {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
                                         <span class="text-danger" id="emailErrorMsg"></span>
                                     </div>
-                                </div> --}}
+                                </div>
 
-                                {{-- <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
+                                <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
                                     <div class="controls">
                                         <label for="password" class="control-label">Password:</label>
                                         {!! Form::password('password', [ 'class' => 'form-control', 'id' => 'password', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
                                         {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
-                                </div> --}}
+                                </div>  -->
 
                                 <div class="col-12 form-group text-center pb-4">
-                                    <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('SIGN UP / LOGIN') }}</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}

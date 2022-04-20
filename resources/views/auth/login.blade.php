@@ -6,12 +6,7 @@
 
             <div class="row">
                 <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                  @if (Session::has('success'))
-                  <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <b>{{ Session::get('success') }}</b>
-                  </div>
-                  @endif
+
                     <div class="login-wrap text-center">
                         <h1>Sign In & Access Your Account</h1>
 
@@ -53,23 +48,22 @@
                             </div>
                         @else
                             {!! Form::open([ 'id' => 'phone_form', 'route' => 'seeker.login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'novalidate', 'autocomplete' => 'off']) !!}
-                            <div
-                                class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}">
+                              @csrf
+                            <div class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}">
                                 <div class="controls">
                                     <label for="phone" class="control-label">Phone No:</label>
                                     {!! Form::tel('phone', old('phone'), [ 'id' => 'phone', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Phone number', 'autocomplete' => 'off', 'title' => 'Your phone number']) !!}
                                     {!! $errors->first('phone', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
-                            <div id="verification_code" class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}" >
+                            <!-- <div id="verification_code" class="col-12 d-flex justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}" >
                                 <div class="controls">
 
                                     {!! Form::tel('otp', old('otp'), [ 'id' => 'otp', 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'OTP Code', 'autocomplete' => 'off', 'title' => 'OTP Verification']) !!}
                                     {!! $errors->first('otp', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12 form-group">
-                                @csrf
                                 <input type="hidden" name="as" value="seeker">
                                 <input type="submit" value="Send OTP" class="btn">
                             </div>

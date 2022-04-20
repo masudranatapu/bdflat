@@ -76,6 +76,12 @@ if (isset($data['row'])) {
                 <div class="col-sm-12 col-md-9">
                     <div class="requirement">
                         <div class="property-title mb-2">
+                          @if (Session::has('success'))
+                          <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <b>{{ Session::get('success') }}</b>
+                          </div>
+                          @endif
                             <h3>Property Requirements <span class="status {{ $req_ststus }}"><i class="fa fa-circle" aria-hidden="true"></i></span>
                                 <span class="pull-right">
                                     <ul class="color-hints">

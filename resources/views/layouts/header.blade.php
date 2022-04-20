@@ -257,7 +257,8 @@ if (request()->segment(2) == 'roommate') {
                                 Login
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('login', ['as' => 'seeker']) }}">As Seeker</a>
+                                <!-- <a class="dropdown-item" href="{{ route('login', ['as' => 'seeker']) }}">As Seeker</a> -->
+                                <a class="dropdown-item" href="{{route('seeker_register')}}">As Seeker</a>
                                 <a class="dropdown-item" href="{{ route('login', ['as' => 'owner']) }}">As Owner</a>
                             </div>
                         @else
