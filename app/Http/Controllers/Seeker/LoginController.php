@@ -245,7 +245,7 @@ class LoginController extends Controller
         $user_id = $user->PK_NO;
 
         DB::table('OTP_VARIFICATION')->insert([
-            'MOBILE_NO' => $phone,
+            'MOBILE' => $phone,
             'USER_ID' => $user_id,
             'OTP_DATE' => date('Y-m-d'),
             'OTP' => $otp,
