@@ -58,12 +58,27 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                             <!-- <button type="submit" class="btn btn-info">REQUEST PIN AGAIN</button> -->
                            <!-- </div> -->
                           </form>
-
+                          @php
+                              $todate = date('Y-m-d');
+                              $check = DB::table('OTP_VARIFICATION')->where('MOBILE', Session::get('otp_phone'))->where('OTP_DATE', $todate)->count('MOBILE');
+        //daily d times er besi send kora jabe na. $check && count($check)
+        if ($check > 4) {
+            
+        }
+                          @endphp
+                          
                           <form class="" action="{{ route('send_otp') }}" method="post">
                             @csrf
                             <input type="hidden" name="user_phone" value="{{ $MOBILE_NO }}">
-                            <button type="submit" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;">REQUEST PIN AGAIN <span id="Timer"></span> </button>
+                            @if($check < 5)
+                                    <button href="#" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled> Please Wait<span id="Timer"></span> </button>
+                                    <button id="Timer_out" type="submit" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -199px;">REQUEST PIN AGAIN <span ></span> </button>
+                                
+                            @else
+                                <button type="submit" class="btn btn-danger text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled>REQUEST NEXTDAY </button>
+                            @endif
                           </form>
+                          
 
                         </div>
                     @else

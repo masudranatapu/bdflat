@@ -69,8 +69,7 @@ class LoginController extends Controller
         $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
         $todate = date('Y-m-d');
         $user = DB::table('web_user')->where('MOBILE_NO', $phone)->where('STATUS',1)->first();
-
-        $user_check = DB::table('OTP_VARIFICATION')->where('MOBILE_NO', $phone)->where('STATUS',1)->first();
+        $user_check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('STATUS',1)->first();
 
         if($user_check){
           Auth::login($user);
@@ -78,15 +77,17 @@ class LoginController extends Controller
           return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
         }
 
-        $check = DB::table('OTP_VARIFICATION')->where('MOBILE_NO', $phone)->where('OTP_DATE', $todate)->count('MOBILE_NO');
+        $check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
+        Session::put('otp_phone',$phone);
+
         //daily d times er besi send kora jabe na. $check && count($check)
-        if ($check > 4) {
+        if ($check > 5) {
             return redirect()->back()->withDanger(__('Today you has Block, Please try again nextday.'));
         }
          else {
           $user_id = $user->PK_NO;
           DB::table('OTP_VARIFICATION')->insert([
-              'MOBILE_NO' => $phone,
+              'MOBILE' => $phone,
               'USER_ID' => $user_id,
               'OTP_DATE' => date('Y-m-d'),
               'OTP' => $otp,
