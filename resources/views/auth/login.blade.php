@@ -261,7 +261,6 @@
                 // });
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('send-otp') }}',
                     data: {
                         phone: $('#verify_phone_number').val(),
                         _token: '{{ csrf_token() }}'

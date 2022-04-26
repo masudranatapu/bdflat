@@ -70,7 +70,6 @@ class LoginController extends Controller
         $todate = date('Y-m-d');
         $user = DB::table('web_user')->where('MOBILE_NO', $phone)->where('STATUS',1)->first();
         $user_check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('STATUS',1)->first();
-
         if($user_check){
           Auth::login($user);
           Session::start();
@@ -222,23 +221,27 @@ class LoginController extends Controller
     public function seeker_register_submit(Request $request)
     {
         $data = $request->validate([
-            'mobile' => 'required|unique:WEB_USER,MOBILE_NO',
+            'mobile' => 'required',
             // 'name' => 'nullable|string|min:2|max:30',
         ]);
 
         $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
         $name = $request->get('mobile');
         $phone = $request->get('mobile');
-        $user = new User();
-        $user->USER_TYPE    = 1;
-        // $user->NAME         = $phone;
-        $user->NAME         = $name;
-        // $user->EMAIL        = $request->get('email');
-        $user->EMAIL        = $phone;
-        $user->MOBILE_NO    = $phone;
-        $user->PASSWORD     = Hash::make($phone);
+        $user = User::where('MOBILE_NO',$phone)->first();
         $otp = rand(1000, 9999);
-        $user->save();
+        if(empty($user)){
+            $user = new User();
+            $user->USER_TYPE    = 1;
+            // $user->NAME         = $phone;
+            $user->NAME         = $name;
+            // $user->EMAIL        = $request->get('email');
+            $user->EMAIL        = $phone;
+            $user->MOBILE_NO    = $phone;
+            $user->PASSWORD     = Hash::make($phone);
+            $user->save();
+        }
+        
         // $user->OTP = $otp;
 
 
