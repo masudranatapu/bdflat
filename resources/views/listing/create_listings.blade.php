@@ -35,6 +35,7 @@
             padding: 4px;
             width: 24em;
         }
+        .select2-results__option--selected { display: none;}
     </style>
 @endpush
 <?php
@@ -48,6 +49,7 @@ $nearby = $data['nearby'] ?? [];
 $floor_lists = $data['floor_list'] ?? [];
 $bed_room = Config::get('static_array.bed_room') ?? [];
 $bath_room = Config::get('static_array.bath_room') ?? [];
+$balcony = Config::get('static_array.balcony') ?? [];
 
 ?>
 
@@ -151,7 +153,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('road') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('road', old('road'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Road']) !!}
+                                            {!! Form::text('road', old('road'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Road','id'=>'road']) !!}
                                             {!! $errors->first('road', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -163,7 +165,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('house') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('house', old('house'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'House']) !!}
+                                            {!! Form::text('house', old('house'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'House','id'=>'house']) !!}
                                             {!! $errors->first('house', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -175,7 +177,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('address') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('address', old('address'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Address']) !!}
+                                            {!! Form::text('address', old('address'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Address','id'=>'address']) !!}
                                             {!! $errors->first('address', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -218,9 +220,9 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 
                             <div id="size_parent">
                                 <div class="row no-gutters form-group size_child">
-                                    <div class="col-6 col-md-3 size_div">
+                                    <div class="col-6 col-md-1 size_div">
                                         <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Size (Sqft)</span>
+                                            <span class="advertis-label">Size</span>
                                             <div class="controls">
                                                 {!! Form::number('size[]', old('size[]'), ['id'=>'size', 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
                                                 <span class="size_placeholder advertis-label"
@@ -229,7 +231,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-3 bedroom_div">
+                                    <div class="col-6 col-md-2 bedroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <span class="advertis-label">Bedroom</span>
                                             <div class="controls">
@@ -240,7 +242,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-3 bathroom_div">
+                                    <div class="col-6 col-md-2 bathroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <span class="advertis-label">Bathroom</span>
                                             <div class="controls">
@@ -251,14 +253,47 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-3 price_div">
-                                        <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Total price</span>
+                                    <div class="col-6 col-md-2 bathroom_div">
+                                        <div class="form-group mb-0 {!! $errors->has('balcony') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Balcony</span>
                                             <div class="controls">
-                                                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::select('balcony[]', $balcony, old('balcony[]'), array('class'=>'form-control', 'placeholder'=>'Balcony')) !!}
+                                                <span class="bathroom_placeholder advertis-label"
+                                                      style="opacity: 0.6;font-size: 12px"></span>
+                                                {!! $errors->first('balcony', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-1 price_div">
+                                        <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Price</span>
+                                            <div class="controls">
+                                                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Total Price','data-validation-required-message' => 'This field is required']) !!}
                                                 <span class="price_placeholder advertis-label"
                                                       style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-2 price_div">
+                                        <div class="form-group mb-0 {!! $errors->has('car_parking') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Car Parking</span>
+                                            <div class="controls">
+                                                {!! Form::text('car_parking[]', old('car_parking[]'), ['class' => 'form-control',  'placeholder' => 'Car Parking','data-validation-required-message' => 'This field is required']) !!}
+                                                <span class="price_placeholder advertis-label"
+                                                      style="opacity: 0.6;font-size: 12px"></span>
+                                                {!! $errors->first('car_parking', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-2 price_div">
+                                        <div class="form-group mb-0 {!! $errors->has('land_area') ? 'error' : '' !!}">
+                                            <span class="advertis-label">Land Area</span>
+                                            <div class="controls">
+                                                {!! Form::text('land_area[]', old('land_area[]'), ['class' => 'form-control',  'placeholder' => 'Land Area','data-validation-required-message' => 'This field is required']) !!}
+                                                <span class="price_placeholder advertis-label"
+                                                      style="opacity: 0.6;font-size: 12px"></span>
+                                                {!! $errors->first('land_area', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
@@ -284,6 +319,17 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                             <!--  Additional Infomation  -->
                             <div class="advertisment-title">
                                 <h3>Additional Infomation</h3>
+                            </div>
+                            <div class="row form-group floor_div">
+                                {{ Form::label('add_land_area','Land area:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('add_land_area') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('add_land_area', old('add_land_area'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Land area']) !!}
+                                            {!! $errors->first('add_land_area', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row form-group floor_div">
                                 {{ Form::label('floor','Total Number Of Floor:',['class' => 'col-sm-4 advertis-label']) }}
@@ -380,23 +426,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                     {!! $errors->first('nearby', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
-                            <!--  map   -->
-                            <div class="advertisment-title">
-                                <h3>Property Location on Map</h3>
-                            </div>
-                            <div class="property-map">
-                                <div class="row no-gutters form-group">
-                                    <div class="col-12">
-                                        <div class="form-group {!! $errors->has('map_url') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                {!! Form::text('map_url', old('map_url'), [ 'class' => 'form-control',  'placeholder' => 'Paste Your Location Map URL']) !!}
-                                                {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            
                             <!--  image & video   -->
                             <div class="advertisment-title">
                                 <h3>Image & Videos</h3>
@@ -412,12 +442,25 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                 </div>
                             </div>
 
+                            <div class="row form-group {{--map--}}">
+                                {{ Form::label('map_url','Property Location on Map:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('map_url') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('map_url', old('map_url'), [ 'id'=>'map_url','class' => 'form-control','placeholder'=>'Paste Your Location Map Embeded Code']) !!}
+                                            {!! $errors->first('map_url', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="row form-group {{--video-tag--}}">
                                 {{ Form::label('videoURL','Video:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('videoURL') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('videoURL', old('videoURL'), [ 'id'=>'videoURL','class' => 'form-control','placeholder'=>'Paste your youtube video URL']) !!}
+                                            {!! Form::text('videoURL', old('videoURL'), [ 'id'=>'videoURL','class' => 'form-control','placeholder'=>'Paste your youtube video embed code']) !!}
                                             {!! $errors->first('videoURL', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -451,17 +494,6 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
                                         <div class="controls">
                                             <input id="mobile" class="form-control" placeholder="Property Owner Number" value="{{Auth::user()->MOBILE_NO}}" data-validation-required-message="This field is required" name="mobile" type="number">
                                             {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                {{ Form::label('contact_person_2','Second Contact Person:',['class' => 'col-sm-4 advertis-label']) }}
-                                <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('contact_person_2') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::text('contact_person_2', old('contact_person_2'), [ 'id'=>'contact_person_2','class' => 'form-control','placeholder'=>'Auto fill owner name except agent user']) !!}
-                                            {!! $errors->first('contact_person_2', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -520,6 +552,54 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
     </script>
     <script>
 
+        $('#city').on('change',function(){
+            let city = $('#city').find(":selected").text();
+            let area = $('#area').find(":selected").text();
+            let sub_area = $('#sub_area').find(":selected").text();
+            let road = $('#road').val();
+            let house = $('#house').val();
+            let address = road + ',' +house +','+sub_area +','+area +',' + city;
+             $('#address').val(address);
+
+        })
+        $('#area').on('change',function(){
+            let area = $('#area').find(":selected").text();
+            let city = $('#city').find(":selected").text();
+            let sub_area = $('#sub_area').find(":selected").text();
+            let road = $('#road').val();
+            let house = $('#house').val();
+            let address = house + ',' +road +','+sub_area +','+area +',' + city;
+             $('#address').val(address);
+
+        })
+        $('#sub_area').on('change',function(){
+            let sub_area = $('#sub_area').find(":selected").text();
+            let area = $('#area').find(":selected").text();
+            let city = $('#city').find(":selected").text();
+            let road = $('#road').val();
+            let house = $('#house').val();
+            let address = house + ',' +road +','+sub_area +','+area +',' + city;
+             $('#address').val(address);
+
+        })
+        $(document).on('keyup', '#road', function() {
+            let road = ($(this).val());
+            let house = $('#house').val();
+            let city = $('#city').find(":selected").text();
+            let area = $('#area').find(":selected").text();
+            let sub_area = $('#sub_area').find(":selected").text();
+            let address = house + ',' +road +','+sub_area +','+area +',' + city;
+             $('#address').val(address);
+        });
+        $(document).on('keyup', '#house', function() {
+            let house = ($(this).val());
+            let road = $('#road').val();
+            let area = $('#area').find(":selected").text();
+            let city = $('#city').find(":selected").text();
+            let sub_area = $('#sub_area').find(":selected").text();
+            let address = house + ',' +road +','+sub_area +','+area +',' + city;
+             $('#address').val(address);
+        });
         $('#imageFile').imageUploader();
 
         $('.datetimepicker').datetimepicker({
@@ -633,7 +713,7 @@ $bath_room = Config::get('static_array.bath_room') ?? [];
 
         $(document).ready(function () {
             $(".floor_available_select").select2({
-                placeholder: "Select Floors",
+                placeholder: "Select one or more",
             });
         });
 

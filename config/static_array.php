@@ -36,6 +36,12 @@ return [
         '3'    => '3 Bath',
         '4'    => '4 Bath',
     ],
+    'balcony' => [
+        '1'    => '1 balcony',
+        '2'    => '2 balcony',
+        '3'    => '3 balcony',
+        '4'    => '4 balcony',
+    ],
 
     'claiming_reason' => [
         '1'    => 'Claiming Reason 1',
