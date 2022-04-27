@@ -80,6 +80,11 @@ class ListingController extends Controller
         $data['html'] = view('listing._add_listing_variant',compact('request'))->render();
         return response()->json($data);
     }
+    public function addListingPhone(Request $request)
+    {
+        $data['html'] = view('listing._add_listing_variant_phone',compact('request'))->render();
+        return response()->json($data);
+    }
 
     public function getAvailableFloor()
     {

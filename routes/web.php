@@ -151,6 +151,7 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
     Route::get('ajax-get-property-type/{id}', 'ListingController@getPropertyType')->name('get.property_type');
     Route::get('ajax-get-available-floor', 'ListingController@getAvailableFloor')->name('get.available.floor');
     Route::get('ajax-add-listing-variant', 'ListingController@addListingVariant')->name('add-listing-variant');
+    Route::get('ajax-add-listing-phone', 'ListingController@addListingPhone')->name('add-listing-phone');
     Route::get('ajax-get-area/{id}', 'OwnerController@getArea')->name('getarea');
 });
 

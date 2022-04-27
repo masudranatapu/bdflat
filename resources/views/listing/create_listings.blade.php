@@ -396,11 +396,18 @@ $balcony = Config::get('static_array.balcony') ?? [];
                             </div>
                             <div class="row form-group">
                                 <div class="col-lg-12">
+                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                <input id="features30" class="form-check-input" name="select_all[]" type="checkbox" value="1">
+                                                <label for="features30" class="form-check-label">Select All</label>
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
                                     @foreach($listing_features as $key => $listing_feature)
                                         <div
                                             class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input']) !!}
+                                                {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input features']) !!}
                                                 {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}
                                             </div>
                                         </div>
@@ -413,12 +420,20 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                 <h3>Facilities Within 1km</h3>
                             </div>
                             <div class="row form-group">
+                                
                                 <div class="col-lg-12">
+                                    <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            <input id="faciliti_all" class="form-check-input" name="select_all[]" type="checkbox" value="1">
+                                            <label for="faciliti_all" class="form-check-label">Select All</label>
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
                                     @foreach($nearby as $key => $item)
                                         <div
                                             class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key]) !!}
+                                                {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key,'class' =>'form-check-input faciliti']) !!}
                                                 {{ Form::label('nearby'.$key,$item) }}
                                             </div>
                                         </div>
@@ -487,24 +502,24 @@ $balcony = Config::get('static_array.balcony') ?? [];
                             @php
                                 // dd(Auth::user());
                             @endphp
-                            <div class="row form-group">
-                                {{ Form::label('mobile','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
-                                <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            <input id="mobile" class="form-control" placeholder="Property Owner Number" value="{{Auth::user()->MOBILE_NO}}" data-validation-required-message="This field is required" name="mobile" type="number">
-                                            {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
-                                        </div>
-                                    </div>
-                                </div>
+                            <!--  Property Size & Price  -->
+                            <div class="advertisment-title">
+                                <h3>Add New Phone Number
+                                    <button type="button" class="btn btn-xs btn-danger" id="add_btn2">+ Add New Phone Number
+                                    </button>
+                                </h3>
                             </div>
-                            <div class="row form-group">
-                                {{ Form::label('mobile_2','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
-                                <div class="col-sm-8">
-                                    <div class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
-                                        <div class="controls">
-                                            {!! Form::number('mobile_2', old('mobile_2'), [ 'id'=>'mobile_2','class' => 'form-control','placeholder'=>'Property Owner Number']) !!}
-                                            {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
+                            
+
+                            <div id="multiplePhone">
+                                <div class="row form-group">
+                                    {{ Form::label('mobile','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
+                                    <div class="col-sm-8">
+                                        <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
+                                            <div class="controls">
+                                                <input id="mobile" class="form-control" placeholder="Property Owner Number" value="{{Auth::user()->MOBILE_NO}}" data-validation-required-message="This field is required" name="mobile[]" type="number">
+                                                {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -613,17 +628,46 @@ $balcony = Config::get('static_array.balcony') ?? [];
         });
         
         $(document).ready(function(){
-            $('#categoryall').on('click',function(){
+            $('#features30').on('click',function(){
+                var slect_all = ($(this).val());
                     if(this.checked){
-                        $('.category').each(function(){
+                        $('.features').each(function(){
                             this.checked = true;
                         });
                     }else{
-                        $('.category').each(function(){
+                        $('.features').each(function(){
                             this.checked = false;
                         });
                     }
-                });
+            });
+            $('.features').on('click',function(){
+            if($('.features:checked').length == $('.features').length){
+                $('#features30').prop('checked',true);
+            }else{
+                $('#features30').prop('checked',false);
+            }
+        });
+        });
+        $(document).ready(function(){
+            $('#faciliti_all').on('click',function(){
+                var slect_all = ($(this).val());
+                    if(this.checked){
+                        $('.faciliti').each(function(){
+                            this.checked = true;
+                        });
+                    }else{
+                        $('.faciliti').each(function(){
+                            this.checked = false;
+                        });
+                    }
+            });
+            $('.faciliti').on('click',function(){
+            if($('.faciliti:checked').length == $('.faciliti').length){
+                $('#faciliti_all').prop('checked',true);
+            }else{
+                $('#faciliti_all').prop('checked',false);
+            }
+        });
         });
         var basepath = $('#base_url').val();
 
@@ -710,7 +754,30 @@ $balcony = Config::get('static_array.balcony') ?? [];
             $(this).closest(".size_child").remove();
         });
 
+        $(document).on('click', '#add_btn2', function () {
+            $.ajax({
+                type: 'get',
+                url: basepath + '/ajax-add-listing-phone',
+                async: true,
+                dataType: 'json',
+                beforeSend: function () {
+                    $("body").css("cursor", "progress");
+                },
+                success: function (response) {
+                    $("#multiplePhone").append(response.html);
 
+                },
+                complete: function (data) {
+                    $("body").css("cursor", "default");
+
+
+                }
+            });
+        });
+
+        $(document).on("click", ".del_btn_phn", function () {
+            $(this).closest(".size_child_phn").remove();
+        });
         $(document).ready(function () {
             $(".floor_available_select").select2({
                 placeholder: "Select one or more",
