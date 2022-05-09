@@ -124,7 +124,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                                 </div>
                             </div>
                         {!! Form::close() !!}
-                        <form action="" method="post">
+                        {{-- <form action="" method="post">
                             <div class="row" id="verification_code">
                                 <div class="col-12 justify-content-center form-group text-left {!! $errors->has('phone') ? 'error' : '' !!}" >
                                     <div class="controls">
@@ -143,7 +143,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
 
                         {{-- <div class="login-account text-center">
                             <h3>Have an Account on BDF.com?</h3>
