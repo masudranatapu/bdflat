@@ -422,7 +422,7 @@ class Listings extends Model
             $list->CONTACT_PERSON2 = $request->contact_person_2;
             $list->MOBILE1 = $request->mobile;
             $list->MOBILE2 = $request->mobile_2;
-            $list->MOBILE2 = $request->mobile_3;
+            $list->MOBILE3 = $request->mobile_3;
             $list->F_LISTING_TYPE = $request->listing_type;
             $list->TOTAL_FLOORS = $floors;
             $list->FLOORS_AVAIABLE = $floor_available;
