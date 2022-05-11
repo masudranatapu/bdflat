@@ -115,6 +115,63 @@ class LoginController extends Controller
         }
 
     }
+    public function seeking_resend_otp(Request $request)
+    {
+
+        $phone = $request->mobile;
+        $otp = rand(1000, 9999);
+        $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
+        $todate = date('Y-m-d');
+        $user = DB::table('web_user')->where('MOBILE_NO', $phone)->where('STATUS',1)->first();
+        $user_check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('STATUS',1)->first();
+        if($user_check){
+          Auth::login($user);
+          Session::start();
+          return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
+        }
+
+        $check = DB::table('otp_varification')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
+        Session::put('otp_phone',$phone);
+
+        //daily d times er besi send kora jabe na. $check && count($check)
+        if ($check > 6) {
+            return redirect()->back()->withDanger(__('Today you has Block, Please try again nextday.'));
+        }
+         else {
+          $user_id = $user->PK_NO;
+          DB::table('otp_varification')->insert([
+              'MOBILE' => $phone,
+              'USER_ID' => $user_id,
+              'OTP_DATE' => date('Y-m-d'),
+              'OTP' => $otp,
+              'STATUS' => 0,
+              'EXPIRE_TIME' => $expire_time,
+              'CREATED_AT' => now(),
+              'CREATED_BY' => 1,
+              'UPDATED_AT' => null,
+              'UPDATED_BY' => null,
+          ]);
+
+            $response = true;
+            // $response = $this->sendSMS($phone, $otp);
+            if ($response) {
+                $res['success'] = true;
+                $res['MOBILE_NO'] = $phone;
+
+            } else {
+                $res['success'] = false;
+                $res['MOBILE_NO'] = $phone;
+            }
+            $res = json_encode($res);
+             // return response()->json(['success'=>'Check your mobile OTP send again.']);
+             return response()->json([
+                'phone'=> $phone,
+                'phone_count' => $check
+            ]);
+
+        }
+
+    }
 //work controller
     public function verifyOTP(Request $request)
     {
@@ -229,6 +286,7 @@ class LoginController extends Controller
         $name = $request->get('mobile');
         $phone = $request->get('mobile');
         $user = User::where('MOBILE_NO',$phone)->first();
+        Session::put('otp_phone',$phone);
         $otp = rand(1000, 9999);
         if(empty($user)){
             $user = new User();
@@ -277,5 +335,64 @@ class LoginController extends Controller
         // return redirect('/seeker_reg?response='.$res);
 
 
+    }
+    public function seeker_register_submit_ajax(Request $request){
+        $data = $request->validate([
+            'mobile' => 'required',
+            // 'name' => 'nullable|string|min:2|max:30',
+        ]);
+
+        $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
+        $name = $request->get('mobile');
+        $phone = $request->get('mobile');
+        $user = User::where('MOBILE_NO',$phone)->first();
+        $otp = rand(1000, 9999);
+        if(empty($user)){
+            $user = new User();
+            $user->USER_TYPE    = 1;
+            // $user->NAME         = $phone;
+            $user->NAME         = $name;
+            // $user->EMAIL        = $request->get('email');
+            $user->EMAIL        = $phone;
+            $user->MOBILE_NO    = $phone;
+            $user->PASSWORD     = Hash::make($phone);
+            $user->save();
+        }
+        
+        // $user->OTP = $otp;
+
+
+        // $user_id = Session::getId();
+        $user_id = $user->PK_NO;
+
+        DB::table('OTP_VARIFICATION')->insert([
+            'MOBILE' => $phone,
+            'USER_ID' => $user_id,
+            'OTP_DATE' => date('Y-m-d'),
+            'OTP' => $otp,
+            'STATUS' => 0,
+            'EXPIRE_TIME' => $expire_time,
+            'CREATED_AT' => now(),
+            'CREATED_BY' => 1,
+            'UPDATED_AT' => null,
+            'UPDATED_BY' => null,
+        ]);
+        $response = true;
+        $res = [];
+        // $response = $this->sendSMS($phone, $otp);
+        if ($response) {
+            $res['success'] = true;
+            $res['MOBILE_NO'] = $phone;
+
+        } else {
+            $res['success'] = false;
+            $res['MOBILE_NO'] = $phone;
+        }
+        $res = json_encode($res);
+        return response()->json([
+            'phone'=> $phone,
+            ]);
+
+        // return redirect('/seeker_reg?response='.$res);
     }
 }

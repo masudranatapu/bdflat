@@ -30,7 +30,7 @@
         <!-- custom_script -->
         @stack('custom_js')
         <!-- end custom_script -->
-        <script type="text/javascript">
+        {{-- <script type="text/javascript">
           var timeLeft = 60;
           var elem = document.getElementById('Timer');
           var elem_time = document.getElementById('Timer_out');
@@ -50,7 +50,7 @@
               elem_time.style.display = 'none';
             }
         }
-        </script>
+        </script> --}}
 
     </body>
 </html>

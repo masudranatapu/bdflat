@@ -422,6 +422,7 @@ class Listings extends Model
             $list->CONTACT_PERSON2 = $request->contact_person_2;
             $list->MOBILE1 = $request->mobile;
             $list->MOBILE2 = $request->mobile_2;
+            $list->MOBILE2 = $request->mobile_3;
             $list->F_LISTING_TYPE = $request->listing_type;
             $list->TOTAL_FLOORS = $floors;
             $list->FLOORS_AVAIABLE = $floor_available;
@@ -429,19 +430,22 @@ class Listings extends Model
             $list->CREATED_BY = Auth::id();
             $list->save();
 
-            //           for store listing variants
+            //for store listing variants
             $property_size = $request->size;
             foreach ($property_size as $key => $item) {
 
                 if ($request->p_type == 'A') {
                     $bedroom = $request->bedroom[$key];
                     $bathroom = $request->bathroom[$key];
+                    $balcony = $request->balcony[$key];
                 } elseif ($request->p_type == 'B') {
                     $bedroom = 0;
                     $bathroom = 0;
+                    $balcony = 0;
                 } else {
                     $bedroom = 0;
                     $bathroom = 0;
+                    $balcony = 0;
                 }
 
                 if ($key == 0) {
@@ -455,6 +459,9 @@ class Listings extends Model
                     'PROPERTY_SIZE' => $request->size[$key],
                     'BEDROOM' => $bedroom,
                     'BATHROOM' => $bathroom,
+                    'TOTAL_PRICE' => $request->price[$key],
+                    'CAR_PARKING' => $request->car_parking[$key],
+                    'LAND_AREA' => $request->land_area[$key],
                     'TOTAL_PRICE' => $request->price[$key],
                     'IS_DEFAULT' => $is_default,
                 );

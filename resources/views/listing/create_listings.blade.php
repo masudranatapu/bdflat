@@ -502,28 +502,42 @@ $balcony = Config::get('static_array.balcony') ?? [];
                             @php
                                 // dd(Auth::user());
                             @endphp
-                            <!--  Property Size & Price  -->
-                            <div class="advertisment-title">
-                                <h3>Add New Phone Number
-                                    <button type="button" class="btn btn-xs btn-danger" id="add_btn2">+ Add New Phone Number
-                                    </button>
-                                </h3>
-                            </div>
+                        
                             
 
-                            <div id="multiplePhone">
-                                <div class="row form-group">
-                                    {{ Form::label('mobile','Mobile:',['class' => 'col-sm-4 advertis-label']) }}
-                                    <div class="col-sm-8">
-                                        <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
-                                            <div class="controls">
-                                                <input id="mobile" class="form-control" placeholder="Property Owner Number" value="{{Auth::user()->MOBILE_NO}}" data-validation-required-message="This field is required" name="mobile[]" type="number">
-                                                {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
-                                            </div>
-                                        </div>
+                        <div class="row form-group">
+                            {{ Form::label('mobile','Mobile 1:',['class' => 'col-sm-4 advertis-label']) }}
+                            <div class="col-sm-8">
+                                <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        <input id="mobile" class="form-control" placeholder="Property Owner Number" value="{{Auth::user()->MOBILE_NO}}" data-validation-required-message="This field is required" name="mobile" type="number">
+                                        {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row form-group">
+                            {{ Form::label('mobile_2','Mobile 2:',['class' => 'col-sm-4 advertis-label']) }}
+                            <div class="col-sm-8">
+                                <div class="form-group {!! $errors->has('mobile_2') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        <input id="mobile_2" class="form-control" placeholder="Property Owner Number" value="{{old('mobile_2')}}" name="mobile_2" type="number">
+                                        {!! $errors->first('mobile_2', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            {{ Form::label('mobile_3','Mobile 3:',['class' => 'col-sm-4 advertis-label']) }}
+                            <div class="col-sm-8">
+                                <div class="form-group {!! $errors->has('mobile') ? 'error' : '' !!}">
+                                    <div class="controls">
+                                        <input id="mobile_3" class="form-control" placeholder="Property Owner Number" value="{{old('mobile_3')}}" name="mobile_3" type="number">
+                                        {!! $errors->first('mobile_3', '<label class="help-block text-danger">:message</label>') !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                             <!--  listing  type -->
                             <div class="advertisment-title">
@@ -563,6 +577,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
     <script>
         //ck editor
         CKEDITOR.replace('description');
+        
 
     </script>
     <script>
@@ -612,6 +627,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
             let area = $('#area').find(":selected").text();
             let city = $('#city').find(":selected").text();
             let sub_area = $('#sub_area').find(":selected").text();
+            
             let address = house + ',' +road +','+sub_area +','+area +',' + city;
              $('#address').val(address);
         });
