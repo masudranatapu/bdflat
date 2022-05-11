@@ -62,8 +62,8 @@ class ListingsRequest extends FormRequest
             'mobile.required'           => 'Mobile Number is required!',
             'mobile.regex'              => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
             'contact_person_2.required' => 'Contact Person is required!',
-            'mobile_2.required'         => 'Mobile Number is required!',
-            'mobile_2.regex'            => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
+            // 'mobile_2.required'         => 'Mobile Number is required!',
+            // 'mobile_2.regex'            => 'Mobile Number Should Less Than 15 Character & Follow Mobile Number Format',
             'listing_type.required'     => 'Listing Type is required!',
         ];
     }
