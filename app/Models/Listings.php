@@ -31,11 +31,14 @@ class Listings extends Model
         'F_PROPERTY_TYPE_NO',
         'PROPERTY_TYPE',
         'ADDRESS',
+        'HOUSE',
+        'ROAD',
         'PROPERTY_CONDITION',
         'F_PROPERTY_CONDITION',
         'PROPERTY_SIZE',
         'BEDROOM',
         'BATHROOM',
+        'BALCONY',
         'TOTAL_PRICE',
         'PRICE_TYPE',
         'TITLE',
@@ -52,6 +55,7 @@ class Listings extends Model
         'CONTACT_PERSON2',
         'MOBILE1',
         'MOBILE2',
+        'MOBILE3',
         'F_LISTING_TYPE',
         'LISTING_TYPE',
         'F_PREP_TENANT_NO',
@@ -414,6 +418,8 @@ class Listings extends Model
             $list->F_AREA_NO = $request->area;
             $list->F_SUBAREA_NO = $request->sub_area;
             $list->ADDRESS = $request->address;
+            $list->HOUSE = $request->house;
+            $list->ROAD = $request->road;
             $list->F_PROPERTY_CONDITION = $request->condition;
             $list->TITLE = $request->property_title;
             $list->URL_SLUG = $slug;
@@ -457,6 +463,7 @@ class Listings extends Model
                 $data = array(
                     'F_LISTING_NO' => $list->PK_NO,
                     'PROPERTY_SIZE' => $request->size[$key],
+                    'BALCONY' => $balcony,
                     'BEDROOM' => $bedroom,
                     'BATHROOM' => $bathroom,
                     'TOTAL_PRICE' => $request->price[$key],
@@ -473,13 +480,23 @@ class Listings extends Model
                 foreach ($request->file('images') as $key => $image) {
                     $name = uniqid() . '.' . $image->getClientOriginalExtension();
                     $name2 = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $name3 = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $name4 = uniqid() . '.' . $image->getClientOriginalExtension();
                     $waterMarkUrl = public_path('assets/img/logo.png');
 
                     $destinationPath = public_path('/uploads/listings/' . $list->PK_NO . '/');
                     $destinationPath2 = public_path('/uploads/listings/' . $list->PK_NO . '/thumb');
+                    $destinationPath3 = public_path('/uploads/listings/' . $list->PK_NO . '/og_image');
+                    $destinationPath4 = public_path('/uploads/listings/' . $list->PK_NO . '/small_img');
 
                     if (!file_exists($destinationPath2)) {
                         mkdir($destinationPath2, 0755, true);
+                    }
+                    if (!file_exists($destinationPath3)) {
+                        mkdir($destinationPath3, 0755, true);
+                    }
+                    if (!file_exists($destinationPath4)) {
+                        mkdir($destinationPath4, 0755, true);
                     }
 
                     $thumb_img = Image::make($image->getRealPath());
@@ -495,6 +512,32 @@ class Listings extends Model
                     $thumb_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
                     $thumb_img->save($destinationPath . '/' . $name);
 
+                    $og_img = Image::make($image->getRealPath());
+
+                    $og_img->backup();
+
+                    $og_img->resize(300, 180, function ($constraint) {
+                    });
+                    $og_img->save($destinationPath3 . '/' . $name3);
+
+                    $og_img->reset();
+
+                    $og_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
+                    $og_img->save($destinationPath . '/' . $name);
+
+                    $sm_img = Image::make($image->getRealPath());
+
+                    $sm_img->backup();
+
+                    $sm_img->resize(200, 130, function ($constraint) {
+                    });
+                    $sm_img->save($destinationPath4 . '/' . $name4);
+
+                    $sm_img->reset();
+
+                    $sm_img->insert($waterMarkUrl, 'bottom-left', 5, 5);
+                    $sm_img->save($destinationPath . '/' . $name);
+
                     if ($key == 0) {
                         $is_default = 1;
                     } else {
@@ -507,6 +550,10 @@ class Listings extends Model
                         'IMAGE' => $name,
                         'THUMB_PATH' => '/uploads/listings/' . $list->PK_NO . '/thumb/' . $name2,
                         'THUMB' => $name2,
+                        'OG_PATH' => '/uploads/listings/' . $list->PK_NO . '/og_image/' . $name3,
+                        'OG_IMAGE' => $name3,
+                        'SM_PATH' => '/uploads/listings/' . $list->PK_NO . '/small_img/' . $name4,
+                        'SM_IMAGE' => $name4,
                         'IS_DEFAULT' => $is_default,
                     ]);
                 }

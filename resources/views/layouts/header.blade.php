@@ -283,7 +283,8 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                 </ul>
             </div>
         </nav><!-- nav -->
-
+        @if(Auth::user())
+        @if(Auth::user()->USER_TYPE != 1)
         <!-- post add -->
         <div class="nav-btn">
             {{-- <a type="button" data-toggle="modal" data-target="#exampleModal">
@@ -296,6 +297,30 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
             @endif
         </div>
         <!-- Modal -->
+        @else
+        <!-- post add -->
+        <div class="nav-btn">
+            {{-- <a type="button" data-toggle="modal" data-target="#exampleModal">
+                Post Your Ad
+            </a> --}}
+            <a href="{{url('property-requirements') }}">Property Requirement</a>
+        </div>
+        <!-- Modal -->
+        @endif
+        @else
+        <!-- post add -->
+        <div class="nav-btn">
+            {{-- <a type="button" data-toggle="modal" data-target="#exampleModal">
+                Post Your Ad
+            </a> --}}
+            @if(Auth::user())
+            <a href="{{route('listings.create') }}">Post Your Ad</a>
+            @else
+            <a href="#" data-toggle="modal" data-target="#exampleModal">Post Your Ad</a>
+            @endif
+        </div>
+        <!-- Modal -->
+        @endif
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">

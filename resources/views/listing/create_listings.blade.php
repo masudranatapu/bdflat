@@ -404,11 +404,15 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                             </div>
                                         </div>
                                     @foreach($listing_features as $key => $listing_feature)
+                                    @php
+                                        $data_icon = App\Models\ListingFeatures::find($key);
+                                    @endphp
                                         <div
                                             class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input features']) !!}
                                                 {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}
+                                                <img src="{{asset($data_icon->ICON)}}" alt="{{$listing_feature}}" style="height: 40px;width: 40px">
                                             </div>
                                         </div>
                                     @endforeach
@@ -430,11 +434,15 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                         </div>
                                     </div>
                                     @foreach($nearby as $key => $item)
+                                    @php
+                                        $data_icon = App\Models\NearBy::find($key);
+                                    @endphp
                                         <div
                                             class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
                                             <div class="controls">
                                                 {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key,'class' =>'form-check-input faciliti']) !!}
                                                 {{ Form::label('nearby'.$key,$item) }}
+                                                <img src="{{asset($data_icon->ICON)}}" alt="{{$item}}" style="height: 40px;width: 40px">
                                             </div>
                                         </div>
                                     @endforeach
@@ -458,7 +466,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                             </div>
 
                             <div class="row form-group {{--map--}}">
-                                {{ Form::label('map_url','Property Location on Map:',['class' => 'col-sm-4 advertis-label']) }}
+                                {{ Form::label('map_url','Google Map Embed Code:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('map_url') ? 'error' : '' !!}">
                                         <div class="controls">
@@ -471,7 +479,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
 
 
                             <div class="row form-group {{--video-tag--}}">
-                                {{ Form::label('videoURL','Video:',['class' => 'col-sm-4 advertis-label']) }}
+                                {{ Form::label('videoURL','Youtube Embed Code:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('videoURL') ? 'error' : '' !!}">
                                         <div class="controls">
