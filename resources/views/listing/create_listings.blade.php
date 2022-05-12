@@ -584,9 +584,23 @@ $balcony = Config::get('static_array.balcony') ?? [];
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
     <script>
         //ck editor
-        CKEDITOR.replace('description');
+        CKEDITOR.replace('description', {
+      // Define the toolbar groups as it is a more accessible solution.
+      toolbarGroups: [{
+          "name": "basicstyles",
+          "groups": ["basicstyles"]
+        },
+        {
+          "name": "paragraph",
+          "groups": ["list", "blocks"]
+        },
         
-
+        
+      ],
+      height: '100px',
+      // Remove the redundant buttons from toolbar groups defined above.
+      removeButtons: 'Underline,Strike,Subscript,Superscript,Anchor,Styles,Specialchar,PasteFromWord'
+    });
     </script>
     <script>
 
