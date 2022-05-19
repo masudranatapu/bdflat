@@ -386,7 +386,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                         <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
                             <div class="controls">
                                 <label for="phone" class="control-label">Phone No:</label>
-                                {!! Form::tel('mobile', old('mobile'), [ 'class' => 'form-control', 'id' => 'phone', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
+                                {!! Form::tel('mobile', old('mobile'), [ 'class' => 'form-control', 'id' => 'phone_number', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
                                 {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                 <span class="text-danger" id="mobileErrorMsg"></span>
                             </div>
@@ -434,14 +434,24 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
     </div><!-- container-fluid  -->
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/intlTelInput.min.js"></script>
+
+<script>
+    var phone_number = window.intlTelInput(document.querySelector("#phone_number"), {
+  separateDialCode: true,
+  preferredCountries:["bd"],
+  hiddenInput: "full",
+  utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+});
+</script>
 
 <script type="text/javascript">
 
 $('#phone_form').on('submit',function(e){
     e.preventDefault();
-    let mobile = $('#phone').val();
-
-    // alert(mobile);
+    var mobile = phone_number.getNumber(intlTelInputUtils.numberFormat.E164);
+    $("input[name='phone_number[full]'").val(mobile);
     
     $.ajax({
       url: "{{route('seeking-owner-register')}}",
