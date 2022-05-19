@@ -389,6 +389,8 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                                 {!! Form::tel('mobile', old('mobile'), [ 'class' => 'form-control', 'id' => 'phone_number', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
                                 {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                 <span class="text-danger" id="mobileErrorMsg"></span>
+                                <span id="valid-msg" style="hide"></span>
+                                <span id="error-msg" class="hide"></span>
                             </div>
                         </div>
 
@@ -438,20 +440,61 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/intlTelInput.min.js"></script>
 
 <script>
-    var phone_number = window.intlTelInput(document.querySelector("#phone_number"), {
-  separateDialCode: true,
-  preferredCountries:["bd"],
-  hiddenInput: "full",
-  utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+//     var phone_number = window.intlTelInput(document.querySelector("#phone_number"), {
+//   separateDialCode: true,
+//   preferredCountries:["bd"],
+//   hiddenInput: "full",
+//   utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+// });
+var input = document.querySelector("#phone_number"),
+  errorMsg = document.querySelector("#error-msg"),
+  validMsg = document.querySelector("#valid-msg");
+//   input_button = document.querySelector("#send_form");
+
+// here, the index maps to the error code returned from getValidationError - see readme
+var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+// initialise plugin
+var iti = window.intlTelInput(input, {
+    utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
 });
+
+var reset = function() {
+// input_button.classList.remove("disable");
+  input.classList.remove("error");
+  errorMsg.innerHTML = "";
+  errorMsg.classList.add("hide");
+  validMsg.classList.add("hide");
+};
+// on blur: validate
+input.addEventListener('blur', function() {
+  reset();
+  if (input.value.trim()) {
+    if (iti.isValidNumber()) {
+      validMsg.classList.remove("hide");
+    //   input_button.classList.remove("disable");
+    } else {
+      input.classList.add("error");
+      var errorCode = iti.getValidationError();
+      errorMsg.innerHTML = errorMap[errorCode];
+      errorMsg.classList.remove("hide");
+    //   input_button.classList.add("disable");
+    //   $('#send_form').hide();
+    }
+  }
+});
+
+// on keyup / change flag: reset
+input.addEventListener('change', reset);
+input.addEventListener('keyup', reset);
 </script>
 
 <script type="text/javascript">
 
+
 $('#phone_form').on('submit',function(e){
     e.preventDefault();
-    var mobile = phone_number.getNumber(intlTelInputUtils.numberFormat.E164);
-    $("input[name='phone_number[full]'").val(mobile);
+    mobile = $("#phone_number").val();
     
     $.ajax({
       url: "{{route('seeking-owner-register')}}",
