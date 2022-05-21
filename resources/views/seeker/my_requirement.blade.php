@@ -98,7 +98,7 @@ if (isset($data['row'])) {
 
                         <div class="row form-group {!! $errors->has('city') ? 'error' : '' !!}">
                             {{ Form::label('city', 'Select location:', ['class' => 'col-md-4 label-title']) }}
-                            <div class="col-md-8" style="margin-left: -5px">
+                            <div class="col-md-8">
                                 <div class="controls">
                                     {!! Form::select('city', $cities, !empty($row)?$row->F_CITY_NO:old('city'), ['class' => 'select2 form-control', 'id' => 'cities', 'data-validation-required-message' => 'Location is required', 'placeholder' => 'Select city']) !!}
                                     {!! $errors->first('city', '<label class="help-block text-danger">:message</label>') !!}
@@ -108,7 +108,7 @@ if (isset($data['row'])) {
 
                         <div class="row form-group {!! $errors->has('area') ? 'error' : '' !!}">
                             {{ Form::label('city', 'Select areas:', ['class' => 'col-md-4 label-title']) }}
-                            <div class="col-md-8" style="margin-left: -5px">
+                            <div class="col-md-8">
                                 <div class="controls">
                                     {!! Form::select('area[]', $data['areas'] ?? [], $old_areas, ['class' => 'select2 form-control', 'id' => 'area', 'data-validation-required-message' => 'Area is required', 'multiple','placeholder' => 'Select are based on city']) !!}
                                     {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
@@ -118,7 +118,7 @@ if (isset($data['row'])) {
                         <!-- Looking property for -->
                         <div class="row form-group {!! $errors->has('itemCon') ? 'error' : '' !!}">
                             {{ Form::label(null,'Looking property for:',['class' => 'col-md-4 label-title']) }}
-                            <div class="col-md-8 property-looking" style="margin-left: -6px">
+                            <div class="col-md-8 property-looking">
                                 <div class="controls">
                                     {!! Form::radio('itemCon','sale', !empty($row)?$row->PROPERTY_FOR=='sale'?true:false:old('itemCon'),[ 'id' => 'buy','data-validation-required-message' => 'This field is required']) !!}
                                     {{ Form::label('buy','Buy') }}
@@ -130,11 +130,11 @@ if (isset($data['row'])) {
                         </div>
 
                         <!--  property type -->
-                        <div class="row form-group property-type {!! $errors->has('property_type') ? 'error' : '' !!}">
+                        <div class="row form-group {!! $errors->has('property_type') ? 'error' : '' !!}">
                             {{ Form::label('property_type','Property Type:',['class' => 'col-sm-4 label-title']) }}
-                            <div class="col-md-8" style="margin-left: -6px; padding-right: 0">
+                            <div class="col-md-8">
                                 <div class="controls">
-                                    {!! Form::select('property_type', $property_types,!empty($row)?$row->F_PROPERTY_TYPE_NO:null,['id'=>'property-type','class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required']) !!}
+                                    {!! Form::select('property_type', $property_types,!empty($row)?$row->F_PROPERTY_TYPE_NO:null,['id'=>'property-type','class'=>'form-control', 'placeholder'=>'Select property type','data-validation-required-message' => 'This field is required','style="height: 39px;"']) !!}
                                     {!! $errors->first('property_type', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>

@@ -443,15 +443,15 @@ class Listings extends Model
                 if ($request->p_type == 'A') {
                     $bedroom = $request->bedroom[$key];
                     $bathroom = $request->bathroom[$key];
-                    $balcony = $request->balcony[$key];
+                    // $balcony = $request->balcony[$key];
                 } elseif ($request->p_type == 'B') {
                     $bedroom = 0;
                     $bathroom = 0;
-                    $balcony = 0;
+                    // $balcony = 0;
                 } else {
                     $bedroom = 0;
                     $bathroom = 0;
-                    $balcony = 0;
+                    // $balcony = 0;
                 }
 
                 if ($key == 0) {
@@ -463,7 +463,7 @@ class Listings extends Model
                 $data = array(
                     'F_LISTING_NO' => $list->PK_NO,
                     'PROPERTY_SIZE' => $request->size[$key],
-                    'BALCONY' => $balcony,
+                    // 'BALCONY' => $balcony,
                     'BEDROOM' => $bedroom,
                     'BATHROOM' => $bathroom,
                     'TOTAL_PRICE' => $request->price[$key],

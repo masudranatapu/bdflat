@@ -220,7 +220,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
 
                             <div id="size_parent">
                                 <div class="row no-gutters form-group size_child">
-                                    <div class="col-6 col-md-1 size_div">
+                                    <div class="col-6 col-md-4 size_div">
                                         <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
                                             <span class="advertis-label">Size</span>
                                             <div class="controls">
@@ -231,7 +231,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-2 bedroom_div">
+                                    <div class="col-6 col-md-4 bedroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             <span class="advertis-label">Bedroom</span>
                                             <div class="controls">
@@ -242,7 +242,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-2 bathroom_div">
+                                    <div class="col-6 col-md-4 bathroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             <span class="advertis-label">Bathroom</span>
                                             <div class="controls">
@@ -252,8 +252,8 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-6 col-md-2 bathroom_div">
+                                    </div>                                    
+                                    <div class="col-6 col-md-4 bathroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('balcony') ? 'error' : '' !!}">
                                             <span class="advertis-label">Balcony</span>
                                             <div class="controls">
@@ -264,7 +264,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-1 price_div">
+                                    <div class="col-6 col-md-4 price_div">
                                         <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
                                             <span class="advertis-label">Price</span>
                                             <div class="controls">
@@ -275,7 +275,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-2 price_div">
+                                    <div class="col-6 col-md-4 price_div">
                                         <div class="form-group mb-0 {!! $errors->has('car_parking') ? 'error' : '' !!}">
                                             <span class="advertis-label">Car Parking</span>
                                             <div class="controls">
@@ -286,7 +286,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-2 price_div">
+                                    {{-- <div class="col-6 col-md-2 price_div">
                                         <div class="form-group mb-0 {!! $errors->has('land_area') ? 'error' : '' !!}">
                                             <span class="advertis-label">Land Area</span>
                                             <div class="controls">
@@ -296,7 +296,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                                 {!! $errors->first('land_area', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 

@@ -337,11 +337,19 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     <p>We've sent a 4-digit one time PIN in your phone</p>
                     <span id="sending_phn"></span>
                   </div>
-                  <form class="" id="contact_us" action="{{ route('verify-otp') }}" method="post">
+                  <form class="" id="contact_us" name="reg_form" onsubmit="return validate()" action="{{ route('verify-otp') }}" method="post">
                     @csrf
                     <input type="hidden" id="user_phone" name="MOBILE_NO">
                     <div class="form-group">
-                    <input class="form-control" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}">
+                        <input class="form-control" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}">
+                    </div>
+                    <div id="two_field" style="display: none">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="name" placeholder="Enter Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="email" placeholder="Email (Optional)">
+                        </div>
                     </div>
                     <!-- <div class="btn-group" role="group" aria-label="OTP Submit"> -->
                     <button type="submit" class="btn btn-danger text-center"  style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
@@ -456,8 +464,10 @@ var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long
 
 // initialise plugin
 var iti = window.intlTelInput(input, {
+    initialCountry: "bd",
     utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
 });
+
 
 var reset = function() {
 // input_button.classList.remove("disable");
@@ -487,6 +497,7 @@ input.addEventListener('blur', function() {
 // on keyup / change flag: reset
 input.addEventListener('change', reset);
 input.addEventListener('keyup', reset);
+
 </script>
 
 <script type="text/javascript">
@@ -510,6 +521,11 @@ $('#phone_form').on('submit',function(e){
            $('#sign_up').hide(); 
            $('#user_phone').val(response.phone)
            $('#user_phone1').val(response.phone)
+           if(response.user_phone){
+                $('#two_field').hide(); 
+           }else{
+                $('#two_field').show(); 
+           }
            document.getElementById("sending_phn").innerHTML = response.phone;
            var timeLeft = 60;
           var elem = document.getElementById('Timer');
@@ -549,6 +565,7 @@ $('#phone_form').on('submit',function(e){
         let mobile = $('#user_phone1').val();
     
         // alert(mobile);
+        var fname = document.reg_form.fname;
         
         $.ajax({
           url: "{{route('seeking-resend-otp')}}",
@@ -605,5 +622,13 @@ $('#phone_form').on('submit',function(e){
             $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
           },
           });
-        });
+        });  
+        // function validate() {  
+        // var name = document.reg_form.name;   
+        //     if (name.value.length <= 0) {  
+        //         alert("Name is required");  
+        //         name.focus();  
+        //         return false;  
+        //     }  
+        // }
       </script>
