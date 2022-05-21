@@ -204,11 +204,7 @@ class LoginController extends Controller
                    ->update(['status' => 1]);
 
               $user = User::where('MOBILE_NO',$MOBILE_NO)->first();
-              if($request->name){
-                $user->NAME = $request->name;
-                $user->EMAIL = $request->email;
-                $user->update();
-              }
+              
               
             //   dd($user);
               if($user){
@@ -352,18 +348,14 @@ class LoginController extends Controller
         $name = $request->get('mobile');
         $phone = $request->get('mobile');
         $user = User::where('MOBILE_NO',$phone)->first();
-        if(!empty($user->MOBILE_NO)){
-            $user_phone = $user->MOBILE_NO;
-        }else{
-            $user_phone = null;
-        }
+        
         
         $otp = rand(1000, 9999);
         if(empty($user)){
             $user = new User();
             $user->USER_TYPE    = 1;
-            $user->NAME         = $name;
-            $user->EMAIL        = $phone;
+            $user->NAME         = $request->name;
+            $user->EMAIL        = $request->email;
             $user->MOBILE_NO    = $phone;
             $user->PASSWORD     = Hash::make($phone);
             $user->save();
@@ -401,10 +393,20 @@ class LoginController extends Controller
         $res = json_encode($res);
         return response()->json([
             'phone'=> $phone,
-            'user_phone'=>$user_phone
         ]);
         
 
         // return redirect('/seeker_reg?response='.$res);
+    }
+    public function get_user_phone(Request $request){
+        $user = User::where('MOBILE_NO',$request->phone_number)->first();
+        if(!empty($user->MOBILE_NO)){
+            $user_phone = $user->MOBILE_NO;
+        }else{
+            $user_phone = null;
+        }
+        return response()->json([
+            'user_phone'=>$user_phone
+        ]);
     }
 }

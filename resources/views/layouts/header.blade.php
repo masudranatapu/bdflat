@@ -343,14 +343,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     <div class="form-group">
                         <input class="form-control" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}">
                     </div>
-                    <div id="two_field" style="display: none">
-                        <div class="form-group">
-                            <input class="form-control" type="text" name="name" placeholder="Enter Your Name">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" type="text" name="email" placeholder="Email (Optional)">
-                        </div>
-                    </div>
+                    
                     <!-- <div class="btn-group" role="group" aria-label="OTP Submit"> -->
                     <button type="submit" class="btn btn-danger text-center"  style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
                     <!-- <button type="submit" class="btn btn-info">REQUEST PIN AGAIN</button> -->
@@ -401,7 +394,20 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                                 <span id="error-msg" class="hide"></span>
                             </div>
                         </div>
-
+                        <div id="two_field" style="margin-left: 28px; display:none">
+                            <div class="form-group row">
+                                <label for="staticName" class="col-md-2 col-form-label">Name </label>
+                                <div class="col-md-10">
+                                  <input type="text" class="form-control" id="staticName" name="name" style="width: 254px" placeholder="Enter Your Name">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="staticEmail" class="col-md-2 col-form-label">Email</label>
+                                <div class="col-md-10">
+                                  <input type="email" class="form-control" id="staticEmail" name="email" style="width: 255px" placeholder="Enter Your Email(Optional)">
+                                </div>
+                              </div>
+                        </div>
                          <!-- <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
                             <div class="controls">
                                 <label for="email" class="control-label">Email Address:</label>
@@ -506,6 +512,8 @@ input.addEventListener('keyup', reset);
 $('#phone_form').on('submit',function(e){
     e.preventDefault();
     mobile = $("#phone_number").val();
+    name = $("#staticName").val();
+    email = $("#staticEmail").val();
     
     $.ajax({
       url: "{{route('seeking-owner-register')}}",
@@ -513,6 +521,8 @@ $('#phone_form').on('submit',function(e){
       data:{
         "_token": "{{ csrf_token() }}",
         mobile:mobile,
+        name:name,
+        email:email,
       },
       success:function(response){
         // $('#successMsg').show();
@@ -521,11 +531,7 @@ $('#phone_form').on('submit',function(e){
            $('#sign_up').hide(); 
            $('#user_phone').val(response.phone)
            $('#user_phone1').val(response.phone)
-           if(response.user_phone){
-                $('#two_field').hide(); 
-           }else{
-                $('#two_field').show(); 
-           }
+           
            document.getElementById("sending_phn").innerHTML = response.phone;
            var timeLeft = 60;
           var elem = document.getElementById('Timer');
@@ -631,4 +637,24 @@ $('#phone_form').on('submit',function(e){
         //         return false;  
         //     }  
         // }
+        $(document).on('keyup', '#phone_number', function() {
+        
+            let phone_number = $(this).val();
+            $.ajax({
+            type: 'GET',
+            url: "{{route('get-user-phone')}}",
+            data: {
+                'phone_number': phone_number
+            },
+            success: function (response) {
+                if(response.user_phone){
+                    $('#two_field').hide(); 
+                }else{
+                        $('#two_field').show(); 
+                }
+            }
+        });
+
+    
+        });
       </script>
