@@ -341,7 +341,8 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     @csrf
                     <input type="hidden" id="user_phone" name="MOBILE_NO">
                     <div class="form-group">
-                        <input class="form-control" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}">
+                        <input class="form-control" id="otp_num" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}">
+                        <span id="otp_verify_user" style="color: red"></span>
                     </div>
                     
                     <!-- <div class="btn-group" role="group" aria-label="OTP Submit"> -->
@@ -390,8 +391,8 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                                 {!! Form::tel('mobile', old('mobile'), [ 'class' => 'form-control', 'id' => 'phone_number', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
                                 {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                 <span class="text-danger" id="mobileErrorMsg"></span>
-                                <span id="valid-msg" style="hide"></span>
-                                <span id="error-msg" class="hide"></span>
+                                <span id="valid-msg" style="hide" style="display:block"></span>
+                                <span id="error-msg" class="hide" style="display:block;color:red"></span>
                             </div>
                         </div>
                         <div id="two_field" style="margin-left: 28px; display:none">
@@ -629,14 +630,8 @@ $('#phone_form').on('submit',function(e){
           },
           });
         });  
-        // function validate() {  
-        // var name = document.reg_form.name;   
-        //     if (name.value.length <= 0) {  
-        //         alert("Name is required");  
-        //         name.focus();  
-        //         return false;  
-        //     }  
-        // }
+        
+
         $(document).on('keyup', '#phone_number', function() {
         
             let phone_number = $(this).val();
@@ -652,6 +647,31 @@ $('#phone_form').on('submit',function(e){
                 }else{
                         $('#two_field').show(); 
                 }
+            }
+        });
+    });
+        $(document).on('keyup', '#otp_num', function() {
+        
+            let otp_num = $(this).val();
+            let user_phone = $('#user_phone').val();
+            // alert(user_phone);
+            $.ajax({
+            type: 'GET',
+            url: "{{route('check-otp-before-submit')}}",
+            data: {
+                'otp_num': otp_num,
+                'user_phone': user_phone
+            },
+            success: function (response) {
+                if(response.user_verify){
+                    document.getElementById("otp_verify_user").innerHTML = '<span style="color:green">Valid OTP</span>';
+                }else{
+                    document.getElementById("otp_verify_user").innerHTML = 'Invalid OTP';
+                }
+                console.log(response.user_verify)
+            },
+            error: function(response) {
+                
             }
         });
 

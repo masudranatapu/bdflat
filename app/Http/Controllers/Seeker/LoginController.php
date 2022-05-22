@@ -211,7 +211,8 @@ class LoginController extends Controller
                 Auth::login($user);
                 Session::start();
                 // auth()->login($user);
-                return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
+                return redirect()->back()->withSuccess(__('OTP verification successful.'));
+                // return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
               }
 
                // return redirect('/login?as=seeker')->withSuccess(__('OTP verification successful.'));
@@ -407,6 +408,12 @@ class LoginController extends Controller
         }
         return response()->json([
             'user_phone'=>$user_phone
+        ]);
+    }
+    public function check_otp_before_submit(Request $request){
+        $user_verify = DB::table('OTP_VARIFICATION')->where('OTP',$request->otp_num)->where('MOBILE',$request->user_phone)->orderBy('PK_NO','desc')->first();
+        return response()->json([
+            'user_verify'=>$user_verify
         ]);
     }
 }

@@ -50,6 +50,7 @@ Route::get('seeker_reg', 'Auth\RegisterController@seeker_register')->name('seeke
 Route::post('seeker_reg', 'Seeker\LoginController@seeker_register_submit')->name('seeker_register_submit');
 Route::post('seeker_reg_ajax', 'Seeker\LoginController@seeker_register_submit_ajax')->name('seeking-owner-register');
 Route::get('get-user-phone', 'Seeker\LoginController@get_user_phone')->name('get-user-phone');
+Route::get('check-otp-before-submit', 'Seeker\LoginController@check_otp_before_submit')->name('check-otp-before-submit');
 // Route::post('regOtp', 'Seeker\LoginController@regOtp')->name('regOtp');
 Route::post('send_Otp','Seeker\LoginController@send_OTP')->name('send_otp');
 Route::post('seeking-resend-otp','Seeker\LoginController@seeking_resend_otp')->name('seeking-resend-otp');

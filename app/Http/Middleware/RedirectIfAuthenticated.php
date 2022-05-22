@@ -19,7 +19,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            if(Auth::user()->USER_TYPE==2){
+                return redirect()->route('listings.create');
+            }else{
+                return redirect(RouteServiceProvider::HOME);
+            }
+            
         }
 
         return $next($request);

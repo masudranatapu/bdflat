@@ -160,7 +160,7 @@
                                             @endif
                                         @else
                                             <span class="mb-2 mr-3" @if(!Auth::check()) data-toggle="modal"
-                                                  data-target="#loginRegModal" @endif ><i class="fa fa-phone"></i><span
+                                                  data-target="#exampleModal" @endif ><i class="fa fa-phone"></i><span
                                                     class="hide_text">Show Number</span></span>
                                         @endif
                                     @else
