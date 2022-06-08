@@ -132,7 +132,7 @@ class LoginController extends Controller
 
         $check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
         Session::put('otp_phone',$phone);
-        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+        // $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
         //daily d times er besi send kora jabe na. $check && count($check)
         if ($check > 6) {
             return redirect()->back()->withDanger(__('Today you has Block, Please try again nextday.'));
@@ -365,7 +365,7 @@ class LoginController extends Controller
         }
 
         // $user->OTP = $otp;
-        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+        // $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
 
         // $user_id = Session::getId();
         $user_id = $user->PK_NO;

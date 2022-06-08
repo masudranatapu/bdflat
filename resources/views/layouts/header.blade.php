@@ -341,12 +341,13 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     @csrf
                     <input type="hidden" id="user_phone" name="MOBILE_NO">
                     <div class="form-group">
-                        <input class="form-control" id="otp_num" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}">
+                        <input class="form-control" id="otp_num" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}" required>
                         <span id="otp_verify_user" style="color: red"></span>
                     </div>
                     
                     <!-- <div class="btn-group" role="group" aria-label="OTP Submit"> -->
-                    <button type="submit" class="btn btn-danger text-center"  style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
+                    <button type="submit" class="btn btn-danger text-center" id="right_otp" style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
+                    <a href="#" class="btn btn-danger text-center" id="wrong_otp" style="position: relative; margin-left: -198px; padding: 6px 37px; display:none;">ENTER</a>
                     <!-- <button type="submit" class="btn btn-info">REQUEST PIN AGAIN</button> -->
                    <!-- </div> -->
                   </form>
@@ -664,9 +665,13 @@ $('#phone_form').on('submit',function(e){
             },
             success: function (response) {
                 if(response.user_verify){
+                    $('#right_otp').show(); 
+                    $('#wrong_otp').hide(); 
                     document.getElementById("otp_verify_user").innerHTML = '<span style="color:green">Valid OTP</span>';
                 }else{
-                    document.getElementById("otp_verify_user").innerHTML = 'Invalid OTP';
+                    $('#right_otp').hide(); 
+                    $('#wrong_otp').show(); 
+                    document.getElementById("otp_verify_user").innerHTML = 'Invalid OTP ! Enter Only 4 digit Otp Number';
                 }
                 console.log(response.user_verify)
             },
