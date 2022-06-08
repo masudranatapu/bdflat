@@ -569,9 +569,8 @@ $('#phone_form').on('submit',function(e){
 
     $('#resend_phone_form').on('submit',function(e){
         e.preventDefault();
-        let mobile = $('#user_phone1').val();
+        let mobile = $('#user_phone').val();
     
-        // alert(mobile);
         var fname = document.reg_form.fname;
         
         $.ajax({
@@ -583,6 +582,7 @@ $('#phone_form').on('submit',function(e){
           },
           success:function(response){
             // $('#successMsg').show();
+            console.log(response.phone);
             if(response.phone !=null){
                $('#login_wrap').show(); 
                $('#sign_up').hide(); 

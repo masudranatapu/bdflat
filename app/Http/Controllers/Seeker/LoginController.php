@@ -78,7 +78,7 @@ class LoginController extends Controller
 
         $check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
         Session::put('otp_phone',$phone);
-
+        // $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
         //daily d times er besi send kora jabe na. $check && count($check)
         if ($check > 5) {
             return redirect()->back()->withDanger(__('Today you has Block, Please try again nextday.'));
@@ -124,20 +124,21 @@ class LoginController extends Controller
         $todate = date('Y-m-d');
         $user = DB::table('web_user')->where('MOBILE_NO', $phone)->where('STATUS',1)->first();
         $user_check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('STATUS',1)->first();
-        if($user_check){
-          Auth::login($user);
-          Session::start();
-          return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
-        }
+        // if($user_check){
+        //   Auth::login($user);
+        //   Session::start();
+        //   return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
+        // }
 
         $check = DB::table('otp_varification')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
         Session::put('otp_phone',$phone);
-
+        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
         //daily d times er besi send kora jabe na. $check && count($check)
         if ($check > 6) {
             return redirect()->back()->withDanger(__('Today you has Block, Please try again nextday.'));
         }
          else {
+        
           $user_id = $user->PK_NO;
           DB::table('otp_varification')->insert([
               'MOBILE' => $phone,
@@ -304,7 +305,7 @@ class LoginController extends Controller
         }
         
         // $user->OTP = $otp;
-
+        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
 
         // $user_id = Session::getId();
         $user_id = $user->PK_NO;
@@ -352,6 +353,7 @@ class LoginController extends Controller
         
         
         $otp = rand(1000, 9999);
+        
         if(empty($user)){
             $user = new User();
             $user->USER_TYPE    = 1;
@@ -363,7 +365,7 @@ class LoginController extends Controller
         }
         
         // $user->OTP = $otp;
-
+        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
 
         // $user_id = Session::getId();
         $user_id = $user->PK_NO;
@@ -415,5 +417,25 @@ class LoginController extends Controller
         return response()->json([
             'user_verify'=>$user_verify
         ]);
+    }
+
+    function sendSmsMetrotel($body, $mobile ){
+        $url = "http://portal.metrotel.com.bd/smsapi";
+        $data = [
+          "api_key" => "R20000315d809876d27604.84144217",
+          "type" => "text",
+          "contacts" => $mobile,
+          "senderid" => "8809612440143",
+          "msg" => $body,
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
     }
 }
