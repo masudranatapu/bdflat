@@ -130,7 +130,7 @@ class LoginController extends Controller
         //   return redirect()->route('property-requirements')->withSuccess(__('OTP verification successful.'));
         // }
 
-        $check = DB::table('otp_varification')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
+        $check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
         Session::put('otp_phone',$phone);
         $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
         //daily d times er besi send kora jabe na. $check && count($check)
@@ -140,7 +140,7 @@ class LoginController extends Controller
          else {
         
           $user_id = $user->PK_NO;
-          DB::table('otp_varification')->insert([
+          DB::table('OTP_VARIFICATION')->insert([
               'MOBILE' => $phone,
               'USER_ID' => $user_id,
               'OTP_DATE' => date('Y-m-d'),
@@ -191,7 +191,7 @@ class LoginController extends Controller
         $todate = date('Y-m-d');
         $now = date('Y-m-d H:i:s');
 
-        $check = DB::table('otp_varification')
+        $check = DB::table('OTP_VARIFICATION')
             ->where('OTP', $otp)
             ->first();
 
@@ -205,8 +205,8 @@ class LoginController extends Controller
                    ->update(['status' => 1]);
 
               $user = User::where('MOBILE_NO',$MOBILE_NO)->first();
-              
-              
+
+
             //   dd($user);
               if($user){
                 Auth::login($user);
@@ -303,7 +303,7 @@ class LoginController extends Controller
             $user->PASSWORD     = Hash::make($phone);
             $user->save();
         }
-        
+
         // $user->OTP = $otp;
         $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
 
@@ -350,8 +350,8 @@ class LoginController extends Controller
         $name = $request->get('mobile');
         $phone = $request->get('mobile');
         $user = User::where('MOBILE_NO',$phone)->first();
-        
-        
+
+
         $otp = rand(1000, 9999);
         
         if(empty($user)){
@@ -363,7 +363,7 @@ class LoginController extends Controller
             $user->PASSWORD     = Hash::make($phone);
             $user->save();
         }
-        
+
         // $user->OTP = $otp;
         $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
 
@@ -397,7 +397,7 @@ class LoginController extends Controller
         return response()->json([
             'phone'=> $phone,
         ]);
-        
+
 
         // return redirect('/seeker_reg?response='.$res);
     }

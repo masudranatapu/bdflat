@@ -24,11 +24,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_bank_txn`
+-- Table structure for table `ACC_BANK_TXN`
 --
 
-DROP TABLE IF EXISTS `acc_bank_txn`;
-CREATE TABLE IF NOT EXISTS `acc_bank_txn` (
+DROP TABLE IF EXISTS `ACC_BANK_TXN`;
+CREATE TABLE IF NOT EXISTS `ACC_BANK_TXN` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `TXN_REF` varchar(200) DEFAULT NULL,
@@ -56,11 +56,11 @@ CREATE TABLE IF NOT EXISTS `acc_bank_txn` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_customer_payments`
+-- Table structure for table `ACC_CUSTOMER_PAYMENTS`
 --
 
-DROP TABLE IF EXISTS `acc_customer_payments`;
-CREATE TABLE IF NOT EXISTS `acc_customer_payments` (
+DROP TABLE IF EXISTS `ACC_CUSTOMER_PAYMENTS`;
+CREATE TABLE IF NOT EXISTS `ACC_CUSTOMER_PAYMENTS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `F_CUSTOMER_NO` int(11) DEFAULT NULL,
@@ -89,10 +89,10 @@ CREATE TABLE IF NOT EXISTS `acc_customer_payments` (
 ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `acc_customer_payments`
+-- Dumping data for table `ACC_CUSTOMER_PAYMENTS`
 --
 
-INSERT INTO `acc_customer_payments` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `CUSTOMER_NO`, `CUSTOMER_NAME`, `AMOUNT`, `F_ACC_PAYMENT_BANK_NO`, `PAYMENT_BANK_NAME`, `PAYMENT_ACCOUNT_NAME`, `PAYMENT_BANK_ACC_NO`, `PAYMENT_CONFIRMED_STATUS`, `ATTACHMENT_PATH`, `PAYMENT_NOTE`, `SLIP_NUMBER`, `PAYMENT_DATE`, `IS_ACTIVE`, `IS_COD`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `F_SS_COMPANY_NO`, `PAYMENT_TYPE`) VALUES
+INSERT INTO `ACC_CUSTOMER_PAYMENTS` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `CUSTOMER_NO`, `CUSTOMER_NAME`, `AMOUNT`, `F_ACC_PAYMENT_BANK_NO`, `PAYMENT_BANK_NAME`, `PAYMENT_ACCOUNT_NAME`, `PAYMENT_BANK_ACC_NO`, `PAYMENT_CONFIRMED_STATUS`, `ATTACHMENT_PATH`, `PAYMENT_NOTE`, `SLIP_NUMBER`, `PAYMENT_DATE`, `IS_ACTIVE`, `IS_COD`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `F_SS_COMPANY_NO`, `PAYMENT_TYPE`) VALUES
 (30, 1001, 66, 1053, 'Monowar Hossain Khan', 10, 4, 'Bonus', 'BDF Bnous', 'BDF Bnous', 1, NULL, 'Registration Bonus', NULL, '2021-09-14', 1, 0, NULL, '2021-09-14 23:05:40', NULL, '2021-09-14 23:05:40', NULL, 2),
 (31, 1002, 65, 1052, 'RUMANA PROPERTIES LTD', 1000, 4, 'Bonus', 'BDF Bnous', 'BDF Bnous', 1, NULL, NULL, NULL, '2016-09-20', 1, 0, 2, '2021-09-16 00:04:17', NULL, '2021-09-16 00:04:17', NULL, 2),
 (32, 1003, 64, 1051, 'Harun Or Rashid', 100, 4, 'Bonus', 'BDF Bnous', 'BDF Bnous', 1, NULL, NULL, NULL, '2016-09-20', 1, 0, 2, '2021-09-16 01:08:38', NULL, '2021-09-16 01:08:38', NULL, 2),
@@ -153,11 +153,11 @@ INSERT INTO `acc_customer_payments` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `CUSTOMER
 (87, 1058, 101, 1085, 'Kamrul', 500, 4, 'Bonus', 'BDF Bnous', 'BDF Bnous', 1, NULL, 'Registration Bonus', NULL, '2021-10-10', 1, 0, NULL, '2021-10-10 15:55:55', NULL, '2021-10-10 15:55:55', NULL, 2);
 
 --
--- Triggers `acc_customer_payments`
+-- Triggers `ACC_CUSTOMER_PAYMENTS`
 --
 DROP TRIGGER IF EXISTS `AFTERT_ACC_CUSTOMER_PAYMENTS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `AFTERT_ACC_CUSTOMER_PAYMENTS_INSERT` AFTER INSERT ON `acc_customer_payments` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTERT_ACC_CUSTOMER_PAYMENTS_INSERT` AFTER INSERT ON `ACC_CUSTOMER_PAYMENTS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT NULL;
 DECLARE VAR_AMOUNT FLOAT DEFAULT 0;
@@ -183,7 +183,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `BEFORE_ACC_CUSTOMER_PAYMENTS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_ACC_CUSTOMER_PAYMENTS_INSERT` BEFORE INSERT ON `acc_customer_payments` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_ACC_CUSTOMER_PAYMENTS_INSERT` BEFORE INSERT ON `ACC_CUSTOMER_PAYMENTS` FOR EACH ROW BEGIN
 
 
 
@@ -214,11 +214,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_customer_payment_used`
+-- Table structure for table `ACC_CUSTOMER_PAYMENT_USED`
 --
 
-DROP TABLE IF EXISTS `acc_customer_payment_used`;
-CREATE TABLE IF NOT EXISTS `acc_customer_payment_used` (
+DROP TABLE IF EXISTS `ACC_CUSTOMER_PAYMENT_USED`;
+CREATE TABLE IF NOT EXISTS `ACC_CUSTOMER_PAYMENT_USED` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_CUSTOMER_PAYMENTS_NO` int(11) DEFAULT NULL,
   `F_CUSTOMER_NO` int(11) DEFAULT NULL COMMENT 'FROM WEB_USER',
@@ -237,11 +237,11 @@ CREATE TABLE IF NOT EXISTS `acc_customer_payment_used` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_customer_refund`
+-- Table structure for table `ACC_CUSTOMER_REFUND`
 --
 
-DROP TABLE IF EXISTS `acc_customer_refund`;
-CREATE TABLE IF NOT EXISTS `acc_customer_refund` (
+DROP TABLE IF EXISTS `ACC_CUSTOMER_REFUND`;
+CREATE TABLE IF NOT EXISTS `ACC_CUSTOMER_REFUND` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `CODE` int(10) DEFAULT NULL,
   `F_USER_NO` int(10) DEFAULT NULL,
@@ -269,19 +269,19 @@ CREATE TABLE IF NOT EXISTS `acc_customer_refund` (
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `acc_customer_refund`
+-- Dumping data for table `ACC_CUSTOMER_REFUND`
 --
 
-INSERT INTO `acc_customer_refund` (`PK_NO`, `CODE`, `F_USER_NO`, `F_REQUEST_REASON_NO`, `REQUEST_REASON`, `REQUEST_AT`, `REQUEST_AMOUNT`, `COMMENT`, `F_LISTING_LEAD_PAYMENT_NO`, `F_LISTING_NO`, `F_LEAD_PAYMENT_NO`, `F_LEAD_USER_NO`, `STATUS`, `APPROVED_AT`, `APPROVED_BY`, `APPROVED_AMOUNT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `IS_DELETE`, `REFUND_TYPE`, `ADMIN_NOTE`) VALUES
+INSERT INTO `ACC_CUSTOMER_REFUND` (`PK_NO`, `CODE`, `F_USER_NO`, `F_REQUEST_REASON_NO`, `REQUEST_REASON`, `REQUEST_AT`, `REQUEST_AMOUNT`, `COMMENT`, `F_LISTING_LEAD_PAYMENT_NO`, `F_LISTING_NO`, `F_LEAD_PAYMENT_NO`, `F_LEAD_USER_NO`, `STATUS`, `APPROVED_AT`, `APPROVED_BY`, `APPROVED_AMOUNT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `IS_DELETE`, `REFUND_TYPE`, `ADMIN_NOTE`) VALUES
 (4, 101, 14, 1, 'Reason 1', '2021-09-24 19:55:04', 30, 'hhhhhhh', 9, 106, NULL, NULL, 2, '2021-09-28 01:16:28', 2, NULL, '2021-09-24 19:55:04', NULL, '2021-09-28 01:16:28', 2, 0, 1, 'SOME NOTE'),
 (5, 102, 14, 2, 'Reason 2', '2021-09-29 23:04:59', 15, 'tessss', 12, 102, NULL, NULL, 1, NULL, NULL, NULL, '2021-09-29 23:04:59', NULL, NULL, NULL, 0, 1, NULL);
 
 --
--- Triggers `acc_customer_refund`
+-- Triggers `ACC_CUSTOMER_REFUND`
 --
 DROP TRIGGER IF EXISTS `BEFORE_ACC_CUSTOMER_REFUND_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_ACC_CUSTOMER_REFUND_INSERT` BEFORE INSERT ON `acc_customer_refund` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_ACC_CUSTOMER_REFUND_INSERT` BEFORE INSERT ON `ACC_CUSTOMER_REFUND` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT 0;
 
@@ -299,8 +299,8 @@ DELIMITER ;
 -- Table structure for table `acc_customer_transaction`
 --
 
-DROP TABLE IF EXISTS `acc_customer_transaction`;
-CREATE TABLE IF NOT EXISTS `acc_customer_transaction` (
+DROP TABLE IF EXISTS `ACC_CUSTOMER_TRANSACTION`;
+CREATE TABLE IF NOT EXISTS `ACC_CUSTOMER_TRANSACTION` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `F_CUSTOMER_NO` int(11) DEFAULT NULL,
@@ -324,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `acc_customer_transaction` (
 -- Dumping data for table `acc_customer_transaction`
 --
 
-INSERT INTO `acc_customer_transaction` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `F_CUSTOMER_PAYMENT_NO`, `F_LISTING_PAYMENT_NO`, `F_LISTING_LEAD_PAYMENT_NO`, `F_LISTING_NO_FOR_COMM`, `F_LEAD_PAYMENT_NO`, `AMOUNT`, `TRANSACTION_DATE`, `TRANSACTION_TYPE`, `IN_OUT`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
+INSERT INTO `ACC_CUSTOMER_TRANSACTION` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `F_CUSTOMER_PAYMENT_NO`, `F_LISTING_PAYMENT_NO`, `F_LISTING_LEAD_PAYMENT_NO`, `F_LISTING_NO_FOR_COMM`, `F_LEAD_PAYMENT_NO`, `AMOUNT`, `TRANSACTION_DATE`, `TRANSACTION_TYPE`, `IN_OUT`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
 (22, 1001, 66, 30, NULL, NULL, 0, NULL, 10, '2021-09-14', 1, 1, NULL, '2021-09-14 23:05:40', NULL, '2021-09-14 23:05:40'),
 (23, 1002, 65, 31, NULL, NULL, 0, NULL, 1000, '2016-09-20', 1, 1, 2, '2021-09-16 00:04:17', NULL, '2021-09-16 00:04:17'),
 (24, 1003, 65, NULL, 5, NULL, 0, NULL, -30, '2021-09-16', 2, 2, 2, '2021-09-16 00:13:02', NULL, '2021-09-16 00:13:02'),
@@ -490,7 +490,7 @@ INSERT INTO `acc_customer_transaction` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `F_CUS
 (186, 1163, 14, NULL, NULL, 13, NULL, NULL, -10, '2021-10-11', 3, 2, 14, '2021-10-11 01:57:18', 14, '2021-10-11 01:57:18');
 
 --
--- Triggers `acc_customer_transaction`
+-- Triggers `ACC_CUSTOMER_TRANSACTION`
 --
 DROP TRIGGER IF EXISTS `AFTERT_ACC_CUSTOMER_TRANSACTION_INSERT`;
 DELIMITER $$
@@ -509,11 +509,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_lead_payments`
+-- Table structure for table `ACC_LEAD_PAYMENTS`
 --
 
-DROP TABLE IF EXISTS `acc_lead_payments`;
-CREATE TABLE IF NOT EXISTS `acc_lead_payments` (
+DROP TABLE IF EXISTS `ACC_LEAD_PAYMENTS`;
+CREATE TABLE IF NOT EXISTS `ACC_LEAD_PAYMENTS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_COMPANY_NO` int(11) DEFAULT NULL,
   `F_USER_NO` int(11) DEFAULT NULL,
@@ -530,20 +530,20 @@ CREATE TABLE IF NOT EXISTS `acc_lead_payments` (
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `acc_lead_payments`
+-- Dumping data for table `ACC_LEAD_PAYMENTS`
 --
 
-INSERT INTO `acc_lead_payments` (`PK_NO`, `F_COMPANY_NO`, `F_USER_NO`, `F_LEAD_SHARE_NO`, `F_REQUIREMENT_NO`, `AMOUNT`, `PURCHASE_DATE`, `CREATE_AT`, `MODIFIED_AT`, `CREATED_BY`, `MODIFIED_BY`, `IS_CLAIM`) VALUES
+INSERT INTO `ACC_LEAD_PAYMENTS` (`PK_NO`, `F_COMPANY_NO`, `F_USER_NO`, `F_LEAD_SHARE_NO`, `F_REQUIREMENT_NO`, `AMOUNT`, `PURCHASE_DATE`, `CREATE_AT`, `MODIFIED_AT`, `CREATED_BY`, `MODIFIED_BY`, `IS_CLAIM`) VALUES
 (1, 22, 15, 21, 14, 10, '2021-09-30', '2021-09-30 22:08:59', '2021-09-30 22:08:59', 15, 15, 0),
 (2, 22, 15, 25, 51, 10, '2021-09-30', '2021-09-30 23:04:59', '2021-09-30 23:04:59', 15, 15, 0),
 (3, 22, 16, 23, 43, 10, '2021-10-01', '2021-10-01 00:28:59', '2021-10-01 00:28:59', 16, 16, 0);
 
 --
--- Triggers `acc_lead_payments`
+-- Triggers `ACC_LEAD_PAYMENTS`
 --
 DROP TRIGGER IF EXISTS `AFTERT_ACC_LEAD_PAYMENTS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `AFTERT_ACC_LEAD_PAYMENTS_INSERT` AFTER INSERT ON `acc_lead_payments` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTERT_ACC_LEAD_PAYMENTS_INSERT` AFTER INSERT ON `ACC_LEAD_PAYMENTS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT NULL;
 DECLARE VAR_AMOUNT FLOAT DEFAULT 0;
@@ -573,11 +573,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_listing_lead_payments`
+-- Table structure for table `ACC_LISTING_LEAD_PAYMENTS`
 --
 
-DROP TABLE IF EXISTS `acc_listing_lead_payments`;
-CREATE TABLE IF NOT EXISTS `acc_listing_lead_payments` (
+DROP TABLE IF EXISTS `ACC_LISTING_LEAD_PAYMENTS`;
+CREATE TABLE IF NOT EXISTS `ACC_LISTING_LEAD_PAYMENTS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_LISTING_NO` int(11) DEFAULT NULL,
   `F_USER_NO` int(11) DEFAULT NULL,
@@ -593,19 +593,19 @@ CREATE TABLE IF NOT EXISTS `acc_listing_lead_payments` (
 ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `acc_listing_lead_payments`
+-- Dumping data for table `ACC_LISTING_LEAD_PAYMENTS`
 --
 
-INSERT INTO `acc_listing_lead_payments` (`PK_NO`, `F_LISTING_NO`, `F_USER_NO`, `AMOUNT`, `PURCHASE_DATE`, `CREATE_AT`, `MODIFIED_AT`, `CREATED_BY`, `MODIFIED_BY`, `IS_CLAIM`) VALUES
+INSERT INTO `ACC_LISTING_LEAD_PAYMENTS` (`PK_NO`, `F_LISTING_NO`, `F_USER_NO`, `AMOUNT`, `PURCHASE_DATE`, `CREATE_AT`, `MODIFIED_AT`, `CREATED_BY`, `MODIFIED_BY`, `IS_CLAIM`) VALUES
 (12, 102, 14, 15, '2021-09-29', '2021-09-29 20:57:00', '2021-09-29 23:04:59', 14, 14, 1),
 (13, 6, 14, 10, '2021-10-11', '2021-10-11 01:57:18', '2021-10-11 01:57:18', 14, 14, 0);
 
 --
--- Triggers `acc_listing_lead_payments`
+-- Triggers `ACC_LISTING_LEAD_PAYMENTS`
 --
 DROP TRIGGER IF EXISTS `AFTERT_ACC_LISTING_LEAD_PAYMENTS_DELETE`;
 DELIMITER $$
-CREATE TRIGGER `AFTERT_ACC_LISTING_LEAD_PAYMENTS_DELETE` AFTER DELETE ON `acc_listing_lead_payments` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTERT_ACC_LISTING_LEAD_PAYMENTS_DELETE` AFTER DELETE ON `ACC_LISTING_LEAD_PAYMENTS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT NULL;
 DECLARE VAR_AMOUNT FLOAT DEFAULT 0;
@@ -636,7 +636,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `AFTERT_ACC_LISTING_LEAD_PAYMENTS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `AFTERT_ACC_LISTING_LEAD_PAYMENTS_INSERT` AFTER INSERT ON `acc_listing_lead_payments` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTERT_ACC_LISTING_LEAD_PAYMENTS_INSERT` AFTER INSERT ON `ACC_LISTING_LEAD_PAYMENTS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT NULL;
 DECLARE VAR_AMOUNT FLOAT DEFAULT 0;
@@ -683,11 +683,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_listing_payments`
+-- Table structure for table `ACC_LISTING_PAYMENTS`
 --
 
-DROP TABLE IF EXISTS `acc_listing_payments`;
-CREATE TABLE IF NOT EXISTS `acc_listing_payments` (
+DROP TABLE IF EXISTS `ACC_LISTING_PAYMENTS`;
+CREATE TABLE IF NOT EXISTS `ACC_LISTING_PAYMENTS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_LISTING_NO` int(11) DEFAULT NULL,
   `F_USER_NO` int(11) DEFAULT NULL,
@@ -702,10 +702,10 @@ CREATE TABLE IF NOT EXISTS `acc_listing_payments` (
 ) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `acc_listing_payments`
+-- Dumping data for table `ACC_LISTING_PAYMENTS`
 --
 
-INSERT INTO `acc_listing_payments` (`PK_NO`, `F_LISTING_NO`, `F_USER_NO`, `AMOUNT`, `START_DATE`, `END_DATE`, `CREATE_AT`, `MODIFIED_AT`, `CREATED_BY`, `MODIFIED_BY`) VALUES
+INSERT INTO `ACC_LISTING_PAYMENTS` (`PK_NO`, `F_LISTING_NO`, `F_USER_NO`, `AMOUNT`, `START_DATE`, `END_DATE`, `CREATE_AT`, `MODIFIED_AT`, `CREATED_BY`, `MODIFIED_BY`) VALUES
 (5, 106, 65, 30, '2021-09-16', '2021-10-16', '2021-09-16 00:13:02', '2021-09-16 00:13:02', 2, 1),
 (6, 105, 65, 30, '2021-09-16', '2021-10-16', '2021-09-16 01:08:20', '2021-09-16 01:08:20', 2, 1),
 (7, 104, 64, 50, '2021-09-16', '2021-10-16', '2021-09-16 01:09:26', '2021-09-16 01:09:26', 2, 1),
@@ -807,11 +807,11 @@ INSERT INTO `acc_listing_payments` (`PK_NO`, `F_LISTING_NO`, `F_USER_NO`, `AMOUN
 (103, 8, 13, 40, '2021-09-16', '2021-10-16', '2021-09-16 22:54:02', '2021-09-16 22:54:02', 2, 1);
 
 --
--- Triggers `acc_listing_payments`
+-- Triggers `ACC_LISTING_PAYMENTS`
 --
 DROP TRIGGER IF EXISTS `AFTERT_ACC_LISTING_PAYMENTS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `AFTERT_ACC_LISTING_PAYMENTS_INSERT` AFTER INSERT ON `acc_listing_payments` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTERT_ACC_LISTING_PAYMENTS_INSERT` AFTER INSERT ON `ACC_LISTING_PAYMENTS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT NULL;
 DECLARE VAR_AMOUNT FLOAT DEFAULT 0;
@@ -836,7 +836,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `AFTERT_ACC_LISTING_PAYMENTS_UPDATE`;
 DELIMITER $$
-CREATE TRIGGER `AFTERT_ACC_LISTING_PAYMENTS_UPDATE` AFTER UPDATE ON `acc_listing_payments` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTERT_ACC_LISTING_PAYMENTS_UPDATE` AFTER UPDATE ON `ACC_LISTING_PAYMENTS` FOR EACH ROW BEGIN
 
 
 UPDATE PRD_LISTINGS SET EXPAIRED_AT = NEW.END_DATE WHERE PK_NO = NEW.F_LISTING_NO;
@@ -848,11 +848,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_payment_bank_acc`
+-- Table structure for table `ACC_PAYMENT_BANK_ACC`
 --
 
-DROP TABLE IF EXISTS `acc_payment_bank_acc`;
-CREATE TABLE IF NOT EXISTS `acc_payment_bank_acc` (
+DROP TABLE IF EXISTS `ACC_PAYMENT_BANK_ACC`;
+CREATE TABLE IF NOT EXISTS `ACC_PAYMENT_BANK_ACC` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `BANK_NAME` varchar(40) DEFAULT NULL,
@@ -875,10 +875,10 @@ CREATE TABLE IF NOT EXISTS `acc_payment_bank_acc` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `acc_payment_bank_acc`
+-- Dumping data for table `ACC_PAYMENT_BANK_ACC`
 --
 
-INSERT INTO `acc_payment_bank_acc` (`PK_NO`, `CODE`, `BANK_NAME`, `BANK_ACC_NAME`, `BANK_ACC_NO`, `BALANCE_ACTUAL`, `BALACNE_BUFFER`, `COMMENTS`, `IS_ACTIVE`, `F_SS_CREATED_BY`, `F_USER_NO`, `IS_COD`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `F_SS_COMPANY_NO`, `F_PAYMENT_METHOD_NO`) VALUES
+INSERT INTO `ACC_PAYMENT_BANK_ACC` (`PK_NO`, `CODE`, `BANK_NAME`, `BANK_ACC_NAME`, `BANK_ACC_NO`, `BALANCE_ACTUAL`, `BALACNE_BUFFER`, `COMMENTS`, `IS_ACTIVE`, `F_SS_CREATED_BY`, `F_USER_NO`, `IS_COD`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `F_SS_COMPANY_NO`, `F_PAYMENT_METHOD_NO`) VALUES
 (1, 101, 'SSL', 'SSL', '101', 510, 0, NULL, 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1),
 (2, 102, 'CASH- Admin', 'CASH', '102', 0, 0, NULL, 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, 6),
 (3, 103, 'NRB', 'Admin', '122211', 0, 0, NULL, 1, NULL, NULL, 0, NULL, NULL, NULL, NULL, 4),
@@ -890,11 +890,11 @@ INSERT INTO `acc_payment_bank_acc` (`PK_NO`, `CODE`, `BANK_NAME`, `BANK_ACC_NAME
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_payment_methods`
+-- Table structure for table `ACC_PAYMENT_METHODS`
 --
 
-DROP TABLE IF EXISTS `acc_payment_methods`;
-CREATE TABLE IF NOT EXISTS `acc_payment_methods` (
+DROP TABLE IF EXISTS `ACC_PAYMENT_METHODS`;
+CREATE TABLE IF NOT EXISTS `ACC_PAYMENT_METHODS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(4) DEFAULT NULL,
   `NAME` varchar(200) DEFAULT NULL,
@@ -904,10 +904,10 @@ CREATE TABLE IF NOT EXISTS `acc_payment_methods` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `acc_payment_methods`
+-- Dumping data for table `ACC_PAYMENT_METHODS`
 --
 
-INSERT INTO `acc_payment_methods` (`PK_NO`, `CODE`, `NAME`, `IS_ACTIVE`) VALUES
+INSERT INTO `ACC_PAYMENT_METHODS` (`PK_NO`, `CODE`, `NAME`, `IS_ACTIVE`) VALUES
 (1, 101, 'SSL Payment', 1),
 (2, 102, 'Bkash', 1),
 (3, 103, 'Roket', 1),
@@ -919,11 +919,11 @@ INSERT INTO `acc_payment_methods` (`PK_NO`, `CODE`, `NAME`, `IS_ACTIVE`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `acc_recharge_request`
+-- Table structure for table `ACC_RECHARGE_REQUEST`
 --
 
-DROP TABLE IF EXISTS `acc_recharge_request`;
-CREATE TABLE IF NOT EXISTS `acc_recharge_request` (
+DROP TABLE IF EXISTS `ACC_RECHARGE_REQUEST`;
+CREATE TABLE IF NOT EXISTS `ACC_RECHARGE_REQUEST` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `F_CUSTOMER_NO` int(11) DEFAULT NULL,
@@ -949,21 +949,21 @@ CREATE TABLE IF NOT EXISTS `acc_recharge_request` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `acc_recharge_request`
+-- Dumping data for table `ACC_RECHARGE_REQUEST`
 --
 
-INSERT INTO `acc_recharge_request` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `CUSTOMER_NO`, `CUSTOMER_NAME`, `AMOUNT`, `F_ACC_PAYMENT_METHOD_NO`, `F_PAYMENT_BANK_ACC`, `PAYMENT_METHOD_NAME`, `PAYMENT_BANK_ACC_NO`, `STATUS`, `ATTACHMENT_PATH`, `PAYMENT_NOTE`, `SLIP_NUMBER`, `PAYMENT_DATE`, `IS_ACTIVE`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
+INSERT INTO `ACC_RECHARGE_REQUEST` (`PK_NO`, `CODE`, `F_CUSTOMER_NO`, `CUSTOMER_NO`, `CUSTOMER_NAME`, `AMOUNT`, `F_ACC_PAYMENT_METHOD_NO`, `F_PAYMENT_BANK_ACC`, `PAYMENT_METHOD_NAME`, `PAYMENT_BANK_ACC_NO`, `STATUS`, `ATTACHMENT_PATH`, `PAYMENT_NOTE`, `SLIP_NUMBER`, `PAYMENT_DATE`, `IS_ACTIVE`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
 (6, 103, 14, 1001, 'Maidul Islam Babu', 50, 1, 5, 'SSL Payment', '01918993427', 1, NULL, NULL, '124555', '2021-09-22', 1, 14, '2021-09-29 23:35:04', 1, '2021-09-30 00:02:35'),
 (7, 103, 14, 1001, 'Maidul Islam Babu', 20, 1, 5, 'SSL Payment', '01918993427', 0, NULL, 'test', '12455', '2021-09-23', 1, 14, '2021-09-30 13:52:24', 1, NULL),
 (8, 103, 14, 1001, 'Maidul Islam Babu', 50, 2, 7, 'Bkash', '01918993420', 0, NULL, 'test', '789', '2021-09-30', 1, 14, '2021-09-30 17:20:06', 1, NULL),
 (9, 103, 16, 1003, 'Monowar Hossain Khan', 100, 1, 5, 'SSL Payment', '01918993427', 0, NULL, 'terst', 'trtrt2232323', '2021-10-01', 1, 16, '2021-10-01 00:30:12', 16, NULL);
 
 --
--- Triggers `acc_recharge_request`
+-- Triggers `ACC_RECHARGE_REQUEST`
 --
 DROP TRIGGER IF EXISTS `BEFORE_ACC_RECHARGE_REQUEST_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_ACC_RECHARGE_REQUEST_INSERT` BEFORE INSERT ON `acc_recharge_request` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_ACC_RECHARGE_REQUEST_INSERT` BEFORE INSERT ON `ACC_RECHARGE_REQUEST` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT 0;
 DECLARE VAR_CUSTOMER_NAME VARCHAR(50) DEFAULT NULL;
@@ -993,11 +993,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `otp_varification`
+-- Table structure for table `OTP_VARIFICATION`
 --
 
-DROP TABLE IF EXISTS `otp_varification`;
-CREATE TABLE IF NOT EXISTS `otp_varification` (
+DROP TABLE IF EXISTS `OTP_VARIFICATION`;
+CREATE TABLE IF NOT EXISTS `OTP_VARIFICATION` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `MOBILE` varchar(20) COLLATE utf8mb4_estonian_ci DEFAULT NULL,
   `USER_ID` varchar(255) COLLATE utf8mb4_estonian_ci DEFAULT NULL COMMENT 'session id',
@@ -1013,10 +1013,10 @@ CREATE TABLE IF NOT EXISTS `otp_varification` (
 ) ENGINE=MyISAM AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_estonian_ci;
 
 --
--- Dumping data for table `otp_varification`
+-- Dumping data for table `OTP_VARIFICATION`
 --
 
-INSERT INTO `otp_varification` (`PK_NO`, `MOBILE`, `USER_ID`, `OTP_DATE`, `OTP`, `EXPIRE_TIME`, `STATUS`, `CREATED_AT`, `CREATED_BY`, `UPDATED_AT`, `UPDATED_BY`) VALUES
+INSERT INTO `OTP_VARIFICATION` (`PK_NO`, `MOBILE`, `USER_ID`, `OTP_DATE`, `OTP`, `EXPIRE_TIME`, `STATUS`, `CREATED_AT`, `CREATED_BY`, `UPDATED_AT`, `UPDATED_BY`) VALUES
 (91, '01916962118', '102', '2022-05-12', '7727', '2022-05-12 20:17:40', 1, '2022-05-12 20:07:40', 1, NULL, NULL),
 (90, '01916962118', '102', '2022-05-12', '8675', '2022-05-12 00:40:58', 1, '2022-05-12 00:30:58', 1, NULL, NULL),
 (89, '01916962118', '102', '2022-05-11', '1516', '2022-05-11 22:25:02', 1, '2022-05-11 22:15:02', 1, NULL, NULL),
@@ -1027,11 +1027,11 @@ INSERT INTO `otp_varification` (`PK_NO`, `MOBILE`, `USER_ID`, `OTP_DATE`, `OTP`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_ads`
+-- Table structure for table `PRD_ADS`
 --
 
-DROP TABLE IF EXISTS `prd_ads`;
-CREATE TABLE IF NOT EXISTS `prd_ads` (
+DROP TABLE IF EXISTS `PRD_ADS`;
+CREATE TABLE IF NOT EXISTS `PRD_ADS` (
   `PK_NO` bigint(20) NOT NULL AUTO_INCREMENT,
   `F_AD_POSITION_NO` int(11) DEFAULT NULL,
   `CODE` bigint(20) DEFAULT NULL,
@@ -1047,10 +1047,10 @@ CREATE TABLE IF NOT EXISTS `prd_ads` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_ads`
+-- Dumping data for table `PRD_ADS`
 --
 
-INSERT INTO `prd_ads` (`PK_NO`, `F_AD_POSITION_NO`, `CODE`, `URL_SLUG`, `AVAILABLE_TO`, `AVAILABLE_FROM`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `STATUS`) VALUES
+INSERT INTO `PRD_ADS` (`PK_NO`, `F_AD_POSITION_NO`, `CODE`, `URL_SLUG`, `AVAILABLE_TO`, `AVAILABLE_FROM`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `STATUS`) VALUES
 (1, 10, NULL, NULL, '2021-09-23 00:00:00', '2020-08-20', '2021-08-08 01:16:22', 2, '2021-08-24 02:32:44', 2, 1),
 (2, 102, NULL, NULL, '2021-08-23 00:00:00', '2020-09-01', '2021-08-21 23:33:49', 2, '2021-08-27 21:40:21', 2, 1),
 (3, 101, NULL, NULL, '2021-08-31 00:00:00', '2021-08-20', '2021-08-21 23:44:06', 2, '2021-08-21 23:44:06', NULL, 1),
@@ -1061,11 +1061,11 @@ INSERT INTO `prd_ads` (`PK_NO`, `F_AD_POSITION_NO`, `CODE`, `URL_SLUG`, `AVAILAB
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_ads_images`
+-- Table structure for table `PRD_ADS_IMAGES`
 --
 
-DROP TABLE IF EXISTS `prd_ads_images`;
-CREATE TABLE IF NOT EXISTS `prd_ads_images` (
+DROP TABLE IF EXISTS `PRD_ADS_IMAGES`;
+CREATE TABLE IF NOT EXISTS `PRD_ADS_IMAGES` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_ADS_NO` bigint(20) DEFAULT NULL,
   `IMAGE_PATH` varchar(100) DEFAULT NULL,
@@ -1076,10 +1076,10 @@ CREATE TABLE IF NOT EXISTS `prd_ads_images` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_ads_images`
+-- Dumping data for table `PRD_ADS_IMAGES`
 --
 
-INSERT INTO `prd_ads_images` (`PK_NO`, `F_ADS_NO`, `IMAGE_PATH`, `IMAGE`, `ORDER_ID`, `URL`) VALUES
+INSERT INTO `PRD_ADS_IMAGES` (`PK_NO`, `F_ADS_NO`, `IMAGE_PATH`, `IMAGE`, `ORDER_ID`, `URL`) VALUES
 (1, 1, '/uploads/ads/1/612138ddd9945.png', NULL, 101, NULL),
 (2, 1, '/uploads/ads/1/612139b0a32be.png', NULL, 102, NULL),
 (3, 2, '/uploads/ads/2/61213a3b35fe4.png', NULL, 102, NULL),
@@ -1091,11 +1091,11 @@ INSERT INTO `prd_ads_images` (`PK_NO`, `F_ADS_NO`, `IMAGE_PATH`, `IMAGE`, `ORDER
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_ad_position`
+-- Table structure for table `PRD_AD_POSITION`
 --
 
-DROP TABLE IF EXISTS `prd_ad_position`;
-CREATE TABLE IF NOT EXISTS `prd_ad_position` (
+DROP TABLE IF EXISTS `PRD_AD_POSITION`;
+CREATE TABLE IF NOT EXISTS `PRD_AD_POSITION` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `POSITION_ID` int(11) DEFAULT NULL,
   `NAME` varchar(100) DEFAULT NULL,
@@ -1108,10 +1108,10 @@ CREATE TABLE IF NOT EXISTS `prd_ad_position` (
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_ad_position`
+-- Dumping data for table `PRD_AD_POSITION`
 --
 
-INSERT INTO `prd_ad_position` (`PK_NO`, `POSITION_ID`, `NAME`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_BY`, `MODIFIED_AT`, `IS_ACTIVE`) VALUES
+INSERT INTO `PRD_AD_POSITION` (`PK_NO`, `POSITION_ID`, `NAME`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_BY`, `MODIFIED_AT`, `IS_ACTIVE`) VALUES
 (1, 10, 'Home Category Left', '2021-08-08 01:11:48', 2, 2, '2021-08-21 23:24:27', 1),
 (2, 102, 'Home Category Right', '2021-08-08 01:14:28', 2, 2, '2021-08-21 23:24:35', 1),
 (3, 101, 'Home Category Bottom', '2021-08-21 23:24:52', 2, NULL, '2021-08-21 23:24:52', 1),
@@ -1122,11 +1122,11 @@ INSERT INTO `prd_ad_position` (`PK_NO`, `POSITION_ID`, `NAME`, `CREATED_AT`, `CR
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_browsing_history`
+-- Table structure for table `PRD_BROWSING_HISTORY`
 --
 
-DROP TABLE IF EXISTS `prd_browsing_history`;
-CREATE TABLE IF NOT EXISTS `prd_browsing_history` (
+DROP TABLE IF EXISTS `PRD_BROWSING_HISTORY`;
+CREATE TABLE IF NOT EXISTS `PRD_BROWSING_HISTORY` (
   `PK_NO` bigint(20) NOT NULL AUTO_INCREMENT,
   `F_USER_NO` int(10) DEFAULT NULL,
   `F_LISTING_NO` int(10) DEFAULT NULL,
@@ -1137,10 +1137,10 @@ CREATE TABLE IF NOT EXISTS `prd_browsing_history` (
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_browsing_history`
+-- Dumping data for table `PRD_BROWSING_HISTORY`
 --
 
-INSERT INTO `prd_browsing_history` (`PK_NO`, `F_USER_NO`, `F_LISTING_NO`, `COUNTER`, `LAST_BROWES_TIME`, `IS_PAY_ATTEMPT`) VALUES
+INSERT INTO `PRD_BROWSING_HISTORY` (`PK_NO`, `F_USER_NO`, `F_LISTING_NO`, `COUNTER`, `LAST_BROWES_TIME`, `IS_PAY_ATTEMPT`) VALUES
 (25, 14, 5, 1, '2021-09-29 19:15:38', 0),
 (26, 14, 105, 1, '2021-09-29 19:15:48', 0),
 (27, 14, 103, 2, '2021-09-29 19:15:52', 0),
@@ -1157,11 +1157,11 @@ INSERT INTO `prd_browsing_history` (`PK_NO`, `F_USER_NO`, `F_LISTING_NO`, `COUNT
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_floor_list`
+-- Table structure for table `PRD_FLOOR_LIST`
 --
 
-DROP TABLE IF EXISTS `prd_floor_list`;
-CREATE TABLE IF NOT EXISTS `prd_floor_list` (
+DROP TABLE IF EXISTS `PRD_FLOOR_LIST`;
+CREATE TABLE IF NOT EXISTS `PRD_FLOOR_LIST` (
   `PK_NO` int(2) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(30) DEFAULT NULL,
   `IS_ACTIVE` int(1) NOT NULL DEFAULT '1',
@@ -1170,10 +1170,10 @@ CREATE TABLE IF NOT EXISTS `prd_floor_list` (
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_floor_list`
+-- Dumping data for table `PRD_FLOOR_LIST`
 --
 
-INSERT INTO `prd_floor_list` (`PK_NO`, `NAME`, `IS_ACTIVE`, `ORDER_ID`) VALUES
+INSERT INTO `PRD_FLOOR_LIST` (`PK_NO`, `NAME`, `IS_ACTIVE`, `ORDER_ID`) VALUES
 (1, 'Ground Floor', 1, 0),
 (2, '1 Storied', 1, 0),
 (3, '2 Storied', 1, 0),
@@ -1184,11 +1184,11 @@ INSERT INTO `prd_floor_list` (`PK_NO`, `NAME`, `IS_ACTIVE`, `ORDER_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_lead_share_map`
+-- Table structure for table `PRD_LEAD_SHARE_MAP`
 --
 
-DROP TABLE IF EXISTS `prd_lead_share_map`;
-CREATE TABLE IF NOT EXISTS `prd_lead_share_map` (
+DROP TABLE IF EXISTS `PRD_LEAD_SHARE_MAP`;
+CREATE TABLE IF NOT EXISTS `PRD_LEAD_SHARE_MAP` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) NOT NULL DEFAULT '0',
   `F_REQUIREMENT_NO` int(10) DEFAULT NULL,
@@ -1213,10 +1213,10 @@ CREATE TABLE IF NOT EXISTS `prd_lead_share_map` (
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_lead_share_map`
+-- Dumping data for table `PRD_LEAD_SHARE_MAP`
 --
 
-INSERT INTO `prd_lead_share_map` (`PK_NO`, `CODE`, `F_REQUIREMENT_NO`, `F_USER_NO`, `CREATED_AT`, `CREATED_BY`, `MODIFYED_AT`, `MODIFYED_BY`, `F_COMPANY_NO`, `F_LISTING_NO`, `PROPERTY_FOR`, `PROPERTY_TYPE`, `AREA`, `SIZE`, `PROPERTY_CONDITION`, `STATUS`, `PURCHASE_AT`, `ORDER_ID`, `LEAD_TYPE`) VALUES
+INSERT INTO `PRD_LEAD_SHARE_MAP` (`PK_NO`, `CODE`, `F_REQUIREMENT_NO`, `F_USER_NO`, `CREATED_AT`, `CREATED_BY`, `MODIFYED_AT`, `MODIFYED_BY`, `F_COMPANY_NO`, `F_LISTING_NO`, `PROPERTY_FOR`, `PROPERTY_TYPE`, `AREA`, `SIZE`, `PROPERTY_CONDITION`, `STATUS`, `PURCHASE_AT`, `ORDER_ID`, `LEAD_TYPE`) VALUES
 (14, 1007, 10, 41, '2021-09-30 01:50:07', 15, NULL, NULL, 13, 15, 0, 0, 0, 0, 0, 0, NULL, 1, 0),
 (15, 1008, 10, 41, '2021-09-30 01:50:07', 15, NULL, NULL, 21, 19, 0, 0, 0, 0, 0, 0, NULL, 2, 0),
 (16, 1009, 10, 41, '2021-09-30 01:50:07', 15, NULL, NULL, 22, 28, 0, 0, 0, 0, 0, 0, NULL, 3, 0),
@@ -1231,11 +1231,11 @@ INSERT INTO `prd_lead_share_map` (`PK_NO`, `CODE`, `F_REQUIREMENT_NO`, `F_USER_N
 (27, 1018, 51, 14, '2021-09-30 01:50:07', 15, NULL, NULL, 65, 106, 0, 0, 0, 0, 0, 0, NULL, 4, 0);
 
 --
--- Triggers `prd_lead_share_map`
+-- Triggers `PRD_LEAD_SHARE_MAP`
 --
 DROP TRIGGER IF EXISTS `BEFORE_PRD_LEAD_SHARE_MAP_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_PRD_LEAD_SHARE_MAP_INSERT` BEFORE INSERT ON `prd_lead_share_map` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_PRD_LEAD_SHARE_MAP_INSERT` BEFORE INSERT ON `PRD_LEAD_SHARE_MAP` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(10) DEFAULT 0;
 
@@ -1250,11 +1250,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listings`
+-- Table structure for table `PRD_LISTINGS`
 --
 
-DROP TABLE IF EXISTS `prd_listings`;
-CREATE TABLE IF NOT EXISTS `prd_listings` (
+DROP TABLE IF EXISTS `PRD_LISTINGS`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTINGS` (
   `PK_NO` bigint(20) NOT NULL AUTO_INCREMENT,
   `CODE` bigint(20) DEFAULT NULL,
   `PROPERTY_FOR` varchar(20) DEFAULT NULL COMMENT 'RENT OR BUY OR ROOMMATE',
@@ -1312,10 +1312,10 @@ CREATE TABLE IF NOT EXISTS `prd_listings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `prd_listings`
+-- Dumping data for table `PRD_LISTINGS`
 --
 
-INSERT INTO `prd_listings` (`PK_NO`, `CODE`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO`, `PROPERTY_TYPE`, `ADDRESS`, `PROPERTY_CONDITION`, `F_PROPERTY_CONDITION`, `PRICE_TYPE`, `TITLE`, `URL_SLUG`, `URL_SLUG_LOCKED`, `F_CITY_NO`, `CITY_NAME`, `F_AREA_NO`, `AREA_NAME`, `F_SUBAREA_NO`, `SUBAREA_NAME`, `ROAD`, `HOUSE`, `F_USER_NO`, `USER_TYPE`, `CONTACT_PERSON1`, `CONTACT_PERSON2`, `MOBILE1`, `MOBILE2`, `MOBILE3`, `F_LISTING_TYPE`, `LISTING_TYPE`, `F_PREP_TENANT_NO`, `PREP_TENANT`, `AVAILABLE_FROM`, `GENDER`, `IS_VERIFIED`, `VERIFIED_BY`, `VERIFIED_AT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `TOTAL_FLOORS`, `FLOORS_AVAIABLE`, `EXPAIRED_AT`, `STATUS`, `PAYMENT_STATUS`, `CI_PAYMENT`, `CI_PRICE`, `IS_TOP`, `PAYMENT_AUTO_RENEW`, `MAX_SHARING_PERMISSION`, `AGENT_COMMISSION_AMT`) VALUES
+INSERT INTO `PRD_LISTINGS` (`PK_NO`, `CODE`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO`, `PROPERTY_TYPE`, `ADDRESS`, `PROPERTY_CONDITION`, `F_PROPERTY_CONDITION`, `PRICE_TYPE`, `TITLE`, `URL_SLUG`, `URL_SLUG_LOCKED`, `F_CITY_NO`, `CITY_NAME`, `F_AREA_NO`, `AREA_NAME`, `F_SUBAREA_NO`, `SUBAREA_NAME`, `ROAD`, `HOUSE`, `F_USER_NO`, `USER_TYPE`, `CONTACT_PERSON1`, `CONTACT_PERSON2`, `MOBILE1`, `MOBILE2`, `MOBILE3`, `F_LISTING_TYPE`, `LISTING_TYPE`, `F_PREP_TENANT_NO`, `PREP_TENANT`, `AVAILABLE_FROM`, `GENDER`, `IS_VERIFIED`, `VERIFIED_BY`, `VERIFIED_AT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `TOTAL_FLOORS`, `FLOORS_AVAIABLE`, `EXPAIRED_AT`, `STATUS`, `PAYMENT_STATUS`, `CI_PAYMENT`, `CI_PRICE`, `IS_TOP`, `PAYMENT_AUTO_RENEW`, `MAX_SHARING_PERMISSION`, `AGENT_COMMISSION_AMT`) VALUES
 (5, 1001, 'sale', 1, 'Apartment', 'Banasree, Dhaka', 'Ongoing', 3, 1, '1690 sqft, 3 Beds Under Construction Apartment/Flats for Sale at Banasree', '1690-sqft-3-beds-under-construction', 1, 1, 'Dhaka', 2, 'Banani', NULL, NULL, NULL, NULL, 15, 3, 'Hyperion Design & Development Ltd.', 'Hyperion Design & Development Ltd.', '01817158000', '01817158000', NULL, 2, 'Feature Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-08-03 20:35:32', 15, '2021-09-30 00:54:48', 2, 6, '[\"2\",\"3\",\"4\",\"5\",\"6\"]', '2021-10-16', 10, 1, 1, 10, 1, 1, 50, 0),
 (6, 1002, 'sale', 1, 'Apartment', 'Eskaton, Dhaka', 'Ongoing', 3, 1, '1478 sqft, 3 Beds Under Construction Apartment/Flats for Sale at Eskaton', '1478-sqft-3-beds-under-construction', 1, 1, 'Dhaka', 2, 'Banani', NULL, NULL, NULL, NULL, 15, 3, 'Runner Properties Ltd.', 'Runner Properties Ltd.', '01730406', '01730406', NULL, 2, 'Feature Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-08-03 20:49:12', 15, '2021-09-30 00:54:32', 2, 6, '[\"2\",\"3\",\"4\",\"5\",\"6\"]', '2021-10-16', 10, 1, 1, 10, 0, 1, 50, 0),
 (7, 1003, 'sale', 2, 'Office', 'Uttara, Dhaka', 'Ongoing', 3, 1, '2500 sqft, Under Construction Office Space for Sale at Uttara', '2500-sqft-under-construction', 1, 1, 'Dhaka', 9, 'Uttara', NULL, NULL, NULL, NULL, 13, 2, 'Ark Builders Ltd', 'Ark Builders Ltd', '01926993000', '01926993000', NULL, 3, 'General Listing with daily auto update f', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-08-03 21:02:31', 13, '2021-09-16 22:52:09', 1, 6, '[\"2\",\"3\",\"4\",\"5\",\"6\"]', '2021-10-16', 10, 1, 1, 0, 0, 1, 0, 0),
@@ -1417,7 +1417,7 @@ INSERT INTO `prd_listings` (`PK_NO`, `CODE`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO
 (104, 1099, 'sale', 3, 'Shop', 'Shantinagar', 'Ready', 1, 1, '88 sqft, Ready Shop for Sale at Shantinagar', '88-sqft-ready-shop-for-sale-at-shantinagar', 1, 1, 'Dhaka', 41, 'Shantinagar', 0, NULL, NULL, NULL, 64, 2, 'AR diamond', NULL, '01797270000', NULL, NULL, 2, 'Feature Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:10:27', 64, '2021-09-16 01:09:26', 1, 4, '[\"2\"]', '2021-10-16', 10, 1, 1, 0, 0, 1, 0, 0),
 (105, 1100, 'sale', 3, 'Shop', 'Karwan Bazaar', 'Ready', 1, 1, '4500 sqft, Ready Showroom/Shop/Restaurant for Sale at Kawran Bazar', '4500-sqft-ready-showroomshoprestaurant-for-sale-at-kawran-bazar', 1, 1, 'Dhaka', 33, 'Karwan Bazaar', 0, NULL, NULL, NULL, 65, 2, 'RUMANA PROPERTIES LTD', NULL, '0179209000', NULL, NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:13:03', 65, '2021-09-18 23:35:28', 1, 6, '[\"2\"]', '2021-10-16', 10, 1, 1, 0, 0, 1, 12, 0),
 (106, 1101, 'sale', 1, 'Apartment', 'Karwan Bazaar', 'Ready', 1, 1, '1350 sqft, 3 Beds Ready Apartment/Flats for Sale at Kawran Bazar', '1350-sqft-3-beds-ready-apartmentflats-for-sale-at-kawran-bazar', 1, 1, 'Dhaka', 2, 'Banani', 0, NULL, NULL, NULL, 65, 2, 'Rumana Properties Ltd', NULL, '01792090000', NULL, NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 1, NULL, NULL, '2021-09-14 21:15:41', 65, '2021-09-23 01:33:39', 2, 6, '[\"4\",\"5\",\"6\"]', '2021-10-16', 10, 1, 1, 10, 0, 1, 50, 0);
-INSERT INTO `prd_listings` (`PK_NO`, `CODE`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO`, `PROPERTY_TYPE`, `ADDRESS`, `PROPERTY_CONDITION`, `F_PROPERTY_CONDITION`, `PRICE_TYPE`, `TITLE`, `URL_SLUG`, `URL_SLUG_LOCKED`, `F_CITY_NO`, `CITY_NAME`, `F_AREA_NO`, `AREA_NAME`, `F_SUBAREA_NO`, `SUBAREA_NAME`, `ROAD`, `HOUSE`, `F_USER_NO`, `USER_TYPE`, `CONTACT_PERSON1`, `CONTACT_PERSON2`, `MOBILE1`, `MOBILE2`, `MOBILE3`, `F_LISTING_TYPE`, `LISTING_TYPE`, `F_PREP_TENANT_NO`, `PREP_TENANT`, `AVAILABLE_FROM`, `GENDER`, `IS_VERIFIED`, `VERIFIED_BY`, `VERIFIED_AT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `TOTAL_FLOORS`, `FLOORS_AVAIABLE`, `EXPAIRED_AT`, `STATUS`, `PAYMENT_STATUS`, `CI_PAYMENT`, `CI_PRICE`, `IS_TOP`, `PAYMENT_AUTO_RENEW`, `MAX_SHARING_PERMISSION`, `AGENT_COMMISSION_AMT`) VALUES
+INSERT INTO `PRD_LISTINGS` (`PK_NO`, `CODE`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO`, `PROPERTY_TYPE`, `ADDRESS`, `PROPERTY_CONDITION`, `F_PROPERTY_CONDITION`, `PRICE_TYPE`, `TITLE`, `URL_SLUG`, `URL_SLUG_LOCKED`, `F_CITY_NO`, `CITY_NAME`, `F_AREA_NO`, `AREA_NAME`, `F_SUBAREA_NO`, `SUBAREA_NAME`, `ROAD`, `HOUSE`, `F_USER_NO`, `USER_TYPE`, `CONTACT_PERSON1`, `CONTACT_PERSON2`, `MOBILE1`, `MOBILE2`, `MOBILE3`, `F_LISTING_TYPE`, `LISTING_TYPE`, `F_PREP_TENANT_NO`, `PREP_TENANT`, `AVAILABLE_FROM`, `GENDER`, `IS_VERIFIED`, `VERIFIED_BY`, `VERIFIED_AT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `TOTAL_FLOORS`, `FLOORS_AVAIABLE`, `EXPAIRED_AT`, `STATUS`, `PAYMENT_STATUS`, `CI_PAYMENT`, `CI_PRICE`, `IS_TOP`, `PAYMENT_AUTO_RENEW`, `MAX_SHARING_PERMISSION`, `AGENT_COMMISSION_AMT`) VALUES
 (107, 1102, 'sale', 7, 'Land', 'Purbachal', 'Ready', 1, 1, '5 katha, Ready Residential Plot for Sale at Purbachal', '5-katha-ready-residential-plot-for-sale-at-purbachal-1102', 0, 1, 'Dhaka', 18, 'Purbachal', NULL, NULL, NULL, NULL, 17, 5, 'Purbachal Marine City', NULL, '01617517000', NULL, NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 0, NULL, NULL, '2021-09-28 02:07:21', 17, '2021-09-28 02:09:01', 17, 1, 'null', NULL, 0, 0, 0, 10, 0, 1, 0, 0),
 (108, 1103, 'sale', 7, 'Land', 'Purbachal', 'Ready', 1, 1, '3 katha,Residential Plot for Sale at Purbachal', '3-katharesidential-plot-for-sale-at-purbachal-1103', 0, 1, 'Dhaka', 18, 'Purbachal', 0, NULL, NULL, NULL, 17, 5, 'Purbachal Marine City', NULL, '01617517000', NULL, NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 0, NULL, NULL, '2021-09-28 02:19:17', 17, '2021-09-28 02:19:17', NULL, NULL, NULL, NULL, 0, 0, 0, 10, 0, 1, 0, 10),
 (109, 1104, 'sale', 1, 'Apartment', 'Banani', 'Ongoing', 3, 1, '2507 sqft, 3 Beds Under Construction Flats for Sale at Banani', '2507-sqft-3-beds-under-construction-flats-for-sale-at-banani', 0, 1, 'Dhaka', 2, 'Banani', 0, NULL, NULL, NULL, 17, 5, 'Anwar Landmark Ltd', NULL, '01973091000', NULL, NULL, 1, 'General Listing for 30 days', NULL, NULL, NULL, NULL, 0, NULL, NULL, '2021-09-28 02:23:34', 17, '2021-09-28 02:23:34', NULL, 6, '[\"3\",\"4\",\"5\"]', NULL, 0, 0, 0, 10, 0, 1, 0, 10),
@@ -1431,11 +1431,11 @@ INSERT INTO `prd_listings` (`PK_NO`, `CODE`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO
 (117, 1112, 'sale', 1, 'Apartment', '4,3,Mirpur 1 Panirtanki,Mirpur,Dhaka', 'Ready', 1, 1, 'flat', 'flat', 0, 1, 'Dhaka', 1, 'Mirpur', 26, 'Mirpur 1 Panirtanki', NULL, NULL, 13, 2, 'maidul1', NULL, '123456', '015655458', '058965544', 2, 'Feature Listing for 30 days', NULL, NULL, NULL, NULL, 0, NULL, NULL, '2022-05-12 20:27:30', 13, '2022-05-12 20:27:30', NULL, 4, '[\"2\",\"3\"]', NULL, 0, 0, 0, 10, 0, 1, 0, 0);
 
 --
--- Triggers `prd_listings`
+-- Triggers `PRD_LISTINGS`
 --
 DROP TRIGGER IF EXISTS `AFTER_PRD_LISTINGS_DELETE`;
 DELIMITER $$
-CREATE TRIGGER `AFTER_PRD_LISTINGS_DELETE` AFTER DELETE ON `prd_listings` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTER_PRD_LISTINGS_DELETE` AFTER DELETE ON `PRD_LISTINGS` FOR EACH ROW BEGIN
 
 DECLARE VAR_TOTAL_LISTING INT(10) DEFAULT 0;
 DECLARE VAR_TOTAL_TYPE_LISTING INT(10) DEFAULT 0;
@@ -1460,7 +1460,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `AFTER_PRD_LISTINGS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `AFTER_PRD_LISTINGS_INSERT` AFTER INSERT ON `prd_listings` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTER_PRD_LISTINGS_INSERT` AFTER INSERT ON `PRD_LISTINGS` FOR EACH ROW BEGIN
 
 DECLARE VAR_TOTAL_LISTING INT(10) DEFAULT 0;
 
@@ -1479,7 +1479,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `AFTER_PRD_LISTINGS_UPDATE`;
 DELIMITER $$
-CREATE TRIGGER `AFTER_PRD_LISTINGS_UPDATE` AFTER UPDATE ON `prd_listings` FOR EACH ROW BEGIN
+CREATE TRIGGER `AFTER_PRD_LISTINGS_UPDATE` AFTER UPDATE ON `PRD_LISTINGS` FOR EACH ROW BEGIN
 
 DECLARE VAR_TOTAL_LISTING INT(10) DEFAULT 0;
 DECLARE VAR_TOTAL_TYPE_LISTING INT(10) DEFAULT 0;
@@ -1502,7 +1502,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `BEFORE_PRD_LISTINGS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_PRD_LISTINGS_INSERT` BEFORE INSERT ON `prd_listings` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_PRD_LISTINGS_INSERT` BEFORE INSERT ON `PRD_LISTINGS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CODE INT(40) DEFAULT 0;
 DECLARE VAR_CITY_NAME VARCHAR(40) DEFAULT NULL;
@@ -1557,7 +1557,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `BEFORE_PRD_LISTINGS_UPDATE`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_PRD_LISTINGS_UPDATE` BEFORE UPDATE ON `prd_listings` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_PRD_LISTINGS_UPDATE` BEFORE UPDATE ON `PRD_LISTINGS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CITY_NAME VARCHAR(40) DEFAULT NULL;
 DECLARE VAR_AREA_NAME VARCHAR(40) DEFAULT NULL;
@@ -1587,11 +1587,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listings_seo`
+-- Table structure for table `PRD_LISTINGS_SEO`
 --
 
-DROP TABLE IF EXISTS `prd_listings_seo`;
-CREATE TABLE IF NOT EXISTS `prd_listings_seo` (
+DROP TABLE IF EXISTS `PRD_LISTINGS_SEO`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTINGS_SEO` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `F_LISTING_NO` int(10) DEFAULT NULL,
   `META_TITLE` varchar(100) DEFAULT NULL,
@@ -1602,10 +1602,10 @@ CREATE TABLE IF NOT EXISTS `prd_listings_seo` (
 ) ENGINE=MyISAM AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_listings_seo`
+-- Dumping data for table `PRD_LISTINGS_SEO`
 --
 
-INSERT INTO `prd_listings_seo` (`PK_NO`, `F_LISTING_NO`, `META_TITLE`, `META_DESCRIPTION`, `META_URL`, `OG_IMAGE_PATH`) VALUES
+INSERT INTO `PRD_LISTINGS_SEO` (`PK_NO`, `F_LISTING_NO`, `META_TITLE`, `META_DESCRIPTION`, `META_URL`, `OG_IMAGE_PATH`) VALUES
 (1, 14, 'Hostel Male for a Roommates/Paying Guest', 'Hostel Male for a Roommates/Paying', 'hostel-male-roommate', 'uploads/listings/14/seo/614374e302a93.jpg'),
 (2, 6, '1478 sqft, 3 Beds Under Construction Apartment/Flats', 'description Under Construction Apartment/Flats for Sale at Eskaton', '1478-sqft-3-beds-under-construction', 'uploads/listings/6/seo/6143765e31fa8.jpeg'),
 (3, 59, '20000 sqft, Ready Industrial Space for Sale at Gazip', '20000 sqft, Ready Industrial S', '20000-sqft-ready-industrial-space-for-sale-at-gazipur-sadar', 'uploads/listings/59/seo/61425587505a2.jpg'),
@@ -1711,11 +1711,11 @@ INSERT INTO `prd_listings_seo` (`PK_NO`, `F_LISTING_NO`, `META_TITLE`, `META_DES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listing_additional_info`
+-- Table structure for table `PRD_LISTING_ADDITIONAL_INFO`
 --
 
-DROP TABLE IF EXISTS `prd_listing_additional_info`;
-CREATE TABLE IF NOT EXISTS `prd_listing_additional_info` (
+DROP TABLE IF EXISTS `PRD_LISTING_ADDITIONAL_INFO`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTING_ADDITIONAL_INFO` (
   `PK_NO` bigint(20) NOT NULL AUTO_INCREMENT,
   `F_FACING_NO` int(2) DEFAULT NULL,
   `F_LISTING_NO` bigint(20) NOT NULL,
@@ -1732,10 +1732,10 @@ CREATE TABLE IF NOT EXISTS `prd_listing_additional_info` (
 ) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_listing_additional_info`
+-- Dumping data for table `PRD_LISTING_ADDITIONAL_INFO`
 --
 
-INSERT INTO `prd_listing_additional_info` (`PK_NO`, `F_FACING_NO`, `F_LISTING_NO`, `FACING`, `HANDOVER_DATE`, `DESCRIPTION`, `F_FEATURE_NOS`, `FEATURES`, `F_NEARBY_NOS`, `NEARBY`, `LOCATION_MAP`, `VIDEO_CODE`) VALUES
+INSERT INTO `PRD_LISTING_ADDITIONAL_INFO` (`PK_NO`, `F_FACING_NO`, `F_LISTING_NO`, `FACING`, `HANDOVER_DATE`, `DESCRIPTION`, `F_FEATURE_NOS`, `FEATURES`, `F_NEARBY_NOS`, `NEARBY`, `LOCATION_MAP`, `VIDEO_CODE`) VALUES
 (1, NULL, 1, '1', '2021-05-08', 'Test Description', '[\"1\",\"2\"]', NULL, '[\"1\",\"2\",\"3\"]', NULL, 'https://www.google.com/maps/place/Uttara+House+Building/@23.8710489,90.4062432,15z/data=!4m5!3m4!1s0x3755c43bb6228489:0xeeba9aedb454ee7f!8m2!3d23.874278!4d90.400369', 'https://www.youtube.com/watch?v=OGI0fNvr4fo'),
 (2, NULL, 1, '1', '2021-05-08', 'Test Description', '[\"1\",\"2\",\"4\"]', NULL, '[\"2\",\"3\",\"4\"]', NULL, 'https://www.google.com/maps/place/Uttara+House+Building/@23.8710489,90.4062432,15z/data=!4m5!3m4!1s0x3755c43bb6228489:0xeeba9aedb454ee7f!8m2!3d23.874278!4d90.400369', 'https://www.youtube.com/watch?v=OGI0fNvr4fo'),
 (3, NULL, 2, NULL, '2021-05-10', 'মিউকরমাইকোসিস একটি বিরল সংক্রমণ। মিউকর নামে একটি ছত্রাকের সংস্পর্শে এলে এই সংক্রমণ হয়। সাধারণত মাটি, গাছপালা, পচনশীল ফল ও শাকসবজিতে এই ছত্রাক দেখা যায়। ডা. নায়ের বলেন, এই ছত্রাক সব জায়গায় থাকে। মাটি, বাতাস, এমনকি স্বাস্থ্যবান লোকের নাক ও শ্লেষ্মায়ও এটা পাওয়া যায়।', '[\"1\",\"2\",\"3\"]', NULL, '[\"1\",\"2\"]', NULL, NULL, NULL),
@@ -1796,7 +1796,7 @@ INSERT INTO `prd_listing_additional_info` (`PK_NO`, `F_FACING_NO`, `F_LISTING_NO
 (58, 2, 57, 'North Facing', '2021-09-09', NULL, '[\"1\",\"2\",\"3\",\"4\"]', NULL, '[\"1\",\"2\",\"3\",\"4\"]', NULL, NULL, NULL),
 (59, 2, 58, 'North Facing', '2021-10-07', '<p>Flat for rent at Kathalbagan</p>\r\n\r\n<p>Address :&nbsp;&nbsp;64/1, Free School Street, Kathalbagan, Dhaka.</p>\r\n\r\n<p>At 1st &amp; 4th&nbsp;&nbsp;floor</p>\r\n\r\n<p>Flat size : 1250 sq feet</p>\r\n\r\n<p>2 bed,</p>\r\n\r\n<p>Drawing, dining,</p>\r\n\r\n<p>3 bath,</p>\r\n\r\n<p>3 balconi</p>\r\n\r\n<p>Car parking : 1</p>\r\n\r\n<p>Rent : 22000 BDT ( 4th floor) &amp; 23000 BDT ( 1st floor)</p>\r\n\r\n<p>Service charge &amp; others: 3000 BDT ( including water, gas &amp; sewerage bill)</p>', '[\"1\",\"2\",\"3\",\"4\"]', NULL, '[\"1\",\"2\",\"3\",\"4\"]', NULL, NULL, NULL),
 (60, 1, 59, 'South Facing', '2021-10-21', NULL, 'null', NULL, 'null', NULL, NULL, NULL);
-INSERT INTO `prd_listing_additional_info` (`PK_NO`, `F_FACING_NO`, `F_LISTING_NO`, `FACING`, `HANDOVER_DATE`, `DESCRIPTION`, `F_FEATURE_NOS`, `FEATURES`, `F_NEARBY_NOS`, `NEARBY`, `LOCATION_MAP`, `VIDEO_CODE`) VALUES
+INSERT INTO `PRD_LISTING_ADDITIONAL_INFO` (`PK_NO`, `F_FACING_NO`, `F_LISTING_NO`, `FACING`, `HANDOVER_DATE`, `DESCRIPTION`, `F_FEATURE_NOS`, `FEATURES`, `F_NEARBY_NOS`, `NEARBY`, `LOCATION_MAP`, `VIDEO_CODE`) VALUES
 (61, 1, 60, 'South Facing', '2020-08-19', '<p>INDUSTRIAL WEREHOUSE &amp; FACTORY SHED AT&nbsp;Dhk-syl highway</p>\r\n\r\n<p>100000sqft<br />\r\n15 km&nbsp;distance from gawsia</p>\r\n\r\n<p>Shed Height &ndash;12.33 ft<br />\r\nWidth:60ft<br />\r\nLength:&nbsp;420ft<br />\r\nElectricity:&nbsp;upon discussion<br />\r\nFactory:<br />\r\nOwners of the factory shed &ndash; single<br />\r\nRent: Tk.22/- P/sft.<br />\r\nAdvance: 9 months &amp; 3 Month for security advance.<br />\r\nAfter 3 years will be 10% increase of rent for next 2 years.</p>\r\n\r\n<p><a href=\"https://youtu.be/Ljy_0CRwqT8\" target=\"_blank\">https://youtu.be/Ljy_0CRwqT8</a></p>\r\n\r\n<p><br />\r\nUtility: So many big and small industry with in 2/3 km, Land is 100% fit for any kind of Garments, Battery Factory, Fashion Industry, Packaging Factory.<br />\r\nIt&#39;s the best place also to made warehouse, could storage or storage of goods because from here you can transport your goods anywhere in the country in any time. Because cargoes or trucks are running in this road 24 hours. In resent days lots of warehouse and business center were established in this area due to well communication.<br />\r\nBroker / Service commission 1 month rent from buyer side no sharing for rent<br />\r\nOnly real and interested customers are requested to contact</p>', '[\"1\",\"2\",\"3\"]', NULL, '[\"1\"]', NULL, NULL, 'https://youtu.be/Ljy_0CRwqT8'),
 (62, 1, 61, 'South Facing', '2021-09-13', '<p>INDUSTRIAL WEREHOUSE &amp; FACTORY SHED AT&nbsp;Dhk-syl highway</p>\r\n\r\n<p>20000sqft<br />\r\nShed Height &ndash;20ft<br />\r\nWidth:<br />\r\nLength:<br />\r\nElectricity:&nbsp;upon discussion<br />\r\nFactory:<br />\r\nOwners of the factory shed &ndash; single<br />\r\nRent: Tk.12/- P/sft.<br />\r\nAdvance: 9 months &amp; 3 Month for security advance.<br />\r\nAfter 3 years will be 10% increase of rent for next 2 years.</p>\r\n\r\n<p><br />\r\nUtility: So many big and small industry with in 2/3 km, Land is 100% fit for any kind of Garments, Battery Factory, Fashion Industry, Packaging Factory.<br />\r\nIt&#39;s the best place also to made warehouse, could storage or storage of goods because from here you can transport your goods anywhere in the country in any time. Because cargoes or trucks are running in this road 24 hours. In resent days lots of warehouse and business center were established in this area due to well communication.<br />\r\nBroker / Service commission 1 month rent from buyer side no sharing for rent<br />\r\nOnly real and interested customers are requested to contact</p>', '[\"1\"]', NULL, 'null', NULL, NULL, NULL),
 (63, 1, 62, 'South Facing', '2021-09-13', '<p><strong>INDUSTRIAL WEREHOUSE &amp; FACTORY SHED AT GAZIPUR KALIGONG, ULUKHOLA, GAZIPUR</strong><br />\r\nLand Size-</p>\r\n\r\n<p>32000 sft fabrication still structure shed with RCC wall.</p>\r\n\r\n<p>25000 sft. Shed &amp; 5000 sft. Open Space for loading Unloading Space</p>\r\n\r\n<p><strong>15 km &amp; 20 minute distance from Tongi bridge</strong></p>\r\n\r\n<p>Shed Height &ndash; 23- 37 feet.</p>\r\n\r\n<p>Width: 132 Feet</p>\r\n\r\n<p>Length: 186 feet</p>\r\n\r\n<p>Electricity: 20 KVA is ready &ndash; To be added up to 90 KVA by max. 1 month</p>\r\n\r\n<p>Factory:</p>\r\n\r\n<p>Owners of the factory shed &ndash; single</p>\r\n\r\n<p>Rent: Tk.18/- P/sft.</p>\r\n\r\n<p>Advance: 9 months &amp; 3 Month for security advance.</p>\r\n\r\n<p>After 3 years will be 10% increase of rent for next 2 years.</p>\r\n\r\n<p>Only Half km meter distance from Asian Highway Road</p>\r\n\r\n<p>After finishing the bridge the distance of Dhk-NB, Dhk-Syl, Dhk - Ctg &amp; Asia Highway will be very shorter.</p>\r\n\r\n<p>Utility: So many big and small industry with in 2/3 km, Land is 100% fit for any kind of&nbsp;&nbsp;Garments, Battery Factory, Fashion Industry, Packaging Factory.</p>\r\n\r\n<p>It&#39;s the best place also to made warehouse, could storage or storage of goods because from here you can transport your goods anywhere in the country in any time. Because cargoes or trucks are running in this road 24 hours. In resent days lots of warehouse and business center were established in this area due to well communication.</p>\r\n\r\n<p>Broker / Service commission 1 month rent from buyer side no sharing for rent</p>\r\n\r\n<p><strong>Only real and interested customers are requested to contact</strong></p>', '[\"1\"]', NULL, '[\"1\"]', NULL, NULL, NULL),
@@ -1856,11 +1856,11 @@ INSERT INTO `prd_listing_additional_info` (`PK_NO`, `F_FACING_NO`, `F_LISTING_NO
 (117, 1, 117, 'South Facing', '2022-05-12', '<p>demo</p>', '[\"1\",\"2\",\"3\",\"4\"]', NULL, '[\"1\"]', NULL, 'demo', 'demo');
 
 --
--- Triggers `prd_listing_additional_info`
+-- Triggers `PRD_LISTING_ADDITIONAL_INFO`
 --
 DROP TRIGGER IF EXISTS `BEFORE_PRD_LISTING_ADDITIONAL_INFO_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_PRD_LISTING_ADDITIONAL_INFO_INSERT` BEFORE INSERT ON `prd_listing_additional_info` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_PRD_LISTING_ADDITIONAL_INFO_INSERT` BEFORE INSERT ON `PRD_LISTING_ADDITIONAL_INFO` FOR EACH ROW BEGIN
 DECLARE VAR_FACING VARCHAR(50) DEFAULT NULL;
 
 SELECT TITLE INTO VAR_FACING FROM PRD_PROPERTY_FACING WHERE PK_NO = NEW.F_FACING_NO;
@@ -1872,7 +1872,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `BEFORE_PRD_LISTING_ADDITIONAL_INFO_UPDATE`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_PRD_LISTING_ADDITIONAL_INFO_UPDATE` BEFORE UPDATE ON `prd_listing_additional_info` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_PRD_LISTING_ADDITIONAL_INFO_UPDATE` BEFORE UPDATE ON `PRD_LISTING_ADDITIONAL_INFO` FOR EACH ROW BEGIN
 DECLARE VAR_FACING VARCHAR(50) DEFAULT NULL;
 
 SELECT TITLE INTO VAR_FACING FROM PRD_PROPERTY_FACING WHERE PK_NO = NEW.F_FACING_NO;
@@ -1886,11 +1886,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listing_features`
+-- Table structure for table `PRD_LISTING_FEATURES`
 --
 
-DROP TABLE IF EXISTS `prd_listing_features`;
-CREATE TABLE IF NOT EXISTS `prd_listing_features` (
+DROP TABLE IF EXISTS `PRD_LISTING_FEATURES`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTING_FEATURES` (
   `PK_NO` int(2) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(50) DEFAULT NULL,
   `ICON` varchar(100) DEFAULT NULL,
@@ -1902,10 +1902,10 @@ CREATE TABLE IF NOT EXISTS `prd_listing_features` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_listing_features`
+-- Dumping data for table `PRD_LISTING_FEATURES`
 --
 
-INSERT INTO `prd_listing_features` (`PK_NO`, `TITLE`, `ICON`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
+INSERT INTO `PRD_LISTING_FEATURES` (`PK_NO`, `TITLE`, `ICON`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
 (1, 'Parking', NULL, 'parking', 1, 1),
 (2, 'Gas', NULL, 'gas', 1, 2),
 (3, 'Water', NULL, 'water', 1, 3),
@@ -1914,11 +1914,11 @@ INSERT INTO `prd_listing_features` (`PK_NO`, `TITLE`, `ICON`, `URL_SLUG`, `IS_AC
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listing_images`
+-- Table structure for table `PRD_LISTING_IMAGES`
 --
 
-DROP TABLE IF EXISTS `prd_listing_images`;
-CREATE TABLE IF NOT EXISTS `prd_listing_images` (
+DROP TABLE IF EXISTS `PRD_LISTING_IMAGES`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTING_IMAGES` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_LISTING_NO` bigint(20) DEFAULT NULL,
   `IMAGE_PATH` varchar(100) DEFAULT NULL,
@@ -1934,10 +1934,10 @@ CREATE TABLE IF NOT EXISTS `prd_listing_images` (
 ) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_listing_images`
+-- Dumping data for table `PRD_LISTING_IMAGES`
 --
 
-INSERT INTO `prd_listing_images` (`PK_NO`, `F_LISTING_NO`, `IMAGE_PATH`, `IMAGE`, `THUMB_PATH`, `THUMB`, `OG_PATH`, `OG_IMAGE`, `SM_PATH`, `SM_IMAGE`, `IS_DEFAULT`) VALUES
+INSERT INTO `PRD_LISTING_IMAGES` (`PK_NO`, `F_LISTING_NO`, `IMAGE_PATH`, `IMAGE`, `THUMB_PATH`, `THUMB`, `OG_PATH`, `OG_IMAGE`, `SM_PATH`, `SM_IMAGE`, `IS_DEFAULT`) VALUES
 (28, 2, '/uploads/listings/2/6099597e40a92.jpg', '6099597e40a92.jpg', NULL, NULL, NULL, NULL, NULL, NULL, 1),
 (29, 2, '/uploads/listings/2/6099597e416a7.jpg', '6099597e416a7.jpg', NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (30, 3, '/uploads/listings/3/60ac10ac9616b.jpg', '60ac10ac9616b.jpg', '/uploads/listings/3/thumb/60ac10ac96184.jpg', '60ac10ac96184.jpg', NULL, NULL, NULL, NULL, 1),
@@ -2110,11 +2110,11 @@ INSERT INTO `prd_listing_images` (`PK_NO`, `F_LISTING_NO`, `IMAGE_PATH`, `IMAGE`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listing_type`
+-- Table structure for table `PRD_LISTING_TYPE`
 --
 
-DROP TABLE IF EXISTS `prd_listing_type`;
-CREATE TABLE IF NOT EXISTS `prd_listing_type` (
+DROP TABLE IF EXISTS `PRD_LISTING_TYPE`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTING_TYPE` (
   `PK_NO` int(2) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(50) DEFAULT NULL,
   `IS_ACTIVE` int(1) NOT NULL DEFAULT '1',
@@ -2125,10 +2125,10 @@ CREATE TABLE IF NOT EXISTS `prd_listing_type` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_listing_type`
+-- Dumping data for table `PRD_LISTING_TYPE`
 --
 
-INSERT INTO `prd_listing_type` (`PK_NO`, `NAME`, `IS_ACTIVE`, `ORDER_ID`, `DURATION`, `SHORT_NAME`) VALUES
+INSERT INTO `PRD_LISTING_TYPE` (`PK_NO`, `NAME`, `IS_ACTIVE`, `ORDER_ID`, `DURATION`, `SHORT_NAME`) VALUES
 (1, 'General Listing for 30 days', 1, 1, 30, 'General'),
 (2, 'Feature Listing for 30 days', 1, 2, 30, 'Feature'),
 (3, 'General Listing with daily auto update for 30 days', 1, 3, 30, 'General'),
@@ -2137,11 +2137,11 @@ INSERT INTO `prd_listing_type` (`PK_NO`, `NAME`, `IS_ACTIVE`, `ORDER_ID`, `DURAT
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listing_variants`
+-- Table structure for table `PRD_LISTING_VARIANTS`
 --
 
-DROP TABLE IF EXISTS `prd_listing_variants`;
-CREATE TABLE IF NOT EXISTS `prd_listing_variants` (
+DROP TABLE IF EXISTS `PRD_LISTING_VARIANTS`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTING_VARIANTS` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `F_LISTING_NO` int(10) DEFAULT NULL,
   `PROPERTY_SIZE` decimal(10,0) NOT NULL DEFAULT '0',
@@ -2156,10 +2156,10 @@ CREATE TABLE IF NOT EXISTS `prd_listing_variants` (
 ) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_listing_variants`
+-- Dumping data for table `PRD_LISTING_VARIANTS`
 --
 
-INSERT INTO `prd_listing_variants` (`PK_NO`, `F_LISTING_NO`, `PROPERTY_SIZE`, `BEDROOM`, `BATHROOM`, `BALCONY`, `TOTAL_PRICE`, `CAR_PARKING`, `LAND_AREA`, `IS_DEFAULT`) VALUES
+INSERT INTO `PRD_LISTING_VARIANTS` (`PK_NO`, `F_LISTING_NO`, `PROPERTY_SIZE`, `BEDROOM`, `BATHROOM`, `BALCONY`, `TOTAL_PRICE`, `CAR_PARKING`, `LAND_AREA`, `IS_DEFAULT`) VALUES
 (44, 2, '5000', 4, 4, NULL, 8000000, NULL, NULL, 1),
 (47, 3, '1000', 2, 2, NULL, 500000, NULL, NULL, 1),
 (48, 3, '1500', 3, 2, NULL, 700000, NULL, NULL, 0),
@@ -2284,11 +2284,11 @@ INSERT INTO `prd_listing_variants` (`PK_NO`, `F_LISTING_NO`, `PROPERTY_SIZE`, `B
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_listing_view`
+-- Table structure for table `PRD_LISTING_VIEW`
 --
 
-DROP TABLE IF EXISTS `prd_listing_view`;
-CREATE TABLE IF NOT EXISTS `prd_listing_view` (
+DROP TABLE IF EXISTS `PRD_LISTING_VIEW`;
+CREATE TABLE IF NOT EXISTS `PRD_LISTING_VIEW` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_PRD_LISTING_NO` int(11) DEFAULT NULL,
   `DATE` date DEFAULT NULL,
@@ -2297,10 +2297,10 @@ CREATE TABLE IF NOT EXISTS `prd_listing_view` (
 ) ENGINE=MyISAM AUTO_INCREMENT=204 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_listing_view`
+-- Dumping data for table `PRD_LISTING_VIEW`
 --
 
-INSERT INTO `prd_listing_view` (`PK_NO`, `F_PRD_LISTING_NO`, `DATE`, `COUNTER`) VALUES
+INSERT INTO `PRD_LISTING_VIEW` (`PK_NO`, `F_PRD_LISTING_NO`, `DATE`, `COUNTER`) VALUES
 (1, 5, '2021-08-10', 10),
 (2, 6, '2021-08-11', 10),
 (3, 14, '2021-08-11', 5),
@@ -2508,11 +2508,11 @@ INSERT INTO `prd_listing_view` (`PK_NO`, `F_PRD_LISTING_NO`, `DATE`, `COUNTER`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_nearby`
+-- Table structure for table `PRD_NEARBY`
 --
 
-DROP TABLE IF EXISTS `prd_nearby`;
-CREATE TABLE IF NOT EXISTS `prd_nearby` (
+DROP TABLE IF EXISTS `PRD_NEARBY`;
+CREATE TABLE IF NOT EXISTS `PRD_NEARBY` (
   `PK_NO` int(2) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(50) DEFAULT NULL,
   `ICON` varchar(100) DEFAULT NULL,
@@ -2524,10 +2524,10 @@ CREATE TABLE IF NOT EXISTS `prd_nearby` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_nearby`
+-- Dumping data for table `PRD_NEARBY`
 --
 
-INSERT INTO `prd_nearby` (`PK_NO`, `TITLE`, `ICON`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
+INSERT INTO `PRD_NEARBY` (`PK_NO`, `TITLE`, `ICON`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
 (1, 'Bus Stand', NULL, 'bus-stand', 1, 1),
 (2, 'Super Shop', NULL, 'super-shop', 1, 2),
 (3, 'Hospital', NULL, 'hospital', 1, 3),
@@ -2536,11 +2536,11 @@ INSERT INTO `prd_nearby` (`PK_NO`, `TITLE`, `ICON`, `URL_SLUG`, `IS_ACTIVE`, `OR
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_property_condition`
+-- Table structure for table `PRD_PROPERTY_CONDITION`
 --
 
-DROP TABLE IF EXISTS `prd_property_condition`;
-CREATE TABLE IF NOT EXISTS `prd_property_condition` (
+DROP TABLE IF EXISTS `PRD_PROPERTY_CONDITION`;
+CREATE TABLE IF NOT EXISTS `PRD_PROPERTY_CONDITION` (
   `PK_NO` int(2) NOT NULL AUTO_INCREMENT,
   `PROD_CONDITION` varchar(50) DEFAULT NULL,
   `URL_SLUG` varchar(50) DEFAULT NULL,
@@ -2551,10 +2551,10 @@ CREATE TABLE IF NOT EXISTS `prd_property_condition` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_property_condition`
+-- Dumping data for table `PRD_PROPERTY_CONDITION`
 --
 
-INSERT INTO `prd_property_condition` (`PK_NO`, `PROD_CONDITION`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
+INSERT INTO `PRD_PROPERTY_CONDITION` (`PK_NO`, `PROD_CONDITION`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
 (1, 'Ready', 'ready', 1, 1),
 (2, 'Semi Ready', 'semi-ready', 1, 2),
 (3, 'Ongoing', 'ongoing', 1, 3),
@@ -2563,11 +2563,11 @@ INSERT INTO `prd_property_condition` (`PK_NO`, `PROD_CONDITION`, `URL_SLUG`, `IS
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_property_facing`
+-- Table structure for table `PRD_PROPERTY_FACING`
 --
 
-DROP TABLE IF EXISTS `prd_property_facing`;
-CREATE TABLE IF NOT EXISTS `prd_property_facing` (
+DROP TABLE IF EXISTS `PRD_PROPERTY_FACING`;
+CREATE TABLE IF NOT EXISTS `PRD_PROPERTY_FACING` (
   `PK_NO` int(2) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(50) NOT NULL,
   `URL_SLUG` varchar(50) DEFAULT NULL,
@@ -2578,21 +2578,21 @@ CREATE TABLE IF NOT EXISTS `prd_property_facing` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_property_facing`
+-- Dumping data for table `PRD_PROPERTY_FACING`
 --
 
-INSERT INTO `prd_property_facing` (`PK_NO`, `TITLE`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
+INSERT INTO `PRD_PROPERTY_FACING` (`PK_NO`, `TITLE`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`) VALUES
 (1, 'South Facing', 'south-facing', 1, 1),
 (2, 'North Facing', 'north-facing', 1, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_property_type`
+-- Table structure for table `PRD_PROPERTY_TYPE`
 --
 
-DROP TABLE IF EXISTS `prd_property_type`;
-CREATE TABLE IF NOT EXISTS `prd_property_type` (
+DROP TABLE IF EXISTS `PRD_PROPERTY_TYPE`;
+CREATE TABLE IF NOT EXISTS `PRD_PROPERTY_TYPE` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `PROPERTY_TYPE` varchar(50) DEFAULT NULL,
   `URL_SLUG` varchar(50) DEFAULT NULL,
@@ -2615,10 +2615,10 @@ CREATE TABLE IF NOT EXISTS `prd_property_type` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_property_type`
+-- Dumping data for table `PRD_PROPERTY_TYPE`
 --
 
-INSERT INTO `prd_property_type` (`PK_NO`, `PROPERTY_TYPE`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`, `TYPE`, `META_TITLE`, `META_DESC`, `BODY_DESC`, `CATEGORY_URL`, `IMG_PATH`, `ICON_PATH`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_BY`, `MODIFIED_AT`, `TOTAL_LISTING`) VALUES
+INSERT INTO `PRD_PROPERTY_TYPE` (`PK_NO`, `PROPERTY_TYPE`, `URL_SLUG`, `IS_ACTIVE`, `ORDER_ID`, `TYPE`, `META_TITLE`, `META_DESC`, `BODY_DESC`, `CATEGORY_URL`, `IMG_PATH`, `ICON_PATH`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_BY`, `MODIFIED_AT`, `TOTAL_LISTING`) VALUES
 (1, 'Apartment', 'apartment', 1, 1, 'A', 'Apartment', 'Apartment', NULL, NULL, NULL, '/media/images/property-category/img_21082021_6121388ceb546.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:31:56', 42),
 (2, 'Office', 'office', 1, 2, 'B', 'Office', 'Office', NULL, NULL, NULL, '/media/images/property-category/img_21082021_6121389b5438e.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:32:11', 11),
 (3, 'Shop', 'shop', 1, 3, 'B', 'Shop', 'Shop', NULL, NULL, NULL, '/media/images/property-category/img_21082021_6121387ee018b.png', '2021-06-01 13:28:13', NULL, 2, '2021-08-21 23:31:42', 12),
@@ -2631,11 +2631,11 @@ INSERT INTO `prd_property_type` (`PK_NO`, `PROPERTY_TYPE`, `URL_SLUG`, `IS_ACTIV
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_requirements`
+-- Table structure for table `PRD_REQUIREMENTS`
 --
 
-DROP TABLE IF EXISTS `prd_requirements`;
-CREATE TABLE IF NOT EXISTS `prd_requirements` (
+DROP TABLE IF EXISTS `PRD_REQUIREMENTS`;
+CREATE TABLE IF NOT EXISTS `PRD_REQUIREMENTS` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `F_USER_NO` int(11) DEFAULT NULL,
   `F_CITY_NO` int(10) DEFAULT NULL,
@@ -2669,10 +2669,10 @@ CREATE TABLE IF NOT EXISTS `prd_requirements` (
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_requirements`
+-- Dumping data for table `PRD_REQUIREMENTS`
 --
 
-INSERT INTO `prd_requirements` (`PK_NO`, `F_USER_NO`, `F_CITY_NO`, `CITY_NAME`, `F_AREAS`, `AREA_NAMES`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO`, `PROPERTY_TYPE`, `MIN_SIZE`, `MAX_SIZE`, `MIN_BUDGET`, `MAX_BUDGET`, `BEDROOM`, `F_PROPERTY_CONDITION`, `PROPERTY_CONDITION`, `REQUIREMENT_DETAILS`, `PREP_CONT_TIME`, `EMAIL_ALERT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `IS_VERIFIED`, `IS_ACTIVE`, `F_VERIFIED_BY`, `VERIFIED_AT`, `MAX_SHARING_PERMISSION`, `LEAD_PRICE`) VALUES
+INSERT INTO `PRD_REQUIREMENTS` (`PK_NO`, `F_USER_NO`, `F_CITY_NO`, `CITY_NAME`, `F_AREAS`, `AREA_NAMES`, `PROPERTY_FOR`, `F_PROPERTY_TYPE_NO`, `PROPERTY_TYPE`, `MIN_SIZE`, `MAX_SIZE`, `MIN_BUDGET`, `MAX_BUDGET`, `BEDROOM`, `F_PROPERTY_CONDITION`, `PROPERTY_CONDITION`, `REQUIREMENT_DETAILS`, `PREP_CONT_TIME`, `EMAIL_ALERT`, `CREATED_AT`, `CREATED_BY`, `MODIFIED_AT`, `MODIFIED_BY`, `IS_VERIFIED`, `IS_ACTIVE`, `F_VERIFIED_BY`, `VERIFIED_AT`, `MAX_SHARING_PERMISSION`, `LEAD_PRICE`) VALUES
 (7, 20, 1, 'Dhaka', '[\"2\",\"3\",\"5\"]', NULL, 'sale', 2, 'Office', 800, 1800, 2000000, 3000000, '[\"any\"]', '[\"1\"]', '[\"ready\"]', '<p>I need a perfect property&nbsp;</p>', '01:00:00', 'daily', NULL, 20, '2021-09-10 22:09:11', 20, 0, 0, NULL, NULL, 0, 10),
 (9, 20, 1, 'Dhaka', '[\"5\",\"3\",\"2\"]', NULL, 'sale', 2, 'Office', 800, 1800, 2000000, 3000000, '[\"any\"]', '[\"1\"]', '[\"ready\"]', '<p>I need a perfect property&nbsp;</p>', '01:00:00', 'daily', NULL, 20, '2021-09-10 22:09:21', 20, 0, 1, NULL, NULL, 0, 10),
 (10, 41, 1, 'Dhaka', '[\"1\",\"5\",\"12\"]', NULL, 'sale', 1, 'Apartment', 100, 1000, 10, 100, 'null', '[]', '[]', '<p>test</p>', '04:10:00', 'daily', NULL, 41, '2021-09-21 00:57:29', 2, 1, 1, 2, '2021-09-21 00:57:29', 10, 10),
@@ -2714,11 +2714,11 @@ INSERT INTO `prd_requirements` (`PK_NO`, `F_USER_NO`, `F_CITY_NO`, `CITY_NAME`, 
 (51, 14, 1, 'Dhaka', '[\"2\",\"3\"]', NULL, 'sale', 1, 'Apartment', 1000, 1500, 1000, 2000000, '[\"any\"]', '[3,1]', '[\"Ongoing\",\"Ready\"]', '<p>test</p>', '02:40:00', 'weekly', NULL, 14, '2021-09-23 01:22:26', 2, 1, 1, 2, '2021-09-23 01:22:26', 10, 10);
 
 --
--- Triggers `prd_requirements`
+-- Triggers `PRD_REQUIREMENTS`
 --
 DROP TRIGGER IF EXISTS `BEFORE_PRD_REQUIREMENTS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_PRD_REQUIREMENTS_INSERT` BEFORE INSERT ON `prd_requirements` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_PRD_REQUIREMENTS_INSERT` BEFORE INSERT ON `PRD_REQUIREMENTS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CITY_NAME VARCHAR(100) DEFAULT NULL;
 DECLARE VAR_PROPERTY_TYPE VARCHAR(100) DEFAULT NULL;
@@ -2745,7 +2745,7 @@ $$
 DELIMITER ;
 DROP TRIGGER IF EXISTS `BEFORE_PRD_REQUIREMENTS_UPDATE`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_PRD_REQUIREMENTS_UPDATE` BEFORE UPDATE ON `prd_requirements` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_PRD_REQUIREMENTS_UPDATE` BEFORE UPDATE ON `PRD_REQUIREMENTS` FOR EACH ROW BEGIN
 
 DECLARE VAR_CITY_NAME VARCHAR(100) DEFAULT NULL;
 DECLARE VAR_PROPERTY_TYPE VARCHAR(100) DEFAULT NULL;
@@ -2763,11 +2763,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_suggested_property`
+-- Table structure for table `PRD_SUGGESTED_PROPERTY`
 --
 
-DROP TABLE IF EXISTS `prd_suggested_property`;
-CREATE TABLE IF NOT EXISTS `prd_suggested_property` (
+DROP TABLE IF EXISTS `PRD_SUGGESTED_PROPERTY`;
+CREATE TABLE IF NOT EXISTS `PRD_SUGGESTED_PROPERTY` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `F_LISTING_NO` int(11) DEFAULT NULL,
   `F_COMPANY_NO` int(11) DEFAULT NULL COMMENT '	FROM WEB_USERS WHO IS BUILDER',
@@ -2790,10 +2790,10 @@ CREATE TABLE IF NOT EXISTS `prd_suggested_property` (
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prd_suggested_property`
+-- Dumping data for table `PRD_SUGGESTED_PROPERTY`
 --
 
-INSERT INTO `prd_suggested_property` (`PK_NO`, `F_LISTING_NO`, `F_COMPANY_NO`, `F_USER_NO`, `CREATED_AT`, `CREATED_BY`, `MODIFYED_AT`, `MODIFYED_BY`, `PROPERTY_FOR`, `PROPERTY_TYPE`, `AREA`, `SIZE`, `BEDROOM`, `BATHROOM`, `TOTAL_PRICE`, `PROPERTY_CONDITION`, `STATUS`, `ORDER_ID`) VALUES
+INSERT INTO `PRD_SUGGESTED_PROPERTY` (`PK_NO`, `F_LISTING_NO`, `F_COMPANY_NO`, `F_USER_NO`, `CREATED_AT`, `CREATED_BY`, `MODIFYED_AT`, `MODIFYED_BY`, `PROPERTY_FOR`, `PROPERTY_TYPE`, `AREA`, `SIZE`, `BEDROOM`, `BATHROOM`, `TOTAL_PRICE`, `PROPERTY_CONDITION`, `STATUS`, `ORDER_ID`) VALUES
 (22, 5, 15, 34, '2021-09-29 19:09:00', 14, NULL, NULL, 'sale', 'Apartment', 7, '1690', '3', '3', 3700, '20', 0, 1),
 (23, 106, 65, 14, '2021-09-29 19:09:00', 14, NULL, NULL, 'sale', 'Apartment', 2, '1350', '3', '3', 4725000, '20', 0, 1),
 (24, 106, 65, 42, '2021-09-29 19:09:00', 14, NULL, NULL, 'sale', 'Apartment', 2, '1350', '3', '3', 4725000, '20', 0, 1),
@@ -2812,11 +2812,11 @@ INSERT INTO `prd_suggested_property` (`PK_NO`, `F_LISTING_NO`, `F_COMPANY_NO`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prd_suggested_property_temp`
+-- Table structure for table `PRD_SUGGESTED_PROPERTY_TEMP`
 --
 
-DROP TABLE IF EXISTS `prd_suggested_property_temp`;
-CREATE TABLE IF NOT EXISTS `prd_suggested_property_temp` (
+DROP TABLE IF EXISTS `PRD_SUGGESTED_PROPERTY_TEMP`;
+CREATE TABLE IF NOT EXISTS `PRD_SUGGESTED_PROPERTY_TEMP` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `F_LISTING_NO` int(11) DEFAULT NULL,
   `F_COMPANY_NO` int(11) DEFAULT NULL COMMENT '	FROM WEB_USERS WHO IS BUILDER',
@@ -2840,11 +2840,11 @@ CREATE TABLE IF NOT EXISTS `prd_suggested_property_temp` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `refund_request_reason`
+-- Table structure for table `REFUND_REQUEST_REASON`
 --
 
-DROP TABLE IF EXISTS `refund_request_reason`;
-CREATE TABLE IF NOT EXISTS `refund_request_reason` (
+DROP TABLE IF EXISTS `REFUND_REQUEST_REASON`;
+CREATE TABLE IF NOT EXISTS `REFUND_REQUEST_REASON` (
   `PK_NO` int(2) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(50) DEFAULT NULL,
   `IS_ACTIVE` int(2) NOT NULL DEFAULT '1',
@@ -2853,21 +2853,21 @@ CREATE TABLE IF NOT EXISTS `refund_request_reason` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `refund_request_reason`
+-- Dumping data for table `REFUND_REQUEST_REASON`
 --
 
-INSERT INTO `refund_request_reason` (`PK_NO`, `TITLE`, `IS_ACTIVE`, `ORDER_ID`) VALUES
+INSERT INTO `REFUND_REQUEST_REASON` (`PK_NO`, `TITLE`, `IS_ACTIVE`, `ORDER_ID`) VALUES
 (1, 'Reason 1', 1, 1),
 (2, 'Reason 2', 1, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_permission_group`
+-- Table structure for table `SA_PERMISSION_GROUP`
 --
 
-DROP TABLE IF EXISTS `sa_permission_group`;
-CREATE TABLE IF NOT EXISTS `sa_permission_group` (
+DROP TABLE IF EXISTS `SA_PERMISSION_GROUP`;
+CREATE TABLE IF NOT EXISTS `SA_PERMISSION_GROUP` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2881,10 +2881,10 @@ CREATE TABLE IF NOT EXISTS `sa_permission_group` (
 ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_permission_group`
+-- Dumping data for table `SA_PERMISSION_GROUP`
 --
 
-INSERT INTO `sa_permission_group` (`PK_NO`, `CODE`, `NAME`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
+INSERT INTO `SA_PERMISSION_GROUP` (`PK_NO`, `CODE`, `NAME`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
 (7, NULL, 'Dashboard', 1, 0, 0, '2020-10-08 15:22:11', '2020-10-08 15:22:11', NULL),
 (8, NULL, 'User role', 1, 0, 0, '2020-10-08 15:22:35', '2020-10-08 15:22:35', NULL),
 (9, NULL, 'Admin User', 1, 0, 0, '2020-10-08 15:23:50', '2020-10-08 15:23:50', NULL),
@@ -2955,11 +2955,11 @@ INSERT INTO `sa_permission_group` (`PK_NO`, `CODE`, `NAME`, `STATUS`, `CREATED_B
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_permission_group_dtl`
+-- Table structure for table `SA_PERMISSION_GROUP_DTL`
 --
 
-DROP TABLE IF EXISTS `sa_permission_group_dtl`;
-CREATE TABLE IF NOT EXISTS `sa_permission_group_dtl` (
+DROP TABLE IF EXISTS `SA_PERMISSION_GROUP_DTL`;
+CREATE TABLE IF NOT EXISTS `SA_PERMISSION_GROUP_DTL` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2975,10 +2975,10 @@ CREATE TABLE IF NOT EXISTS `sa_permission_group_dtl` (
 ) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_permission_group_dtl`
+-- Dumping data for table `SA_PERMISSION_GROUP_DTL`
 --
 
-INSERT INTO `sa_permission_group_dtl` (`PK_NO`, `CODE`, `NAME`, `DISPLAY_NAME`, `F_PERMISSION_GROUP_NO`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
+INSERT INTO `SA_PERMISSION_GROUP_DTL` (`PK_NO`, `CODE`, `NAME`, `DISPLAY_NAME`, `F_PERMISSION_GROUP_NO`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
 (10, NULL, 'view_dashboard', 'View', 7, 1, 0, 0, '2020-10-08 15:25:12', '2020-10-08 15:25:12', NULL),
 (11, NULL, 'view_admin_user', 'View', 9, 1, 0, 0, '2020-10-08 15:27:01', '2020-10-08 15:27:01', NULL),
 (12, NULL, 'add_admin_user', 'Add', 9, 1, 0, 0, '2020-10-08 15:27:23', '2020-10-08 15:27:23', NULL),
@@ -3167,11 +3167,11 @@ INSERT INTO `sa_permission_group_dtl` (`PK_NO`, `CODE`, `NAME`, `DISPLAY_NAME`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_role`
+-- Table structure for table `SA_ROLE`
 --
 
-DROP TABLE IF EXISTS `sa_role`;
-CREATE TABLE IF NOT EXISTS `sa_role` (
+DROP TABLE IF EXISTS `SA_ROLE`;
+CREATE TABLE IF NOT EXISTS `SA_ROLE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -3185,10 +3185,10 @@ CREATE TABLE IF NOT EXISTS `sa_role` (
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_role`
+-- Dumping data for table `SA_ROLE`
 --
 
-INSERT INTO `sa_role` (`PK_NO`, `CODE`, `NAME`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
+INSERT INTO `SA_ROLE` (`PK_NO`, `CODE`, `NAME`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
 (1, NULL, 'Super admin', 1, 0, 0, '2020-03-04 22:42:11', '2017-03-13 07:42:11', NULL),
 (8, NULL, 'Admin', 1, 0, 0, '2020-03-04 22:42:11', NULL, NULL),
 (12, NULL, 'Manager (MY)', 1, 0, 0, '2020-10-07 20:02:37', '2021-02-19 12:21:13', NULL),
@@ -3202,11 +3202,11 @@ INSERT INTO `sa_role` (`PK_NO`, `CODE`, `NAME`, `STATUS`, `CREATED_BY`, `UPDATED
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_role_dtl`
+-- Table structure for table `SA_ROLE_DTL`
 --
 
-DROP TABLE IF EXISTS `sa_role_dtl`;
-CREATE TABLE IF NOT EXISTS `sa_role_dtl` (
+DROP TABLE IF EXISTS `SA_ROLE_DTL`;
+CREATE TABLE IF NOT EXISTS `SA_ROLE_DTL` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `PERMISSIONS` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -3220,10 +3220,10 @@ CREATE TABLE IF NOT EXISTS `sa_role_dtl` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_role_dtl`
+-- Dumping data for table `SA_ROLE_DTL`
 --
 
-INSERT INTO `sa_role_dtl` (`PK_NO`, `CODE`, `PERMISSIONS`, `F_ROLE_NO`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
+INSERT INTO `SA_ROLE_DTL` (`PK_NO`, `CODE`, `PERMISSIONS`, `F_ROLE_NO`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
 (1, NULL, ',view_dashboard,', 1, 0, 0, NULL, NULL, NULL),
 (2, NULL, ',view_pending_app_dispach,view_batch_collected,view_item_collected,view_order_collect,assign_item_collect,new_booking,view_booking,edit_booking,delete_booking,view_customer,new_customer,edit_customer,delete_customer,view_customer_address,new_customer_address,edit_customer_address,delete_customer_address,view_customer_section,view_dashboard,view_dashboard_cards_my_manager,view_dispatch,view_dispatch_management,view_dispatched,edit_dispatch,view_notify_sms,send_notify_sms,view_order,new_order,edit_order,delete_order,view_payment,new_payment,edit_payment,delete_payment,view_payment_section,view_product_list,view_product,new_reseller,view_reseller,edit_reseller,delete_reseller,new_search_booking,edit_user,view_rts_collect_btn,view_warehouse_section,view_warehouse_stock,view_warehouse_stock_view,', 12, 0, 0, '2020-10-07 20:02:37', '2021-03-14 02:10:44', NULL),
 (3, NULL, ',view_dashboard,add_user_report,execute_dashboard,view_role,', 8, 0, 0, NULL, NULL, NULL),
@@ -3237,11 +3237,11 @@ INSERT INTO `sa_role_dtl` (`PK_NO`, `CODE`, `PERMISSIONS`, `F_ROLE_NO`, `CREATED
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_token`
+-- Table structure for table `SA_TOKEN`
 --
 
-DROP TABLE IF EXISTS `sa_token`;
-CREATE TABLE IF NOT EXISTS `sa_token` (
+DROP TABLE IF EXISTS `SA_TOKEN`;
+CREATE TABLE IF NOT EXISTS `SA_TOKEN` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `F_USER_NO` int(11) NOT NULL,
@@ -3255,10 +3255,10 @@ CREATE TABLE IF NOT EXISTS `sa_token` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_token`
+-- Dumping data for table `SA_TOKEN`
 --
 
-INSERT INTO `sa_token` (`PK_NO`, `CODE`, `F_USER_NO`, `TOKEN`, `CLIENT`, `IP_ADDRESS`, `IS_EXPIRE`, `STARTED_AT`, `EXPIRE_AT`) VALUES
+INSERT INTO `SA_TOKEN` (`PK_NO`, `CODE`, `F_USER_NO`, `TOKEN`, `CLIENT`, `IP_ADDRESS`, `IS_EXPIRE`, `STARTED_AT`, `EXPIRE_AT`) VALUES
 (2, NULL, 54, '3bad48d417c012b7af2eaa43aa97a50d4ae8e496688fbe89282cd4cca6784cd1', 'okhttp/3.8.0', NULL, 1, '2021-04-02 07:13:01', '2022-04-02 07:13:01'),
 (3, NULL, 67, 'e35f048b4d038de19cfb5610ae5b19255206e8649ab2c58793e4f76761fc2375', 'okhttp/3.8.0', NULL, 1, '2021-04-02 07:15:41', '2022-04-02 07:15:41'),
 (4, NULL, 17, 'a1941bd66393010af191f4732078b45ad74104a4d6911abc17faff0453f37471', 'okhttp/3.8.0', NULL, 1, '2021-04-02 08:54:04', '2022-04-02 08:54:04'),
@@ -3272,11 +3272,11 @@ INSERT INTO `sa_token` (`PK_NO`, `CODE`, `F_USER_NO`, `TOKEN`, `CLIENT`, `IP_ADD
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_user`
+-- Table structure for table `SA_USER`
 --
 
-DROP TABLE IF EXISTS `sa_user`;
-CREATE TABLE IF NOT EXISTS `sa_user` (
+DROP TABLE IF EXISTS `SA_USER`;
+CREATE TABLE IF NOT EXISTS `SA_USER` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `USERNAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3319,21 +3319,21 @@ CREATE TABLE IF NOT EXISTS `sa_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_user`
+-- Dumping data for table `SA_USER`
 --
 
-INSERT INTO `sa_user` (`PK_NO`, `CODE`, `USERNAME`, `FIRST_NAME`, `LAST_NAME`, `DESIGNATION`, `EMAIL`, `MOBILE_NO`, `PASSWORD`, `GENDER`, `DOB`, `FACEBOOK_ID`, `GOOGLE_ID`, `PROFILE_PIC`, `PROFILE_PIC_URL`, `PIC_MIME_TYPE`, `ACTIVATION_CODE`, `ACTIVATION_CODE_EXPIRE`, `IS_FIRST_LOGIN`, `USER_TYPE`, `CAN_LOGIN`, `REMEMBER_TOKEN`, `STATUS`, `F_AGENT_NO`, `F_PARENT_USER_ID`, `F_USER_GROUP_NO`, `USR_CUSTOM_PERMISSION`, `IS_SECONDARY_USER`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `IS_EMAIL_VERIFIED`, `IS_MOBILE_VERIFIED`, `EMAIL_VERIFY_CODE`, `EMAIL_VERIFY_EXPIRE`, `MOBILE_VERITY_CODE`, `MOBILE_VERIFY_EXPIRE`) VALUES
+INSERT INTO `SA_USER` (`PK_NO`, `CODE`, `USERNAME`, `FIRST_NAME`, `LAST_NAME`, `DESIGNATION`, `EMAIL`, `MOBILE_NO`, `PASSWORD`, `GENDER`, `DOB`, `FACEBOOK_ID`, `GOOGLE_ID`, `PROFILE_PIC`, `PROFILE_PIC_URL`, `PIC_MIME_TYPE`, `ACTIVATION_CODE`, `ACTIVATION_CODE_EXPIRE`, `IS_FIRST_LOGIN`, `USER_TYPE`, `CAN_LOGIN`, `REMEMBER_TOKEN`, `STATUS`, `F_AGENT_NO`, `F_PARENT_USER_ID`, `F_USER_GROUP_NO`, `USR_CUSTOM_PERMISSION`, `IS_SECONDARY_USER`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `IS_EMAIL_VERIFIED`, `IS_MOBILE_VERIFIED`, `EMAIL_VERIFY_CODE`, `EMAIL_VERIFY_EXPIRE`, `MOBILE_VERITY_CODE`, `MOBILE_VERIFY_EXPIRE`) VALUES
 (1, NULL, 'Sharif', 'Super', 'Admin', 'Super', 'sharif@gmail.com', '01983798502', '$2y$10$aAANKQzyqfRinNTVZ1tlfesvIGYHWa4.Hg5IER24IiykshzpqhZeC', 1, NULL, NULL, NULL, 'profile_22032021_1616364686.jpeg', 'https://admin.azuramart.com/media/images/profile/profile_22032021_1616364686.jpeg', NULL, NULL, NULL, 1, 0, 1, NULL, 1, 0, 0, 0, NULL, 0, 0, 0, NULL, '2021-03-22 06:11:40', 0, 0, NULL, NULL, NULL, NULL),
 (2, NULL, 'admin', 'Admin', 'General', 'General Admin', 'admin@admin.com', '01716824758', '$2y$10$aAANKQzyqfRinNTVZ1tlfesvIGYHWa4.Hg5IER24IiykshzpqhZeC', 1, NULL, NULL, NULL, 'profile_10082021_1628616332.jpg', 'http://localhost/test/bdflat/panel/public/media/images/profile/profile_10082021_1628616332.jpg', NULL, NULL, NULL, 1, 0, 1, NULL, 1, 0, 0, 0, NULL, 0, 0, 0, '2020-10-05 05:06:35', '2021-08-10 23:25:32', 0, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_user_group`
+-- Table structure for table `SA_USER_GROUP`
 --
 
-DROP TABLE IF EXISTS `sa_user_group`;
-CREATE TABLE IF NOT EXISTS `sa_user_group` (
+DROP TABLE IF EXISTS `SA_USER_GROUP`;
+CREATE TABLE IF NOT EXISTS `SA_USER_GROUP` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `GROUP_NAME` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -3347,21 +3347,21 @@ CREATE TABLE IF NOT EXISTS `sa_user_group` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_user_group`
+-- Dumping data for table `SA_USER_GROUP`
 --
 
-INSERT INTO `sa_user_group` (`PK_NO`, `CODE`, `GROUP_NAME`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
+INSERT INTO `SA_USER_GROUP` (`PK_NO`, `CODE`, `GROUP_NAME`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
 (1, NULL, 'Super User', 1, 0, 0, NULL, '2020-10-10 17:45:46', NULL),
 (3, NULL, 'General Admin Group', 1, 0, 0, '2020-10-10 17:33:26', '2020-10-10 17:45:57', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_user_group_role`
+-- Table structure for table `SA_USER_GROUP_ROLE`
 --
 
-DROP TABLE IF EXISTS `sa_user_group_role`;
-CREATE TABLE IF NOT EXISTS `sa_user_group_role` (
+DROP TABLE IF EXISTS `SA_USER_GROUP_ROLE`;
+CREATE TABLE IF NOT EXISTS `SA_USER_GROUP_ROLE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `F_USER_GROUP_NO` int(11) NOT NULL,
@@ -3377,21 +3377,21 @@ CREATE TABLE IF NOT EXISTS `sa_user_group_role` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_user_group_role`
+-- Dumping data for table `SA_USER_GROUP_ROLE`
 --
 
-INSERT INTO `sa_user_group_role` (`PK_NO`, `CODE`, `F_USER_GROUP_NO`, `F_ROLE_NO`, `GRP_CUSTOM_PERMISSION`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
+INSERT INTO `SA_USER_GROUP_ROLE` (`PK_NO`, `CODE`, `F_USER_GROUP_NO`, `F_ROLE_NO`, `GRP_CUSTOM_PERMISSION`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
 (11, NULL, 1, 1, NULL, 1, 0, 0, NULL, '2020-10-10 17:45:46', NULL),
 (12, NULL, 3, 8, NULL, 1, 0, 0, '2020-10-10 17:33:26', '2020-10-10 17:45:57', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sa_user_group_users`
+-- Table structure for table `SA_USER_GROUP_USERS`
 --
 
-DROP TABLE IF EXISTS `sa_user_group_users`;
-CREATE TABLE IF NOT EXISTS `sa_user_group_users` (
+DROP TABLE IF EXISTS `SA_USER_GROUP_USERS`;
+CREATE TABLE IF NOT EXISTS `SA_USER_GROUP_USERS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `F_GROUP_NO` int(11) DEFAULT '0',
@@ -3406,10 +3406,10 @@ CREATE TABLE IF NOT EXISTS `sa_user_group_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sa_user_group_users`
+-- Dumping data for table `SA_USER_GROUP_USERS`
 --
 
-INSERT INTO `sa_user_group_users` (`PK_NO`, `CODE`, `F_GROUP_NO`, `F_USER_NO`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
+INSERT INTO `SA_USER_GROUP_USERS` (`PK_NO`, `CODE`, `F_GROUP_NO`, `F_USER_NO`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `DELETED_AT`) VALUES
 (22, NULL, 1, 2, 1, 0, 0, '2020-10-04 22:06:35', '2021-08-10 23:25:32', NULL),
 (24, NULL, 1, 1, 1, 0, 0, NULL, NULL, NULL),
 (28, NULL, 5, 44, 1, 0, 0, '2020-12-16 03:45:49', '2020-12-16 03:46:29', NULL);
@@ -3417,11 +3417,11 @@ INSERT INTO `sa_user_group_users` (`PK_NO`, `CODE`, `F_GROUP_NO`, `F_USER_NO`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sls_agents`
+-- Table structure for table `SLS_AGENTS`
 --
 
-DROP TABLE IF EXISTS `sls_agents`;
-CREATE TABLE IF NOT EXISTS `sls_agents` (
+DROP TABLE IF EXISTS `SLS_AGENTS`;
+CREATE TABLE IF NOT EXISTS `SLS_AGENTS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `NAME` varchar(200) DEFAULT NULL,
@@ -3442,10 +3442,10 @@ CREATE TABLE IF NOT EXISTS `sls_agents` (
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `sls_agents`
+-- Dumping data for table `SLS_AGENTS`
 --
 
-INSERT INTO `sls_agents` (`PK_NO`, `CODE`, `NAME`, `MOBILE_NO`, `ALTERNATE_NO`, `EMAIL`, `FB_ID`, `IG_ID`, `UKSHOP_ID`, `UKSHOP_PASS`, `IS_ACTIVE`, `CUM_ORDERS_QTY`, `CUM_ORDERS_VAL`, `CUM_BALANCE`) VALUES
+INSERT INTO `SLS_AGENTS` (`PK_NO`, `CODE`, `NAME`, `MOBILE_NO`, `ALTERNATE_NO`, `EMAIL`, `FB_ID`, `IG_ID`, `UKSHOP_ID`, `UKSHOP_PASS`, `IS_ACTIVE`, `CUM_ORDERS_QTY`, `CUM_ORDERS_VAL`, `CUM_BALANCE`) VALUES
 (1, 28, 'DEMO', '123456789', NULL, 'demo@gmail.com', NULL, NULL, NULL, '$2y$10$MzzdBBJ2tE0.TDPO17DMpuHrt1cuEXVahB/Lubk3wsrOpQpXc6FrS', 0, NULL, NULL, NULL),
 (7, 17, 'Azura', '07983283981', NULL, 'azura@azuramart.com', NULL, NULL, NULL, '$2y$10$L8.MgwGa3SF8lXXHx6cXQ.nBvHS9sgCo7FjiLuhA66Al7F3rBOwWm', 1, NULL, NULL, NULL),
 (8, 18, 'Huda', '0186687939', NULL, 'huda@azuramart.com', NULL, NULL, NULL, '$2y$10$AQISO8evFdYKpKMKR2jL4u/NNBtdRxc7whxPzdQKav1oWWw7VWZx6', 1, NULL, NULL, NULL),
@@ -3458,11 +3458,11 @@ INSERT INTO `sls_agents` (`PK_NO`, `CODE`, `NAME`, `MOBILE_NO`, `ALTERNATE_NO`, 
 (17, 27, 'Syarifah', '1233456789', NULL, 'syarifah@azuramart.com', NULL, NULL, NULL, '$2y$10$MzzdBBJ2tE0.TDPO17DMpuHrt1cuEXVahB/Lubk3wsrOpQpXc6FrS', 0, NULL, NULL, NULL);
 
 --
--- Triggers `sls_agents`
+-- Triggers `SLS_AGENTS`
 --
 DROP TRIGGER IF EXISTS `BEFORE_SLS_AGENTS_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_SLS_AGENTS_INSERT` BEFORE INSERT ON `sls_agents` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_SLS_AGENTS_INSERT` BEFORE INSERT ON `SLS_AGENTS` FOR EACH ROW BEGIN
 declare PKCODE int(2) default 0;
 
 
@@ -3480,11 +3480,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sls_lead_managements`
+-- Table structure for table `SLS_LEAD_MANAGEMENTS`
 --
 
-DROP TABLE IF EXISTS `sls_lead_managements`;
-CREATE TABLE IF NOT EXISTS `sls_lead_managements` (
+DROP TABLE IF EXISTS `SLS_LEAD_MANAGEMENTS`;
+CREATE TABLE IF NOT EXISTS `SLS_LEAD_MANAGEMENTS` (
   `PK_NO` int(1) NOT NULL AUTO_INCREMENT,
   `START_DATE` date DEFAULT NULL,
   `END_DATE` date DEFAULT NULL,
@@ -3513,11 +3513,11 @@ CREATE TABLE IF NOT EXISTS `sls_lead_managements` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sls_lead_master`
+-- Table structure for table `SLS_LEAD_MASTER`
 --
 
-DROP TABLE IF EXISTS `sls_lead_master`;
-CREATE TABLE IF NOT EXISTS `sls_lead_master` (
+DROP TABLE IF EXISTS `SLS_LEAD_MASTER`;
+CREATE TABLE IF NOT EXISTS `SLS_LEAD_MASTER` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `F_USER_NO` int(11) DEFAULT NULL,
   `F_CITY_NO` int(10) DEFAULT NULL,
@@ -3552,11 +3552,11 @@ CREATE TABLE IF NOT EXISTS `sls_lead_master` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sls_lead_send`
+-- Table structure for table `SLS_LEAD_SEND`
 --
 
-DROP TABLE IF EXISTS `sls_lead_send`;
-CREATE TABLE IF NOT EXISTS `sls_lead_send` (
+DROP TABLE IF EXISTS `SLS_LEAD_SEND`;
+CREATE TABLE IF NOT EXISTS `SLS_LEAD_SEND` (
   `PK_NO` int(1) NOT NULL AUTO_INCREMENT,
   `SEND_DATE` date DEFAULT NULL,
   `LEAD_TYPE` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT 'BOOKING = IT COME FROM PHONE NUMBER VIEW OR INQUERY BY MESSAGE, AREA = SEND BY BDHOUSING DEPENDS ON AREA, FORCE = SEND BY BDHOUSING FORCEFULLY ',
@@ -3586,11 +3586,11 @@ CREATE TABLE IF NOT EXISTS `sls_lead_send` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sls_postrequirements`
+-- Table structure for table `SLS_POSTREQUIREMENTS`
 --
 
-DROP TABLE IF EXISTS `sls_postrequirements`;
-CREATE TABLE IF NOT EXISTS `sls_postrequirements` (
+DROP TABLE IF EXISTS `SLS_POSTREQUIREMENTS`;
+CREATE TABLE IF NOT EXISTS `SLS_POSTREQUIREMENTS` (
   `PK_NO` int(16) NOT NULL AUTO_INCREMENT,
   `BUY_SALE_ROMMATE` varchar(30) DEFAULT NULL,
   `PROPERTY_CATEGORIES` varchar(100) DEFAULT NULL,
@@ -3639,11 +3639,11 @@ CREATE TABLE IF NOT EXISTS `sls_postrequirements` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss_area`
+-- Table structure for table `SS_AREA`
 --
 
-DROP TABLE IF EXISTS `ss_area`;
-CREATE TABLE IF NOT EXISTS `ss_area` (
+DROP TABLE IF EXISTS `SS_AREA`;
+CREATE TABLE IF NOT EXISTS `SS_AREA` (
   `PK_NO` int(10) NOT NULL AUTO_INCREMENT,
   `AREA_NAME` varchar(50) COLLATE utf8_estonian_ci DEFAULT NULL,
   `F_PARENT_AREA_NO` int(11) DEFAULT NULL,
@@ -3660,10 +3660,10 @@ CREATE TABLE IF NOT EXISTS `ss_area` (
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci;
 
 --
--- Dumping data for table `ss_area`
+-- Dumping data for table `SS_AREA`
 --
 
-INSERT INTO `ss_area` (`PK_NO`, `AREA_NAME`, `F_PARENT_AREA_NO`, `IS_PARENT`, `URL_SLUG`, `F_CITY_NO`, `CITY_NAME`, `IS_ACTIVE`, `ORDER_ID`, `LAT`, `LON`) VALUES
+INSERT INTO `SS_AREA` (`PK_NO`, `AREA_NAME`, `F_PARENT_AREA_NO`, `IS_PARENT`, `URL_SLUG`, `F_CITY_NO`, `CITY_NAME`, `IS_ACTIVE`, `ORDER_ID`, `LAT`, `LON`) VALUES
 (1, 'Mirpur', NULL, 1, 'mirpur', 1, 'Dhaka', 1, 1, NULL, NULL),
 (2, 'Banani', NULL, 1, 'banani', 1, 'Dhaka', 1, 50, NULL, NULL),
 (3, 'Mohakhali', NULL, 1, 'mohakhali', 1, 'Dhaka', 1, 3, NULL, NULL),
@@ -3709,11 +3709,11 @@ INSERT INTO `ss_area` (`PK_NO`, `AREA_NAME`, `F_PARENT_AREA_NO`, `IS_PARENT`, `U
 (43, 'Khilgaon', NULL, 1, 'khilgaon', 1, 'Dhaka', 1, 60, NULL, NULL);
 
 --
--- Triggers `ss_area`
+-- Triggers `SS_AREA`
 --
 DROP TRIGGER IF EXISTS `BEFORE_SS_AREA_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_SS_AREA_INSERT` BEFORE INSERT ON `ss_area` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_SS_AREA_INSERT` BEFORE INSERT ON `SS_AREA` FOR EACH ROW BEGIN
 DECLARE VAR_CITY_NAME VARCHAR(50) DEFAULT NULL;
 DECLARE VAR_ORDER_ID INT(10) DEFAULT 0;
 
@@ -3731,11 +3731,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss_city`
+-- Table structure for table `SS_CITY`
 --
 
-DROP TABLE IF EXISTS `ss_city`;
-CREATE TABLE IF NOT EXISTS `ss_city` (
+DROP TABLE IF EXISTS `SS_CITY`;
+CREATE TABLE IF NOT EXISTS `SS_CITY` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CITY_NAME` varchar(50) DEFAULT NULL,
   `URL_SLUG` varchar(50) DEFAULT NULL,
@@ -3750,10 +3750,10 @@ CREATE TABLE IF NOT EXISTS `ss_city` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `ss_city`
+-- Dumping data for table `SS_CITY`
 --
 
-INSERT INTO `ss_city` (`PK_NO`, `CITY_NAME`, `URL_SLUG`, `F_COUNTRY_NO`, `IS_ACTIVE`, `ORDER_ID`, `LAT`, `LON`, `IS_POPULATED`, `TOTAL_LISTING`) VALUES
+INSERT INTO `SS_CITY` (`PK_NO`, `CITY_NAME`, `URL_SLUG`, `F_COUNTRY_NO`, `IS_ACTIVE`, `ORDER_ID`, `LAT`, `LON`, `IS_POPULATED`, `TOTAL_LISTING`) VALUES
 (1, 'Dhaka', 'dhaka', 1, 1, 19, NULL, NULL, 1, 81),
 (2, 'Chittagong', 'chittagong', 1, 1, 2, NULL, NULL, 1, 0),
 (3, 'Bhola', 'bhola', NULL, 1, 15, '48.45555', '48.45555', 1, 0),
@@ -3765,11 +3765,11 @@ INSERT INTO `ss_city` (`PK_NO`, `CITY_NAME`, `URL_SLUG`, `F_COUNTRY_NO`, `IS_ACT
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss_currency`
+-- Table structure for table `SS_CURRENCY`
 --
 
-DROP TABLE IF EXISTS `ss_currency`;
-CREATE TABLE IF NOT EXISTS `ss_currency` (
+DROP TABLE IF EXISTS `SS_CURRENCY`;
+CREATE TABLE IF NOT EXISTS `SS_CURRENCY` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` varchar(4) DEFAULT NULL,
   `NAME` varchar(10) DEFAULT NULL,
@@ -3780,20 +3780,20 @@ CREATE TABLE IF NOT EXISTS `ss_currency` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `ss_currency`
+-- Dumping data for table `SS_CURRENCY`
 --
 
-INSERT INTO `ss_currency` (`PK_NO`, `CODE`, `NAME`, `EXCHANGE_RATE_GB`) VALUES
+INSERT INTO `SS_CURRENCY` (`PK_NO`, `CODE`, `NAME`, `EXCHANGE_RATE_GB`) VALUES
 (1, '101', 'BDT', 116);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss_lead_price`
+-- Table structure for table `SS_LEAD_PRICE`
 --
 
-DROP TABLE IF EXISTS `ss_lead_price`;
-CREATE TABLE IF NOT EXISTS `ss_lead_price` (
+DROP TABLE IF EXISTS `SS_LEAD_PRICE`;
+CREATE TABLE IF NOT EXISTS `SS_LEAD_PRICE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `AGENT_PROP_VIEW_SALES_PRICE` float DEFAULT NULL,
   `AGENT_PROP_VIEW_RENT_PRICE` float DEFAULT NULL,
@@ -3811,20 +3811,20 @@ CREATE TABLE IF NOT EXISTS `ss_lead_price` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `ss_lead_price`
+-- Dumping data for table `SS_LEAD_PRICE`
 --
 
-INSERT INTO `ss_lead_price` (`PK_NO`, `AGENT_PROP_VIEW_SALES_PRICE`, `AGENT_PROP_VIEW_RENT_PRICE`, `AGENT_PROP_VIEW_ROOMMATE_PRICE`, `AGENT_COMM_SALES_PRICE`, `AGENT_COMM_RENT_PRICE`, `AGENT_COMM_ROOMMATE_PRICE`, `LEAD_VIEW_SALES_PRICE`, `LEAD_VIEW_RENT_PRICE`, `LEAD_VIEW_ROOMMATE_PRICE`, `CI_VIEW_SALES_PRICE`, `CI_VIEW_RENT_PRICE`, `CI_VIEW_ROOMMATE_PRICE`) VALUES
+INSERT INTO `SS_LEAD_PRICE` (`PK_NO`, `AGENT_PROP_VIEW_SALES_PRICE`, `AGENT_PROP_VIEW_RENT_PRICE`, `AGENT_PROP_VIEW_ROOMMATE_PRICE`, `AGENT_COMM_SALES_PRICE`, `AGENT_COMM_RENT_PRICE`, `AGENT_COMM_ROOMMATE_PRICE`, `LEAD_VIEW_SALES_PRICE`, `LEAD_VIEW_RENT_PRICE`, `LEAD_VIEW_ROOMMATE_PRICE`, `CI_VIEW_SALES_PRICE`, `CI_VIEW_RENT_PRICE`, `CI_VIEW_ROOMMATE_PRICE`) VALUES
 (1, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss_listing_price`
+-- Table structure for table `SS_LISTING_PRICE`
 --
 
-DROP TABLE IF EXISTS `ss_listing_price`;
-CREATE TABLE IF NOT EXISTS `ss_listing_price` (
+DROP TABLE IF EXISTS `SS_LISTING_PRICE`;
+CREATE TABLE IF NOT EXISTS `SS_LISTING_PRICE` (
   `PK_NO` int(5) NOT NULL AUTO_INCREMENT,
   `F_LISTING_TYPE_NO` int(5) DEFAULT NULL,
   `SELL_PRICE` float NOT NULL DEFAULT '0',
@@ -3834,10 +3834,10 @@ CREATE TABLE IF NOT EXISTS `ss_listing_price` (
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ss_listing_price`
+-- Dumping data for table `SS_LISTING_PRICE`
 --
 
-INSERT INTO `ss_listing_price` (`PK_NO`, `F_LISTING_TYPE_NO`, `SELL_PRICE`, `RENT_PRICE`, `ROOMMAT_PRICE`) VALUES
+INSERT INTO `SS_LISTING_PRICE` (`PK_NO`, `F_LISTING_TYPE_NO`, `SELL_PRICE`, `RENT_PRICE`, `ROOMMAT_PRICE`) VALUES
 (1, 1, 30, 40, 40),
 (2, 2, 50, 50, 50),
 (3, 3, 70, 70, 0),
@@ -3846,11 +3846,11 @@ INSERT INTO `ss_listing_price` (`PK_NO`, `F_LISTING_TYPE_NO`, `SELL_PRICE`, `REN
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss_sticky_note`
+-- Table structure for table `SS_STICKY_NOTE`
 --
 
-DROP TABLE IF EXISTS `ss_sticky_note`;
-CREATE TABLE IF NOT EXISTS `ss_sticky_note` (
+DROP TABLE IF EXISTS `SS_STICKY_NOTE`;
+CREATE TABLE IF NOT EXISTS `SS_STICKY_NOTE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `NOTE` mediumtext,
   PRIMARY KEY (`PK_NO`)
@@ -3859,11 +3859,11 @@ CREATE TABLE IF NOT EXISTS `ss_sticky_note` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss_user_type`
+-- Table structure for table `SS_USER_TYPE`
 --
 
-DROP TABLE IF EXISTS `ss_user_type`;
-CREATE TABLE IF NOT EXISTS `ss_user_type` (
+DROP TABLE IF EXISTS `SS_USER_TYPE`;
+CREATE TABLE IF NOT EXISTS `SS_USER_TYPE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(50) DEFAULT NULL,
   `TYPE_NO` int(11) DEFAULT NULL,
@@ -3875,10 +3875,10 @@ CREATE TABLE IF NOT EXISTS `ss_user_type` (
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ss_user_type`
+-- Dumping data for table `SS_USER_TYPE`
 --
 
-INSERT INTO `ss_user_type` (`PK_NO`, `TITLE`, `TYPE_NO`, `MODIFIED_AT`, `CREATE_AT`, `CREATED_BY`, `MODIFIED_BY`) VALUES
+INSERT INTO `SS_USER_TYPE` (`PK_NO`, `TITLE`, `TYPE_NO`, `MODIFIED_AT`, `CREATE_AT`, `CREATED_BY`, `MODIFIED_BY`) VALUES
 (1, 'seeker', 1, NULL, NULL, NULL, NULL),
 (2, 'owner', 2, NULL, NULL, NULL, NULL),
 (3, 'builder', 3, NULL, NULL, NULL, NULL),
@@ -3888,11 +3888,11 @@ INSERT INTO `ss_user_type` (`PK_NO`, `TITLE`, `TYPE_NO`, `MODIFIED_AT`, `CREATE_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_token`
+-- Table structure for table `USERS_TOKEN`
 --
 
-DROP TABLE IF EXISTS `users_token`;
-CREATE TABLE IF NOT EXISTS `users_token` (
+DROP TABLE IF EXISTS `USERS_TOKEN`;
+CREATE TABLE IF NOT EXISTS `USERS_TOKEN` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `F_USER_NO` int(11) NOT NULL,
@@ -3906,10 +3906,10 @@ CREATE TABLE IF NOT EXISTS `users_token` (
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `users_token`
+-- Dumping data for table `USERS_TOKEN`
 --
 
-INSERT INTO `users_token` (`PK_NO`, `CODE`, `F_USER_NO`, `TOKEN`, `CLIENT`, `IP_ADDRESS`, `IS_EXPIRE`, `STARTED_AT`, `EXPIRE_AT`) VALUES
+INSERT INTO `USERS_TOKEN` (`PK_NO`, `CODE`, `F_USER_NO`, `TOKEN`, `CLIENT`, `IP_ADDRESS`, `IS_EXPIRE`, `STARTED_AT`, `EXPIRE_AT`) VALUES
 (15, NULL, 1282, 'a6092591d9a604fad9b7168217c27ff86e5c96af171066288c45c25dc6d3a1eb', 'WEB', NULL, 1, '2021-04-08 19:55:09', '2022-04-08 19:55:09'),
 (16, NULL, 1282, '86f25ffbefda24fc54037d174ab8c8b505c6110324d3ffe4891395bf3c5acca0', 'PostmanRuntime/7.26.8', NULL, 1, '2021-04-08 19:55:19', '2022-04-08 19:55:19'),
 (17, NULL, 1283, '508641a48dab9a29bf10221d58a59bbf7c623bc4810d5771b7a0175b2f836417', 'WEB', NULL, 1, '2021-04-08 19:58:33', '2022-04-08 19:58:33'),
@@ -3938,11 +3938,11 @@ INSERT INTO `users_token` (`PK_NO`, `CODE`, `F_USER_NO`, `TOKEN`, `CLIENT`, `IP_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_about`
+-- Table structure for table `WEB_ABOUT`
 --
 
-DROP TABLE IF EXISTS `web_about`;
-CREATE TABLE IF NOT EXISTS `web_about` (
+DROP TABLE IF EXISTS `WEB_ABOUT`;
+CREATE TABLE IF NOT EXISTS `WEB_ABOUT` (
   `PK_NO` int(11) NOT NULL,
   `TITLE` varchar(200) DEFAULT NULL,
   `SUB_TITLE` varchar(255) DEFAULT NULL,
@@ -3962,20 +3962,20 @@ CREATE TABLE IF NOT EXISTS `web_about` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_about`
+-- Dumping data for table `WEB_ABOUT`
 --
 
-INSERT INTO `web_about` (`PK_NO`, `TITLE`, `SUB_TITLE`, `DESCRIPTION`, `BANNER`, `VISION_TITLE`, `VISION_DESCRIPTION`, `MISSION_TITLE`, `MISSION_DESCRIPTION`, `APPROACH_TITLE`, `APPROACH_DESCRIPTION`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`) VALUES
+INSERT INTO `WEB_ABOUT` (`PK_NO`, `TITLE`, `SUB_TITLE`, `DESCRIPTION`, `BANNER`, `VISION_TITLE`, `VISION_DESCRIPTION`, `MISSION_TITLE`, `MISSION_DESCRIPTION`, `APPROACH_TITLE`, `APPROACH_DESCRIPTION`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`) VALUES
 (0, 'About Us', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\r\n\r\nvelit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.', NULL, 'Our Vision', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Our Mission', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'Our Approach', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 1, NULL, NULL, 2, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_article`
+-- Table structure for table `WEB_ARTICLE`
 --
 
-DROP TABLE IF EXISTS `web_article`;
-CREATE TABLE IF NOT EXISTS `web_article` (
+DROP TABLE IF EXISTS `WEB_ARTICLE`;
+CREATE TABLE IF NOT EXISTS `WEB_ARTICLE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(50) NOT NULL,
   `URL_SLUG` varchar(50) DEFAULT NULL,
@@ -4000,10 +4000,10 @@ CREATE TABLE IF NOT EXISTS `web_article` (
 ) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_article`
+-- Dumping data for table `WEB_ARTICLE`
 --
 
-INSERT INTO `web_article` (`PK_NO`, `TITLE`, `URL_SLUG`, `FEATURE_IMAGE`, `THUMBNAIL_IMAGE`, `SUMMARY`, `BODY`, `IS_ACTIVE`, `TAGS`, `META_KEYWARDS`, `META_DESCRIPTION`, `ORDER_ID`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `IS_FEATURE`, `ARTICLE_CATEGORY`, `AUTHOR_NAME`, `TOTAL_HIT`) VALUES
+INSERT INTO `WEB_ARTICLE` (`PK_NO`, `TITLE`, `URL_SLUG`, `FEATURE_IMAGE`, `THUMBNAIL_IMAGE`, `SUMMARY`, `BODY`, `IS_ACTIVE`, `TAGS`, `META_KEYWARDS`, `META_DESCRIPTION`, `ORDER_ID`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `IS_FEATURE`, `ARTICLE_CATEGORY`, `AUTHOR_NAME`, `TOTAL_HIT`) VALUES
 (71, 'Lorem Impum Loraa Fisu', 'lorem-impum-loraa-fisu', 'uploads/2021/05/photos/pexels-photo-1571460-60af654b78c88.webp', 'uploads/2021/05/photos/thumb/pexels-photo-1571460-60af654b78c8a.webp', 'Mauris id enim id purus ornare tincidunt. Aenean vel consequat risus.Proin viverra nisi at nisl imperdiet auctor. Donec ornare, est sed tincidunt placerat, sem mi suscipit mi, at varius enim sem at sem. Fusce tempus ex nibh, eget vulputate ligula ornare eget. Nunc facilisis erat at ligula blandit tempor. maecenas', '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 15px; font-family: Roboto, sans-serif; letter-spacing: normal; color: rgb(138, 145, 172);\">Misl imperdiet auctor. DoPlacerat, sem mi suscipit mi, at varius enim sem at sem. Fusce tempus ex nibh, eget vulpuAenean vel consequat risus.Proin viverra auris id enim id purus ornare tincidunt. nisi at nisl imperdiet auctor. Donec ornare,ex nibh, eget vulputate ligula ornartincidunt placerat</p><ul class=\"ttm-list ttm-list-style-icon mb-15\" style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; list-style: none; padding: 0px; font-size: 15px; color: rgb(138, 145, 172); font-family: Roboto, sans-serif;\"><li style=\"position: relative; margin-bottom: 2.7rem; padding-bottom: 11px;\"><span class=\"fa fa-minus\" style=\"font-weight: normal; font-stretch: normal; font-size: 14px; line-height: 14px; font-family: FontAwesome; position: absolute; left: auto; top: 5px;\"></span><div class=\"ttm-list-li-content\" style=\"display: inline-block; padding-left: 20px;\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin</div></li><li style=\"position: relative; margin-bottom: 2.7rem; padding-bottom: 11px;\"><span class=\"fa fa-minus\" style=\"font-weight: normal; font-stretch: normal; font-size: 14px; line-height: 14px; font-family: FontAwesome; position: absolute; left: auto; top: 5px;\"></span><div class=\"ttm-list-li-content\" style=\"display: inline-block; padding-left: 20px;\">Mliterature from 45 BC, making it over 2000 years old. Lorealintock The Extremes of Good and Eviyr.</div></li><li style=\"position: relative; margin-bottom: 2.7rem; padding-bottom: 11px;\"><span class=\"fa fa-minus\" style=\"font-weight: normal; font-stretch: normal; font-size: 14px; line-height: 14px; font-family: FontAwesome; position: absolute; left: auto; top: 5px;\"></span><div class=\"ttm-list-li-content\" style=\"display: inline-block; padding-left: 20px;\">The standard chunk of Lorem Ipsum used sfertyui ince the 1500s is reproduced below for those interested.</div></li><li style=\"position: relative; margin-bottom: 2.7rem; padding-bottom: 11px;\"><span class=\"fa fa-minus\" style=\"font-weight: normal; font-stretch: normal; font-size: 14px; line-height: 14px; font-family: FontAwesome; position: absolute; left: auto; top: 5px;\"></span><div class=\"ttm-list-li-content\" style=\"display: inline-block; padding-left: 20px;\">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dom, totam rem ape Donec</div></li><li style=\"position: relative; margin-bottom: 2.7rem; padding-bottom: 11px;\"><span class=\"fa fa-minus\" style=\"font-weight: normal; font-stretch: normal; font-size: 14px; line-height: 14px; font-family: FontAwesome; position: absolute; left: auto; top: 5px;\"></span><div class=\"ttm-list-li-content\" style=\"display: inline-block; padding-left: 20px;\">Purus ornare tincidunt. nisi at nisl imperdiet enim ad minima circumstances occur in which toil and pain vm,</div></li><li style=\"position: relative; margin-bottom: 2.7rem; padding-bottom: 0px;\"><span class=\"fa fa-minus\" style=\"font-weight: normal; font-stretch: normal; font-size: 14px; line-height: 14px; font-family: FontAwesome; position: absolute; left: auto; top: 5px;\"></span><div class=\"ttm-list-li-content\" style=\"display: inline-block; padding-left: 20px;\">onsequat risus.Proin viverra auris id standard chunk enim idnisi at nisl imper purus ornare tincidunt.</div></li></ul><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 15px; font-family: Roboto, sans-serif; letter-spacing: normal; color: rgb(138, 145, 172);\">Misl imperdiet auctor. DoPlacerat, sem mi suscipit mi, at varius enim sem at sem. Fusce tempus ex nibh, eget vulpuAenean vel consequat risus.Proin viverra auris id enim id purus ornare tincidunt. nisi at nisl imperdiet auctor. Donec ornare,ex nibh, eget vulputate ligula ornartincidunt placerat</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 15px; font-family: Roboto, sans-serif; letter-spacing: normal; color: rgb(138, 145, 172);\">Seurus ornarMisl imperdiet auctor. DoPlacerat, sem mi suscipit mi, at varius enim sem at sem. Fusce tempus ex nibh, eget vulpuAenean vel consequat risus.Proin viverra auris id enim ie tincidunt. nisi at nisl imperdiet auctor. Donec ornare,ex nibh, eget vulputate ligula ornartin Misl imperdiet auctor. DoPlacerat, sem mi suscipit mi, at varius enim sem at sem. Fusce tempus ex nibh, eget vulpuAenean vel consequat risuscidunt placerat</p>', 0, 'Tech', NULL, NULL, 1, 1, NULL, 1, '2021-08-01 02:39:47', 1, 69, 'Tech', 1),
 (72, 'What is Lorem Ipsum?', 'what-is-lorem-ipsum', '/media/blog/2021/06/Login-banner2-60dc4a3993421.webp', '/media/blog/thumb/2021/06/Login-banner2-60dc4a3993423.webp', 'What is Lorem Ipsum?', '<p><div style=\"margin: 0px 28.7969px 0px 14.3906px; padding: 0px; width: 436.797px; text-align: left; float: right; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\"></div></p><div style=\"margin: 0px 14.3906px 0px 28.7969px; padding: 0px; width: 436.797px; text-align: left; float: left; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\"><p style=\"margin: 0px 0px 15px; padding: 0px; text-align: justify;\"><strong style=\"margin: 0px; padding: 0px;\">Lorem Ipsum</strong><span>&nbsp;</span>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p></div>', 1, 'asas', NULL, NULL, 2, 1, '2021-06-30 04:40:57', NULL, NULL, 1, 68, 'asa', 1),
 (73, 'article-title', 'article-title', '/media/images/blog//8511861-610665b219870.webp', '/media/images/blog/thumb//8511861-610665b219874.webp', 'article-summary', '<p>article-body</p><p><img src=\"http://127.0.0.1:8080/media/blog/8511861-6106651aefdd3.webp\" class=\"img-fluid\"><br></p>', 1, 'adad,sdsad', NULL, NULL, 3, 1, '2021-08-01 03:12:55', 1, '2021-08-01 03:13:20', 1, 68, 'asas', 1);
@@ -4011,11 +4011,11 @@ INSERT INTO `web_article` (`PK_NO`, `TITLE`, `URL_SLUG`, `FEATURE_IMAGE`, `THUMB
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_article_category`
+-- Table structure for table `WEB_ARTICLE_CATEGORY`
 --
 
-DROP TABLE IF EXISTS `web_article_category`;
-CREATE TABLE IF NOT EXISTS `web_article_category` (
+DROP TABLE IF EXISTS `WEB_ARTICLE_CATEGORY`;
+CREATE TABLE IF NOT EXISTS `WEB_ARTICLE_CATEGORY` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(50) NOT NULL,
   `URL_SLUG` varchar(50) DEFAULT NULL,
@@ -4032,10 +4032,10 @@ CREATE TABLE IF NOT EXISTS `web_article_category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_article_category`
+-- Dumping data for table `WEB_ARTICLE_CATEGORY`
 --
 
-INSERT INTO `web_article_category` (`PK_NO`, `NAME`, `URL_SLUG`, `BANNER`, `IS_ACTIVE`, `META_KEYWARDS`, `META_DESCRIPTION`, `ORDER_ID`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
+INSERT INTO `WEB_ARTICLE_CATEGORY` (`PK_NO`, `NAME`, `URL_SLUG`, `BANNER`, `IS_ACTIVE`, `META_KEYWARDS`, `META_DESCRIPTION`, `ORDER_ID`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
 (68, 'abc', 'abc', '/media/images/blog/prod_01082021_6106624eec9bc.jpg', 1, NULL, NULL, 2, NULL, NULL, NULL, NULL),
 (69, 'News', 'news', 'media/images/banner/prod_12042021_60741165113f2.jpg', 1, NULL, NULL, 1, NULL, NULL, NULL, NULL),
 (70, 'aaaaa', 'aaaaa', '/media/images/blog/prod_01082021_610662637b81e.jpg', 1, NULL, NULL, 3, NULL, NULL, NULL, NULL);
@@ -4043,11 +4043,11 @@ INSERT INTO `web_article_category` (`PK_NO`, `NAME`, `URL_SLUG`, `BANNER`, `IS_A
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_cart`
+-- Table structure for table `WEB_CART`
 --
 
-DROP TABLE IF EXISTS `web_cart`;
-CREATE TABLE IF NOT EXISTS `web_cart` (
+DROP TABLE IF EXISTS `WEB_CART`;
+CREATE TABLE IF NOT EXISTS `WEB_CART` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_PRD_MASTER_NO` int(11) DEFAULT NULL,
   `F_PRD_VARIANT_NO` int(11) DEFAULT NULL,
@@ -4070,10 +4070,10 @@ CREATE TABLE IF NOT EXISTS `web_cart` (
 ) ENGINE=InnoDB AUTO_INCREMENT=628 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_cart`
+-- Dumping data for table `WEB_CART`
 --
 
-INSERT INTO `web_cart` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_CUSTOMER_NO`, `F_WAREHOUSE_NO`, `F_SHIPPMENT_NO`, `SESSION_ID`, `TOTAL_ITEM_QTY`, `REGULAR_PRICE`, `INSTALLMENT_PRICE`, `IS_BOOKING`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`, `PAYMENT_PLAN`, `IS_RESELLER`) VALUES
+INSERT INTO `WEB_CART` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_CUSTOMER_NO`, `F_WAREHOUSE_NO`, `F_SHIPPMENT_NO`, `SESSION_ID`, `TOTAL_ITEM_QTY`, `REGULAR_PRICE`, `INSTALLMENT_PRICE`, `IS_BOOKING`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`, `PAYMENT_PLAN`, `IS_RESELLER`) VALUES
 (509, 101, 229, 1295, 2, NULL, 'GCz7WuLf8PTkJnriJjf5fQrMeHIOo3xsYu8Di9W8', 3, 89, 99, 0, 1, '2021-07-14 12:05:26', '2021-07-14 10:41:37', NULL, NULL, NULL, 0),
 (510, 101, 233, 1295, 2, NULL, 'GCz7WuLf8PTkJnriJjf5fQrMeHIOo3xsYu8Di9W8', 5, 89, 99, 0, 1, '2021-07-14 11:08:07', '2021-07-14 10:42:29', NULL, NULL, NULL, 0),
 (516, 101, 1843, 1295, 1, NULL, 'GCz7WuLf8PTkJnriJjf5fQrMeHIOo3xsYu8Di9W8', 1, 109, 129, 0, 1, '2021-07-14 11:09:53', '2021-07-14 11:09:53', NULL, NULL, NULL, 0),
@@ -4130,11 +4130,11 @@ INSERT INTO `web_cart` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_CUSTO
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_compare`
+-- Table structure for table `WEB_COMPARE`
 --
 
-DROP TABLE IF EXISTS `web_compare`;
-CREATE TABLE IF NOT EXISTS `web_compare` (
+DROP TABLE IF EXISTS `WEB_COMPARE`;
+CREATE TABLE IF NOT EXISTS `WEB_COMPARE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_PRD_VARIANT_NO` int(11) DEFAULT NULL,
   `F_CUSTOMER_NO` int(11) DEFAULT NULL,
@@ -4148,11 +4148,11 @@ CREATE TABLE IF NOT EXISTS `web_compare` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_contact_message`
+-- Table structure for table `WEB_CONTACT_MESSAGE`
 --
 
-DROP TABLE IF EXISTS `web_contact_message`;
-CREATE TABLE IF NOT EXISTS `web_contact_message` (
+DROP TABLE IF EXISTS `WEB_CONTACT_MESSAGE`;
+CREATE TABLE IF NOT EXISTS `WEB_CONTACT_MESSAGE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(200) DEFAULT NULL,
   `EMAIL` varchar(255) NOT NULL,
@@ -4171,11 +4171,11 @@ CREATE TABLE IF NOT EXISTS `web_contact_message` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_faq`
+-- Table structure for table `WEB_FAQ`
 --
 
-DROP TABLE IF EXISTS `web_faq`;
-CREATE TABLE IF NOT EXISTS `web_faq` (
+DROP TABLE IF EXISTS `WEB_FAQ`;
+CREATE TABLE IF NOT EXISTS `WEB_FAQ` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `QUESTION` varchar(255) DEFAULT NULL,
   `ANSWER` text,
@@ -4189,10 +4189,10 @@ CREATE TABLE IF NOT EXISTS `web_faq` (
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_faq`
+-- Dumping data for table `WEB_FAQ`
 --
 
-INSERT INTO `web_faq` (`PK_NO`, `QUESTION`, `ANSWER`, `ORDER_ID`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`) VALUES
+INSERT INTO `WEB_FAQ` (`PK_NO`, `QUESTION`, `ANSWER`, `ORDER_ID`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`) VALUES
 (30, 'Questiona', 'Answera', 1, 1, NULL, NULL, 1, 1),
 (31, 'asasa', 'asas', 2, 1, NULL, NULL, 1, NULL),
 (32, 'hh', 'hh', 3, 1, NULL, NULL, 1, NULL),
@@ -4201,11 +4201,11 @@ INSERT INTO `web_faq` (`PK_NO`, `QUESTION`, `ANSWER`, `ORDER_ID`, `IS_ACTIVE`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_newsletter`
+-- Table structure for table `WEB_NEWSLETTER`
 --
 
-DROP TABLE IF EXISTS `web_newsletter`;
-CREATE TABLE IF NOT EXISTS `web_newsletter` (
+DROP TABLE IF EXISTS `WEB_NEWSLETTER`;
+CREATE TABLE IF NOT EXISTS `WEB_NEWSLETTER` (
   `PK_NO` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `EMAIL` varchar(120) DEFAULT NULL,
   `CREATED_ON` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -4213,10 +4213,10 @@ CREATE TABLE IF NOT EXISTS `web_newsletter` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `web_newsletter`
+-- Dumping data for table `WEB_NEWSLETTER`
 --
 
-INSERT INTO `web_newsletter` (`PK_NO`, `EMAIL`, `CREATED_ON`) VALUES
+INSERT INTO `WEB_NEWSLETTER` (`PK_NO`, `EMAIL`, `CREATED_ON`) VALUES
 (2, 'maidul.tech1@gmail.com', '2021-08-23 18:09:04'),
 (3, 'maidul.tech@gmail.com', '2021-10-10 12:12:00'),
 (4, 'maidul.tdech@gmail.com', '2021-10-10 12:12:11');
@@ -4224,11 +4224,11 @@ INSERT INTO `web_newsletter` (`PK_NO`, `EMAIL`, `CREATED_ON`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_notification`
+-- Table structure for table `WEB_NOTIFICATION`
 --
 
-DROP TABLE IF EXISTS `web_notification`;
-CREATE TABLE IF NOT EXISTS `web_notification` (
+DROP TABLE IF EXISTS `WEB_NOTIFICATION`;
+CREATE TABLE IF NOT EXISTS `WEB_NOTIFICATION` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(200) DEFAULT NULL,
   `BODY` text,
@@ -4246,10 +4246,10 @@ CREATE TABLE IF NOT EXISTS `web_notification` (
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COMMENT='WEB_NOTIFICATION' ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_notification`
+-- Dumping data for table `WEB_NOTIFICATION`
 --
 
-INSERT INTO `web_notification` (`PK_NO`, `TITLE`, `BODY`, `IMAGE`, `NOTIFICATION_TYPE`, `MESSAGE_ID`, `STATUS`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`, `MODIFIED_BY`, `MODIFIED_ON`, `TOTAL_SUCCESS`) VALUES
+INSERT INTO `WEB_NOTIFICATION` (`PK_NO`, `TITLE`, `BODY`, `IMAGE`, `NOTIFICATION_TYPE`, `MESSAGE_ID`, `STATUS`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`, `MODIFIED_BY`, `MODIFIED_ON`, `TOTAL_SUCCESS`) VALUES
 (58, '4 x Staub Ceramic Petite Cocotte', '4 x Staub Ceramic Petite Cocotte', 'http://dev.ukshop.my/media/images/slider/Payment-card-Banner-60d6c93901741.webp', 'app', NULL, 1, 1, NULL, NULL, NULL, NULL, 0),
 (59, '4 x Staub Ceramic Petite Cocotte', '4 x Staub Ceramic Petite Cocotte', 'http://dev.ukshop.my/media/images/products/24/prod_12112020_5fad924be4402.jpg', 'app', NULL, 1, 1, NULL, NULL, NULL, NULL, 0),
 (64, 'LE CREUSET DINNER PLATE - COASTAL BLUE - 27CM', '4 x Le Creuset 400ml Mug', 'http://dev.ukshop.my/media/images/products/34/prod_14112020_5fb0524f8cc5b.jpg', 'app', '7999853639651909076', 1, 1, NULL, NULL, NULL, NULL, 0),
@@ -4258,11 +4258,11 @@ INSERT INTO `web_notification` (`PK_NO`, `TITLE`, `BODY`, `IMAGE`, `NOTIFICATION
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_notification_device`
+-- Table structure for table `WEB_NOTIFICATION_DEVICE`
 --
 
-DROP TABLE IF EXISTS `web_notification_device`;
-CREATE TABLE IF NOT EXISTS `web_notification_device` (
+DROP TABLE IF EXISTS `WEB_NOTIFICATION_DEVICE`;
+CREATE TABLE IF NOT EXISTS `WEB_NOTIFICATION_DEVICE` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `DEVICE_KEY` varchar(200) DEFAULT NULL,
   `CUSTOMER_ID` int(11) DEFAULT NULL,
@@ -4274,21 +4274,21 @@ CREATE TABLE IF NOT EXISTS `web_notification_device` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COMMENT='WEB_NOTIFICATION_DEVICE' ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_notification_device`
+-- Dumping data for table `WEB_NOTIFICATION_DEVICE`
 --
 
-INSERT INTO `web_notification_device` (`PK_NO`, `DEVICE_KEY`, `CUSTOMER_ID`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`) VALUES
+INSERT INTO `WEB_NOTIFICATION_DEVICE` (`PK_NO`, `DEVICE_KEY`, `CUSTOMER_ID`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`) VALUES
 (13, 'dzfmSDBdBB7QE8C2871-CA:APA91bE65_RIwCr8cRLldZxZ9SPCVw5TlEiQCkHHyQ1Mn-8ks2HI-TFQIhStiw4b9WF45ACtAIa3z3_b49CpB2Cs2YbUB7GDYSHv7euu6DpCOpkE7bubBcccob6lyasu2c6RR1_RFWu5', NULL, 1, NULL, NULL),
 (16, 'dw9VsoA8gpqSP2g2iM1Lss:APA91bGkfhpI4zYPnDqsFZoYS4f2KT0prxvGZfEpMPmsUtZUb-tjqKUF4uRm9-4nzFsPwJzQ4nZwGyA2LazBNmVayUtcKA3mFLb5wDEQXkIpa5W0u00wFuDnyQzx0ibZw30-kBYMISrf', NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_pages`
+-- Table structure for table `WEB_PAGES`
 --
 
-DROP TABLE IF EXISTS `web_pages`;
-CREATE TABLE IF NOT EXISTS `web_pages` (
+DROP TABLE IF EXISTS `WEB_PAGES`;
+CREATE TABLE IF NOT EXISTS `WEB_PAGES` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(255) NOT NULL,
   `SUB_TITLE` varchar(255) DEFAULT NULL,
@@ -4311,10 +4311,10 @@ CREATE TABLE IF NOT EXISTS `web_pages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_pages`
+-- Dumping data for table `WEB_PAGES`
 --
 
-INSERT INTO `web_pages` (`PK_NO`, `TITLE`, `SUB_TITLE`, `URL_SLUG`, `POSITION`, `BODY`, `FEATURE_IMAGE`, `BANNER`, `ORDER_ID`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`, `META_KEYWARDS`, `META_DESCRIPTION`, `FOR_APP`, `SECTION`) VALUES
+INSERT INTO `WEB_PAGES` (`PK_NO`, `TITLE`, `SUB_TITLE`, `URL_SLUG`, `POSITION`, `BODY`, `FEATURE_IMAGE`, `BANNER`, `ORDER_ID`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`, `META_KEYWARDS`, `META_DESCRIPTION`, `FOR_APP`, `SECTION`) VALUES
 (33, 'About us', 'About us', 'about-us', NULL, '<p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">PRIVACY POLICY</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">At EasyBazar.com  we respect the privacy of your personal information. We take privacy seriously and are committed to comply with ICT Act 2009  of Bangladesh.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">This Privacy Policy relates to personal information we collect and handle about you as our customers, visitors to our website, social media and other digital services and members of the public. Our personnel and job applicants can contact our human resources team for details about the privacy of their personal information.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">WHAT PERSONAL INFORMATION DO WE COLLECT?</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">The types of personal information we collect includes name, contact details, identification information, payment and transaction details/history, details regarding participation in any clubs and programs operated from time to time. We also collect records of your communications and interactions with us, details/history of preferences, interests and behavior relating to transactions, products, services and activity with our digital services.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">HOW WE COLLECT PERSONAL INFORMATION?</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">We may collect your personal information in relation to your interactions and transactions with us. This includes direct from an individual when that individual meets with; communicates with us by letter, telephone, email or fax; subscribes to our publications; making a purchase in store, making a non-cash payment; participating in a promotion, competition survey or submits information through our websites, blogs or other social media outlets. We may ask other people to analyse traffic on our websites, blogs and other social media outlets and they may use cookies to do so.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">We hold personal information electronically and in hard copy form, both at our own premises and with the assistance of our service providers. We implement a range of measures to protect the security of that personal information. We also take measures in respect of destroying or de-identifying personal information that is no longer needed for any lawful purpose.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\"> </span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">GENERAL USE AND DISCLOSURE</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">We use and disclose personal information for the primary purpose for which it was collected, related purposes and other purposes authorized. In general, we use and disclose personal information for the purposes set out above.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">HOW DO WE KEEP PERSONAL INFORMATION SECURE?</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">We take reasonable steps to protect the personal information we hold from misuse and loss and from unauthorized access, modification or disclosure. We store information in access-controlled premises, and electronic information on secure servers. We require all persons authorized to access electronic information to use logins and passwords to access such information.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">We disclose personal information or whom may have access to personal information we collect, to keep such personal information private and to protect such personal information from misuse and loss and from unauthorized access, modification or disclosure. Unless we are prevented to do so by the law, we de-identify or destroy securely all personal information we hold when no longer reasonably required by us.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">INTEGRITY OF PERSONAL INFORMATION</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">We take reasonable steps to ensure that the personal information we collect is accurate, up to date and complete and that the personal information we use or disclose is, having regard to the purpose of such use or disclosure, accurate, up to date, complete and relevant.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">To that end, we encourage you to contact us to update or correct any personal information we hold about you.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">ACCESSING YOUR PERSONAL INFORMATION</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">You may request access to personal information we hold about you. We may require you to verify your identity and to specify what information you require. We deal with all requests for access to personal information as required. We may charge a fee where we provide access and may refuse to provide access.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\"> </span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">CORRECTION OF PERSONAL INFORMATION</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">We take reasonable steps to correct all personal information we hold to ensure that, having regard to the purposes for which it is held, the information is accurate, up to date, complete, relevant and not misleading. You may request corrections to personal information we hold about you. We deal with all requests for correction to personal information as required. We may refuse to correct personal information.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">COMPLAINTS</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">If you wish to make a complaint about this Privacy Policy or our collection, use or disclosure of personal information, please contact us in the first instance. We will investigate your complaint and try to promptly resolve your complaint directly with you.</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"><span style=\"font-weight: 700;\">CONTACT US</span></p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\">To request access to or correction of personal information, to request not to receive marketing material or invitations from us, or to make a privacy complaint to us, please contact:</p><p style=\"margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: Roboto, sans-serif; letter-spacing: normal; background-color: rgb(245, 245, 245);\"> </p>', 'uploads/2021/08/photos/2-61117ef073572.webp', 'uploads/2021/08/photos/3-61117ef082471.webp', 10, 0, NULL, NULL, 1, 2, NULL, NULL, 1, 1),
 (34, 'sas', 'as', 'sas', NULL, '<p>as</p>', NULL, NULL, 5, 1, NULL, NULL, 1, 1, NULL, NULL, 1, 1),
 (35, 'fgh', 'gfh', 'fgh', NULL, '<p>fghgf</p>', NULL, NULL, 1, 1, NULL, NULL, 1, NULL, NULL, NULL, 0, 1),
@@ -4323,11 +4323,11 @@ INSERT INTO `web_pages` (`PK_NO`, `TITLE`, `SUB_TITLE`, `URL_SLUG`, `POSITION`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_page_category`
+-- Table structure for table `WEB_PAGE_CATEGORY`
 --
 
-DROP TABLE IF EXISTS `web_page_category`;
-CREATE TABLE IF NOT EXISTS `web_page_category` (
+DROP TABLE IF EXISTS `WEB_PAGE_CATEGORY`;
+CREATE TABLE IF NOT EXISTS `WEB_PAGE_CATEGORY` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(50) NOT NULL,
   `IS_ACTIVE` int(1) DEFAULT '1',
@@ -4343,10 +4343,10 @@ CREATE TABLE IF NOT EXISTS `web_page_category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_page_category`
+-- Dumping data for table `WEB_PAGE_CATEGORY`
 --
 
-INSERT INTO `web_page_category` (`PK_NO`, `NAME`, `IS_ACTIVE`, `META_KEYWARDS`, `META_DESCRIPTION`, `ORDER_ID`, `F_CREATED_BY`, `CREATED_ON`, `F_MODIFIED_BY`, `MODIFIED_ON`, `PROPERTY_FOR`) VALUES
+INSERT INTO `WEB_PAGE_CATEGORY` (`PK_NO`, `NAME`, `IS_ACTIVE`, `META_KEYWARDS`, `META_DESCRIPTION`, `ORDER_ID`, `F_CREATED_BY`, `CREATED_ON`, `F_MODIFIED_BY`, `MODIFIED_ON`, `PROPERTY_FOR`) VALUES
 (1, 'FLAT AND APARTMENT', 0, 'FLAT AND APARTMENT', 'FLAT AND APARTMENT', 100, 2, '2021-08-18 00:20:27', 2, '2021-08-23 23:38:31', 'sell'),
 (2, 'LAND AND PLOAT', 1, 'LAND AND PLOAT', 'LAND AND PLOAT', 101, 2, '2021-08-23 21:21:59', NULL, '2021-08-23 21:21:59', 'sell'),
 (3, 'OFFICE SPACE', 1, 'OFFICE SPACE', 'OFFICE SPACE', 102, 2, '2021-08-23 21:22:17', NULL, '2021-08-23 21:22:17', 'sell'),
@@ -4360,11 +4360,11 @@ INSERT INTO `web_page_category` (`PK_NO`, `NAME`, `IS_ACTIVE`, `META_KEYWARDS`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_prd_reviews`
+-- Table structure for table `WEB_PRD_REVIEWS`
 --
 
-DROP TABLE IF EXISTS `web_prd_reviews`;
-CREATE TABLE IF NOT EXISTS `web_prd_reviews` (
+DROP TABLE IF EXISTS `WEB_PRD_REVIEWS`;
+CREATE TABLE IF NOT EXISTS `WEB_PRD_REVIEWS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_PRD_MASTER_NO` int(11) DEFAULT NULL,
   `F_PRD_VARIANT_NO` int(11) DEFAULT NULL,
@@ -4383,21 +4383,21 @@ CREATE TABLE IF NOT EXISTS `web_prd_reviews` (
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_prd_reviews`
+-- Dumping data for table `WEB_PRD_REVIEWS`
 --
 
-INSERT INTO `web_prd_reviews` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_CUSTOMER_NO`, `CUSTOMER_NAME`, `RATING`, `REVIEW_TEXT`, `LANGUAGE_ID`, `IS_FEATURE`, `IS_ACTIVE`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
+INSERT INTO `WEB_PRD_REVIEWS` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_CUSTOMER_NO`, `CUSTOMER_NAME`, `RATING`, `REVIEW_TEXT`, `LANGUAGE_ID`, `IS_FEATURE`, `IS_ACTIVE`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`) VALUES
 (29, 118, 262, 1282, 'sifat ecommerce', 5, 'good product', 1, 0, 0, NULL, '2021-04-11 07:19:40', NULL, '2021-04-11 07:19:40'),
 (30, 132, 280, 1282, 'sifat ecommerce', 5, 'WOW', 1, 0, 0, NULL, '2021-04-13 12:07:57', NULL, '2021-04-13 12:07:57');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_search_pages`
+-- Table structure for table `WEB_SEARCH_PAGES`
 --
 
-DROP TABLE IF EXISTS `web_search_pages`;
-CREATE TABLE IF NOT EXISTS `web_search_pages` (
+DROP TABLE IF EXISTS `WEB_SEARCH_PAGES`;
+CREATE TABLE IF NOT EXISTS `WEB_SEARCH_PAGES` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_PAGE_CATEGORY_NO` int(11) DEFAULT NULL,
   `TITLE` varchar(255) NOT NULL,
@@ -4417,10 +4417,10 @@ CREATE TABLE IF NOT EXISTS `web_search_pages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_search_pages`
+-- Dumping data for table `WEB_SEARCH_PAGES`
 --
 
-INSERT INTO `web_search_pages` (`PK_NO`, `F_PAGE_CATEGORY_NO`, `TITLE`, `URL_SLUG`, `SEARCH_URL`, `IMAGE_PATH`, `IS_BOTTOM_VIEW`, `ORDER_ID`, `META_DESCRIPTION`, `META_KEYWARDS`, `IS_ACTIVE`, `MODIFIED_AT`, `CREATED_AT`, `F_CREATED_BY`, `F_MODIFIED_BY`) VALUES
+INSERT INTO `WEB_SEARCH_PAGES` (`PK_NO`, `F_PAGE_CATEGORY_NO`, `TITLE`, `URL_SLUG`, `SEARCH_URL`, `IMAGE_PATH`, `IS_BOTTOM_VIEW`, `ORDER_ID`, `META_DESCRIPTION`, `META_KEYWARDS`, `IS_ACTIVE`, `MODIFIED_AT`, `CREATED_AT`, `F_CREATED_BY`, `F_MODIFIED_BY`) VALUES
 (1, 1, 'Apartment and flat sale in Dhaka', 'http://bdflatpanel.local/page/123', 'http://bdflatpanel.local/page/123', '/uploads/pages/6123be54bb758.jpg', 1, 10, 'Apartment and flat sale in Dhaka', 'Apartment and flat sale in Dhaka', 1, '2021-08-23 21:27:16', '2021-08-23 21:27:16', 2, NULL),
 (2, 4, 'Apartment and flat sale in Dhaka', 'http://bdflatpanel.local/page/apartment', NULL, NULL, 1, 100, 'Apartment and flat sale in Dhaka', 'Apartment and flat sale in Dhaka', 1, '2021-08-23 22:16:42', '2021-08-23 22:16:28', 2, 2),
 (3, 5, 'Apartment and flat sale in Dhaka', 'http://bdflatpanel.local/page/apartment', NULL, NULL, 1, 100, 'Apartment and flat sale in Dhaka', 'Apartment and flat sale in Dhaka', 1, '2021-08-23 22:16:42', '2021-08-23 22:16:28', 2, 2),
@@ -4434,11 +4434,11 @@ INSERT INTO `web_search_pages` (`PK_NO`, `F_PAGE_CATEGORY_NO`, `TITLE`, `URL_SLU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_settings`
+-- Table structure for table `WEB_SETTINGS`
 --
 
-DROP TABLE IF EXISTS `web_settings`;
-CREATE TABLE IF NOT EXISTS `web_settings` (
+DROP TABLE IF EXISTS `WEB_SETTINGS`;
+CREATE TABLE IF NOT EXISTS `WEB_SETTINGS` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(50) NOT NULL,
   `DESCRIPTION` text,
@@ -4493,20 +4493,20 @@ CREATE TABLE IF NOT EXISTS `web_settings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_settings`
+-- Dumping data for table `WEB_SETTINGS`
 --
 
-INSERT INTO `web_settings` (`PK_NO`, `TITLE`, `DESCRIPTION`, `HEADER_LOGO`, `FOOTER_LOGO`, `APP_LOGO`, `META_IMAGE`, `FAVICON`, `PHONE_1`, `PHONE_2`, `EMAIL_1`, `EMAIL_2`, `HQ_ADDRESS`, `URL`, `FACEBOOK_URL`, `TWITTER_URL`, `INSTAGRAM_URL`, `YOUTUBE_URL`, `PINTEREST_URL`, `WHATS_APP`, `FB_APP_ID`, `FACEBOOK_SECRET_ID`, `GOOGLE_MAP`, `GOOGLE_APP_ID`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `ANDROID_APP_LINK`, `ANDROID_APP_VERSION`, `META_TITLE`, `META_KEYWARDS`, `META_DESCRIPTION`, `ANALYTIC_ID`, `LANGUAGE_ID`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `IPHONE_APP_LINK`, `IPHONE_APP_VERSION`, `COPYRIGHT_TEXT`, `FEATURE_PROPERTY_LIMIT`, `VERIFIED_PROPERTY_LIMIT`, `SALE_PROPERTY_LIMIT`, `RENT_PROPERTY_LIMIT`, `ROOMMATE_PROPERTY_LIMIT`, `SIMILAR_PROPERTY_LIMIT`, `LISTING_LEAD_CLAIMED_TIME`, `SEEKER_BONUS_BALANCE`, `OWNER_BONUS_BALANCE`, `DEFAULT_CI_PRICE`) VALUES
+INSERT INTO `WEB_SETTINGS` (`PK_NO`, `TITLE`, `DESCRIPTION`, `HEADER_LOGO`, `FOOTER_LOGO`, `APP_LOGO`, `META_IMAGE`, `FAVICON`, `PHONE_1`, `PHONE_2`, `EMAIL_1`, `EMAIL_2`, `HQ_ADDRESS`, `URL`, `FACEBOOK_URL`, `TWITTER_URL`, `INSTAGRAM_URL`, `YOUTUBE_URL`, `PINTEREST_URL`, `WHATS_APP`, `FB_APP_ID`, `FACEBOOK_SECRET_ID`, `GOOGLE_MAP`, `GOOGLE_APP_ID`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `ANDROID_APP_LINK`, `ANDROID_APP_VERSION`, `META_TITLE`, `META_KEYWARDS`, `META_DESCRIPTION`, `ANALYTIC_ID`, `LANGUAGE_ID`, `F_SS_CREATED_BY`, `SS_CREATED_ON`, `F_SS_MODIFIED_BY`, `SS_MODIFIED_ON`, `IPHONE_APP_LINK`, `IPHONE_APP_VERSION`, `COPYRIGHT_TEXT`, `FEATURE_PROPERTY_LIMIT`, `VERIFIED_PROPERTY_LIMIT`, `SALE_PROPERTY_LIMIT`, `RENT_PROPERTY_LIMIT`, `ROOMMATE_PROPERTY_LIMIT`, `SIMILAR_PROPERTY_LIMIT`, `LISTING_LEAD_CLAIMED_TIME`, `SEEKER_BONUS_BALANCE`, `OWNER_BONUS_BALANCE`, `DEFAULT_CI_PRICE`) VALUES
 (1, 'BDFLAT', 'Lorem ipsum dolor, sit, amet consectetur adipisicing elit. A quibusdam nisi corrupti minus architecto at impedit amet repudiandae voluptate sed.', NULL, NULL, NULL, NULL, NULL, '01918993427', NULL, 'info@bdflat.com', NULL, 'Unit 1A, House 01, Road 02, Block A Banani C/A, Dhaka 1213', 'https://bdflat.com', 'https://facebook.com', 'https://twitter.com', 'https://instagram.com', 'httsp://youtube.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Bdflat', 5, 5, 5, 5, 5, 5, 24, 100, 500, 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_slider`
+-- Table structure for table `WEB_SLIDER`
 --
 
-DROP TABLE IF EXISTS `web_slider`;
-CREATE TABLE IF NOT EXISTS `web_slider` (
+DROP TABLE IF EXISTS `WEB_SLIDER`;
+CREATE TABLE IF NOT EXISTS `WEB_SLIDER` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `TITLE` varchar(200) DEFAULT NULL,
   `SUBTITLE` varchar(20) DEFAULT NULL,
@@ -4527,21 +4527,21 @@ CREATE TABLE IF NOT EXISTS `web_slider` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='WEB_WHATSAPP' ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_slider`
+-- Dumping data for table `WEB_SLIDER`
 --
 
-INSERT INTO `web_slider` (`PK_NO`, `TITLE`, `SUBTITLE`, `BANNER`, `IMAGE_NAME`, `URL_LINK`, `ORDER_BY`, `IS_FEATURE`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`, `MODIFIED_BY`, `MODIFIED_ON`, `POSITION`, `MOBILE_BANNER`, `MOBILE_IMAGE_NAME`) VALUES
+INSERT INTO `WEB_SLIDER` (`PK_NO`, `TITLE`, `SUBTITLE`, `BANNER`, `IMAGE_NAME`, `URL_LINK`, `ORDER_BY`, `IS_FEATURE`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`, `MODIFIED_BY`, `MODIFIED_ON`, `POSITION`, `MOBILE_BANNER`, `MOBILE_IMAGE_NAME`) VALUES
 (2, 'Coming Soon', 'Coming Soon', '/media/images/banner/prod_20082021_611eb3c9433a1.jpg', 'prod_20082021_611eb3c9433a1.jpg', 'https://www.bdhousing.com/', 1, 1, 1, 2, '2021-08-20 01:40:57', NULL, NULL, 1, NULL, NULL),
 (3, 'This bdhousing', 'This bdhousing', '/media/images/banner/prod_20082021_611eb6e466370.jpg', 'prod_20082021_611eb6e466370.jpg', 'https://www.bdhousing.com/', 2, 1, 1, 2, '2021-08-20 01:54:12', NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_team_members`
+-- Table structure for table `WEB_TEAM_MEMBERS`
 --
 
-DROP TABLE IF EXISTS `web_team_members`;
-CREATE TABLE IF NOT EXISTS `web_team_members` (
+DROP TABLE IF EXISTS `WEB_TEAM_MEMBERS`;
+CREATE TABLE IF NOT EXISTS `WEB_TEAM_MEMBERS` (
   `PK_NO` int(11) NOT NULL,
   `NAME` varchar(200) DEFAULT NULL,
   `DESIGNATION` varchar(150) DEFAULT NULL,
@@ -4560,11 +4560,11 @@ CREATE TABLE IF NOT EXISTS `web_team_members` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_testimonials`
+-- Table structure for table `WEB_TESTIMONIALS`
 --
 
-DROP TABLE IF EXISTS `web_testimonials`;
-CREATE TABLE IF NOT EXISTS `web_testimonials` (
+DROP TABLE IF EXISTS `WEB_TESTIMONIALS`;
+CREATE TABLE IF NOT EXISTS `WEB_TESTIMONIALS` (
   `PK_NO` int(11) NOT NULL,
   `NAME` varchar(200) DEFAULT NULL,
   `IMAGE` varchar(255) DEFAULT NULL,
@@ -4580,11 +4580,11 @@ CREATE TABLE IF NOT EXISTS `web_testimonials` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_user`
+-- Table structure for table `WEB_USER`
 --
 
-DROP TABLE IF EXISTS `web_user`;
-CREATE TABLE IF NOT EXISTS `web_user` (
+DROP TABLE IF EXISTS `WEB_USER`;
+CREATE TABLE IF NOT EXISTS `WEB_USER` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `CODE` int(11) DEFAULT NULL,
   `NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4631,10 +4631,10 @@ CREATE TABLE IF NOT EXISTS `web_user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_user`
+-- Dumping data for table `WEB_USER`
 --
 
-INSERT INTO `web_user` (`PK_NO`, `CODE`, `NAME`, `DESIGNATION`, `EMAIL`, `COUNTRY_CODE`, `MOBILE_NO`, `PASSWORD`, `GENDER`, `DOB`, `FACEBOOK_ID`, `GOOGLE_ID`, `PROFILE_PIC`, `PROFILE_PIC_URL`, `ACTIVATION_CODE`, `ACTIVATION_CODE_EXPIRE`, `IS_FIRST_LOGIN`, `USER_TYPE`, `CAN_LOGIN`, `REMEMBER_TOKEN`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `IS_EMAIL_VERIFIED`, `IS_MOBILE_VERIFIED`, `EMAIL_VERIFY_CODE`, `EMAIL_VERIFY_EXPIRE`, `MOBILE_VERITY_CODE`, `MOBILE_VERIFY_EXPIRE`, `CONTACT_PER_NAME`, `ADDRESS`, `ACTUAL_TOPUP`, `PENDING_TOPUP`, `USED_TOPUP`, `UNUSED_TOPUP`, `TOTAL_LISTING`, `LISTING_LIMIT`, `TOTAL_LEAD`, `IS_FEATURE`, `PAYMENT_AUTO_RENEW`) VALUES
+INSERT INTO `WEB_USER` (`PK_NO`, `CODE`, `NAME`, `DESIGNATION`, `EMAIL`, `COUNTRY_CODE`, `MOBILE_NO`, `PASSWORD`, `GENDER`, `DOB`, `FACEBOOK_ID`, `GOOGLE_ID`, `PROFILE_PIC`, `PROFILE_PIC_URL`, `ACTIVATION_CODE`, `ACTIVATION_CODE_EXPIRE`, `IS_FIRST_LOGIN`, `USER_TYPE`, `CAN_LOGIN`, `REMEMBER_TOKEN`, `STATUS`, `CREATED_BY`, `UPDATED_BY`, `CREATED_AT`, `UPDATED_AT`, `IS_EMAIL_VERIFIED`, `IS_MOBILE_VERIFIED`, `EMAIL_VERIFY_CODE`, `EMAIL_VERIFY_EXPIRE`, `MOBILE_VERITY_CODE`, `MOBILE_VERIFY_EXPIRE`, `CONTACT_PER_NAME`, `ADDRESS`, `ACTUAL_TOPUP`, `PENDING_TOPUP`, `USED_TOPUP`, `UNUSED_TOPUP`, `TOTAL_LISTING`, `LISTING_LIMIT`, `TOTAL_LEAD`, `IS_FEATURE`, `PAYMENT_AUTO_RENEW`) VALUES
 (13, 1000, 'maidul1', NULL, 'owner@gmail.com', NULL, '123456', '$2y$10$TGoxPnA9ir8feFPFaWSeX.0hlqoD/cxQ.pdvc5ADo/feFsWm1O4kO', 1, NULL, NULL, NULL, '60b13784f3288.jpg', '/uploads/user/13/60b13784f3288.jpg', NULL, NULL, 1, 2, 1, NULL, 1, 0, 0, '2021-04-11 20:33:09', '2021-07-28 18:01:15', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 2000, 0, 0, 1830, 5, 5, 0, 0, 1),
 (14, 1001, 'Maidul Islam Babu', NULL, 'seeker@gmail.com', NULL, '01681944126', '$2y$10$uDfNvGFGnLQoltKrDaAuk.bipD33SYs.AWxvL3D2UyeahDBGwaCvy', 1, NULL, NULL, NULL, '61648969c44b2.jpg', '/uploads/user/14/61648969c44b2.jpg', NULL, NULL, 1, 1, 1, NULL, 1, 0, 0, '2021-04-14 10:00:54', '2021-10-12 00:58:49', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 550, 0, 0, 525, 0, 5, 0, 0, 0),
 (15, 1002, 'Maidul Islam Babu', 'Data analyst', 'developer@gmail.com', NULL, '01681944127', '$2y$10$WAp/98uhcPn2e06RQCf3KuCX9wFSwds/Oz/yJklaiStsYB5R882b.', 1, NULL, NULL, NULL, '60b11641916e1.jpg', '/uploads/user/14/60b11641916e1.jpg', NULL, NULL, 1, 3, 1, NULL, 1, 0, 2, '2021-04-14 10:00:54', '2021-09-18 23:36:06', 0, 0, NULL, NULL, NULL, NULL, 'Maidul Islam Babu', 'mirur', 2000, 0, 0, 1900, 2, 20, 0, 1, 1),
@@ -4752,11 +4752,11 @@ INSERT INTO `web_user` (`PK_NO`, `CODE`, `NAME`, `DESIGNATION`, `EMAIL`, `COUNTR
 (130, 1114, '01546565444', NULL, '01546565444', NULL, '01546565444', '$2y$10$u7a6CeGUjXATh7isd5OGJ.9L/43Xry8c1feFC4iHM7cxw3IRnqFIG', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, 1, 0, 0, '2022-05-11 22:14:00', '2022-05-11 22:14:00', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 0, 0, 1);
 
 --
--- Triggers `web_user`
+-- Triggers `WEB_USER`
 --
 DROP TRIGGER IF EXISTS `BEFORE_WEB_USER_INSERT`;
 DELIMITER $$
-CREATE TRIGGER `BEFORE_WEB_USER_INSERT` BEFORE INSERT ON `web_user` FOR EACH ROW BEGIN
+CREATE TRIGGER `BEFORE_WEB_USER_INSERT` BEFORE INSERT ON `WEB_USER` FOR EACH ROW BEGIN
 declare VAR_CODE INT DEFAULT 0;
 
 SELECT IFNULL(MAX(CODE),1000) INTO VAR_CODE
@@ -4769,11 +4769,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_user_info`
+-- Table structure for table `WEB_USER_INFO`
 --
 
-DROP TABLE IF EXISTS `web_user_info`;
-CREATE TABLE IF NOT EXISTS `web_user_info` (
+DROP TABLE IF EXISTS `WEB_USER_INFO`;
+CREATE TABLE IF NOT EXISTS `WEB_USER_INFO` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_USER_NO` int(11) DEFAULT NULL,
   `META_TITLE` varchar(200) DEFAULT NULL,
@@ -4789,10 +4789,10 @@ CREATE TABLE IF NOT EXISTS `web_user_info` (
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `web_user_info`
+-- Dumping data for table `WEB_USER_INFO`
 --
 
-INSERT INTO `web_user_info` (`PK_NO`, `F_USER_NO`, `META_TITLE`, `META_DESCRIPTION`, `ABOUT_COMPANY`, `SITE_URL`, `LOGO`, `BANNER`, `SHOP_OPEN_TIME`, `SHOP_CLOSE_TIME`, `WORKING_DAYS`) VALUES
+INSERT INTO `WEB_USER_INFO` (`PK_NO`, `F_USER_NO`, `META_TITLE`, `META_DESCRIPTION`, `ABOUT_COMPANY`, `SITE_URL`, `LOGO`, `BANNER`, `SHOP_OPEN_TIME`, `SHOP_CLOSE_TIME`, `WORKING_DAYS`) VALUES
 (1, 19, 'Anawar Landmark', 'test', 'Anawar Landmark', 'https://www.prothomalo.com/', '/uploads/images/owner/19/img_10082021_6112bd1bec8f6.jpg', '/uploads/images/owner/19/img_10082021_6112bd1becca8.jpg', '08:00', '04:00', '[\"2\",\"3\"]'),
 (2, 15, 'Apartment', 'ff', 'xcvcv', 'www.google.com', NULL, NULL, '02:17', '02:18', '[\"0\",\"1\",\"2\",\"4\",\"5\"]'),
 (3, 16, 'Company Name', 'Donno', 'Donno', 'http://company.com', NULL, NULL, '16:00', '04:00', '[\"1\",\"2\",\"3\"]'),
@@ -4812,11 +4812,11 @@ INSERT INTO `web_user_info` (`PK_NO`, `F_USER_NO`, `META_TITLE`, `META_DESCRIPTI
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_whatsapp`
+-- Table structure for table `WEB_WHATSAPP`
 --
 
-DROP TABLE IF EXISTS `web_whatsapp`;
-CREATE TABLE IF NOT EXISTS `web_whatsapp` (
+DROP TABLE IF EXISTS `WEB_WHATSAPP`;
+CREATE TABLE IF NOT EXISTS `WEB_WHATSAPP` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(200) DEFAULT NULL,
   `PHONE_NUMBER` varchar(15) DEFAULT NULL,
@@ -4833,10 +4833,10 @@ CREATE TABLE IF NOT EXISTS `web_whatsapp` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_whatsapp`
+-- Dumping data for table `WEB_WHATSAPP`
 --
 
-INSERT INTO `web_whatsapp` (`PK_NO`, `NAME`, `PHONE_NUMBER`, `DESIGNATION`, `DEFAULT_MSG`, `PHOTO`, `ORDER_BY`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`, `MODIFIED_BY`, `MODIFIED_ON`) VALUES
+INSERT INTO `WEB_WHATSAPP` (`PK_NO`, `NAME`, `PHONE_NUMBER`, `DESIGNATION`, `DEFAULT_MSG`, `PHOTO`, `ORDER_BY`, `IS_ACTIVE`, `CREATED_BY`, `CREATED_ON`, `MODIFIED_BY`, `MODIFIED_ON`) VALUES
 (1, 'Huda', '+8801711103662', NULL, 'Hi, I have some questions about sales, can you please help me?', '/media/image/logo/avatar-60e06346f1790.webp', 1, 1, NULL, NULL, 1, '2021-07-03 07:16:55'),
 (2, 'Mira', '+60 11-2905 337', NULL, 'Hi, I have some questions about sales, can you please help me?', NULL, 3, 1, NULL, NULL, NULL, NULL),
 (3, 'SYARIFA', '+60 10-405 4788', NULL, 'Hi, I have some questions about sales, can you please help me?', '/media/image/logo/sharif-60e96d5b032a0.webp', 4, 1, NULL, NULL, 2, '2021-07-10 03:50:19'),
@@ -4846,11 +4846,11 @@ INSERT INTO `web_whatsapp` (`PK_NO`, `NAME`, `PHONE_NUMBER`, `DESIGNATION`, `DEF
 -- --------------------------------------------------------
 
 --
--- Table structure for table `web_wishlist`
+-- Table structure for table `WEB_WISHLIST`
 --
 
-DROP TABLE IF EXISTS `web_wishlist`;
-CREATE TABLE IF NOT EXISTS `web_wishlist` (
+DROP TABLE IF EXISTS `WEB_WISHLIST`;
+CREATE TABLE IF NOT EXISTS `WEB_WISHLIST` (
   `PK_NO` int(11) NOT NULL AUTO_INCREMENT,
   `F_PRD_MASTER_NO` int(11) DEFAULT NULL,
   `F_PRD_VARIANT_NO` int(11) DEFAULT NULL,
@@ -4866,10 +4866,10 @@ CREATE TABLE IF NOT EXISTS `web_wishlist` (
 ) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 --
--- Dumping data for table `web_wishlist`
+-- Dumping data for table `WEB_WISHLIST`
 --
 
-INSERT INTO `web_wishlist` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_CUSTOMER_NO`, `SESSION_ID`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`, `IS_RESELLER`) VALUES
+INSERT INTO `WEB_WISHLIST` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_CUSTOMER_NO`, `SESSION_ID`, `IS_ACTIVE`, `SS_MODIFIED_ON`, `SS_CREATED_ON`, `F_SS_CREATED_BY`, `F_SS_MODIFIED_BY`, `IS_RESELLER`) VALUES
 (48, 703, 1933, NULL, '3W1HNygI85VKjspn4K5UO38fkXNltgud6oeGaMni', 1, '2021-05-06 10:04:06', '2021-05-06 10:04:06', NULL, NULL, 0),
 (49, 3, 3, NULL, '3W1HNygI85VKjspn4K5UO38fkXNltgud6oeGaMni', 1, '2021-05-06 10:05:30', '2021-05-06 10:05:30', NULL, NULL, 0),
 (50, 6, 10, NULL, '3W1HNygI85VKjspn4K5UO38fkXNltgud6oeGaMni', 1, '2021-05-06 10:18:52', '2021-05-06 10:18:52', NULL, NULL, 0),
@@ -4956,10 +4956,10 @@ INSERT INTO `web_wishlist` (`PK_NO`, `F_PRD_MASTER_NO`, `F_PRD_VARIANT_NO`, `F_C
 --
 
 --
--- Constraints for table `ss_area`
+-- Constraints for table `SS_AREA`
 --
-ALTER TABLE `ss_area`
-  ADD CONSTRAINT `FK_SS_AREA_CITY` FOREIGN KEY (`F_CITY_NO`) REFERENCES `ss_city` (`PK_NO`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `SS_AREA`
+  ADD CONSTRAINT `FK_SS_AREA_CITY` FOREIGN KEY (`F_CITY_NO`) REFERENCES `SS_CITY` (`PK_NO`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
