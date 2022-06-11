@@ -321,7 +321,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
         </div>
         <!-- Modal -->
         @endif
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" data-backdrop="static" data-target="#staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -337,7 +337,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     <p>We've sent a 4-digit one time PIN in your phone</p>
                     <span id="sending_phn"></span>
                   </div>
-                  <form class="" id="contact_us" name="reg_form" onsubmit="return validate()" action="{{ route('verify-otp') }}" method="post">
+                  <form class="" id="contact_us" name="reg_form" action="{{ route('verify-otp') }}" method="post">
                     @csrf
                     <input type="hidden" id="user_phone" name="MOBILE_NO">
                     <div class="form-group">
@@ -347,7 +347,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     
                     <!-- <div class="btn-group" role="group" aria-label="OTP Submit"> -->
                     <button type="submit" class="btn btn-danger text-center" id="right_otp" style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
-                    <a href="#" class="btn btn-danger text-center" id="wrong_otp" style="position: relative; margin-left: -198px; padding: 6px 37px; display:none;">ENTER</a>
+                    {{-- <a href="javascript:void(0)" class="btn btn-danger text-center" id="wrong_otp" style="position: relative; margin-left: -198px; padding: 6px 37px; display:none;">ENTER</a> --}}
                     <!-- <button type="submit" class="btn btn-info">REQUEST PIN AGAIN</button> -->
                    <!-- </div> -->
                   </form>
@@ -363,6 +363,8 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                   <form class="" action="#" id="resend_phone_form" method="post">
                     @csrf
                     <input type="hidden" name="user_phone" id="user_phone1">
+                    <input type="hidden" name="email_otp" id="email_otp">
+                    <input type="hidden" name="countryCode" id="countryCode">
                     <div id="show_today">
                         <button href="#" id="time_count" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px; display:none" disabled> Please Wait <span id="Timer_w"></span> </button>
                         <button href="#" id="timer_next" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled> Please Wait <span id="Timer"></span> </button>
@@ -406,7 +408,8 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                               <div class="form-group row">
                                 <label for="staticEmail" class="col-md-2 col-form-label">Email</label>
                                 <div class="col-md-10">
-                                  <input type="email" class="form-control" id="staticEmail" name="email" style="width: 255px" placeholder="Enter Your Email(Optional)">
+                                  <input type="email" class="form-control" id="staticEmail" name="email" style="width: 255px" placeholder="Enter Your Email">
+                                  <span id="errorEmailReq" style="color: red"></span>
                                 </div>
                               </div>
                         </div>
@@ -476,7 +479,6 @@ var iti = window.intlTelInput(input, {
     utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
 });
 
-
 var reset = function() {
 // input_button.classList.remove("disable");
   input.classList.remove("error");
@@ -509,13 +511,23 @@ input.addEventListener('keyup', reset);
 </script>
 
 <script type="text/javascript">
-
+let numberSavedInDatabase = false;
 
 $('#phone_form').on('submit',function(e){
     e.preventDefault();
     mobile = $("#phone_number").val();
     name = $("#staticName").val();
     email = $("#staticEmail").val();
+    var countryCode = iti.getSelectedCountryData().iso2;
+    console.log(countryCode);
+    if(email==''){
+        if (countryCode !== 'bd') {
+            $('#two_field').show();
+            document.getElementById("errorEmailReq").innerHTML = 'Email is Required';
+            return 0;
+        }
+    }
+    
     
     $.ajax({
       url: "{{route('seeking-owner-register')}}",
@@ -525,6 +537,7 @@ $('#phone_form').on('submit',function(e){
         mobile:mobile,
         name:name,
         email:email,
+        countryCode:countryCode,
       },
       success:function(response){
         // $('#successMsg').show();
@@ -533,6 +546,8 @@ $('#phone_form').on('submit',function(e){
            $('#sign_up').hide(); 
            $('#user_phone').val(response.phone)
            $('#user_phone1').val(response.phone)
+           $('#email_otp').val(response.email)
+           $('#countryCode').val(response.countryCode)
            
            document.getElementById("sending_phn").innerHTML = response.phone;
            var timeLeft = 60;
@@ -567,10 +582,12 @@ $('#phone_form').on('submit',function(e){
     });
   </script>
   <script type="text/javascript">
-
+    
     $('#resend_phone_form').on('submit',function(e){
         e.preventDefault();
         let mobile = $('#user_phone').val();
+        let email = $('#email_otp').val();
+        let countryCode = $('#countryCode').val();
     
         var fname = document.reg_form.fname;
         
@@ -580,6 +597,8 @@ $('#phone_form').on('submit',function(e){
           data:{
             "_token": "{{ csrf_token() }}",
             mobile:mobile,
+            email:email,
+            countryCode:countryCode,
           },
           success:function(response){
             // $('#successMsg').show();
@@ -636,21 +655,34 @@ $('#phone_form').on('submit',function(e){
         $(document).on('keyup', '#phone_number', function() {
         
             let phone_number = $(this).val();
+            var countryCode = iti.getSelectedCountryData().iso2;
+            if (countryCode !== 'bd') {
+                $('#two_field').show();
+            }
+            
             $.ajax({
             type: 'GET',
             url: "{{route('get-user-phone')}}",
             data: {
                 'phone_number': phone_number
             },
+            
             success: function (response) {
-                if(response.user_phone){
+                if(response.user_phone && countryCode == 'bd'){
                     $('#two_field').hide(); 
+                    numberSavedInDatabase = true;
                 }else{
-                        $('#two_field').show(); 
+                    $('#two_field').show(); 
+                    numberSavedInDatabase = false;
                 }
             }
         });
     });
+        $("#contact_us").on("submit",function(e){
+            if (!$(this).hasClass('valid')) {
+                e.preventDefault();
+            }
+        })
         $(document).on('keyup', '#otp_num', function() {
         
             let otp_num = $(this).val();
@@ -665,15 +697,17 @@ $('#phone_form').on('submit',function(e){
             },
             success: function (response) {
                 if(response.user_verify){
-                    $('#right_otp').show(); 
-                    $('#wrong_otp').hide(); 
+                    // $('#right_otp').show(); 
+                    // $('#wrong_otp').hide(); 
+                    $('#contact_us').addClass('valid');
                     document.getElementById("otp_verify_user").innerHTML = '<span style="color:green">Valid OTP</span>';
                 }else{
-                    $('#right_otp').hide(); 
-                    $('#wrong_otp').show(); 
+                    // $('#right_otp').hide(); 
+                    // $('#wrong_otp').show(); 
                     document.getElementById("otp_verify_user").innerHTML = 'Invalid OTP ! Enter Only 4 digit Otp Number';
                 }
                 console.log(response.user_verify)
+                
             },
             error: function(response) {
                 
@@ -682,4 +716,7 @@ $('#phone_form').on('submit',function(e){
 
     
         });
+
+
       </script>
+

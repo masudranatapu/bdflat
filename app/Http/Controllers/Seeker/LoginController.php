@@ -13,6 +13,7 @@ use App\Traits\SMSAPI;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Mail;
 
 
 class LoginController extends Controller
@@ -122,7 +123,7 @@ class LoginController extends Controller
         $otp = rand(1000, 9999);
         $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
         $todate = date('Y-m-d');
-        $user = DB::table('web_user')->where('MOBILE_NO', $phone)->where('STATUS',1)->first();
+        $user = DB::table('WEB_USER')->where('MOBILE_NO', $phone)->where('STATUS',1)->first();
         $user_check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('STATUS',1)->first();
         // if($user_check){
         //   Auth::login($user);
@@ -132,7 +133,21 @@ class LoginController extends Controller
 
         $check = DB::table('OTP_VARIFICATION')->where('MOBILE', $phone)->where('OTP_DATE', $todate)->count('MOBILE');
         Session::put('otp_phone',$phone);
-        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+
+        $email = $request->email;
+        $messageData = [
+            'message' => 'Thank you for being with bdflats.com. Activation Code',
+            'otp' =>$otp
+
+        ];
+        if($request->countryCode =='bd'){
+            $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+        }else{
+            Mail::send('auth.email',$messageData, function($message) use($email)
+            {    
+                $message->to($email)->subject('Login Otp Code.'); 
+            });
+        }
         //daily d times er besi send kora jabe na. $check && count($check)
         if ($check > 6) {
             return redirect()->back()->withDanger(__('Today you has Block, Please try again nextday.'));
@@ -365,7 +380,21 @@ class LoginController extends Controller
         }
 
         // $user->OTP = $otp;
-        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+        $email = $request->email;
+        $messageData = [
+            'message' => 'Thank you for being with bdflats.com. Activation Code',
+            'otp' =>$otp
+
+        ];
+        if($request->countryCode =='bd'){
+            $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+        }else{
+            Mail::send('auth.email',$messageData, function($message) use($email)
+            {    
+                $message->to($email)->subject('Login Otp Code.'); 
+            });
+        }
+            
 
         // $user_id = Session::getId();
         $user_id = $user->PK_NO;
@@ -396,6 +425,8 @@ class LoginController extends Controller
         $res = json_encode($res);
         return response()->json([
             'phone'=> $phone,
+            'email'=> $email,
+            'countryCode'=> $request->countryCode,
         ]);
 
 
