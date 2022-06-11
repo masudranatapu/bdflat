@@ -20,6 +20,8 @@ $response  = json_decode($response);
 $MOBILE_NO = $response->MOBILE_NO ?? '';
 
 ?>
+
+
 <!--
    ============  mobile menu  ============
 -->
@@ -258,7 +260,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     </li>
                     <li class="nav-menu nav-item dropdown">
                         @guest
-                            <a class="nav-link dropdown-toggle" href="{{ route('login') }}" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown"
                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Login
                             </a>
@@ -331,7 +333,6 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
             </button>
             </div>
             <div class="modal-body">
-                {{-- @if($response) --}}
                 <div class="login-wrap text-center" id="login_wrap" style="display: none">
                   <div class="pt-3 pb-3">
                     <p>We've sent a 4-digit one time PIN in your phone</p>
@@ -340,98 +341,83 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                   <form class="" id="contact_us" name="reg_form" action="{{ route('verify-otp') }}" method="post">
                     @csrf
                     <input type="hidden" id="user_phone" name="MOBILE_NO">
+                    <input type="hidden" id="user_name" name="NAME">
+                    <input type="hidden" id="user_email" name="EMAIL">
+                    <input type="hidden" id="user_country_code" name="COUNTRY_CODE">
                     <div class="form-group">
                         <input class="form-control" id="otp_num" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}" required>
                         <span id="otp_verify_user" style="color: red"></span>
                     </div>
-                    
-                    <!-- <div class="btn-group" role="group" aria-label="OTP Submit"> -->
                     <button type="submit" class="btn btn-danger text-center" id="right_otp" style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
-                    {{-- <a href="javascript:void(0)" class="btn btn-danger text-center" id="wrong_otp" style="position: relative; margin-left: -198px; padding: 6px 37px; display:none;">ENTER</a> --}}
-                    <!-- <button type="submit" class="btn btn-info">REQUEST PIN AGAIN</button> -->
-                   <!-- </div> -->
-                  </form>
-                  @php
-                      $todate = date('Y-m-d');
-                      $check = DB::table('OTP_VARIFICATION')->where('MOBILE', Session::get('otp_phone'))->where('OTP_DATE', $todate)->count('MOBILE');
-//daily d times er besi send kora jabe na. $check && count($check)
-                    if ($check > 4) {
-                        
-                    }
-                  @endphp
-                  
-                  <form class="" action="#" id="resend_phone_form" method="post">
-                    @csrf
-                    <input type="hidden" name="user_phone" id="user_phone1">
-                    <input type="hidden" name="email_otp" id="email_otp">
-                    <input type="hidden" name="countryCode" id="countryCode">
+
                     <div id="show_today">
                         <button href="#" id="time_count" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px; display:none" disabled> Please Wait <span id="Timer_w"></span> </button>
                         <button href="#" id="timer_next" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled> Please Wait <span id="Timer"></span> </button>
                         <button id="Timer_out" type="submit" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -199px;">REQUEST PIN AGAIN <span ></span> </button>
                     </div>
-                            
-                        <button type="submit" id="req_next_day" class="btn btn-danger text-center" style="position: relative; margin-top: -62px; margin-right: -110px; display: none" disabled>REQUEST NEXTDAY </button>
+
                   </form>
-                  
+
+                  {{-- @php
+                      $todate = date('Y-m-d');
+                      $check = DB::table('OTP_VARIFICATION')->where('MOBILE', Session::get('otp_phone'))->where('OTP_DATE', $todate)->count('MOBILE');
+//daily d times er besi send kora jabe na. $check && count($check)
+                    if ($check > 4) {
+
+                    }
+                  @endphp --}}
+
+                  {{-- <form class="" action="#" id="resend_phone_form" method="post">
+                    @csrf
+                    <input type="hidden" name="user_phone" id="user_phone1">
+                    <input type="hidden" name="email_otp" id="email_otp">
+                    <input type="hidden" name="countryCode" id="countryCode">
+
+
+                        <button type="submit" id="req_next_day" class="btn btn-danger text-center" style="position: relative; margin-top: -62px; margin-right: -110px; display: none" disabled>REQUEST NEXTDAY </button>
+                  </form> --}}
+
 
                 </div>
             {{-- @else --}}
             <div class="sign-wrap" id="sign_up">
+                <span id="valid-msg" style="hide" style="display:block"></span>
+                <span id="error-msg" class="hide text-center" style="display:block;color:red"></span>
                 <h1>Your BDFlats.com Account</h1>
                 {!! Form::open([ 'route' => 'seeker_register_submit', 'id' => 'phone_form', 'method' => 'post', 'class' => 'registerForm', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                     <div class="row" id="regForm">
-                        <!-- <div class="col-12 form-group regi-name {!! $errors->has('name') ? 'error' : '' !!}">
-                            <div class="controls">
-                                <label for="name" class="control-label">Full Name:</label>
-                                {!! Form::text('name', old('name'), [ 'class' => 'form-control', 'id' => 'regi-name', 'autocomplete' => 'off', 'tabindex' => 1, 'placeholder' => 'Your name']) !!}
-                                {!! $errors->first('name', '<label class="help-block text-danger">:message</label>') !!}
-                            </div>
-                        </div> -->
+
                         <div class="col-12 form-group regi-mobile {!! $errors->has('mobile') ? 'error' : '' !!}">
                             <div class="controls">
                                 <label for="phone" class="control-label">Phone No:</label>
                                 {!! Form::tel('mobile', old('mobile'), [ 'class' => 'form-control', 'id' => 'phone_number', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Your number', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your number, It will be verify by OTP']) !!}
                                 {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                 <span class="text-danger" id="mobileErrorMsg"></span>
-                                <span id="valid-msg" style="hide" style="display:block"></span>
-                                <span id="error-msg" class="hide" style="display:block;color:red"></span>
+
                             </div>
                         </div>
                         <div id="two_field" style="margin-left: 28px; display:none">
                             <div class="form-group row">
                                 <label for="staticName" class="col-md-2 col-form-label">Name </label>
                                 <div class="col-md-10">
-                                  <input type="text" class="form-control" id="staticName" name="name" style="width: 254px" placeholder="Enter Your Name">
+                                  <input type="text" class="form-control" id="staticName" name="name" style="width: 254px" placeholder="Enter your name" required>
+                                  <span class="text-danger" id="nameErrorMsg"></span>
                                 </div>
                               </div>
                               <div class="form-group row">
                                 <label for="staticEmail" class="col-md-2 col-form-label">Email</label>
                                 <div class="col-md-10">
-                                  <input type="email" class="form-control" id="staticEmail" name="email" style="width: 255px" placeholder="Enter Your Email">
-                                  <span id="errorEmailReq" style="color: red"></span>
+                                  <input type="email" class="form-control" id="staticEmail" name="email" style="width: 255px" placeholder="Enter your email (optional)">
+                                  <span id="emailErrorMsg"></span>
                                 </div>
                               </div>
                         </div>
-                         <!-- <div class="col-12 form-group regi-email {!! $errors->has('email') ? 'error' : '' !!}">
-                            <div class="controls">
-                                <label for="email" class="control-label">Email Address:</label>
-                                {!! Form::email('email', old('email'), [ 'class' => 'form-control', 'id' => 'email',  'placeholder' => 'Email address (optional)', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Your email']) !!}
-                                {!! $errors->first('email', '<label class="help-block text-danger">:message</label>') !!}
-                                <span class="text-danger" id="emailErrorMsg"></span>
-                            </div>
-                        </div>
 
-                        <div class="col-12 form-group regi-password {!! $errors->has('password') ? 'error' : '' !!}">
-                            <div class="controls">
-                                <label for="password" class="control-label">Password:</label>
-                                {!! Form::password('password', [ 'class' => 'form-control', 'id' => 'password', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Type password', 'minlength' => '6', 'data-validation-minlength-message' => 'Minimum 6 characters', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Type Password']) !!}
-                                {!! $errors->first('password', '<label class="help-block text-danger">:message</label>') !!}
-                            </div>
-                        </div>  -->
 
                         <div class="col-12 form-group text-center pb-4">
                             <button type="submit" name="submit" id="send_form" class="btn btn-primary button">{{ __('SIGN UP / LOGIN') }}</button>
+                        </div>
+                        <div class="col-12 form-group text-center pb-4" id="error_print_div">
                         </div>
                     </div>
                 {!! Form::close() !!}
@@ -515,82 +501,92 @@ let numberSavedInDatabase = false;
 
 $('#phone_form').on('submit',function(e){
     e.preventDefault();
+    var flag = 'true';
+
     mobile = $("#phone_number").val();
     name = $("#staticName").val();
     email = $("#staticEmail").val();
     var countryCode = iti.getSelectedCountryData().iso2;
     console.log(countryCode);
-    if(email==''){
-        if (countryCode !== 'bd') {
-            $('#two_field').show();
-            document.getElementById("errorEmailReq").innerHTML = 'Email is Required';
-            return 0;
-        }
+    if(mobile == ''){flag='false'; $('#mobileErrorMsg').text('Mobile number is required'); }
+    if(name == ''){flag='false'; $('#nameErrorMsg').text('Name is required'); }
+    if (countryCode !== 'bd') {
+        flag='false'; $('#emailErrorMsg').text('Email is required');
     }
-    
-    
-    $.ajax({
-      url: "{{route('seeking-owner-register')}}",
-      type:"POST",
-      data:{
-        "_token": "{{ csrf_token() }}",
-        mobile:mobile,
-        name:name,
-        email:email,
-        countryCode:countryCode,
-      },
-      success:function(response){
-        // $('#successMsg').show();
-        if(response.phone !=null){
-           $('#login_wrap').show(); 
-           $('#sign_up').hide(); 
-           $('#user_phone').val(response.phone)
-           $('#user_phone1').val(response.phone)
-           $('#email_otp').val(response.email)
-           $('#countryCode').val(response.countryCode)
-           
-           document.getElementById("sending_phn").innerHTML = response.phone;
-           var timeLeft = 60;
-          var elem = document.getElementById('Timer');
-          var elem_time = document.getElementById('Timer_out');
-      
-          var timerId = setInterval(countdown, 1000);
-      
-          function countdown() {
-            if (timeLeft == -1) {
-              clearTimeout(timerId);
-              elem.style.display = 'none';
-              // doSomething();
-              elem_time.style.display = 'inline';
-              // ("#timer_on").hide();
-            } else {
-              elem.innerHTML = '(' + timeLeft + ')';
-              --timeLeft;
-              elem_time.style.display = 'none';
-            }
-        }
-        }else{
-            $('#login_wrap').hide(); 
-           $('#sign_up').show();
-        }
-        console.log(response.phone);
-      },
-      error: function(response) {
-        $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
-      },
-      });
+
+    if(flag == 'true'){
+        $.ajax({
+            url: "{{route('seeking-owner-register')}}",
+            type:"POST",
+            data:{
+                "_token": "{{ csrf_token() }}",
+                mobile:mobile,
+                name:name,
+                email:email,
+                countryCode:countryCode,
+            },
+            success:function(response){
+                console.log(response);
+                if(response.success){
+
+                        $('#login_wrap').show();
+                        $('#sign_up').hide();
+
+                        $('#user_phone').val(response.phone)
+                        $('#user_name').val(response.name)
+                        $('#user_email').val(response.email)
+                        $('#user_country_code').val(response.countryCode)
+
+                        // document.getElementById("sending_phn").innerHTML = response.phone;
+                        var timeLeft = 60;
+                        var elem = document.getElementById('Timer');
+                        var elem_time = document.getElementById('Timer_out');
+
+                        var timerId = setInterval(countdown, 1000);
+
+                        function countdown() {
+                                if (timeLeft == -1) {
+                                clearTimeout(timerId);
+                                elem.style.display = 'none';
+                                // doSomething();
+                                elem_time.style.display = 'inline';
+                                // ("#timer_on").hide();
+                                } else {
+                                elem.innerHTML = '(' + timeLeft + ')';
+                                --timeLeft;
+                                elem_time.style.display = 'none';
+                                }
+                            }
+                }else{
+                    $('#error-msg').text(response.message);
+
+                    $('#login_wrap').hide();
+                    $('#sign_up').show();
+                }
+
+            },
+            error: function(response) {
+                $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
+            },
+        });
+    }
+
+
+
+
     });
-  </script>
-  <script type="text/javascript">
-    
+
+</script>
+<script type="text/javascript">
+
     $('#resend_phone_form').on('submit',function(e){
         e.preventDefault();
         let mobile = $('#user_phone').val();
         let email = $('#email_otp').val();
         let countryCode = $('#countryCode').val();
-    
+
         var fname = document.reg_form.fname;
-        
+
         $.ajax({
           url: "{{route('seeking-resend-otp')}}",
           type:"POST",
@@ -604,11 +600,11 @@ $('#phone_form').on('submit',function(e){
             // $('#successMsg').show();
             console.log(response.phone);
             if(response.phone !=null){
-               $('#login_wrap').show(); 
-               $('#sign_up').hide(); 
-               $('#time_count').show(); 
-               $('#Timer_w').show(); 
-                
+               $('#login_wrap').show();
+               $('#sign_up').hide();
+               $('#time_count').show();
+               $('#Timer_w').show();
+
                $('#timer_next').hide();
                $('#user_phone').val(response.phone)
                $('#user_phone1').val(response.phone)
@@ -617,9 +613,9 @@ $('#phone_form').on('submit',function(e){
                 // alert(timeLeft);
                 var elem = document.getElementById('Timer_w');
                 var elem_time = document.getElementById('Timer_out');
-            
+
                 var timerId = setInterval(countdown, 1000);
-            
+
                 function countdown() {
                     if (timeLeft == -1) {
                     clearTimeout(timerId);
@@ -631,16 +627,16 @@ $('#phone_form').on('submit',function(e){
                     elem.innerHTML = '(' + timeLeft + ')';
                     --timeLeft;
                     elem_time.style.display = 'none';
-                    
+
                     }
                 }
                 console.log(response.phone_count)
                 if(response.phone_count>4){
-                    $('#show_today').hide(); 
+                    $('#show_today').hide();
                         $('#req_next_day').show();
                 }
             }else{
-                $('#login_wrap').hide(); 
+                $('#login_wrap').hide();
                $('#sign_up').show();
             }
             console.log(response.phone);
@@ -649,74 +645,87 @@ $('#phone_form').on('submit',function(e){
             $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
           },
           });
-        });  
-        
+    });
 
-        $(document).on('keyup', '#phone_number', function() {
-        
+
+    $(document).on('input', '#phone_number', function() {
             let phone_number = $(this).val();
             var countryCode = iti.getSelectedCountryData().iso2;
-            if (countryCode !== 'bd') {
+            if (countryCode == 'bd') {
+                let phone_len = phone_number.length;
+                if(phone_len == 11){
+                    $('#mobileErrorMsg').text('');
+                    $.ajax({
+                    type: 'GET',
+                    url: "{{route('get-user-phone')}}",
+                    data: {
+                        'phone_number': phone_number
+                    },
+                    success: function (response) {
+                            if(response.user_phone){
+                                $('#two_field').hide();
+                                $('#staticName').val(response.user_name);
+                                numberSavedInDatabase = true;
+                            }else{
+                                $('#two_field').show();
+                                numberSavedInDatabase = false;
+                            }
+
+                        }
+                    });
+                }else{
+                    //Invalid number
+                    let invalid = 'Invalid number';
+                    if(phone_len > 0){
+                        $('#mobileErrorMsg').text(invalid);
+                    }
+                }
+
+            }else{
                 $('#two_field').show();
             }
-            
-            $.ajax({
-            type: 'GET',
-            url: "{{route('get-user-phone')}}",
-            data: {
-                'phone_number': phone_number
-            },
-            
-            success: function (response) {
-                if(response.user_phone && countryCode == 'bd'){
-                    $('#two_field').hide(); 
-                    numberSavedInDatabase = true;
-                }else{
-                    $('#two_field').show(); 
-                    numberSavedInDatabase = false;
-                }
-            }
-        });
     });
-        $("#contact_us").on("submit",function(e){
-            if (!$(this).hasClass('valid')) {
-                e.preventDefault();
+
+
+    $("#contact_us").on("submit",function(e){
+        if (!$(this).hasClass('valid')) {
+            e.preventDefault();
+        }
+    })
+
+    $(document).on('keyup', '#otp_num', function() {
+        let otp_num = $(this).val();
+        let user_phone = $('#user_phone').val();
+        // alert(user_phone);
+        $.ajax({
+        type: 'GET',
+        url: "{{route('check-otp-before-submit')}}",
+        data: {
+            'otp_num': otp_num,
+            'user_phone': user_phone
+        },
+        success: function (response) {
+            if(response.user_verify){
+                // $('#right_otp').show();
+                // $('#wrong_otp').hide();
+                $('#contact_us').addClass('valid');
+                document.getElementById("otp_verify_user").innerHTML = '<span style="color:green">Valid OTP</span>';
+            }else{
+                // $('#right_otp').hide();
+                // $('#wrong_otp').show();
+                document.getElementById("otp_verify_user").innerHTML = 'Invalid OTP ! Enter Only 4 digit Otp Number';
             }
-        })
-        $(document).on('keyup', '#otp_num', function() {
-        
-            let otp_num = $(this).val();
-            let user_phone = $('#user_phone').val();
-            // alert(user_phone);
-            $.ajax({
-            type: 'GET',
-            url: "{{route('check-otp-before-submit')}}",
-            data: {
-                'otp_num': otp_num,
-                'user_phone': user_phone
-            },
-            success: function (response) {
-                if(response.user_verify){
-                    // $('#right_otp').show(); 
-                    // $('#wrong_otp').hide(); 
-                    $('#contact_us').addClass('valid');
-                    document.getElementById("otp_verify_user").innerHTML = '<span style="color:green">Valid OTP</span>';
-                }else{
-                    // $('#right_otp').hide(); 
-                    // $('#wrong_otp').show(); 
-                    document.getElementById("otp_verify_user").innerHTML = 'Invalid OTP ! Enter Only 4 digit Otp Number';
-                }
-                console.log(response.user_verify)
-                
-            },
-            error: function(response) {
-                
-            }
-        });
+            console.log(response.user_verify)
 
-    
-        });
+        },
+        error: function(response) {
+
+        }
+    });
 
 
-      </script>
+    });
+
+
+</script>
 

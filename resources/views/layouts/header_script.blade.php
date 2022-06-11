@@ -57,5 +57,9 @@
   <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
   <meta name="theme-color" content="#fafafa">
   <input type="hidden" name="base_url" id="base_url" value="{{url('/')}}">
+  <style type="text/css">
+    #mobileErrorMsg{display: inline-block !important;}
+
+    </style>
   @stack('custom_css')
 </head>

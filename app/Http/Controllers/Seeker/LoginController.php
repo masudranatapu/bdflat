@@ -144,8 +144,8 @@ class LoginController extends Controller
             $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
         }else{
             Mail::send('auth.email',$messageData, function($message) use($email)
-            {    
-                $message->to($email)->subject('Login Otp Code.'); 
+            {
+                $message->to($email)->subject('Login Otp Code.');
             });
         }
         //daily d times er besi send kora jabe na. $check && count($check)
@@ -153,7 +153,7 @@ class LoginController extends Controller
             return redirect()->back()->withDanger(__('Today you has Block, Please try again nextday.'));
         }
          else {
-        
+
           $user_id = $user->PK_NO;
           DB::table('OTP_VARIFICATION')->insert([
               'MOBILE' => $phone,
@@ -316,11 +316,11 @@ class LoginController extends Controller
             $user->EMAIL        = $phone;
             $user->MOBILE_NO    = $phone;
             $user->PASSWORD     = Hash::make($phone);
-            $user->save();
+            // $user->save();
         }
 
-        // $user->OTP = $otp;
-        $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+
+        // $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
 
         // $user_id = Session::getId();
         $user_id = $user->PK_NO;
@@ -357,18 +357,28 @@ class LoginController extends Controller
     }
     public function seeker_register_submit_ajax(Request $request){
         $data = $request->validate([
-            'mobile' => 'required',
-            // 'name' => 'nullable|string|min:2|max:30',
+            'mobile'    => 'required',
+            'name'      => 'required|string|min:1|max:30',
         ]);
-
         $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
-        $name = $request->get('mobile');
-        $phone = $request->get('mobile');
-        $user = User::where('MOBILE_NO',$phone)->first();
+        $name   = $request->get('name');
+        $phone  = $request->get('mobile');
+        $user   = User::where('MOBILE_NO',$phone)->first();
+        $otp    = rand(1000, 9999);
+        $res['success'] = false;
+        $res['message'] = 'Something wrong';
+        $res['phone'] = $phone;
+        $res['email'] = $request->email;
+        $res['countryCode'] = $request->countryCode;
 
 
-        $otp = rand(1000, 9999);
-        
+        $messageData = [
+            'message'   => 'Thank you for being with bdflats.com. Activation Code',
+            'otp'       => $otp
+
+        ];
+        $text = 'Thank you for being with bdflats.com. Activation Code: '.$otp;
+
         if(empty($user)){
             $user = new User();
             $user->USER_TYPE    = 1;
@@ -376,71 +386,80 @@ class LoginController extends Controller
             $user->EMAIL        = $request->email;
             $user->MOBILE_NO    = $phone;
             $user->PASSWORD     = Hash::make($phone);
-            $user->save();
+            // $user->save();
         }
 
-        // $user->OTP = $otp;
-        $email = $request->email;
-        $messageData = [
-            'message' => 'Thank you for being with bdflats.com. Activation Code',
-            'otp' =>$otp
+        $email      = $request->email;
+        $user_id    = $user->PK_NO;
 
-        ];
-        if($request->countryCode =='bd'){
-            $this->sendSmsMetrotel('Thank you for being with bdflats.com. Activation Code: '.$otp,$phone);
+        $check_otp = DB::table('OTP_VARIFICATION')->whereDate('OTP_DATE', '=', date('Y-m-d'))->where('MOBILE',$phone)->first();
+        if($check_otp){
+            if($check_otp->OTP_COUNT > 5){
+                $res['success'] = false;
+                $res['message'] = 'Please try another day or contact with admin';
+            }else{
+                $otp_count = $check_otp->OTP_COUNT+1;
+                DB::table('OTP_VARIFICATION')->whereDate('OTP_DATE', '=', date('Y-m-d'))
+                ->where('MOBILE',$phone)
+                ->update([ 'OTP' => $otp,'EXPIRE_TIME' => $expire_time, 'CREATED_AT' => now(), 'OTP_COUNT' =>$otp_count]);
+
+                if($request->countryCode =='bd'){
+                    // $this->sendSmsMetrotel($text,$phone);
+                }else{
+                    // Mail::send('auth.email',$messageData, function($message) use($email)
+                    // {
+                    //     $message->to($email)->subject('Login Otp Code.');
+                    // });
+                }
+                $res['success'] = true;
+                $res['message'] = 'Otp sended successfully';
+            }
         }else{
-            Mail::send('auth.email',$messageData, function($message) use($email)
-            {    
-                $message->to($email)->subject('Login Otp Code.'); 
-            });
-        }
-            
+            DB::table('OTP_VARIFICATION')->insert([
+                'MOBILE'        => $phone,
+                'USER_ID'       => $user_id,
+                'OTP_DATE'      => date('Y-m-d'),
+                'OTP'           => $otp,
+                'STATUS'        => 0,
+                'EXPIRE_TIME'   => $expire_time,
+                'CREATED_AT'    => now(),
+                'CREATED_BY'    => 1,
+                'OTP_COUNT'     => 1,
+                'UPDATED_AT'    => null,
+                'UPDATED_BY'    => null,
+            ]);
 
-        // $user_id = Session::getId();
-        $user_id = $user->PK_NO;
-
-        DB::table('OTP_VARIFICATION')->insert([
-            'MOBILE' => $phone,
-            'USER_ID' => $user_id,
-            'OTP_DATE' => date('Y-m-d'),
-            'OTP' => $otp,
-            'STATUS' => 0,
-            'EXPIRE_TIME' => $expire_time,
-            'CREATED_AT' => now(),
-            'CREATED_BY' => 1,
-            'UPDATED_AT' => null,
-            'UPDATED_BY' => null,
-        ]);
-        $response = true;
-        $res = [];
-        // $response = $this->sendSMS($phone, $otp);
-        if ($response) {
+            if($request->countryCode =='bd'){
+                // $this->sendSmsMetrotel($text,$phone);
+            }else{
+                // Mail::send('auth.email',$messageData, function($message) use($email)
+                // {
+                //     $message->to($email)->subject('Login Otp Code.');
+                // });
+            }
             $res['success'] = true;
-            $res['MOBILE_NO'] = $phone;
+            $res['message'] = 'Otp sended successfully';
 
-        } else {
-            $res['success'] = false;
-            $res['MOBILE_NO'] = $phone;
         }
-        $res = json_encode($res);
-        return response()->json([
-            'phone'=> $phone,
-            'email'=> $email,
-            'countryCode'=> $request->countryCode,
-        ]);
 
-
-        // return redirect('/seeker_reg?response='.$res);
+        return response()->json($res);
     }
+
+
+
     public function get_user_phone(Request $request){
         $user = User::where('MOBILE_NO',$request->phone_number)->first();
         if(!empty($user->MOBILE_NO)){
             $user_phone = $user->MOBILE_NO;
+            $user_name = $user->NAME;
+            $user_email = $user->EMAIL;
         }else{
-            $user_phone = null;
+            $user_phone = $user_name = $user_email = null;
         }
         return response()->json([
-            'user_phone'=>$user_phone
+            'user_phone'=>$user_phone,
+            'user_name'=>$user_name,
+            'user_email'=>$user_email
         ]);
     }
     public function check_otp_before_submit(Request $request){
