@@ -368,17 +368,15 @@ class LoginController extends Controller
         $res['success'] = false;
         $res['message'] = 'Something wrong';
         $res['phone'] = $phone;
+        $res['name'] = $name;
         $res['email'] = $request->email;
         $res['countryCode'] = $request->countryCode;
-
-
         $messageData = [
             'message'   => 'Thank you for being with bdflats.com. Activation Code',
             'otp'       => $otp
 
         ];
         $text = 'Thank you for being with bdflats.com. Activation Code: '.$otp;
-
         if(empty($user)){
             $user = new User();
             $user->USER_TYPE    = 1;
@@ -391,7 +389,6 @@ class LoginController extends Controller
 
         $email      = $request->email;
         $user_id    = $user->PK_NO;
-
         $check_otp = DB::table('OTP_VARIFICATION')->whereDate('OTP_DATE', '=', date('Y-m-d'))->where('MOBILE',$phone)->first();
         if($check_otp){
             if($check_otp->OTP_COUNT > 5){
@@ -439,7 +436,6 @@ class LoginController extends Controller
             }
             $res['success'] = true;
             $res['message'] = 'Otp sended successfully';
-
         }
 
         return response()->json($res);

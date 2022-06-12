@@ -54,7 +54,7 @@ Route::get('check-otp-before-submit', 'Seeker\LoginController@check_otp_before_s
 // Route::post('regOtp', 'Seeker\LoginController@regOtp')->name('regOtp');
 Route::post('send_Otp','Seeker\LoginController@send_OTP')->name('send_otp');
 Route::post('seeking-resend-otp','Seeker\LoginController@seeking_resend_otp')->name('seeking-resend-otp');
-Route::post('verify-otp', 'Seeker\LoginController@verifyOTP')->name('verify-otp');
+// Route::post('verify-otp', 'Seeker\LoginController@verifyOTP')->name('verify-otp');
 Route::post('loginWithOtp', 'Seeker\LoginController@loginWithOtp')->name('loginWithOtp');
 // Route::post('sendOtp', 'UserController@sendOtp');
 

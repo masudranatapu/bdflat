@@ -335,25 +335,25 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
             <div class="modal-body">
                 <div class="login-wrap text-center" id="login_wrap" style="display: none">
                   <div class="pt-3 pb-3">
-                    <p>We've sent a 4-digit one time PIN in your phone</p>
+                    <p>We've sent a 4-digit OTP in <span id="otp_sended_mobile"></span></p>
                     <span id="sending_phn"></span>
                   </div>
-                  <form class="" id="contact_us" name="reg_form" action="{{ route('verify-otp') }}" method="post">
+                  <form class="" id="contact_us" name="reg_form" action="{{ route('seeking-owner-register') }}" method="post">
                     @csrf
-                    <input type="hidden" id="user_phone" name="MOBILE_NO">
-                    <input type="hidden" id="user_name" name="NAME">
-                    <input type="hidden" id="user_email" name="EMAIL">
-                    <input type="hidden" id="user_country_code" name="COUNTRY_CODE">
+                    <input type="hidden" id="user_phone" name="mobile_no">
+                    <input type="hidden" id="user_name" name="name">
+                    <input type="hidden" id="user_email" name="email">
+                    <input type="hidden" id="user_country_code" name="country_code">
                     <div class="form-group">
-                        <input class="form-control" id="otp_num" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}" required>
-                        <span id="otp_verify_user" style="color: red"></span>
+                        <input class="form-control" id="otp_num" type="text" name="otp" placeholder="Please enter 4-digit one time pin" value="{{ old('otp') }}" >
+                        <span id="otpErrorMsg" style="color: red"></span>
                     </div>
-                    <button type="submit" class="btn btn-danger text-center" id="right_otp" style="position: relative; margin-left: -198px; padding: 6px 37px;">ENTER</button>
+                    <button type="submit" class="btn btn-danger text-center" id="right_otp" style="position: relative; margin-left: -198px; padding: 6px 37px;" name="submit" value="varification_pin" >ENTER</button>
 
                     <div id="show_today">
-                        <button href="#" id="time_count" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px; display:none" disabled> Please Wait <span id="Timer_w"></span> </button>
-                        <button href="#" id="timer_next" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled> Please Wait <span id="Timer"></span> </button>
-                        <button id="Timer_out" type="submit" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -199px;">REQUEST PIN AGAIN <span ></span> </button>
+                        <button id="time_count" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px; display:none" disabled> Please Wait <span id="Timer_w"></span> </button>
+                        <button id="timer_next" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled> Please Wait <span id="Timer"></span> </button>
+                        <button id="Timer_out" type="submit" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -199px;" name="submit" value="request_pin">REQUEST PIN AGAIN <span ></span> </button>
                     </div>
 
                   </form>
@@ -408,7 +408,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                                 <label for="staticEmail" class="col-md-2 col-form-label">Email</label>
                                 <div class="col-md-10">
                                   <input type="email" class="form-control" id="staticEmail" name="email" style="width: 255px" placeholder="Enter your email (optional)">
-                                  <span id="emailErrorMsg"></span>
+                                  <span class="text-danger" id="emailErrorMsg"></span>
                                 </div>
                               </div>
                         </div>
@@ -508,10 +508,18 @@ $('#phone_form').on('submit',function(e){
     email = $("#staticEmail").val();
     var countryCode = iti.getSelectedCountryData().iso2;
     console.log(countryCode);
-    if(mobile == ''){flag='false'; $('#mobileErrorMsg').text('Mobile number is required'); }
-    if(name == ''){flag='false'; $('#nameErrorMsg').text('Name is required'); }
+    if(mobile == ''){flag='false'; $('#mobileErrorMsg').text('Mobile number is required').fadeOut(4000); }
+    if(name == ''){flag='false'; $('#nameErrorMsg').text('Name is required').fadeOut(4000); }
     if (countryCode !== 'bd') {
-        flag='false'; $('#emailErrorMsg').text('Email is required');
+        if(email == ''){flag='false'; $('#emailErrorMsg').text('Email is required').fadeOut(4000); }
+    }
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(email != ''){
+        if(!regex.test(email)) {
+            flag='false';
+            $('#emailErrorMsg').text('Email is not valid');
+            $('#emailErrorMsg').fadeOut(4000);
+          }
     }
 
     if(flag == 'true'){
@@ -528,10 +536,10 @@ $('#phone_form').on('submit',function(e){
             success:function(response){
                 console.log(response);
                 if(response.success){
-
                         $('#login_wrap').show();
                         $('#sign_up').hide();
 
+                        $('#otp_sended_mobile').text(response.phone)
                         $('#user_phone').val(response.phone)
                         $('#user_name').val(response.name)
                         $('#user_email').val(response.email)
@@ -577,74 +585,140 @@ $('#phone_form').on('submit',function(e){
     });
 
 </script>
+
 <script type="text/javascript">
 
-    $('#resend_phone_form').on('submit',function(e){
+    $('#contact_us').on('submit',function(e){
         e.preventDefault();
-        let mobile = $('#user_phone').val();
-        let email = $('#email_otp').val();
-        let countryCode = $('#countryCode').val();
+        let submitter_btn = $(e.originalEvent.submitter);
+        let submit_type = submitter_btn.attr("value");
+        var flag = 'true';
 
-        var fname = document.reg_form.fname;
+        let mobile  = $('#user_phone').val();
+        let name    = $('#user_name').val();
+        let email   = $('#user_email').val();
+        let otp_num   = $('#otp_num').val();
+        let countryCode = $('#user_country_code').val();
 
-        $.ajax({
-          url: "{{route('seeking-resend-otp')}}",
-          type:"POST",
-          data:{
-            "_token": "{{ csrf_token() }}",
-            mobile:mobile,
-            email:email,
-            countryCode:countryCode,
-          },
-          success:function(response){
-            // $('#successMsg').show();
-            console.log(response.phone);
-            if(response.phone !=null){
-               $('#login_wrap').show();
-               $('#sign_up').hide();
-               $('#time_count').show();
-               $('#Timer_w').show();
-
-               $('#timer_next').hide();
-               $('#user_phone').val(response.phone)
-               $('#user_phone1').val(response.phone)
-               document.getElementById("sending_phn").innerHTML = response.phone;
-                var timeLeft = 60;
-                // alert(timeLeft);
-                var elem = document.getElementById('Timer_w');
-                var elem_time = document.getElementById('Timer_out');
-
-                var timerId = setInterval(countdown, 1000);
-
-                function countdown() {
-                    if (timeLeft == -1) {
-                    clearTimeout(timerId);
-                    elem.style.display = 'none';
-                    // doSomething();
-                    elem_time.style.display = 'inline';
-                    // ("#timer_on").hide();
-                    } else {
-                    elem.innerHTML = '(' + timeLeft + ')';
-                    --timeLeft;
-                    elem_time.style.display = 'none';
-
-                    }
-                }
-                console.log(response.phone_count)
-                if(response.phone_count>4){
-                    $('#show_today').hide();
-                        $('#req_next_day').show();
-                }
-            }else{
-                $('#login_wrap').hide();
-               $('#sign_up').show();
+        if(submit_type == 'varification_pin'){
+            if(otp_num.length != 4){
+                flag = 'false';
+                $('#otpErrorMsg').text('OTP is 4 character');
             }
-            console.log(response.phone);
-          },
-          error: function(response) {
-            $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
-          },
-          });
+        }
+
+/*
+        $.ajax({
+            url: "{{route('seeking-owner-register')}}",
+            type:"POST",
+            data:{
+                "_token": "{{ csrf_token() }}",
+                mobile:mobile,
+                name:name,
+                email:email,
+                countryCode:countryCode,
+            },
+            success:function(response){
+                console.log(response.phone);
+                if(response.phone !=null){
+                    $('#login_wrap').show();
+                    $('#sign_up').hide();
+                    $('#time_count').show();
+                    $('#Timer_w').show();
+
+                    $('#timer_next').hide();
+                    $('#user_phone').val(response.phone);
+                    $('#user_phone1').val(response.phone);
+                    document.getElementById("sending_phn").innerHTML = response.phone;
+                    var timeLeft = 60;
+                    var elem = document.getElementById('Timer_w');
+                    var elem_time = document.getElementById('Timer_out');
+                    var timerId = setInterval(countdown, 1000);
+                    function countdown() {
+                        if (timeLeft == -1) {
+                        clearTimeout(timerId);
+                        elem.style.display = 'none';
+                        elem_time.style.display = 'inline';
+                        } else {
+                        elem.innerHTML = '(' + timeLeft + ')';
+                        --timeLeft;
+                        elem_time.style.display = 'none';
+                        }
+                    }
+                    if(response.phone_count>4){
+                        $('#show_today').hide();
+                        $('#req_next_day').show();
+                    }
+                }else{
+                    $('#login_wrap').hide();
+                    $('#sign_up').show();
+                }
+            },
+            error: function(response) {
+                $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
+            },
+        });
+        */
+
+        if(flag == 'true'){
+            $.ajax({
+                url: "{{route('seeking-owner-register')}}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    otp_num: otp_num,
+                    mobile: mobile,
+                    name: name,
+                    email: email,
+                    countryCode: countryCode,
+                    submit_type: submit_type,
+                },
+                success: function(response) {
+                    if(response.success){
+                            $('#login_wrap').show();
+                            $('#sign_up').hide();
+
+                            $('#otp_sended_mobile').text(response.phone)
+                            $('#user_phone').val(response.phone)
+                            $('#user_name').val(response.name)
+                            $('#user_email').val(response.email)
+                            $('#user_country_code').val(response.countryCode)
+
+                            // document.getElementById("sending_phn").innerHTML = response.phone;
+                            var timeLeft = 60;
+                            var elem = document.getElementById('Timer');
+                            var elem_time = document.getElementById('Timer_out');
+
+                            var timerId = setInterval(countdown, 1000);
+
+                            function countdown() {
+                                    if (timeLeft == -1) {
+                                    clearTimeout(timerId);
+                                    elem.style.display = 'none';
+                                    // doSomething();
+                                    elem_time.style.display = 'inline';
+                                    // ("#timer_on").hide();
+                                    } else {
+                                    elem.innerHTML = '(' + timeLeft + ')';
+                                    --timeLeft;
+                                    elem_time.style.display = 'none';
+                                    }
+                                }
+                    }else{
+                        $('#error-msg').text(response.message);
+
+                        $('#login_wrap').hide();
+                        $('#sign_up').show();
+                    }
+
+
+                },
+                error: function(response) {
+                    $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
+                },
+            });
+        }
+
     });
 
 
@@ -668,6 +742,8 @@ $('#phone_form').on('submit',function(e){
                                 numberSavedInDatabase = true;
                             }else{
                                 $('#two_field').show();
+                                $('#staticName').val('');
+                                $('#staticEmail').val('');
                                 numberSavedInDatabase = false;
                             }
 
@@ -687,11 +763,7 @@ $('#phone_form').on('submit',function(e){
     });
 
 
-    $("#contact_us").on("submit",function(e){
-        if (!$(this).hasClass('valid')) {
-            e.preventDefault();
-        }
-    })
+
 
     $(document).on('keyup', '#otp_num', function() {
         let otp_num = $(this).val();
@@ -709,11 +781,11 @@ $('#phone_form').on('submit',function(e){
                 // $('#right_otp').show();
                 // $('#wrong_otp').hide();
                 $('#contact_us').addClass('valid');
-                document.getElementById("otp_verify_user").innerHTML = '<span style="color:green">Valid OTP</span>';
+                document.getElementById("otpErrorMsg").innerHTML = '<span style="color:green">Valid OTP</span>';
             }else{
                 // $('#right_otp').hide();
                 // $('#wrong_otp').show();
-                document.getElementById("otp_verify_user").innerHTML = 'Invalid OTP ! Enter Only 4 digit Otp Number';
+                document.getElementById("otpErrorMsg").innerHTML = 'Invalid OTP ! Enter Only 4 digit Otp Number';
             }
             console.log(response.user_verify)
 
