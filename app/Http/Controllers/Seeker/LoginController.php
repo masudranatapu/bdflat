@@ -257,15 +257,34 @@ class LoginController extends Controller
 
     public function loginWithOtp(Request $request){
         Log::info($request);
-        $user  = User::where([['MOBILE_NO','=',request('mobile')],['OTP','=',request('otp')]])->first();
-        if( $user){
-            Auth::login($user, true);
-            User::where('MOBILE_NO','=',$request->mobile)->update(['OTP' => null]);
-            // return view('home');
+        $mobile         = $request->mobile;
+        $otp_num        = $request->otp_num;
+        $name           = $request->name;
+        $email          = $request->email;
+        $countryCode    = $request->countryCode;
+        $c_time = date('Y-m-d H:i:s');
+
+        $check = DB::table('OTP_VARIFICATION')
+        ->where('MOBILE',$mobile)
+        ->where('OTP',$otp_num)
+        ->where('STATUS',0)
+        ->where('EXPIRE_TIME', '>',$c_time)
+        ->first();
+        if($check){
+            $user = User::where('MOBILE_NO',$mobile)->first();
+            if($user){
+
+                Auth::login($user, true);
+                DB::table('OTP_VARIFICATION')->where('MOBILE',$mobile)->where('STATUS',0)->update(['STATUS' => 1]);
+                $res['status'] = true;
+                $res['message'] = 'Welcome to BDflats.com';
+            }
+        }else{
+            $res['status'] = false;
+            $res['message'] = 'Please try again';
         }
-        else{
-            return Redirect::back ();
-        }
+        return response()->json($res);
+
     }
 
 // not working
@@ -355,7 +374,7 @@ class LoginController extends Controller
 
 
     }
-    public function seeker_register_submit_ajax(Request $request){
+    public function seeker_reg_ajax(Request $request){
         $data = $request->validate([
             'mobile'    => 'required',
             'name'      => 'required|string|min:1|max:30',
@@ -384,12 +403,16 @@ class LoginController extends Controller
             $user->EMAIL        = $request->email;
             $user->MOBILE_NO    = $phone;
             $user->PASSWORD     = Hash::make($phone);
-            // $user->save();
+            $user->save();
         }
 
         $email      = $request->email;
         $user_id    = $user->PK_NO;
-        $check_otp = DB::table('OTP_VARIFICATION')->whereDate('OTP_DATE', '=', date('Y-m-d'))->where('MOBILE',$phone)->first();
+        $check_otp = DB::table('OTP_VARIFICATION')
+        ->whereDate('OTP_DATE', '=', date('Y-m-d'))
+        ->where('MOBILE',$phone)
+        ->first();
+
         if($check_otp){
             if($check_otp->OTP_COUNT > 5){
                 $res['success'] = false;
@@ -398,15 +421,15 @@ class LoginController extends Controller
                 $otp_count = $check_otp->OTP_COUNT+1;
                 DB::table('OTP_VARIFICATION')->whereDate('OTP_DATE', '=', date('Y-m-d'))
                 ->where('MOBILE',$phone)
-                ->update([ 'OTP' => $otp,'EXPIRE_TIME' => $expire_time, 'CREATED_AT' => now(), 'OTP_COUNT' =>$otp_count]);
+                ->update([ 'OTP' => $otp,'EXPIRE_TIME' => $expire_time, 'CREATED_AT' => now(), 'OTP_COUNT' =>$otp_count, 'STATUS' => 0]);
 
                 if($request->countryCode =='bd'){
-                    // $this->sendSmsMetrotel($text,$phone);
+                    $this->sendSmsMetrotel($text,$phone);
                 }else{
-                    // Mail::send('auth.email',$messageData, function($message) use($email)
-                    // {
-                    //     $message->to($email)->subject('Login Otp Code.');
-                    // });
+                    Mail::send('auth.email',$messageData, function($message) use($email)
+                    {
+                        $message->to($email)->subject('Login Otp Code.');
+                    });
                 }
                 $res['success'] = true;
                 $res['message'] = 'Otp sended successfully';
@@ -427,12 +450,12 @@ class LoginController extends Controller
             ]);
 
             if($request->countryCode =='bd'){
-                // $this->sendSmsMetrotel($text,$phone);
+                $this->sendSmsMetrotel($text,$phone);
             }else{
-                // Mail::send('auth.email',$messageData, function($message) use($email)
-                // {
-                //     $message->to($email)->subject('Login Otp Code.');
-                // });
+                Mail::send('auth.email',$messageData, function($message) use($email)
+                {
+                    $message->to($email)->subject('Login Otp Code.');
+                });
             }
             $res['success'] = true;
             $res['message'] = 'Otp sended successfully';
