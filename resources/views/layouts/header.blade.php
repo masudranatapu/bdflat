@@ -562,7 +562,7 @@ $('#phone_form').on('submit',function(e){
                         var elem = document.getElementById('Timer');
                         var elem_time = document.getElementById('Timer_out');
                         var timerId = setInterval(countdown, 1000);
-                        
+
                         function countdown() {
                                 if (timeLeft == -1) {
                                 clearTimeout(timerId);
@@ -585,7 +585,7 @@ $('#phone_form').on('submit',function(e){
 
             },
             error: function(response) {
-                $('#mobileErrorMsg').text(response.responseJSON.errors.mobile);
+                $('#mobileErrorMsg').text('Something wrong');
             },
         });
     }
