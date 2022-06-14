@@ -298,6 +298,7 @@
                     }
                 });
             });
+            /*
             $('#verify_button').click(function (e) {
                 e.preventDefault();
                 $('#recipient_phone').hide();
@@ -338,6 +339,7 @@
                     }
                 });
             });
+            */
         });
     </script>
     <script>

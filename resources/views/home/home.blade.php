@@ -32,7 +32,7 @@
         <!-- container -->
         <div class="container text-center">
             <div class="banner-article">
-                <h2>Welcome to bdflats</h2>
+                <h2>Welcome to bdflats {{ $panel_path }}</h2>
                 <h5>No.1 Property Maarketplace</h5>
             </div>
         </div>
