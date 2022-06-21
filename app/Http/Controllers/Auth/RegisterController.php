@@ -132,10 +132,10 @@ class RegisterController extends Controller
 
     }
 
-    public function seeker_register()
-    {
-        return view('auth.seeker_reg');
-    }
+    // public function seeker_register()
+    // {
+    //     return view('auth.seeker_reg');
+    // }
 
 
 }

@@ -13,6 +13,7 @@
                         @if(request()->query->get('as') == "owner")
                             {!! Form::open([ 'route' => 'login', 'method' => 'post', 'class' => 'form-horizontal mt-5', 'files' => true , 'novalidate', 'autocomplete' => 'off']) !!}
                             @csrf
+                            <input type="hidden" value="{{ request()->get('referrer') }}" name="referrer" />
                             <div class="row">
                                 <div
                                     class="col-12 form-group text-left login-email {!! $errors->has('email') ? 'error' : '' !!}">

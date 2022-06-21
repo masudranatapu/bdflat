@@ -18,6 +18,7 @@ if (request()->segment(2) == 'roommate') {
 $response  = request()->get('response');
 $response  = json_decode($response);
 $MOBILE_NO = $response->MOBILE_NO ?? '';
+$post_ad_url = 'post_your_add';
 
 ?>
 
@@ -267,7 +268,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <!-- <a class="dropdown-item" href="{{ route('login', ['as' => 'seeker']) }}">As Seeker</a> -->
                                 <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">As Seeker</a>
-                                <a class="dropdown-item" href="{{ route('login', ['as' => 'owner']) }}">As Owner</a>
+                                <a class="dropdown-item" href="{{ route('login', ['as' => 'owner', 'referrer' => $post_ad_url ]) }}">As Owner</a>
                             </div>
                         @else
                             <a class="nav-link" href="{{route('my-account') }}">My Account</a>
@@ -284,7 +285,9 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                     </li>
                 </ul>
             </div>
-        </nav><!-- nav -->
+        </nav>
+        <!-- nav -->
+
         @if(Auth::user())
         @if(Auth::user()->USER_TYPE != 1)
         <!-- post add -->
@@ -295,7 +298,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
             @if(Auth::user())
             <a href="{{route('listings.create') }}">Post Your Ad</a>
             @else
-            <a href="{{ route('login', ['as' => 'owner']) }}">Post Your Ad</a>
+            <a href="{{ route('login', ['as' => 'owner', 'referrer' => $post_ad_url ]) }}">Post Your Ad</a>
             @endif
         </div>
         <!-- Modal -->
@@ -318,7 +321,7 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
             @if(Auth::user())
             <a href="{{route('listings.create') }}">Post Your Ad</a>
             @else
-            <a href="{{ route('login', ['as' => 'owner']) }}">Post Your Ad</a>
+            <a href="{{ route('login', ['as' => 'owner', 'referrer' => $post_ad_url ]) }}">Post Your Ad</a>
             @endif
         </div>
         <!-- Modal -->

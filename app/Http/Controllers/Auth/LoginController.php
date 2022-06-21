@@ -31,9 +31,12 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
+        if($request->referrer){
+            return redirect()->route('listings.create');
+        }else{
+            return $this->authenticated($request, $this->guard()->user()) ?: redirect()->back();
+        }
 
-        return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->back();
     }
 
     protected $redirectTo = '/';
