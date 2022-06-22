@@ -259,6 +259,15 @@ class CommonController extends Controller
         DB::commit();
         return redirect()->route('my-account');
     }
+
+
+    public function account_verification(Request $request)
+    {
+        return view('auth.account_verification');
+    }
+
+
+
 }
 
 

@@ -46,6 +46,7 @@ Route::get('privacy-policy', 'CommonController@getPrivacyPolicy')->name('privacy
 Route::get('post-requirement', 'CommonController@getPostRequirement')->name('post-requirement');
 Route::post('store-requirement', 'CommonController@storePostRequirement')->name('store-requirement');
 
+Route::get('account_verification', 'CommonController@account_verification')->name('account_verification');
 // Route::get('seeker_reg', 'Auth\RegisterController@seeker_register')->name('seeker_register');
 // Route::post('seeker_reg', 'Seeker\LoginController@seeker_register_submit')->name('seeker_register_submit');
 Route::post('seeker_reg_ajax', 'Seeker\LoginController@seeker_reg_ajax')->name('seeker_reg_ajax');
@@ -159,8 +160,10 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
     Route::get('ajax-get-area/{id}', 'OwnerController@getArea')->name('getarea');
 });
 
+Route::group([ 'middleware' => ['auth','IsVerified']], function () {
+    Route::get('my-account', 'UserController@getMyAccount')->name('my-account');
+});
 
-Route::get('my-account', 'UserController@getMyAccount')->name('my-account');
 Route::get('profile/edit', 'UserController@getEditProfile')->name('profile.edit');
 Route::post('profile/store_or_update', 'UserController@updateProfile')->name('profile.store_or_update');
 Route::post('profile/password_update', 'UserController@updatePass')->name('profile.password_update');

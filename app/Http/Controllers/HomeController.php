@@ -52,6 +52,7 @@ class HomeController extends Controller
 
     public function index()
     {
+        // dd(setting());
     //    $user_id = Session::getId();
     //    dd($user_id);
 

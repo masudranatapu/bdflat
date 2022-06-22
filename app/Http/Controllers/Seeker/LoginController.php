@@ -62,7 +62,7 @@ class LoginController extends Controller
         return 'MOBILE_NO';
     }
 
-    
+
     public function verifyOTP(Request $request)
     {
 
@@ -117,7 +117,7 @@ class LoginController extends Controller
 
         }
 
-        
+
     }
 
     public function loginWithOtp(Request $request){
@@ -141,6 +141,7 @@ class LoginController extends Controller
 
                 Auth::login($user, true);
                 DB::table('OTP_VARIFICATION')->where('MOBILE',$mobile)->where('STATUS',0)->update(['STATUS' => 1]);
+                User::where('MOBILE_NO',$mobile)->update(['IS_VERIFIED' => 1, 'IS_MOBILE_VERIFIED' => 1]);
                 $res['status'] = true;
                 $res['message'] = 'Welcome to BDflats.com';
             }
@@ -207,7 +208,7 @@ class LoginController extends Controller
                 if($request->countryCode =='bd'){
                     $this->sendSmsMetrotel($text,$phone);
                 }else{
-                    Mail::send('auth.email',$messageData, function($message) use($email)
+                    Mail::send('email.otp_email',$messageData, function($message) use($email)
                     {
                         $message->to($email)->subject('Login Otp Code.');
                     });
@@ -233,7 +234,7 @@ class LoginController extends Controller
             if($request->countryCode =='bd'){
                 $this->sendSmsMetrotel($text,$phone);
             }else{
-                Mail::send('auth.email',$messageData, function($message) use($email)
+                Mail::send('email.otp_email',$messageData, function($message) use($email)
                 {
                     $message->to($email)->subject('Login Otp Code.');
                 });
@@ -262,25 +263,31 @@ class LoginController extends Controller
             'user_email'=>$user_email
         ]);
     }
-   
+
 
     function sendSmsMetrotel($body, $mobile ){
-        $url = "http://portal.metrotel.com.bd/smsapi";
-        $data = [
-          "api_key" => "R20000315d809876d27604.84144217",
-          "type" => "text",
-          "contacts" => $mobile,
-          "senderid" => "8809612440143",
-          "msg" => $body,
-        ];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        return $response;
+        if(setting()->APP_MODE == 'live'){
+            $url = "http://portal.metrotel.com.bd/smsapi";
+            $data = [
+              "api_key" => "R20000315d809876d27604.84144217",
+              "type" => "text",
+              "contacts" => $mobile,
+              "senderid" => "8809612440143",
+              "msg" => $body,
+            ];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            return $response;
+        }else{
+            return true;
+        }
+
+
     }
 }
