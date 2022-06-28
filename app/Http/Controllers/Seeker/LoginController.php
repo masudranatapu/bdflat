@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Seeker;
 
 use Auth;
-use App\Http\Controllers\Controller;
+use Mail;
 use App\User;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Traits\SMSAPI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
-use App\Traits\SMSAPI;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Mail;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 
 class LoginController extends Controller
@@ -155,7 +155,6 @@ class LoginController extends Controller
 
 
 
-
     public function seeker_reg_ajax(Request $request){
         $data = $request->validate([
             'mobile'    => 'required',
@@ -265,29 +264,5 @@ class LoginController extends Controller
     }
 
 
-    function sendSmsMetrotel($body, $mobile ){
-        if(setting()->APP_MODE == 'live'){
-            $url = "http://portal.metrotel.com.bd/smsapi";
-            $data = [
-              "api_key" => "R20000315d809876d27604.84144217",
-              "type" => "text",
-              "contacts" => $mobile,
-              "senderid" => "8809612440143",
-              "msg" => $body,
-            ];
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            $response = curl_exec($ch);
-            curl_close($ch);
-            return $response;
-        }else{
-            return true;
-        }
 
-
-    }
 }

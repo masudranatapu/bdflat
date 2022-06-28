@@ -64,19 +64,19 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
                             //daily d times er besi send kora jabe na. $check && count($check)
                             // dd(Session::get('otp_phone'));
                           @endphp
-                          
+
                           <form class="" action="{{ route('send_otp') }}" method="post">
                             @csrf
                             <input type="hidden" name="user_phone" value="{{ $MOBILE_NO }}">
                             @if($check < 5)
                                     <button href="#" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled> Please Wait<span id="Timer_sek"></span> </button>
                                     <button id="Timer_out_sek" type="submit" class="btn btn-info text-center" style="position: relative; margin-top: -62px; margin-right: -199px;">REQUEST PIN AGAIN <span ></span> </button>
-                                
+
                             @else
                                 <button type="submit" class="btn btn-danger text-center" style="position: relative; margin-top: -62px; margin-right: -110px;" disabled>REQUEST NEXTDAY </button>
                             @endif
                           </form>
-                          
+
 
                         </div>
                     @else
@@ -295,9 +295,9 @@ $MOBILE_NO = $response->MOBILE_NO ?? '';
         var timeLeft = 60;
         var elem = document.getElementById('Timer_sek');
         var elem_time = document.getElementById('Timer_out_sek');
-    
+
         var timerId = setInterval(countdown, 1000);
-    
+
         function countdown() {
           if (timeLeft == -1) {
             clearTimeout(timerId);

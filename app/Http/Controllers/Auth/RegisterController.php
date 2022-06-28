@@ -16,6 +16,7 @@ use Auth;
 use Toastr;
 use App\Notifications\WellComeNotification;
 use Illuminate\Support\Facades\Request;
+use Response;
 
 class RegisterController extends Controller
 {
@@ -61,13 +62,14 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'usertype'       => ['required', 'integer', 'max:4'],
             'name'           => ['required', 'string', 'max:255'],
-            'email'          => ['required', 'string', 'email', 'max:255', 'unique:WEB_USER'],
+            // 'email'          => ['required', 'string', 'email', 'max:255', 'unique:WEB_USER'],
             'mobile'         => ['required', 'string', 'max:15'],
             'password'       => ['required', 'string', 'min:6'],
             'contact_name'   => ['nullable', 'string', 'max:50'],
             'designation'    => ['nullable', 'string', 'max:50'],
             'office_address' => ['nullable', 'string', 'max:255'],
         ]);
+
     }
 
     /**
@@ -78,7 +80,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+        $data['status'] = false;
+        $data['message'] = 'Registration is not completed!';
+        $check = User::where('EMAIL',$data['email'])->first();
+        if($check){
+            $data['message'] = 'This email already registered';
+            return $data;
+            // return response()->json($data);
+        }
         $user = new User();
         $user->USER_TYPE    = $data['usertype'];
         $user->NAME         = $data['name'];
