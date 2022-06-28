@@ -50,13 +50,86 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
-                        ->withSuccess('You have Successfully loggedin');
+        $user = User::where('EMAIL',$request->email)->first();
+        if($user){
+            if($user->IS_VERIFIED == 1){
+                Auth::login($user, true);
+                Toastr::success('Login successful', "Success", ["positionClass" => "toast-top-right"]);
+                return redirect()->route('my-account');
+            }else{
+                $otp = rand(1000, 9999);
+                $messageData = [
+                    'message'   => 'Thank you for being with bdflats.com. Activation Code',
+                    'otp'       => $otp
+                ];
+                $text  = 'Thank you for being with bdflats.com. Activation Code: '.$otp;
+                $phone = $user->MOBILE_NO;
+                $email = $user->EMAIL;
+                $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
+                $otp_phone = $user->COUNTRY_CODE == 'bd' ? $user->MOBILE_NO : $user->EMAIL;
+
+                $check_otp = DB::table('OTP_VARIFICATION')
+                ->whereDate('OTP_DATE', '=', date('Y-m-d'))
+                ->where('MOBILE',$otp_phone)
+                ->first();
+
+                if($check_otp){
+                    if($check_otp->OTP_COUNT > 5){
+                        $res['success'] = false;
+                        $res['message'] = 'Please try another day or contact with admin';
+                    }else{
+                        $otp_count = $check_otp->OTP_COUNT+1;
+                        DB::table('OTP_VARIFICATION')->whereDate('OTP_DATE', '=', date('Y-m-d'))
+                        ->where('MOBILE',$otp_phone)
+                        ->update([ 'OTP' => $otp,'EXPIRE_TIME' => $expire_time, 'CREATED_AT' => now(), 'OTP_COUNT' =>$otp_count, 'STATUS' => 0]);
+
+                        if($user->COUNTRY_CODE =='bd'){
+                            $this->sendSmsMetrotel($text,$phone);
+                        }else{
+                            Mail::send('email.otp_email',$messageData, function($message) use($email)
+                            {
+                                $message->to($email)->subject('Login Otp Code.');
+                            });
+                        }
+                        $res['success'] = true;
+                        $res['message'] = 'Otp sended successfully';
+                    }
+
+                }else{
+                    DB::table('OTP_VARIFICATION')->insert([
+                        'MOBILE'        => $phone,
+                        'USER_ID'       => $user->PK_NO,
+                        'OTP_DATE'      => date('Y-m-d'),
+                        'OTP'           => $otp,
+                        'STATUS'        => 0,
+                        'EXPIRE_TIME'   => $expire_time,
+                        'CREATED_AT'    => now(),
+                        'CREATED_BY'    => 1,
+                        'OTP_COUNT'     => 1,
+                        'UPDATED_AT'    => null,
+                        'UPDATED_BY'    => null,
+                    ]);
+
+                    if($user->COUNTRY_CODE =='bd'){
+                        $this->sendSmsMetrotel($text,$phone);
+                    }else{
+                        Mail::send('email.otp_email',$messageData, function($message) use($email)
+                        {
+                            $message->to($email)->subject('Login Otp Code.');
+                        });
+                    }
+                    $res['success'] = true;
+                    $res['message'] = 'Otp sended successfully';
+                }
+
+                return redirect()->route('register',['mode'=>'verify','mobile'=>$user->MOBILE_NO,'code'=>$user->COUNTRY_CODE,'email'=>$user->EMAIL]);
+
+            }
+        }else{
+            Toastr::success('You are not register user', "Success", ["positionClass" => "toast-top-right"]);
+            return redirect()->route('register');
         }
 
-        return redirect("login")->withSuccess('Oppes! You have entered invalid credentials');
     }
 
     /**
@@ -94,11 +167,9 @@ class AuthController extends Controller
             $User->PASSWORD         = bcrypt($request->password);
             $User->save();
             $otp = rand(1000, 9999);
-
             $messageData = [
                 'message'   => 'Thank you for being with bdflats.com. Activation Code',
                 'otp'       => $otp
-
             ];
             $text  = 'Thank you for being with bdflats.com. Activation Code: '.$otp;
             $phone = $request->mobile;

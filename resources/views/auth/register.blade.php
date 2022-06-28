@@ -3,7 +3,7 @@
 @push('custom_css')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/forms/validation/form-validation.css')}}">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
     <style>
         .iti--allow-dropdown{display: block !important;}
     </style>
@@ -17,9 +17,7 @@
             <!-- row -->
             <div class="row">
                 <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-
                     <div class="sign-wrap">
-{{ $errors }}
                         @if(request()->get('mode') == 'verify')
                         <div class="verify_section">
                             {!! Form::open([ 'route' => 'register.otp_verify', 'method' => 'post', 'files' => false, 'autocomplete' => 'off', 'id' => 'otp_frm']) !!}

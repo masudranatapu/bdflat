@@ -32,6 +32,7 @@ Route::get('owner/{slug}', 'HomeController@owner')->name('web.owner');
 Route::post('newsletter', 'HomeController@storeNewsLetter')->name('newsletter.store');
 Route::get('/api/get-area', 'HomeController@getArea')->name('api.get.area');
 Route::post('post-registration', 'Auth\AuthController@postRegistration')->name('register.post');
+Route::post('post-login', 'Auth\AuthController@postLogin')->name('login.post');
 Route::post('post-otp-verify', 'Auth\AuthController@postOtpVerify')->name('register.otp_verify');
 
 
@@ -173,7 +174,7 @@ Route::post('profile/store_or_update', 'UserController@updateProfile')->name('pr
 Route::post('profile/password_update', 'UserController@updatePass')->name('profile.password_update');
 
 Auth::routes();
-Route::post('seeker-login', 'Seeker\LoginController@login')->name('seeker.login');
+// Route::post('seeker-login', 'Seeker\LoginController@login')->name('seeker.login');
 
 Route::get('home', 'HomeController@index')->name('home');
 
