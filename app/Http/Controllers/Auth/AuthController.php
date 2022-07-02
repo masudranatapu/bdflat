@@ -49,12 +49,22 @@ class AuthController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-
+        $password = $request->password;
         $user = User::where('EMAIL',$request->email)->first();
         if($user){
+
+            if (!Hash::check($password, $user->PASSWORD)) {
+                Toastr::error('Your password is not correct', "Success", ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+
             if($user->IS_VERIFIED == 1){
                 Auth::login($user, true);
                 Toastr::success('Login successful', "Success", ["positionClass" => "toast-top-right"]);
+                if(isset($request->referrer) && $request->referrer == 'post_your_add'){
+                    if($user->USER_TYPE == )
+                    return redirect()->route('my-account');
+                }
                 return redirect()->route('my-account');
             }else{
                 $otp = rand(1000, 9999);
