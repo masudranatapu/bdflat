@@ -371,7 +371,7 @@ class Listings extends Model
 
     public function getCreate($request): object
     {
-        $data['property_type'] = PropertyType::pluck('PROPERTY_TYPE', 'PK_NO');
+        $data['property_type'] = PropertyType::orderBy('ORDER_ID', 'DESC')->pluck('PROPERTY_TYPE', 'PK_NO');
         $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
         $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
         $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
