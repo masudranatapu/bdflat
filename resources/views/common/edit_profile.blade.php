@@ -76,7 +76,7 @@ $days = [
                                 <td>
                                     <div class="form-group mb-0 {!! $errors->has('mobile') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::text('mobile', old('mobile') ?? $user_data->MOBILE_NO, [ 'class' => 'form-control', 'pattern' => '^(01)[0-9]{9}$', 'data-validation-pattern-message' => 'Incorrect mobile number format', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Mobile']) !!}
+                                            {!! Form::text('mobile', old('mobile') ?? $user_data->MOBILE_NO, [ 'class' => 'form-control', 'readonly', 'pattern' => '^(01)[0-9]{9}$', 'data-validation-pattern-message' => 'Incorrect mobile number format', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Mobile']) !!}
                                             {!! $errors->first('mobile', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@ $days = [
                                     <td>
                                         <div class="form-group mb-2">
                                             <div class="controls">
-                                                {!! Form::text('open_time', old('open_time', $user_data->info->SHOP_OPEN_TIME ?? ''), ['class' => 'form-control time', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::text('open_time', old('open_time', $user_data->info->SHOP_OPEN_TIME ?? ''), ['class' => 'form-control time', 'style' => 'height: calc(2.25rem)', 'placeholder' => 'Open Time']) !!}
                                                 {!! $errors->first('open_time', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
@@ -130,18 +130,18 @@ $days = [
                                     <td>
                                         <div class="form-group mb-2">
                                             <div class="controls">
-                                                {!! Form::text('close_time', old('close_time', $user_data->info->SHOP_CLOSE_TIME ?? ''), ['class' => 'form-control time', 'style' => 'height: calc(2.25rem)', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::text('close_time', old('close_time', $user_data->info->SHOP_CLOSE_TIME ?? ''), ['class' => 'form-control time', 'style' => 'height: calc(2.25rem)', 'placeholder' => 'Closing time']) !!}
                                                 {!! $errors->first('close_time', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="label">Closing Time: </td>
+                                    <td class="label">Closing Day : </td>
                                     <td>
                                         <div class="form-group mb-0">
                                             <div class="controls">
-                                                {!! Form::select('working_days[]', $days ?? [], old('working_days', json_decode($user_data->info->WORKING_DAYS ?? '') ?? ''), ['id' => 'working_days', 'class' => 'form-control select2', 'style' => 'height: calc(2.25rem)', 'multiple', 'data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::select('working_days[]', $days ?? [], old('working_days', json_decode($user_data->info->WORKING_DAYS ?? '') ?? ''), ['id' => 'working_days', 'class' => 'form-control select2', 'style' => 'height: calc(2.25rem)', 'multiple']) !!}
                                                 {!! $errors->first('working_days', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
