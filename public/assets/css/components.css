@@ -4311,3 +4311,9 @@ input[type=number] {
     }
 }
 
+.size_child{
+    border: 1px solid #c93737;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+

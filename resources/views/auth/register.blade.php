@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="col-12 form-group d-none regi-office_address {!! $errors->has('office_address') ? 'error' : '' !!}">
                                     <div class="controls office_address_block">
-                                        <label for="office_address" class="control-label">Phone:</label>
+                                        <label for="office_address" class="control-label">Office Address:</label>
                                         {!! Form::text('office_address', old('office_address'), [ 'class' => 'form-control', 'placeholder' => 'Office address', 'autocomplete' => 'off', 'tabindex' => 2, 'title' => 'Office address' ]) !!}
                                         {!! $errors->first('office_address', '<label class="help-block text-danger">:message</label>') !!}
                                     </div>
