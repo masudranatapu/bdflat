@@ -18,7 +18,7 @@ if (request()->segment(2) == 'roommate') {
 $response  = request()->get('response');
 $response  = json_decode($response);
 $MOBILE_NO = $response->MOBILE_NO ?? '';
-$post_ad_url = 'post_your_add';
+$referrer = request()->get('referrer') ?? null;
 
 ?>
 
@@ -268,7 +268,7 @@ $post_ad_url = 'post_your_add';
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <!-- <a class="dropdown-item" href="{{ route('login', ['as' => 'seeker']) }}">As Seeker</a> -->
                                 <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">As Seeker</a>
-                                <a class="dropdown-item" href="{{ route('login', ['as' => 'owner', 'referrer' => $post_ad_url ]) }}">As Owner</a>
+                                <a class="dropdown-item" href="{{ route('login', ['as' => 'owner', 'referrer' => $referrer ]) }}">As Owner</a>
                             </div>
                         @else
                             <a class="nav-link" href="{{route('my-account') }}">My Account</a>
@@ -298,7 +298,7 @@ $post_ad_url = 'post_your_add';
             @if(Auth::user())
             <a href="{{route('listings.create') }}">Post Your Ad</a>
             @else
-            <a href="{{ route('login', ['as' => 'owner', 'referrer' => $post_ad_url ]) }}">Post Your Ad</a>
+            <a href="{{ route('login', ['as' => 'owner', 'referrer' => 'post_your_add' ]) }}">Post Your Ad</a>
             @endif
         </div>
         <!-- Modal -->
@@ -321,7 +321,7 @@ $post_ad_url = 'post_your_add';
             @if(Auth::user())
             <a href="{{route('listings.create') }}">Post Your Ad</a>
             @else
-            <a href="{{ route('login', ['as' => 'owner', 'referrer' => $post_ad_url ]) }}">Post Your Ad</a>
+            <a href="{{ route('login', ['as' => 'owner', 'referrer' => 'post_your_add' ]) }}">Post Your Ad</a>
             @endif
         </div>
         <!-- Modal -->

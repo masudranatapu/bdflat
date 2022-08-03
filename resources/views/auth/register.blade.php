@@ -46,6 +46,8 @@
                         <div class="regi_section">
                         <h1>Create Your BDFlats.com Account</h1>
                         {!! Form::open([ 'route' => 'register.post', 'method' => 'post', 'class' => '', 'files' => true , 'novalidate', 'autocomplete' => 'off', 'id' => 'register_frm']) !!}
+                        <input type="hidden" name="as" value="{{ request()->get('as') }}"/>
+                        <input type="hidden" name="referrer" value="{{ request()->get('referrer') }}"/>
                             <div class="account-info">
                                 <h5>I am:</h5>
                                 {{-- <input type="radio" name="usertype" value="1" id="seeker" checked> <label for="seeker">Seeker</label> --}}

@@ -47,7 +47,7 @@
                         <div class="create-account">
                             <h3>New to BDF.com?</h3>
                             <h5>Create your FREE Account</h5>
-                            <a href="{{route('register')}}">Create Account</a>
+                            <a href="{{route('register')}}?as={{ request()->get('as') }}&referrer={{ request()->get('referrer') }}">Create Account</a>
                         </div>
 
                     </div>

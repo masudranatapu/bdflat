@@ -62,8 +62,11 @@ class AuthController extends Controller
                 Auth::login($user, true);
                 Toastr::success('Login successful', "Success", ["positionClass" => "toast-top-right"]);
                 if(isset($request->referrer) && $request->referrer == 'post_your_add'){
-                    if($user->USER_TYPE == )
-                    return redirect()->route('my-account');
+                    if($user->USER_TYPE != 1 ){
+                        return redirect()->route('listings.create');
+                    }else{
+                        return redirect()->route('my-account');
+                    }
                 }
                 return redirect()->route('my-account');
             }else{
@@ -251,8 +254,8 @@ class AuthController extends Controller
         $mobile = $request->mobile;
         $email = $request->email;
         $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
-        $otp_phone = $request->country_code == 'bd' ? $request->mobile : $request->email;
         $user = User::where('MOBILE_NO',$mobile)->where('EMAIL',$email)->first();
+        $otp_phone = $user->COUNTRY_CODE == 'bd' ? $request->mobile : $request->email;
 
         if($request->submit == 'otp_again'){
             $check_otp = DB::table('OTP_VARIFICATION')
