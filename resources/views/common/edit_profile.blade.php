@@ -101,7 +101,11 @@ $days = [
                                              alt="{{ $user_data->NAME ?? '' }}"></a>
                                 </td>
                             </tr>
-                            @if(in_array($user_data->USER_TYPE, [2, 3, 4, 5]))
+                            @if($user_data->USER_TYPE == 1)
+
+                            @elseif($user_data->USER_TYPE == 2)
+
+                            @else
                                 <tr>
                                     <td class="label">Property Payment Auto Renew :</td>
                                     <td>
