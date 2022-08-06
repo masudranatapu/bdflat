@@ -20,6 +20,8 @@ use App\Models\PropertyCondition;
 use App\Models\PropertyListingType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ListingsRequest;
+use DB;
+use Auth;
 
 class ListingController extends Controller
 {
@@ -37,6 +39,7 @@ class ListingController extends Controller
     public function create(Request $request)
     {
         $data = $this->listings->getCreate($request)->data;
+        
         return view('listing.create_listings', compact('data'));
     }
 

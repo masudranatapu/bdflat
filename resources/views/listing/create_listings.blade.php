@@ -41,6 +41,7 @@
 <?php
 $property_types = $data['property_type'] ?? [];
 $cities = $data['city'] ?? [];
+// dd($cities);
 $property_conditions = $data['property_condition'] ?? [];
 $property_facing = $data['property_facing'] ?? [];
 $property_listing_types = $data['property_listing_type'] ?? [];
