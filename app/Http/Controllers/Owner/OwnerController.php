@@ -22,6 +22,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
+use DB;
 
 class OwnerController extends Controller
 {
@@ -67,7 +68,24 @@ class OwnerController extends Controller
 
     public function getArea($id)
     {
-        $data['area'] = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
+        $agent_area = DB::table('ss_agent_area')
+            ->join('web_user', 'web_user.PK_NO', '=', 'ss_agent_area.F_USER_NO')
+            ->where('F_USER_NO', Auth::user()->PK_NO)
+            ->where('F_CITY_NO', $id)
+            ->select('F_AREA_NO')
+            ->get();
+        
+        // return response()->json($agent_area);
+        
+        $areaArray = [];
+        
+        foreach ($agent_area as $key => $value) {
+            $areaArray[$key] = $value->F_AREA_NO;
+        }
+
+        // return response()->json($areaArray);
+
+        $data['area'] = Area::whereIN('PK_NO', $areaArray)->pluck('AREA_NAME', 'PK_NO');
         return response()->json($data);
     }
 
