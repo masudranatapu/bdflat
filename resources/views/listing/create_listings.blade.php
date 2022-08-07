@@ -127,7 +127,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
 
                             <!--  area  -->
                             <div class="row form-group">
-                                {!! Form::label('area','Area(based on city) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                {!! Form::label('area','Area(based on city) <span class="required"></span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                         <div class="controls">
@@ -138,11 +138,11 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                 </div>
                             </div>
                             <div class="row form-group">
-                                {!! Form::label('sub_area','Sub Area(based on area) <span class="required">*</span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
+                                {!! Form::label('sub_area','Sub Area(based on area) <span class="required"></span>:', ['class' => 'col-sm-4 advertis-label'], false) !!}
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('sub_area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control','data-validation-required-message' => 'This field is required', 'placeholder'=>'Select One')) !!}
+                                            {!! Form::select('sub_area', [],null,array('id' => 'sub_area', 'class'=>'select2 form-control','placeholder'=>'Select One')) !!}
                                             {!! $errors->first('sub_area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>

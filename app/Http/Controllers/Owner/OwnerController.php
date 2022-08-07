@@ -22,6 +22,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\updateProfileRequest;
 use App\Http\Requests\updatePasswordRequest;
+use DB;
 
 class OwnerController extends Controller
 {
