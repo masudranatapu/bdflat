@@ -64,3 +64,19 @@ if (!function_exists('meta_info')) {
         ];
     }
 }
+
+if (!function_exists('fileExit')) {
+    function fileExit($path) {
+        if($path){
+            $ppath = public_path($path);
+            if(file_exists($ppath)){
+              return asset($path);
+            } else {
+                return asset('images/no-photo.png');
+           }
+        }else{
+            return asset('images/no-photo.png');
+        }
+
+    }
+}

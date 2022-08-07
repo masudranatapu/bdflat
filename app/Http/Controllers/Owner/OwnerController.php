@@ -65,10 +65,15 @@ class OwnerController extends Controller
         return view('owner.leads', compact('data'));
     }
 
-    public function getArea($id)
+    public function getArea($city_id)
     {
-        $data['area'] = Area::where('F_CITY_NO', $id)->pluck('AREA_NAME', 'PK_NO');
-        return response()->json($data);
+        $area = Area::orderBy('AREA_NAME','ASC')->where('F_CITY_NO', $city_id)->whereNull('F_PARENT_AREA_NO')->get(['AREA_NAME', 'PK_NO']);
+        return response()->json($area);
+    }
+    public function getSubArea($area_id)
+    {
+        $area = Area::orderBy('AREA_NAME','ASC')->where('F_PARENT_AREA_NO', $area_id)->get(['AREA_NAME', 'PK_NO']);
+        return response()->json($area);
     }
 
 }

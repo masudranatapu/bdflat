@@ -76,19 +76,5 @@ class AgencyController extends Controller
     }
 
 
-    public function getArea(Request $request)
-    {
-        $status = false;
-        $area = [];
 
-        if ($request->get('area')) {
-            $area = Area::where('F_PARENT_AREA_NO', $request->get('area'))->pluck('AREA_NAME', 'PK_NO');
-            $status = true;
-        }
-
-        return Response::json([
-            'status' => $status,
-            'data' => $area
-        ]);
-    }
 }

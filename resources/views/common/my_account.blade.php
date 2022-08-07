@@ -20,11 +20,7 @@
                     <div class="account-details">
                         <div class="account-user">
                             <div class="user-bx">
-                                @if(Auth::user()->PROFILE_PIC_URL)
-                                <img src="{{ asset(Auth::user()->PROFILE_PIC_URL) }}" alt="image">
-                                @else
-                                <img src="{{ asset('assets/img/user/1.jpg') }}" alt="image">
-                                @endif
+                                <img src="{{ fileExit(Auth::user()->PROFILE_PIC_URL) }}" alt="image">
                             </div>
                             <div class="user-profile">
                                 <h3>{{ Auth::user()->NAME }}</h3>

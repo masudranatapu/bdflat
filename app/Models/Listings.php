@@ -371,21 +371,24 @@ class Listings extends Model
 
     public function getCreate($request): object
     {
-        $agent_area = DB::table('ss_agent_area')
-            ->join('web_user', 'web_user.PK_NO', '=', 'ss_agent_area.F_USER_NO')
-            ->select('F_CITY_NO')
-            ->groupBy('F_CITY_NO')
-            ->get();
-        
-        $cityArray = [];
-        foreach ($agent_area as $key => $value) {
-            $cityArray[$key] = $value->F_CITY_NO;
+
+        if(Auth::user()->USER_TYPE == '5'){
+            $agent_area = DB::table('ss_agent_area')
+                ->join('web_user', 'web_user.PK_NO', '=', 'ss_agent_area.F_USER_NO')
+                ->select('F_CITY_NO')
+                ->groupBy('F_CITY_NO')
+                ->get();
+
+            $cityArray = [];
+            foreach ($agent_area as $key => $value) {
+                $cityArray[$key] = $value->F_CITY_NO;
+            }
+            $data['city'] = DB::table('ss_city')->orderBy('CITY_NAME','ASC')->whereIn('PK_NO', $cityArray)->pluck('CITY_NAME', 'PK_NO');
+        }else{
+            $data['city'] = City::orderBy('CITY_NAME','ASC')->pluck('CITY_NAME', 'PK_NO');
         }
 
-        $data['city'] = DB::table('ss_city')->whereIn('PK_NO', $cityArray)->pluck('CITY_NAME', 'PK_NO');
-    
         $data['property_type'] = PropertyType::orderBy('ORDER_ID', 'DESC')->pluck('PROPERTY_TYPE', 'PK_NO');
-        // $data['city'] = City::pluck('CITY_NAME', 'PK_NO');
         $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
         $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
         $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');

@@ -140,7 +140,7 @@ class AuthController extends Controller
             }
         }else{
             Toastr::success('You are not register user', "Success", ["positionClass" => "toast-top-right"]);
-            return redirect()->route('register');
+            return redirect()->back();
         }
 
     }

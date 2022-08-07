@@ -199,6 +199,7 @@
             let mobileSort = $('#mobile_sort');
             let mobileVerified = $('#mobile_verified');
 
+            /*
             $('#city').change(function () {
                 let cityId = $(this).val().split('-')[1];
                 $('#fareas').empty();
@@ -219,6 +220,8 @@
                     }
                 });
             });
+            */
+
 
             mobileSort.change(function () {
                 mobile_filter();

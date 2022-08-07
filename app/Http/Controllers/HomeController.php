@@ -186,7 +186,7 @@ class HomeController extends Controller
     public function getArea(Request $request)
     {
         $cityId = $request->query->get('city');
-        $areas = Area::query()->where('F_CITY_NO', '=', $cityId)->pluck('AREA_NAME', 'PK_NO');
+        $areas = Area::query()->orderBy('AREA_NAME','ASC')->where('F_CITY_NO', '=', $cityId)->pluck('AREA_NAME', 'PK_NO');
         return response()->json([
             'status' => true,
             'areas' => $areas

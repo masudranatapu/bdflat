@@ -87,13 +87,13 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                         <div class="controls">
                                             {!! Form::radio('property_for','sale', old('property_for'),[ 'id' => 'sell','data-validation-required-message' => 'This field is required','checked']) !!}
                                             {{ Form::label('sell','Sell') }}
-            
+
                                             {!! Form::radio('property_for','rent', old('property_for'),[ 'id' => 'rent']) !!}
                                             {{ Form::label('rent','Rent') }}
-            
+
                                             {!! Form::radio('property_for','roommate', old('property_for'),[ 'id' => 'roommate']) !!}
                                             {{ Form::label('roommate','Roommate') }}
-            
+
                                             {!! $errors->first('property_for', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -131,7 +131,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                 <div class="col-sm-8">
                                     <div class="form-group {!! $errors->has('area') ? 'error' : '' !!}">
                                         <div class="controls">
-                                            {!! Form::select('area', [],null,array('id' => 'area', 'class'=>'select2 form-control', 'placeholder'=>'Select One','data-validation-required-message' => 'This field is required')) !!}
+                                            {!! Form::select('area', [],null,['id' => 'area', 'class'=>'select2 form-control', 'placeholder'=>'Select One','data-validation-required-message' => 'This field is required']) !!}
                                             {!! $errors->first('area', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
@@ -253,7 +253,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <div class="col-6 col-md-4 bathroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('balcony') ? 'error' : '' !!}">
                                             <span class="advertis-label">Balcony</span>
@@ -425,7 +425,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                 <h3>Facilities Within 1km</h3>
                             </div>
                             <div class="row form-group">
-                                
+
                                 <div class="col-lg-12">
                                     <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                         <div class="controls">
@@ -450,7 +450,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                     {!! $errors->first('nearby', '<label class="help-block text-danger">:message</label>') !!}
                                 </div>
                             </div>
-                            
+
                             <!--  image & video   -->
                             <div class="advertisment-title">
                                 <h3>Image & Videos</h3>
@@ -491,7 +491,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                 </div>
                             </div>
 
-                            
+
                             <!--   property owner   -->
                             <div class="advertisment-title">
                                 <h3>Property Owner Details</h3>
@@ -511,8 +511,8 @@ $balcony = Config::get('static_array.balcony') ?? [];
                             @php
                                 // dd(Auth::user());
                             @endphp
-                        
-                            
+
+
 
                         <div class="row form-group">
                             {{ Form::label('mobile','Mobile 1:',['class' => 'col-sm-4 advertis-label']) }}
@@ -595,8 +595,8 @@ $balcony = Config::get('static_array.balcony') ?? [];
           "name": "paragraph",
           "groups": ["list", "blocks"]
         },
-        
-        
+
+
       ],
       height: '100px',
       // Remove the redundant buttons from toolbar groups defined above.
@@ -650,7 +650,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
             let area = $('#area').find(":selected").text();
             let city = $('#city').find(":selected").text();
             let sub_area = $('#sub_area').find(":selected").text();
-            
+
             let address = house + ',' +road +','+sub_area +','+area +',' + city;
              $('#address').val(address);
         });
@@ -665,7 +665,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
             format: 'DD-MM-YYYY',
             debug: true
         });
-        
+
         $(document).ready(function(){
             $('#features30').on('click',function(){
                 var slect_all = ($(this).val());
@@ -717,14 +717,14 @@ $balcony = Config::get('static_array.balcony') ?? [];
 
             $.ajax({
                 type: 'get',
-                url: '{{ route('get.area') }}?area=' + id,
+                url: basepath + '/ajax-get-subarea/' + id,
                 async: true,
                 dataType: 'json',
-                success: function (res) {
-                    $.each(res.data, function (key, value) {
-                        let option = new Option(value, key);
-                        $('#sub_area').append(option);
-                    })
+                success: function (data) {
+                    $.each(data, function(key, value) {
+                        $('#sub_area').append('<option value="' + value.PK_NO + '">' + value.AREA_NAME + '</option>');
+
+                    });
                 },
                 complete: function (data) {
                     $("body").css("cursor", "default");
@@ -737,7 +737,9 @@ $balcony = Config::get('static_array.balcony') ?? [];
             if (id == '') {
                 return false;
             }
-            $("#area").empty();$('#sub_area').empty();
+
+            $("#area").empty();
+            $('#sub_area').empty();
             $('#area').append(new Option('Select One', 0));
             $.ajax({
                 type: 'get',
@@ -747,10 +749,10 @@ $balcony = Config::get('static_array.balcony') ?? [];
                 beforeSend: function () {
                     $("body").css("cursor", "progress");
                 },
-                success: function (response) {
-                    $.each(response.area, function (key, value) {
-                        let option = new Option(value, key);
-                        $("#area").append(option);
+                success: function (data) {
+                    $.each(data, function(key, value) {
+                        $('#area').append('<option value="' + value.PK_NO + '">' + value.AREA_NAME + '</option>');
+
                     });
                 },
                 complete: function (data) {

@@ -97,8 +97,6 @@ Route::group(['namespace' => 'Agency', 'middleware' => ['auth']], function () {
 
     Route::get('agency-payments', 'AgencyController@getPayments')->name('agency-payments');
 
-    Route::get('get-area', 'AgencyController@getArea')->name('get.area');
-
     Route::get('agency-listings/create', 'ListingController@create')->name('agency.listings.create');
     Route::post('agency-listings/store', 'ListingController@store')->name('agency.listings.store');
     Route::get('agency-listings/{id}/edit', 'ListingController@edit')->name('agency.listings.edit');
@@ -162,7 +160,8 @@ Route::group(['namespace' => 'Owner', 'middleware' => ['auth']], function () {
     Route::get('ajax-get-available-floor', 'ListingController@getAvailableFloor')->name('get.available.floor');
     Route::get('ajax-add-listing-variant', 'ListingController@addListingVariant')->name('add-listing-variant');
     Route::get('ajax-add-listing-phone', 'ListingController@addListingPhone')->name('add-listing-phone');
-    Route::get('ajax-get-area/{id}', 'OwnerController@getArea')->name('getarea');
+    Route::get('ajax-get-area/{id}', 'OwnerController@getArea')->name('get.area');
+    Route::get('ajax-get-subarea/{id}', 'OwnerController@getSubArea')->name('get.subarea');
 });
 
 Route::group([ 'middleware' => ['auth','IsVerified']], function () {

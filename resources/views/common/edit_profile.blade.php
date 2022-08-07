@@ -97,7 +97,7 @@ $days = [
                                 <td style="position: relative">
                                     <a target="_blank" href="{{asset($user_data->PROFILE_PIC_URL)}}">
                                         <img class="profile_photo" width="50"
-                                             src="{{asset($user_data->PROFILE_PIC_URL)}}"
+                                             src="{{ fileExit($user_data->PROFILE_PIC_URL) }} "
                                              alt="{{ $user_data->NAME ?? '' }}"></a>
                                 </td>
                             </tr>
