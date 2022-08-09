@@ -37,10 +37,18 @@ return [
         '4'    => '4 Bath',
     ],
     'balcony' => [
+        '0'    => 'No balcony',
         '1'    => '1 balcony',
         '2'    => '2 balcony',
         '3'    => '3 balcony',
         '4'    => '4 balcony',
+    ],
+    'parking' => [
+        '0'    => 'No parking',
+        '1'    => '1 parking',
+        '2'    => '2 parking',
+        '3'    => '3 parking',
+        '4'    => '4 parking',
     ],
 
     'claiming_reason' => [

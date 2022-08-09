@@ -3,6 +3,7 @@ $bed_room = Config::get('static_array.bed_room') ?? [];
 $bath_room = Config::get('static_array.bath_room') ?? [];
 $bath_room = Config::get('static_array.bath_room') ?? [];
 $balcony = Config::get('static_array.balcony') ?? [];
+$car_parking = Config::get('static_array.parking') ?? [];
 ?>
 <div class="row no-gutters form-group size_child" style="position: relative">
     <div class="col-6 col-md-4 size_div">
@@ -14,7 +15,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
             </div>
         </div>
     </div>
-    <div class="col-6 col-md-4 bedroom_div" style="{{ $request->property_type != 1 ? 'display:none' : '' }}">
+    <div class="col-6 col-md-4 bedroom_div" style="{{ $request->property_type == 1 ? 'display:none' : '' }}">
         <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
             <div class="controls">
                 {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom','data-validation-required-message' => 'This field is required')) !!}
@@ -42,22 +43,23 @@ $balcony = Config::get('static_array.balcony') ?? [];
             </div>
         </div>
     </div>
+
     <div class="col-6 col-md-4 price_div">
-        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
+        <div class="form-group mb-0 {!! $errors->has('car_parking') ? 'error' : '' !!}">
             <div class="controls">
-                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price','data-validation-required-message' => 'This field is required']) !!}
-                <span class="price_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
-                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                {!! Form::select('car_parking[]',$car_parking, old('car_parking[]'), ['class' => 'form-control',  'placeholder' => 'Select parking','data-validation-required-message' => 'This field is required']) !!}
+                <span class="price_placeholder advertis-label"
+                      style="opacity: 0.6;font-size: 12px"></span>
+                {!! $errors->first('car_parking', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
     </div>
     <div class="col-6 col-md-4 price_div">
-        <div class="form-group mb-0 {!! $errors->has('car_parking') ? 'error' : '' !!}">
+        <div class="form-group {!! $errors->has('price') ? 'error' : '' !!}">
             <div class="controls">
-                {!! Form::text('car_parking[]', old('car_parking[]'), ['class' => 'form-control',  'placeholder' => 'Car Parking','data-validation-required-message' => 'This field is required']) !!}
-                <span class="price_placeholder advertis-label"
-                      style="opacity: 0.6;font-size: 12px"></span>
-                {!! $errors->first('car_parking', '<label class="help-block text-danger">:message</label>') !!}
+                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price per sqft','data-validation-required-message' => 'This field is required']) !!}
+                <span class="price_placeholder advertis-label" style="opacity: 0.6;font-size: 12px"></span>
+                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
             </div>
         </div>
     </div>

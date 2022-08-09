@@ -51,6 +51,7 @@ $floor_lists = $data['floor_list'] ?? [];
 $bed_room = Config::get('static_array.bed_room') ?? [];
 $bath_room = Config::get('static_array.bath_room') ?? [];
 $balcony = Config::get('static_array.balcony') ?? [];
+$car_parking = Config::get('static_array.parking') ?? [];
 
 ?>
 
@@ -213,17 +214,14 @@ $balcony = Config::get('static_array.balcony') ?? [];
 
                             <!--  Property Size & Price  -->
                             <div class="advertisment-title">
-                                <h3>Property Size & Price
-                                    <button type="button" class="btn btn-xs btn-danger" id="add_btn">+ Add new size
-                                    </button>
-                                </h3>
+                                <h3>Property Size & Price</h3>
                             </div>
 
                             <div id="size_parent">
                                 <div class="row no-gutters form-group size_child">
                                     <div class="col-6 col-md-4 size_div">
-                                        <div class="form-group mb-0 {!! $errors->has('size') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Size</span>
+                                        <div class="form-group mb-2 {!! $errors->has('size') ? 'error' : '' !!}">
+                                            {{-- <span class="advertis-label">Size</span> --}}
                                             <div class="controls">
                                                 {!! Form::number('size[]', old('size[]'), ['id'=>'size', 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
                                                 <span class="size_placeholder advertis-label"
@@ -233,10 +231,10 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-4 bedroom_div">
-                                        <div class="form-group mb-0 {!! $errors->has('bedroom') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Bedroom</span>
+                                        <div class="form-group mb-2 {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                            {{-- <span class="advertis-label">Bedroom</span> --}}
                                             <div class="controls">
-                                                {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Bedroom')) !!}
+                                                {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Select bedroom')) !!}
                                                 <span class="bedroom_placeholder advertis-label"
                                                       style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bedroom', '<label class="help-block text-danger">:message</label>') !!}
@@ -244,10 +242,10 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-4 bathroom_div">
-                                        <div class="form-group mb-0 {!! $errors->has('bathroom') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Bathroom</span>
+                                        <div class="form-group mb-2 {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                            {{-- <span class="advertis-label">Bathroom</span> --}}
                                             <div class="controls">
-                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Bathroom')) !!}
+                                                {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Select bathroom')) !!}
                                                 <span class="bathroom_placeholder advertis-label"
                                                       style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('bathroom', '<label class="help-block text-danger">:message</label>') !!}
@@ -256,34 +254,35 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                     </div>
                                     <div class="col-6 col-md-4 bathroom_div">
                                         <div class="form-group mb-0 {!! $errors->has('balcony') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Balcony</span>
+                                            {{-- <span class="advertis-label">Balcony</span> --}}
                                             <div class="controls">
-                                                {!! Form::select('balcony[]', $balcony, old('balcony[]'), array('class'=>'form-control', 'placeholder'=>'Balcony')) !!}
+                                                {!! Form::select('balcony[]', $balcony, old('balcony[]'), array('class'=>'form-control', 'placeholder'=>'Select balcony')) !!}
                                                 <span class="bathroom_placeholder advertis-label"
                                                       style="opacity: 0.6;font-size: 12px"></span>
                                                 {!! $errors->first('balcony', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-6 col-md-4 price_div">
-                                        <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Price</span>
+                                        <div class="form-group mb-0 {!! $errors->has('car_parking') ? 'error' : '' !!}">
+                                            {{-- <span class="advertis-label">Car Parking</span> --}}
                                             <div class="controls">
-                                                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Total Price','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::select('car_parking[]',$car_parking, old('car_parking[]'), ['class' => 'form-control',  'placeholder' => 'Select parking','data-validation-required-message' => 'This field is required']) !!}
                                                 <span class="price_placeholder advertis-label"
                                                       style="opacity: 0.6;font-size: 12px"></span>
-                                                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
+                                                {!! $errors->first('car_parking', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-4 price_div">
-                                        <div class="form-group mb-0 {!! $errors->has('car_parking') ? 'error' : '' !!}">
-                                            <span class="advertis-label">Car Parking</span>
+                                        <div class="form-group mb-0 {!! $errors->has('price') ? 'error' : '' !!}">
+                                            {{-- <span class="advertis-label">Price</span> --}}
                                             <div class="controls">
-                                                {!! Form::text('car_parking[]', old('car_parking[]'), ['class' => 'form-control',  'placeholder' => 'Car Parking','data-validation-required-message' => 'This field is required']) !!}
+                                                {!! Form::number('price[]', old('price[]'), ['class' => 'form-control',  'placeholder' => 'Price per sqft','data-validation-required-message' => 'This field is required']) !!}
                                                 <span class="price_placeholder advertis-label"
                                                       style="opacity: 0.6;font-size: 12px"></span>
-                                                {!! $errors->first('car_parking', '<label class="help-block text-danger">:message</label>') !!}
+                                                {!! $errors->first('price', '<label class="help-block text-danger">:message</label>') !!}
                                             </div>
                                         </div>
                                     </div>
@@ -298,6 +297,12 @@ $balcony = Config::get('static_array.balcony') ?? [];
                                             </div>
                                         </div>
                                     </div> --}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-xs btn-danger float-right " id="add_btn" style="margin-right: 6px;">+ Add new size
+                                    </button>
                                 </div>
                             </div>
 
@@ -605,55 +610,49 @@ $balcony = Config::get('static_array.balcony') ?? [];
     </script>
     <script>
 
-        $('#city').on('change',function(){
-            let city = $('#city').find(":selected").text();
-            let area = $('#area').find(":selected").text();
-            let sub_area = $('#sub_area').find(":selected").text();
-            let road = $('#road').val();
-            let house = $('#house').val();
-            let address = road + ',' +house +','+sub_area +','+area +',' + city;
-             $('#address').val(address);
+        function autoAddress(){
+            // Auto generate hobe (H+R+B+Area+City). Editable thakbe.
+            var address = '';
+            var city = $('#city').find(":selected").text();
+            var area = $('#area').find(":selected").text();
+            var area_id = $('#area').find(":selected").val();
+            var sub_area = $('#sub_area').find(":selected").text();
+            var sub_area_id = $('#sub_area').find(":selected").val();
+            var road = $('#road').val();
+            var house = $('#house').val();
 
+            if(house){
+                address +='H-'+house+', ';
+            }
+
+            if(road){
+                address +='R-'+road+', ';
+            }
+
+            if(sub_area_id>0){
+                address +=sub_area+', ';
+            }
+
+            if(area_id){
+                address +=area+', ';
+            }
+
+            if(city){
+                address +=city;
+            }
+
+            $('#address').val(address);
+        }
+
+        $('#road').on('input',function(){
+            autoAddress();
         })
-        $('#area').on('change',function(){
-            let area = $('#area').find(":selected").text();
-            let city = $('#city').find(":selected").text();
-            let sub_area = $('#sub_area').find(":selected").text();
-            let road = $('#road').val();
-            let house = $('#house').val();
-            let address = house + ',' +road +','+sub_area +','+area +',' + city;
-             $('#address').val(address);
 
+        $('#house').on('input',function(){
+            autoAddress();
         })
-        $('#sub_area').on('change',function(){
-            let sub_area = $('#sub_area').find(":selected").text();
-            let area = $('#area').find(":selected").text();
-            let city = $('#city').find(":selected").text();
-            let road = $('#road').val();
-            let house = $('#house').val();
-            let address = house + ',' +road +','+sub_area +','+area +',' + city;
-             $('#address').val(address);
 
-        })
-        $(document).on('keyup', '#road', function() {
-            let road = ($(this).val());
-            let house = $('#house').val();
-            let city = $('#city').find(":selected").text();
-            let area = $('#area').find(":selected").text();
-            let sub_area = $('#sub_area').find(":selected").text();
-            let address = house + ',' +road +','+sub_area +','+area +',' + city;
-             $('#address').val(address);
-        });
-        $(document).on('keyup', '#house', function() {
-            let house = ($(this).val());
-            let road = $('#road').val();
-            let area = $('#area').find(":selected").text();
-            let city = $('#city').find(":selected").text();
-            let sub_area = $('#sub_area').find(":selected").text();
 
-            let address = house + ',' +road +','+sub_area +','+area +',' + city;
-             $('#address').val(address);
-        });
         $('#imageFile').imageUploader();
 
         $('.datetimepicker').datetimepicker({
@@ -710,7 +709,12 @@ $balcony = Config::get('static_array.balcony') ?? [];
         });
         var basepath = $('#base_url').val();
 
+        $(document).on('change', '#sub_area', function () {
+            autoAddress();
+        })
+
         $(document).on('change', '#area', function () {
+            autoAddress();
             let id = $(this).val();
             $('#sub_area').empty();
             $('#sub_area').append(new Option('Select One', 0));
@@ -733,6 +737,7 @@ $balcony = Config::get('static_array.balcony') ?? [];
         });
 
         $(document).on('change', '#city', function () {
+            autoAddress();
             var id = $(this).val();
             if (id == '') {
                 return false;
