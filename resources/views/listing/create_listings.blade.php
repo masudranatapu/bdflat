@@ -219,8 +219,9 @@ $car_parking = Config::get('static_array.parking') ?? [];
 
                             <div id="size_parent">
                                 <div class="row no-gutters form-group size_child">
-                                    <div class="col-6 col-md-4 size_div">
-                                        <div class="form-group mb-2 {!! $errors->has('size') ? 'error' : '' !!}">
+                                    <span class="floating_labels">Type-A</span>
+                                    <div class="col-6 col-md-4  size_div">
+                                        <div class="form-group {!! $errors->has('size') ? 'error' : '' !!}">
                                             {{-- <span class="advertis-label">Size</span> --}}
                                             <div class="controls">
                                                 {!! Form::number('size[]', old('size[]'), ['id'=>'size', 'class' => 'form-control',  'placeholder' => 'Size in sft','data-validation-required-message' => 'This field is required']) !!}
@@ -230,8 +231,8 @@ $car_parking = Config::get('static_array.parking') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-4 bedroom_div">
-                                        <div class="form-group mb-2 {!! $errors->has('bedroom') ? 'error' : '' !!}">
+                                    <div class="col-6 col-md-4   bedroom_div">
+                                        <div class="form-group {!! $errors->has('bedroom') ? 'error' : '' !!}">
                                             {{-- <span class="advertis-label">Bedroom</span> --}}
                                             <div class="controls">
                                                 {!! Form::select('bedroom[]', $bed_room, old('bedroom[]') ?? null, array('class'=>'form-control', 'placeholder'=>'Select bedroom')) !!}
@@ -241,8 +242,8 @@ $car_parking = Config::get('static_array.parking') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-4 bathroom_div">
-                                        <div class="form-group mb-2 {!! $errors->has('bathroom') ? 'error' : '' !!}">
+                                    <div class="col-6 col-md-4  bathroom_div">
+                                        <div class="form-group {!! $errors->has('bathroom') ? 'error' : '' !!}">
                                             {{-- <span class="advertis-label">Bathroom</span> --}}
                                             <div class="controls">
                                                 {!! Form::select('bathroom[]', $bath_room, old('bathroom[]'), array('class'=>'form-control', 'placeholder'=>'Select bathroom')) !!}
@@ -252,8 +253,8 @@ $car_parking = Config::get('static_array.parking') ?? [];
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-4 bathroom_div">
-                                        <div class="form-group mb-0 {!! $errors->has('balcony') ? 'error' : '' !!}">
+                                    <div class="col-6 col-md-4  mb-0 bathroom_div">
+                                        <div class="form-group {!! $errors->has('balcony') ? 'error' : '' !!}">
                                             {{-- <span class="advertis-label">Balcony</span> --}}
                                             <div class="controls">
                                                 {!! Form::select('balcony[]', $balcony, old('balcony[]'), array('class'=>'form-control', 'placeholder'=>'Select balcony')) !!}
