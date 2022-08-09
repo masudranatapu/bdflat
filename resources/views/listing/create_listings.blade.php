@@ -39,19 +39,21 @@
     </style>
 @endpush
 <?php
-$property_types = $data['property_type'] ?? [];
-$cities = $data['city'] ?? [];
+$property_types         = $data['property_type'] ?? [];
+$cities                 = $data['city'] ?? [];
 // dd($cities);
-$property_conditions = $data['property_condition'] ?? [];
-$property_facing = $data['property_facing'] ?? [];
+$property_conditions    = $data['property_condition'] ?? [];
+$property_facing        = $data['property_facing'] ?? [];
 $property_listing_types = $data['property_listing_type'] ?? [];
-$listing_features = $data['listing_feature'] ?? [];
-$nearby = $data['nearby'] ?? [];
-$floor_lists = $data['floor_list'] ?? [];
-$bed_room = Config::get('static_array.bed_room') ?? [];
-$bath_room = Config::get('static_array.bath_room') ?? [];
-$balcony = Config::get('static_array.balcony') ?? [];
-$car_parking = Config::get('static_array.parking') ?? [];
+$listing_features       = $data['listing_feature'] ?? [];
+$nearby                 = $data['nearby'] ?? [];
+$floor_lists            = $data['floor_list'] ?? [];
+$bed_room               = Config::get('static_array.bed_room') ?? [];
+$bath_room              = Config::get('static_array.bath_room') ?? [];
+$balcony                = Config::get('static_array.balcony') ?? [];
+$car_parking            = Config::get('static_array.parking') ?? [];
+$setting = setting();
+$admin_url = $setting->ADMIN_PUBLIC_URL;
 
 ?>
 
@@ -308,6 +310,18 @@ $car_parking = Config::get('static_array.parking') ?? [];
                             </div>
 
                             <!--  property price   -->
+                            <div class="row form-group mt-2">
+                                {{ Form::label('','Utility and others cost:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8 col-md-4">
+                                    <div class="form-group {!! $errors->has('utility') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::text('utility', old('utility'), [ 'class' => 'form-control', 'data-validation-required-message' => 'This field is required', 'placeholder' => 'Utility and others cost']) !!}
+
+                                            {!! $errors->first('utility', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row form-group">
                                 {{ Form::label('','Property price is:',['class' => 'col-sm-4 advertis-label']) }}
                                 <div class="col-sm-8">
@@ -318,6 +332,19 @@ $car_parking = Config::get('static_array.parking') ?? [];
                                             {!! Form::radio('property_price','2', old('property_price'),[ 'id' => 'nagotiable']) !!}
                                             {{ Form::label('nagotiable','Nagotiable') }}
                                             {!! $errors->first('property_price', '<label class="help-block text-danger">:message</label>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                {{ Form::label('','Call for price:',['class' => 'col-sm-4 advertis-label']) }}
+                                <div class="col-sm-8">
+                                    <div class="form-group {!! $errors->has('call_for_price') ? 'error' : '' !!}">
+                                        <div class="controls">
+                                            {!! Form::checkbox('call_for_price','1', old('call_for_price'),[ 'id' => 'call_price','data-validation-required-message' => 'This field is required']) !!}
+                                            {{ Form::label('call_price','Yes') }}
+
+                                            {!! $errors->first('call_for_price', '<label class="help-block text-danger">:message</label>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -401,7 +428,7 @@ $car_parking = Config::get('static_array.parking') ?? [];
                             <div class="advertisment-title">
                                 <h3>Features</h3>
                             </div>
-                            <div class="row form-group">
+                            <div class="row form-group" style="margin-left: 20px; ">
                                 <div class="col-lg-12">
                                         <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                             <div class="controls">
@@ -410,16 +437,15 @@ $car_parking = Config::get('static_array.parking') ?? [];
                                                 <div class="help-block"></div>
                                             </div>
                                         </div>
-                                    @foreach($listing_features as $key => $listing_feature)
-                                    @php
-                                        $data_icon = App\Models\ListingFeatures::find($key);
-                                    @endphp
-                                        <div
-                                            class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
+                                    @foreach($listing_features as $key => $list_feature)
+                                        @php
+                                            $icon = $admin_url.$list_feature->ICON;
+                                        @endphp
+                                        <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::checkbox('features[]',$key, old('features'),[ 'id' => 'features'.$key,'class' =>'form-check-input features']) !!}
-                                                {{ Form::label('features'.$key,$listing_feature,['class' =>'form-check-label']) }}
-                                                <img src="{{asset($data_icon->ICON)}}" alt="{{$listing_feature}}" style="height: 40px;width: 40px">
+                                                {!! Form::checkbox('features[]',$list_feature->PK_NO, old('features'),[ 'id' => 'features'.$list_feature->PK_NO,'class' =>'form-check-input features']) !!}
+                                                {{ Form::label('features'.$list_feature->PK_NO,$list_feature->TITLE,['class' =>'form-check-label']) }}
+                                                <img src="{{ fileExitRemote($icon) }}" alt="{{ $list_feature->TITLE }}" style="height: 40px;width: 40px">
                                             </div>
                                         </div>
                                     @endforeach
@@ -430,8 +456,7 @@ $car_parking = Config::get('static_array.parking') ?? [];
                             <div class="advertisment-title">
                                 <h3>Facilities Within 1km</h3>
                             </div>
-                            <div class="row form-group">
-
+                            <div class="row form-group" style="margin-left: 20px; ">
                                 <div class="col-lg-12">
                                     <div class="form-check form-check-inline {!! $errors->has('features') ? 'error' : '' !!}">
                                         <div class="controls">
@@ -442,14 +467,14 @@ $car_parking = Config::get('static_array.parking') ?? [];
                                     </div>
                                     @foreach($nearby as $key => $item)
                                     @php
-                                        $data_icon = App\Models\NearBy::find($key);
+                                        $icon = $admin_url.$item->ICON;
                                     @endphp
                                         <div
                                             class="form-check form-check-inline {!! $errors->has('nearby') ? 'error' : '' !!}">
                                             <div class="controls">
-                                                {!! Form::checkbox('nearby[]',$key, old('nearby'),[ 'id' => 'nearby'.$key,'class' =>'form-check-input faciliti']) !!}
-                                                {{ Form::label('nearby'.$key,$item) }}
-                                                <img src="{{asset($data_icon->ICON)}}" alt="{{$item}}" style="height: 40px;width: 40px">
+                                                {!! Form::checkbox('nearby[]',$item->PK_NO, old('nearby'),[ 'id' => 'nearby'.$item->PK_NO, 'class' =>'form-check-input faciliti']) !!}
+                                                {{ Form::label('nearby'.$item->PK_NO,$item->TITLE) }}
+                                                <img src="{{ fileExitRemote($icon) }}" alt="{{$item->TITLE}}" style="height: 40px;width: 40px">
                                             </div>
                                         </div>
                                     @endforeach
@@ -767,6 +792,28 @@ $car_parking = Config::get('static_array.parking') ?? [];
                 }
             });
         });
+        var noToAlp = {
+            1:'A',
+            2:'B',
+            3:'C',
+            4:'D',
+            5:'E',
+            6:'F',
+            7:'G',
+            8:'H',
+            9:'I',
+            10:'J',
+            11:'K',
+            12:'L',
+            13:'M',
+            14:'N',
+            15:'O',
+            16:'P',
+            17:'Q',
+            18:'R',
+            19:'S',
+            20:'T',
+        };
 
         $(document).on('click', '#add_btn', function () {
             var property_type = $('#property_type').val();
@@ -784,6 +831,12 @@ $car_parking = Config::get('static_array.parking') ?? [];
                     },
                     success: function (response) {
                         $("#size_parent").append(response.html);
+                        var new_floating_label = 'Type-B';
+                        $(".floating_labels").each(function(index, el) {
+                            var num = index+1;
+                            $(this).text("Type-" + (noToAlp[num]));
+                        });
+
 
                     },
                     complete: function (data) {

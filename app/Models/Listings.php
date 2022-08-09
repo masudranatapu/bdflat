@@ -388,13 +388,14 @@ class Listings extends Model
             $data['city'] = City::orderBy('CITY_NAME','ASC')->pluck('CITY_NAME', 'PK_NO');
         }
 
-        $data['property_type'] = PropertyType::orderBy('ORDER_ID', 'DESC')->pluck('PROPERTY_TYPE', 'PK_NO');
+        $data['property_type']      = PropertyType::orderBy('ORDER_ID', 'DESC')->pluck('PROPERTY_TYPE', 'PK_NO');
         $data['property_condition'] = PropertyCondition::where('IS_ACTIVE', 1)->pluck('PROD_CONDITION', 'PK_NO');
-        $data['property_facing'] = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
+        $data['property_facing']    = PropertyFacing::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
         $data['property_listing_type'] = PropertyListingType::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
-        $data['listing_feature'] = ListingFeatures::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['nearby'] = NearBy::where('IS_ACTIVE', 1)->pluck('TITLE', 'PK_NO');
-        $data['floor_list'] = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+        $data['listing_feature']    = ListingFeatures::where('IS_ACTIVE', 1)->get();
+        $data['nearby']             = NearBy::where('IS_ACTIVE', 1)->get();
+        $data['floor_list']         = FloorList::where('IS_ACTIVE', 1)->pluck('NAME', 'PK_NO');
+
         return $this->formatResponse(true, '', '', $data);
     }
 
