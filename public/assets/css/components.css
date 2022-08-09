@@ -4317,3 +4317,20 @@ input[type=number] {
     margin-bottom: 10px;
 }
 
+#size_parent {
+    position: relative;
+}
+
+span.floating_labels {
+    position: absolute;
+    top: -9px;
+    left: 26px;
+    background: #fff;
+    overflow: hidden;
+    z-index: 1;
+    color: #222;
+    padding: 2px 23px;
+    font-weight: 700;
+    font-size: 11px;
+    font-family: 'Montserrat-Medium';
+}
