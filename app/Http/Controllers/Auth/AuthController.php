@@ -214,24 +214,34 @@ class AuthController extends Controller
             $expire_time = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +10 minutes"));
             $otp_phone = $request->countryCode == 'bd' ? $request->mobile : $request->email;
 
-            if($request->countryCode == 'bd'){
-                //sms
-                $this->sendSmsMetrotel($text,$phone);
+            $setting = setting();
 
+            if($setting->OWNER_SMS_VERIFICATION == 0){
+                Auth::login($User, true);
+                return response()->json([
+                    "status"=>'success',
+                    "msg"=>"You have successfully registered",
+                    "data" => $User,
+                ]);
             }else{
-                //mail
-                Mail::send('email.otp_email',$messageData, function($message) use($email)
-                {
-                    $message->to($email)->subject('Login Otp Code.');
-                });
+                if($request->countryCode == 'bd'){
+                    //sms
+                    $this->sendSmsMetrotel($text,$phone);
 
+                }else{
+                    //mail
+                    Mail::send('email.otp_email',$messageData, function($message) use($email)
+                    {
+                        $message->to($email)->subject('Login Otp Code.');
+                    });
+
+                }
+                return response()->json([
+                    "status"=>'success',
+                    "msg"=>"You have successfully registered, But you should self verify your account",
+                    "data" => $User,
+                ]);
             }
-
-            return response()->json([
-                "status"=>'success',
-                "msg"=>"You have successfully registered, But you should self verify your account",
-                "data" => $User,
-            ]);
 
         }
     }

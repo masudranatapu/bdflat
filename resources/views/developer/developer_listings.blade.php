@@ -42,8 +42,8 @@ $status = Config::get('static_array.property_status');
                                         <th>PID</th>
                                         <th>Name</th>
                                         <th>Location</th>
-                                        <th>Ad For</th>
-                                        <th>Ad Type</th>
+                                        {{-- <th>Ad For</th> --}}
+                                        {{-- <th>Ad Type</th> --}}
                                         <th>Last Update</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -58,8 +58,8 @@ $status = Config::get('static_array.property_status');
                                                 <td>{{$listing->CODE}}</td>
                                                 <td>{{$listing->TITLE}}</td>
                                                 <td>{{$listing->AREA_NAME}}, {{$listing->CITY_NAME}}</td>
-                                                <td>{{$listing->PROPERTY_FOR}}</td>
-                                                <td title="{{ $listing->LISTING_TYPE }}">{{$listing->PROPERTY_TYPE}}</td>
+                                                {{-- <td>{{$listing->PROPERTY_FOR}}</td> --}}
+                                                {{-- <td title="{{ $listing->LISTING_TYPE }}">{{$listing->PROPERTY_TYPE}}</td> --}}
                                                 <td>{{date('M m, Y', strtotime($listing->MODIFIED_AT))}}</td>
                                                 <td>{{ $status[$listing->STATUS] ?? '' }}</td>
                                                 <td width="20%">

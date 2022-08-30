@@ -69,6 +69,8 @@ class OwnerController extends Controller
     public function getArea($city_id)
     {
         $area = Area::orderBy('AREA_NAME','ASC')->where('F_CITY_NO', $city_id)->whereNull('F_PARENT_AREA_NO')->get(['AREA_NAME', 'PK_NO']);
+
+        $area = DB::table('SS_AGENT_AREA')->leftJoin('SS_AREA','SS_AREA.PK_NO','SS_AGENT_AREA.F_AREA_NO')->where('SS_AGENT_AREA.F_CITY_NO', $city_id)->get(['SS_AREA.AREA_NAME', 'SS_AREA.PK_NO']);
         return response()->json($area);
     }
     public function getSubArea($area_id)

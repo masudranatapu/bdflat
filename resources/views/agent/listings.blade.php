@@ -30,15 +30,15 @@ $listings = $data['listings'] ?? [];
                                 </div>
 
                                 <!-- product -->
-                                <table class="table table-striped table-responsive text-center" style="font-family: 'Montserrat-Medium';font-size: 14px">
+                                <table class="table table-striped table-responsive" style="font-family: 'Montserrat-Medium';font-size: 14px">
                                     <thead>
                                     <tr>
                                         <th>Sl.</th>
                                         <th>PID</th>
                                         <th>Name</th>
                                         <th>Location</th>
-                                        <th>Ad For</th>
-                                        <th>Ad Type</th>
+                                        {{-- <th>Ad For</th> --}}
+                                        {{-- <th>Ad Type</th> --}}
                                         <th>Last Update</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -53,8 +53,8 @@ $listings = $data['listings'] ?? [];
                                                 <td>{{$listing->CODE}}</td>
                                                 <td>{{$listing->TITLE}}</td>
                                                 <td>{{$listing->AREA_NAME}}, {{$listing->CITY_NAME}}</td>
-                                                <td>{{$listing->PROPERTY_FOR}}</td>
-                                                <td title="{{ $listing->LISTING_TYPE }}">{{$listing->SHORT_NAME}}</td>
+                                                {{-- <td>{{$listing->PROPERTY_FOR}}</td> --}}
+                                                {{-- <td title="{{ $listing->LISTING_TYPE }}">{{$listing->SHORT_NAME}}</td> --}}
                                                 <td>{{date('M m, Y', strtotime($listing->MODIFIED_AT))}}</td>
                                                 <td>Pending</td>
                                                 <td width="20%">
